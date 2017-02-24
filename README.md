@@ -1,0 +1,1 @@
+Unfinished beginnings of an Angular2 website for Forge UI.  Setup development environment as described at https://angular.io/docs/ts/latest/guide/setup.html.  Run "npm start" command from project folder to test.
