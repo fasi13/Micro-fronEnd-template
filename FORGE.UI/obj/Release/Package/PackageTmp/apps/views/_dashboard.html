@@ -1,0 +1,29 @@
+﻿<span class="clearfix" />
+<div ng-include="'apps/views/_nav-bar-top.html'" />
+
+<div class="container-fluid" style="margin:60px auto;">
+    <div class="row">
+        <div class="col-md-3" style="padding:0">
+            <div class="row">
+                <div class="col-md-12"><img src="imgs/sample-img.PNG" class="img-responsive" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div ui-view="left-menu"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-sm-12"><heirarchy-component></heirarchy-component></div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div ui-view="content-manager" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,18 @@
+﻿{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Default",
+    "_links": [
+      {
+        "rel": "contentgroups",
+        "method": {
+          "method": "GET"
+        },
+        "href": "https://toolsservices-qa.awardcenter.com/application/1/contentGroups",
+        "name": null
+      }
+    ]
+  },
+  "error": null
+}
