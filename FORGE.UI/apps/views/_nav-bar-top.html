@@ -1,16 +1,22 @@
-﻿<nav class="navbar navbar-fixed-top" style="border-bottom:none;background-color:#00568D;">
+﻿<nav class="navbar navbar-fixed-top">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3" style="background-color:#fff;">
+            <div class="col-md-3 header-tilte">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#" style="color: #000;">
-                        ADMIN PORTAL
-                    </a>
+                    
+                        <a class="navbar-brand" href="#">
+                            <h2 class="portal-title">   ADMIN PORTAL</h2>
+                        </a>
+                    
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="navbar-form navbar-right">
-                    <a class="btn btn-info" ng-click="$event.preventDefault();db.logout();">{{db.username}}</a>
+                    <a class="username-col-white userinfo" ng-click="$event.preventDefault();db.logout();">{{db.username}} <i class="glyphicon glyphicon-chevron-down"></i>
+                        
+                    </a>
+                    <img class="user-img img-responsive" src="../../imgs/user.png" />
+                    
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
 ﻿<section id="sec-heirarchy" class="col-sm-12 small">
     <div class="row">
         <div class="col-md-5">
-            <ul class="breadcrumb" style="background-color:#fff;font-size:medium;">
-                <li>Heirarchy</li>
+            <ul class="breadcrumb">
+                <li>Heirarchy <span  ng-click="hc.isCollapsed = true" class="glyphicon glyphicon-home"></span></li>
                 <li>Harvard</li>
                 <li>Dashboard</li>
             </ul>
@@ -11,12 +11,13 @@
             <div class="inner-addon right-addon">
                 <i class="glyphicon glyphicon-search"></i>
                 <input type="text" class="form-control" placeholder="Search..e.g. PSCU, Harward, CU">
+                <button class="btn btn-col search-btn">Search</button>            
             </div>
         </div>
-        <div class="col-md-1">
-            <a ng-click="hc.isCollapsed = !hc.isCollapsed">
-                <i ng-class="{'glyphicon glyphicon-chevron-right': hc.isCollapsed,
-                                    'glyphicon glyphicon-chevron-down':!hc.isCollapsed}" style="top: 10px"></i>
+        <div class="col-md-1" ng-click="hc.isCollapsed = !hc.isCollapsed">
+            <a>
+                <i ng-class="{'chevron glyphicon glyphicon-chevron-right': hc.isCollapsed,
+                                    'chevron glyphicon glyphicon-chevron-down':!hc.isCollapsed}"></i>
             </a>
 
         </div>
@@ -49,48 +50,50 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div uib-collapse="hc.isCollapsed">
+            <div uib-collapse="hc.isCollapsed" class="cust-border">
                 <div class="row">
-                    <div class="col-sm-5">
-                    
-                        <div ng-if="hc.showTree" ivh-treeview="hc.data"></div>
+                    <div class="col-sm-6 cust-offset">
+                        <div class="row">
+                            <div class="col-sm-11 bottom">
+                                <div ng-if="hc.showTree" ivh-treeview="hc.data"></div>
 
-                        <!--<ul class="list-unstyled" ng-repeat="item in hirerachy.items">
-                            <ul class="list-unstyled" ng-repeat="topLevelNode in item">
+                            </div>
+                            <div class="col-sm-1">
 
-                                <span ng-class="{'glyphicon glyphicon-plus': !IsVisible,
-                                    'glyphicon glyphicon-minus':IsVisible}" ng-click="ShowHide()"></span> {{topLevelNode.name}}
-                                <li ng-show="IsVisible" ng-repeat="childNode in topLevelNode._links">
-                                    <span ng-class="{'glyphicon glyphicon-plus': !IsSecondVisible,
-                                    'glyphicon glyphicon-minus':IsSecondVisible}" ng-click="ShowHide1()"></span>{{childNode.name}}
-                                    <ul ng-show="IsSecondVisible" ng-repeat="subChildNode in childNode._links">
-                                        {{subChildNode.name}}
-                                        <li class="list-group-item-text" ng-if="subChildNode.name=='Harvard University Employees'">
-                                            SYS/PRIN/AGENT
-                                            <ul class="list-unstyled"><li>827600000000 (99131)</li></ul>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </ul>-->
-                        <!--<ul class="list-unstyled">
-                            <li><span class="glyphicon glyphicon-minus"></span> Harvard</li>
-                            <li>
-                                PSCUClientEntityIDs
-                                <ul>
-                                    <li><span class="glyphicon glyphicon-minus"></span> 991132</li>
-                                    <li><span class="glyphicon glyphicon-minus"></span> 991134</li>
-                                    <li><span class="glyphicon glyphicon-minus"></span> 991135</li>
-                                    <li><span class="glyphicon glyphicon-minus"></span> 991143</li>
-
-                                </ul>
-                            </li>
-                        </ul>-->
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-7"></div>
-                </div>
+                    <div class="col-sm-6 right-box">
+                       
+                        <div class="row">
+                            <div class="text-left col-sm-6"><label>Color Scheme: </label></div>
+                            <div class="text-left col-sm-6"><div class="color-tag"><div class="box red" ></div><p>P</p> <div class="box silver"></div><p>S</p></div></div>
+                                
+                            </div>
+                        <div class="row">
+                            <div class="text-left col-sm-6"><label>Credit Union Name: </label></div>
+                            <div class="text-left col-sm-6"><h3>Harvard</h3></div>
+                        </div>
+                        <div class="row">
+                            <div class="text-left col-sm-6"><label>Credit Union Logo: </label></div>
+                            <div class="text-left col-sm-6"><img class="img-responsive" src="../../imgs/harvard-logo.jpg" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="text-left col-sm-6"><label>Credit Union URL: </label></div>
+                            <div class="text-left col-sm-6"><a href="#">www.exampleURL.com</a></div>
+                        </div>
+                        <div class="row">
+                            <div class="text-left col-sm-6"><label>Customer Service Number: </label></div>
+                            <div class="text-left col-sm-6"><p>1-12345-121-22</p></div>
+                        </div>
 
+                    </div>
+                </div>
+                <div class="row config-btn text-right">
+                       
+                        <div class="col-sm-6 nopadding"><button class="btn btn-sm btn-col ">Configure</button></div>
+                  
+                </div>
 
 
 

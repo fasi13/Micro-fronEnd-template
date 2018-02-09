@@ -1,7 +1,7 @@
  var app =angular.module('instinctcoder',[])
     'use strict';
 
-    app.directive('leaf', function (tree, ivhTreeviewMgr,$window,apiService) {
+    app.directive('leaf', function (tree, ivhTreeviewMgr,$window,apiService,$cookies) {
         return { 
             restrict: 'AE', 
             link: function (scope, element, attrs) {
@@ -39,10 +39,10 @@
                         case 'S':  //Is the last node. need to stop
                             break;
                     }
-
+                    var _token = JSON.parse($cookies.get('profile'))._token;
                     apiService.get(url,
                             loadCompleted,
-                            loadFailed);
+                            loadFailed,_token);
 
 
                     function loadCompleted(result) {

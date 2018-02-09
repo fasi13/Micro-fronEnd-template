@@ -165,7 +165,7 @@ angular.module('ivh.treeview').directive('ivhTreeviewNode', ['ivhTreeviewCompile
       return ivhTreeviewCompiler
         .compile(tElement, function(scope, element, attrs, trvw) {
           var node = scope.node;
-
+         
           var getChildren = scope.getChildren = function() {
             return trvw.children(node);
           };
@@ -213,19 +213,25 @@ angular.module('ivh.treeview').directive('ivhTreeviewNode', ['ivhTreeviewCompile
 angular.module('ivh.treeview').directive('ivhTreeviewToggle', [function() {
   'use strict';
   return {
-    restrict: 'A',
+      restrict: 'A',
     require: '^ivhTreeview',
     link: function(scope, element, attrs, trvw) {
       var node = scope.node;
 
       element.addClass('ivh-treeview-toggle');
+   
+
+      
 
       element.bind('click', function() {
-        if(!trvw.isLeaf(node)) {
-          scope.$apply(function() {
+          
+          if (!trvw.isLeaf(node)) {
+             
+              scope.$apply(function () {
             trvw.toggleExpanded(node);
             trvw.onToggle(node);
-          });
+         
+            });
         }
       });
     }
@@ -361,123 +367,160 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
     },
     controllerAs: 'trvw',
     controller: ['$scope', '$element', '$attrs', '$transclude', 'ivhTreeviewOptions', 'filterFilter', function($scope, $element, $attrs, $transclude, ivhTreeviewOptions, filterFilter) {
-      var ng = angular
-        , trvw = this;
+        var ng = angular
+          , trvw = this;
 
-      // Merge any locally set options with those registered with hte
-      // ivhTreeviewOptions provider
-      var localOpts = ng.extend({}, ivhTreeviewOptions(), $scope.userOptions);
+        // Merge any locally set options with those registered with hte
+        // ivhTreeviewOptions provider
+        var localOpts = ng.extend({}, ivhTreeviewOptions(), $scope.userOptions);
 
-      // Two-way bound attributes (=) can be copied over directly if they're
-      // non-empty
-      ng.forEach([
-        'childrenAttribute',
-        'defaultSelectedState',
-        'disableCheckboxSelectionPropagation',
-        'expandToDepth',
-        'idAttribute',
-        'indeterminateAttribute',
-        'expandedAttribute',
-        'labelAttribute',
-        'nodeTpl',
-        'selectedAttribute',
-        'twistieCollapsedTpl',
-        'twistieExpandedTpl',
-        'twistieLeafTpl',
-        'useCheckboxes',
-        'validate',
-        'visibleAttribute'
-      ], function(attr) {
-        if(ng.isDefined($scope[attr])) {
-          localOpts[attr] = $scope[attr];
-        }
-      });
-
-      // Attrs with the `&` prefix will yield a defined scope entity even if
-      // no value is specified. We must check to make sure the attribute string
-      // is non-empty before copying over the scope value.
-      var normedAttr = function(attrKey) {
-        return 'ivhTreeview' +
-          attrKey.charAt(0).toUpperCase() +
-          attrKey.slice(1);
-      };
-
-      ng.forEach([
-        'onCbChange',
-        'onToggle'
-      ], function(attr) {
-        if($attrs[normedAttr(attr)]) {
-          localOpts[attr] = $scope[attr];
-        }
-      });
-
-      // Treat the transcluded content (if there is any) as our node template
-      var transcludedScope;
-      $transclude(function(clone, scope) {
-        var transcludedNodeTpl = '';
-        angular.forEach(clone, function(c) {
-          transcludedNodeTpl += (c.innerHTML || '').trim();
+        // Two-way bound attributes (=) can be copied over directly if they're
+        // non-empty
+        ng.forEach([
+          'childrenAttribute',
+          'defaultSelectedState',
+          'disableCheckboxSelectionPropagation',
+          'expandToDepth',
+          'idAttribute',
+          'indeterminateAttribute',
+          'expandedAttribute',
+          'labelAttribute',
+          'nodeTpl',
+          'selectedAttribute',
+          'twistieCollapsedTpl',
+          'twistieExpandedTpl',
+          'twistieLeafTpl',
+          'useCheckboxes',
+          'validate',
+          'visibleAttribute'
+        ], function(attr) {
+            if(ng.isDefined($scope[attr])) {
+                localOpts[attr] = $scope[attr];
+            }
         });
-        if(transcludedNodeTpl.length) {
-          transcludedScope = scope;
-          localOpts.nodeTpl = transcludedNodeTpl;
-        }
-      });
 
-      /**
-       * Get the merged global and local options
-       *
-       * @return {Object} the merged options
-       */
-      trvw.opts = function() {
-        return localOpts;
+        // Attrs with the `&` prefix will yield a defined scope entity even if
+        // no value is specified. We must check to make sure the attribute string
+        // is non-empty before copying over the scope value.
+        var normedAttr = function(attrKey) {
+            return 'ivhTreeview' +
+              attrKey.charAt(0).toUpperCase() +
+              attrKey.slice(1);
+        };
+
+        ng.forEach([
+          'onCbChange',
+          'onToggle'
+        ], function(attr) {
+            if($attrs[normedAttr(attr)]) {
+                localOpts[attr] = $scope[attr];
+            }
+        });
+
+        // Treat the transcluded content (if there is any) as our node template
+        var transcludedScope;
+        $transclude(function(clone, scope) {
+            var transcludedNodeTpl = '';
+            angular.forEach(clone, function(c) {
+                transcludedNodeTpl += (c.innerHTML || '').trim();
+            });
+            if(transcludedNodeTpl.length) {
+                transcludedScope = scope;
+                localOpts.nodeTpl = transcludedNodeTpl;
+            }
+        });
+
+        /**
+         * Get the merged global and local options
+         *
+         * @return {Object} the merged options
+         */
+        trvw.opts = function() {
+            return localOpts;
+        };
+
+        // If we didn't provide twistie templates we'll be doing a fair bit of
+        // extra checks for no reason. Let's just inform down stream directives
+        // whether or not they need to worry about twistie non-global templates.
+        var userOpts = $scope.userOptions || {};
+
+        /**
+         * Whether or not we have local twistie templates
+         *
+         * @private
+         */
+        trvw.hasLocalTwistieTpls = !!(
+          userOpts.twistieCollapsedTpl ||
+          userOpts.twistieExpandedTpl ||
+          userOpts.twistieLeafTpl ||
+          $scope.twistieCollapsedTpl ||
+          $scope.twistieExpandedTpl ||
+          $scope.twistieLeafTpl);
+
+        /**
+         * Get the child nodes for `node`
+         *
+         * Abstracts away the need to know the actual label attribute in
+         * templates.
+         *
+         * @param {Object} node a tree node
+         * @return {Array} the child nodes
+         */
+        trvw.children = function(node) {
+            var children = node[localOpts.childrenAttribute];
+            return ng.isArray(children) ? children : [];
+        };
+
+        /**
+         * Get the label for `node`
+         *
+         * Abstracts away the need to know the actual label attribute in
+         * templates.
+         *
+         * @param {Object} node A tree node
+         * @return {String} The node label
+         */
+        trvw.check = function (node) {
+         
+            if (node.label == "No Records Found") {
+
+                return false;
+            }
+            else
+                return true;
+        };
+
+        trvw.label = function (node) {
+
+           
+            return node[localOpts.labelAttribute];
+        };
+        trvw.check_app_group = function (node) {
+            var find = false;
+           
+            if (node._links) {
+                var links = node._links;
+                for (var i = 0; i < links.length; i++) {
+
+                    if (links[i].rel == "applicationGroups") {
+                       
+                        find = true;
+                        break;
+                    }
+                }
+
+            }
+            return find; 
+
+        };
+        trvw.value = function (node) {
+          if (node.value) {
+            
+              return node.value;
+          }
+          else
+          return false;
       };
-
-      // If we didn't provide twistie templates we'll be doing a fair bit of
-      // extra checks for no reason. Let's just inform down stream directives
-      // whether or not they need to worry about twistie non-global templates.
-      var userOpts = $scope.userOptions || {};
-
-      /**
-       * Whether or not we have local twistie templates
-       *
-       * @private
-       */
-      trvw.hasLocalTwistieTpls = !!(
-        userOpts.twistieCollapsedTpl ||
-        userOpts.twistieExpandedTpl ||
-        userOpts.twistieLeafTpl ||
-        $scope.twistieCollapsedTpl ||
-        $scope.twistieExpandedTpl ||
-        $scope.twistieLeafTpl);
-
-      /**
-       * Get the child nodes for `node`
-       *
-       * Abstracts away the need to know the actual label attribute in
-       * templates.
-       *
-       * @param {Object} node a tree node
-       * @return {Array} the child nodes
-       */
-      trvw.children = function(node) {
-        var children = node[localOpts.childrenAttribute];
-        return ng.isArray(children) ? children : [];
-      };
-
-      /**
-       * Get the label for `node`
-       *
-       * Abstracts away the need to know the actual label attribute in
-       * templates.
-       *
-       * @param {Object} node A tree node
-       * @return {String} The node label
-       */
-      trvw.label = function(node) {
-        return node[localOpts.labelAttribute];
-      };
-
       /**
        * Returns `true` if this treeview has a filter
        *
@@ -734,8 +777,10 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
 angular.module('ivh.treeview').filter('ivhTreeviewAsArray', function() {
   'use strict';
-  return function(arr) {
-    if(!angular.isArray(arr) && angular.isObject(arr)) {
+  return function (arr) {
+      
+      if (!angular.isArray(arr) && angular.isObject(arr)) {
+        
       return [arr];
     }
     return arr;
@@ -1423,17 +1468,27 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
      */
     nodeTpl: [
       '<div class="ivh-treeview-node-content" title="{{trvw.label(node)}}">',
-        '<p class="parent">',
-        '<span ivh-treeview-toggle>',
+      '<div ng-class="{\'row parent\':!trvw.check_app_group(node),\'row add-bg\':trvw.check_app_group(node)}">',
+        '<div class="col-sm-8 nopadding">',
+        '<span ivh-treeview-toggle  ng-show="trvw.check(node)">',
           '<span class="ivh-treeview-twistie-wrapper" ivh-treeview-twistie></span>',
         '</span>',
+       
         '<span class="ivh-treeview-checkbox-wrapper" ng-if="trvw.useCheckboxes()"',
             'ivh-treeview-checkbox>',
         '</span>',
-        '<span class="ivh-treeview-node-label" ivh-treeview-toggle>',
-          '{{trvw.label(node)}} ',
+        '<span class="ivh-treeview-node-label" ng-attr="trvw.check(node) ? ivh-treeview-toggle:"" ">',
+          '{{trvw.label(node)}} <span ng-show="trvw.value(node)">({{trvw.value(node)}})</span>',
         '</span>',
-       '</p>',
+        '</div>',
+        '<div class="col-sm-4 nopadding">',
+        '<div class="pull-right show-icon" ng-show="trvw.check(node)">',
+        ' <a href="#"><span  class="glyphicon glyphicon-pencil"></span></a>',
+        ' <a href="#"><span  class="glyphicon glyphicon-edit"></span></a>',
+        '<a href="#"> <span  class="glyphicon glyphicon-trash"></span> </a>',
+       '</div>',
+       '</div>',
+       '</div>',
         '<div ivh-treeview-children></div>',
       '</div>'
     ].join('\n')

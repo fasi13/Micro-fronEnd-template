@@ -7,15 +7,14 @@ apiService.$inject = ['$http'];
 function apiService($http) { 
      var self =this;
 
-  self.get= function(url, success, failure) { 
-    var jsonfile='';
-       jsonfile='subCat';
+  self.get= function(url, success, failurem,token) { 
+   
     
  
     
     return  $http.get(url, {
                 headers: {
-                    "Authorization": "Basic YXNpbW9uOnRlc3Q="
+                    "Authorization": token
                 }
             }).then(function(result) {
         success(result);

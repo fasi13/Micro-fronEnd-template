@@ -8,6 +8,59 @@
 ul.ivh-treeview li.ivh-treeview-node-collapsed ul.ivh-treeview {
   display: none;
 }
+
+.add-bg {
+background-color:#EBEBEB;
+    font-family: "Lato",sans-serif;
+   
+    margin: 0;
+    margin-top:3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    padding-left: 7px;
+    border-radius: 1px;
+    font-weight:bold;
+}
+leaf .fa {
+    font-size: 10px;
+}
+ .load{
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+    }
+    
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.parent {
+        font-family: "Lato",sans-serif;
+    font-weight:500;
+    margin: 0;
+    margin-top:3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    padding-left: 7px;
+    border-radius: 1px;
+}
+
+.show-icon {
+    display:inline-block;
+    font-size: 15px;
+    z-index:10;
+}
+.show-icon a {
+    padding-left:10px;
+}
+.custom-icon {
+
+
+    display:none;
+}
+.ivh-treeview-node-label {
+    font-size: 15px;
+  
+}
 ul.ivh-treeview .ivh-treeview-twistie-leaf,
 ul.ivh-treeview .ivh-treeview-twistie-collapsed {
   display: none;

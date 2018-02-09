@@ -1,5 +1,5 @@
 ﻿<section id="sec-left-menu" class="col-sm-12 small">
-    <h5 class="text-muted">MENU</h5>
+    <h3 class="text-muted">MENU</h3>
     <uib-accordion>
         <div uib-accordion-group class="panel-default" is-open="status.isDashboard">
             <uib-accordion-heading>
@@ -16,7 +16,7 @@
      
             </uib-accordion-heading>
             <ul class="list-unstyled">
-                <li ng-repeat="item in lm.navLinks track by item.id" style="padding:2px;">
+                <li ng-repeat="item in lm.navLinks track by item.id">
                     <i class="glyphicon glyphicon-plus"></i> 
                     <!--<a ui-sref=".{{item.getApplication.replace(' ','-').toLowerCase()}}">{{item.getApplication}}</a>-->
                     <a ui-sref=".content-manager({contentId: item.id})">{{item.getApplication}}</a>

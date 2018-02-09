@@ -123,14 +123,17 @@
     <Content Include="apps\views\top-right-menu-component.html" />
     <Content Include="apps\views\_dashboard.html" />
     <Content Include="apps\views\_nav-bar-top.html" />
+    <Content Include="Assets\Css\custom.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview-theme.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview.css" />
     <Content Include="imgs\dragon.png" />
     <Content Include="imgs\fish.png" />
+    <Content Include="imgs\harvard-logo.jpg" />
     <Content Include="imgs\monkey.png" />
     <Content Include="imgs\notfound.PNG" />
     <Content Include="imgs\sample-img.PNG" />
     <Content Include="imgs\Torchic.png" />
+    <Content Include="imgs\user.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -152,7 +155,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\my-style.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
