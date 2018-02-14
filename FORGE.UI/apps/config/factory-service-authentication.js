@@ -24,6 +24,7 @@
                     _token = resp.headers('authentication-info');
                     return new service($http, resp.data.data._links[0].href)._get(_token)
                                      .then(function (data) {
+                                         sessionStorage.setItem("baseApplicationUrl", JSON.stringify(data.data.data._links[0].href));
                                          return new service($http, data.data.data._links[0].href)._get(_token)
             .then(function (data) {
                 /* -assign token- */
@@ -54,9 +55,9 @@
                 var _link = JSON.parse(sessionStorage._contentManagement).items[i]._links[0].href;
                 _token = JSON.parse($cookies.get('profile'))._token;
                 return new service($http, _link)._get(_token)
-                    //.then(function (data) {
-                    //return data;
-                    //})
+                //.then(function (data) {
+                //return data;
+                //})
                 ;
             },
             sayHello: function () {

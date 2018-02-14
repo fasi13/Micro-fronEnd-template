@@ -24,15 +24,93 @@ background-color:#EBEBEB;
 leaf .fa {
     font-size: 10px;
 }
- .load{
-    -webkit-animation: spin 1s linear infinite; /* Safari */
-  animation: spin 1s linear infinite;
-    }
+
+
+.load{
     
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    -webkit-animation:swing 1s  normal  infinite ;
+    -moz-animation:swing 1s  normal infinite ;
+    -ms-animation:swing 1s  normal  infinite ;
+    -o-animation:swing 1s  normal  infinite ;
+    animation:swing 1s  normal  infinite ;
+
+    }
+
+@keyframes swing {
+  0% { transform: rotate(0deg); 
+    -webkit-transform:rotate(0deg);
+        -ms-transform:rotate(0deg);
+        -o-transform:rotate(0deg);
+
+  }
+  100% { transform: rotate(360deg);
+             -webkit-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+  }
 }
+
+@-moz-keyframes swing {
+ 0% { transform: rotate(0deg); 
+    -webkit-transform:rotate(0deg);
+        -ms-transform:rotate(0deg);
+        -o-transform:rotate(0deg);
+
+  }
+  100% { transform: rotate(360deg);
+             -webkit-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+  }
+}
+
+@-webkit-keyframes swing {
+ 0% { transform: rotate(0deg); 
+    -webkit-transform:rotate(0deg);
+        -ms-transform:rotate(0deg);
+        -o-transform:rotate(0deg);
+
+  }
+  100% { transform: rotate(360deg);
+             -webkit-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+  }
+}
+
+@-ms-keyframes swing {
+ 0% { transform: rotate(0deg); 
+    -webkit-transform:rotate(0deg);
+        -ms-transform:rotate(0deg);
+        -o-transform:rotate(0deg);
+
+  }
+  100% { transform: rotate(360deg);
+             -webkit-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+  }
+
+}
+
+@-o-keyframes swing {
+ 0% { transform: rotate(0deg); 
+    -webkit-transform:rotate(0deg);
+        -ms-transform:rotate(0deg);
+        -o-transform:rotate(0deg);
+
+  }
+  100% { transform: rotate(360deg);
+             -webkit-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+  }
+}
+
+
+
+ 
+
 .parent {
         font-family: "Lato",sans-serif;
     font-weight:500;
