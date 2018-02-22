@@ -16,7 +16,7 @@
     };
     var setHeirarchy = function (hirerachy) {
     };
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, $timeout) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree) {
         var self = this;
         self.data = [];
 
@@ -40,6 +40,7 @@
         function HierarchyLoadCompleted(result) {
 
             if (result.status == 200) {
+              
                 self.data = tree.genNode(result.data.data, null, true);
 
             } else {
@@ -52,12 +53,18 @@
             $window.alert('Hierarchy load failed');
         }
 
+
+    
+
+       
+
         self.showTree = true;
+
 
         //$log.info('heirachy connected');
     }; //controller;
     angular
-        .module('app_heirarchy', ["treeModule", 'ui.bootstrap'])
+        .module('app_heirarchy', ["treeModule"])
         .config(function (ivhTreeviewOptionsProvider) {
             ivhTreeviewOptionsProvider.set({
                 twistieCollapsedTpl: '<span class="glyphicon glyphicon-plus"></span>',
@@ -68,7 +75,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', '$timeout', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree',  controller],
             controllerAs: 'hc'
         });
 

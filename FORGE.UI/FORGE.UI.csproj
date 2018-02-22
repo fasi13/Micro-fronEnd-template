@@ -103,9 +103,11 @@
     <Content Include="apps\components\sign-in-component.js" />
     <Content Include="apps\components\top-right-menu-component.js" />
     <Content Include="apps\config\app-const.js" />
+    <Content Include="apps\config\app-modal-module.js" />
     <Content Include="apps\config\app-route.js" />
     <Content Include="apps\config\app-service-modal.js" />
     <Content Include="apps\config\app-service.js" />
+    <Content Include="apps\config\app-share_data-fac.js" />
     <Content Include="apps\config\factory-service-authentication.js" />
     <Content Include="apps\forge-app.js" />
     <Content Include="apps\UI-TREE VIEW\apiService.js" />
@@ -134,6 +136,7 @@
     <Content Include="imgs\sample-img.PNG" />
     <Content Include="imgs\Torchic.png" />
     <Content Include="imgs\user.png" />
+    <Content Include="imgs\views-icon.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -143,6 +146,7 @@
     <Content Include="apps\data\contentGroup.json" />
     <Content Include="apps\data\application-id.json" />
     <None Include="Properties\PublishProfiles\Simon.pubxml" />
+    <None Include="Properties\PublishProfiles\Vire.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

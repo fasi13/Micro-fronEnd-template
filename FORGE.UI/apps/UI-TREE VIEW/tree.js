@@ -10,12 +10,13 @@ function tree() {
     //              node, to tell the ivh-treeview to show "Expanded" icon because we're not sure
     //              where every node has child
     var makeNode = function (label, hasFakechild) {
+       
         var node;
         if (label.value == null) {
             node = {
                 label: label.name,
                 id: label.id,
-
+                unique:Math.random(),
                 _links: label._links,
                 type: 'C1',
                 children: []
@@ -26,6 +27,7 @@ function tree() {
             node = {
                 label: label.name,
                 id: label.id,
+                unique: Math.random(),
                 value: label.value,
                 _links: label._links,
                 type: 'C1',
@@ -50,6 +52,7 @@ function tree() {
     var makeChild = function (node) {
         return {
             label: label.Name,
+            unique : Math.random(),
             id: label.ID,
             type: label.Type,
             children: []
@@ -93,6 +96,7 @@ function tree() {
             node = {
                 label: list.name,
                 id: list.id,
+                unique : Math.random(),
                 _links: list._links,
                 type: 'C1',
                 children: []
@@ -109,9 +113,9 @@ function tree() {
         else if (list.length > 0) {
             while (list !== null && list.length) {
 
-
+              
                 node = makeNode(list.shift(), hasFakechild);
-
+                
                 node.selected = parent === null ? node.selected : parent.selected;
                 if (parent !== null) {
                     if (parent.children[0].type == 'DEL') {//Remove the dummy node

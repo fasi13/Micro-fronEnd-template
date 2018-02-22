@@ -45,10 +45,11 @@ angular.module('ivh.treeview').directive('ivhTreeviewChildren', function () {
         require: '^ivhTreeviewNode',
         template: [
           '<ul ng-if="getChildren().length" class="ivh-treeview">',
-            '<li ng-repeat="child in getChildren()" ',
+            '<li ng-repeat="child in getChildren() track by child.unique" ',
 
                 'ng-class="{\'ivh-treeview-node ivh-treeview-node-collapsed\': !trvw.isExpanded(child) && !trvw.isLeaf(child)}"',
                 'ivh-treeview-node="child"',
+                
                 'ivh-treeview-depth="childDepth">',
             '</li>',
           '</ul>'
@@ -78,8 +79,9 @@ angular.module('ivh.treeview').directive('ivhTreeviewNode', ['ivhTreeviewCompile
         compile: function (tElement) {
             return ivhTreeviewCompiler
               .compile(tElement, function (scope, element, attrs, trvw) {
-                  var node = scope.node;
 
+                  var node = scope.node;
+                 
                   var getChildren = scope.getChildren = function () {
                       return trvw.children(node);
                   };
@@ -263,9 +265,10 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
             filter: '=ivhTreeviewFilter'
         },
         controllerAs: 'trvw',
-        controller: ['$scope', '$element', '$attrs', '$transclude', 'ivhTreeviewOptions', 'filterFilter', function ($scope, $element, $attrs, $transclude, ivhTreeviewOptions, filterFilter) {
+        controller: ['$scope', '$element', '$attrs', '$transclude', 'ivhTreeviewOptions', 'filterFilter', 'share_data', 'share_parent', '$rootScope', function ($scope, $element, $attrs, $transclude, ivhTreeviewOptions, filterFilter, share_data, share_parent, $rootScope) {
             var ng = angular
               , trvw = this;
+           
 
             // Merge any locally set options with those registered with hte
             // ivhTreeviewOptions provider
@@ -393,11 +396,79 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                 else
                     return true;
             };
+            trvw.share = function (method, node) {
+               
+
+
+                share_data.get_data(node);
+                share_data.get_op(method);
+
+                share_data.get_root(trvw.root());
+                
+            }
             trvw.label = function (node) {
-
-
+               
                 return node[localOpts.labelAttribute];
             };
+          
+            $scope.$on('parentChanged', function () {
+
+               
+               
+                $scope.root = share_parent.parent;
+                
+              
+                
+
+            });
+
+            trvw.alt_title_add = function (node) {
+                var name = "";
+                
+                if (node._links) {
+                    var links = node._links;
+                    for (var i = 0; i < links.length; i++) {
+
+                        if (links[i].rel == "applications") {
+
+                            name = "Application";
+                        }
+                            if(links[i].rel == "applicationGroups") {
+
+                                name = "Application Group";
+                        }
+                    }
+
+                }
+
+                return name;
+
+
+            };
+            trvw.alt_title_edit = function (node) {
+                var name = "";
+
+                if (node._links) {
+                    var links = node._links;
+                    for (var i = 0; i < links.length; i++) {
+
+                        if (links[i].rel == "applications") {
+
+                            name = "Application Group";
+                        }
+                        if (links[i].rel == "applicationGroups") {
+
+                            name = "Application";
+                        }
+                    }
+
+                }
+
+                return name;
+
+
+            };
+
             // to show the add icon
             trvw.check_add = function (node) {
                 var find = false;
@@ -406,7 +477,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                     var links = node._links;
                     for (var i = 0; i < links.length; i++) {
 
-                        if (links[i].rel == "createApplicationGroup") {
+                        if (links[i].rel == "createApplicationGroup" || links[i].rel == "createApplication") {
 
                             find = true;
                             break;
@@ -417,7 +488,36 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                 return find;
 
             };
+            trvw.check_create_app_group = function (node) {
 
+                var find = false;
+
+                if (node._links) {
+                    var links = node._links;
+                    var app_rel;
+                    for (var i = 0; i < links.length; i++) {
+
+                        if (links[i].rel == "applications") {
+
+                            app_rel = links[i].rel;
+                            break;
+                        }
+                    }
+                    for (var i = 0; i < links.length; i++) {
+
+                        if (links[i].rel == "createApplicationGroup" && app_rel == "applications") {
+
+                            find = true;
+                            break;
+                        }
+                    }
+
+                }
+                return find;
+
+
+            };
+           
             // to show the edit icon
             trvw.check_edit = function (node) {
                 var find = false;
@@ -426,7 +526,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                     var links = node._links;
                     for (var i = 0; i < links.length; i++) {
 
-                        if (links[i].rel == "updateApplication") {
+                        if (links[i].rel == "updateApplication" || links[i].rel == "updateApplicationGroup") {
 
                             find = true;
                             break;
@@ -555,7 +655,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
              * @return {Boolean} `true` if `node` is selected
              */
             trvw.isSelected = function (node) {
-                debugger;
+               
                 return node[localOpts.selectedAttribute];
             };
 
@@ -692,7 +792,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
         },
         template: [
           '<ul class="ivh-treeview">',
-            '<li ng-repeat="child in root | ivhTreeviewAsArray" ',
+            '<li ng-repeat="child in root | ivhTreeviewAsArray " ',
 
                 'ng-class="{\'ivh-treeview-node ivh-treeview-node-collapsed\': !trvw.isExpanded(child) && !trvw.isLeaf(child)}" ',
                 'ivh-treeview-node="child"',
@@ -1292,7 +1392,7 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
             nodeTpl: [
               '<div class="ivh-treeview-node-content" title="{{::trvw.label(node)}}">',
               '<div ng-class="{\'row parent\':!trvw.check_app_group(node),\'row add-bg\':trvw.check_app_group(node)}">',
-                '<div   class="col-sm-8 nopadding">',
+                '<div   class="cust-col nopadding">',
                 '<span ivh-treeview-toggle  leaf>',
                   '<span class="ivh-treeview-twistie-wrapper" ivh-treeview-twistie ng-if="trvw.check(node)"></span>',
                   '<span class="ivh-treeview-node-label" ng-if="trvw.check(node)">',
@@ -1306,11 +1406,12 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
                 '</span>',
 
                 '</div>',
-                '<div class="col-sm-4 nopadding" ng-if="trvw.check(node) && trvw.check_loading(node)">',
+                '<div class="nopadding cust-width" ng-if="trvw.check(node) && trvw.check_loading(node)">',
                 '<div class="pull-right show-icon">',
-                ' <a href="" ng-if="trvw.check_add(node)" title="Add Application Group"><span  class="glyphicon glyphicon-pencil" ></span></a>',
-                ' <a href="" ng-if="trvw.check_edit(node)" title="Edit Application"><span  class="glyphicon glyphicon-edit"></span></a>',
-                '<a href="" ng-if="true" title="Delete Application"> <span  class="glyphicon glyphicon-trash"></span> </a>',
+                ' <a ng-if="trvw.check_create_app_group(node)" href="#add_ag"  ng-click="trvw.share(\'add_ag\',node); $event.preventDefault();" role="button" data-toggle="modal" title="Add Application Group"><span><img src="imgs/views-icon.png"/></span></a>',
+                ' <a ng-if="trvw.check_add(node)" href="#add"  ng-click="trvw.share(\'add\',node); $event.preventDefault();" role="button" data-toggle="modal" ng-attr-title="Add {{::trvw.alt_title_add(node);}}"><span  class="glyphicon glyphicon-pencil" ></span></a>',
+                ' <a ng-if="trvw.check_edit(node)" href="#edit" ng-click="trvw.share(\'edit\',node);$event.preventDefault();" role="button" data-toggle="modal"  ng-attr-title="Edit {{::trvw.alt_title_edit(node);}}"><span  class="glyphicon glyphicon-edit"></span></a>',
+                '<a href="" ng-attr-title="Delete {{::trvw.alt_title_edit(node);}}"> <span  class="glyphicon glyphicon-trash"></span> </a>',
                '</div>',
                '</div>',
                '</div>',

@@ -120,7 +120,7 @@ margin:0px;
     padding-top: 27px;
     margin-bottom: 15px;
     padding-bottom: 27px;
-    padding-left: 5.33% !important;
+    padding-left: 1% !important;
 }
 .content-body{
     margin:60px auto;
@@ -208,7 +208,30 @@ right:-15px;
 padding-top:7px;
 font-size:25px;
 }
- 
+.cust-width {
+        width: 95px;
+    position: absolute;
+   
+    display: inline;
+   
+    right: 20px;
+
+}
+a:focus {
+outline:none;
+}
+.row.add-bg:focus ,.row.parent:focus{
+   
+    background-color: cyan;
+}
+.cust-col {
+  display: inline;
+    float: left !important;
+    word-wrap: break-word;
+   
+    padding-right: 95px !important;
+}
+
 ul.breadcrumb > li:first-child {
     font-size: 16px;
     font-weight: bold;
@@ -218,6 +241,7 @@ font-family:"Lato Regular",sans-serif;
 font-size:medium;
 background-color:transparent;
 padding:10px;
+padding-left:0px;
 border-radius:2px;
 }
 ul i.glyphicon.glyphicon-chevron-right {
