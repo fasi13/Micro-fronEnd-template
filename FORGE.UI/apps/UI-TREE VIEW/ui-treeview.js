@@ -48,7 +48,7 @@ angular.module('ivh.treeview').directive('ivhTreeviewChildren', function () {
             '<li ng-repeat="child in getChildren() track by child.unique" ',
 
                 'ng-class="{\'ivh-treeview-node ivh-treeview-node-collapsed\': !trvw.isExpanded(child) && !trvw.isLeaf(child)}"',
-                'ivh-treeview-node="child"',
+                'ivh-treeview-node="child" id="{{child.unique}}"',
                 
                 'ivh-treeview-depth="childDepth">',
             '</li>',
@@ -265,7 +265,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
             filter: '=ivhTreeviewFilter'
         },
         controllerAs: 'trvw',
-        controller: ['$scope', '$element', '$attrs', '$transclude', 'ivhTreeviewOptions', 'filterFilter', 'share_data', 'share_parent', '$rootScope', function ($scope, $element, $attrs, $transclude, ivhTreeviewOptions, filterFilter, share_data, share_parent, $rootScope) {
+        controller: ['$scope', '$element', '$attrs', '$transclude', 'ivhTreeviewOptions', 'filterFilter', 'share_data', 'share_parent', '$rootScope', 'update_breadcrumbs', function ($scope, $element, $attrs, $transclude, ivhTreeviewOptions, filterFilter, share_data, share_parent, $rootScope, update_breadcrumbs) {
             var ng = angular
               , trvw = this;
            
@@ -387,6 +387,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                     return true;
             };
 
+            
             trvw.check_loading = function (node) {
 
                 if (node.label == "Loading...") {
@@ -410,7 +411,15 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                
                 return node[localOpts.labelAttribute];
             };
-          
+
+            trvw.update_brdcms = function (node,el) {
+
+                angular.element('.ivh-treeview-node-label').removeClass("selected");
+                angular.element(el).addClass("selected");
+
+                update_breadcrumbs.set_text(node, trvw.root());
+            };
+
             $scope.$on('parentChanged', function () {
 
                
@@ -469,7 +478,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
             };
 
-            // to show the add icon
+           
             trvw.check_add = function (node) {
                 var find = false;
 
@@ -518,7 +527,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
             };
            
-            // to show the edit icon
+           
             trvw.check_edit = function (node) {
                 var find = false;
 
@@ -795,7 +804,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
             '<li ng-repeat="child in root | ivhTreeviewAsArray " ',
 
                 'ng-class="{\'ivh-treeview-node ivh-treeview-node-collapsed\': !trvw.isExpanded(child) && !trvw.isLeaf(child)}" ',
-                'ivh-treeview-node="child"',
+                'ivh-treeview-node="child" id="{{child.unique}}"',
                 'ivh-treeview-depth="0">',
             '</li>',
           '</ul>'
@@ -1391,11 +1400,12 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
              */
             nodeTpl: [
               '<div class="ivh-treeview-node-content" title="{{::trvw.label(node)}}">',
-              '<div ng-class="{\'row parent\':!trvw.check_app_group(node),\'row add-bg\':trvw.check_app_group(node)}">',
+              '<div ng-class="{\'row parent\':!trvw.check_app_group(node),\'row add-bg\':trvw.check_app_group(node)}" ng-init="show_icons = \'hide\'" ng-mouseenter="show_icons = \'show\'" ng-mouseleave="show_icons = \'hide\'">',
+              
                 '<div   class="cust-col nopadding">',
-                '<span ivh-treeview-toggle  leaf>',
+                '<span ivh-treeview-toggle  leaf >',
                   '<span class="ivh-treeview-twistie-wrapper" ivh-treeview-twistie ng-if="trvw.check(node)"></span>',
-                  '<span class="ivh-treeview-node-label" ng-if="trvw.check(node)">',
+                  '<span class="ivh-treeview-node-label" ng-if="trvw.check(node)" ng-click="trvw.update_brdcms(node,$event.currentTarget)">',
                   '{{::trvw.label(node)}} <span ng-if="trvw.value(node)">({{::trvw.value(node)}})</span>',
                 '</span>',
 
@@ -1406,13 +1416,14 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
                 '</span>',
 
                 '</div>',
-                '<div class="nopadding cust-width" ng-if="trvw.check(node) && trvw.check_loading(node)">',
+                '<div ng-class="show_icons" class="nopadding cust-width" ng-if="trvw.check(node) && trvw.check_loading(node)">',
                 '<div class="pull-right show-icon">',
-                ' <a ng-if="trvw.check_create_app_group(node)" href="#add_ag"  ng-click="trvw.share(\'add_ag\',node); $event.preventDefault();" role="button" data-toggle="modal" title="Add Application Group"><span><img src="imgs/views-icon.png"/></span></a>',
+                ' <a ng-if="trvw.check_create_app_group(node)" href="#add_ag"  ng-click="trvw.share(\'add_ag\',node); $event.preventDefault();" role="button" data-toggle="modal" title="Add Application Group"><span><img src="imgs/views-icon.png" class="glif_icon"/></span></a>',
                 ' <a ng-if="trvw.check_add(node)" href="#add"  ng-click="trvw.share(\'add\',node); $event.preventDefault();" role="button" data-toggle="modal" ng-attr-title="Add {{::trvw.alt_title_add(node);}}"><span  class="glyphicon glyphicon-pencil" ></span></a>',
                 ' <a ng-if="trvw.check_edit(node)" href="#edit" ng-click="trvw.share(\'edit\',node);$event.preventDefault();" role="button" data-toggle="modal"  ng-attr-title="Edit {{::trvw.alt_title_edit(node);}}"><span  class="glyphicon glyphicon-edit"></span></a>',
                 '<a href="" ng-attr-title="Delete {{::trvw.alt_title_edit(node);}}"> <span  class="glyphicon glyphicon-trash"></span> </a>',
                '</div>',
+               
                '</div>',
                '</div>',
                 '<div ivh-treeview-children></div>',

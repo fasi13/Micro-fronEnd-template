@@ -9,14 +9,15 @@ function tree() {
     //hasFakechild: The reason of this parameter is use to create a dummy "loading..."
     //              node, to tell the ivh-treeview to show "Expanded" icon because we're not sure
     //              where every node has child
-    var makeNode = function (label, hasFakechild) {
-       
+    var makeNode = function (label, parent, hasFakechild) {
+
         var node;
         if (label.value == null) {
             node = {
                 label: label.name,
                 id: label.id,
-                unique:Math.random(),
+                parent: parent,
+                unique: Math.random(),
                 _links: label._links,
                 type: 'C1',
                 children: []
@@ -27,6 +28,7 @@ function tree() {
             node = {
                 label: label.name,
                 id: label.id,
+                parent: parent,
                 unique: Math.random(),
                 value: label.value,
                 _links: label._links,
@@ -49,11 +51,12 @@ function tree() {
         return node;
     };
 
-    var makeChild = function (node) {
+    var makeChild = function (node, parent) {
         return {
             label: label.Name,
-            unique : Math.random(),
+            unique: Math.random(),
             id: label.ID,
+            parent: parent,
             type: label.Type,
             children: []
         };
@@ -74,9 +77,10 @@ function tree() {
 
 
         // if the return list's length is zero add new child with No Records Found
-        if (list.length == 0) {
-            list.push({ name: "No Records Found", _links: [] });
-            node = makeNode(list.shift(), hasFakechild);
+        if (list.length === 0) {
+
+            list.push({ name: "No Records Found" });
+            node = makeNode(list.shift(), null, false);
 
             node.selected = parent === null ? node.selected : parent.selected;
             if (parent !== null) {
@@ -96,8 +100,9 @@ function tree() {
             node = {
                 label: list.name,
                 id: list.id,
-                unique : Math.random(),
+                unique: Math.random(),
                 _links: list._links,
+                parent: parent,
                 type: 'C1',
                 children: []
             };
@@ -113,9 +118,8 @@ function tree() {
         else if (list.length > 0) {
             while (list !== null && list.length) {
 
-              
-                node = makeNode(list.shift(), hasFakechild);
-                
+                node = makeNode(list.shift(), parent, hasFakechild);
+
                 node.selected = parent === null ? node.selected : parent.selected;
                 if (parent !== null) {
                     if (parent.children[0].type == 'DEL') {//Remove the dummy node

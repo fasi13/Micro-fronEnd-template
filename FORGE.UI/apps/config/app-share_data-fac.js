@@ -42,3 +42,23 @@
 
         return shareObj;
     })
+.factory('update_breadcrumbs', function ($rootScope) {
+
+
+    var shareObj = {};
+
+    shareObj.node = {};
+    shareObj.parent = {};
+
+    shareObj.set_text = function (node, parent) {
+        this.node = node;
+        this.parent = parent;
+        this.update();
+    };
+    shareObj.update = function () {
+        $rootScope.$broadcast('breadcrumbsChanged');
+    };
+
+    return shareObj;
+
+})

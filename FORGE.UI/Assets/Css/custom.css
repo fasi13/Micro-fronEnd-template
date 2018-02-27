@@ -70,7 +70,11 @@ display:inline-block;
 /* border and shadow */
 .config-btn {
 position:relative;
-bottom:15px;
+bottom:10px;
+}
+.inline{
+    display:inline-block;
+    width:85%;
 }
 .cust-offset {
 padding-left:5%;
@@ -220,9 +224,14 @@ font-size:25px;
 a:focus {
 outline:none;
 }
-.row.add-bg:focus ,.row.parent:focus{
-   
-    background-color: cyan;
+a{
+    cursor:pointer;
+}
+.show{
+    display:block;
+}
+.hide {
+display:none;
 }
 .cust-col {
   display: inline;
@@ -232,17 +241,15 @@ outline:none;
     padding-right: 95px !important;
 }
 
-ul.breadcrumb > li:first-child {
-    font-size: 16px;
-    font-weight: bold;
-}
 .breadcrumb {
 font-family:"Lato Regular",sans-serif;
 font-size:medium;
 background-color:transparent;
 padding:10px;
+padding-top:0px;
 padding-left:0px;
 border-radius:2px;
+display:inline-block;
 }
 ul i.glyphicon.glyphicon-chevron-right {
 font-weight:lighter;
@@ -283,6 +290,17 @@ label{
 .box:first-child {
     margin-left: 0px;
 }
+.top-margin {
+margin-top:10px !important;
+padding-bottom:10px;
+border-bottom:1px solid #ccc;
+}
+.home-icon{
+    display:inline-block;
+    padding-left:12px;
+    padding-right:5px;
+    width:12%;
+}
 span.glyphicon.glyphicon-home {
     background: #444;
     color: #fff;
@@ -296,7 +314,7 @@ span.glyphicon.glyphicon-home {
     content:none;
 
 }
-.breadcrumb>li+li+li:before {
+.breadcrumb>li+li:before {
     padding: 0 5px;
     color: #ccc;
     content: "/\00a0";
@@ -308,8 +326,23 @@ span.glyphicon.glyphicon-home {
     padding-right:10px;
     margin:0px;
 }
-.red {
-  background:#822434;
+.selected {
+background-color:#00568d;
+color:#fff;
+}
+.red_box {
+  background-color:red;
+}
+.red{
+    color:red;
+}
+img.glif_icon{
+
+    margin-bottom:6px;
+    height:14px;
+}
+.red_border {
+border:2px solid red !important;
 }
 
 .silver {
