@@ -14,16 +14,14 @@
             }
         }
     };
-    var setHeirarchy = function (hirerachy) {
-    };
+
     function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, share_parent) {
         var self = this;
         self.data = [];
+        $scope.parent = [];
         $scope.bread_text = [];
-
         var hc = this;
         hc.isCollapsed = true;
-
         var baseApplicationUrl = JSON.parse(sessionStorage.getItem("baseApplicationUrl"));
 
 
@@ -52,14 +50,7 @@
         function HierarchyLoadFailed(result) {
             $window.alert('Hierarchy load failed');
         }
-
-
-
-
-
-
         self.showTree = true;
-
 
 
         $scope.$on('breadcrumbsChanged', function () {
@@ -70,30 +61,128 @@
 
 
         });
-
-
-
-
         $scope.config_breadcrumb = function () {
-
-
-            var start_node = $scope.parent[0];
             $scope.bread_text = [];
+            $scope.hover_brdcm = "";
+            var start_node = $scope.parent[0];
 
-            $scope.brdcrm = { 'user': start_node.label, 'unique': start_node.unique };
+            create_brdcm($scope.clicked_node, start_node);
 
+            create_brdcm_hover($scope.clicked_node, start_node);
+            hc.isCollapsed = true;
 
-            if ($scope.clicked_node.parent != null && $scope.clicked_node.parent.unique == start_node.unique) {
-                $scope.bread_text.unshift($scope.clicked_node);
+        }
+
+        function check_rel_app(node) {
+            var rel_found = false;
+
+            for (var i = 0; i < node.length; i++) {
+
+                if (node[i].rel == "applicationGroups") {
+
+                    rel_found = true;
+                    break;
+                }
             }
-            if ($scope.clicked_node.unique != start_node.unique && $scope.clicked_node.parent.unique != start_node.unique) {
-                $scope.bread_text.unshift($scope.clicked_node);
-                $scope.bread_text.unshift($scope.clicked_node.parent);
+            return rel_found;
+        }
+
+        function parent_exist(node) {
+
+            if (node == null) {
+                return false;
+            }
+            else
+                return true;
+        }
+
+        function containsObjectNot(obj, list) {
+            var i;
+            if (obj == undefined) {
+                return false;
+            } for (i = 0; i < list.length; i++) {
+                if (list[i].unique === obj.unique) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        function create_brdcm(node, parent) {
+
+
+            if (node.id == parent.id) {
+                if (containsObjectNot($scope.main_parent, $scope.bread_text)) {
+                    $scope.bread_text.unshift($scope.main_parent);
+                }
+                if ($scope.bread_text.length == 0 || containsObjectNot(node, $scope.bread_text)) {
+
+                    $scope.bread_text.unshift(node);
+                }
+
+                return;
+
+            }
+            else {
+                if (node.unique == $scope.clicked_node.unique)
+
+                    if (check_rel_app(node._links)) {
+
+                        $scope.bread_text.unshift(node);
+
+                        if (node.parent != null && parent_exist(node.parent.parent)) {
+                            $scope.bread_text.unshift(node.parent.parent);
+
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    else {
+                        var new_parent = node.parent;
+                        if (containsObjectNot(new_parent, $scope.bread_text)) {
+                            $scope.bread_text.unshift(new_parent);
+                        }
+                        if (new_parent.parent != null && parent_exist(new_parent.parent.parent)) {
+                            $scope.bread_text.unshift(new_parent.parent.parent);
+
+                        }
+                        else {
+                            return;
+                        }
+
+                    }
+
+
+                if (check_rel_app(node._links)) {
+                    $scope.main_parent = node;
+
+
+                }
+
+                create_brdcm(node.parent, parent);
             }
 
         }
 
 
+        function create_brdcm_hover(node, parent) {
+            if (node.id == parent.id) {
+
+                $scope.hover_brdcm = node.label + " / " + $scope.hover_brdcm;
+                return;
+
+            }
+            else {
+                if ($scope.hover_brdcm.length == 0) {
+                    $scope.hover_brdcm = node.label;
+                }
+                else
+                    $scope.hover_brdcm = node.label + " / " + $scope.hover_brdcm;
+                create_brdcm_hover(node.parent, parent);
+            }
+
+        }
         $scope.show_node = function (id) {
 
 

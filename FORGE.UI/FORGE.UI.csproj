@@ -126,6 +126,7 @@
     <Content Include="apps\views\_dashboard.html" />
     <Content Include="apps\views\_nav-bar-top.html" />
     <Content Include="Assets\Css\custom.css" />
+    <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview-theme.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview.css" />
     <Content Include="imgs\dragon.png" />
@@ -965,6 +966,7 @@
     <Content Include="scripts\i18n\angular-locale_zu.js" />
     <Content Include="scripts\jquery-2.1.1.js" />
     <Content Include="scripts\jquery-2.1.1.min.js" />
+    <Content Include="scripts\jquery.mCustomScrollbar.js" />
     <Content Include="Web.config" />
     <Content Include="scripts\version.json" />
   </ItemGroup>

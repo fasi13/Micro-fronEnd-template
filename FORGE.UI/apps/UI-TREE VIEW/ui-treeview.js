@@ -49,7 +49,7 @@ angular.module('ivh.treeview').directive('ivhTreeviewChildren', function () {
 
                 'ng-class="{\'ivh-treeview-node ivh-treeview-node-collapsed\': !trvw.isExpanded(child) && !trvw.isLeaf(child)}"',
                 'ivh-treeview-node="child" id="{{child.unique}}"',
-                
+
                 'ivh-treeview-depth="childDepth">',
             '</li>',
           '</ul>'
@@ -81,7 +81,7 @@ angular.module('ivh.treeview').directive('ivhTreeviewNode', ['ivhTreeviewCompile
               .compile(tElement, function (scope, element, attrs, trvw) {
 
                   var node = scope.node;
-                 
+
                   var getChildren = scope.getChildren = function () {
                       return trvw.children(node);
                   };
@@ -268,7 +268,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
         controller: ['$scope', '$element', '$attrs', '$transclude', 'ivhTreeviewOptions', 'filterFilter', 'share_data', 'share_parent', '$rootScope', 'update_breadcrumbs', function ($scope, $element, $attrs, $transclude, ivhTreeviewOptions, filterFilter, share_data, share_parent, $rootScope, update_breadcrumbs) {
             var ng = angular
               , trvw = this;
-           
+
 
             // Merge any locally set options with those registered with hte
             // ivhTreeviewOptions provider
@@ -387,7 +387,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                     return true;
             };
 
-            
+
             trvw.check_loading = function (node) {
 
                 if (node.label == "Loading...") {
@@ -398,42 +398,62 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                     return true;
             };
             trvw.share = function (method, node) {
-               
+
 
 
                 share_data.get_data(node);
                 share_data.get_op(method);
 
                 share_data.get_root(trvw.root());
-                
+
             }
             trvw.label = function (node) {
-               
+
                 return node[localOpts.labelAttribute];
             };
+            trvw.checkIfNodeIsAppGroup = function (nodeLinks) {
+                var rel_found = false;
 
-            trvw.update_brdcms = function (node,el) {
+                for (var i = 0; i < nodeLinks.length; i++) {
 
-                angular.element('.ivh-treeview-node-label').removeClass("selected");
-                angular.element(el).addClass("selected");
+                    if (nodeLinks[i].rel == "applicationGroups") {
 
-                update_breadcrumbs.set_text(node, trvw.root());
+                        rel_found = true;
+                        break;
+                    }
+                }
+                return rel_found;
+            };
+            trvw.update_brdcms = function (node, el) {
+                var currentNodeIsAppGroup = false;
+                if (node.parent != null) {
+                    currentNodeIsAppGroup = trvw.checkIfNodeIsAppGroup(node.parent._links);
+                }
+                if (currentNodeIsAppGroup) {
+                    angular.element(document.getElementById('configureBtn'))[0].disabled = true;
+                }
+                else {
+                    angular.element('.ivh-treeview-node-label').removeClass("selected");
+                    angular.element(el).addClass("selected");
+                    update_breadcrumbs.set_text(node, trvw.root());
+                    angular.element(document.getElementById('configureBtn'))[0].disabled = false;
+                }
             };
 
             $scope.$on('parentChanged', function () {
 
-               
-               
+
+
                 $scope.root = share_parent.parent;
-                
-              
-                
+
+
+
 
             });
 
             trvw.alt_title_add = function (node) {
                 var name = "";
-                
+
                 if (node._links) {
                     var links = node._links;
                     for (var i = 0; i < links.length; i++) {
@@ -442,9 +462,9 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
                             name = "Application";
                         }
-                            if(links[i].rel == "applicationGroups") {
+                        if (links[i].rel == "applicationGroups") {
 
-                                name = "Application Group";
+                            name = "Application Group";
                         }
                     }
 
@@ -478,7 +498,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
             };
 
-           
+
             trvw.check_add = function (node) {
                 var find = false;
 
@@ -526,8 +546,8 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
 
             };
-           
-           
+
+
             trvw.check_edit = function (node) {
                 var find = false;
 
@@ -664,7 +684,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
              * @return {Boolean} `true` if `node` is selected
              */
             trvw.isSelected = function (node) {
-               
+
                 return node[localOpts.selectedAttribute];
             };
 
@@ -1401,7 +1421,7 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
             nodeTpl: [
               '<div class="ivh-treeview-node-content" title="{{::trvw.label(node)}}">',
               '<div ng-class="{\'row parent\':!trvw.check_app_group(node),\'row add-bg\':trvw.check_app_group(node)}" ng-init="show_icons = \'hide\'" ng-mouseenter="show_icons = \'show\'" ng-mouseleave="show_icons = \'hide\'">',
-              
+
                 '<div   class="cust-col nopadding">',
                 '<span ivh-treeview-toggle  leaf >',
                   '<span class="ivh-treeview-twistie-wrapper" ivh-treeview-twistie ng-if="trvw.check(node)"></span>',
@@ -1423,7 +1443,7 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
                 ' <a ng-if="trvw.check_edit(node)" href="#edit" ng-click="trvw.share(\'edit\',node);$event.preventDefault();" role="button" data-toggle="modal"  ng-attr-title="Edit {{::trvw.alt_title_edit(node);}}"><span  class="glyphicon glyphicon-edit"></span></a>',
                 '<a href="" ng-attr-title="Delete {{::trvw.alt_title_edit(node);}}"> <span  class="glyphicon glyphicon-trash"></span> </a>',
                '</div>',
-               
+
                '</div>',
                '</div>',
                 '<div ivh-treeview-children></div>',
