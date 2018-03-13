@@ -412,11 +412,12 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                 return node[localOpts.labelAttribute];
             };
             trvw.update_brdcms = function (node, el) {
+                debugger;
                 var currentNodeIsAppGroup = false;
                 if (node.parent != null) {
-                    currentNodeIsAppGroup = node.parent.IsApplicationGroup;
+                    currentNodeIsAppGroup = node.IsApplicationGroup;
                 }
-                if (!currentNodeIsAppGroup) {
+                if (currentNodeIsAppGroup) {
                     return; // no need to disable the configure button
                 }
                 else {

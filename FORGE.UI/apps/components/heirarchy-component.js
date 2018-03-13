@@ -161,7 +161,7 @@
         }
 
         function CreateBreadcrumbForHover(node, parent) {
-            if (node.id == parent.id && node.IsApplicationGroup) {
+            if (node.id == parent.id && !node.IsApplicationGroup) {
                 $scope.hover_brdcm = node.label + " / " + $scope.hover_brdcm;
                 return;
             }

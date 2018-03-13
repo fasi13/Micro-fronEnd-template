@@ -22,7 +22,7 @@ function tree() {
     var makeNode = function (label, parent, hasFakechild) {
 
         var node;
-        if (label.value == null) {
+        if (label.value != null) {
             node = {
                 label: label.name,
                 id: label.id,
@@ -88,6 +88,7 @@ function tree() {
 
 
         // if the return list's length is zero add new child with No Records Found
+        debugger;
         if (list.length === 0) {
 
             list.push({ name: "No Records Found" });
