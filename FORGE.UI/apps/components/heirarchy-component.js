@@ -105,7 +105,6 @@
             return true;
         }
         function CreateBreadcrumb(node, parent) {
-            debugger;
             if (node.id == parent.id) {
                 if ($scope.bread_text.length == 0) {
 
@@ -191,7 +190,6 @@
         }
 
         $scope.toggleBreadCrumb = function (node) {
-            debugger;
             if ($scope.bread_text.length > 0) {
                 toggleNodes(node);
                 if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {

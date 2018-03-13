@@ -49,7 +49,6 @@ app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cook
 
                         if (result.data != "") 
                         {
-                            debugger;
                             tree.genNode(result.data.data.items, scope.node, fakechild);
                         } else {
                             if (scope.node.children[0].type == 'DEL') {

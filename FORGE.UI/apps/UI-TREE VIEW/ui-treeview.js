@@ -412,7 +412,6 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
                 return node[localOpts.labelAttribute];
             };
             trvw.update_brdcms = function (node, el) {
-                debugger;
                 var currentNodeIsAppGroup = false;
                 if (node.parent != null) {
                     currentNodeIsAppGroup = node.parent.IsApplicationGroup;
