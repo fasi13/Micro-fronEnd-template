@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="inner-addon right-addon">
 
-                <input type="text" class="form-control" placeholder="Search..e.g. PSCU, Harward, CU">
+                <input type="text" class="form-control" placeholder="Search..e.g. PSCU, Harvard, CU">
                 <button class="btn btn-col search-btn">Search</button>
             </div>
         </div>
@@ -23,8 +23,10 @@
             <div class="pull-left home-icon"><span class="glyphicon glyphicon-home"></span> </div>
             <div class="inline nopadding">
                 <ul class="breadcrumb" title="{{hover_brdcm}}">
-                    <li ng-if="bread_text.length==0"><a ng-click="show_node(brdcrm.unique)">{{brdcrm.user}}</a></li>
-                    <li ng-if="!db.isCollapsed" ng-repeat="text in bread_text"><a ng-click="show_node(text.unique)">{{text.label}}</a></li>
+                    <li ng-if="bread_text.length==0"><a   ng-click="toggleRootNode(brdcrm.unique)">{{brdcrm.user}}</a></li>
+                    <li ng-if="!db.isCollapsed" ng-repeat="text in bread_text">
+                        <a ng-click="toggleBreadCrumb(text)">{{text.label}}</a> <span ng-if="iterateCount > 7 && $index == 1" class="forward-slash"></span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -36,13 +38,10 @@
                 <div class="row">
                     <div class="col-sm-7 cust-offset">
                         <div class="row">
-                            <div class="col-sm-11 bottom">
+                            <div class="col-sm-12 bottom">
                                 <div id="hierarchyVerticalScroll" ng-if="hc.showTree" ivh-treeview="hc.data">
 
                                 </div>
-
-                            </div>
-                            <div class="col-sm-1">
 
                             </div>
                         </div>

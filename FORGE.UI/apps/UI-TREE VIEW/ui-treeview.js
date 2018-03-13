@@ -411,26 +411,14 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
 
                 return node[localOpts.labelAttribute];
             };
-            trvw.checkIfNodeIsAppGroup = function (nodeLinks) {
-                var rel_found = false;
-
-                for (var i = 0; i < nodeLinks.length; i++) {
-
-                    if (nodeLinks[i].rel == "applicationGroups") {
-
-                        rel_found = true;
-                        break;
-                    }
-                }
-                return rel_found;
-            };
             trvw.update_brdcms = function (node, el) {
+                debugger;
                 var currentNodeIsAppGroup = false;
                 if (node.parent != null) {
-                    currentNodeIsAppGroup = trvw.checkIfNodeIsAppGroup(node.parent._links);
+                    currentNodeIsAppGroup = node.parent.IsApplicationGroup;
                 }
-                if (currentNodeIsAppGroup) {
-                    angular.element(document.getElementById('configureBtn'))[0].disabled = true;
+                if (!currentNodeIsAppGroup) {
+                    return; // no need to disable the configure button
                 }
                 else {
                     angular.element('.ivh-treeview-node-label').removeClass("selected");
@@ -1423,7 +1411,7 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
               '<div ng-class="{\'row parent\':!trvw.check_app_group(node),\'row add-bg\':trvw.check_app_group(node)}" ng-init="show_icons = \'hide\'" ng-mouseenter="show_icons = \'show\'" ng-mouseleave="show_icons = \'hide\'">',
 
                 '<div   class="cust-col nopadding">',
-                '<span ivh-treeview-toggle  leaf >',
+                '<span ivh-treeview-toggle leaf >',
                   '<span class="ivh-treeview-twistie-wrapper" ivh-treeview-twistie ng-if="trvw.check(node)"></span>',
                   '<span class="ivh-treeview-node-label" ng-if="trvw.check(node)" ng-click="trvw.update_brdcms(node,$event.currentTarget)">',
                   '{{::trvw.label(node)}} <span ng-if="trvw.value(node)">({{::trvw.value(node)}})</span>',

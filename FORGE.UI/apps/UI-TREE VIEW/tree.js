@@ -5,6 +5,16 @@ app.factory('tree', tree);
 function tree() {
 
     var self = this;
+    function IsApplicationGroup(node) {
+        var isAppGroup = false;
+
+        angular.forEach(node._links, function (linksVal, linksKey) {
+            if (linksVal.rel == "applicationGroups") {
+                isAppGroup = true;
+            }
+        });
+        return isAppGroup;
+    }
     //label: description of node
     //hasFakechild: The reason of this parameter is use to create a dummy "loading..."
     //              node, to tell the ivh-treeview to show "Expanded" icon because we're not sure
@@ -20,7 +30,8 @@ function tree() {
                 unique: Math.random(),
                 _links: label._links,
                 type: 'C1',
-                children: []
+                children: [],
+                IsApplicationGroup: IsApplicationGroup(parent)
             };
 
         }
@@ -104,7 +115,8 @@ function tree() {
                 _links: list._links,
                 parent: parent,
                 type: 'C1',
-                children: []
+                children: [],
+                IsApplicationGroup: false
             };
             node.children.push({
                 label: 'Loading...',

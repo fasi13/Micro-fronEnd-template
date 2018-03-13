@@ -139,7 +139,6 @@ textarea.form-control {
 
 .right-box {
     margin-top: 15px;
-    border-left: 1px solid #ccc;
     padding-top: 27px;
     margin-bottom: 15px;
     padding-bottom: 27px;
@@ -248,10 +247,10 @@ body {
 }
 
 .cust-width {
-    /*width: 95px;
-    position: absolute;*/
+    width: 95px;
+    position: absolute;
     display: inline;
-    right: 20px;
+    right: 5px;
 }
 
 .hierarchyVerticalScroll {
@@ -383,7 +382,7 @@ span.glyphicon.glyphicon-home {
 .breadcrumb > li + li:before {
     padding: 0 5px;
     color: #ccc;
-    content: "/.../";
+    content: "/";
 }
 
 .color-tag p {
@@ -419,3 +418,7 @@ img.glif_icon {
 .silver {
     background: #777777;
 }
+.forward-slash:before {
+content:" /... ";
+    color: #ccc;
+} 

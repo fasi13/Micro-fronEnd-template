@@ -89,7 +89,7 @@
                 for (var i = 0, length = currentNode.children.length; i < length; i++) {
 
                     if ($scope.new_obj.parent_id == currentNode.unique) {
-
+                        $scope.new_obj.child.parent = currentNode;
                         $scope.new_obj.child.unique = Math.random();
 
                         for (var k = 0; k < currentNode.children.length; k++) {

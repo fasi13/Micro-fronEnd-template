@@ -7,7 +7,6 @@ app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cook
         link: function (scope, element, attrs) {
 
             element.on('click', function () {
-
                 var root = scope.trvw.root();
                 if (scope.node.type == 'S') {
                     return;
@@ -48,7 +47,9 @@ app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cook
                 function loadCompleted(result) {
                     if (result.status == 200) {
 
-                        if (result.data != "") {
+                        if (result.data != "") 
+                        {
+                            debugger;
                             tree.genNode(result.data.data.items, scope.node, fakechild);
                         } else {
                             if (scope.node.children[0].type == 'DEL') {
@@ -78,7 +79,7 @@ app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cook
                             updateOnContentResize: true
                         }
                     });
-                    
+
                 }
                 initVerticalScroll();
             });

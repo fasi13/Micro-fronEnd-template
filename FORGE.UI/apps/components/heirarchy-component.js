@@ -15,7 +15,7 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, share_parent) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, share_parent, $timeout) {
         var self = this;
         self.data = [];
         $scope.parent = [];
@@ -40,7 +40,8 @@
             if (result.status == 200) {
 
                 self.data = tree.genNode(result.data.data, null, true);
-                $scope.brdcrm = { 'user': result.data.data.name };
+
+                $scope.brdcrm = { 'user': result.data.data.name, 'unique': self.data[0].unique };
             } else {
                 $window.alert('Hierarchy load failed' + result.error);
             }
@@ -61,61 +62,59 @@
 
 
         });
-        $scope.config_breadcrumb = function () {
-            $scope.bread_text = [];
-            $scope.hover_brdcm = "";
-            var start_node = $scope.parent[0];
+        function updateSelectedNode(uniqueId) {
 
-            create_brdcm($scope.clicked_node, start_node);
+            angular.element('.ivh-treeview-node-label').removeClass("selected");
+            var el = document.getElementById(uniqueId);
+            var span = angular.element(el).find("span");
 
-            create_brdcm_hover($scope.clicked_node, start_node);
-            hc.isCollapsed = true;
-
-        }
-
-        function check_rel_app(node) {
-            var rel_found = false;
-
-            for (var i = 0; i < node.length; i++) {
-
-                if (node[i].rel == "applicationGroups") {
-
-                    rel_found = true;
+            for (var i = 0; i < span.length; i++) {
+                if (angular.element(span[i]).hasClass('ivh-treeview-node-label')) {
+                    angular.element(span[i]).addClass("selected");
                     break;
                 }
             }
-            return rel_found;
         }
-
-        function parent_exist(node) {
-
-            if (node == null) {
-                return false;
+        $scope.config_breadcrumb = function (currentNode) {
+            if (currentNode != undefined) {
+                $scope.clicked_node = currentNode;
             }
-            else
-                return true;
-        }
+            if ($scope.clicked_node.IsApplicationGroup) {
+                return;
+            }
+            else {
+                $scope.iterateCount = 0;
+                $scope.bread_text = [];
+                $scope.hover_brdcm = "";
+                var start_node = $scope.parent[0];
+                CreateBreadcrumb($scope.clicked_node, start_node);
+                CreateBreadcrumbForHover($scope.clicked_node, start_node);
+                hc.isCollapsed = true;
+            }
 
-        function containsObjectNot(obj, list) {
-            var i;
+        }
+        function IsNodeExist(obj, list) {
             if (obj == undefined) {
-                return false;
-            } for (i = 0; i < list.length; i++) {
+                return;
+            } for (var i = 0; i < list.length; i++) {
                 if (list[i].unique === obj.unique) {
-                    return false;
+                    return;
                 }
             }
 
             return true;
         }
-        function create_brdcm(node, parent) {
-
-
+        function CreateBreadcrumb(node, parent) {
+            debugger;
             if (node.id == parent.id) {
-                if (containsObjectNot($scope.main_parent, $scope.bread_text)) {
+                if ($scope.bread_text.length == 0) {
+
+                    $scope.main_parent = undefined;
+                }
+                if (IsNodeExist($scope.main_parent, $scope.bread_text)) {
                     $scope.bread_text.unshift($scope.main_parent);
                 }
-                if ($scope.bread_text.length == 0 || containsObjectNot(node, $scope.bread_text)) {
+                if ($scope.bread_text.length == 0 || IsNodeExist(node, $scope.bread_text)) {
 
                     $scope.bread_text.unshift(node);
                 }
@@ -124,99 +123,93 @@
 
             }
             else {
-                if (node.unique == $scope.clicked_node.unique)
+                $scope.breadCrumb = [];
+                getApplications(node, parent);
 
-                    if (check_rel_app(node._links)) {
 
-                        $scope.bread_text.unshift(node);
+                for (var i = 0; i < $scope.breadCrumb.length; i++) {
 
-                        if (node.parent != null && parent_exist(node.parent.parent)) {
-                            $scope.bread_text.unshift(node.parent.parent);
+                    if (i == 2) {
 
+                        for (var j = $scope.breadCrumb.length - 2; i > 0; (i-- && j++)) {
+                            if (IsNodeExist($scope.breadCrumb[j], $scope.bread_text)) {
+                                $scope.bread_text.push($scope.breadCrumb[j]);
+                            }
                         }
-                        else {
-                            return;
-                        }
+                        break;
                     }
                     else {
-                        var new_parent = node.parent;
-                        if (containsObjectNot(new_parent, $scope.bread_text)) {
-                            $scope.bread_text.unshift(new_parent);
-                        }
-                        if (new_parent.parent != null && parent_exist(new_parent.parent.parent)) {
-                            $scope.bread_text.unshift(new_parent.parent.parent);
-
-                        }
-                        else {
-                            return;
-                        }
-
+                        $scope.bread_text.push($scope.breadCrumb[i]);
                     }
 
-
-                if (check_rel_app(node._links)) {
-                    $scope.main_parent = node;
-
-
                 }
-
-                create_brdcm(node.parent, parent);
             }
 
         }
 
+        function getApplications(node, parent) {
 
-        function create_brdcm_hover(node, parent) {
-            if (node.id == parent.id) {
+            if (!node.IsApplicationGroup) {
 
+                $scope.breadCrumb.unshift(node);
+                if (node.id == parent.id) {
+                    return;
+                }
+            }
+            $scope.iterateCount++;
+            getApplications(node.parent, parent);
+
+        }
+
+        function CreateBreadcrumbForHover(node, parent) {
+            if (node.id == parent.id && node.IsApplicationGroup) {
                 $scope.hover_brdcm = node.label + " / " + $scope.hover_brdcm;
                 return;
-
             }
             else {
                 if ($scope.hover_brdcm.length == 0) {
-                    $scope.hover_brdcm = node.label;
-                }
-                else
-                    $scope.hover_brdcm = node.label + " / " + $scope.hover_brdcm;
-                create_brdcm_hover(node.parent, parent);
-            }
-
-        }
-        $scope.show_node = function (id) {
-
-
-            if ($scope.bread_text.length > 0) {
-
-                if (id == $scope.brdcrm.unique) {
-
-                    if ($scope.bread_text.length == 2) {
-                        $scope.bread_text.pop();
-                        $scope.bread_text.pop();
-                    }
-                    if ($scope.bread_text.length == 1) {
-                        $scope.bread_text.pop();
+                    if (!node.IsApplicationGroup) {
+                        $scope.hover_brdcm = node.label;
                     }
                 }
                 else {
-                    if ($scope.bread_text.length == 2 && $scope.bread_text[1].unique != id) {
-                        $scope.bread_text.pop();
-
+                    if (!node.IsApplicationGroup) {
+                        $scope.hover_brdcm = node.label + " / " + $scope.hover_brdcm;
                     }
                 }
+                CreateBreadcrumbForHover(node.parent, parent);
             }
 
-            var el = document.getElementById(id);
+        }
+        $scope.toggleRootNode = function (uniqueId) {
+            var rootElement = document.getElementById(uniqueId);
+            var rootElementSpan = angular.element(rootElement).find("span");
+            $timeout(function () {
+                angular.element(rootElementSpan[0]).triggerHandler('click');
+            });
+
+        }
+
+        $scope.toggleBreadCrumb = function (node) {
+            debugger;
+            if ($scope.bread_text.length > 0) {
+                toggleNodes(node);
+                if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
+                    $scope.config_breadcrumb(node);
+                }
+            }
+        }
+        function toggleNodes(node) {
+            updateSelectedNode(node.unique);
+            var el = document.getElementById(node.unique);
             if (angular.element(el).hasClass('ivh-treeview-node')) {
                 angular.element(el).removeClass('ivh-treeview-node');
                 angular.element(el).removeClass('ivh-treeview-node-collapsed');
             }
             else {
-
                 angular.element(el).addClass('ivh-treeview-node');
                 angular.element(el).addClass('ivh-treeview-node-collapsed');
             }
-
         }
 
         //$log.info('heirachy connected');
@@ -233,7 +226,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'share_parent', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'share_parent', '$timeout', controller],
             controllerAs: 'hc'
         });
 
