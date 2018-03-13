@@ -88,7 +88,6 @@ function tree() {
 
 
         // if the return list's length is zero add new child with No Records Found
-        debugger;
         if (list.length === 0) {
 
             list.push({ name: "No Records Found" });
