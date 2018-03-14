@@ -7,12 +7,13 @@ function tree() {
     var self = this;
     function IsApplicationGroup(node) {
         var isAppGroup = false;
-
-        angular.forEach(node._links, function (linksVal, linksKey) {
-            if (linksVal.rel == "applicationGroups") {
-                isAppGroup = true;
-            }
-        });
+        if (node != null) {
+            angular.forEach(node._links, function (linksVal, linksKey) {
+                if (linksVal.rel == "applicationGroups") {
+                    isAppGroup = true;
+                }
+            });
+        }
         return isAppGroup;
     }
     //label: description of node
@@ -22,9 +23,9 @@ function tree() {
     var makeNode = function (label, parent, hasFakechild) {
 
         var node;
-        if (label.value != null) {
             node = {
                 label: label.name,
+                value: label.value,
                 id: label.id,
                 parent: parent,
                 unique: Math.random(),
@@ -33,20 +34,6 @@ function tree() {
                 children: [],
                 IsApplicationGroup: IsApplicationGroup(parent)
             };
-
-        }
-        else {
-            node = {
-                label: label.name,
-                id: label.id,
-                parent: parent,
-                unique: Math.random(),
-                value: label.value,
-                _links: label._links,
-                type: 'C1',
-                children: []
-            };
-        }
         //Create dummy for speed up loading & make library show "Expand" icon
         //child nodes only load when 'leaf element click in directive
 
@@ -85,12 +72,10 @@ function tree() {
             i = 0,
             temp = [],
             nodes = [];
-
-
         // if the return list's length is zero add new child with No Records Found
         if (list.length === 0) {
 
-            list.push({ name: "No Records Found" });
+            list.push({ name: "No Records Found", _links: [] });
             node = makeNode(list.shift(), null, false);
 
             node.selected = parent === null ? node.selected : parent.selected;
