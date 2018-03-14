@@ -1,81 +1,63 @@
-﻿<style type="text/css">
-    body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #eee;
-    }
+﻿    <!-- start container  -->
+<div class="container ">
 
-    .form-signin {
-        max-width: 330px;
-        padding: 15px;
-        margin: 0 auto;
-    }
+    <!-- start row -->
+    <div class="row">
 
-        .form-signin .form-signin-heading,
-        .form-signin .checkbox {
-            margin-bottom: 10px;
-        }
+        <h2 class="admin-portal-title white-text"> <span class="admin-portal-title-orange"> ADMIN </span> PORTAL </h2>
 
-        .form-signin .checkbox {
-            font-weight: normal;
-        }
-
-        .form-signin .form-control {
-            position: relative;
-            height: auto;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-            .form-signin .form-control:focus {
-                z-index: 2;
-            }
-
-        .form-signin input[type="email"] {
-            margin-bottom: -1px;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-
-        .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-</style>
-
-<form name="form" ng-submit="form.$valid && vm.login()"  class="form-signin" novalidate>
-    <h2 class="form-signin-heading">Please sign in</h2>
-  
-    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.username.$invalid }">
-        <div class="inner-addon left-addon">
-            <i class="glyphicon glyphicon-user "></i>
-            <input type="text" name="username" class="form-control" ng-model="vm.username" placeholder="user name" required />
-        </div>
-        <div ng-messages="form.$submitted && form.username.$error" class="help-block">
-            <div ng-message="required" style="margin-left:10px;">Username is required</div>
-        </div>
     </div>
-    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.password.$invalid }">
+    <!-- end row -->
+    <!-- start row -->
+    <div class="row login-form">
 
-        <div class="inner-addon left-addon">
-            <i class="glyphicon glyphicon-qrcode"></i>
-            <input type="password" name="password" class="form-control" ng-model="vm.password" placeholder="password" required />
+        <div class="col-sm-6 col-md-6 col-md-offset-1">
+            <h2 class="white-text login-heading text-bold login-text"> Welcome to the Admin Portal</h2>
+            <p class="white-text login-p login-text"> This tool can be used to modify and customize variety of content and configuration for registered clients</p>
         </div>
 
-        <div ng-messages="form.$submitted && form.password.$error" class="help-block">
-            <div ng-message="required" style="margin-left:10px;">Password is required</div>
+        <div class="col-md-4 col-sm-5">
+
+            <div class="contact-form">
+                <h3 class="login-heading"> <b> LOGIN </b> </h3>
+                <br>
+                <form name="form" ng-submit="form.$valid && vm.login()" class="form-signin" novalidate>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input id="username" name="username" ng-class="{'red_border': (form.$submitted && vm.username==null) || (vm.error)}" type="text" class="form-control login-input" ng-model="vm.username" placeholder="user name" required>
+                        </div>
+                        <span ng-if="form.$submitted && vm.username==null" class="field-validation-error login-validation-error" data-valmsg-for="username" data-valmsg-replace="true"><span for="username" generated="true" class="">Username is required</span></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-certificate"></i></span>
+                            <input id="password" type="password" ng-class="{'red_border': (form.$submitted && vm.password==null) || (vm.error)}" class="form-control login-input" name="password" ng-model="vm.password" placeholder="password" required>
+                        </div>
+                        <span ng-if="form.$submitted && vm.password==null" class="field-validation-error login-validation-error" data-valmsg-for="password" data-valmsg-replace="true"><span for="password" generated="true" class="">Password is required</span></span>
+                    </div>
+                    <div class="input-group nofloat login-text">
+                        <a href="#"> Forgot Password? </a> / <a href="#"> Forgot Login? </a>
+                    </div>
+                    <div ng-if="vm.error" class="validation-summary-errors login-summary-errors" data-valmsg-summary="true">
+                        {{vm.error}}
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btnClass btn-block btn-login" ng-disabled="vm.loading" ng-submit="vm.login();">
+                            Login
+                            <img id="loginLoader" ng-if="vm.loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        </button>
+
+                    </div>
+                </form>
+                <!-- end of form -->
+
+            </div>
+
         </div>
+        <!-- end row -->
+
     </div>
-    <div class="form-group">
-        <button ng-disabled="vm.loading" ng-submit="vm.login();" class="btn btn-primary">Login</button>
-        <img ng-if="vm.loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-    </div>
-    
-</form>
-<div class="container" ng-if="vm.error" style="max-width:777px;" >
-    <div class="alert alert-danger">{{vm.error}}</div>
-</div>
+
+    <!-- end container  -->

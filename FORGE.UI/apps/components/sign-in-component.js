@@ -3,6 +3,7 @@
     'use strict';
 
     var controller = function ($state, serviceEndpoint) {
+        $('body').addClass("login-body");
         var vm = this;
         vm.loading = false;
 
@@ -18,7 +19,7 @@
                             vm.error = resp.statusText;
                             return false;
                         }
-
+                        $('body').removeClass("login-body");
                         $state.go(sessionStorage._toState || 'dashboard');
                     })
                     .catch(function (resp) {

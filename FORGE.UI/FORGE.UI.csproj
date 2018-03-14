@@ -126,11 +126,13 @@
     <Content Include="apps\views\_dashboard.html" />
     <Content Include="apps\views\_nav-bar-top.html" />
     <Content Include="Assets\Css\custom.css" />
+    <Content Include="Assets\Css\responsive.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview-theme.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview.css" />
     <Content Include="imgs\dragon.png" />
     <Content Include="imgs\fish.png" />
     <Content Include="imgs\harvard-logo.jpg" />
+    <Content Include="imgs\login-background.jpg" />
     <Content Include="imgs\monkey.png" />
     <Content Include="imgs\notfound.PNG" />
     <Content Include="imgs\sample-img.PNG" />
