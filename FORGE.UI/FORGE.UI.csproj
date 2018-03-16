@@ -96,7 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="apps\components\auth-component.js" />
+    <Content Include="apps\components\bootstrap-colorpicker-module.min.js" />
     <Content Include="apps\components\content-management-component.js" />
+    <Content Include="apps\components\contentView.js" />
     <Content Include="apps\components\heirarchy-component.js" />
     <Content Include="apps\components\left-menu-component.js" />
     <Content Include="apps\components\promotion-component.js" />
@@ -117,6 +119,7 @@
     <Content Include="apps\UI-TREE VIEW\ui-treeview.js" />
     <Content Include="apps\views\auth-component.html" />
     <Content Include="apps\views\content-management-component.html" />
+    <Content Include="apps\views\contentView.html" />
     <Content Include="apps\views\heirarchy-component.html" />
     <Content Include="apps\views\iam-404p.html" />
     <Content Include="apps\views\left-menu-component.html" />
@@ -125,6 +128,7 @@
     <Content Include="apps\views\top-right-menu-component.html" />
     <Content Include="apps\views\_dashboard.html" />
     <Content Include="apps\views\_nav-bar-top.html" />
+    <Content Include="Assets\Css\colorpicker.min.css" />
     <Content Include="Assets\Css\custom.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview-theme.css" />
@@ -134,8 +138,10 @@
     <Content Include="imgs\harvard-logo.jpg" />
     <Content Include="imgs\monkey.png" />
     <Content Include="imgs\notfound.PNG" />
+    <Content Include="imgs\one.png" />
     <Content Include="imgs\sample-img.PNG" />
     <Content Include="imgs\Torchic.png" />
+    <Content Include="imgs\two.png" />
     <Content Include="imgs\user.png" />
     <Content Include="imgs\views-icon.png" />
     <Content Include="packages.config" />

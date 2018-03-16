@@ -25,7 +25,6 @@
         var baseApplicationUrl = JSON.parse(sessionStorage.getItem("baseApplicationUrl"));
 
 
-
         var _token = JSON.parse($cookies.get('profile'))._token;
 
         apiService.get(baseApplicationUrl,
@@ -78,6 +77,7 @@
         $scope.config_breadcrumb = function (currentNode) {
             if (currentNode != undefined) {
                 $scope.clicked_node = currentNode;
+                update_breadcrumbs.node = currentNode;
             }
             if ($scope.clicked_node.IsApplicationGroup) {
                 return;
@@ -122,9 +122,11 @@
 
             }
             else {
+              
                 $scope.breadCrumb = [];
                 getApplications(node, parent);
 
+               
 
                 for (var i = 0; i < $scope.breadCrumb.length; i++) {
 
@@ -147,7 +149,7 @@
         }
 
         function getApplications(node, parent) {
-
+            
             if (!node.IsApplicationGroup) {
 
                 $scope.breadCrumb.unshift(node);

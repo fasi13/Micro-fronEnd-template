@@ -7,7 +7,7 @@
             <div class="inner-addon right-addon">
 
                 <input type="text" class="form-control" placeholder="Search..e.g. PSCU, Harvard, CU">
-                <button class="btn btn-col search-btn">Search</button>
+                <button class="btn btnClass search-btn">Search</button>
             </div>
         </div>
         <div class="col-md-1 text-right" ng-click="hc.isCollapsed = !hc.isCollapsed">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 hierarchy">
             <div uib-collapse="hc.isCollapsed" class="cust-border">
                 <div class="row">
                     <div class="col-sm-7 cust-offset">
@@ -78,7 +78,7 @@
                 </div>
                 <div class="row config-btn text-right">
 
-                    <div class="col-sm-6 nopadding"><button id="configureBtn" ng-disabled="parent.length==0" class="btn btn-sm btn-col marginTop20" ng-click="config_breadcrumb();">Configure</button></div>
+                    <div class="col-sm-6 nopadding"><button id="configureBtn" ng-disabled="parent.length==0" class="btn btn-sm btnClass marginTop20" ng-click="config_breadcrumb();">Configure</button></div>
 
                 </div>
 
