@@ -127,7 +127,7 @@ and dependencies (minified).
 			always show scrollbar, even when there's nothing to scroll 
 			values: integer (0=disable, 1=always show dragger rail, 2=always show dragger rail, dragger and buttons), boolean
 			*/
-			alwaysShowScrollbar:0,
+			alwaysShowScrollbar:1,
 			/*
 			scrolling always snaps to a multiple of this number in pixels
 			values: integer
@@ -2096,4 +2096,22 @@ and dependencies (minified).
 		$(defaultSelector)[pluginNS](); /* add scrollbars automatically on default selector */
 	});
 
-}))}(window,document));
+}))}(window, document));
+
+
+// Auto Scroll Changes
+
+$(document).ready(function () {
+
+    $(document).on('click', '.row.parent, span.ivh-treeview-node-label', function (event) {
+        var scrollPosition = event.target.offsetTop + 150;
+        $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
+    });
+
+    $(document).on('click', '.glyphicon-minus, .glyphicon-plus', function (event) {
+        var scrollPosition = event.target.offsetTop + 200;
+        $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
+    });
+
+
+});
