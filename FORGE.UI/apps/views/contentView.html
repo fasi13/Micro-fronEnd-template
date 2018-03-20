@@ -1,0 +1,259 @@
+﻿<section id="sec-email-templates" class="col-md-12">
+
+    <div class="row">
+
+        <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content)">
+
+            <div class="contents-page" >
+            
+
+           
+                <div>
+
+                    <h3>{{contentObj.content_name}}</h3>
+
+                </div>
+
+                <div class="row bottom-border">
+                    <div ng-repeat="(key,val) in contentObj.content[0]" ng-if="key == 'name' || key == 'value' || key == 'status' || key == 'publishDate'" class="col-sm-4">
+
+                        <h4>{{key|cap}}</h4>
+
+                    </div>
+
+                </div>
+
+                <div class="row form-label bottom-border" ng-repeat="data in contentObj.content">
+                    <div class="col-sm-4" ng-repeat="(key,val) in data" ng-if="key == 'name' || key == 'value' || key == 'status' || key == 'publishDate'">
+
+                        <div>
+                            {{val}} <span ng-if="key == 'name'" class="pull-right">
+                                <a href="#editContent" data-toggle="modal" ng-click="contentObj.passContentName(data);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a> <a> <span class="glyphicon glyphicon-trash"></span></a>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="pull-right">
+                    <button data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction()" class="btn btnClass marginTop20">New</button>
+                </div>
+
+               
+            </div>
+
+            
+
+
+            </div>
+        <div ng-if="contentObj.content_name == 'Email Templates'">
+
+            <div class="col-md-12 col-xs-12 maincontent">
+
+                <div>
+                    <h3>Email Template Settings</h3>
+                </div>
+                <div class="control-label">
+
+                </div>
+                <div class="control-group form-inline">
+                    <label>
+                        From Address
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <input type="email" class="form-control input-width" placeholder="info@domain.com" ng-model="email" />
+
+                            <button class="btn btnClass" type="button">Save</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+            <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content) == false">
+
+                <div class="contents-page">
+
+
+
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 login-left-section">
+
+                            <h3 class="m-b-30"> Customize Branding </h3>
+
+
+
+
+
+                            <form class="form">
+                                <div ng-repeat="cb in contentObj.content">
+
+
+                                    <div class="form-group" ng-if="cb.dataType.name == 'Color Picker'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
+                                        <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
+                                        <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
+                                            <span class="input-group-addon" ng-style="{'background-color':cb.value}"></span>
+                                            <input colorpicker class="form-control" ng-model="cb.value" type="text" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
+                                        </div>
+
+                                    </div>
+
+
+                                    <!--<div class="form-group" ng-if="cb.name == 'Secondary Color'" ng-init="contentObj.s_color = cb.value">
+                            <label class="col-xs-12 col-sm-5 form-label">{{cb.name}} </label>
+                            <div id="cp3" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
+                                <span class="input-group-addon" ng-style="{'background-color':contentObj.s_color}"></span>
+                                <input colorpicker class="form-control" ng-model="contentObj.s_color" type="text" ng-blur="contentObj.editContent(cb,contentObj.s_color);" />
+                            </div>
+                        </div>-->
+
+
+                                    <div class="form-group" ng-if="cb.dataType.name == 'Text'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
+                                        <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
+                                        <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Using color option">
+                                            <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="form-group" ng-if="cb.name == 'Secondary Font'" ng-init="contentObj.s_font = cb.value">
+                            <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
+                            <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Using color option">
+                                <input type="text" class="form-control input-lg custom-input" ng-model="contentObj.s_font" ng-blur="contentObj.editContent(cb,contentObj.s_font);" />
+                            </div>
+                        </div>-->
+
+
+
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-5 form-label"> Primary Logo </label>
+                                    <div class="input-group col-xs-12 col-sm-7">
+                                        <label class="input-group-btn">
+                                            <span class="btn btnClass">
+                                                Choose File <input type="file" file-model="p_file" style="display: none;">
+                                            </span>
+                                        </label>
+                                        <input type="text" class="form-control" ng-model="p_file[0].name" readonly>
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-12 col-sm-5 form-label"> Secondary Logo </label>
+                                    <div class="input-group col-xs-12 col-sm-7">
+                                        <label class="input-group-btn">
+                                            <span class="btn btnClass">
+                                                Choose File <input type="file" file-model="s_file" style="display: none;">
+                                            </span>
+                                        </label>
+                                        <input type="text" class="form-control" ng-model="s_file[0].name" readonly>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="customize-help-text">
+                                        <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>
+                                        <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+
+
+                        <div class="col-md-6 customize-right-sec ">
+
+                            <h3 class="m-b-30"> Color Contrast Analyser </h3>
+
+
+                            <div class="padding-25 login-right">
+
+                                <div class="row">
+
+                                    <div class="col-xs-6">
+                                        <img class="img-responsive full-width" src="imgs/one.png" />
+                                    </div>
+
+                                    <div class="col-xs-6 m-b-20">
+                                        <img class="img-responsive full-width" src="imgs/two.png" />
+                                    </div>
+
+                                    <div class="customize-help-text">
+                                        <p class="pull-left">   -The requirement is to have a contrast ratio of greater than 4.5:1 All informational elements need to pass this rating</p>
+                                        <p class="pull-left"> -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
+                                        <p class="pull-left"> <b> Check your color contrast to validate ADA compliance. Please visit.</b></p> <br />
+                                        <a class="customize-link" href="https://www.paciellogroup.com/resources/contrastanalyser/"> https://www.paciellogroup.com/resources/contrastanalyser/ </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    </div>
+                </div>
+           
+        </div>
+
+
+
+    
+   
+
+    <div class="modal fade " id="editContent" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="myform" ng-submit="contentObj.performAction(newContent)" novalidate>
+                    <div class="modal-header">
+
+
+                        <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+
+                        <h5 class="modal-title" id="lblEditModel">Content Management</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter here" ng-model="newContent.name" required />
+
+                            <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
+
+                        </div>
+
+
+                        
+                        
+                        <div class="form-group">
+                            <label>Data Type</label>
+
+                            <select name="dataType" ng-model="newContent.selectedDataType" class="form-control"  ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
+                                <option value="">Select Data Type</option>
+                            </select>
+
+                            <p ng-if="myform.$submitted && (!(myform.dataType.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Data Type is required</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" ng-disabled="false">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,31 +1,78 @@
 ﻿<section id="sec-email-templates" class="col-md-12">
-    <div class="panel panel-default">
-         <div class="panel-body">
-            <h4 class="muted">{{et.result.name}}</h4>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Publish Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in et.result.content track by item.id">
-                        <td>{{item.name}}</td>
-                        <td>{{item.status}}</td>
-                        <!--<td>{{item.publishDate | date: 'M-d-yyyy'}}</td>-->
-                        <td>{{item.publishDate }}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td align="right" colspan="3"><button class="btn btn-danger">New</button></td>
-                    </tr>
-                </tfoot>
 
-            </table>
-             
+    <div class="col-md-12 col-xs-12 maincontent">
+
+        <div class="row">
+
+           
+            <h2 class="m-b-Content"> Content Management </h2>
+            <div class="contents-page">
+
+                <form>
+                    <div class="row form-label">
+
+                        <div class="col-sm-4">
+                            <h3>Content Groups</h3>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <h3>Settings</h3>
+                        </div>
+                    </div>
+                    <div class="row form-label" ng-repeat="item in et.contentGroup track by item.id">
+
+                        <div class="col-sm-4">
+                            <a href="#">{{item.name}}</a>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span class="glyphicon glyphicon-edit group-edit-content" ng-click="et.passContentGroupName(item.name,item.id)" data-toggle="modal" data-target="#editContentGroup"></span>
+                            <span class="glyphicon glyphicon-trash group-trash-content"></span>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="row form-label">
+                <button type="button" class="btn btn-warning  btn-sm content-btns ">New Group</button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</section>
+
+<div class="modal fade " id="editContentGroup" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+
+                <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+
+                <h5 class="modal-title" id="lblEditModel">Content Group Management</h5>
+            </div>
+            <div class="modal-body">
+                <form name="myform" ng-submit="et.editContentGroup()" novalidate>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter here" ng-model="contentGroupName" required />
+
+                        <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-disabled="true">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+            </div>
         </div>
     </div>
-</section>
+</div>

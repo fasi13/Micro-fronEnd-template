@@ -15,6 +15,8 @@
             'app_leftMenuComponent',
             'app_topRightMenuComponent',
             'app_heirarchy',
+            'colorpicker.module',
+            'contentsModule',
             'modal-module',
             'app-share_data-fac',
             'app_content_management',

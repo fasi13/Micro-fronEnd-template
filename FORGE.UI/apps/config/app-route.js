@@ -58,29 +58,55 @@
                             }
                             
                         }) //-
-                        .state('dashboard.content-manager', {
-                            url: '/content-manager',
-                            params:{
-                                contentId: 0
-                            },
-                            views: {
-                                'content-manager@dashboard': {
-                                    template: '<content-management-component result="$resolve.result"></content-management-component>',
-                                    resolve: {
-                                        result: ['serviceEndpoint', '$stateParams', function (serviceEndpoint, $stateParams) {
-                                            return serviceEndpoint.contentManagement($stateParams.contentId)
-                                                   .then(function (resp) {
-                                                       return resp.data.data;
-                                                   })
-                                               .catch(function (resp) {
-                                                   return resp;
-                                               })
-                                            ; //srv
-                                        }]
-                                    },
-                                },
-                            }
-                        }) //-
+                        //.state('dashboard.content-manager', {
+                        //    url: '/content-manager',
+                        //    params:{
+                        //        contentId: 0
+                        //    },
+                        //    views: {
+                        //        'content-manager@dashboard': {
+                        //            template: '<content-management-component result="$resolve.result"></content-management-component>',
+                        //            resolve: {
+                        //                result: ['serviceEndpoint', '$stateParams', function (serviceEndpoint, $stateParams) {
+                        //                    return serviceEndpoint.contentManagement($stateParams.contentId)
+                        //                           .then(function (resp) {
+                        //                               return resp.data.data;
+                        //                           })
+                        //                       .catch(function (resp) {
+                        //                           return resp;
+                        //                       })
+                        //                    ; //srv
+                        //                }]
+                        //            },
+                        //        },
+                        //    }
+                        //})
+
+                    .state('dashboard.content-management', {
+                        url: '/content-management',
+                        params: {
+                            obj: null
+                        },
+                        template: '<content-management-component></content-management-component>'
+
+
+
+                    })
+                     .state('dashboard.content-view', {
+                         url: '/content-view',
+                         cache:false,
+                         params:{
+                             obj: null,
+                             name: "Template Name"
+                         },
+                        
+                         templateUrl: 'apps/views/contentView.html',
+                         controller: "contentView"
+                        
+                     })
+						
+
+                    //-
                     //    .state('dashboard.content-pages', {
                     //        url: '/dashboard',
                     //        views: {
