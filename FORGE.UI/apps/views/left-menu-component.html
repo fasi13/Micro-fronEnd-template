@@ -10,16 +10,20 @@
         </div>
         <div uib-accordion-group class="panel-default" is-open="status.isContentMgmt">
             <uib-accordion-heading>
-                <span class="glyphicon glyphicon-hdd"></span> CONTENT MANAGEMENT
-                <i class="pull-right glyphicon"
-                   ng-class="{'glyphicon-chevron-down': status.isContentMgmt, 'glyphicon-chevron-right': !status.isContentMgmt}"></i>
-     
+                <span ng-click="lmc.loadContentGroups()">
+                    <span class="glyphicon glyphicon-hdd"></span> CONTENT MANAGEMENT
+                    <i class="pull-right glyphicon"
+                       ng-class="{'glyphicon-chevron-down': status.isContentMgmt, 'glyphicon-chevron-right': !status.isContentMgmt}"></i>
+                </span>
             </uib-accordion-heading>
             <ul class="list-unstyled">
-                <li ng-repeat="item in lm.navLinks track by item.id">
-                    <i class="glyphicon glyphicon-plus"></i> 
-                    <!--<a ui-sref=".{{item.getApplication.replace(' ','-').toLowerCase()}}">{{item.getApplication}}</a>-->
-                    <a ui-sref=".content-manager({contentId: item.id})">{{item.getApplication}}</a>
+                <li ng-repeat="content in lmc.contentGroupsList track by content.id">
+
+
+                    <a ng-click="lmc.loadContents(content)">{{content.name}}</a>
+
+
+
                 </li>
             </ul>
         </div>

@@ -263,12 +263,60 @@ textarea.form-control {
     color: #000;
 }
 
+
 .btn {
+ height: 40px;
+ padding:0px 20px;
+ font-size: 18px;
+ border-radius: 2px;
+}
+
+.btnClass {
+    display: inline-block;
+    padding: 0 20px;
+    /* font: normal 1em/1.35em 'Lato', sans-serif; */
+    text-align: center;
     font-size: 18px;
+    white-space: nowrap;
     border-radius: 2px;
-    padding-left: 20px;
-    padding-right: 20px;
+    background: #c85000;
+    color: #fff;
     height: 40px;
+   
+    border: none;
+}
+
+.btnClass:focus {
+    background: #E26A1A !important;
+    outline:none;
+}
+
+.btnClass {
+    padding: 5px 20px;
+}
+
+
+.btnClass:focus {
+   background: #E26A1A !important;
+   outline:none;
+   color:white;
+}
+
+.btnClass:hover {
+    background: #AF3700;
+    color:white;
+}
+
+.btnClass:active{
+     outline:none;
+      color:white;
+      box-shadow:none;
+}
+
+.btnClass:active:focus{
+  outline:none;
+  color:white;
+  box-shadow:none;
 }
 
 
@@ -307,21 +355,6 @@ textarea.form-control {
 .panel-group .panel + .panel {
     margin-top: 10px;
 }
-
-.btn-col {
-    color: #fff;
-    background: #C85000;
-}
-
-    .btn-col:hover {
-        Background: #d0490f;
-        color: #fff;
-    }
-
-    .btn-col:focus {
-        background: #d0490f;
-        color: #fff;
-    }
 
 #body {
     padding-top: 15px;
@@ -1045,3 +1078,63 @@ margin-left:0px;
 content:" /... ";
     color: #ccc;
 } 
+
+.group-trash-content {
+			font-size:13px;
+			cursor:pointer;
+			margin-left:18px;
+			color: red;
+}
+.group-edit-content {
+			font-size:13px;
+			cursor:pointer;
+			margin-left:9px;
+}
+.m-b-Content {
+			margin-left: 40px;
+}
+.content-btns {
+			margin-left: 53px;
+			font-size: 18px !important;
+			margin-top:20px;
+		    color: #fff;
+			background: #C85000;
+			padding: 5px 20px;
+			border-radius: 2px;
+			padding-left: 20px;
+			padding-right: 20px;
+			height: 40px;
+}
+.content-btns:hover {
+    background: #AF3700;
+    color: white;
+}
+.contents-page{
+			    margin-left: 40px;
+				margin-right:40px;
+}
+.bottom-border {
+    border-bottom: 1px solid #ccc;
+}
+
+.form-label {
+    margin-top:10px;
+    padding-bottom:10px;
+    margin-left:-13px;    
+}
+.maincontent {
+    background-color:white;
+    border: 2px solid lightgrey;
+    border-radius:8px;
+    padding:25px;
+    margin-bottom:15px;
+}
+.hierarchy{
+    position: absolute;
+    z-index: 100;
+
+}
+.input-width {
+    margin-right: 10px;
+    margin-left: 10px;
+}
