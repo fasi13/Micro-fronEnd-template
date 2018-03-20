@@ -265,11 +265,13 @@ textarea.form-control {
 
 
 .btn {
- height: 40px;
- padding:0px 20px;
- font-size: 18px;
- border-radius: 2px;
+    font-size: 18px;
+    border-radius: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
 }
+
 
 .btnClass {
     display: inline-block;
@@ -404,6 +406,21 @@ textarea.form-control {
 .panel-group .panel + .panel {
     margin-top: 10px;
 }
+
+.btn-col {
+    color: #fff;
+    background: #C85000;
+}
+
+    .btn-col:hover {
+        Background: #d0490f;
+        color: #fff;
+    }
+
+    .btn-col:focus {
+        background: #d0490f;
+        color: #fff;
+    }
 
 #body {
     padding-top: 15px;
