@@ -39,8 +39,11 @@
             if (result.status == 200) {
 
                 self.data = tree.genNode(result.data.data, null, true);
-
-                $scope.brdcrm = { 'user': result.data.data.name, 'unique': self.data[0].unique };
+                $scope.root = self.data[0];
+                
+                updateSelectedNode($scope.root.unique);
+                $scope.config_breadcrumb($scope.root);
+                $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
             } else {
                 $window.alert('Hierarchy load failed' + result.error);
             }
@@ -62,7 +65,12 @@
 
         });
         function updateSelectedNode(uniqueId) {
-
+            var el = document.getElementById(uniqueId);
+            if (el == null) {
+                $timeout(function () {
+                    updateSelectedNode(uniqueId);
+                }, 0);
+            }
             angular.element('.ivh-treeview-node-label').removeClass("selected");
             var el = document.getElementById(uniqueId);
             var span = angular.element(el).find("span");
@@ -74,6 +82,17 @@
                 }
             }
         }
+
+        function temporarilyNavigateToContentManagement() {
+
+            var rootElement = document.getElementById("contentManagementSection");
+
+            $timeout(function () {
+                angular.element(rootElement).triggerHandler('click');
+            });
+
+        }
+
         $scope.config_breadcrumb = function (currentNode) {
             if (currentNode != undefined) {
                 update_breadcrumbs.configNode(currentNode);
@@ -88,12 +107,13 @@
                 $scope.iterateCount = 0;
                 $scope.bread_text = [];
                 $scope.hover_brdcm = "";
-                var start_node = $scope.parent[0];
-                
+                var start_node = $scope.root;
+
                 CreateBreadcrumb($scope.clicked_node, start_node);
                 CreateBreadcrumbForHover($scope.clicked_node, start_node);
                 hc.isCollapsed = true;
             }
+            temporarilyNavigateToContentManagement();
 
         }
         function IsNodeExist(obj, list) {
@@ -125,11 +145,11 @@
 
             }
             else {
-              
+
                 $scope.breadCrumb = [];
                 getApplications(node, parent);
 
-               
+
 
                 for (var i = 0; i < $scope.breadCrumb.length; i++) {
 
@@ -152,7 +172,7 @@
         }
 
         function getApplications(node, parent) {
-            
+
             if (!node.IsApplicationGroup) {
 
                 $scope.breadCrumb.unshift(node);

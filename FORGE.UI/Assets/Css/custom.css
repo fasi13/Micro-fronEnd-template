@@ -284,42 +284,41 @@ textarea.form-control {
     background: #c85000;
     color: #fff;
     height: 40px;
-   
     border: none;
 }
 
-.btnClass:focus {
-    background: #E26A1A !important;
-    outline:none;
-}
+    .btnClass:focus {
+        background: #E26A1A !important;
+        outline: none;
+    }
 
 .btnClass {
     padding: 5px 20px;
 }
 
 
-.btnClass:focus {
-   background: #E26A1A !important;
-   outline:none;
-   color:white;
-}
+    .btnClass:focus {
+        background: #E26A1A !important;
+        outline: none;
+        color: white;
+    }
 
-.btnClass:hover {
-    background: #AF3700;
-    color:white;
-}
+    .btnClass:hover {
+        background: #AF3700;
+        color: white;
+    }
 
-.btnClass:active{
-     outline:none;
-      color:white;
-      box-shadow:none;
-}
+    .btnClass:active {
+        outline: none;
+        color: white;
+        box-shadow: none;
+    }
 
-.btnClass:active:focus{
-  outline:none;
-  color:white;
-  box-shadow:none;
-}
+        .btnClass:active:focus {
+            outline: none;
+            color: white;
+            box-shadow: none;
+        }
 
 
 .btnClass {
@@ -1103,19 +1102,18 @@ img.glif_icon {
     font-family: 'Lato', sans-serif;
     font-size: 11px;
     color: #e40a0a;
-      margin-top:-20px;
+    margin-top: -20px;
 }
 
-.field-validation-error span:before {
-    content: "\e101";
-    font-family: 'Glyphicons Halflings';
-    line-height: 1;
-    margin: 10px 10px 0px 0px;
-    display: inline-block;
-    color: #e40a0a;
-    font-size: 12px;
-  
-}
+    .field-validation-error span:before {
+        content: "\e101";
+        font-family: 'Glyphicons Halflings';
+        line-height: 1;
+        margin: 10px 10px 0px 0px;
+        display: inline-block;
+        color: #e40a0a;
+        font-size: 12px;
+    }
 
 .validation-summary-errors {
     font-family: 'Lato', sans-serif;
@@ -1123,8 +1121,8 @@ img.glif_icon {
     color: #e4040a;
 }
 
-.login-validation-error{
-    margin-left:2px;
+.login-validation-error {
+    margin-left: 2px;
 }
 
 .validation-summary-errors:before {
@@ -1138,14 +1136,17 @@ img.glif_icon {
 }
 
 .login-summary-errors:before {
-margin-left:0px;
+    margin-left: 0px;
 }
+
 .forward-slash:before {
-content:" /... ";
+    content: " /... ";
     color: #ccc;
 }
 
+
 /*Back to top Custom*/
+
 
 .glyphicon-chevron-up {
     padding: 7px;
@@ -1165,65 +1166,74 @@ content:" /... ";
 display:none;
 }
 .group-trash-content {
-			font-size:13px;
-			cursor:pointer;
-			margin-left:18px;
-			color: red;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 18px;
+    color: red;
 }
+
 .group-edit-content {
-			font-size:13px;
-			cursor:pointer;
-			margin-left:9px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 9px;
 }
+
 .m-b-Content {
-			margin-left: 40px;
+    margin-left: 40px;
 }
+
 .content-btns {
-			margin-left: 53px;
-			font-size: 18px !important;
-			margin-top:20px;
-		    color: #fff;
-			background: #C85000;
-			padding: 5px 20px;
-			border-radius: 2px;
-			padding-left: 20px;
-			padding-right: 20px;
-			height: 40px;
+    margin-left: 53px;
+    font-size: 18px !important;
+    margin-top: 20px;
+    color: #fff;
+    background: #C85000;
+    padding: 5px 20px;
+    border-radius: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
 }
-.content-btns:hover {
-    background: #AF3700;
-    color: white;
+
+    .content-btns:hover {
+        background: #AF3700;
+        color: white;
+    }
+
+.contents-page {
+    margin-left: 40px;
+    margin-right: 40px;
 }
-.contents-page{
-			    margin-left: 40px;
-				margin-right:40px;
-}
+
 .bottom-border {
     border-bottom: 1px solid #ccc;
 }
 
 .form-label {
-    margin-top:10px;
-    padding-bottom:10px;
-    margin-left:-13px;    
+    margin-top: 10px;
+    padding-bottom: 10px;
+    margin-left: -13px;
 }
+
 .maincontent {
-    background-color:white;
+    background-color: white;
     border: 2px solid lightgrey;
-    border-radius:8px;
-    padding:25px;
-    margin-bottom:15px;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 15px;
 }
+
 .chevron {
     padding-top: 7px;
     font-size: 25px;
     width: 44px;
 }
-.hierarchy{
+
+.hierarchy {
     position: absolute;
     z-index: 100;
-
 }
+
 .input-width {
     margin-right: 10px;
     margin-left: 10px;
@@ -1237,38 +1247,41 @@ span.seach-icon {
 /* Auto Complete Changes*/
 
 .autocomplete {
-  /*the container must be positioned relative:*/
-  position: relative;
-  display: inline-block;
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: inline-block;
 }
 
 .autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 110;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 110;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
 }
-.autocomplete-items div {
-  padding: 10px;
-  padding-left:25px;
-  position:relative;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
-.autocomplete-items div:hover {
-  /*when hovering an item:*/
-  background-color: #e9e9e9; 
-}
+
+    .autocomplete-items div {
+        padding: 10px;
+        padding-left: 25px;
+        position: relative;
+        cursor: pointer;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d4;
+    }
+
+        .autocomplete-items div:hover {
+            /*when hovering an item:*/
+            background-color: #e9e9e9;
+        }
+
 .autocomplete-active {
-  /*when navigating through the items using the arrow keys:*/
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important;
+    color: #ffffff;
 }
 
 
@@ -1282,6 +1295,9 @@ span.seach-icon {
 }
 
 .search-btn {
-  
     margin: 0px !important;
+}
+
+.paddingBot20Pixel {
+    padding-bottom: 20px;
 }

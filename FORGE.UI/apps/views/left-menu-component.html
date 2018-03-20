@@ -10,7 +10,7 @@
         </div>
         <div uib-accordion-group class="panel-default" is-open="status.isContentMgmt">
             <uib-accordion-heading>
-                <span ng-click="lmc.loadContentGroups()">
+                <span ng-click="lmc.loadContentGroups()" id="contentManagementSection">
                     <span class="glyphicon glyphicon-hdd"></span> CONTENT MANAGEMENT
                     <i class="pull-right glyphicon"
                        ng-class="{'glyphicon-chevron-down': status.isContentMgmt, 'glyphicon-chevron-right': !status.isContentMgmt}"></i>
