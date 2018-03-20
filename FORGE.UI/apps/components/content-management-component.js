@@ -2,6 +2,7 @@
     'use strict';
     var controller = function ($scope,$stateParams,$cookies,$http) {
 
+	
         var et = this;
 
       
