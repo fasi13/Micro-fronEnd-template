@@ -67,3 +67,23 @@
     return shareObj;
 
 })
+.factory('updateContentGroup', function ($rootScope) {
+
+
+    var shareObj = {};
+
+    shareObj.contentGroup = {};
+    shareObj.isAdd = true;
+    shareObj.setContentGroup = function (node, isAdd) {
+        this.contentGroup = node;
+        shareObj.isAdd = isAdd;
+        this.update();
+    }
+
+    shareObj.update = function () {
+        $rootScope.$broadcast('contentGroupsChanged');
+    };
+
+    return shareObj;
+
+})

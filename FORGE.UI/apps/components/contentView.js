@@ -18,18 +18,22 @@
 })
 
 
-.controller("contentView", function ($scope, $stateParams, $cookies, $http, $state) {
+.controller("contentView", function ($scope,$state, $stateParams, $cookies, $http, $state) {
 
     $scope.contentObj = {};
+    $scope.isCustomControls = false;
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = JSON.parse($stateParams.obj);
+
+
     if ($scope.contentObj.completeObj != null) {
-        
         $scope.contentObj.content = $scope.contentObj.completeObj.content;
         $scope.contentObj.dataTypeURL = $scope.contentObj.completeObj.dataTypeURL;
         getDataTypes($scope.contentObj.dataTypeURL);
     }
-
+    else {
+        $state.go("dashboard.content-management");
+    }
 
     function getDataTypes(url) {
 
@@ -78,16 +82,24 @@
            }
        })
   .then(function (response) {
-      
-      var responseContent = response.data.data;
-      var tempContent = {
-          name: responseContent.name,
-          status: responseContent.status,
-          publishDate: responseContent.publishDate,
-          _links: responseContent._links
-      };
-      $scope.contentObj.content.push(tempContent);
 
+      var responseContent = response.data.data;
+      var tempContent = {};
+      if ($scope.isCustomControls) {
+          tempContent = responseContent;
+      }
+      else {
+          tempContent = {
+              name: responseContent.name,
+              status: responseContent.status,
+              publishDate: responseContent.publishDate,
+              _links: responseContent._links
+          };
+      }
+      $scope.contentObj.content.push(tempContent);
+   
+      $scope.myform.$submitted = false;
+      $scope.newContent = {};
       $('#editContent').modal('hide');
   },
   function (error) {
@@ -100,6 +112,9 @@
     }
 
     $scope.contentObj.check_displayasList = function (content) {
+        if (content.length == 0) {
+            return true;
+        }
 
         if (content != null) {
 
@@ -108,7 +123,7 @@
         }
     };
     $scope.contentObj.passContentForEdit = function (item, includeDataType, isUpdateContent) {
-        
+
         $scope.isDataTypePropertyEnabled = includeDataType;
         $scope.contentObj.isAdd = false;
         $scope.IsUpdateContent = isUpdateContent;
@@ -138,14 +153,15 @@
 
     }
 
-    $scope.contentObj.setAction = function (isAdd, includeDataType) {
+    $scope.contentObj.setAction = function (isAdd, includeDataType, isCustomControls) {
+        $scope.isCustomControls = isCustomControls;
         $scope.IsUpdateContent = false;
         $scope.contentObj.isAdd = isAdd;
         $scope.isDataTypePropertyEnabled = includeDataType;
     }
 
     $scope.contentObj.performAction = function (content) {
-        
+
 
         if ($scope.myform.$valid) {
 
@@ -170,7 +186,7 @@
 
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
-        
+
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
@@ -201,7 +217,7 @@
         $scope.tempContentData = content;
         var url = "";
         var requestObject = {};
-        
+
         if (isUpdateContent) {
             url = getURL(object._links, "updateContent");
             requestObject = {
@@ -225,8 +241,10 @@
             }
         })
         .then(function (response) {
+            $scope.myform.$submitted = false;
+            $scope.newContent = {};
             $('#editContent').modal('hide');
-            
+
             if ($scope.IsUpdateContent) {
                 UpdateContentArray($scope.tempContentData);
             }
@@ -240,20 +258,20 @@
 
     }
     function UpdateContentArray(currentData) {
-        
+
         for (var i = 0; i < $scope.contentObj.content.length; i++) {
             if ($scope.contentObj.content[i].id == currentData.ID) {
-                
+
                 $scope.contentObj.content[i].name = currentData.name;
                 $scope.contentObj.content[i].value = currentData.value;
             }
         }
     }
     function UpdateContentValueArray(currentData) {
-        
+
         for (var i = 0; i < $scope.contentObj.content.length; i++) {
             if ($scope.contentObj.content[i].id == currentData.ID) {
-                
+
                 $scope.contentObj.content[i].value = currentData.value;
             }
         }

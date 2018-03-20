@@ -43,6 +43,7 @@
                 
                 updateSelectedNode($scope.root.unique);
                 $scope.config_breadcrumb($scope.root);
+                $scope.toggleRootNode($scope.root.unique);
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
             } else {
                 $window.alert('Hierarchy load failed' + result.error);
@@ -207,6 +208,14 @@
         }
         $scope.toggleRootNode = function (uniqueId) {
             var rootElement = document.getElementById(uniqueId);
+
+            if (rootElement == null) {
+                $timeout(function () {
+                    $scope.toggleRootNode(uniqueId);
+                }, 0);
+               
+            }
+
             var rootElementSpan = angular.element(rootElement).find("span");
             $timeout(function () {
                 angular.element(rootElementSpan[0]).triggerHandler('click');

@@ -17,7 +17,7 @@
                 </span>
             </uib-accordion-heading>
             <ul class="list-unstyled">
-                <li ng-repeat="content in lmc.contentGroupsList track by content.id">
+                <li ng-repeat="content in lmc.contentGroupsList.items track by content.id">
 
 
                     <a ng-click="lmc.loadContents(content)">{{content.name}}</a>

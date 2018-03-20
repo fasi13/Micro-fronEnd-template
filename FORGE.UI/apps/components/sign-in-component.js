@@ -4,6 +4,7 @@
 
     var controller = function ($state, serviceEndpoint) {
         $('body').addClass("login-body");
+        $('#IsBackToTopEnabled').hide();
         var vm = this;
         vm.loading = false;
 
@@ -20,6 +21,7 @@
                             return false;
                         }
                         $('body').removeClass("login-body");
+                        $('#IsBackToTopEnabled').show();
                         $state.go(sessionStorage._toState || 'dashboard');
                     })
                     .catch(function (resp) {
@@ -33,7 +35,7 @@
         };
     };
 
-    controller.$inject = [ '$state', 'serviceEndpoint'];
+    controller.$inject = ['$state', 'serviceEndpoint'];
 
 
     angular
@@ -42,7 +44,7 @@
         templateUrl: 'apps/views/sign-in-component.html',
         controller: controller,
         controllerAs: 'vm',
-         
+
     })
     ;//module
 })();

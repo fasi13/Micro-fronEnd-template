@@ -19,15 +19,16 @@
                             <h3>Settings</h3>
                         </div>
                     </div>
-                    <div class="row form-label" ng-repeat="item in et.contentGroup track by item.id">
+                    <div class="row form-label" ng-repeat="item in contentGroup.content track by item.id">
 
                         <div class="col-sm-4">
                             <a href="#">{{item.name}}</a>
                         </div>
 
                         <div class="col-sm-6">
-                            <span class="glyphicon glyphicon-edit group-edit-content" ng-click="et.passContentGroupName(item.name,item.id)" data-toggle="modal" data-target="#editContentGroup"></span>
-                            <span class="glyphicon glyphicon-trash group-trash-content"></span>
+                            <span class="glyphicon glyphicon-edit group-edit-content" ng-click="contentGroup.passContentForEdit(item,false)" data-toggle="modal" data-target="#editContent"></span>
+                            <!--commented delete icon as API is not returning the endpoint for delete-->
+                            <!--<span class="glyphicon glyphicon-trash group-trash-content"></span>--> 
                         </div>
                     </div>
 
@@ -35,7 +36,7 @@
 
             </div>
             <div class="row form-label">
-                <button type="button" class="btn btn-warning  btn-sm content-btns ">New Group</button>
+                <button type="button"data-toggle="modal" data-target="#editContent" ng-click="contentGroup.setAction(true,true)" class="btn btn-warning  btn-sm content-btns ">New Group</button>
             </div>
         </div>
 
@@ -46,35 +47,53 @@
 
 </section>
 
-<div class="modal fade " id="editContentGroup" role="dialog">
+<div class="modal fade " id="editContent" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <form name="myform" ng-submit="contentGroup.performAction(newContent)" novalidate>
+                <div class="modal-header">
 
 
-                <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+                    <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
 
-                <h5 class="modal-title" id="lblEditModel">Content Group Management</h5>
-            </div>
-            <div class="modal-body">
-                <form name="myform" ng-submit="et.editContentGroup()" novalidate>
+                    <h5 class="modal-title" id="lblEditModel">Content Management</h5>
+                </div>
+                <div class="modal-body">
+
                     <div class="form-group">
-
-                        <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter here" ng-model="contentGroupName" required />
+                        <label>Name</label>
+                        <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="true" />
 
                         <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Value</label>
+                        <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required />
+
+                        <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
 
                     </div>
 
 
 
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
+                        <label>Data Type</label>
 
+                        <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentGroup.dataTypeList" required>
+                            <option value="">Select Data Type</option>
+                        </select>
+
+                        <p ng-if="myform.$submitted && (!(myform.dataType.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Data Type is required</p>
                     </div>
-                </form>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit" ng-disabled="false">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </form>
         </div>
     </div>
 </div>
