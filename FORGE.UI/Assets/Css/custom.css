@@ -1,4 +1,100 @@
-﻿p, a, input, small, textarea, button {
+﻿/* Main Over Rides */
+
+input[type=text] {
+    border-radius: 2px !important;
+    border: 1px solid #cdcbcc;
+    font-size: 14px !important;
+    color: #525252;
+}
+
+    input[type=text]:focus {
+        outline: none !important;
+        border: 1px solid #525252 !important;
+        outline-offset: 0px;
+        box-shadow: none !important;
+    }
+
+input[type=password] {
+    border-radius: 2px !important;
+    border: 1px solid #cdcbcc;
+    font-size: 14px !important;
+    color: #525252;
+}
+
+    input[type=password]:focus {
+        outline: none !important;
+        border: 1px solid #525252 !important;
+        outline-offset: 0px;
+        box-shadow: none !important;
+    }
+
+label {
+    font-size: 14px;
+    font-family: 'Droid',sans-serif !important;
+    color: #525252;
+    font-weight: 400;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+a {
+    color: #036592;
+}
+
+/* -------------------------------------------------------------------- */
+
+/* Bootstrap Over rides */
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn {
+    outline: none;
+    box-shadow: none;
+}
+
+    .btn:active {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .btn:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .btn:active:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .btn:hover {
+        outline: none;
+        box-shadow: none;
+    }
+
+input.form-control {
+    font-size: 15px;
+    color: #525252;
+    border: 1px solid #cdcbcc;
+    border-radius: 2px;
+    height: 40px;
+    padding: 10px;
+}
+
+    input.form-control:focus {
+        border: 1px solid #525252;
+    }
+
+/* -------------------------------------------------------------------- */
+
+
+/* Custom CSS */
+
+p, a, input, small, textarea, button {
     font-family: "Lato",sans-serif;
 }
 
@@ -108,7 +204,7 @@ textarea.form-control {
     }
 
     label {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     h3 {
@@ -169,11 +265,13 @@ textarea.form-control {
 
 
 .btn {
- height: 40px;
- padding:0px 20px;
- font-size: 18px;
- border-radius: 2px;
+    font-size: 18px;
+    border-radius: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
 }
+
 
 .btnClass {
     display: inline-block;
@@ -260,6 +358,21 @@ textarea.form-control {
     margin-top: 10px;
 }
 
+.btn-col {
+    color: #fff;
+    background: #C85000;
+}
+
+    .btn-col:hover {
+        Background: #d0490f;
+        color: #fff;
+    }
+
+    .btn-col:focus {
+        background: #d0490f;
+        color: #fff;
+    }
+
 #body {
     padding-top: 15px;
 }
@@ -271,7 +384,7 @@ body {
 .search-btn {
     position: absolute;
     top: 0px;
-    right: -15px;
+    right: 0px;
 }
 
 .chevron {
@@ -426,6 +539,483 @@ span.glyphicon.glyphicon-home {
     margin: 0px;
 }
 
+.red {
+    background: #822434;
+}
+
+.silver {
+    background: #777777;
+}
+
+.form-label {
+    margin-top: 10px;
+    margin-left: -13px;
+}
+
+.custom-hide {
+    visibility: hidden;
+    margin-left: 2px;
+}
+
+.input-group-addon {
+    background-color: #fff;
+}
+
+.custom-input {
+}
+
+
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+
+.btn-grey {
+    background-color: #353535;
+    color: white;
+}
+
+    .btn-grey:hover {
+        background-color: #525252;
+        color: white;
+    }
+
+    .btn-grey:active {
+        background-color: #a9a6a6;
+        color: white;
+        outline-offset: 0;
+    }
+
+    .btn-grey:focus {
+        background-color: #a9a6a6;
+        color: white;
+        outline: none !important;
+    }
+
+.no-border-left {
+    border-left: 0px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.bg-white {
+    background: white !important;
+}
+
+.border-left-4 {
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+
+.maincontent {
+    background-color: white;
+    border: 2px solid lightgrey;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.padding-25 {
+    padding: 25px;
+}
+
+.customize-right-sec {
+    padding: 25px;
+}
+
+.browse {
+    font-size: 14px !important;
+    padding: 0px 10px !important;
+    margin-left: 0px !important;
+}
+
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+
+.m-b-30 {
+    margin-bottom: 30px;
+}
+
+.customize-help-text {
+    padding-left: 10px;
+}
+
+/*-----------------------------------------------------------------------------------
+
+/* Over Rides */
+
+/*----------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%; /* overflow-x: hidden; */
+}
+
+.floatleft {
+    float: left !important;
+}
+
+.floatright {
+    float: right !important;
+}
+
+.floatnone {
+    float: none !important;
+}
+
+.alignleft {
+    text-align: left !important;
+}
+
+.alignright {
+    text-align: right !important;
+}
+
+.aligncenter {
+    text-align: center !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: 0;
+    vertical-align: top;
+}
+
+.clear {
+    clear: both;
+}
+
+body {
+    /* font:14px/20px Lato,sans-serif;  */
+    /* font:15px Lato Regular; */
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #525252;
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 5px;
+    line-height: 1.35;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+h4 {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+h5 {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+h6 {
+    font-size: 11px;
+    font-weight: normal;
+}
+
+h1, h2, h3 {
+    font-family: 'Droid',sans-serif;
+    color: #353535;
+}
+
+form {
+    display: inline;
+}
+
+fieldset {
+    border: 0;
+    line-height: 25px;
+}
+
+legend {
+    display: none;
+}
+
+table {
+    border: 0;
+    border-spacing: 0;
+    empty-cells: show;
+    font-size: 100%;
+}
+
+caption, th, td {
+    vertical-align: top;
+    text-align: left;
+    /* font-weight:normal;  */
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+address {
+    font-style: normal;
+    line-height: 25px;
+    margin: 0;
+}
+
+cite {
+    font-style: normal;
+}
+
+q, blockquote {
+    quotes: none;
+}
+
+    q:before, q:after {
+        content: '';
+    }
+
+small, big {
+    font-size: 1em;
+}
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+}
+
+.no-display {
+    display: none;
+}
+
+.no-margin {
+    margin: 0 !important;
+    border: 0px !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+input, select, textarea {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    vertical-align: middle;
+    color: #525252;
+    background: #fff;
+}
+
+button {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    vertical-align: middle;
+    height: 40px;
+}
+
+a {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    color: #036592;
+}
+
+small {
+    font-size: 13px;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #525252;
+}
+
+
+/*----------------------------------------*/
+
+h1, h2, h3 {
+    font-family: 'Droid',sans-serif;
+    color: #353535;
+}
+
+
+
+
+
+.btnClass {
+    display: inline-block;
+    padding: 0 20px;
+    /* font: normal 1em/1.35em 'Lato', sans-serif; */
+    text-align: center;
+    font-size: 18px;
+    white-space: nowrap;
+    border-radius: 2px;
+    background: #c85000;
+    color: #fff;
+    height: 40px;
+    line-height: 38px;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #00568D;
+}
+
+.m-top-7 {
+    margin-top: 7px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+
+.white-text {
+    color: white;
+}
+
+/* Login CSS */
+
+
+.admin-portal-title {
+    padding: 30px 0px 0px 100px;
+}
+
+.admin-portal-title-orange {
+    color: #FAE608;
+}
+
+.login-heading {
+    text-transform: uppercase;
+}
+
+.input-group-addon {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.login-p {
+    letter-spacing: 0.3px;
+}
+
+
+.login-logo {
+    width: 300px;
+    display: inline;
+}
+
+.login-form {
+    margin-top: 110px;
+}
+
+
+.login-body {
+    background-image: url("../../imgs/login-background.jpg");
+    min-height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+
+.login-right {
+    border-left: 1px solid lightgrey;
+}
+
+.login-left-section {
+    padding: 25px;
+}
+
+.btn-primary-login {
+    margin-right: 13px;
+}
+
+.login-input {
+    height: 40px;
+}
+
+.contact-form {
+    background-color: white;
+    padding: 25px;
+    border-radius: 5px;
+}
+
+.input-group-addon {
+    color: #969494;
+}
+
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.btnClass {
+    display: inline-block;
+    padding: 0 20px;
+    /* font: normal 1em/1.35em 'Lato', sans-serif; */
+    text-align: center;
+    font-size: 18px;
+    white-space: nowrap;
+    border-radius: 2px;
+    background: #c85000;
+    color: #fff;
+    height: 40px;
+    line-height: 38px;
+    border: none;
+}
+
+    .btnClass:focus {
+        background: #E26A1A !important;
+        outline: none;
+    }
+
+.btnClass {
+    padding: 5px 20px;
+}
+
+
+    .btnClass:focus {
+        background: #E26A1A !important;
+        outline: none;
+        color: white;
+    }
+
+    .btnClass:hover {
+        background: #AF3700;
+        color: white;
+    }
+
+    .btnClass:active {
+        outline: none;
+        color: white;
+        box-shadow: none;
+    }
+
+        .btnClass:active:focus {
+            outline: none;
+            color: white;
+            box-shadow: none;
+        }
+
 .selected {
     background-color: #00568d;
     color: #fff;
@@ -450,6 +1040,56 @@ img.glif_icon {
 
 .silver {
     background: #777777;
+}
+
+#loginLoader {
+    position: absolute;
+    padding-left: 5px;
+    padding-top: 7px;
+}
+
+/* Validation Error Changes */
+
+.field-validation-error {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    color: #e40a0a;
+      margin-top:-20px;
+}
+
+.field-validation-error span:before {
+    content: "\e101";
+    font-family: 'Glyphicons Halflings';
+    line-height: 1;
+    margin: 10px 10px 0px 0px;
+    display: inline-block;
+    color: #e40a0a;
+    font-size: 12px;
+  
+}
+
+.validation-summary-errors {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: #e4040a;
+}
+
+.login-validation-error{
+    margin-left:2px;
+}
+
+.validation-summary-errors:before {
+    content: "\e101";
+    font-family: 'Glyphicons Halflings';
+    line-height: 1;
+    margin: 10px;
+    display: inline-block;
+    color: #e40a0a;
+    font-size: 12px;
+}
+
+.login-summary-errors:before {
+margin-left:0px;
 }
 .forward-slash:before {
 content:" /... ";
@@ -506,6 +1146,11 @@ content:" /... ";
     padding:25px;
     margin-bottom:15px;
 }
+.chevron {
+    padding-top: 7px;
+    font-size: 25px;
+    width: 44px;
+}
 .hierarchy{
     position: absolute;
     z-index: 100;
@@ -514,4 +1159,61 @@ content:" /... ";
 .input-width {
     margin-right: 10px;
     margin-left: 10px;
+}
+/* Working  */
+span.seach-icon {
+    position: absolute;
+    left: 5px;
+    top: 8px;
+}
+/* Auto Complete Changes*/
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 110;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  padding-left:25px;
+  position:relative;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+
+.right-addon .glyphicon {
+    padding: 0px !important;
+    padding-top: 7px !important;
+}
+
+.md-autocomplete {
+    max-width: fit-content;
+}
+
+.search-btn {
+  
+    margin: 0px !important;
 }
