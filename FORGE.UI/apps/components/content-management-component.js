@@ -9,6 +9,7 @@
         et.contentGroup = $stateParams.obj;
 
         et.editContentGroup = function () {
+
             var _token = JSON.parse($cookies.get('profile'))._token;
             $http.put(url,
             { "name": $scope.contentGroupName }, {

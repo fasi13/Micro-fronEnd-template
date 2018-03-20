@@ -23,7 +23,7 @@
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = JSON.parse($stateParams.obj);
     if ($scope.contentObj.completeObj != null) {
-        debugger;
+        
         $scope.contentObj.content = $scope.contentObj.completeObj.content;
         $scope.contentObj.dataTypeURL = $scope.contentObj.completeObj.dataTypeURL;
         getDataTypes($scope.contentObj.dataTypeURL);
