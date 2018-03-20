@@ -16,15 +16,12 @@
         }
     };
 })
-
-
 .controller("contentView", function ($scope, $stateParams, $cookies, $http, $state) {
 
     $scope.contentObj = {};
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = JSON.parse($stateParams.obj);
     if ($scope.contentObj.completeObj != null) {
-        
         $scope.contentObj.content = $scope.contentObj.completeObj.content;
         $scope.contentObj.dataTypeURL = $scope.contentObj.completeObj.dataTypeURL;
         getDataTypes($scope.contentObj.dataTypeURL);
@@ -32,7 +29,6 @@
 
 
     function getDataTypes(url) {
-
 
         $http.get(url, {
             headers: {
@@ -53,7 +49,7 @@
     var _token = JSON.parse($cookies.get('profile'))._token;
 
     $scope.contentObj.createContent = function (content) {
-        var url, links;
+        var url , links;
 
 
         if ($scope.contentObj.completeObj != null && content.name) {
@@ -70,7 +66,6 @@
                name: content.selectedDataType.name,
                type: content.selectedDataType.name
            }
-
        }, {
            headers: {
                "Authorization": _token,
@@ -87,7 +82,6 @@
           _links: responseContent._links
       };
       $scope.contentObj.content.push(tempContent);
-
       $('#editContent').modal('hide');
   },
   function (error) {
@@ -137,7 +131,6 @@
         }
 
     }
-
     $scope.contentObj.setAction = function (isAdd, includeDataType) {
         $scope.IsUpdateContent = false;
         $scope.contentObj.isAdd = isAdd;
@@ -158,8 +151,6 @@
             else if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == false) {
 
                 $scope.contentObj.editContent($scope.currentContent, content, false);
-
-
             }
 
             else if ($scope.contentObj.isAdd == true) {
@@ -194,7 +185,6 @@
 
 
     }
-
 
     $scope.contentObj.editContent = function (object, content, isUpdateContent) {
         $scope.IsUpdateContent = isUpdateContent;

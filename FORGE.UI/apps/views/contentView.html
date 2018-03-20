@@ -5,9 +5,6 @@
         <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content)">
 
             <div class="contents-page">
-
-
-
                 <div>
 
                     <h3>{{contentObj.content_name}}</h3>
@@ -89,10 +86,6 @@
 
                         <h3 class="m-b-30"> {{contentObj.content_name}} </h3>
 
-
-
-
-
                         <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
                             <div ng-repeat="cb in contentObj.content">
 
@@ -115,6 +108,8 @@
                                         <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
                                     </div>
                                 </div>
+
+
 
 
 
@@ -207,6 +202,7 @@
 
 
 
+
     <div class="modal fade " id="editContent" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -219,7 +215,6 @@
                         <h5 class="modal-title" id="lblEditModel">Content Management</h5>
                     </div>
                     <div class="modal-body">
-
                         <div class="form-group" ng-show="(IsUpdateContent == true) || (contentObj.isAdd == true)">
                             <label>Name</label>
                             <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="IsUpdateContent == false && contentObj.isAdd == true" />
@@ -235,12 +230,11 @@
 
                         </div>
 
-
-
                         <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
                             <label>Data Type</label>
 
                             <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
+
                                 <option value="">Select Data Type</option>
                             </select>
 

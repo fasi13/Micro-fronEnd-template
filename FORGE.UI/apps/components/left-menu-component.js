@@ -63,7 +63,6 @@
         }
 
         $scope.lmc.loadContents = function (content) {
-            
             $scope.lmc.contentName = content.name;
             var url, links = content._links;
             for (var i = 0; i < links.length; i++) {

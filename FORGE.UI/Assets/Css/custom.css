@@ -265,11 +265,58 @@ textarea.form-control {
 
 
 .btn {
+ height: 40px;
+ padding:0px 20px;
+ font-size: 18px;
+ border-radius: 2px;
+}
+
+.btnClass {
+    display: inline-block;
+    padding: 0 20px;
+    /* font: normal 1em/1.35em 'Lato', sans-serif; */
+    text-align: center;
     font-size: 18px;
+    white-space: nowrap;
     border-radius: 2px;
-    padding-left: 20px;
-    padding-right: 20px;
+    background: #c85000;
+    color: #fff;
     height: 40px;
+   
+    border: none;
+}
+
+.btnClass:focus {
+    background: #E26A1A !important;
+    outline:none;
+}
+
+.btnClass {
+    padding: 5px 20px;
+}
+
+
+.btnClass:focus {
+   background: #E26A1A !important;
+   outline:none;
+   color:white;
+}
+
+.btnClass:hover {
+    background: #AF3700;
+    color:white;
+}
+
+.btnClass:active{
+     outline:none;
+      color:white;
+      box-shadow:none;
+}
+
+.btnClass:active:focus{
+  outline:none;
+  color:white;
+  box-shadow:none;
 }
 
 
@@ -357,21 +404,6 @@ textarea.form-control {
 .panel-group .panel + .panel {
     margin-top: 10px;
 }
-
-.btn-col {
-    color: #fff;
-    background: #C85000;
-}
-
-    .btn-col:hover {
-        Background: #d0490f;
-        color: #fff;
-    }
-
-    .btn-col:focus {
-        background: #d0490f;
-        color: #fff;
-    }
 
 #body {
     padding-top: 15px;
