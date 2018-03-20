@@ -8,7 +8,7 @@
 
 
 
-                <div>
+                <div class="paddingBot20Pixel">
 
                     <h3>{{contentObj.content_name}}</h3>
 
@@ -17,7 +17,7 @@
                 <div class="row bottom-border">
                     <div ng-repeat="(key,val) in contentObj.content[0]" ng-if="key == 'name' || key == 'value' || key == 'status' || key == 'publishDate'" class="col-sm-4">
 
-                        <h4>{{key|cap}}</h4>
+                        <h4 class="text-bold">{{key|cap}}</h4>
 
                     </div>
 
