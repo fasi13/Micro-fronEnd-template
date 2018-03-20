@@ -1045,3 +1045,22 @@ margin-left:0px;
 content:" /... ";
     color: #ccc;
 } 
+
+
+/*Back to top Custom*/
+
+.glyphicon-chevron-up {
+    padding: 7px;
+    color: white;
+    background-color: #C85000;
+    border-radius: 360px;
+    font-size: 183%;
+    color:white;
+}
+
+.backToTop {
+    margin-left: 65px;
+    margin-top: 10px;
+    margin-top: 18px;
+}
+}

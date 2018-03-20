@@ -2103,15 +2103,31 @@ and dependencies (minified).
 
 $(document).ready(function () {
 
-    $(document).on('click', '.row.parent, span.ivh-treeview-node-label', function (event) {
-        var scrollPosition = event.target.offsetTop + 150;
+    $(document).on('click', 'span.ivh-treeview-node-label', function (event) {
+        var scrollPosition = 0;
+        var scrollPosition = event.target.offsetTop + 10;
+        $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
+    }); 
+
+    $(document).on('click', '.glyphicon-minus', function (event) {
+        var scrollPosition = 0;
+        var scrollPosition = event.target.offsetTop + 10;
         $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
     });
 
-    $(document).on('click', '.glyphicon-minus, .glyphicon-plus', function (event) {
-        var scrollPosition = event.target.offsetTop + 200;
+    $(document).on('click', '.glyphicon-plus', function (event) {
+        var scrollPosition = 0;
+        var scrollPosition = event.target.offsetTop + 10;
         $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
     });
 
+    $(document).on('click', '.glyphicon-chevron-up', function () {
+        $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', "top");
+    });
+
+    $(document).on('click', '.MainbackToTopIcon', function () {
+        $('html,body').animate({ scrollTop: 0 }, 'slow');
+        return false;
+    });
 
 });
