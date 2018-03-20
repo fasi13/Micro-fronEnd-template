@@ -49,6 +49,11 @@
 
     shareObj.node = {};
     shareObj.parent = {};
+    shareObj.configuredNode = {};
+    shareObj.configNode = function (node) {
+        this.configuredNode = node;
+        this.update();
+    }
 
     shareObj.set_text = function (node, parent) {
         this.node = node;

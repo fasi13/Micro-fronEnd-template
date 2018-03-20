@@ -14,7 +14,8 @@
 
         var _token = JSON.parse($cookies.get('profile'))._token;
         $scope.lmc.loadContentGroups = function () {
-            $scope.lmc.clickedNode = update_breadcrumbs.node._links;
+            debugger;
+            $scope.lmc.clickedNode = update_breadcrumbs.configuredNode._links;
 
             if ($scope.lmc.clickedNode != null && IsContentGroupExist($scope.lmc.clickedNode)) {
 
@@ -61,7 +62,8 @@
             }
         }
 
-        $scope.lmc.loadContents= function (content) {
+        $scope.lmc.loadContents = function (content) {
+            debugger;
             $scope.lmc.contentName = content.name;
             var url, links = content._links;
             for (var i = 0; i < links.length; i++) {
