@@ -1,14 +1,14 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
 
     function controller($http) {
         var vm = this;
         vm.loading = false;
-        
+
         var http = function (_user) {
             $http
-                .get('https://toolsservices-qa.awardcenter.com/test', {
+                .get(const_APIUrl + '/test', {
                     headers: {
                         'Authorization': 'Basic ' + btoa(_user),
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -27,8 +27,8 @@
                     vm.loading = false;
                 });
         };
-          
-       
+
+
         vm.login = function () {
 
             vm.loading = true;
@@ -37,7 +37,7 @@
                 http(_u);
             }, 2000);
 
-           
+
 
         };
 
