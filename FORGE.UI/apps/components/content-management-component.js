@@ -12,7 +12,7 @@
             getDataTypes($scope.contentGroup.dataTypeURL);
         }
         function getDataTypes(url) {
-            debugger;
+            
             $http.get(url, {
                 headers: {
                     "Authorization": _token
@@ -20,7 +20,7 @@
                 }
             })
             .then(function (response) {
-                debugger;
+                
                 $scope.contentGroup.dataTypeList = response.data.data.items;
 
 

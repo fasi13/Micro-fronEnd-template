@@ -110,7 +110,7 @@
 
         });
         function UpdateContentMangementLeftMenuArray(currentData) {
-            debugger;
+            
             for (var i = 0; i < $scope.lmc.contentGroupsList.items.length; i++) {
                 if ($scope.lmc.contentGroupsList.items[i].id == currentData.ID) {
 
