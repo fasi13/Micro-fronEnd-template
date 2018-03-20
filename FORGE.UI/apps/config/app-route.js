@@ -85,7 +85,8 @@
                     .state('dashboard.content-management', {
                         url: '/content-management',
                         params: {
-                            obj: null
+                            obj: null,
+                            dataTypeURL: null
                         },
                         template: '<content-management-component></content-management-component>'
 

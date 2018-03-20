@@ -587,10 +587,6 @@ span.glyphicon.glyphicon-home {
     margin: 0px;
 }
 
-.red {
-    background: #822434;
-}
-
 .silver {
     background: #777777;
 }
@@ -1300,4 +1296,23 @@ span.seach-icon {
 
 .paddingBot20Pixel {
     padding-bottom: 20px;
+}
+
+.paddingTop03EM {
+    padding-top: 0.3em;
+}
+
+.MainbackToTop {
+    margin-right: 65px;
+    margin-top: 18px;
+    padding-bottom: 30px;
+}
+
+.MainbackToTopIcon {
+    padding: 7px;
+    color: white;
+    background-color: #C85000;
+    border-radius: 360px;
+    font-size: 183%;
+    color: white;
 }

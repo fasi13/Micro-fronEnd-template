@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    function controller($scope,$log, $state, $rootScope, $cookies, apiService, update_breadcrumbs) {
+    function controller($scope, $log, $state, $rootScope, $cookies, apiService, update_breadcrumbs, updateContentGroup) {
         var lm = this;
         
         lm.status = {
@@ -85,7 +85,7 @@
         }
 
         function contentLoadSuccessfully(response) {
-           
+            
             $scope.lmc.contents = response.data.data;
            
             $scope.lmc.contents.dataTypeURL = $scope.lmc.dataTypeURL;
@@ -96,13 +96,36 @@
         }
 
 
+        $scope.$on("contentGroupsChanged", function () {
+            if (updateContentGroup.isAdd)
+            {
+                $scope.lmc.contentGroupsList.items.push(updateContentGroup.contentGroup);
+            }
+            else if (updateContentGroup.isAdd == false)
+            {
+                UpdateContentMangementLeftMenuArray(updateContentGroup.contentGroup);
+            }
+           
+
+
+        });
+        function UpdateContentMangementLeftMenuArray(currentData) {
+            debugger;
+            for (var i = 0; i < $scope.lmc.contentGroupsList.items.length; i++) {
+                if ($scope.lmc.contentGroupsList.items[i].id == currentData.ID) {
+
+                    $scope.lmc.contentGroupsList.items[i].name = currentData.name;
+                    $scope.lmc.contentGroupsList.items[i].value = currentData.value;
+                }
+            }
+        }
         function contentGroupsLoadSuccessfully(result) {
 
 
  
-                $scope.lmc.contentGroupsList = result.data.data.items;
+                $scope.lmc.contentGroupsList = result.data.data;
 
-                $state.go('dashboard.content-management', { obj: $scope.lmc.contentGroupsList });
+                $state.go('dashboard.content-management', { obj: $scope.lmc.contentGroupsList, dataTypeURL:$scope.lmc.dataTypeURL });
 
 
 
@@ -133,7 +156,7 @@
        .module('app_leftMenuComponent',[])
        .component('leftMenuComponent', {
            templateUrl: 'apps/views/left-menu-component.html',
-           controller: ['$scope','$log', '$state', '$rootScope','$cookies', 'apiService', 'update_breadcrumbs', controller],
+           controller: ['$scope','$log', '$state', '$rootScope','$cookies', 'apiService', 'update_breadcrumbs','updateContentGroup', controller],
            controllerAs: 'lm',
            bindings: {
                navLinks: '<',
