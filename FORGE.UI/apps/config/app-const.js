@@ -1,14 +1,14 @@
 ﻿var const_application = {
     applications: 1,
     group: 2,
-    settings:3,
+    settings: 3,
     content: 4
 };
 
 var const_content = {
     contents: 1,
     groups: 2,
-    statues:3
+    statues: 3
 };
 
 var const_control = {
@@ -42,7 +42,7 @@ var const_promotion = {
 var const_user = {
     users: 1,
     permissions: 2,
-    roles:3
+    roles: 3
 };
 
 var const_permission = {
@@ -68,13 +68,14 @@ var const_request = {
     notrequire: false
 };
 
+var const_APIUrl = "https://toolsservices-qa.awardcenter.com";
 
 var const_role = {
     parentAdmin: 'pAdmin',
-    childAdmin:'cAdmin'
+    childAdmin: 'cAdmin'
 };
 
-var Profile = function() {
+var Profile = function () {
     return {
         "success": false,
         "data": {

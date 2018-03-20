@@ -20,16 +20,16 @@
                             views: {
                                 '': {
                                     templateUrl: 'apps/views/_dashboard.html',
-                                    controller: ['$cookies' , '$state', function ($cookies, $state) {
+                                    controller: ['$cookies', '$state', function ($cookies, $state) {
                                         var db = this,
                                             model = JSON.parse(sessionStorage._contentManagement),
                                             linkList = [];
-                                   
+
                                         db.username = JSON.parse($cookies.get('profile')).data.data.name;
                                         var cnt = 0;
                                         angular.forEach(model.items, function (v, k) {
                                             linkList.push({
-                                                id:cnt++,
+                                                id: cnt++,
                                                 appId: v.id,
                                                 getApplication: v.name,
                                                 href: v._links[0].href
@@ -51,12 +51,12 @@
                                 'left-menu@dashboard': {
                                     template: '<left-menu-component nav-links="db.links"></left-menu-component>'
                                 },
-                               
+
                             },
                             data: {
                                 requireLogin: const_request.require
                             }
-                            
+
                         }) //-
                         //.state('dashboard.content-manager', {
                         //    url: '/content-manager',
@@ -94,17 +94,17 @@
                     })
                      .state('dashboard.content-view', {
                          url: '/content-view',
-                         cache:false,
-                         params:{
+                         cache: false,
+                         params: {
                              obj: null,
                              name: "Template Name"
                          },
-                        
+
                          templateUrl: 'apps/views/contentView.html',
                          controller: "contentView"
-                        
+
                      })
-						
+
 
                     //-
                     //    .state('dashboard.content-pages', {
@@ -138,7 +138,7 @@
                 '$rootScope', '$state', '$cookies', 'appService',
                 function ($rootScope, $state, $cookies, srvAPI) {
 
-                     if (typeof $cookies.get('profile') !== const_auth.undefined) {
+                    if (typeof $cookies.get('profile') !== const_auth.undefined) {
                         $rootScope.profile = JSON.parse($cookies.get('profile'));
                     }
 
@@ -154,7 +154,7 @@
                         //    srvAPI().then(function (resp) {
                         //        if (typeof $cookies.get('profile') !== const_auth.undefined) {
                         //            $cookies.remove('profile');
-                       //        }
+                        //        }
                         //        resp._token = resp.headers('authentication-info');
                         //        $cookies.put('profile', JSON.stringify(resp));
                         //        $rootScope.profile = JSON.parse($cookies.get('profile'));
@@ -166,7 +166,7 @@
                         /* form-login */
                         if (rQ && (typeof $rootScope.profile === const_auth.undefined || !sessionStorage.length)) {
                             event.preventDefault();
-                            if (typeof sessionStorage.getItem('_toState') !== const_auth.undefined)  
+                            if (typeof sessionStorage.getItem('_toState') !== const_auth.undefined)
                                 sessionStorage.removeItem('_toState');
                             sessionStorage.setItem('_toState', toState.name);
                             $state.go('sign-in');
@@ -183,7 +183,7 @@
                 } //fn
             ]) //run
             .constant('APIEndpoint', {
-                auth: 'https://toolsservices-qa.awardcenter.com/users/me'
-            }) //https://toolsservices-qa.awardcenter.com/users/me
+                auth: const_APIUrl + '/users/me'
+            })
     ;//module
 })();
