@@ -18,12 +18,13 @@
 })
 
 
-.controller("contentView", function ($scope, $stateParams, $cookies, $http) {
+.controller("contentView", function ($scope, $stateParams, $cookies, $http, $state) {
 
     $scope.contentObj = {};
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = JSON.parse($stateParams.obj);
     if ($scope.contentObj.completeObj != null) {
+        debugger;
         $scope.contentObj.content = $scope.contentObj.completeObj.content;
         $scope.contentObj.dataTypeURL = $scope.contentObj.completeObj.dataTypeURL;
         getDataTypes($scope.contentObj.dataTypeURL);
@@ -32,26 +33,27 @@
 
     function getDataTypes(url) {
 
-        
-        $http.get(url, {headers: {
-            "Authorization": _token
-           
-        }
+
+        $http.get(url, {
+            headers: {
+                "Authorization": _token
+
+            }
         })
         .then(function (response) {
-            
+
             $scope.contentObj.dataTypeList = response.data.data.items;
-          
+
 
         }, function (error) {
             console.log(error);
-                })
+        })
     }
     $scope.contentObj.content_name = $stateParams.name;
     var _token = JSON.parse($cookies.get('profile'))._token;
 
     $scope.contentObj.createContent = function (content) {
-        var url , links;
+        var url, links;
 
 
         if ($scope.contentObj.completeObj != null && content.name) {
@@ -61,12 +63,14 @@
 
             $http.post(url,
        {
-           "name": content.name,
-           "status": "Published",
-           "dataType": {
-               "name": content.selectedDataType.name
+           name: content.name,
+           value: content.value,
+           status: "Published",
+           dataType: {
+               name: content.selectedDataType.name,
+               type: content.selectedDataType.name
            }
-           
+
        }, {
            headers: {
                "Authorization": _token,
@@ -74,9 +78,16 @@
            }
        })
   .then(function (response) {
+      debugger;
       var responseContent = response.data.data;
-      $scope.contentObj.content.push(responseContent);
-   
+      var tempContent = {
+          name: responseContent.name,
+          status: responseContent.status,
+          publishDate: responseContent.publishDate,
+          _links: responseContent._links
+      };
+      $scope.contentObj.content.push(tempContent);
+
       $('#editContent').modal('hide');
   },
   function (error) {
@@ -96,45 +107,62 @@
 
         }
     };
-    $scope.contentObj.passContentName = function (item) {
-        $scope.newContent = {};
-        $scope.newContent.name = item.name;
-       
-        $scope.newContent.ID = item.id;
-        $scope.newContent.value = item.vaue;
-        $scope.contentObj.action = "edit";
-        $scope.currentContent= item;
-
+    $scope.contentObj.passContentForEdit = function (item, includeDataType, isUpdateContent) {
+        debugger;
+        $scope.isDataTypePropertyEnabled = includeDataType;
+        $scope.contentObj.isAdd = false;
+        $scope.IsUpdateContent = isUpdateContent;
+        if (isUpdateContent) {
+            $scope.newContent = {};
+            $scope.newContent.name = item.name;
+            $scope.newContent.ID = item.id;
+            $scope.newContent.value = item.value;
+            $scope.currentContent = item;
+        }
+        else if (isUpdateContent == false) {
+            $scope.newContent = {};
+            $scope.newContent.ID = item.id;
+            $scope.newContent.value = item.value;
+            $scope.currentContent = item;
+        }
     }
 
-    function getURL(links,rel) {
+    function getURL(links, rel) {
 
         for (var i = 0; i < links.length; i++) {
 
             if (links[i].rel == rel) {
-               return links[i].href;
+                return links[i].href;
             }
         }
 
     }
 
-    $scope.contentObj.setAction = function(){
-        $scope.contentObj.action = "add";
+    $scope.contentObj.setAction = function (isAdd, includeDataType) {
+        $scope.IsUpdateContent = false;
+        $scope.contentObj.isAdd = isAdd;
+        $scope.isDataTypePropertyEnabled = includeDataType;
     }
-    
+
     $scope.contentObj.performAction = function (content) {
-       
-        
+        debugger;
+
         if ($scope.myform.$valid) {
 
-            if ($scope.contentObj.action == "edit") {
+            if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == true) {
 
-                $scope.contentObj.editContent($scope.currentContent, content);
+                $scope.contentObj.editContent($scope.currentContent, content, true);
+
+
+            }
+            else if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == false) {
+
+                $scope.contentObj.editContent($scope.currentContent, content, false);
 
 
             }
 
-            else {
+            else if ($scope.contentObj.isAdd == true) {
                 $scope.contentObj.createContent(content);
             }
         }
@@ -142,15 +170,11 @@
 
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
-
+        debugger;
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
-            "name": object.name,
-            "value": value,
-            "status": "Published",
-            "dataType": {
-                "name": object.dataType.name
-            }
+            value: value,
+            status: "Published"
         };
 
         $http.put(url,
@@ -172,34 +196,66 @@
     }
 
 
-    $scope.contentObj.editContent = function (object,content) {
-      
-           
-            var url = getURL(object._links, "updateContentValue");
-            var requestObject = {
-                "name": content.name,
-                "value": content.name,
-                "status": "Published",
-                "dataType": {
-                    "name": object.dataType.name
-                }
+    $scope.contentObj.editContent = function (object, content, isUpdateContent) {
+        $scope.IsUpdateContent = isUpdateContent;
+        $scope.tempContentData = content;
+        var url = "";
+        var requestObject = {};
+        debugger;
+        if (isUpdateContent) {
+            url = getURL(object._links, "updateContent");
+            requestObject = {
+                name: content.name,
+                value: content.value,
+                status: "Published"
             };
+        }
+        else if (isUpdateContent == false) {
+            url = getURL(object._links, "updateContentValue");
+            requestObject = {
+                value: content.value,
+                status: "Published"
+            };
+        }
+        $http.put(url,
+        requestObject, {
+            headers: {
+                "Authorization": _token,
+                "Content-type": "application/json"
+            }
+        })
+        .then(function (response) {
+            $('#editContent').modal('hide');
+            debugger;
+            if ($scope.IsUpdateContent) {
+                UpdateContentArray($scope.tempContentData);
+            }
+            else if ($scope.IsUpdateContent) {
+                UpdateContentValueArray($scope.tempContentData);
+            }
+        },
+        function (error) {
+            alert(error);
+        });
 
-            $http.put(url,
-            requestObject, {
-                headers: {
-                    "Authorization": _token,
-                    "Content-type": "application/json"
-                }
-            })
-            .then(function (response) {
-
-                console.log(response);
-            },
-            function (error) {
-
-                console.log(error);
-            });
-        
+    }
+    function UpdateContentArray(currentData) {
+        debugger;
+        for (var i = 0; i < $scope.contentObj.content.length; i++) {
+            if ($scope.contentObj.content[i].id == currentData.ID) {
+                debugger;
+                $scope.contentObj.content[i].name = currentData.name;
+                $scope.contentObj.content[i].value = currentData.value;
+            }
+        }
+    }
+    function UpdateContentValueArray(currentData) {
+        debugger;
+        for (var i = 0; i < $scope.contentObj.content.length; i++) {
+            if ($scope.contentObj.content[i].id == currentData.ID) {
+                debugger;
+                $scope.contentObj.content[i].value = currentData.value;
+            }
+        }
     }
 });

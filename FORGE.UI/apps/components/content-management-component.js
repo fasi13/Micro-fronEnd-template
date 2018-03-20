@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    var controller = function ($scope,$stateParams) {
+    var controller = function ($scope,$stateParams,$cookies,$http) {
         var et = this;
 
       
         et.contentGroup = $stateParams.obj;
 
         et.editContentGroup = function () {
-
+            debugger;
             var _token = JSON.parse($cookies.get('profile'))._token;
             $http.put(url,
             { "name": $scope.contentGroupName }, {
@@ -41,7 +41,7 @@
 
     };
 
-    controller.$inject = ['$scope','$stateParams'];
+    controller.$inject = ['$scope','$stateParams','$cookies','$http'];
 
     angular
         .module('app_content_management', [])

@@ -76,6 +76,7 @@
         }
         $scope.config_breadcrumb = function (currentNode) {
             if (currentNode != undefined) {
+                update_breadcrumbs.configNode(currentNode);
                 $scope.clicked_node = currentNode;
                 update_breadcrumbs.node = currentNode;
             }
@@ -83,10 +84,12 @@
                 return;
             }
             else {
+                update_breadcrumbs.configNode($scope.clicked_node);
                 $scope.iterateCount = 0;
                 $scope.bread_text = [];
                 $scope.hover_brdcm = "";
                 var start_node = $scope.parent[0];
+                
                 CreateBreadcrumb($scope.clicked_node, start_node);
                 CreateBreadcrumbForHover($scope.clicked_node, start_node);
                 hc.isCollapsed = true;

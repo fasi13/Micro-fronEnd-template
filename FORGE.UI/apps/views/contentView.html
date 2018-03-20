@@ -4,10 +4,10 @@
 
         <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content)">
 
-            <div class="contents-page" >
-            
+            <div class="contents-page">
 
-           
+
+
                 <div>
 
                     <h3>{{contentObj.content_name}}</h3>
@@ -28,7 +28,12 @@
 
                         <div>
                             {{val}} <span ng-if="key == 'name'" class="pull-right">
-                                <a href="#editContent" data-toggle="modal" ng-click="contentObj.passContentName(data);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a> <a> <span class="glyphicon glyphicon-trash"></span></a>
+                                <span ng-repeat="(linkKey,linkVal) in data._links">
+                                    <a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
+                                    <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
+                                    <!--commenting delete icon for now as API needs to return the delete url-->
+                                    <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
+                                </span>
                             </span>
                         </div>
 
@@ -37,16 +42,16 @@
 
                 </div>
                 <div class="pull-right">
-                    <button data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction()" class="btn btnClass marginTop20">New</button>
+                    <button data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true)" class="btn btnClass marginTop20">New</button>
                 </div>
 
-               
-            </div>
-
-            
-
 
             </div>
+
+
+
+
+        </div>
         <div ng-if="contentObj.content_name == 'Email Templates'">
 
             <div class="col-md-12 col-xs-12 maincontent">
@@ -71,146 +76,136 @@
                 </div>
             </div>
         </div>
-  
-            <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content) == false">
 
-                <div class="contents-page">
+        <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content) == false">
 
-
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 login-left-section">
-
-                            <h3 class="m-b-30"> Customize Branding </h3>
+            <div class="contents-page">
 
 
 
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-6 login-left-section">
+
+                        <h3 class="m-b-30"> {{contentObj.content_name}} </h3>
 
 
-                            <form class="form">
-                                <div ng-repeat="cb in contentObj.content">
 
 
-                                    <div class="form-group" ng-if="cb.dataType.name == 'Color Picker'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
-                                        <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
-                                        <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
-                                            <span class="input-group-addon" ng-style="{'background-color':cb.value}"></span>
-                                            <input colorpicker class="form-control" ng-model="cb.value" type="text" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
-                                        </div>
 
+                        <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
+                            <div ng-repeat="cb in contentObj.content">
+
+
+                                <div class="form-group" ng-if="cb.dataType.name == 'Color Picker'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
+                                    <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
+                                    <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
+                                        <span class="input-group-addon" ng-style="{'background-color':cb.value}"></span>
+                                        <input colorpicker class="form-control" ng-model="cb.value" type="text" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
                                     </div>
 
+                                </div>
 
-                                    <!--<div class="form-group" ng-if="cb.name == 'Secondary Color'" ng-init="contentObj.s_color = cb.value">
-                            <label class="col-xs-12 col-sm-5 form-label">{{cb.name}} </label>
-                            <div id="cp3" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
-                                <span class="input-group-addon" ng-style="{'background-color':contentObj.s_color}"></span>
-                                <input colorpicker class="form-control" ng-model="contentObj.s_color" type="text" ng-blur="contentObj.editContent(cb,contentObj.s_color);" />
+
+
+
+                                <div class="form-group" ng-if="cb.dataType.name == 'Text'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
+                                    <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
+                                    <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Using color option">
+                                        <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
                             </div>
-                        </div>-->
+                            <!--commented out the divs as the api is not returning records  for file upload. need to implement upload feature-->
+                            <!--<div class="form-group">
+                                <label class="col-xs-12 col-sm-5 form-label"> Primary Logo </label>
+                                <div class="input-group col-xs-12 col-sm-7">
+                                    <label class="input-group-btn">
+                                        <span class="btn btnClass">
+                                            Choose File <input type="file" file-model="p_file" style="display: none;">
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" ng-model="p_file[0].name" readonly>
 
+                                </div>
 
-                                    <div class="form-group" ng-if="cb.dataType.name == 'Text'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
-                                        <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
-                                        <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Using color option">
-                                            <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
-                                        </div>
-                                    </div>
-
-                                    <!--<div class="form-group" ng-if="cb.name == 'Secondary Font'" ng-init="contentObj.s_font = cb.value">
-                            <label class="col-xs-12 col-sm-5 form-label"> {{cb.name}} </label>
-                            <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Using color option">
-                                <input type="text" class="form-control input-lg custom-input" ng-model="contentObj.s_font" ng-blur="contentObj.editContent(cb,contentObj.s_font);" />
                             </div>
-                        </div>-->
-
-
-
-
-
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-12 col-sm-5 form-label"> Primary Logo </label>
-                                    <div class="input-group col-xs-12 col-sm-7">
-                                        <label class="input-group-btn">
-                                            <span class="btn btnClass">
-                                                Choose File <input type="file" file-model="p_file" style="display: none;">
-                                            </span>
-                                        </label>
-                                        <input type="text" class="form-control" ng-model="p_file[0].name" readonly>
-
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-xs-12 col-sm-5 form-label"> Secondary Logo </label>
+                                <div class="input-group col-xs-12 col-sm-7">
+                                    <label class="input-group-btn">
+                                        <span class="btn btnClass">
+                                            Choose File <input type="file" file-model="s_file" style="display: none;">
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" ng-model="s_file[0].name" readonly>
 
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-xs-12 col-sm-5 form-label"> Secondary Logo </label>
-                                    <div class="input-group col-xs-12 col-sm-7">
-                                        <label class="input-group-btn">
-                                            <span class="btn btnClass">
-                                                Choose File <input type="file" file-model="s_file" style="display: none;">
-                                            </span>
-                                        </label>
-                                        <input type="text" class="form-control" ng-model="s_file[0].name" readonly>
-
-                                    </div>
 
 
-                                </div>
-                                <div class="form-group">
-                                    <div class="customize-help-text">
-                                        <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>
-                                        <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
-                                    </div>
-                                </div>
-
-                            </form>
-
-                        </div>
-
-
-
-                        <div class="col-md-6 customize-right-sec ">
-
-                            <h3 class="m-b-30"> Color Contrast Analyser </h3>
-
-
-                            <div class="padding-25 login-right">
-
-                                <div class="row">
-
-                                    <div class="col-xs-6">
-                                        <img class="img-responsive full-width" src="imgs/one.png" />
-                                    </div>
-
-                                    <div class="col-xs-6 m-b-20">
-                                        <img class="img-responsive full-width" src="imgs/two.png" />
-                                    </div>
-
-                                    <div class="customize-help-text">
-                                        <p class="pull-left">   -The requirement is to have a contrast ratio of greater than 4.5:1 All informational elements need to pass this rating</p>
-                                        <p class="pull-left"> -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
-                                        <p class="pull-left"> <b> Check your color contrast to validate ADA compliance. Please visit.</b></p> <br />
-                                        <a class="customize-link" href="https://www.paciellogroup.com/resources/contrastanalyser/"> https://www.paciellogroup.com/resources/contrastanalyser/ </a>
-                                    </div>
-
+                            </div>-->
+                            <div class="form-group">
+                                <div class="customize-help-text">
+                                    <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>
+                                    <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
                                 </div>
                             </div>
-
-                        </div>
-
+                            <div class="form-group">
+                                <button class="btn btnClass pull-right btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true)" type="submit"> Create</button>
+                            </div>
+                        </form>
 
                     </div>
 
+
+
+                    <div class="col-md-6 customize-right-sec ">
+
+                        <h3 class="m-b-30"> Color Contrast Analyser </h3>
+
+
+                        <div class="padding-25 login-right">
+
+                            <div class="row">
+
+                                <div class="col-xs-6">
+                                    <img class="img-responsive full-width" src="imgs/one.png" />
+                                </div>
+
+                                <div class="col-xs-6 m-b-20">
+                                    <img class="img-responsive full-width" src="imgs/two.png" />
+                                </div>
+
+                                <div class="customize-help-text">
+                                    <p class="pull-left">   -The requirement is to have a contrast ratio of greater than 4.5:1 All informational elements need to pass this rating</p>
+                                    <p class="pull-left"> -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
+                                    <p class="pull-left"> <b> Check your color contrast to validate ADA compliance. Please visit.</b></p> <br />
+                                    <a class="customize-link" href="https://www.paciellogroup.com/resources/contrastanalyser/"> https://www.paciellogroup.com/resources/contrastanalyser/ </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+
                 </div>
-           
+
+            </div>
         </div>
 
+    </div>
 
 
-    
-   
+
+
+
 
     <div class="modal fade " id="editContent" role="dialog">
         <div class="modal-dialog">
@@ -225,21 +220,27 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="form-group">
+                        <div class="form-group" ng-show="(IsUpdateContent == true) || (contentObj.isAdd == true)">
                             <label>Name</label>
-                            <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter here" ng-model="newContent.name" required />
+                            <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="IsUpdateContent == false && contentObj.isAdd == true" />
 
                             <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Value</label>
+                            <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required />
+
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
 
                         </div>
 
 
-                        
-                        
-                        <div class="form-group">
+
+                        <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
                             <label>Data Type</label>
 
-                            <select name="dataType" ng-model="newContent.selectedDataType" class="form-control"  ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
+                            <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
                                 <option value="">Select Data Type</option>
                             </select>
 
