@@ -15,12 +15,13 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild) {
         var self = this;
         self.data = [];
         $scope.parent = [];
         $scope.bread_text = [];
         var hc = this;
+        $scope.searchBox = {};
         hc.isCollapsed = true;
         var baseApplicationUrl = JSON.parse(sessionStorage.getItem("baseApplicationUrl"));
 
@@ -65,7 +66,273 @@
         }
         self.showTree = true;
 
+        // start of search implementation
+        $scope.startSearch = function (myobj) {
+            var node = hc.data[0];
+            if (myobj != undefined) {
+                hc.isCollapsed = false;
+                $scope.requiredNode = myobj.path[myobj.path.length - 1];
+                $scope.nodePath = [];
+                $scope.nodePath = myobj.path;
 
+                node.click = "autoClick";
+
+                if (node.children.length > 1 || node.children.length == 1) {
+                    node.children = [];
+                    node.children.push({
+                        label: 'Loading...',
+                        id: 0,
+                        type: 'DEL',  //Use for determine whether to load from server or delete the node
+                        children: []
+                    });
+                }
+                $scope.toggleRootNode(node.unique);
+
+
+
+                $scope.currentNodeChild = [];
+
+            }
+        }
+        function containNode(id) {
+            if (id == undefined) {
+
+                $timeout(function () {
+                    containNode(id)
+
+
+                }, 0);
+            }
+            if (id != undefined) {
+                for (var i = 0; i < $scope.currentNodeChild.length; i++) {
+
+                    if (id == $scope.currentNodeChild[i].id) {
+
+                        return $scope.currentNodeChild[i];
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        $scope.search = function (text) {
+            $scope.text_val = text;
+
+            if (text.length > 2) {
+                apiService.get(const_APIUrl + "/applications?keyword=" + text, SearchResultSuccess, SearchResultFail, _token);
+            }
+
+        }
+        function autocomplete(inp, arr) {
+
+
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+
+
+            var a, b, s, i, val = $scope.text_val;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) { return false; }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", self.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            inp.parentNode.appendChild(a);
+            /*for each item in the array...*/
+
+            if (arr.length == 0) {
+                b = document.createElement("DIV");
+                b.innerHTML += "<strong>No Records Found</strong>";
+                a.appendChild(b);
+            }
+            else {
+                for (i = 0; i < arr.length; i++) {
+
+                    var name = arr[i].name;
+                    var indexvalue = name.toLowerCase().indexOf(val.toLowerCase());
+                    if (indexvalue !== -1) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        s = document.createElement("SPAN");
+                        s.innerHTML = '<span class="seach-icon glyphicon glyphicon-search"></span>';
+
+                        for (var j = 0; j < name.length; j++) {
+
+                            if (j == indexvalue) {
+
+                                b.innerHTML += "<strong>" + name.substr(j, val.length) + "</strong>";
+                                j = j + (val.length - 1);
+                            }
+                            else {
+                                b.innerHTML += name.charAt(j);
+                            }
+
+                        }
+                        b.onclick = getClickedValue.bind(self, arr[i]);
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.appendChild(s);
+                        a.appendChild(b);
+                    }
+                }
+            }
+            /*execute a function presses a key on the keyboard:*/
+
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+
+        }
+
+
+
+        function openNode() {
+
+            var uniqueID = hc.data[0].unique;
+            var el = document.getElementById(uniqueID);
+            if (angular.element(el).hasClass('ivh-treeview-node')) {
+                angular.element(el).removeClass('ivh-treeview-node');
+                angular.element(el).removeClass('ivh-treeview-node-collapsed');
+            }
+            else {
+
+                angular.element(el).addClass('ivh-treeview-node');
+                angular.element(el).addClass('ivh-treeview-node-collapsed');
+
+                angular.element(el).removeClass('ivh-treeview-node');
+                angular.element(el).removeClass('ivh-treeview-node-collapsed');
+
+            }
+
+        }
+
+        function getClickedValue(myobj) {
+
+            $scope.searchBox.text = myobj.name;
+            $scope.searchResponseObject = myobj;
+            $scope.$apply();
+
+
+        }
+
+        $scope.$on('childUpdated', function () {
+
+
+
+
+            $scope.currentNodeChild = getChild.child;
+            for (var i = 1; i < $scope.nodePath.length; i++) {
+                var appId = $scope.nodePath[i].id, appGroupId = $scope.nodePath[i].applicationGroupId;
+
+                if (containNode(appGroupId)) {
+
+                    var newNode = containNode(appGroupId);
+                    if (newNode.IsApplicationGroup) {
+                        newNode.click = "autoClick";
+                        $scope.toggleRootNode(newNode.unique);
+
+                    }
+                }
+                if (containNode(appId)) {
+
+                    var newNode = containNode(appId);
+                    if (!newNode.IsApplicationGroup) {
+                        newNode.click = "autoClick";
+                        $scope.toggleRootNode(newNode.unique);
+                        openNode(hc.data[0].unique);
+                        updateSelectedNode(newNode.unique);
+                    }
+                }
+
+
+            }
+
+
+
+
+
+        });
+
+
+        function SearchResultSuccess(response) {
+            var items = response.data.data.items;
+            $scope.searchResult = [];
+
+
+            for (var i = 0; i < items.length; i++) {
+                var matchItem = {};
+                matchItem.name = "";
+                matchItem.path = items[i].path;
+
+                if (matchItem.path.length > 4) {
+
+                    for (var j = 0; j < matchItem.path.length; j++) {
+                        if (j == 2) {
+
+                            for (var k = matchItem.path.length - 2; j > 0; (j-- && k++)) {
+                                matchItem.name += matchItem.path[k].name;
+                                if ((k + 1) != matchItem.path.length) {
+                                    matchItem.name += " | ";
+                                }
+
+
+                            }
+                            break;
+
+                        }
+                        if (j == 1) {
+                            matchItem.name += matchItem.path[j].name + " |...| ";
+                        }
+                        else {
+                            matchItem.name += matchItem.path[j].name + " | ";
+
+                        }
+
+                    }
+
+                }
+                else {
+
+                    for (var j = 0; j < matchItem.path.length; j++) {
+                        matchItem.name += matchItem.path[j].name;
+                        if (matchItem.path.length != (j + 1)) {
+                            matchItem.name += " | ";
+                        }
+
+
+                    }
+
+                }
+
+
+                $scope.searchResult.push(matchItem);
+
+            }
+
+            autocomplete(document.getElementById("myInput"), $scope.searchResult);
+
+        }
+
+        function SearchResultFail() {
+
+        }
+        //end of search implementation
         $scope.$on('breadcrumbsChanged', function () {
 
             $scope.clicked_node = update_breadcrumbs.node;
@@ -124,22 +391,27 @@
         }
 
         function updateSelectedNode(uniqueId) {
-            var el = document.getElementById(uniqueId);
-            if (el == null) {
+            if (uniqueId == null) {
                 $timeout(function () {
                     updateSelectedNode(uniqueId);
                 }, 0);
             }
-            angular.element('.ivh-treeview-node-label').removeClass("selected");
-            var el = document.getElementById(uniqueId);
-            var span = angular.element(el).find("span");
+            else {
+                $timeout(function () {
 
-            for (var i = 0; i < span.length; i++) {
-                if (angular.element(span[i]).hasClass('ivh-treeview-node-label')) {
-                    angular.element(span[i]).addClass("selected");
-                    break;
-                }
+                    angular.element('.ivh-treeview-node-label').removeClass("selected");
+                    var element = document.getElementById(uniqueId);
+                    var span = angular.element(element).find("span");
+
+                    for (var i = 0; i < span.length; i++) {
+                        if (angular.element(span[i]).hasClass('ivh-treeview-node-label')) {
+                            angular.element(span[i]).addClass("selected");
+                            break;
+                        }
+                    }
+                }, 0);
             }
+
         }
         function HierarchyBrandingAttributesLoadCompleted(result) {
 
@@ -361,7 +633,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', controller],
             controllerAs: 'hc'
         });
 

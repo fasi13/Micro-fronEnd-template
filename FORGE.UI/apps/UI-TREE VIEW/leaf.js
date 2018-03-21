@@ -1,7 +1,7 @@
 var app = angular.module('instinctcoder', [])
 'use strict';
 
-app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cookies) {
+app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cookies, getChild) {
     return {
         restrict: 'AE',
         link: function (scope, element, attrs) {
@@ -47,9 +47,11 @@ app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cook
                 function loadCompleted(result) {
                     if (result.status == 200) {
 
-                        if (result.data != "") 
-                        {
+                        if (result.data != "") {
                             tree.genNode(result.data.data.items, scope.node, fakechild);
+                            if (scope.node.click == "autoClick") {
+                                getChild.setChild(scope.node.children);
+                            }
                         } else {
                             if (scope.node.children[0].type == 'DEL') {
                                 delete scope.node.children

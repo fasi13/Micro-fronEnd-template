@@ -54,7 +54,6 @@
         this.configuredNode = node;
         this.update();
     }
-
     shareObj.set_text = function (node, parent) {
         this.node = node;
         this.parent = parent;
@@ -67,6 +66,25 @@
     return shareObj;
 
 })
+.factory('getChild', function ($rootScope) {
+
+
+    var shareObj = {};
+
+    shareObj.child = {};
+
+    shareObj.setChild = function (node) {
+        this.child = node;
+        this.update();
+    };
+    shareObj.update = function () {
+        $rootScope.$broadcast('childUpdated');
+    };
+
+    return shareObj;
+
+})
+
 .factory('update_brandingContent', function ($rootScope) {
 
     var shareObj = {};
