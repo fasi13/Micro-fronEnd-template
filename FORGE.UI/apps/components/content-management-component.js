@@ -15,8 +15,10 @@
             
             $http.get(url, {
 
+
                 headers: {
                     "Authorization": _token
+
 
                 }
             })
@@ -149,7 +151,9 @@
 
 
 
+
     controller.$inject = ['$scope', '$stateParams', '$cookies', '$http', 'updateContentGroup'];
+
 
 
 

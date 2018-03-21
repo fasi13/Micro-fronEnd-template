@@ -19,7 +19,9 @@
 
 
 
+
 .controller("contentView", function ($scope,$state, $stateParams, $cookies, $http, $state) {
+
 
 
     $scope.contentObj = {};
@@ -168,26 +170,11 @@
         if ($scope.myform.$valid) {
 
             if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == true) {
-
-
                 $scope.contentObj.editContent($scope.currentContent, content, true);
-
-				
-
             }
             else if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == false) {
-
                 $scope.contentObj.editContent($scope.currentContent, content, false);
             }
-            else if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == false) {
-
-
-                $scope.contentObj.editContent($scope.currentContent, content, false);
-
-
-            }
-
-			
             else if ($scope.contentObj.isAdd == true) {
                 $scope.contentObj.createContent(content);
             }
@@ -268,8 +255,6 @@
 
     }
     function UpdateContentArray(currentData) {
-
-
         for (var i = 0; i < $scope.contentObj.content.length; i++) {
             if ($scope.contentObj.content[i].id == currentData.ID) {
                 $scope.contentObj.content[i].name = currentData.name;
@@ -278,8 +263,6 @@
         }
     }
     function UpdateContentValueArray(currentData) {
-
-
         for (var i = 0; i < $scope.contentObj.content.length; i++) {
             if ($scope.contentObj.content[i].id == currentData.ID) {
 

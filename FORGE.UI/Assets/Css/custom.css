@@ -321,6 +321,7 @@ textarea.form-control {
         }
 
 
+
 .btnClass {
     display: inline-block;
     padding: 0 20px;
@@ -368,6 +369,7 @@ textarea.form-control {
   color:white;
   box-shadow:none;
 }
+
 
 
 .username-col-white:hover {
@@ -1139,6 +1141,7 @@ img.glif_icon {
     content: " /... ";
     color: #ccc;
 }
+
 
 
 /*Back to top Custom*/

@@ -5,13 +5,7 @@
         <div class="col-md-12 col-xs-12 maincontent" ng-if="contentObj.check_displayasList(contentObj.content)">
 
             <div class="contents-page">
-
-
-
-
                 <div class="paddingBot20Pixel">
-
-
                     <h3>{{contentObj.content_name}}</h3>
 
                 </div>
@@ -46,9 +40,8 @@
                 <div class="pull-right">
                     <button data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true)" class="btn btnClass marginTop20">New</button>
                 </div>
+            </div>
 
-
-      
 
 
 
@@ -93,9 +86,6 @@
 
                         <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
 
-
-
-
                             <div ng-repeat="cb in contentObj.content" class="form-group" ng-if="cb.dataType.name == 'Color Picker'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
                                 <div class="col-xs-12 col-sm-5 paddingTop03EM"> {{cb.name}}</div>
                                 <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
@@ -109,67 +99,13 @@
                                 <div class="input-group col-xs-12 col-sm-7" title="">
                                     <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
                                 </div>
-
                             </div>
-                            <!--commented out the divs as the api is not returning records  for file upload. need to implement upload feature-->
-                            <!--<div class="form-group">
-                                <label class="col-xs-12 col-sm-5 form-label"> Primary Logo </label>
-                                <div class="input-group col-xs-12 col-sm-7">
-                                    <label class="input-group-btn">
-                                        <span class="btn btnClass">
-                                            Choose File <input type="file" file-model="p_file" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" ng-model="p_file[0].name" readonly>
-
-<<<<<<< 3d2f09cbd90120b20bec890b49f6d86ff5efc5f3
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-xs-12 col-sm-5 form-label"> Secondary Logo </label>
-                                <div class="input-group col-xs-12 col-sm-7">
-                                    <label class="input-group-btn">
-                                        <span class="btn btnClass">
-                                            Choose File <input type="file" file-model="s_file" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" ng-model="s_file[0].name" readonly>
-=======
-
-                            </div>
-                            <!--commented out the divs as the api is not returning records  for file upload. need to implement upload feature-->
-                            <!--<div class="form-group">
-                                <label class="col-xs-12 col-sm-5 form-label"> Primary Logo </label>
-                                <div class="input-group col-xs-12 col-sm-7">
-                                    <label class="input-group-btn">
-                                        <span class="btn btnClass">
-                                            Choose File <input type="file" file-model="p_file" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" ng-model="p_file[0].name" readonly>
->>>>>>> implementation of customize branding
-
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-xs-12 col-sm-5 form-label"> Secondary Logo </label>
-                                <div class="input-group col-xs-12 col-sm-7">
-                                    <label class="input-group-btn">
-                                        <span class="btn btnClass">
-                                            Choose File <input type="file" file-model="s_file" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" ng-model="s_file[0].name" readonly>
-
-                            </div>-->
+                            
                             <div class="form-group">
                                 <div class="customize-help-text">
                                     <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>
                                     <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass the "Large Text" test (greater than contrast ration 3.0:1)</p>
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <button class="btn btnClass pull-right btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
@@ -216,12 +152,6 @@
 
     </div>
 
-
-
-	
-
-
-
     <div class="modal fade " id="editContent" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -240,7 +170,6 @@
                             <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="IsUpdateContent == false && contentObj.isAdd == true" />
 
                             <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
-
                         </div>
 
                         <div class="form-group">
@@ -250,13 +179,10 @@
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
 
                         </div>
-
-
                         <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
                             <label>Data Type</label>
 
                             <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
-
                                 <option value="">Select Data Type</option>
                             </select>
 
