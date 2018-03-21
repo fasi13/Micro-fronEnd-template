@@ -67,6 +67,21 @@
     return shareObj;
 
 })
+.factory('update_brandingContent', function ($rootScope) {
+
+    var shareObj = {};
+    shareObj.node = {};
+    shareObj.set_branding = function (getAttributeURL) {
+        this.node = getAttributeURL;
+        this.updateBranding();
+    };
+    shareObj.updateBranding = function () {
+        $rootScope.$broadcast('CreateHierarchyRightContent');
+    };
+
+    return shareObj;
+
+})
 .factory('updateContentGroup', function ($rootScope) {
 
 

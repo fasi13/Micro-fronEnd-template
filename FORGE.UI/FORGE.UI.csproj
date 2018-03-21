@@ -154,6 +154,7 @@
     <Content Include="apps\data\sample-data.json" />
     <Content Include="apps\data\contentGroup.json" />
     <Content Include="apps\data\application-id.json" />
+    <Content Include="Assets\Less\custom.less" />
     <None Include="Properties\PublishProfiles\Simon.pubxml" />
     <None Include="Properties\PublishProfiles\Vire.pubxml" />
     <None Include="Web.Debug.config">
@@ -975,6 +976,7 @@
     <Content Include="scripts\jquery-2.1.1.js" />
     <Content Include="scripts\jquery-2.1.1.min.js" />
     <Content Include="scripts\jquery.mCustomScrollbar.js" />
+    <Content Include="scripts\less.min.js" />
     <Content Include="Web.config" />
     <Content Include="scripts\version.json" />
   </ItemGroup>

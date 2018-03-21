@@ -23,7 +23,7 @@
             <div class="pull-left home-icon"><span class="glyphicon glyphicon-home"></span> </div>
             <div class="inline nopadding">
                 <ul class="breadcrumb" title="{{hover_brdcm}}">
-                    <li ng-if="bread_text.length==0"><a   ng-click="toggleRootNode(brdcrm.unique)">{{brdcrm.user}}</a></li>
+                    <li ng-if="bread_text.length==0"><a ng-click="toggleRootNode(brdcrm.unique)">{{brdcrm.user}}</a></li>
                     <li ng-if="!db.isCollapsed" ng-repeat="text in bread_text">
                         <a ng-click="toggleBreadCrumb(text)">{{text.label}}</a> <span ng-if="iterateCount > 7 && $index == 1" class="forward-slash"></span>
                     </li>
@@ -53,38 +53,38 @@
 
 
                         <div class="row">
-                            <div class="text-left col-sm-6"><label>Color Scheme: </label></div>
-                            <div class="text-left col-sm-6"><div class="color-tag"><div class="box red_box"></div><p>P</p> <div class="box silver"></div><p>S</p></div></div>
+                            <div class="text-left col-sm-4"><label>Color Scheme: </label></div>
+                            <div class="text-left col-sm-8"><div class="color-tag"><div class="box red_box"></div><p>P</p> <div class="box silver"></div><p>S</p></div></div>
 
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-6"><label>Credit Union Name: </label></div>
-                            <div class="text-left col-sm-6"><h3>Harvard</h3></div>
+                            <div class="text-left col-sm-4"><label>Credit Union Name: </label></div>
+                            <div class="text-left col-sm-8"><h3>{{hierarchyRightContentCreditUnionName}}</h3></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-6"><label>Credit Union Logo: </label></div>
-                            <div class="text-left col-sm-6"><img class="img-responsive" src="../../imgs/harvard-logo.jpg" /></div>
+                            <div class="text-left col-sm-4"><label>Credit Union Logo: </label></div>
+                            <div class="text-left col-sm-8"><img class="img-responsive" src="{{hierarchyRightContentCreditUnionLogo}}" /></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-6"><label>Credit Union URL: </label></div>
-                            <div class="text-left col-sm-6"><a href="#">www.exampleURL.com</a></div>
+                            <div class="text-left col-sm-4"><label>Credit Union URL: </label></div>
+                            <div class="text-left col-sm-8"><a href="{{hierarchyRightContentCreditUnionURL}}">{{hierarchyRightContentCreditUnionURL}}</a></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-6"><label>Customer Service Number: </label></div>
-                            <div class="text-left col-sm-6"><p>1-12345-121-22</p></div>
+                            <div class="text-left col-sm-4"><label>Customer Service Number: </label></div>
+                            <div class="text-left col-sm-8"><p>{{hierarchyRightContentCustomerServiceNumber}}</p></div>
                         </div>
 
                     </div>
                 </div>
-                <div class="row config-btn text-right"> 
+                <div class="row config-btn text-right">
                     <div class="col-sm-6 nopadding">
-                        <a href="" class="pull-left backToTop" > <span class="glyphicon glyphicon-chevron-up"> </span> </a>
+                        <a href="" class="pull-left backToTop"> <span class="glyphicon glyphicon-chevron-up"> </span> </a>
                         <button id="configureBtn" ng-disabled="parent.length==0" class="btn btn-sm btnClass marginTop20" ng-click="config_breadcrumb();">Configure</button>
                     </div>
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
 </section>
 
 <div ng-controller="modal_controller">
@@ -120,8 +120,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal">Close</button>
-                        <button class="btn btn-col" type="submit">Save</button>
+                        <button class="btn btnClass" data-dismiss="modal">Close</button>
+                        <button class="btn btn-col btnClass" type="submit">Save</button>
                     </div>
                 </form>
             </div>

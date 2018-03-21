@@ -15,7 +15,7 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, share_parent, $timeout) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout) {
         var self = this;
         self.data = [];
         $scope.parent = [];
@@ -32,7 +32,15 @@
                                  HierarchyLoadFailed, _token);
 
 
+        $scope.hierarchyRightContent = {
+            PrimaryColor: "",
+            SecondaryColor: "",
+            CreditUnionLogo: "",
+            CreditUnionName: "",
+            CreditUnionURL: "",
+            CustomerServiceNumber: ""
 
+        };
 
         function HierarchyLoadCompleted(result) {
 
@@ -40,8 +48,9 @@
 
                 self.data = tree.genNode(result.data.data, null, true);
                 $scope.root = self.data[0];
-                
+
                 updateSelectedNode($scope.root.unique);
+                $scope.clicked_node = $scope.root; // for branding content
                 $scope.config_breadcrumb($scope.root);
                 $scope.toggleRootNode($scope.root.unique);
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
@@ -65,6 +74,55 @@
 
 
         });
+        $scope.$on('CreateHierarchyRightContent', function () {
+
+            angular.forEach(update_brandingContent.node, function (attributeVal, attributeKey) {
+                if (attributeVal.name == "Primary Color") {
+                    var color = attributeVal.value;
+                    if (color.charAt(0) == "#") {
+                        $scope.hierarchyRightContentPrimaryColor = color;
+                    }
+                    else {
+                        $scope.hierarchyRightContentPrimaryColor = "#" + color;
+                    }
+
+                }
+                if (attributeVal.name == "Secondary Color") {
+                    var color = attributeVal.value;
+                    if (color.charAt(0) == "#") {
+                        $scope.hierarchyRightContentSecondaryColor = color;
+                    }
+                    else {
+                        $scope.hierarchyRightContentSecondaryColor = "#" + color;
+                    }
+
+                }
+                if (attributeVal.name == "Customer Service Phone Number") {
+                    $scope.hierarchyRightContentCustomerServiceNumber = attributeVal.value;
+                }
+                if (attributeVal.name == "Primary Logo") {
+                    $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
+                }
+                if (attributeVal.name == "Site URL") {
+                    $scope.hierarchyRightContentCreditUnionURL = attributeVal.value;
+                }
+
+                $scope.hierarchyRightContentCreditUnionName = $scope.clicked_node.label;
+                isColorFilled();
+
+            });
+
+        });
+
+        function isColorFilled() {
+            if ($scope.hierarchyRightContentSecondaryColor == null || $scope.hierarchyRightContentPrimaryColor == null) {
+                $timeout(function () { isColorFilled(); }, 0);
+            }
+            else {
+                less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
+            }
+        }
+
         function updateSelectedNode(uniqueId) {
             var el = document.getElementById(uniqueId);
             if (el == null) {
@@ -83,7 +141,43 @@
                 }
             }
         }
+        function HierarchyBrandingAttributesLoadCompleted(result) {
 
+            if (result.status == 200) {
+
+                $scope.value = result.data.data.items[0].value;
+
+
+            } else {
+                $window.alert('Branding Contents load failed' + result.error);
+            }
+
+        }
+
+        function HierarchyBrandingAttributesLoadFailed(result) {
+            $window.alert('Branding Contents load failed');
+        }
+        function CreateHierarchyRightContent(contentURL) {
+
+
+            getHierarchyBrandingAttributes(contentURL, "Primary Color"),
+            getHierarchyBrandingAttributes(contentURL, "Secondary Color"),
+            getHierarchyBrandingAttributes(contentURL, "Customer Service Phone Number"),
+            getHierarchyBrandingAttributes(contentURL, "Primary Logo"),
+            getHierarchyBrandingAttributes(contentURL, "Site URL");
+
+
+        }
+        function getHierarchyBrandingAttributes(contentURL, attribute) {
+
+            var getAttributeURL = contentURL + "?name=" + attribute + "&exactMatch=true";
+            var value;
+            apiService.getBrandingData(getAttributeURL, _token).then(function (brandingData) {
+                value = update_brandingContent.set_branding(brandingData);
+
+            });
+
+        }
         function temporarilyNavigateToContentManagement() {
 
             var rootElement = document.getElementById("contentManagementSection");
@@ -95,6 +189,14 @@
         }
 
         $scope.config_breadcrumb = function (currentNode) {
+
+            // Get branding....
+            angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
+                if (linksVal.rel == "contents") {
+                    CreateHierarchyRightContent(linksVal.href);
+                }
+            });
+
             if (currentNode != undefined) {
                 update_breadcrumbs.configNode(currentNode);
                 $scope.clicked_node = currentNode;
@@ -213,7 +315,7 @@
                 $timeout(function () {
                     $scope.toggleRootNode(uniqueId);
                 }, 0);
-               
+
             }
 
             var rootElementSpan = angular.element(rootElement).find("span");
@@ -227,6 +329,7 @@
             if ($scope.bread_text.length > 0) {
                 toggleNodes(node);
                 if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
+                    $scope.clicked_node = node; // for branding content
                     $scope.config_breadcrumb(node);
                 }
             }
@@ -258,7 +361,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'share_parent', '$timeout', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', controller],
             controllerAs: 'hc'
         });
 

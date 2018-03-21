@@ -1,5 +1,9 @@
 ﻿/* Main Over Rides */
 
+
+@color1: #00568D;
+@color2: #c85000;
+
 input[type=text] {
     border-radius: 2px !important;
     border: 1px solid #cdcbcc;
@@ -7,12 +11,12 @@ input[type=text] {
     color: #525252;
 }
 
-    input[type=text]:focus {
-        outline: none !important;
-        border: 1px solid #525252 !important;
-        outline-offset: 0px;
-        box-shadow: none !important;
-    }
+input[type=text]:focus {
+    outline: none !important;
+    border: 1px solid #525252 !important;
+    outline-offset: 0px;
+    box-shadow: none !important;
+}
 
 input[type=password] {
     border-radius: 2px !important;
@@ -21,12 +25,12 @@ input[type=password] {
     color: #525252;
 }
 
-    input[type=password]:focus {
-        outline: none !important;
-        border: 1px solid #525252 !important;
-        outline-offset: 0px;
-        box-shadow: none !important;
-    }
+input[type=password]:focus {
+    outline: none !important;
+    border: 1px solid #525252 !important;
+    outline-offset: 0px;
+    box-shadow: none !important;
+}
 
 label {
     font-size: 14px;
@@ -56,25 +60,25 @@ a {
     box-shadow: none;
 }
 
-    .btn:active {
-        outline: none;
-        box-shadow: none;
-    }
+.btn:active {
+    outline: none;
+    box-shadow: none;
+}
 
-    .btn:focus {
-        outline: none;
-        box-shadow: none;
-    }
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
 
-    .btn:active:focus {
-        outline: none;
-        box-shadow: none;
-    }
+.btn:active:focus {
+    outline: none;
+    box-shadow: none;
+}
 
-    .btn:hover {
-        outline: none;
-        box-shadow: none;
-    }
+.btn:hover {
+    outline: none;
+    box-shadow: none;
+}
 
 input.form-control {
     font-size: 15px;
@@ -85,9 +89,9 @@ input.form-control {
     padding: 10px;
 }
 
-    input.form-control:focus {
-        border: 1px solid #525252;
-    }
+input.form-control:focus {
+    border: 1px solid #525252;
+}
 
 /* -------------------------------------------------------------------- */
 
@@ -133,9 +137,9 @@ input.form-control {
     padding: 10px;
 }
 
-    input.form-control:focus {
-        border: 1px solid #525252;
-    }
+input.form-control:focus {
+    border: 1px solid #525252;
+}
 
 i.glyphicon.glyphicon-search {
     top: 4px;
@@ -229,9 +233,9 @@ textarea.form-control {
     padding-bottom: 15px;
 }
 
-    .right-box .row:last-child {
-        padding-bottom: 0px !important;
-    }
+.right-box .row:last-child {
+    padding-bottom: 0px !important;
+}
 
 .right-box {
     margin-top: 15px;
@@ -252,7 +256,7 @@ textarea.form-control {
 
 .navbar {
     border-bottom: none;
-    background-color: #00568D;
+    background-color: @color1;
 }
 
 .header-tilte {
@@ -263,7 +267,6 @@ textarea.form-control {
     color: #000;
 }
 
-
 .btn {
     font-size: 18px;
     border-radius: 2px;
@@ -271,105 +274,6 @@ textarea.form-control {
     padding-right: 20px;
     height: 40px;
 }
-
-
-.btnClass {
-    display: inline-block;
-    padding: 0 20px;
-    /* font: normal 1em/1.35em 'Lato', sans-serif; */
-    text-align: center;
-    font-size: 18px;
-    white-space: nowrap;
-    border-radius: 2px;
-    background: #c85000;
-    color: #fff;
-    height: 40px;
-    border: none;
-}
-
-    .btnClass:focus {
-        background: #E26A1A !important;
-        outline: none;
-    }
-
-.btnClass {
-    padding: 5px 20px;
-}
-
-
-    .btnClass:focus {
-        background: #E26A1A !important;
-        outline: none;
-        color: white;
-    }
-
-    .btnClass:hover {
-        background: #AF3700;
-        color: white;
-    }
-
-    .btnClass:active {
-        outline: none;
-        color: white;
-        box-shadow: none;
-    }
-
-        .btnClass:active:focus {
-            outline: none;
-            color: white;
-            box-shadow: none;
-        }
-
-
-
-.btnClass {
-    display: inline-block;
-    padding: 0 20px;
-    /* font: normal 1em/1.35em 'Lato', sans-serif; */
-    text-align: center;
-    font-size: 18px;
-    white-space: nowrap;
-    border-radius: 2px;
-    background: #c85000;
-    color: #fff;
-    height: 40px;
-   
-    border: none;
-}
-
-.btnClass:focus {
-    background: #E26A1A !important;
-    outline:none;
-}
-
-.btnClass {
-    padding: 5px 20px;
-}
-
-
-.btnClass:focus {
-   background: #E26A1A !important;
-   outline:none;
-   color:white;
-}
-
-.btnClass:hover {
-    background: #AF3700;
-    color:white;
-}
-
-.btnClass:active{
-     outline:none;
-      color:white;
-      box-shadow:none;
-}
-
-.btnClass:active:focus{
-  outline:none;
-  color:white;
-  box-shadow:none;
-}
-
 
 
 .username-col-white:hover {
@@ -410,18 +314,18 @@ textarea.form-control {
 
 .btn-col {
     color: #fff;
-    background: #C85000;
+    background: @color2;
 }
 
-    .btn-col:hover {
-        Background: #d0490f;
-        color: #fff;
-    }
+.btn-col:hover {
+    background-color: darken(@color2, 10%) !important;
+    color: #fff;
+}
 
-    .btn-col:focus {
-        background: #d0490f;
-        color: #fff;
-    }
+.btn-col:focus {
+    background: #d0490f;
+    color: #fff;
+}
 
 #body {
     padding-top: 15px;
@@ -434,7 +338,7 @@ body {
 .search-btn {
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: -15px;
 }
 
 .chevron {
@@ -461,10 +365,10 @@ body {
     overflow: hidden;
 }
 
-    #hierarchyVerticalScroll ul {
-        list-style: none;
-        overflow: hidden;
-    }
+#hierarchyVerticalScroll ul {
+    list-style: none;
+    overflow: hidden;
+}
 
 .marginTop20 {
     margin-top: 20px;
@@ -547,9 +451,9 @@ label {
     border: none;
 }
 
-    .box:first-child {
-        margin-left: 0px;
-    }
+.box:first-child {
+    margin-left: 0px;
+}
 
 .top-margin {
     margin-top: 10px !important;
@@ -589,6 +493,10 @@ span.glyphicon.glyphicon-home {
     margin: 0px;
 }
 
+.red {
+    background: #822434;
+}
+
 .silver {
     background: #777777;
 }
@@ -621,22 +529,22 @@ span.glyphicon.glyphicon-home {
     color: white;
 }
 
-    .btn-grey:hover {
-        background-color: #525252;
-        color: white;
-    }
+.btn-grey:hover {
+    background-color: darken(@color2, 10%) !important;
+    color: white;
+}
 
-    .btn-grey:active {
-        background-color: #a9a6a6;
-        color: white;
-        outline-offset: 0;
-    }
+.btn-grey:active {
+    background-color: #a9a6a6;
+    color: white;
+    outline-offset: 0;
+}
 
-    .btn-grey:focus {
-        background-color: #a9a6a6;
-        color: white;
-        outline: none !important;
-    }
+.btn-grey:focus {
+    background-color: #a9a6a6;
+    color: white;
+    outline: none !important;
+}
 
 .no-border-left {
     border-left: 0px !important;
@@ -838,9 +746,9 @@ q, blockquote {
     quotes: none;
 }
 
-    q:before, q:after {
-        content: '';
-    }
+q:before, q:after {
+    content: '';
+}
 
 small, big {
     font-size: 1em;
@@ -915,7 +823,7 @@ h1, h2, h3 {
     font-size: 18px;
     white-space: nowrap;
     border-radius: 2px;
-    background: #c85000;
+    background: @color2;
     color: #fff;
     height: 40px;
     line-height: 38px;
@@ -923,7 +831,7 @@ h1, h2, h3 {
 }
 
 .btn-primary {
-    background-color: #00568D;
+    background-color: @color1;
 }
 
 .m-top-7 {
@@ -1022,48 +930,48 @@ h1, h2, h3 {
     font-size: 18px;
     white-space: nowrap;
     border-radius: 2px;
-    background: #c85000;
+    background: @color2;
     color: #fff;
     height: 40px;
     line-height: 38px;
     border: none;
 }
 
-    .btnClass:focus {
-        background: #E26A1A !important;
-        outline: none;
-    }
+.btnClass:focus {
+    background: #E26A1A !important;
+    outline: none;
+}
 
 .btnClass {
     padding: 5px 20px;
 }
 
 
-    .btnClass:focus {
-        background: #E26A1A !important;
-        outline: none;
-        color: white;
-    }
+.btnClass:focus {
+    background: #E26A1A !important;
+    outline: none;
+    color: white;
+}
 
-    .btnClass:hover {
-        background: #AF3700;
-        color: white;
-    }
+.btnClass:hover {
+    background-color: darken(@color2, 10%) !important;
+    color: white;
+}
 
-    .btnClass:active {
-        outline: none;
-        color: white;
-        box-shadow: none;
-    }
+.btnClass:active {
+    outline: none;
+    color: white;
+    box-shadow: none;
+}
 
-        .btnClass:active:focus {
-            outline: none;
-            color: white;
-            box-shadow: none;
-        }
+.btnClass:active:focus {
+    outline: none;
+    color: white;
+    box-shadow: none;
+}
 
 .selected {
-    background-color: #00568d;
+    background-color: @color1;
     color: #fff;
 }
 
@@ -1103,15 +1011,15 @@ img.glif_icon {
     margin-top: -20px;
 }
 
-    .field-validation-error span:before {
-        content: "\e101";
-        font-family: 'Glyphicons Halflings';
-        line-height: 1;
-        margin: 10px 10px 0px 0px;
-        display: inline-block;
-        color: #e40a0a;
-        font-size: 12px;
-    }
+.field-validation-error span:before {
+    content: "\e101";
+    font-family: 'Glyphicons Halflings';
+    line-height: 1;
+    margin: 10px 10px 0px 0px;
+    display: inline-block;
+    color: #e40a0a;
+    font-size: 12px;
+}
 
 .validation-summary-errors {
     font-family: 'Lato', sans-serif;
@@ -1142,185 +1050,23 @@ img.glif_icon {
     color: #ccc;
 }
 
-
-
-/*Back to top Custom*/
-
-
-.glyphicon-chevron-up {
-    padding: 7px;
-    color: white;
-    background-color: #C85000;
-    border-radius: 360px;
-    font-size: 183%;
-    color:white;
-}
-
-.backToTop {
-    margin-left: 65px;
-    margin-top: 10px;
-    margin-top: 18px;
-}
-#IsBackToTopEnabled {
-display:none;
-}
-.group-trash-content {
-    font-size: 13px;
-    cursor: pointer;
-    margin-left: 18px;
-    color: red;
-}
-
-.group-edit-content {
-    font-size: 13px;
-    cursor: pointer;
-    margin-left: 9px;
-}
-
-.m-b-Content {
-    margin-left: 40px;
-}
-
-.content-btns {
-    margin-left: 53px;
-    font-size: 18px !important;
-    margin-top: 20px;
-    color: #fff;
-    background: #C85000;
-    padding: 5px 20px;
-    border-radius: 2px;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 40px;
-}
-
-    .content-btns:hover {
-        background: #AF3700;
-        color: white;
-    }
-
-.contents-page {
-    margin-left: 40px;
-    margin-right: 40px;
-}
-
-.bottom-border {
-    border-bottom: 1px solid #ccc;
-}
-
-.form-label {
-    margin-top: 10px;
-    padding-bottom: 10px;
-    margin-left: -13px;
-}
-
-.maincontent {
-    background-color: white;
-    border: 2px solid lightgrey;
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 15px;
-}
-
-.chevron {
-    padding-top: 7px;
-    font-size: 25px;
-    width: 44px;
-}
-
-.hierarchy {
-    position: absolute;
-    z-index: 100;
-}
-
-.input-width {
-    margin-right: 10px;
-    margin-left: 10px;
-}
-/* Working  */
-span.seach-icon {
-    position: absolute;
-    left: 5px;
-    top: 8px;
-}
-/* Auto Complete Changes*/
-
-.autocomplete {
-    /*the container must be positioned relative:*/
-    position: relative;
-    display: inline-block;
-}
-
-.autocomplete-items {
-    position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 110;
-    /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
-    left: 0;
-    right: 0;
-}
-
-    .autocomplete-items div {
-        padding: 10px;
-        padding-left: 25px;
-        position: relative;
-        cursor: pointer;
-        background-color: #fff;
-        border-bottom: 1px solid #d4d4d4;
-    }
-
-        .autocomplete-items div:hover {
-            /*when hovering an item:*/
-            background-color: #e9e9e9;
-        }
-
-.autocomplete-active {
-    /*when navigating through the items using the arrow keys:*/
-    background-color: DodgerBlue !important;
-    color: #ffffff;
-}
-
-
-.right-addon .glyphicon {
-    padding: 0px !important;
-    padding-top: 7px !important;
-}
-
-.md-autocomplete {
-    max-width: fit-content;
-}
-
-.search-btn {
-    margin: 0px !important;
-}
-
-.paddingBot20Pixel {
-    padding-bottom: 20px;
-}
-
-.paddingTop03EM {
-    padding-top: 0.3em;
-}
-
-.MainbackToTop {
-    margin-right: 65px;
-    margin-top: 18px;
-    padding-bottom: 30px;
-}
-
-.MainbackToTopIcon {
-    padding: 7px;
-    color: white;
-    background-color: #C85000;
-    border-radius: 360px;
-    font-size: 183%;
-    color: white;
-}
 .navbar-inverse {
     background-color: #3477a5;
-    border-color: #fff0f5; 
+    border-color: #fff0f5;
 }
 
+.red_box {
+    background-color: @color1;
+}
+
+.silver {
+    background: @color2;
+}
+
+.btn-warning:focus {
+    background-color: @color2 !important;
+}
+
+.btnClass:focus {
+    background-color: @color2 !important;
+}
