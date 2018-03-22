@@ -86,21 +86,39 @@
 
                         <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
 
-                            <div ng-repeat="cb in contentObj.content" class="form-group" ng-if="cb.dataType.name == 'Color Picker'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
+                            <div ng-repeat="cb in contentObj.content" class="form-group" ng-if="cb.dataType.name == 'Color Picker'" ng-init="newContent.Value = cb.value; newContent.preVal = cb.name;">
                                 <div class="col-xs-12 col-sm-5 paddingTop03EM"> {{cb.name}}</div>
                                 <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
                                     <span class="input-group-addon" ng-style="{'background-color':cb.value}"></span>
-                                    <input colorpicker class="form-control" ng-model="cb.value" type="text" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
+                                    <input colorpicker class="form-control" ng-model="cb.value" type="text" ng-focus="newContent.showIcons = true;newContent.checkName = cb.name;valueChange = false;" ng-change="valueChange = true" />
+                                    <span ng-init="contentObj.getValue(cb.value,cb) "></span>
+                                    <span ng-if="newContent.showIcons  && cb.name == newContent.checkName" class="rightspace">
+                                        <span ng-click="contentObj.editContentCustomizeBranding(cb,cb.value);" class="save glyphicon glyphicon-ok-sign"></span>
+                                        <span ng-if="cb.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(cb.value,cb)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                    </span>
+
                                 </div>
 
                             </div>
-                            <div ng-repeat="cb in contentObj.content" class="form-group" ng-if="cb.dataType.name == 'Text'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name">
+                            <div ng-repeat="cb in contentObj.content" class="form-group" ng-if="cb.dataType.name == 'Text'" ng-init="newContent.Value = cb.value; newContent.Name = cb.name;">
                                 <div class="col-xs-12 col-sm-5 paddingTop03EM">{{cb.name}}</div>
                                 <div class="input-group col-xs-12 col-sm-7" title="">
-                                    <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-blur="contentObj.editContentCustomizeBranding(cb,cb.value);" />
+                                    <input type="text" class="form-control input-lg custom-input" ng-model="cb.value" ng-focus="newContent.showIcons = true;newContent.checkName = cb.name;valueChange = false;" ng-change="valueChange = true" />
+                                    <span ng-init="contentObj.getValue(cb.value,cb)"></span>
+                                    <span ng-if="newContent.showIcons  && cb.name == newContent.checkName">
+                                        <span ng-click="contentObj.editContentCustomizeBranding(cb,cb.value);" class="save glyphicon glyphicon-ok-sign"></span>
+                                        <span ng-if="cb.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(cb.value,cb)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                    </span>
+
                                 </div>
                             </div>
-                            
+                            <div ng-repeat="cb in contentObj.content" class="form-group" ng-if="cb.dataType.name == 'Image'">
+                                <div class="col-xs-12 col-sm-5 paddingTop03EM">{{cb.name}}</div>
+                                <div class="input-group col-xs-12 col-sm-7" title="">
+                                    <img style="width:150px;" class="img-responsive" ng-src="{{cb.value}}" />
+
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="customize-help-text">
                                     <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>

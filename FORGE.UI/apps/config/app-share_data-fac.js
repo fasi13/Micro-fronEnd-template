@@ -160,3 +160,22 @@
     return contentGroups;
 
 })
+.factory('logoimg', function ($rootScope) {
+
+    var img = {};
+    img.url= {};
+   
+
+    img.setURL= function (img) {
+        this.url = img;
+
+        this.update();
+    }
+   
+    img.update = function () {
+        $rootScope.$broadcast('updatelogoIMG');
+    };
+
+    return img;
+
+})

@@ -20,7 +20,7 @@
                             views: {
                                 '': {
                                     templateUrl: 'apps/views/_dashboard.html',
-                                    controller: ['$cookies', '$state', function ($cookies, $state) {
+                                    controller: ['$scope', '$cookies', '$state', 'logoimg', function ($scope,$cookies, $state, logoimg) {
                                         var db = this,
                                             model = JSON.parse(sessionStorage._contentManagement),
                                             linkList = [];
@@ -35,7 +35,10 @@
                                                 href: v._links[0].href
                                             });
                                         });
+                                        $scope.$on("updatelogoIMG", function () {
 
+                                           $scope.logoURL= logoimg.url;
+                                        });
                                         db.links = linkList;
                                         db.logout = function () {
                                             if (typeof $cookies.get('profile') !== const_auth.undefined) {

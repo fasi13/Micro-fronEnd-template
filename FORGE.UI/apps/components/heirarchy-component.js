@@ -15,7 +15,7 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy, logoimg) {
         var self = this;
         self.data = [];
         $scope.parent = [];
@@ -23,6 +23,7 @@
         var hc = this;
         $scope.searchBox = {};
         hc.isCollapsed = true;
+        $scope.clicked_node = {};
         var baseApplicationUrl = JSON.parse(sessionStorage.getItem("baseApplicationUrl"));
 
 
@@ -400,12 +401,16 @@
 
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
-
-
+           
+           
+            
+            
+           
+          
 
         });
         $scope.$on('CreateHierarchyRightContent', function () {
-
+           
             angular.forEach(update_brandingContent.node, function (attributeVal, attributeKey) {
                 if (attributeVal.name == "Primary Color") {
                     var color = attributeVal.value;
@@ -431,6 +436,7 @@
                     $scope.hierarchyRightContentCustomerServiceNumber = attributeVal.value;
                 }
                 if (attributeVal.name == "Primary Logo") {
+                    logoimg.setURL(attributeVal.value);
                     $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
                 }
                 if (attributeVal.name == "Site URL") {
@@ -439,8 +445,9 @@
                 if (attributeVal.name == "Program Name") {
                     $scope.hierarchyRightContentCreditUnionName = attributeVal.value;
                 }
-                isColorFilled();
-
+               
+                    isColorFilled();
+               
             });
 
         });
@@ -450,13 +457,18 @@
                 $timeout(function () { isColorFilled(); }, 0);
             }
             else {
+                
                 less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
             }
         }
-        function classChange() {
+        $scope.showSelected = function () {
+            var unique = $scope.clicked_node.unique;
+            updateSelectedNode(unique);
+        }
+        $scope.classChange =  function () {
 
             var selectedItem = $(".selected");
-
+           
             var scrollPosition = 0;
             var scrollPosition = selectedItem.position().top;
             $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
@@ -478,7 +490,7 @@
                     for (var i = 0; i < span.length; i++) {
                         if (angular.element(span[i]).hasClass('ivh-treeview-node-label')) {
                             angular.element(span[i]).addClass("selected");
-                            classChange();
+                            $scope.classChange();
                             break;
                         }
                     }
@@ -503,8 +515,8 @@
             $window.alert('Branding Contents load failed');
         }
         function CreateHierarchyRightContent(contentURL) {
-
-
+           
+           
             getHierarchyBrandingAttributes(contentURL, "Primary Color"),
             getHierarchyBrandingAttributes(contentURL, "Secondary Color"),
             getHierarchyBrandingAttributes(contentURL, "Customer Service Phone Number"),
@@ -558,12 +570,12 @@
         }
 
         $scope.config_breadcrumb = function (currentNode) {
-
             $scope.searchBox.text = "";
             // Get branding....
+           
             angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
                 if (linksVal.rel == "contents") {
-                    CreateHierarchyRightContent(linksVal.href);
+                    CreateHierarchyRightContent(linksVal.href,true);
                 }
             });
 
@@ -740,7 +752,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', 'logoimg', controller],
             controllerAs: 'hc'
         });
 

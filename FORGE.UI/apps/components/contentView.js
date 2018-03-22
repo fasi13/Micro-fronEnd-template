@@ -25,10 +25,11 @@
 
     $scope.contentObj = {};
     $scope.isCustomControls = false;
-
+    $scope.newContent = {};
+    $scope.newContent.showIcons = false;
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = $stateParams.obj;
-
+    $scope.copyContent = [];
 
     if ($scope.contentObj.completeObj != null) {
 
@@ -39,6 +40,40 @@
         var _token = JSON.parse($cookies.get('profile'))._token;
     }
 
+    $scope.contentObj.setPreviousValue = function (newval,obj) {
+      
+        for (var i = 0; i < $scope.contentObj.content.length; i++) {
+
+            if (obj.id == $scope.contentObj.content[i].id) {
+
+                for (var j = 0; j < $scope.copyContent.length; j++) {
+
+                    if ($scope.contentObj.content[i].id == $scope.copyContent[j].id) {
+
+                        $scope.contentObj.content[i].value = $scope.copyContent[j].value;
+                        $scope.newContent.showIcons = false;
+                       
+                        break;
+                        
+                    }
+
+            }
+            
+
+
+            }
+        }
+      
+    }
+    $scope.contentObj.getValue = function (value,obj) {
+
+       
+        if (!$scope.newContent.showIcons) {
+            $scope.copyContent.push({id:angular.copy(obj.id),value:angular.copy(value)})
+           
+
+        }
+    }
     function getDataTypes(url) {
 
 
@@ -183,7 +218,8 @@
 
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
-
+        $scope.newContent.showIcons = false;
+       
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,

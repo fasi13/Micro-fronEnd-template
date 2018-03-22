@@ -13,7 +13,7 @@
         <div class="col-md-1 col-xs-1 text-right" ng-click="hc.isCollapsed = !hc.isCollapsed">
             <a>
                 <i ng-class="{'chevron glyphicon glyphicon-chevron-right': hc.isCollapsed,
-                                    'chevron glyphicon glyphicon-chevron-down':!hc.isCollapsed}"></i>
+                                    'chevron glyphicon glyphicon-chevron-down':!hc.isCollapsed}" ng-click="showSelected()"></i>
             </a>
 
         </div>
@@ -54,12 +54,12 @@
 
                         <div class="row">
                             <div class="text-left col-sm-4"><label>Color Scheme: </label></div>
-                            <div class="text-left col-sm-8"><div class="color-tag"><div class="box red_box"></div><p>P</p> <div class="box silver"></div><p>S</p></div></div>
+                            <div class="text-left col-sm-8"><div class="color-tag"><div class="box "  ng-style="{'background-color':hierarchyRightContentPrimaryColor}"></div><p>P</p> <div class="box "  ng-style="{'background-color':hierarchyRightContentSecondaryColor}"></div><p>S</p></div></div>
 
                         </div>
                         <div class="row">
                             <div class="text-left col-sm-4"><label>Credit Union Name: </label></div>
-                            <div class="text-left col-sm-8"><h3>{{hierarchyRightContentCreditUnionName}}</h3></div>
+                            <div class="text-left col-sm-8"><h3 ng-bind-html="hierarchyRightContentCreditUnionName"></h3></div>
                         </div>
                         <div class="row">
                             <div class="text-left col-sm-4"><label>Credit Union Logo: </label></div>

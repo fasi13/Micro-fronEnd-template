@@ -1051,10 +1051,14 @@ and dependencies (minified).
 
                             setTimeout(function () {
                                 var scrollTop = $('#hierarchyVerticalScroll').find(".mCSB_dragger").position().top;
+
                                 if (scrollTop == 0) {
                                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
                                 }
-                                if (scrollTop > 0) {
+                                if ($('.mCS_no_scrollbar_y').length == 1) {
+                                    document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
+                                }
+                                if (scrollTop > 0 && $('.mCS_no_scrollbar_y').length == 0) {
                                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "block";
                                 }
                             }, 200);
@@ -1075,7 +1079,10 @@ and dependencies (minified).
                                 if (scrollTop == 0) {
                                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
                                 }
-                                if (scrollTop > 0) {
+                                if ($('.mCS_no_scrollbar_y').length == 1) {
+                                    document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
+                                }
+                                if (scrollTop > 5 && $('.mCS_no_scrollbar_y').length == 0) {
                                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "block";
                                 }
                             }, 200);
@@ -2151,7 +2158,10 @@ $(document).ready(function () {
                 if (scrollTop == 0) {
                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
                 }
-                if (scrollTop > 0) {
+                if ($('.mCS_no_scrollbar_y').length == 1) {
+                    document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
+                }
+                if (scrollTop > 0 && $('.mCS_no_scrollbar_y').length == 0) {
                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "block";
                 }
             }, 200);
@@ -2171,7 +2181,10 @@ $(document).ready(function () {
                 if (scrollTop == 0) {
                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
                 }
-                if (scrollTop > 0) {
+                if ($('.mCS_no_scrollbar_y').length == 1) {
+                    document.getElementById("IsBackToTopHierarchyEnabled").style.display = "none";
+                }
+                if (scrollTop > 0 && $('.mCS_no_scrollbar_y').length == 0) {
                     document.getElementById("IsBackToTopHierarchyEnabled").style.display = "block";
                 }
             }, 200);
