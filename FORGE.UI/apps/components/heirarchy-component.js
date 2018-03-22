@@ -15,7 +15,7 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy) {
         var self = this;
         self.data = [];
         $scope.parent = [];
@@ -52,8 +52,9 @@
 
                 updateSelectedNode($scope.root.unique);
                 $scope.clicked_node = $scope.root; // for branding content
-                $scope.config_breadcrumb($scope.root);
                 $scope.toggleRootNode($scope.root.unique);
+                $scope.config_breadcrumb($scope.root);
+               
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
             } else {
                 $window.alert('Hierarchy load failed' + result.error);
@@ -67,33 +68,8 @@
         self.showTree = true;
 
         // start of search implementation
-        $scope.startSearch = function (myobj) {
-            var node = hc.data[0];
-            if (myobj != undefined) {
-                hc.isCollapsed = false;
-                $scope.requiredNode = myobj.path[myobj.path.length - 1];
-                $scope.nodePath = [];
-                $scope.nodePath = myobj.path;
-
-                node.click = "autoClick";
-
-                if (node.children.length > 1 || node.children.length == 1) {
-                    node.children = [];
-                    node.children.push({
-                        label: 'Loading...',
-                        id: 0,
-                        type: 'DEL',  //Use for determine whether to load from server or delete the node
-                        children: []
-                    });
-                }
-                $scope.toggleRootNode(node.unique);
 
 
-
-                $scope.currentNodeChild = [];
-
-            }
-        }
         function containNode(id) {
             if (id == undefined) {
 
@@ -116,6 +92,11 @@
         }
 
 
+        $scope.$on("collapseHierarchy", function () {
+
+            hc.isCollapsed = true;
+        });
+
         $scope.search = function (text) {
             $scope.text_val = text;
 
@@ -134,6 +115,7 @@
 
 
             var a, b, s, i, val = $scope.text_val;
+
             /*close any already open lists of autocompleted values*/
             closeAllLists();
             if (!val) { return false; }
@@ -159,6 +141,10 @@
                     if (indexvalue !== -1) {
                         /*create a DIV element for each matching element:*/
                         b = document.createElement("DIV");
+                        var attr = document.createAttribute("id");
+                        attr.value = "element" + i;
+                        var objectAttr = document.createAttribute("object");
+                        objectAttr.value = arr[i];
                         s = document.createElement("SPAN");
                         s.innerHTML = '<span class="seach-icon glyphicon glyphicon-search"></span>';
 
@@ -174,13 +160,17 @@
                             }
 
                         }
-                        b.onclick = getClickedValue.bind(self, arr[i]);
+                        b.onclick = startSearch.bind(self, arr[i]);
+                        b.setAttributeNode(attr);
+                        b.setAttributeNode(objectAttr);
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.appendChild(s);
                         a.appendChild(b);
                     }
                 }
             }
+
+
             /*execute a function presses a key on the keyboard:*/
 
             function closeAllLists(elmnt) {
@@ -200,7 +190,53 @@
 
         }
 
+        $scope.handleKeyEvents = function (event) {
+            if ($scope.searchResult != null) {
+              
+                if (event.keyCode === 13) {
+                    var clickedObject = null;
+                    for (var k = 0; k < $scope.searchResult.length; k++) {
 
+                        if (k === $scope.countarrowDown) {
+                            clickedObject = $scope.searchResult[k];
+                            break;
+                        }
+                    }
+                    if (clickedObject != null) {
+                        startSearch(clickedObject);
+                    }
+
+                    var x = document.getElementsByClassName("autocomplete-items");
+                    for (var i = 0; i < x.length; i++) {
+                       
+                            x[i].parentNode.removeChild(x[i]);
+                       
+                    }
+
+                }
+                if (event.keyCode === 38) {
+                    $scope.countarrowDown--;
+                  
+                    $(".autocomplete-items div").css("background-color", "#fff");
+                    var parentDiv = document.getElementsByClassName("autocomplete-items");
+                    var element = parentDiv[0].childNodes[$scope.countarrowDown];
+                    $(element).css("background-color", "#e9e9e9");
+
+                }
+                if (event.keyCode === 40) {
+                    $scope.countarrowDown++;
+                    if ($scope.countarrowDown == $scope.searchResult.length){
+                        $scope.countarrowDown=0;
+                    }
+                    $(".autocomplete-items div").css("background-color", "#fff");
+                    var parentDiv = document.getElementsByClassName("autocomplete-items");
+                    var element = parentDiv[0].childNodes[$scope.countarrowDown];
+                    $(element).css("background-color", "#e9e9e9");
+
+                }
+            }
+
+        }
 
         function openNode() {
 
@@ -222,11 +258,36 @@
 
         }
 
-        function getClickedValue(myobj) {
+        function startSearch(selectedObject) {
 
-            $scope.searchBox.text = myobj.name;
-            $scope.searchResponseObject = myobj;
-            $scope.$apply();
+            $scope.searchBox.text = selectedObject.name;
+            $scope.searchResponseObject = selectedObject;
+          
+            var node = hc.data[0];
+            if (selectedObject != undefined) {
+                hc.isCollapsed = false;
+                $scope.requiredNode = selectedObject.path[selectedObject.path.length - 1];
+                $scope.nodePath = [];
+                $scope.nodePath = selectedObject.path;
+
+                node.click = "autoClick";
+
+                if (node.children.length > 1 || node.children.length == 1) {
+                    node.children = [];
+                    node.children.push({
+                        label: 'Loading...',
+                        id: 0,
+                        type: 'DEL',  //Use for determine whether to load from server or delete the node
+                        children: []
+                    });
+                }
+                $scope.toggleRootNode(node.unique);
+
+
+
+                $scope.currentNodeChild = [];
+
+            }
 
 
         }
@@ -254,9 +315,11 @@
                     var newNode = containNode(appId);
                     if (!newNode.IsApplicationGroup) {
                         newNode.click = "autoClick";
+                        update_breadcrumbs.set_text(newNode, $scope.root);
                         $scope.toggleRootNode(newNode.unique);
                         openNode(hc.data[0].unique);
                         updateSelectedNode(newNode.unique);
+                        
                     }
                 }
 
@@ -324,7 +387,7 @@
                 $scope.searchResult.push(matchItem);
 
             }
-
+            $scope.countarrowUp = -1, $scope.countarrowDown = -1;
             autocomplete(document.getElementById("myInput"), $scope.searchResult);
 
         }
@@ -373,8 +436,9 @@
                 if (attributeVal.name == "Site URL") {
                     $scope.hierarchyRightContentCreditUnionURL = attributeVal.value;
                 }
-
-                $scope.hierarchyRightContentCreditUnionName = $scope.clicked_node.label;
+                if (attributeVal.name == "Program Name") {
+                    $scope.hierarchyRightContentCreditUnionName = attributeVal.value;
+                }
                 isColorFilled();
 
             });
@@ -388,6 +452,14 @@
             else {
                 less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
             }
+        }
+        function classChange() {
+
+            var selectedItem = $(".selected");
+
+            var scrollPosition = 0;
+            var scrollPosition = selectedItem.position().top;
+            $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
         }
 
         function updateSelectedNode(uniqueId) {
@@ -406,6 +478,7 @@
                     for (var i = 0; i < span.length; i++) {
                         if (angular.element(span[i]).hasClass('ivh-treeview-node-label')) {
                             angular.element(span[i]).addClass("selected");
+                            classChange();
                             break;
                         }
                     }
@@ -437,7 +510,7 @@
             getHierarchyBrandingAttributes(contentURL, "Customer Service Phone Number"),
             getHierarchyBrandingAttributes(contentURL, "Primary Logo"),
             getHierarchyBrandingAttributes(contentURL, "Site URL");
-
+            getHierarchyBrandingAttributes(contentURL, "Program Name");
 
         }
         function getHierarchyBrandingAttributes(contentURL, attribute) {
@@ -450,18 +523,43 @@
             });
 
         }
+
+        function navigateToCustomizeBranding() {
+
+            var rootElement = document.getElementById("contentGroup4");
+
+            if (rootElement == null) {
+
+                $timeout(function () {
+                    navigateToCustomizeBranding();
+
+                });
+
+            }
+            $timeout(function () {
+                angular.element(rootElement).triggerHandler('click');
+
+            });
+
+
+        }
+
         function temporarilyNavigateToContentManagement() {
 
             var rootElement = document.getElementById("contentManagementSection");
 
             $timeout(function () {
+
                 angular.element(rootElement).triggerHandler('click');
+                navigateToCustomizeBranding();
+
             });
 
         }
 
         $scope.config_breadcrumb = function (currentNode) {
 
+            $scope.searchBox.text = "";
             // Get branding....
             angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
                 if (linksVal.rel == "contents") {
@@ -581,6 +679,12 @@
 
         }
         $scope.toggleRootNode = function (uniqueId) {
+
+
+           
+
+
+
             var rootElement = document.getElementById(uniqueId);
 
             if (rootElement == null) {
@@ -598,6 +702,9 @@
         }
 
         $scope.toggleBreadCrumb = function (node) {
+
+            hc.isCollapsed = false;
+
             if ($scope.bread_text.length > 0) {
                 toggleNodes(node);
                 if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
@@ -633,7 +740,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', controller],
             controllerAs: 'hc'
         });
 

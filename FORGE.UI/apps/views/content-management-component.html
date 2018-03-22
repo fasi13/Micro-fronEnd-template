@@ -20,7 +20,7 @@
                     <div class="row form-label" ng-repeat="item in contentGroup.content track by item.id">
 
                         <div class="col-sm-4">
-                            <a href="#">{{item.name}}</a>
+                            <a  ng-click="contentGroup.loadContents(item)">{{item.name}}</a>
                         </div>
 
                         <div class="col-sm-6">

@@ -120,3 +120,43 @@
     return shareObj;
 
 })
+.factory('collapseHierarchy', function ($rootScope) {
+
+    var collapseObj = {};
+    collapseObj.collapse = true;
+    collapseObj.closeHierarchy = function () {
+        this.collapse = true;
+       
+        this.update();
+    }
+
+    collapseObj.update = function () {
+        $rootScope.$broadcast('collapseHierarchy');
+    };
+
+    return collapseObj;
+
+})
+.factory('gotoContentViewState', function ($rootScope) {
+
+    var contentGroups = {};
+    contentGroups.groups = {};
+    contentGroups.auto = false;
+   
+    contentGroups.gotoContentView = function (contentGroups) {
+        this.groups = contentGroups;
+       
+        this.update();
+    }
+    contentGroups.setAuto = function (isAuto) {
+      
+        this.auto = isAuto;
+        this.update();
+    }
+    contentGroups.update = function () {
+        $rootScope.$broadcast('gotoContentViewState');
+    };
+
+    return contentGroups;
+
+})

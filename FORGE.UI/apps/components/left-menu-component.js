@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    function controller($scope, $log, $state, $rootScope, $cookies, apiService, update_breadcrumbs, updateContentGroup) {
+    function controller($scope, $log, $state, $rootScope, $cookies, apiService, update_breadcrumbs, updateContentGroup, collapseHierarchy, gotoContentViewState) {
         var lm = this;
         
         lm.status = {
@@ -13,12 +13,22 @@
         $scope.lmc = {};
 
         var _token = JSON.parse($cookies.get('profile'))._token;
-        $scope.lmc.loadContentGroups = function () {
+
+        $scope.lmc.loadContentGroups = function (auto) {
+            collapseHierarchy.closeHierarchy();
+           
+            if (!auto) {
+
+                gotoContentViewState.setAuto(false);
+
+
+            }
             $scope.lmc.clickedNode = update_breadcrumbs.configuredNode._links;
 
             if ($scope.lmc.clickedNode != null && IsContentGroupExist($scope.lmc.clickedNode)) {
 
                 $scope.lmc.contentGroupsList = [];
+                
                 $scope.lmc.dataTypeURL = getdataTypeURL($scope.lmc.clickedNode);
 
 
@@ -39,7 +49,7 @@
 
         }
 
-
+       
         function getdataTypeURL(links) {
             for (var i = 0; i < links.length; i++) {
 
@@ -62,6 +72,11 @@
         }
 
         $scope.lmc.loadContents = function (content) {
+
+           
+
+            collapseHierarchy.closeHierarchy();
+           
             $scope.lmc.contentName = content.name;
             var url, links = content._links;
             for (var i = 0; i < links.length; i++) {
@@ -85,10 +100,10 @@
         function contentLoadSuccessfully(response) {
             
             $scope.lmc.contents = response.data.data;
-           
+            
             $scope.lmc.contents.dataTypeURL = $scope.lmc.dataTypeURL;
             
-            $state.go("dashboard.content-view", { obj: JSON.stringify($scope.lmc.contents), name: $scope.lmc.contentName});
+            $state.go("dashboard.content-view", { obj: ($scope.lmc.contents), name: $scope.lmc.contentName});
 
 
         }
@@ -117,14 +132,23 @@
                 }
             }
         }
+        $scope.lmc.autoGotoContentViewState =  function () {
+           
+            gotoContentViewState.setAuto(true);
+            $scope.lmc.loadContentGroups(true);
+        }
         function contentGroupsLoadSuccessfully(result) {
 
-
+           
  
-                $scope.lmc.contentGroupsList = result.data.data;
+            $scope.lmc.contentGroupsList = result.data.data;
 
-                $state.go('dashboard.content-management', { obj: $scope.lmc.contentGroupsList, dataTypeURL:$scope.lmc.dataTypeURL });
+           
+            if (!gotoContentViewState.auto) {
 
+          
+                $state.go('dashboard.content-management', { obj: $scope.lmc.contentGroupsList, dataTypeURL: $scope.lmc.dataTypeURL });
+            }
 
 
 
@@ -154,7 +178,7 @@
        .module('app_leftMenuComponent',[])
        .component('leftMenuComponent', {
            templateUrl: 'apps/views/left-menu-component.html',
-           controller: ['$scope','$log', '$state', '$rootScope','$cookies', 'apiService', 'update_breadcrumbs','updateContentGroup', controller],
+           controller: ['$scope','$log', '$state', '$rootScope','$cookies', 'apiService', 'update_breadcrumbs','updateContentGroup','collapseHierarchy','gotoContentViewState', controller],
            controllerAs: 'lm',
            bindings: {
                navLinks: '<',

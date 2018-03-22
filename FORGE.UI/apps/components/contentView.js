@@ -20,23 +20,23 @@
 
 
 
-.controller("contentView", function ($scope,$state, $stateParams, $cookies, $http, $state) {
-
+.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $state) {
 
 
     $scope.contentObj = {};
     $scope.isCustomControls = false;
+
     var _token = JSON.parse($cookies.get('profile'))._token;
-    $scope.contentObj.completeObj = JSON.parse($stateParams.obj);
+    $scope.contentObj.completeObj = $stateParams.obj;
 
 
     if ($scope.contentObj.completeObj != null) {
+
         $scope.contentObj.content = $scope.contentObj.completeObj.content;
         $scope.contentObj.dataTypeURL = $scope.contentObj.completeObj.dataTypeURL;
         getDataTypes($scope.contentObj.dataTypeURL);
-    }
-    else {
-        $state.go("dashboard.content-management");
+        $scope.contentObj.content_name = $stateParams.name;
+        var _token = JSON.parse($cookies.get('profile'))._token;
     }
 
     function getDataTypes(url) {
@@ -57,8 +57,7 @@
             console.log(error);
         })
     }
-    $scope.contentObj.content_name = $stateParams.name;
-    var _token = JSON.parse($cookies.get('profile'))._token;
+
 
     $scope.contentObj.createContent = function (content) {
         var url, links;
@@ -101,7 +100,7 @@
           };
       }
       $scope.contentObj.content.push(tempContent);
-   
+
       $scope.myform.$submitted = false;
       $scope.newContent = {};
       $('#editContent').modal('hide');
@@ -116,7 +115,8 @@
     }
 
     $scope.contentObj.check_displayasList = function (content) {
-        if (content.length == 0) {
+
+        if (content == undefined || content.length == 0) {
             return true;
         }
 

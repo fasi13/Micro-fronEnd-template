@@ -10,17 +10,18 @@
         </div>
         <div uib-accordion-group class="panel-default" is-open="status.isContentMgmt">
             <uib-accordion-heading>
-                <span ng-click="lmc.loadContentGroups()" id="contentManagementSection">
+                <span ng-click="lmc.loadContentGroups(false)">
                     <span class="glyphicon glyphicon-hdd"></span> CONTENT MANAGEMENT
-                    <i class="pull-right glyphicon"
-                       ng-class="{'glyphicon-chevron-down': status.isContentMgmt, 'glyphicon-chevron-right': !status.isContentMgmt}"></i>
                 </span>
+                    <i class="pull-right glyphicon"  ng-click="lmc.autoGotoContentViewState()"
+                       ng-class="{'glyphicon-chevron-down': status.isContentMgmt, 'glyphicon-chevron-right': !status.isContentMgmt}" id="contentManagementSection"></i>
+                
             </uib-accordion-heading>
             <ul class="list-unstyled">
                 <li ng-repeat="content in lmc.contentGroupsList.items track by content.id">
 
 
-                    <a ng-click="lmc.loadContents(content)">{{content.name}}</a>
+                    <a ng-click="lmc.loadContents(content)" id="contentGroup{{content.id}}">{{content.name}}</a>
 
 
 

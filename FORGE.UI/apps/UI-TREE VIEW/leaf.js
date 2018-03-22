@@ -74,7 +74,7 @@ app.directive('leaf', function (tree, ivhTreeviewMgr, $window, apiService, $cook
                         scrollButtons: {
                             enable: true
                         },
-                        scrollInertia: 500,
+                        scrollInertia: 0,
                         advanced: {
                             autoScrollOnFocus: false,
                             updateOnContentResize: true

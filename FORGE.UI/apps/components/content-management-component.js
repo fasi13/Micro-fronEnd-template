@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controller = function ($scope, $stateParams, $cookies, $http, updateContentGroup) {
+    var controller = function ($scope, $stateParams, $cookies, $http, updateContentGroup, apiService, $state, update_breadcrumbs) {
 
         $scope.contentGroup = {};
         var _token = JSON.parse($cookies.get('profile'))._token;
@@ -11,6 +11,60 @@
             $scope.contentGroup.dataTypeURL = $stateParams.dataTypeURL;
             getDataTypes($scope.contentGroup.dataTypeURL);
         }
+
+        $scope.contentGroup.loadContents = function (content) {
+
+          
+
+            $scope.contentGroup.contentName = content.name;
+            $scope.clickedNode = update_breadcrumbs.configuredNode._links;
+            $scope.contentGroup.dataTypeURL = getdataTypeURL($scope.clickedNode);
+            var url, links = content._links;
+            for (var i = 0; i < links.length; i++) {
+
+                if (links[i].rel == "self") {
+                    url = links[i].href;
+                }
+            }
+
+            apiService.get(url + "?content=true",
+                                    contentLoadSuccessfully,
+                                    contentLoadFailed, _token);
+
+        }
+
+        function getdataTypeURL(links) {
+           
+            for (var i = 0; i < links.length; i++) {
+
+                if (links[i].rel == "self") {
+
+                    return links[i].href + "/dataTypes";
+                }
+            }
+
+        }
+
+        function contentLoadFailed(data) {
+
+            console.log(data);
+        }
+
+
+
+        function contentLoadSuccessfully(response) {
+
+            $scope.contentGroup.content = response.data.data.content;
+
+            $scope.contentGroup.content.dataTypeURL = $scope.contentGroup.dataTypeURL;
+
+            
+            $state.go("dashboard.content-view", { obj: ($scope.contentGroup), name: $scope.contentGroup.contentName });
+
+
+        }
+
+
         function getDataTypes(url) {
             
             $http.get(url, {
@@ -152,7 +206,7 @@
 
 
 
-    controller.$inject = ['$scope', '$stateParams', '$cookies', '$http', 'updateContentGroup'];
+    controller.$inject = ['$scope', '$stateParams', '$cookies', '$http', 'updateContentGroup', 'apiService', '$state', 'update_breadcrumbs'];
 
 
 
