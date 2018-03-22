@@ -15,7 +15,7 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy, logoimg) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy, logoimg, updateConfigNode) {
         var self = this;
         self.data = [];
         $scope.parent = [];
@@ -51,12 +51,15 @@
                 self.data = tree.genNode(result.data.data, null, true);
                 $scope.root = self.data[0];
 
-                updateSelectedNode($scope.root.unique);
                 $scope.clicked_node = $scope.root; // for branding content
+
+                updateSelectedNode($scope.root.unique);
                 $scope.toggleRootNode($scope.root.unique);
+
                 $scope.config_breadcrumb($scope.root);
-               
+
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
+
             } else {
                 $window.alert('Hierarchy load failed' + result.error);
             }
@@ -193,7 +196,7 @@
 
         $scope.handleKeyEvents = function (event) {
             if ($scope.searchResult != null) {
-              
+
                 if (event.keyCode === 13) {
                     var clickedObject = null;
                     for (var k = 0; k < $scope.searchResult.length; k++) {
@@ -209,15 +212,15 @@
 
                     var x = document.getElementsByClassName("autocomplete-items");
                     for (var i = 0; i < x.length; i++) {
-                       
-                            x[i].parentNode.removeChild(x[i]);
-                       
+
+                        x[i].parentNode.removeChild(x[i]);
+
                     }
 
                 }
                 if (event.keyCode === 38) {
                     $scope.countarrowDown--;
-                  
+
                     $(".autocomplete-items div").css("background-color", "#fff");
                     var parentDiv = document.getElementsByClassName("autocomplete-items");
                     var element = parentDiv[0].childNodes[$scope.countarrowDown];
@@ -226,8 +229,8 @@
                 }
                 if (event.keyCode === 40) {
                     $scope.countarrowDown++;
-                    if ($scope.countarrowDown == $scope.searchResult.length){
-                        $scope.countarrowDown=0;
+                    if ($scope.countarrowDown == $scope.searchResult.length) {
+                        $scope.countarrowDown = 0;
                     }
                     $(".autocomplete-items div").css("background-color", "#fff");
                     var parentDiv = document.getElementsByClassName("autocomplete-items");
@@ -263,7 +266,7 @@
 
             $scope.searchBox.text = selectedObject.name;
             $scope.searchResponseObject = selectedObject;
-          
+
             var node = hc.data[0];
             if (selectedObject != undefined) {
                 hc.isCollapsed = false;
@@ -320,7 +323,7 @@
                         $scope.toggleRootNode(newNode.unique);
                         openNode(hc.data[0].unique);
                         updateSelectedNode(newNode.unique);
-                        
+
                     }
                 }
 
@@ -401,16 +404,22 @@
 
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
-           
-           
-            
-            
-           
-          
+
+            if ($scope.clicked_node.unique != undefined) {
+
+                angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
+                    if (linksVal.rel == "contents") {
+                        CreateHierarchyRightContent(linksVal.href, false);
+                    }
+                });
+            }
+
+
+
 
         });
         $scope.$on('CreateHierarchyRightContent', function () {
-           
+
             angular.forEach(update_brandingContent.node, function (attributeVal, attributeKey) {
                 if (attributeVal.name == "Primary Color") {
                     var color = attributeVal.value;
@@ -436,7 +445,9 @@
                     $scope.hierarchyRightContentCustomerServiceNumber = attributeVal.value;
                 }
                 if (attributeVal.name == "Primary Logo") {
-                    logoimg.setURL(attributeVal.value);
+                    if ($scope.isUpdate) {
+                        logoimg.setURL(attributeVal.value);
+                    }
                     $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
                 }
                 if (attributeVal.name == "Site URL") {
@@ -446,8 +457,9 @@
                     $scope.hierarchyRightContentCreditUnionName = attributeVal.value;
                 }
                
+                if ($scope.isUpdate) {
                     isColorFilled();
-               
+                }
             });
 
         });
@@ -457,7 +469,7 @@
                 $timeout(function () { isColorFilled(); }, 0);
             }
             else {
-                
+
                 less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
             }
         }
@@ -465,10 +477,10 @@
             var unique = $scope.clicked_node.unique;
             updateSelectedNode(unique);
         }
-        $scope.classChange =  function () {
+        $scope.classChange = function () {
 
             var selectedItem = $(".selected");
-           
+
             var scrollPosition = 0;
             var scrollPosition = selectedItem.position().top;
             $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
@@ -514,9 +526,9 @@
         function HierarchyBrandingAttributesLoadFailed(result) {
             $window.alert('Branding Contents load failed');
         }
-        function CreateHierarchyRightContent(contentURL) {
-           
-           
+        function CreateHierarchyRightContent(contentURL, isUpdate) {
+
+            $scope.isUpdate = isUpdate;
             getHierarchyBrandingAttributes(contentURL, "Primary Color"),
             getHierarchyBrandingAttributes(contentURL, "Secondary Color"),
             getHierarchyBrandingAttributes(contentURL, "Customer Service Phone Number"),
@@ -572,15 +584,15 @@
         $scope.config_breadcrumb = function (currentNode) {
             $scope.searchBox.text = "";
             // Get branding....
-           
+
             angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
                 if (linksVal.rel == "contents") {
-                    CreateHierarchyRightContent(linksVal.href,true);
+                    CreateHierarchyRightContent(linksVal.href, true);
                 }
             });
 
             if (currentNode != undefined) {
-                update_breadcrumbs.configNode(currentNode);
+                updateConfigNode.configNode(currentNode);
                 $scope.clicked_node = currentNode;
                 update_breadcrumbs.node = currentNode;
             }
@@ -588,7 +600,7 @@
                 return;
             }
             else {
-                update_breadcrumbs.configNode($scope.clicked_node);
+                updateConfigNode.configNode($scope.clicked_node);
                 $scope.iterateCount = 0;
                 $scope.bread_text = [];
                 $scope.hover_brdcm = "";
@@ -693,7 +705,7 @@
         $scope.toggleRootNode = function (uniqueId) {
 
 
-           
+
 
 
 
@@ -752,7 +764,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', 'logoimg', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', 'logoimg', 'updateConfigNode', controller],
             controllerAs: 'hc'
         });
 

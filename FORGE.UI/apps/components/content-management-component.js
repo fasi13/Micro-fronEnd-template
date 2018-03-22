@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var controller = function ($scope, $stateParams, $cookies, $http, updateContentGroup, apiService, $state, update_breadcrumbs) {
+    var controller = function ($scope, $stateParams, $cookies, $http, updateContentGroup, apiService, $state, updateConfigNode) {
 
         $scope.contentGroup = {};
         var _token = JSON.parse($cookies.get('profile'))._token;
@@ -17,7 +17,7 @@
           
 
             $scope.contentGroup.contentName = content.name;
-            $scope.clickedNode = update_breadcrumbs.configuredNode._links;
+            $scope.clickedNode = updateConfigNode.configuredNode._links;
             $scope.contentGroup.dataTypeURL = getdataTypeURL($scope.clickedNode);
             var url, links = content._links;
             for (var i = 0; i < links.length; i++) {
@@ -206,7 +206,7 @@
 
 
 
-    controller.$inject = ['$scope', '$stateParams', '$cookies', '$http', 'updateContentGroup', 'apiService', '$state', 'update_breadcrumbs'];
+    controller.$inject = ['$scope', '$stateParams', '$cookies', '$http', 'updateContentGroup', 'apiService', '$state', 'updateConfigNode'];
 
 
 

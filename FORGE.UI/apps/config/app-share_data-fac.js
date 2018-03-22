@@ -66,6 +66,7 @@
     return shareObj;
 
 })
+
 .factory('getChild', function ($rootScope) {
 
 
@@ -177,5 +178,24 @@
     };
 
     return img;
+
+})
+.factory('updateConfigNode', function ($rootScope) {
+
+
+    var shareObj = {};
+
+   
+    shareObj.configuredNode = {};
+    shareObj.configNode = function (node) {
+        this.configuredNode = node;
+        this.update();
+    }
+   
+    shareObj.update = function () {
+        $rootScope.$broadcast('configNodeUpdated');
+    };
+
+    return shareObj;
 
 })

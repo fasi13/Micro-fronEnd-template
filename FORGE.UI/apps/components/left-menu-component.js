@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
 
-    function controller($scope, $log, $state, $rootScope, $cookies, apiService, update_breadcrumbs, updateContentGroup, collapseHierarchy, gotoContentViewState) {
+    function controller($scope, $log, $state, $rootScope, $cookies, apiService, updateConfigNode, updateContentGroup, collapseHierarchy, gotoContentViewState) {
         var lm = this;
         
         lm.status = {
             isDashboard :false,
             isContentMgmt: false,
             isPromotion: false,
-            isSetting:false,
+        isSetting:false,
         };
         $scope.lmc = {};
 
@@ -23,7 +23,7 @@
 
 
             }
-            $scope.lmc.clickedNode = update_breadcrumbs.configuredNode._links;
+            $scope.lmc.clickedNode = updateConfigNode.configuredNode._links;
 
             if ($scope.lmc.clickedNode != null && IsContentGroupExist($scope.lmc.clickedNode)) {
 
@@ -178,7 +178,7 @@
        .module('app_leftMenuComponent',[])
        .component('leftMenuComponent', {
            templateUrl: 'apps/views/left-menu-component.html',
-           controller: ['$scope','$log', '$state', '$rootScope','$cookies', 'apiService', 'update_breadcrumbs','updateContentGroup','collapseHierarchy','gotoContentViewState', controller],
+           controller: ['$scope','$log', '$state', '$rootScope','$cookies', 'apiService', 'updateConfigNode','updateContentGroup','collapseHierarchy','gotoContentViewState', controller],
            controllerAs: 'lm',
            bindings: {
                navLinks: '<',
