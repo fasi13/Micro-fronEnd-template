@@ -200,13 +200,20 @@
                         </div>
                         <div class="modal-body">
 
-                            <div class="form-group">
+                            <div class="form-group" ng-show="(IsUpdateContent == true) || (contentObj.isAdd == true)">
                                 <label>Name</label>
                                 <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="IsUpdateContent == false && contentObj.isAdd == true" />
 
                                 <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
                             </div>
 
+                            <div class="form-group" ng-if="newContent.isEditValue" ng-init="newContent.Value = '';">
+                                <label>Value</label>
+                                <textarea type="text" class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required ></textarea>
+
+                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
+
+                            </div>
 
 
                             <div ng-if="isDataTypePropertyEnabled==true" class="form-group">

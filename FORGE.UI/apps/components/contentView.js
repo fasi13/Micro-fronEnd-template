@@ -318,9 +318,10 @@
             $scope.currentContent = item;
         }
         else if (isUpdateContent == false) {
+            
             $scope.newContent = {};
+            $scope.newContent.isEditValue = true;
             $scope.newContent.ID = item.id;
-            $scope.newContent.name = item.name;
             $scope.newContent.value = item.value;
             $scope.currentContent = item;
         }
