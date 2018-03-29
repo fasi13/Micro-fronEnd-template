@@ -20,13 +20,15 @@
 
 
 
-.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $state) {
+.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout) {
 
 
     $scope.contentObj = {};
     $scope.isCustomControls = false;
     $scope.newContent = {};
     $scope.newContent.showIcons = false;
+    $scope.contentValidation = {};
+    $scope.imgsrc = [];
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = $stateParams.obj;
     $scope.copyContent = [];
@@ -34,14 +36,41 @@
     if ($scope.contentObj.completeObj != null) {
 
         $scope.contentObj.content = $scope.contentObj.completeObj.content;
+        $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
+        $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
+
         $scope.contentObj.dataTypeURL = $scope.contentObj.completeObj.dataTypeURL;
+        getSupportingContent(getURL($scope.contentObj.completeObj._links, "supportingContent"));
         getDataTypes($scope.contentObj.dataTypeURL);
         $scope.contentObj.content_name = $stateParams.name;
         var _token = JSON.parse($cookies.get('profile'))._token;
     }
 
-    $scope.contentObj.setPreviousValue = function (newval,obj) {
-      
+    function getContentAsList(contents) {
+        var contentAsList = [];
+        for (var i = 0; i < contents.length; i++) {
+
+            if (contents[i].displayAsList) {
+                contentAsList.push(contents[i]);
+            }
+
+        }
+        return contentAsList;
+    }
+    function getContentAsGrid(contents) {
+        var contentAsGrid = [];
+        for (var i = 0; i < contents.length; i++) {
+
+            if (!contents[i].displayAsList) {
+                contentAsGrid.push(contents[i]);
+            }
+
+        }
+        return contentAsGrid;
+    }
+
+    $scope.contentObj.setPreviousValue = function (newval, obj) {
+
         for (var i = 0; i < $scope.contentObj.content.length; i++) {
 
             if (obj.id == $scope.contentObj.content[i].id) {
@@ -52,26 +81,45 @@
 
                         $scope.contentObj.content[i].value = $scope.copyContent[j].value;
                         $scope.newContent.showIcons = false;
-                       
+
                         break;
-                        
+
                     }
 
-            }
-            
+                }
+
 
 
             }
         }
-      
+
     }
-    $scope.contentObj.getValue = function (value,obj) {
+    $scope.contentObj.getValue = function (value, obj) {
 
-       
+
         if (!$scope.newContent.showIcons) {
-            $scope.copyContent.push({id:angular.copy(obj.id),value:angular.copy(value)})
-           
+            $scope.copyContent.push({ id: angular.copy(obj.id), value: angular.copy(value) })
 
+
+        }
+    }
+    function getSupportingContent(url) {
+        if (url != undefined) {
+            $http.get(url, {
+                headers: {
+                    "Authorization": _token
+
+                }
+            })
+            .then(function (response) {
+                $scope.supportingContent = response.data.data.value;
+
+
+
+
+            }, function (error) {
+                console.log(error);
+            })
         }
     }
     function getDataTypes(url) {
@@ -86,6 +134,8 @@
         .then(function (response) {
 
             $scope.contentObj.dataTypeList = response.data.data.items;
+
+
 
 
         }, function (error) {
@@ -135,7 +185,8 @@
           };
       }
       $scope.contentObj.content.push(tempContent);
-
+      $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
+      $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
       $scope.myform.$submitted = false;
       $scope.newContent = {};
       $('#editContent').modal('hide');
@@ -157,12 +208,105 @@
 
         if (content != null) {
 
-            return content[0].displayAsList;
+            return content.displayAsList;
 
         }
     };
-    $scope.contentObj.passContentForEdit = function (item, includeDataType, isUpdateContent) {
+    $scope.checkColorIsValid = function (color) {
 
+        $scope.validColor = !(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color));
+    }
+
+    $scope.documentUpload = function (event) {
+
+        var files = event.files;
+        $scope.file = files[0];
+
+        var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
+        if (ext  == "pdf") {
+
+            $scope.newContent.documentName = $scope.file.name;
+
+            var reader = new FileReader();
+
+            reader.onload = $scope.documentIsLoaded;
+            reader.readAsDataURL($scope.file);
+
+            $scope.dataURL = reader.result;
+        }
+        else {
+            $scope.contentValidation.isValidExtension = true;
+            $scope.$apply();
+            $timeout(function () {
+                $scope.contentValidation.isValidExtension = false;
+            }, 2000);
+        }
+
+    }
+
+
+    $scope.documentIsLoaded = function (e) {
+        $scope.$apply(function () {
+
+
+        });
+    }
+    function validateImageExtension(fld) {
+        if (!/(\png|\jpg|\jpeg)$/i.test(fld)) {
+            return false;
+        }
+        else
+            return true;
+    }
+
+    $scope.imageUpload = function (event) {
+
+        var files = event.files;
+        $scope.file = files[0];
+
+
+        
+
+
+        var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
+        if (validateImageExtension(ext)) {
+            if (event.attributes.imgID != undefined) {
+                $scope.imgID = event.attributes.imgID.value;
+            }
+            else {
+                $scope.newContent.filename = $scope.file.name;
+            }
+            var reader = new FileReader();
+
+            reader.onload = $scope.imageIsLoaded;
+            reader.readAsDataURL($scope.file);
+
+            $scope.dataURL = reader.result;
+        }
+        else {
+            $scope.contentValidation.isValidExtension = true;
+            $scope.$apply();
+            $timeout(function () {
+                $scope.contentValidation.isValidExtension = false;
+            }, 2000);
+        }
+
+    }
+
+
+    $scope.imageIsLoaded = function (e) {
+        $scope.$apply(function () {
+
+
+            $scope.modalImgsrc = "";
+            $scope.modalImgsrc = e.target.result;
+            var imgObject = { name: $scope.file.name, src: e.target.result, file: $scope.dataURL };
+            $scope.imgsrc[$scope.imgID] = imgObject;
+
+        });
+    }
+    $scope.contentObj.passContentForEdit = function (item, includeDataType, isUpdateContent) {
+        $scope.modalImgsrc = "";
         $scope.isDataTypePropertyEnabled = includeDataType;
         $scope.contentObj.isAdd = false;
         $scope.IsUpdateContent = isUpdateContent;
@@ -176,6 +320,7 @@
         else if (isUpdateContent == false) {
             $scope.newContent = {};
             $scope.newContent.ID = item.id;
+            $scope.newContent.name = item.name;
             $scope.newContent.value = item.value;
             $scope.currentContent = item;
         }
@@ -193,9 +338,12 @@
     }
 
     $scope.contentObj.setAction = function (isAdd, includeDataType, isCustomControls) {
+        $scope.modalImgsrc = "";
+        $scope.myform.$submitted = false;
         $scope.isCustomControls = isCustomControls;
         $scope.IsUpdateContent = false;
         $scope.contentObj.isAdd = isAdd;
+        $scope.newContent = {};
         $scope.isDataTypePropertyEnabled = includeDataType;
     }
 
@@ -219,7 +367,7 @@
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
         $scope.newContent.showIcons = false;
-       
+
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
@@ -235,6 +383,11 @@
         })
         .then(function (response) {
 
+            $scope.isPropertySaved = true;
+
+            $timeout(function () {
+                $scope.isPropertySaved = false;
+            }, 2000);
         },
         function (error) {
 
@@ -253,6 +406,7 @@
 
         if (isUpdateContent) {
             url = getURL(object._links, "updateContent");
+
             requestObject = {
                 name: content.name,
                 value: content.value,
@@ -262,7 +416,8 @@
         else if (isUpdateContent == false) {
             url = getURL(object._links, "updateContentValue");
             requestObject = {
-                value: content.value,
+
+                name: content.name,
                 status: "Published"
             };
         }
@@ -274,19 +429,24 @@
             }
         })
         .then(function (response) {
+
             $scope.myform.$submitted = false;
             $scope.newContent = {};
             $('#editContent').modal('hide');
-
             if ($scope.IsUpdateContent) {
                 UpdateContentArray($scope.tempContentData);
+                $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
+                $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
             }
             else if ($scope.IsUpdateContent) {
                 UpdateContentValueArray($scope.tempContentData);
+                $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
+                $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
             }
+
         },
         function (error) {
-            alert(error);
+            console.log(error);
         });
 
     }

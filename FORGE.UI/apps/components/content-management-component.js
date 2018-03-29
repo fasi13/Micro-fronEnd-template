@@ -7,18 +7,19 @@
         var _token = JSON.parse($cookies.get('profile'))._token;
         if ($stateParams.obj != null) {
             $scope.contentGroup.content = $stateParams.obj.items;
-            $scope.contentGroup._links = $stateParams.obj._links
+            $scope.contentGroup._links = $stateParams.obj._links;
+             
             $scope.contentGroup.dataTypeURL = $stateParams.dataTypeURL;
             getDataTypes($scope.contentGroup.dataTypeURL);
         }
 
         $scope.contentGroup.loadContents = function (content) {
 
-          
+             
 
             $scope.contentGroup.contentName = content.name;
             $scope.clickedNode = updateConfigNode.configuredNode._links;
-            $scope.contentGroup.dataTypeURL = getdataTypeURL($scope.clickedNode);
+            $scope.contentGroup.dataTypeURL = $stateParams.dataTypeURL;
             var url, links = content._links;
             for (var i = 0; i < links.length; i++) {
 
@@ -53,13 +54,13 @@
 
 
         function contentLoadSuccessfully(response) {
-
-            $scope.contentGroup.content = response.data.data.content;
-
-            $scope.contentGroup.content.dataTypeURL = $scope.contentGroup.dataTypeURL;
+             
+            $scope.newContents = response.data.data;
+            $scope.newContents.dataTypeURL = $scope.contentGroup.dataTypeURL;
+           
 
             
-            $state.go("dashboard.content-view", { obj: ($scope.contentGroup), name: $scope.contentGroup.contentName });
+            $state.go("dashboard.content-view", { obj: ($scope.newContents), name: $scope.contentGroup.contentName });
 
 
         }
@@ -86,6 +87,7 @@
             })
         }
         $scope.contentGroup.performAction = function (content) {
+             
             if ($scope.myform.$valid) {
                 if ($scope.contentGroup.isAdd == false) {
                     $scope.contentGroup.editContent($scope.currentContent, content, true);
@@ -114,12 +116,9 @@
             $http.post(url,
        {
            name: content.name,
-           value: content.value,
-           status: "Published",
-           dataType: {
-               name: content.selectedDataType.name,
-               type: content.selectedDataType.name
-           }
+           
+           status: "Published"
+          
 
        }, {
            headers: {
@@ -128,16 +127,11 @@
            }
        })
   .then(function (response) {
-
+       
       var responseContent = response.data.data;
       updateContentGroup.setContentGroup(responseContent, true);
-      var tempContent = {
-          name: responseContent.name,
-          status: responseContent.status,
-          publishDate: responseContent.publishDate,
-          _links: responseContent._links
-      };
-      $scope.contentGroup.content.push(tempContent);
+     
+      $scope.contentGroup.content.push(responseContent);
       $scope.myform.$submitted = false;
       $scope.newContent = {};
       $('#editContent').modal('hide');
@@ -148,11 +142,12 @@
   });
         }
         $scope.contentGroup.editContent = function (object, content) {
+             
             $scope.tempContentData = content;
             var url = "";
             var requestObject = {
                 name: content.name,
-                value: content.value,
+               
                 status: "Published"
             };
             url = getURL(object._links, "updateContentGroup");
@@ -164,13 +159,15 @@
                 }
             })
             .then(function (response) {
+                 
                 $scope.myform.$submitted = false;
                 $scope.newContent = {};
 
                 $('#editContent').modal('hide');
                
-                updateContentGroup.setContentGroup($scope.tempContentData, false);
                 UpdateContentGroupArray($scope.tempContentData);
+                updateContentGroup.setContentGroup($scope.tempContentData, false);
+               
             },
             function (error) {
                 alert(error);
@@ -183,22 +180,22 @@
                 if ($scope.contentGroup.content[i].id == currentData.ID) {
 
                     $scope.contentGroup.content[i].name = currentData.name;
-                    $scope.contentGroup.content[i].value = currentData.value;
                 }
             }
         }
         $scope.contentGroup.setAction = function (isAdd, includeDataType) {
+            $scope.newContent = {};
+            $scope.myform.$submitted = false;
             $scope.contentGroup.isAdd = isAdd;
             $scope.isDataTypePropertyEnabled = includeDataType;
         }
         $scope.contentGroup.passContentForEdit = function (item, includeDataType) {
-
+             
             $scope.isDataTypePropertyEnabled = includeDataType;
             $scope.contentGroup.isAdd = false;
             $scope.newContent = {};
             $scope.newContent.name = item.name;
             $scope.newContent.ID = item.id;
-            $scope.newContent.value = item.value;
             $scope.currentContent = item;
         }
     };

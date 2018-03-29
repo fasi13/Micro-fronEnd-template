@@ -39,8 +39,7 @@
             SecondaryColor: "",
             CreditUnionLogo: "",
             CreditUnionName: "",
-            CreditUnionURL: "",
-            CustomerServiceNumber: ""
+            CreditUnionURL: ""
 
         };
 
@@ -198,6 +197,7 @@
             if ($scope.searchResult != null) {
 
                 if (event.keyCode === 13) {
+
                     var clickedObject = null;
                     for (var k = 0; k < $scope.searchResult.length; k++) {
 
@@ -220,7 +220,9 @@
                 }
                 if (event.keyCode === 38) {
                     $scope.countarrowDown--;
-
+                    if ($scope.countarrowDown < 0) {
+                        $scope.countarrowDown = $scope.searchResult.length - 1;
+                    }
                     $(".autocomplete-items div").css("background-color", "#fff");
                     var parentDiv = document.getElementsByClassName("autocomplete-items");
                     var element = parentDiv[0].childNodes[$scope.countarrowDown];
@@ -290,6 +292,8 @@
 
 
                 $scope.currentNodeChild = [];
+
+                $scope.searchBox.text = "";
 
             }
 
@@ -441,9 +445,6 @@
                     }
 
                 }
-                if (attributeVal.name == "Customer Service Phone Number") {
-                    $scope.hierarchyRightContentCustomerServiceNumber = attributeVal.value;
-                }
                 if (attributeVal.name == "Primary Logo") {
                     if ($scope.isUpdate) {
                         logoimg.setURL(attributeVal.value);
@@ -531,7 +532,6 @@
             $scope.isUpdate = isUpdate;
             getHierarchyBrandingAttributes(contentURL, "Primary Color"),
             getHierarchyBrandingAttributes(contentURL, "Secondary Color"),
-            getHierarchyBrandingAttributes(contentURL, "Customer Service Phone Number"),
             getHierarchyBrandingAttributes(contentURL, "Primary Logo"),
             getHierarchyBrandingAttributes(contentURL, "Site URL");
             getHierarchyBrandingAttributes(contentURL, "Program Name");

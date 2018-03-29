@@ -958,7 +958,7 @@ img.glif_icon {
 }
 
 .red_border {
-    border: 2px solid red !important;
+    border: 1px solid red !important;
 }
 
 .silver {
@@ -1203,9 +1203,8 @@ span.seach-icon {
     background-color: #3477a5;
     border-color: #fff0f5;
 }
+
 .save.glyphicon {
-   
-   
     font-size: 16px;
     background-color: white;
     color: #00ff00;
@@ -1213,31 +1212,75 @@ span.seach-icon {
     font-size: 20px;
     font-weight: bold;
 }
+
 .rightspace {
-    position:absolute;
-    right:5px;
+    position: absolute;
+    right: 5px;
     z-index: 10;
     top: 10px;
 }
+
 .remove.glyphicon {
-   
-     background-color: white;
+    background-color: white;
     color: #00ff00;
     font-size: 16px;
-   
     font-style: normal;
     font-size: 20px;
     font-weight: bold;
 }
+
 .cust-border.in {
-    box-shadow:40px 75px 0px 76px rgba(31, 12, 12, 0.45098039215686275);
-      border-top: none;
-        padding-top:35px; 
+    box-shadow: 40px 75px 0px 76px rgba(31, 12, 12, 0.45098039215686275);
+    border-top: none;
+    padding-top: 35px;
     border-radius: 0px;
     background: #fff;
     margin-top: -19px;
 }
+
 .text-left.col-sm-8 img {
-   
     padding-right: 15px;
+}
+
+.thumb {
+    max-width: 100%;
+    max-height: 70px;
+}
+
+.notification {
+    color: green;
+}
+
+.borderGreen {
+    border: 1px solid green !important;
+}
+
+span.image-icon-box {
+    position: absolute;
+    right: 5px;
+    z-index: 10;
+    max-width: 30px !important;
+    max-height: 30px;
+    top: 10px;
+}
+
+span.pdf-icon-box {
+    position: absolute;
+    right: 5px;
+    z-index: 10;
+    max-width: 30px !important;
+    max-height: 30px;
+    top: 5px;
+}
+
+.pdf-icon-box img {
+    max-height: 30px;
+}
+
+.contentImg {
+    width: 80px;
+}
+
+.resizeVertical {
+    resize: vertical;
 }

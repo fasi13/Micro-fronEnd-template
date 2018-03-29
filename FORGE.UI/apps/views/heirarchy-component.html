@@ -6,7 +6,7 @@
         <div class="col-md-6 col-xs-10">
             <div class="inner-addon right-addon">
 
-                <input id="myInput" type="text" class="form-control" ng-keydown="handleKeyEvents($event)" placeholder="Search..e.g. PSCU, Harvard, CU" ng-model="searchBox.text" ng-change="search(searchBox.text)" autocomplete="off">
+                <input id="myInput" type="text" class="form-control" ng-keydown="handleKeyEvents($event)" placeholder="Search (3 character minimum)"  ng-model="searchBox.text" ng-change="search(searchBox.text)" autocomplete="off">
                
             </div>
         </div>
@@ -58,20 +58,16 @@
 
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Credit Union Name: </label></div>
+                            <div class="text-left col-sm-4"><label>Program Name: </label></div>
                             <div class="text-left col-sm-8"><h3 ng-bind-html="hierarchyRightContentCreditUnionName"></h3></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Credit Union Logo: </label></div>
+                            <div class="text-left col-sm-4"><label>Primary Logo: </label></div>
                             <div class="text-left col-sm-8"><img class="img-responsive" src="{{hierarchyRightContentCreditUnionLogo}}" /></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Credit Union URL: </label></div>
+                            <div class="text-left col-sm-4"><label>Site URL: </label></div>
                             <div class="text-left col-sm-8"><a href="{{hierarchyRightContentCreditUnionURL}}">{{hierarchyRightContentCreditUnionURL}}</a></div>
-                        </div>
-                        <div class="row">
-                            <div class="text-left col-sm-4"><label>Customer Service Number: </label></div>
-                            <div class="text-left col-sm-8"><p>{{hierarchyRightContentCustomerServiceNumber}}</p></div>
                         </div>
 
                     </div>

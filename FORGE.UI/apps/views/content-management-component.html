@@ -20,13 +20,13 @@
                     <div class="row form-label" ng-repeat="item in contentGroup.content track by item.id">
 
                         <div class="col-sm-4">
-                            <a  ng-click="contentGroup.loadContents(item)">{{item.name}}</a>
+                            <a ng-click="contentGroup.loadContents(item)">{{item.name}}</a>
                         </div>
 
                         <div class="col-sm-6">
                             <span class="glyphicon glyphicon-edit group-edit-content" ng-click="contentGroup.passContentForEdit(item,false)" data-toggle="modal" data-target="#editContent"></span>
                             <!--commented delete icon as API is not returning the endpoint for delete-->
-                            <!--<span class="glyphicon glyphicon-trash group-trash-content"></span>--> 
+                            <!--<span class="glyphicon glyphicon-trash group-trash-content"></span>-->
                         </div>
                     </div>
 
@@ -34,7 +34,7 @@
 
             </div>
             <div class="row form-label">
-                <button type="button"data-toggle="modal" data-target="#editContent" ng-click="contentGroup.setAction(true,true)" class="btn btn-warning  btn-sm content-btns btnClass ">New Group</button>
+                <button type="button" data-toggle="modal" data-target="#editContent" ng-click="contentGroup.setAction(true,true)" class="btn btn-warning  btn-sm content-btns btnClass ">New Group</button>
             </div>
         </div>
 
@@ -65,26 +65,7 @@
                         <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
                     </div>
 
-                    <div class="form-group">
-                        <label>Value</label>
-                        <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required />
-
-                        <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-
-                    </div>
-
-
-
-                    <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
-                        <label>Data Type</label>
-
-                        <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentGroup.dataTypeList" required>
-                            <option value="">Select Data Type</option>
-                        </select>
-
-                        <p ng-if="myform.$submitted && (!(myform.dataType.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Data Type is required</p>
-                    </div>
-
+                   
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary btnClass" type="submit" ng-disabled="false">Save</button>
