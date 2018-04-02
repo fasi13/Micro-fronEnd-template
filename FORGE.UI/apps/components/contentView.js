@@ -221,7 +221,7 @@
 
         var files = event.files;
         $scope.file = files[0];
-
+        $scope.newContent.documentName = "";
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
         if (ext  == "pdf") {
 
@@ -263,10 +263,7 @@
 
         var files = event.files;
         $scope.file = files[0];
-
-
-        
-
+        $scope.imgsrc[$scope.imgID] = "";
 
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
         if (validateImageExtension(ext)) {
@@ -305,6 +302,8 @@
 
         });
     }
+
+
     $scope.contentObj.passContentForEdit = function (item, includeDataType, isUpdateContent) {
         $scope.modalImgsrc = "";
         $scope.isDataTypePropertyEnabled = includeDataType;

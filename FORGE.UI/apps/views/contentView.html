@@ -4,7 +4,7 @@
 
         <div class="col-md-12 col-xs-12 maincontent">
 
-            <div class="contents-page">
+            <div>
                 <div class="paddingBot20Pixel">
                     <h3>{{contentObj.content_name}}</h3>
 
@@ -49,17 +49,18 @@
 
         <div class="col-md-12 col-xs-12 maincontent"  ng-if="contentObj.contentAsGrid.length > 0">
 
-            <div class="contents-page">
-                <div class="paddingBot20Pixel">
-                    <h3>{{contentObj.content_name}}</h3>
+            <div>
+               
+                <div class="col-xs-12 col-sm-12 col-md-6 nopadding">
+                    <div class="m-b-30">
+                        <h3>{{contentObj.content_name}}</h3>
 
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 login-left-section">
+                    </div>
                     <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
                         <div ng-repeat="data in contentObj.contentAsGrid">
                             <div class="form-group" ng-if="data.dataType.name == 'Color Picker'" ng-init="newContent.Value = data.value; newContent.preVal = data.name;">
-                                <div class="col-xs-12 col-sm-5 paddingTop03EM"> {{data.name}}</div>
-                                <div id="cp1" class="input-group col-xs-12 col-sm-7" title="Click here to change color">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM"> {{data.name}}</div>
+                                <div id="cp1" class="input-group col-xs-12 col-sm-8" title="Click here to change color">
                                     <div id="cp1" class="input-group">
                                         <span class="input-group-addon" ng-style="{'background-color':data.value}"></span>
                                         <input colorpicker class="form-control" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName,'red_border':validColor  && data.name == newContent.checkName}" ng-model="data.value" type="text" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="checkColorIsValid(data.value);valueChange = true" />
@@ -75,8 +76,8 @@
 
                             </div>
                             <div class="form-group" ng-if="data.dataType.name == 'Text'" ng-init="newContent.Value = data.value; newContent.Name = data.name;">
-                                <div class="col-xs-12 col-sm-5 paddingTop03EM">{{data.name}}</div>
-                                <div class="input-group col-xs-12 col-sm-7" title="">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM">{{data.name}}</div>
+                                <div class="input-group col-xs-12 col-sm-8" title="">
                                     <div class="input-group col-xs-12 col-sm-12 col-md-12">
                                         <input type="text" class="form-control input-lg custom-input" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="data.value" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="valueChange = true" />
                                         <span ng-init="contentObj.getValue(data.value,data)"></span>
@@ -89,12 +90,12 @@
                                 </div>
                             </div>
                             <div class="form-group" ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="name = data.name">
-                                <div class="col-xs-12 col-sm-5 paddingTop03EM">{{data.name}}</div>
-                                <div class="input-group col-xs-12 col-sm-7" title="">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM">{{data.name}}</div>
+                                <div class="input-group col-xs-12 col-sm-8" title="">
                                     <div class="input-group col-xs-12 col-sm-12 col-md-12">
                                         <div class="input-group col-xs-12 col-sm-12">
-                                            <label class="input-group-btn">
-                                                <span class="btn btnClass">
+                                            <label class="input-group-btn ">
+                                                <span class="btn btnClass no-margin">
                                                     Choose File <input type="file" imgID="{{data.id}}" onchange="angular.element(this).scope().imageUpload(this);" accept="image/*" style="display: none;">
                                                 </span>
                                             </label>
@@ -122,12 +123,12 @@
                             </div>
 
                             <div class="form-group" ng-if="data.dataType.name == 'Document'" ng-init="name = data.name">
-                                <div class="col-xs-12 col-sm-5 paddingTop03EM">{{data.name}}</div>
-                                <div class="input-group col-xs-12 col-sm-7" title="">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM">{{data.name}}</div>
+                                <div class="input-group col-xs-12 col-sm-8" title="">
                                     <div class="input-group col-xs-12 col-sm-12 col-md-12">
                                         <div class="input-group col-xs-12 col-sm-12">
                                             <label class="input-group-btn">
-                                                <span class="btn btnClass">
+                                                <span class="btn btnClass no-margin">
                                                     Choose File <input type="file" imgID="{{data.id}}" onchange="angular.element(this).scope().documentUpload(this);" accept="application/pdf" style="display: none;">
                                                 </span>
                                             </label>
@@ -139,7 +140,7 @@
                                             </span>
                                             <span class="pdf-icon-box"><img src="imgs/pdf-icon.png" /></span>
                                         </div>
-                                        <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
+                                        <span ng-show="contentValidation.isValidExtension && name == data.name" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
 
                                     </div>
                                     <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
@@ -264,7 +265,7 @@
 
                                 <div class="input-group col-xs-12 col-sm-12">
                                     <label class="input-group-btn">
-                                        <span class="btn btnClass">
+                                        <span class="btn btnClass no-margin">
                                             Choose File <input type="file" onchange="angular.element(this).scope().imageUpload(this)" accept="image/*" style="display: none;">
                                         </span>
                                     </label>
@@ -287,7 +288,7 @@
 
                                 <div class="input-group col-xs-12 col-sm-12">
                                     <label class="input-group-btn">
-                                        <span class="btn btnClass">
+                                        <span class="btn btnClass no-margin">
                                             Choose File <input type="file" onchange="angular.element(this).scope().documentUpload(this)" accept="application/pdf" style="display: none;">
                                         </span>
                                     </label>

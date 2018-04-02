@@ -243,6 +243,7 @@ textarea.form-control {
 
 .content-body {
     margin: 60px auto;
+    margin-bottom:10px !important;
 }
 
 .nopadding {
@@ -532,8 +533,9 @@ span.glyphicon.glyphicon-home {
 }
 
 .form-label {
-    margin-top: 10px;
-    margin-left: -13px;
+    padding-top: 10px;
+    padding-bottom:10px;
+  
 }
 
 .custom-hide {
@@ -604,6 +606,7 @@ span.glyphicon.glyphicon-home {
 
 .customize-right-sec {
     padding: 25px;
+    padding-top:0px !important;
 }
 
 .browse {
@@ -1087,11 +1090,6 @@ img.glif_icon {
     border-bottom: 1px solid #ccc;
 }
 
-.form-label {
-    margin-top: 10px;
-    padding-bottom: 10px;
-    margin-left: -13px;
-}
 
 .maincontent {
     background-color: white;
@@ -1181,6 +1179,7 @@ span.seach-icon {
 }
 
 .paddingTop03EM {
+    padding:0px;
     padding-top: 0.3em;
 }
 
@@ -1197,6 +1196,7 @@ span.seach-icon {
     border-radius: 360px;
     font-size: 183%;
     color: white;
+    margin-top:0px;
 }
 
 .navbar-inverse {
