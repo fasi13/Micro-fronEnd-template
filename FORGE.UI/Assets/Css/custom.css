@@ -193,7 +193,27 @@ textarea.form-control {
     margin: 0px;
 }
 
+
+
 @media screen and (max-width: 768px) {
+
+    .input-group-xs {
+        display: block;
+    }
+
+   .margin-bottom-5-xs {
+    margin-bottom: 5px;
+    }
+
+    .nopadding-xs{
+        padding:0px;
+    }
+   
+    .xs {
+        padding: 0px !important;
+    }
+
+
     p {
         font-size: 12px;
     }
@@ -243,12 +263,11 @@ textarea.form-control {
 
 .content-body {
     margin: 60px auto;
-    margin-bottom:10px !important;
+    margin-bottom: 10px !important;
 }
 
 .nopadding {
     padding: 0 !important;
-    margin: 0 !important;
 }
 
 .navbar {
@@ -534,8 +553,7 @@ span.glyphicon.glyphicon-home {
 
 .form-label {
     padding-top: 10px;
-    padding-bottom:10px;
-  
+    padding-bottom: 10px;
 }
 
 .custom-hide {
@@ -606,7 +624,7 @@ span.glyphicon.glyphicon-home {
 
 .customize-right-sec {
     padding: 25px;
-    padding-top:0px !important;
+    padding-top: 0px !important;
 }
 
 .browse {
@@ -956,7 +974,7 @@ h1, h2, h3 {
 }
 
 img.glif_icon {
-    margin-bottom: 6px;
+    vertical-align: inherit;
     height: 14px;
 }
 
@@ -1179,7 +1197,6 @@ span.seach-icon {
 }
 
 .paddingTop03EM {
-    padding:0px;
     padding-top: 0.3em;
 }
 
@@ -1196,7 +1213,7 @@ span.seach-icon {
     border-radius: 360px;
     font-size: 183%;
     color: white;
-    margin-top:0px;
+    margin-top: 0px;
 }
 
 .navbar-inverse {
@@ -1211,9 +1228,17 @@ span.seach-icon {
     font-style: normal;
     font-size: 20px;
     font-weight: bold;
+    border-radius: 50%;
 }
 
 .rightspace {
+    position: absolute;
+    right: 20px;
+    z-index: 10;
+    top: 10px;
+}
+
+.rightspace-img {
     position: absolute;
     right: 5px;
     z-index: 10;
@@ -1227,6 +1252,22 @@ span.seach-icon {
     font-style: normal;
     font-size: 20px;
     font-weight: bold;
+    border-radius: 50%;
+}
+
+.pdf-thumbnail {
+    position: relative;
+}
+
+.paddingleft20 {
+    padding-left: 20px;
+}
+
+.cust-icon-width {
+    position: absolute;
+    left: 3px;
+    top: 2px;
+    max-width: 15px;
 }
 
 .cust-border.in {
@@ -1264,23 +1305,27 @@ span.image-icon-box {
     top: 10px;
 }
 
-span.pdf-icon-box {
-    position: absolute;
-    right: 5px;
-    z-index: 10;
+    span.image-icon-box img {
+        max-width: 30px !important;
+        max-height: 30px;
+    }
+
+span.icon-box img {
     max-width: 30px !important;
     max-height: 30px;
-    top: 5px;
 }
 
-.pdf-icon-box img {
-    max-height: 30px;
-}
+
 
 .contentImg {
-    width: 80px;
+    max-width: 300px;
 }
 
 .resizeVertical {
     resize: vertical;
+}
+
+.toolTipProp {
+    margin-top: 12px;
+    margin-left: -9px;
 }

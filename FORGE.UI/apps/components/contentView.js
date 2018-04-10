@@ -20,7 +20,7 @@
 
 
 
-.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout) {
+.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService) {
 
 
     $scope.contentObj = {};
@@ -71,24 +71,28 @@
 
     $scope.contentObj.setPreviousValue = function (newval, obj) {
 
-        for (var i = 0; i < $scope.contentObj.content.length; i++) {
+       
 
-            if (obj.id == $scope.contentObj.content[i].id) {
+        for (var i = 0; i <obj.length; i++) {
 
+           
                 for (var j = 0; j < $scope.copyContent.length; j++) {
 
-                    if ($scope.contentObj.content[i].id == $scope.copyContent[j].id) {
-
-                        $scope.contentObj.content[i].value = $scope.copyContent[j].value;
+                    if (obj[i] == undefined){
+                        break;
+                    }
+                     if(obj[i].id == $scope.copyContent[j].id) {
+                         obj[i].name = $scope.copyContent[j].name;
+                        obj[i].value = $scope.copyContent[j].value;
                         $scope.newContent.showIcons = false;
+                        if (obj[i].showIcons !== undefined) {
 
+                            obj[i].showIcons = false;
+                            obj[i].filename = "";
+                        }
                         break;
 
                     }
-
-                }
-
-
 
             }
         }
@@ -96,9 +100,8 @@
     }
     $scope.contentObj.getValue = function (value, obj) {
 
-
         if (!$scope.newContent.showIcons) {
-            $scope.copyContent.push({ id: angular.copy(obj.id), value: angular.copy(value) })
+            $scope.copyContent.push({ id: angular.copy(obj.id), value: angular.copy(value),name:angular.copy(obj.name) })
 
 
         }
@@ -149,55 +152,58 @@
 
 
         if ($scope.contentObj.completeObj != null && content.name) {
-
+            debugger;
             links = $scope.contentObj.completeObj._links;
             url = getURL(links, "createContent");
+           
 
-            $http.post(url,
-       {
-           name: content.name,
-           value: content.value,
-           status: "Published",
-           dataType: {
-               name: content.selectedDataType.name,
-               type: content.selectedDataType.name
-           }
+            
 
-       }, {
-           headers: {
-               "Authorization": _token,
-               "Content-type": "application/json"
-           }
-       })
-  .then(function (response) {
+                $http.post(url,
+           {
+               name: content.name,
+               value: content.value,
+               status: "Published",
+               dataType: {
+                   name: content.selectedDataType.name,
+                   type: content.selectedDataType.name
+               }
 
-      var responseContent = response.data.data;
-      var tempContent = {};
-      if ($scope.isCustomControls) {
-          tempContent = responseContent;
-      }
-      else {
-          tempContent = {
-              name: responseContent.name,
-              status: responseContent.status,
-              publishDate: responseContent.publishDate,
-              _links: responseContent._links
-          };
-      }
-      $scope.contentObj.content.push(tempContent);
-      $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
-      $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
-      $scope.myform.$submitted = false;
-      $scope.newContent = {};
-      $('#editContent').modal('hide');
-  },
-  function (error) {
-      console.log(error);
+           }, {
+               headers: {
+                   "Authorization": _token,
+                   "Content-type": "application/json"
+               }
+           })
+      .then(function (response) {
 
-  });
+          var responseContent = response.data.data;
+          var tempContent = {};
+          if ($scope.isCustomControls) {
+              tempContent = responseContent;
+          }
+          else {
+              tempContent = {
+                  name: responseContent.name,
+                  status: responseContent.status,
+                  publishDate: responseContent.publishDate,
+                  _links: responseContent._links
+              };
+          }
+          $scope.contentObj.content.push(tempContent);
+          $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
+          $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
+          $scope.myform.$submitted = false;
+          $scope.newContent = {};
+          $('#editContent').modal('hide');
+      },
+      function (error) {
+          console.log(error);
 
+      });
 
-        }
+            }
+        
     }
 
     $scope.contentObj.check_displayasList = function (content) {
@@ -217,40 +223,57 @@
         $scope.validColor = !(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color));
     }
 
-    $scope.documentUpload = function (event) {
+    $scope.documentUpload = function (element) {
 
-        var files = event.files;
+        var files = element.files;
         $scope.file = files[0];
-        $scope.newContent.documentName = "";
+        debugger;
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
-        if (ext  == "pdf") {
 
-            $scope.newContent.documentName = $scope.file.name;
 
+      
+
+        if (ext == "pdf") {
+            if (element.attributes.documentID != undefined) {
+                debugger;
+                $scope.documentID = element.attributes.documentID.value;
+                $scope.imgsrc[$scope.documentID] = {};
+            }
+            else {
+                $scope.newContent.Value = $scope.file.name;
+            }
             var reader = new FileReader();
-
-            reader.onload = $scope.documentIsLoaded;
             reader.readAsDataURL($scope.file);
+            reader.addEventListener("loadend", function (e) {
 
-            $scope.dataURL = reader.result;
+               
+                $scope.documentBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
+
+
+                $scope.$apply(function () {
+                    var fileObject = { id: $scope.documentID, filename: $scope.file.name, value: e.target.result ,showIcons:true};
+                   
+                    $scope.imgsrc[$scope.documentID] = fileObject;
+                });
+
+
+            });
+
         }
         else {
-            $scope.contentValidation.isValidExtension = true;
+         
+            $scope.documentID = element.attributes.documentID.value;
+            $scope.imgsrc[$scope.documentID].isValidExtension = true;
             $scope.$apply();
             $timeout(function () {
-                $scope.contentValidation.isValidExtension = false;
+                $scope.imgsrc[$scope.documentID].isValidExtension = false;
             }, 2000);
         }
 
     }
 
 
-    $scope.documentIsLoaded = function (e) {
-        $scope.$apply(function () {
 
-
-        });
-    }
     function validateImageExtension(fld) {
         if (!/(\png|\jpg|\jpeg)$/i.test(fld)) {
             return false;
@@ -259,50 +282,101 @@
             return true;
     }
 
-    $scope.imageUpload = function (event) {
+    $scope.imageUpload = function (element) {
 
-        var files = event.files;
+        var files = element.files;
         $scope.file = files[0];
-        $scope.imgsrc[$scope.imgID] = "";
-
+        
+       
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
+
+       
         if (validateImageExtension(ext)) {
-            if (event.attributes.imgID != undefined) {
-                $scope.imgID = event.attributes.imgID.value;
+
+          
+            if (element.attributes.imgObject != undefined) {
+
+                var imgObject = JSON.parse(element.attributes.imgObject.value);
+                $scope.imgsrc[imgObject.id] = {};
+                $scope.imgObject = imgObject.id;
             }
             else {
-                $scope.newContent.filename = $scope.file.name;
+                $scope.newContent.value = $scope.file.name;
+
             }
+
+
+
+
             var reader = new FileReader();
 
-            reader.onload = $scope.imageIsLoaded;
             reader.readAsDataURL($scope.file);
+            reader.onloadend = function (e) {
+                
+                $scope.imageBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
+                $scope.$apply(function () {
 
-            $scope.dataURL = reader.result;
+                    $scope.modalImgsrc = "";
+                    $scope.modalImgsrc = e.target.result;
+                    $scope.newContent.dataURL = e.target.result;
+                   
+                    if (element.attributes.imgObject != undefined) {
+                        
+                        var imgObject = { id:$scope.imgObject,filename: $scope.file.name, value: e.target.result , showIcons:true};
+                        $scope.imgsrc[$scope.imgObject] = imgObject;
+                    }
+                });
+
+            };
+
+        
+
+
+
+
         }
         else {
-            $scope.contentValidation.isValidExtension = true;
+           
+            
+            $scope.imgsrc[$scope.imgObject].isValidExtension = true;
             $scope.$apply();
             $timeout(function () {
-                $scope.contentValidation.isValidExtension = false;
+                $scope.imgsrc[$scope.imgObject].isValidExtension = false;
             }, 2000);
         }
 
     }
 
 
-    $scope.imageIsLoaded = function (e) {
-        $scope.$apply(function () {
 
 
-            $scope.modalImgsrc = "";
-            $scope.modalImgsrc = e.target.result;
-            var imgObject = { name: $scope.file.name, src: e.target.result, file: $scope.dataURL };
-            $scope.imgsrc[$scope.imgID] = imgObject;
 
-        });
+    function getContentValue(content) {
+
+        var url = getURL(content._links, "self");
+        apiService.get(url, ContentValueLoadSuccessfully, ContentValueLoadFailed, _token);
+      
     }
 
+    function ContentValueLoadSuccessfully(result) {
+
+
+
+        $scope.newContent = {};
+        $scope.newContent.isEditValue = true;
+       
+        $scope.newContent.id = result.data.data.id;
+        $scope.newContent.value = result.data.data.value;
+        $scope.currentContent = result.data.data;
+
+
+    }
+
+    function ContentValueLoadFailed(error) {
+       
+        console.log(error);
+
+    }
 
     $scope.contentObj.passContentForEdit = function (item, includeDataType, isUpdateContent) {
         $scope.modalImgsrc = "";
@@ -317,12 +391,11 @@
             $scope.currentContent = item;
         }
         else if (isUpdateContent == false) {
-            
-            $scope.newContent = {};
-            $scope.newContent.isEditValue = true;
-            $scope.newContent.ID = item.id;
-            $scope.newContent.value = item.value;
-            $scope.currentContent = item;
+
+
+            getContentValue(item);
+           
+
         }
     }
 
@@ -347,9 +420,18 @@
         $scope.isDataTypePropertyEnabled = includeDataType;
     }
 
+
+    window.onload = function (e) {
+        $('#form').data('serialize', $('#form').serialize()); // On load save form current state
+        console.log($('form').data('serialize'));
+        $(window).bind('beforeunload', function (e) {
+            if ($('#form').serialize() != $('#form').data('serialize')) return "Changes you made may not be saved.";
+            // i.e; if form state change show warning box, else don't show it.
+        });
+    };
+
     $scope.contentObj.performAction = function (content) {
-
-
+        
         if ($scope.myform.$valid) {
 
             if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == true) {
@@ -366,44 +448,70 @@
 
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
-        $scope.newContent.showIcons = false;
-
+       
+        debugger;
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
             status: "Published"
         };
 
-        $http.put(url,
-        requestObject, {
-            headers: {
-                "Authorization": _token,
-                "Content-type": "application/json"
-            }
-        })
-        .then(function (response) {
+        
+        
 
-            $scope.isPropertySaved = true;
+            $http.put(url,
+            requestObject, {
+                headers: {
+                    "Authorization": _token,
+                    "Content-type": "application/json"
+                }
+            })
+            .then(function (response) {
+               
+                console.log(response);
+                if ($scope.imgsrc[object.id] != undefined) {
+                    $scope.imgsrc[object.id].showIcons = false;
+                    $scope.imgsrc[object.id].isPropertySaved = true;
+                    $timeout(function () {
+                        $scope.imgsrc[object.id].isPropertySaved = false;
+                    }, 2000);
+                }
+                $scope.isPropertySaved = true;
+                $scope.newContent.showIcons = false;
+               
+                $timeout(function () {
+                    $scope.isPropertySaved = false;
+                }, 2000);
+            },
+            function (error) {
+                
+                if ($scope.imgsrc[object.id] != undefined) {
+                    
+                    $scope.imgsrc[object.id].isAlreadyExist = true;
+                    $scope.imgsrc[object.id].errorDescription = (typeof error.data.fields !=="undefined") ? error.data.fields.value.toString() : error.description.toString();
 
-            $timeout(function () {
-                $scope.isPropertySaved = false;
-            }, 2000);
-        },
-        function (error) {
+
+                    $timeout(function () {
+                        $scope.imgsrc[object.id].isAlreadyExist = false;
+
+                    }, 2000);
+                }
+                debugger;
+                console.log(error);
+
+            });
 
 
-        });
-
-
+        
     }
-
 
     $scope.contentObj.editContent = function (object, content, isUpdateContent) {
         $scope.IsUpdateContent = isUpdateContent;
         $scope.tempContentData = content;
         var url = "";
-        var requestObject = {};
 
+        var requestObject = {};
+       
         if (isUpdateContent) {
             url = getURL(object._links, "updateContent");
 
@@ -415,9 +523,10 @@
         }
         else if (isUpdateContent == false) {
             url = getURL(object._links, "updateContentValue");
+
             requestObject = {
 
-                name: content.name,
+                value: content.value,
                 status: "Published"
             };
         }

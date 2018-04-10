@@ -1,67 +1,55 @@
 ﻿<section id="sec-email-templates" class="col-md-12">
+    <div class="row paddingBot20Pixel">
 
+            <h3>
+                {{contentObj.content_name}}
+                <span class="pull-right">
+                    <button class="btn btnClass btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
+                </span>
+            </h3>
+    </div>
+    <!--nest row-->
     <div class="row">
+        <div class="col-md-12 maincontent" ng-if="contentObj.contentAsList[0] != null">
 
-        <div class="col-md-12 col-xs-12 maincontent">
-
-            <div>
-                <div class="paddingBot20Pixel">
-                    <h3>{{contentObj.content_name}}</h3>
-
+            <div class="row bottom-border">
+                <div ng-repeat="(key,val) in contentObj.contentAsList[0]" ng-if="key == 'name' || key == 'status' || key == 'publishDate'" class="col-sm-4">
+                    <h4><strong>{{key|cap}}</strong></h4>
                 </div>
-
-
-
-                <div class="row bottom-border">
-                    <div ng-repeat="(key,val) in contentObj.contentAsList[0]" ng-if="key == 'name' || key == 'status' || key == 'publishDate'" class="col-sm-4">
-
-                        <h4><strong>{{key|cap}}</strong></h4>
-
-                    </div>
-
-                </div>
-
-                <div class="row form-label bottom-border" ng-repeat="data in  contentObj.contentAsList">
-                    <div class="col-sm-4" ng-repeat="(key,val) in data" ng-if="key == 'name' || key == 'status' || key == 'publishDate'">
-
-                        <div>
-                            {{val}} <span ng-if="key == 'name'" class="pull-right">
-                                <span ng-repeat="(linkKey,linkVal) in data._links">
-                                    <a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
-                                    <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
-                                    <!--commenting delete icon for now as API needs to return the delete url-->
-                                    <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
-                                </span>
+            </div>
+            <div class="row form-label bottom-border" ng-repeat="data in  contentObj.contentAsList">
+                <div class="col-sm-4" ng-repeat="(key,val) in data" ng-if="key == 'name' || key == 'status' || key == 'publishDate'">
+                    <div>
+                        {{val}}
+                        <span ng-if="key == 'name'" class="pull-right">
+                            <span ng-repeat="(linkKey,linkVal) in data._links">
+                                <a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
+                                <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>
+                                <!--commenting delete icon for now as API needs to return the delete url-->
+                                <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
                             </span>
-                        </div>
-
-
+                        </span>
                     </div>
-
-                </div>
-
-                <div class="form-group pull-right paddingTop03EM">
-                    <button class="btn btnClass  btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
                 </div>
             </div>
         </div>
+    </div>
+    <!--nest row-->
+    <div class="row">
+        <div class="col-md-12 maincontent" ng-if="contentObj.contentAsGrid.length > 0">
 
+            <div class="col-xs-12 col-sm-12 col-md-6 nopadding">
+                <!--<div class="m-b-30">
+                <h3>{{contentObj.content_name}}</h3>
 
-        <div class="col-md-12 col-xs-12 maincontent"  ng-if="contentObj.contentAsGrid.length > 0">
-
-            <div>
-               
-                <div class="col-xs-12 col-sm-12 col-md-6 nopadding">
-                    <div class="m-b-30">
-                        <h3>{{contentObj.content_name}}</h3>
-
-                    </div>
-                    <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
-                        <div ng-repeat="data in contentObj.contentAsGrid">
-                            <div class="form-group" ng-if="data.dataType.name == 'Color Picker'" ng-init="newContent.Value = data.value; newContent.preVal = data.name;">
-                                <div class="col-xs-12 col-sm-4 paddingTop03EM"> {{data.name}}</div>
-                                <div id="cp1" class="input-group col-xs-12 col-sm-8" title="Click here to change color">
-                                    <div id="cp1" class="input-group">
+                </div>-->
+                <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
+                    <div ng-repeat="data in contentObj.contentAsGrid">
+                        <div class="form-group" ng-if="data.dataType.name == 'Color Picker'" ng-init="newContent.Value = data.value; newContent.preVal = data.name;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM nopadding-xs margin-bottom-5-xs"> {{data.name}}</div>
+                                <div class="col-xs-10 col-sm-7" title="Click here to change color">
+                                    <div class="input-group">
                                         <span class="input-group-addon" ng-style="{'background-color':data.value}"></span>
                                         <input colorpicker class="form-control" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName,'red_border':validColor  && data.name == newContent.checkName}" ng-model="data.value" type="text" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="checkColorIsValid(data.value);valueChange = true" />
                                         <span ng-init="contentObj.getValue(data.value,data) "></span>
@@ -73,246 +61,217 @@
                                     <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
                                     <div class="red" ng-if="validColor && data.name == newContent.checkName"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
                                 </div>
-
-                            </div>
-                            <div class="form-group" ng-if="data.dataType.name == 'Text'" ng-init="newContent.Value = data.value; newContent.Name = data.name;">
-                                <div class="col-xs-12 col-sm-4 paddingTop03EM">{{data.name}}</div>
-                                <div class="input-group col-xs-12 col-sm-8" title="">
-                                    <div class="input-group col-xs-12 col-sm-12 col-md-12">
-                                        <input type="text" class="form-control input-lg custom-input" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="data.value" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="valueChange = true" />
-                                        <span ng-init="contentObj.getValue(data.value,data)"></span>
-                                        <span class="rightspace" ng-if="newContent.showIcons  && data.name == newContent.checkName">
-                                            <span ng-click="contentObj.editContentCustomizeBranding(data,data.value);" class="save glyphicon glyphicon-ok-sign"></span>
-                                            <span ng-if="data.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(data.value,data)" class="remove glyphicon glyphicon-remove-sign"></span>
-                                        </span>
-                                    </div>
-                                    <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
+                                <div class="col-xs-2 col-sm-1 nopadding">
+                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
                                 </div>
                             </div>
-                            <div class="form-group" ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="name = data.name">
-                                <div class="col-xs-12 col-sm-4 paddingTop03EM">{{data.name}}</div>
-                                <div class="input-group col-xs-12 col-sm-8" title="">
+                        </div>
+                        <div class="form-group" ng-if="data.dataType.name == 'Text'" ng-init="newContent.Value = data.value; newContent.Name = data.name;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
+                                <div class="col-xs-10 col-sm-7">
+                                    <input type="text" class="form-control input-lg custom-input" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="data.value" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="valueChange = true" />
+                                    <span ng-init="contentObj.getValue(data.value,data)"></span>
+                                    <span class="rightspace" ng-if="newContent.showIcons  && data.name == newContent.checkName">
+                                        <span ng-click="contentObj.editContentCustomizeBranding(data,data.value);" class="save glyphicon glyphicon-ok-sign"></span>
+                                        <span ng-if="data.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(data.value,data)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                    </span>
+                                    <div>
+                                        <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-sm-1 nopadding">
+                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value" class="form-group">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
+                                <div class="col-xs-10 col-sm-7" title="">
                                     <div class="input-group col-xs-12 col-sm-12 col-md-12">
                                         <div class="input-group col-xs-12 col-sm-12">
                                             <label class="input-group-btn ">
                                                 <span class="btn btnClass no-margin">
-                                                    Choose File <input type="file" imgID="{{data.id}}" onchange="angular.element(this).scope().imageUpload(this);" accept="image/*" style="display: none;">
+                                                    Choose File <input type="file" imgObject="{{data}}" onchange="angular.element(this).scope().imageUpload(this);" accept="image/*" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="imgsrc[data.id].name" required type="text" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="valueChange = true">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text">
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
-                                            <span class="rightspace" ng-if="newContent.showIcons  && data.name == newContent.checkName">
-                                                <span ng-click="contentObj.editContentCustomizeBranding(data,imgsrc[data.id].file);" class="save glyphicon glyphicon-ok-sign"></span>
-                                                <span ng-if="data.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(data.value,data)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                            <span class="rightspace-img">
+                                                <span ng-if="imgsrc[data.id].showIcons">
+                                                    <span ng-click="contentObj.editContentCustomizeBranding(data,imageBase64);" class="save glyphicon glyphicon-ok-sign"></span>
+                                                    <span ng-click="contentObj.setPreviousValue(imgsrc[data.id],imgsrc)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                                </span>
+                                                <span class="icon-box"><img src="imgs/image-icon.png" /></span>
                                             </span>
-                                            <span class="image-icon-box"><img src="imgs/image-icon.png" /></span>
                                         </div>
-                                        <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
+                                        <span ng-show="imgsrc[data.id].isAlreadyExist" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{imgsrc[data.id].errorDescription}}</span>
+                                        <span ng-show="imgsrc[data.id].isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span> Not a Valid Extension</span>
+                                    </div>
+                                    <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
 
+                                    <div class="contentImg" ng-if="imgsrc[data.id].value !=null ">
+                                        <a ng-href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb img-responsive " ng-src="{{imgsrc[data.id].value}}" /></a>
                                     </div>
-                                    <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
-                                    
 
-                                    <div class="contentImg" ng-if="imgsrc[data.id].src !=null">
-                                        <img class="thumb img-responsive " ng-src="{{imgsrc[data.id].src}}" />
-                                    </div>
-                                    <div class="contentImg" ng-if="imgsrc[data.id] == null && data.value.length > 0">
-                                        <img class="thumb img-responsive " ng-src="{{data.value}}" />
-                                    </div>
+
+                                </div>
+                                <div class="col-xs-2 col-sm-1 nopadding">
+                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
                                 </div>
                             </div>
-
-                            <div class="form-group" ng-if="data.dataType.name == 'Document'" ng-init="name = data.name">
-                                <div class="col-xs-12 col-sm-4 paddingTop03EM">{{data.name}}</div>
-                                <div class="input-group col-xs-12 col-sm-8" title="">
+                        </div>
+                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value" class="form-group">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
+                                <div class="col-xs-10 col-sm-7" title="">
                                     <div class="input-group col-xs-12 col-sm-12 col-md-12">
                                         <div class="input-group col-xs-12 col-sm-12">
                                             <label class="input-group-btn">
                                                 <span class="btn btnClass no-margin">
-                                                    Choose File <input type="file" imgID="{{data.id}}" onchange="angular.element(this).scope().documentUpload(this);" accept="application/pdf" style="display: none;">
+                                                    Choose File <input type="file" documentID="{{data.id}}" onchange="angular.element(this).scope().documentUpload(this);" accept="application/pdf" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="imgsrc[data.id].name" required type="text" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="valueChange = true">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text">
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
-                                            <span class="rightspace" ng-if="newContent.showIcons  && data.name == newContent.checkName">
-                                                <span ng-click="contentObj.editContentCustomizeBranding(data,imgsrc[data.id].file);" class="save glyphicon glyphicon-ok-sign"></span>
-                                                <span ng-if="data.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(data.value,data)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                            <span class="rightspace-img">
+                                                <span ng-if="imgsrc[data.id].showIcons">
+                                                    <span ng-click="contentObj.editContentCustomizeBranding(data,documentBase64);" class="save glyphicon glyphicon-ok-sign"></span>
+                                                    <span ng-click="contentObj.setPreviousValue(imgsrc[data.id],imgsrc)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                                </span>
+                                                <span class="pdf-icon icon-box"><img src="imgs/pdf-icon.png" /></span>
                                             </span>
-                                            <span class="pdf-icon-box"><img src="imgs/pdf-icon.png" /></span>
                                         </div>
-                                        <span ng-show="contentValidation.isValidExtension && name == data.name" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
-
-                                    </div>
-                                    <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
-                                   
-
-                                    <div class="contentImg" ng-if="imgsrc[data.id].src !=null">
-                                        <img class="thumb img-responsive " ng-src="{{imgsrc[data.id].src}}" />
-                                    </div>
-                                    <div class="contentImg" ng-if="imgsrc[data.id] == null && data.value.length > 0">
-                                        <img class="thumb img-responsive " ng-src="{{data.value}}" />
+                                        <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
+                                        <span ng-show="imgsrc[data.id].isAlreadyExist" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{imgsrc[data.id].errorDescription}}</span>
+                                        <span ng-show="imgsrc[data.id].isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span> Not a Valid Extension</span>
+                                        <a href="{{imgsrc[data.id].value}}" class="pdf-thumbnail thumbnail" target="_blank" ng-if="imgsrc[data.id].value != undefined">
+                                            <span>
+                                                <img class="pull-left cust-icon-width" src="imgs/pdf-icon.png" />
+                                            </span>
+                                            <span class="paddingleft20">
+                                                {{imgsrc[data.id].filename}}
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
+                                <div class="col-xs-2 col-sm-1 nopadding">
+                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                </div>
                             </div>
-
-
                         </div>
-                    </form>
-
-                    <div class="row">
-
-                        <!--<div class="form-group">
-                            <div class="customize-help-text">
-                                <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>
-
-                            </div>
-                        </div>-->
-
-                        <div class="form-group">
-                            <button class="btn btnClass pull-right btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
-                        </div>
-
                     </div>
-                </div>
-
-                <div id="test" ng-bind-html="supportingContent"></div>
-
-
+                </form>
+                <!--Create button  Piece of code is moved to lower div .-->
             </div>
+            <!--end coloumn-->
+            <div ng-bind-html="supportingContent"></div>
 
         </div>
+    </div>
+    <div class="row" ng-if="contentObj.content[0] != null">
+        <!--<div class="form-group">
+           <div class="customize-help-text">
+               <p>  -Text in fonts larger than 18px(bold) or 24px(regular) only need to pass  the "Large Text" test (greater than contrast ration 3.0:1)</p>
 
-
-
-
-
-
-
-        <div class="modal fade " id="editContent" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form name="myform" ng-submit="contentObj.performAction(newContent)" novalidate>
-                        <div class="modal-header">
-
-
-                            <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
-
-                            <h5 class="modal-title" id="lblEditModel">Content Management</h5>
+           </div>
+           </div>-->
+        <div class="col-sm-12">
+            <button class="btn btnClass pull-right btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
+        </div>
+    </div>
+    <!--We will use it later for back to top purpose-->
+    <!--<div class="row">
+       <div class="form-group">
+           <span class="glyphicon glyphicon-arrow-up pull-right MainbackToTop MainbackToTopIcon"></span>
+       </div>
+       </div>-->
+    <div class="modal fade " id="editContent" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="form" name="myform" ng-submit="contentObj.performAction(newContent)" novalidate>
+                    <div class="modal-header">
+                        <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+                        <h5 class="modal-title" id="lblEditModel">Content Management</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" ng-show="(IsUpdateContent == true) || (contentObj.isAdd == true)">
+                            <label>Name</label>
+                            <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="IsUpdateContent == false && contentObj.isAdd == true" />
+                            <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
                         </div>
-                        <div class="modal-body">
-
-                            <div class="form-group" ng-show="(IsUpdateContent == true) || (contentObj.isAdd == true)">
-                                <label>Name</label>
-                                <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Name.$valid))}" name="Name" placeholder="Enter Name" ng-model="newContent.name" ng-required="IsUpdateContent == false && contentObj.isAdd == true" />
-
-                                <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
-                            </div>
-
-                            <div class="form-group" ng-if="newContent.isEditValue" ng-init="newContent.Value = '';">
-                                <label>Value</label>
-                                <textarea type="text" class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required ></textarea>
-
-                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-
-                            </div>
-
-
-                            <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
-                                <label>Data Type</label>
-
-                                <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
-                                    <option value="">Select Data Type</option>
-                                </select>
-
-                                <p ng-if="myform.$submitted && (!(myform.dataType.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Data Type is required</p>
-                            </div>
-
-                            <div class="form-group" ng-if="newContent.selectedDataType.name == 'Text';" ng-init="newContent.Value = '';">
-                                <label>Value</label>
-                                <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required />
-
-                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-
-                            </div>
-
-                            <div class="form-group" ng-if="newContent.selectedDataType.name == 'Color Picker';" ng-init="newContent.Value = '';">
-                                <label>Value</label>
-                                <div id="cp1" class="input-group col-xs-12 col-sm-12" title="Click here to change color">
-                                    <span class="input-group-addon" ng-style="{'background-color':newContent.value}"></span>
-                                    <input colorpicker type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid)),'red_border':validColor}" name="Value" placeholder="Enter Value" ng-model="newContent.value" ng-change="checkColorIsValid(newContent.value);" required />
-
-                                </div>
-                                <div class="red" ng-if="validColor"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
-
-
-                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-
-                            </div>
-
-                            <div class="form-group" ng-if="newContent.selectedDataType.name == 'HTML';">
-                                <label>Value</label>
-                                <textarea class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required></textarea>
-
-                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-
-                            </div>
-
-
-
-
-                            <div class="form-group" ng-if="newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display'" ng-init="newContent.Value = ''">
-                                <label>Value</label>
-
-                                <div class="input-group col-xs-12 col-sm-12">
-                                    <label class="input-group-btn">
-                                        <span class="btn btnClass no-margin">
-                                            Choose File <input type="file" onchange="angular.element(this).scope().imageUpload(this)" accept="image/*" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.filename" required type="text">
-                                    <span class="image-icon-box"><img src="imgs/image-icon.png" /></span>
-
-                                </div>
-                                <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
-
-                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-                              
-                                <div class="contentImg" ng-if="modalImgsrc !=null && (newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display')">
-                                    <img class="thumb" ng-src="{{modalImgsrc}}" />
-                                </div>
-
-                            </div>
-
-                            <div class="form-group" ng-if="newContent.selectedDataType.name == 'Document' " ng-init="newContent.Value = ''">
-                                <label>Value</label>
-
-                                <div class="input-group col-xs-12 col-sm-12">
-                                    <label class="input-group-btn">
-                                        <span class="btn btnClass no-margin">
-                                            Choose File <input type="file" onchange="angular.element(this).scope().documentUpload(this)" accept="application/pdf" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.documentName" required type="text">
-                                    <span class="pdf-icon-box"><img src="imgs/pdf-icon.png" /></span>
-                                </div>
-                                <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
-
-                                <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-                                
-
-
-                            </div>
-
-
-
+                        <div class="form-group" ng-if="newContent.isEditValue">
+                            <label>Value</label>
+                            <textarea type="text" class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required></textarea>
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
                         </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary btnClass" type="submit" ng-disabled="false">Save</button>
-                            <button type="button" class="btn btn-secondary btnClass" data-dismiss="modal">Cancel</button>
-
+                        <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
+                            <label>Data Type</label>
+                            <select name="dataType" ng-model="newContent.selectedDataType" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.dataType.$valid))}" ng-options="list.name for list in contentObj.dataTypeList" required>
+                                <option value="">Select Data Type</option>
+                            </select>
+                            <p ng-if="myform.$submitted && (!(myform.dataType.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Data Type is required</p>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Text';" ng-init="newContent.value = '';">
+                            <label>Value</label>
+                            <input type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required />
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
+                        </div>
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Color Picker';" ng-init="newContent.value = '';">
+                            <label>Value</label>
+                            <div id="cp1" class="input-group col-xs-12 col-sm-12" title="Click here to change color">
+                                <span class="input-group-addon" ng-style="{'background-color':newContent.value}"></span>
+                                <input colorpicker type="text" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid)),'red_border':validColor}" name="Value" placeholder="Enter Value" ng-model="newContent.value" ng-change="checkColorIsValid(newContent.value);" required />
+                            </div>
+                            <div class="red" ng-if="validColor"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
+                        </div>
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'HTML';">
+                            <label>Value</label>
+                            <textarea class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required></textarea>
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
+                        </div>
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display'" ng-init="newContent.value = ''">
+                            <label>Value</label>
+                            <div class="input-group col-xs-12 col-sm-12">
+                                <label class="input-group-btn">
+                                    <span class="btn btnClass no-margin">
+                                        Choose File <input type="file" onchange="angular.element(this).scope().imageUpload(this)" accept="image/*" style="display: none;">
+                                    </span>
+                                </label>
+                                <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.value" required type="text">
+                                <span class="image-icon-box"><img src="imgs/image-icon.png" /></span>
+                            </div>
+                            <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
+                            <div class="contentImg" ng-if="modalImgsrc !=null && (newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display')">
+                                <img class="thumb" ng-src="{{modalImgsrc}}" />
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Document' " ng-init="newContent.value = ''">
+                            <label>Value</label>
+                            <div class="input-group col-xs-12 col-sm-12">
+                                <label class="input-group-btn">
+                                    <span class="btn btnClass no-margin">
+                                        Choose File <input type="file" onchange="angular.element(this).scope().documentUpload(this)" accept="application/pdf" style="display: none;">
+                                    </span>
+                                </label>
+                                <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.value" required type="text">
+                                <span class="image-icon-box"><img src="imgs/pdf-icon.png" /></span>
+                            </div>
+                            <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
+                            <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btnClass" type="submit" ng-disabled="false">Save</button>
+                        <button type="button" class="btn btn-secondary btnClass" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 </section>
