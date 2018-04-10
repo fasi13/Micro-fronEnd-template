@@ -22,12 +22,16 @@
                     <div>
                         {{val}}
                         <span ng-if="key == 'name'" class="pull-right">
+                            <a> <span class="glyphicon glyphicon-info-sign"></span> </a>
                             <span ng-repeat="(linkKey,linkVal) in data._links">
-                                <a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
-                                <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>
+                                <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
+                                <!--<a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>-->
+                              
+                                
                                 <!--commenting delete icon for now as API needs to return the delete url-->
                                 <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
                             </span>
+            
                         </span>
                     </div>
                 </div>
@@ -62,7 +66,11 @@
                                     <div class="red" ng-if="validColor && data.name == newContent.checkName"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                    <span class="tooltips">
+                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                       <!--<span class="tooltiptext">Sample Sample Sample</span>-->
+                                    </span>
+
                                 </div>
                             </div>
                         </div>
@@ -81,13 +89,17 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                    <span class="tooltips">
+                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                       <!--<span class="tooltiptext">Sample Sample Sample</span>-->
+                                    </span>
+
                                 </div>
 
                             </div>
 
                         </div>
-                        <div ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value" class="form-group">
+                        <div ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value; imgsrc[data.id].filename = data.name " class="form-group">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7" title="">
@@ -98,7 +110,7 @@
                                                     Choose File <input type="file" imgObject="{{data}}" onchange="angular.element(this).scope().imageUpload(this);" accept="image/*" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].name" required type="text">
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
                                             <span class="rightspace-img">
                                                 <span ng-if="imgsrc[data.id].showIcons">
@@ -113,18 +125,22 @@
                                     </div>
                                     <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
 
-                                    <div class="contentImg" ng-if="imgsrc[data.id].value !=null ">
+                                    <div class="contentImg" ng-if="imgsrc[data.id].value !=null">
                                         <a ng-href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb img-responsive " ng-src="{{imgsrc[data.id].value}}" /></a>
                                     </div>
 
 
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                    <span class="tooltips">
+                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                        <!--<span class="tooltiptext">Sample Sample Sample</span>-->
+                                    </span>
+                                   
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value" class="form-group">
+                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value;imgsrc[data.id].filename = data.name" class="form-group">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7" title="">
@@ -135,7 +151,7 @@
                                                     Choose File <input type="file" documentID="{{data.id}}" onchange="angular.element(this).scope().documentUpload(this);" accept="application/pdf" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].name" required type="text">
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
                                             <span class="rightspace-img">
                                                 <span ng-if="imgsrc[data.id].showIcons">
@@ -159,7 +175,11 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                    <span class="tooltips">
+                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                       <!--<span class="tooltiptext">Sample Sample Sample</span>-->
+                                    </span>
+
                                 </div>
                             </div>
                         </div>
@@ -204,8 +224,8 @@
                             <p ng-if="myform.$submitted && (!(myform.Name.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Name is required</p>
                         </div>
                         <div class="form-group" ng-if="newContent.isEditValue">
-                            <label>Value</label>
-                            <textarea type="text" class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required></textarea>
+                            <label>{{newContent.name}}</label>
+                            <textarea type="text" class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter HTML" ng-model="newContent.value" required></textarea>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
                         </div>
                         <div ng-if="isDataTypePropertyEnabled==true" class="form-group">
@@ -231,10 +251,10 @@
                         </div>
                         <div class="form-group" ng-if="newContent.selectedDataType.name == 'HTML';">
                             <label>Value</label>
-                            <textarea class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter Value" ng-model="newContent.value" required></textarea>
+                            <textarea class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter HTML" ng-model="newContent.value" required></textarea>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
                         </div>
-                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display'" ng-init="newContent.value = ''">
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display'" >
                             <label>Value</label>
                             <div class="input-group col-xs-12 col-sm-12">
                                 <label class="input-group-btn">
@@ -242,16 +262,17 @@
                                         Choose File <input type="file" onchange="angular.element(this).scope().imageUpload(this)" accept="image/*" style="display: none;">
                                     </span>
                                 </label>
-                                <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.value" required type="text">
+                                <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.filename" required type="text">
                                 <span class="image-icon-box"><img src="imgs/image-icon.png" /></span>
                             </div>
                             <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-                            <div class="contentImg" ng-if="modalImgsrc !=null && (newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display')">
+                           <p ng-if="errorDescription != undefined" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{errorDescription}}</p>
+                             <div class="contentImg" ng-if="modalImgsrc !=null && (newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display')" >
                                 <img class="thumb" ng-src="{{modalImgsrc}}" />
                             </div>
                         </div>
-                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Document' " ng-init="newContent.value = ''">
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Document' ">
                             <label>Value</label>
                             <div class="input-group col-xs-12 col-sm-12">
                                 <label class="input-group-btn">
@@ -259,9 +280,11 @@
                                         Choose File <input type="file" onchange="angular.element(this).scope().documentUpload(this)" accept="application/pdf" style="display: none;">
                                     </span>
                                 </label>
-                                <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.value" required type="text">
+                                <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.filename" required type="text">
                                 <span class="image-icon-box"><img src="imgs/pdf-icon.png" /></span>
                             </div>
+                            <p ng-if="errorDescription != undefined" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{errorDescription}}</p>
+
                             <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
                         </div>
@@ -273,5 +296,8 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div id="IsBackToTopEnabled" class="row">
+        <a href="" class="pull-right MainbackToTop"> <span class="glyphicon glyphicon-chevron-up MainbackToTopIcon"> </span> </a>
     </div>
 </section>

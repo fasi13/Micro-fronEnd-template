@@ -82,13 +82,13 @@
                         break;
                     }
                      if(obj[i].id == $scope.copyContent[j].id) {
-                         obj[i].name = $scope.copyContent[j].name;
+                         obj[i].filename = $scope.copyContent[j].name;
                         obj[i].value = $scope.copyContent[j].value;
                         $scope.newContent.showIcons = false;
                         if (obj[i].showIcons !== undefined) {
 
                             obj[i].showIcons = false;
-                            obj[i].filename = "";
+                            obj[i].name = "";
                         }
                         break;
 
@@ -150,9 +150,9 @@
     $scope.contentObj.createContent = function (content) {
         var url, links;
 
-
+       
         if ($scope.contentObj.completeObj != null && content.name) {
-            debugger;
+           
             links = $scope.contentObj.completeObj._links;
             url = getURL(links, "createContent");
            
@@ -198,6 +198,10 @@
           $('#editContent').modal('hide');
       },
       function (error) {
+          $scope.errorDescription = (typeof error.data.fields !== "undefined") ? error.data.fields.value.toString() : error.description.toString();
+          $timeout(function () {
+              $scope.errorDescription = undefined;
+          }, 2000);
           console.log(error);
 
       });
@@ -227,7 +231,7 @@
 
         var files = element.files;
         $scope.file = files[0];
-        debugger;
+       
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
 
@@ -235,12 +239,13 @@
 
         if (ext == "pdf") {
             if (element.attributes.documentID != undefined) {
-                debugger;
+              
                 $scope.documentID = element.attributes.documentID.value;
                 $scope.imgsrc[$scope.documentID] = {};
             }
             else {
-                $scope.newContent.Value = $scope.file.name;
+                $scope.newContent.filename = $scope.file.name;
+               
             }
             var reader = new FileReader();
             reader.readAsDataURL($scope.file);
@@ -248,11 +253,11 @@
 
                
                 $scope.documentBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
-
+                $scope.newContent.value = $scope.documentBase64;
 
                 $scope.$apply(function () {
-                    var fileObject = { id: $scope.documentID, filename: $scope.file.name, value: e.target.result ,showIcons:true};
-                   
+                    var fileObject = { id: $scope.documentID,name: $scope.file.name,filename: $scope.file.name, value: e.target.result, showIcons: true };
+                 
                     $scope.imgsrc[$scope.documentID] = fileObject;
                 });
 
@@ -301,8 +306,8 @@
                 $scope.imgObject = imgObject.id;
             }
             else {
-                $scope.newContent.value = $scope.file.name;
-
+                $scope.newContent.filename = $scope.file.name;
+               
             }
 
 
@@ -314,6 +319,7 @@
             reader.onloadend = function (e) {
                 
                 $scope.imageBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
+                $scope.newContent.value = $scope.imageBase64;
                 $scope.$apply(function () {
 
                     $scope.modalImgsrc = "";
@@ -322,7 +328,7 @@
                    
                     if (element.attributes.imgObject != undefined) {
                         
-                        var imgObject = { id:$scope.imgObject,filename: $scope.file.name, value: e.target.result , showIcons:true};
+                        var imgObject = { id:$scope.imgObject,name:$scope.file.name,filename: $scope.file.name, value: e.target.result ,showIcons:true};
                         $scope.imgsrc[$scope.imgObject] = imgObject;
                     }
                 });
@@ -366,6 +372,7 @@
         $scope.newContent.isEditValue = true;
        
         $scope.newContent.id = result.data.data.id;
+        $scope.newContent.name = result.data.data.name;
         $scope.newContent.value = result.data.data.value;
         $scope.currentContent = result.data.data;
 
@@ -449,7 +456,7 @@
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
        
-        debugger;
+      
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
@@ -470,6 +477,7 @@
                
                 console.log(response);
                 if ($scope.imgsrc[object.id] != undefined) {
+                    $scope.imgsrc[object.id].value = response.data.data.value;
                     $scope.imgsrc[object.id].showIcons = false;
                     $scope.imgsrc[object.id].isPropertySaved = true;
                     $timeout(function () {
@@ -496,7 +504,7 @@
 
                     }, 2000);
                 }
-                debugger;
+               
                 console.log(error);
 
             });

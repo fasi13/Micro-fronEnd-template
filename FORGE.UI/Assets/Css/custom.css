@@ -1325,7 +1325,51 @@ span.icon-box img {
     resize: vertical;
 }
 
+/* Tool Tip Css*/
 .toolTipProp {
     margin-top: 12px;
     margin-left: -9px;
+    padding-left:2px;
+    color:#0000EE;
+}
+
+.tooltips {
+    position: relative;
+    display: inline-block;
+    opacity:1;
+}
+
+.tooltips .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: white;
+    color: #fff;
+    font-weight: 200;
+    border:1px solid #ccc;
+    color:grey;
+    text-align: center;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 100;
+    bottom: 80%;
+    left: 0%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltips .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: lightgrey transparent transparent transparent;
+}
+
+.tooltips:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

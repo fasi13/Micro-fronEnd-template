@@ -2140,6 +2140,19 @@ and dependencies (minified).
 
 $(document).ready(function () {
 
+    $(window).scroll(function () {
+
+      
+
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("IsBackToTopEnabled").style.display = "block";
+        } else {
+            document.getElementById("IsBackToTopEnabled").style.display = "none";
+        }
+
+    });
+    
+
     $(document).on('click', '.ivh-treeview-node-content', function (event) {
 
         var scrollPosition = 0;
