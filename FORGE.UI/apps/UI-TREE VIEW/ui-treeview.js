@@ -97,18 +97,12 @@ angular.module('ivh.treeview').directive('ivhTreeviewNode', ['ivhTreeviewCompile
                       trvw.expand(node, trvw.isInitiallyExpanded(scope.depth));
                   }
 
-                  /**
-                   * @todo Provide a way to opt out of this
-                   */
-                  scope.$watch(function () {
-                      return getChildren().length > 0;
-                  }, function (newVal) {
-                      if (newVal) {
-                          element.removeClass('ivh-treeview-node-leaf');
-                      } else {
-                          element.addClass('ivh-treeview-node-leaf');
-                      }
-                  });
+                  if (getChildren().length > 0) {
+                      element.removeClass('ivh-treeview-node-leaf');
+                  } else {
+                      element.addClass('ivh-treeview-node-leaf');
+                  }
+
               });
         }
     };
