@@ -10,7 +10,7 @@
     </div>
     <!--nest row-->
     <div class="row">
-        <div class="col-md-12 maincontent" ng-if="contentObj.contentAsList[0] != null">
+        <div class="col-sm-12 col-xs-12 col-md-12 maincontent" ng-if="contentObj.contentAsList[0] != null">
 
             <div class="row bottom-border">
                 <div ng-repeat="(key,val) in contentObj.contentAsList[0]" ng-if="key == 'name' || key == 'status' || key == 'publishDate'" class="col-sm-4">
@@ -40,7 +40,7 @@
     </div>
     <!--nest row-->
     <div class="row">
-        <div class="col-md-12 maincontent" ng-if="contentObj.contentAsGrid.length > 0">
+        <div class="col-sm-12 col-xs-12 col-md-12 maincontent" ng-if="contentObj.contentAsGrid.length > 0">
 
             <div class="col-xs-12 col-sm-12 col-md-6 nopadding">
                 <!--<div class="m-b-30">
@@ -51,7 +51,7 @@
                     <div ng-repeat="data in contentObj.contentAsGrid">
                         <div class="form-group" ng-if="data.dataType.name == 'Color Picker'" ng-init="newContent.Value = data.value; newContent.preVal = data.name;">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-4 paddingTop03EM nopadding-xs margin-bottom-5-xs"> {{data.name}}</div>
+                                <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs"> {{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7" title="Click here to change color">
                                     <div class="input-group">
                                         <span class="input-group-addon" ng-style="{'background-color':data.value}"></span>
@@ -128,7 +128,7 @@
                                     <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
 
                                     <div class="contentImg" ng-if="imgsrc[data.id].value !=null">
-                                        <a ng-href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb img-responsive " ng-src="{{imgsrc[data.id].value}}" /></a>
+                                        <a ng-href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb" ng-src="{{imgsrc[data.id].value}}" /></a>
                                     </div>
 
 

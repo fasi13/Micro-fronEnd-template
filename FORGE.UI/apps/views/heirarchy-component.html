@@ -6,8 +6,8 @@
         <div class="col-md-6 col-xs-10">
             <div class="inner-addon right-addon">
 
-                <input id="myInput" type="text" class="form-control" ng-keydown="handleKeyEvents($event)" placeholder="Search (3 character minimum)"  ng-model="searchBox.text" ng-change="search(searchBox.text)" autocomplete="off">
-               
+                <input id="myInput" type="text" class="form-control" ng-keydown="handleKeyEvents($event)" placeholder="Search (3 character minimum)" ng-model="searchBox.text" ng-change="search(searchBox.text)" autocomplete="off">
+
             </div>
         </div>
         <div class="col-md-1 col-xs-1 text-right" ng-click="hc.isCollapsed = !hc.isCollapsed">
@@ -34,7 +34,7 @@
 
     <div class="row">
         <div class="col-md-12 hierarchy col-xs-12">
-            <div uib-collapse="hc.isCollapsed" class="cust-border">
+            <div uib-collapse="hc.isCollapsed" class="cust-border padding-10">
                 <div class="row">
                     <div class="col-sm-7 cust-offset">
                         <div class="row">
@@ -47,27 +47,26 @@
                         </div>
                     </div>
                     <div class="col-sm-5 right-box">
-
-
-
-
-
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Color Scheme: </label></div>
-                            <div class="text-left col-sm-8"><div class="color-tag"><div class="box "  ng-style="{'background-color':hierarchyRightContentPrimaryColor}"></div><p>P</p> <div class="box "  ng-style="{'background-color':hierarchyRightContentSecondaryColor}"></div><p>S</p></div></div>
+                            <div class="col-sm-5"><label>Color Scheme: </label></div>
+                            <div class="col-sm-7"><div class="color-tag"><div class="box " ng-style="{'background-color':hierarchyRightContentPrimaryColor}"></div><p>P</p> <div class="box " ng-style="{'background-color':hierarchyRightContentSecondaryColor}"></div><p>S</p></div></div>
 
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Program Name: </label></div>
-                            <div class="text-left col-sm-8"><h3 ng-bind-html="hierarchyRightContentCreditUnionName"></h3></div>
+                            <div class="col-sm-5"><label>Program Name: </label></div>
+                            <div class="col-sm-7"><h3 ng-bind-html="hierarchyRightContentCreditUnionName"></h3></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Primary Logo: </label></div>
-                            <div class="text-left col-sm-8"><img class="img-responsive" src="{{hierarchyRightContentCreditUnionLogo}}" /></div>
+                            <div class="col-sm-5"><label>Primary Logo: </label></div>
+                            <div class="col-sm-7"><img class="thumb" src="{{hierarchyRightContentCreditUnionLogo}}" /></div>
                         </div>
                         <div class="row">
-                            <div class="text-left col-sm-4"><label>Site URL: </label></div>
-                            <div class="text-left col-sm-8"><a href="{{hierarchyRightContentCreditUnionURL}}">{{hierarchyRightContentCreditUnionURL}}</a></div>
+                            <div class="col-sm-5"><label>Secondary Logo: </label></div>
+                            <div class="col-sm-7"><img class="thumb" src="{{hierarchyRightContentCreditUnionSecondaryLogo}}" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5"><label>Site URL: </label></div>
+                            <div class="col-sm-7"><a href="{{hierarchyRightContentCreditUnionURL}}">{{hierarchyRightContentCreditUnionURL}}</a></div>
                         </div>
 
                     </div>
@@ -76,9 +75,9 @@
                     <div class="col-sm-6 nopadding">
                         <div id="IsBackToTopHierarchyEnabled">
                             <a href="" class="pull-left backToTop"> <span class="glyphicon glyphicon-chevron-up"> </span> </a>
-                            </div>
-                            <button id="configureBtn" ng-disabled="parent.length==0" class="btn btn-sm btnClass marginTop20" ng-click="config_breadcrumb();">Configure</button>
                         </div>
+                        <button id="configureBtn" ng-disabled="parent.length==0" class="btn btn-sm btnClass marginTop20" ng-click="config_breadcrumb();">Configure</button>
+                    </div>
                 </div>
             </div>
 

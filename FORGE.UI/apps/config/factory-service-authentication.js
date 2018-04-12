@@ -1,31 +1,26 @@
 ﻿(function () {
     'use strict';
 
-    var service = function ($http, APIEndpoint) {
-        return {
-            _get: function (t) {
-                return $http({
-                    method: 'GET',
-                    url: APIEndpoint,
-                    headers: {
-                        'Authorization': t,
-                    }
-                });
-            } //auth fn
-        }//return
-    };
-
-    var controller = function ($http, APIEndpoint, $cookies, $rootScope) {
+    var controller = function ($http, APIEndpoint, $cookies, $rootScope, apiService) {
         var _token = '';
         return {
             authentication: function (user) {
-                return new service($http, APIEndpoint.auth)._get('Basic ' + user)
+                return new apiService._get($http, APIEndpoint.auth,
+                    {
+                        'Authorization': 'Basic ' + user,
+                    })
                 .then(function (resp) {
                     _token = resp.headers('authentication-info');
-                    return new service($http, resp.data.data._links[0].href)._get(_token)
+                    return new apiService._get($http, resp.data.data._links[0].href,
+                         {
+                             'Authorization': _token,
+                         })
                                      .then(function (data) {
                                          sessionStorage.setItem("baseApplicationUrl", JSON.stringify(data.data.data._links[0].href));
-                                         return new service($http, data.data.data._links[0].href)._get(_token)
+                                         return new apiService._get($http, data.data.data._links[0].href,
+                                             {
+                                                 'Authorization': _token,
+                                             })
             .then(function (data) {
                 /* -assign token- */
                 if (typeof $cookies.get('profile') !== const_auth.undefined)
@@ -54,11 +49,10 @@
             contentManagement: function (i) {
                 var _link = JSON.parse(sessionStorage._contentManagement).items[i]._links[0].href;
                 _token = JSON.parse($cookies.get('profile'))._token;
-                return new service($http, _link)._get(_token)
-                //.then(function (data) {
-                //return data;
-                //})
-                ;
+                return new apiService._get($http, _link,
+                    {
+                        'Authorization': _token,
+                    });
             },
             sayHello: function () {
                 /* test method */
@@ -67,7 +61,7 @@
         }
     };
 
-    controller.$inject = ['$http', 'APIEndpoint', '$cookies', '$rootScope']
+    controller.$inject = ['$http', 'APIEndpoint', '$cookies', '$rootScope', 'apiService']
 
 
     angular

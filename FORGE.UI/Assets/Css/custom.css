@@ -201,14 +201,14 @@ textarea.form-control {
         display: block;
     }
 
-   .margin-bottom-5-xs {
-    margin-bottom: 5px;
+    .margin-bottom-5-xs {
+        margin-bottom: 5px;
     }
 
-    .nopadding-xs{
-        padding:0px;
+    .nopadding-xs {
+        padding: 0px;
     }
-   
+
     .xs {
         padding: 0px !important;
     }
@@ -242,6 +242,14 @@ textarea.form-control {
     .right-box {
         border: none !important;
         margin-left: 10% !important;
+    }
+
+    .model-description {
+        margin: 10px 0px 00px 130px;
+    }
+
+    .modal-footer-bord {
+        margin-top: 20px !important;
     }
 }
 
@@ -1296,6 +1304,33 @@ span.seach-icon {
     border: 1px solid green !important;
 }
 
+.modal-head > h4, .close {
+    color: #fff;
+    opacity: 1;
+}
+
+.modal-header {
+    padding: 5px 15px 0px 15px !important;
+}
+
+.model-description {
+    margin-top: 20px;
+}
+
+.modal-footer-bord {
+    margin-top: 90px;
+    padding: 10px !important;
+    border-top: 1px solid #ccc;
+}
+
+span.image-box {
+    position: absolute;
+    /*right: 5px;*/
+    z-index: 10;
+    max-width: 100px !important;
+    max-height: 70px;
+}
+
 span.image-icon-box {
     position: absolute;
     right: 5px;
@@ -1330,46 +1365,53 @@ span.icon-box img {
     margin-top: 12px;
     margin-left: -9px;
     padding-left:2px;
-    color:#0000EE;
+   
 }
 
+.glyphicon-info-sign {
+     color:#2664c9 !important;
+}
 .tooltips {
     position: relative;
     display: inline-block;
-    opacity:1;
-}
-
-.tooltips .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: white;
-    color: #fff;
-    font-weight: 200;
-    border:1px solid #ccc;
-    color:grey;
-    text-align: center;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 100;
-    bottom: 80%;
-    left: 0%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltips .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: lightgrey transparent transparent transparent;
-}
-
-.tooltips:hover .tooltiptext {
-    visibility: visible;
     opacity: 1;
+}
+
+    .tooltips .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: white;
+        color: #fff;
+        font-weight: 200;
+        border: 1px solid #ccc;
+        color: grey;
+        text-align: center;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 100;
+        bottom: 80%;
+        left: 0%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+        .tooltips .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: lightgrey transparent transparent transparent;
+        }
+
+    .tooltips:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+.padding-10 {
+    padding: 10px;
 }

@@ -20,7 +20,7 @@
 
 
 
-.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService) {
+.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope) {
 
 
     $scope.contentObj = {};
@@ -71,28 +71,28 @@
 
     $scope.contentObj.setPreviousValue = function (newval, obj) {
 
-       
 
-        for (var i = 0; i <obj.length; i++) {
 
-           
-                for (var j = 0; j < $scope.copyContent.length; j++) {
+        for (var i = 0; i < obj.length; i++) {
 
-                    if (obj[i] == undefined){
-                        break;
+
+            for (var j = 0; j < $scope.copyContent.length; j++) {
+
+                if (obj[i] == undefined) {
+                    break;
+                }
+                if (obj[i].id == $scope.copyContent[j].id) {
+                    obj[i].filename = $scope.copyContent[j].name;
+                    obj[i].value = $scope.copyContent[j].value;
+                    $scope.newContent.showIcons = false;
+                    if (obj[i].showIcons !== undefined) {
+
+                        obj[i].showIcons = false;
+                        obj[i].name = "";
                     }
-                     if(obj[i].id == $scope.copyContent[j].id) {
-                         obj[i].filename = $scope.copyContent[j].name;
-                        obj[i].value = $scope.copyContent[j].value;
-                        $scope.newContent.showIcons = false;
-                        if (obj[i].showIcons !== undefined) {
+                    break;
 
-                            obj[i].showIcons = false;
-                            obj[i].name = "";
-                        }
-                        break;
-
-                    }
+                }
 
             }
         }
@@ -101,18 +101,15 @@
     $scope.contentObj.getValue = function (value, obj) {
 
         if (!$scope.newContent.showIcons) {
-            $scope.copyContent.push({ id: angular.copy(obj.id), value: angular.copy(value),name:angular.copy(obj.name) })
+            $scope.copyContent.push({ id: angular.copy(obj.id), value: angular.copy(value), name: angular.copy(obj.name) })
 
 
         }
     }
     function getSupportingContent(url) {
         if (url != undefined) {
-            $http.get(url, {
-                headers: {
-                    "Authorization": _token
-
-                }
+            apiService._get($http, url, {
+                "Authorization": _token
             })
             .then(function (response) {
                 $scope.supportingContent = response.data.data.value;
@@ -121,28 +118,20 @@
 
 
             }, function (error) {
-                console.log(error);
             })
         }
     }
     function getDataTypes(url) {
 
 
-        $http.get(url, {
-            headers: {
-                "Authorization": _token
-
-            }
+        apiService._get($http, url, {
+            "Authorization": _token
         })
         .then(function (response) {
 
             $scope.contentObj.dataTypeList = response.data.data.items;
 
-
-
-
         }, function (error) {
-            console.log(error);
         })
     }
 
@@ -150,31 +139,25 @@
     $scope.contentObj.createContent = function (content) {
         var url, links;
 
-       
+
         if ($scope.contentObj.completeObj != null && content.name) {
-           
+
             links = $scope.contentObj.completeObj._links;
             url = getURL(links, "createContent");
-           
 
-            
-
-                $http.post(url,
-           {
-               name: content.name,
-               value: content.value,
-               status: "Published",
-               dataType: {
-                   name: content.selectedDataType.name,
-                   type: content.selectedDataType.name
-               }
-
-           }, {
-               headers: {
-                   "Authorization": _token,
-                   "Content-type": "application/json"
-               }
-           })
+            apiService._post($http, url,
+       {
+           name: content.name,
+           value: content.value,
+           status: "Published",
+           dataType: {
+               name: content.selectedDataType.name,
+               type: content.selectedDataType.name
+           }
+       }, {
+           "Authorization": _token,
+           "Content-type": "application/json"
+       })
       .then(function (response) {
 
           var responseContent = response.data.data;
@@ -202,12 +185,11 @@
           $timeout(function () {
               $scope.errorDescription = undefined;
           }, 2000);
-          console.log(error);
 
       });
 
-            }
-        
+        }
+
     }
 
     $scope.contentObj.check_displayasList = function (content) {
@@ -231,33 +213,33 @@
 
         var files = element.files;
         $scope.file = files[0];
-       
+
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
 
-      
+
 
         if (ext == "pdf") {
             if (element.attributes.documentID != undefined) {
-              
+
                 $scope.documentID = element.attributes.documentID.value;
                 $scope.imgsrc[$scope.documentID] = {};
             }
             else {
                 $scope.newContent.filename = $scope.file.name;
-               
+
             }
             var reader = new FileReader();
             reader.readAsDataURL($scope.file);
             reader.addEventListener("loadend", function (e) {
 
-               
+
                 $scope.documentBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
                 $scope.newContent.value = $scope.documentBase64;
 
                 $scope.$apply(function () {
-                    var fileObject = { id: $scope.documentID,name: $scope.file.name,filename: $scope.file.name, value: e.target.result, showIcons: true };
-                 
+                    var fileObject = { id: $scope.documentID, name: $scope.file.name, filename: $scope.file.name, value: e.target.result, showIcons: true };
+
                     $scope.imgsrc[$scope.documentID] = fileObject;
                 });
 
@@ -266,7 +248,7 @@
 
         }
         else {
-         
+
             $scope.documentID = element.attributes.documentID.value;
             $scope.imgsrc[$scope.documentID].isValidExtension = true;
             $scope.$apply();
@@ -291,14 +273,14 @@
 
         var files = element.files;
         $scope.file = files[0];
-        
-       
+
+
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
-       
+
         if (validateImageExtension(ext)) {
 
-          
+
             if (element.attributes.imgObject != undefined) {
 
                 var imgObject = JSON.parse(element.attributes.imgObject.value);
@@ -307,7 +289,7 @@
             }
             else {
                 $scope.newContent.filename = $scope.file.name;
-               
+
             }
 
 
@@ -317,7 +299,7 @@
 
             reader.readAsDataURL($scope.file);
             reader.onloadend = function (e) {
-                
+
                 $scope.imageBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
                 $scope.newContent.value = $scope.imageBase64;
                 $scope.$apply(function () {
@@ -325,25 +307,25 @@
                     $scope.modalImgsrc = "";
                     $scope.modalImgsrc = e.target.result;
                     $scope.newContent.dataURL = e.target.result;
-                   
+
                     if (element.attributes.imgObject != undefined) {
-                        
-                        var imgObject = { id:$scope.imgObject,name:$scope.file.name,filename: $scope.file.name, value: e.target.result ,showIcons:true};
+
+                        var imgObject = { id: $scope.imgObject, name: $scope.file.name, filename: $scope.file.name, value: e.target.result, showIcons: true };
                         $scope.imgsrc[$scope.imgObject] = imgObject;
                     }
                 });
 
             };
 
-        
+
 
 
 
 
         }
         else {
-           
-            
+
+
             $scope.imgsrc[$scope.imgObject].isValidExtension = true;
             $scope.$apply();
             $timeout(function () {
@@ -361,7 +343,7 @@
 
         var url = getURL(content._links, "self");
         apiService.get(url, ContentValueLoadSuccessfully, ContentValueLoadFailed, _token);
-      
+
     }
 
     function ContentValueLoadSuccessfully(result) {
@@ -370,7 +352,7 @@
 
         $scope.newContent = {};
         $scope.newContent.isEditValue = true;
-       
+
         $scope.newContent.id = result.data.data.id;
         $scope.newContent.name = result.data.data.name;
         $scope.newContent.value = result.data.data.value;
@@ -380,8 +362,8 @@
     }
 
     function ContentValueLoadFailed(error) {
-       
-        console.log(error);
+
+
 
     }
 
@@ -401,7 +383,7 @@
 
 
             getContentValue(item);
-           
+
 
         }
     }
@@ -428,17 +410,9 @@
     }
 
 
-    window.onload = function (e) {
-        $('#form').data('serialize', $('#form').serialize()); // On load save form current state
-        console.log($('form').data('serialize'));
-        $(window).bind('beforeunload', function (e) {
-            if ($('#form').serialize() != $('#form').data('serialize')) return "Changes you made may not be saved.";
-            // i.e; if form state change show warning box, else don't show it.
-        });
-    };
 
     $scope.contentObj.performAction = function (content) {
-        
+
         if ($scope.myform.$valid) {
 
             if ($scope.contentObj.isAdd == false && $scope.IsUpdateContent == true) {
@@ -455,27 +429,21 @@
 
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
-       
-      
+
+
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
             status: "Published"
         };
 
-        
-        
 
-            $http.put(url,
-            requestObject, {
-                headers: {
-                    "Authorization": _token,
-                    "Content-type": "application/json"
-                }
-            })
+        apiService._put($http, url,
+       requestObject, {
+           "Authorization": _token,
+           "Content-type": "application/json"
+       })
             .then(function (response) {
-               
-                console.log(response);
                 if ($scope.imgsrc[object.id] != undefined) {
                     $scope.imgsrc[object.id].value = response.data.data.value;
                     $scope.imgsrc[object.id].showIcons = false;
@@ -486,17 +454,20 @@
                 }
                 $scope.isPropertySaved = true;
                 $scope.newContent.showIcons = false;
-               
+
                 $timeout(function () {
                     $scope.isPropertySaved = false;
                 }, 2000);
+                $rootScope.$emit("Configure", {});
+
+
             },
             function (error) {
-                
+
                 if ($scope.imgsrc[object.id] != undefined) {
-                    
+
                     $scope.imgsrc[object.id].isAlreadyExist = true;
-                    $scope.imgsrc[object.id].errorDescription = (typeof error.data.fields !=="undefined") ? error.data.fields.value.toString() : error.description.toString();
+                    $scope.imgsrc[object.id].errorDescription = (typeof error.data.fields !== "undefined") ? error.data.fields.value.toString() : error.description.toString();
 
 
                     $timeout(function () {
@@ -504,13 +475,11 @@
 
                     }, 2000);
                 }
-               
-                console.log(error);
 
             });
 
 
-        
+
     }
 
     $scope.contentObj.editContent = function (object, content, isUpdateContent) {
@@ -519,7 +488,7 @@
         var url = "";
 
         var requestObject = {};
-       
+
         if (isUpdateContent) {
             url = getURL(object._links, "updateContent");
 
@@ -538,13 +507,11 @@
                 status: "Published"
             };
         }
-        $http.put(url,
-        requestObject, {
-            headers: {
-                "Authorization": _token,
-                "Content-type": "application/json"
-            }
-        })
+        apiService._put($http, url,
+         requestObject, {
+             "Authorization": _token,
+             "Content-type": "application/json"
+         })
         .then(function (response) {
 
             $scope.myform.$submitted = false;
@@ -563,7 +530,6 @@
 
         },
         function (error) {
-            console.log(error);
         });
 
     }

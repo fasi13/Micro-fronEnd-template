@@ -68,14 +68,8 @@
 
         function getDataTypes(url) {
             
-            $http.get(url, {
-
-
-                headers: {
-                    "Authorization": _token
-
-
-                }
+            apiService._get($http, url, {
+                "Authorization": _token
             })
             .then(function (response) {
                 
@@ -113,19 +107,14 @@
             links = $scope.contentGroup._links;
             url = getURL(links, "createContentGroup");
 
-            $http.post(url,
-       {
-           name: content.name,
-           
-           status: "Published"
-          
-
-       }, {
-           headers: {
-               "Authorization": _token,
-               "Content-type": "application/json"
-           }
-       })
+            apiService._post($http, url,
+            {
+                name: content.name,
+                status: "Published"
+            }, {
+                "Authorization": _token,
+                "Content-type": "application/json"
+            })
   .then(function (response) {
        
       var responseContent = response.data.data;
@@ -151,13 +140,11 @@
                 status: "Published"
             };
             url = getURL(object._links, "updateContentGroup");
-            $http.put(url,
-            requestObject, {
-                headers: {
-                    "Authorization": _token,
-                    "Content-type": "application/json"
-                }
-            })
+            apiService._put($http, url,
+           requestObject, {
+               "Authorization": _token,
+               "Content-type": "application/json"
+           })
             .then(function (response) {
                  
                 $scope.myform.$submitted = false;

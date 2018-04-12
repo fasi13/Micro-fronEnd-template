@@ -15,7 +15,7 @@
         }
     };
 
-    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy, logoimg, updateConfigNode) {
+    function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy, logoimg, updateConfigNode, $rootScope) {
         var self = this;
         self.data = [];
         $scope.parent = [];
@@ -39,7 +39,8 @@
             SecondaryColor: "",
             CreditUnionLogo: "",
             CreditUnionName: "",
-            CreditUnionURL: ""
+            CreditUnionURL: "",
+            CreditUnionSecondaryLogo: ""
 
         };
 
@@ -457,7 +458,12 @@
                 if (attributeVal.name == "Program Name") {
                     $scope.hierarchyRightContentCreditUnionName = attributeVal.value;
                 }
-               
+                if (attributeVal.name == "Secondary Logo") {
+                    if ($scope.isUpdate) {
+                        logoimg.setURL(attributeVal.value);
+                    }
+                    $scope.hierarchyRightContentCreditUnionSecondaryLogo = attributeVal.value;
+                }
                 if ($scope.isUpdate) {
                     isColorFilled();
                 }
@@ -535,6 +541,7 @@
             getHierarchyBrandingAttributes(contentURL, "Primary Logo"),
             getHierarchyBrandingAttributes(contentURL, "Site URL");
             getHierarchyBrandingAttributes(contentURL, "Program Name");
+            getHierarchyBrandingAttributes(contentURL, "Secondary Logo");
 
         }
         function getHierarchyBrandingAttributes(contentURL, attribute) {
@@ -581,33 +588,40 @@
 
         }
 
+        $rootScope.$on("Configure", function () {
+
+            $scope.config_breadcrumb(updateConfigNode.configuredNode);
+        });
+
         $scope.config_breadcrumb = function (currentNode) {
             $scope.searchBox.text = "";
             // Get branding....
-
-            angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
-                if (linksVal.rel == "contents") {
-                    CreateHierarchyRightContent(linksVal.href, true);
-                }
-            });
-
             if (currentNode != undefined) {
                 updateConfigNode.configNode(currentNode);
                 $scope.clicked_node = currentNode;
                 update_breadcrumbs.node = currentNode;
             }
+            else {
+                currentNode = $scope.clicked_node;
+            }
+
+            angular.forEach(currentNode._links, function (linksVal, linksKey) {
+                if (linksVal.rel == "contents") {
+                    CreateHierarchyRightContent(linksVal.href, true);
+                }
+            });
             if ($scope.clicked_node.IsApplicationGroup) {
                 return;
             }
             else {
-                updateConfigNode.configNode($scope.clicked_node);
+                updateConfigNode.configNode(currentNode);
                 $scope.iterateCount = 0;
                 $scope.bread_text = [];
                 $scope.hover_brdcm = "";
                 var start_node = $scope.root;
 
-                CreateBreadcrumb($scope.clicked_node, start_node);
-                CreateBreadcrumbForHover($scope.clicked_node, start_node);
+                CreateBreadcrumb(currentNode, start_node);
+                CreateBreadcrumbForHover(currentNode, start_node);
                 hc.isCollapsed = true;
             }
             temporarilyNavigateToContentManagement();
@@ -764,7 +778,7 @@
         })
         .component('heirarchyComponent', {
             templateUrl: 'apps/views/heirarchy-component.html',
-            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', 'logoimg', 'updateConfigNode', controller],
+            controller: ['$log', 'serviceEndpoint', '$http', '$cookies', '$scope', 'apiService', '$window', 'tree', 'update_breadcrumbs', 'update_brandingContent', 'share_parent', '$timeout', 'getChild', 'collapseHierarchy', 'logoimg', 'updateConfigNode', '$rootScope', controller],
             controllerAs: 'hc'
         });
 

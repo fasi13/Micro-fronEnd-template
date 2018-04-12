@@ -20,8 +20,24 @@
 
     serviceAPI.$inject = ['$uibModal'];
 
+    var removeUserToken = function ($cookies, Idle) {
+
+        return function () {
+            if (typeof $cookies.get('profile') !== const_auth.undefined) {
+                $cookies.remove('profile');
+                sessionStorage.clear();
+                Idle.unwatch();
+            }
+        }
+
+
+    };//removeProfile
+    removeUserToken.$inject = ['$cookies', 'Idle'];
+
+
     angular
         .module('app_service', [])
-        .service('appService', serviceAPI);
+        .service('appService', serviceAPI)
+        .service('removeUserToken', removeUserToken);
 
 })();

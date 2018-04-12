@@ -2,18 +2,15 @@
     'use strict';
 
 
-    function controller($http) {
+    function controller($http, apiService) {
         var vm = this;
         vm.loading = false;
 
         var http = function (_user) {
-            $http
-                .get(const_APIUrl + '/test', {
-                    headers: {
-                        'Authorization': 'Basic ' + btoa(_user),
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                    }
-                })
+            apiService._get($http, const_APIUrl + '/test', {
+                'Authorization': 'Basic ' + btoa(_user),
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            })
                 .then(function (resp) {
                     vm.close({
                         $value: resp
@@ -48,7 +45,7 @@
     }; //controller
 
 
-    controller.$inject = ['$http'];
+    controller.$inject = ['$http', 'apiService'];
 
     angular.module('app_auth', [])
         .component('authComponent', {

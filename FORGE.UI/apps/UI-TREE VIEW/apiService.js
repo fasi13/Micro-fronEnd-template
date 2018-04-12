@@ -2,9 +2,9 @@ var app = angular.module('apiservice', []);
 
 app.factory('apiService', apiService);
 
-apiService.$inject = ['$q', '$http'];
+apiService.$inject = ['$q', '$rootScope', '$http'];
 
-function apiService($q, $http) {
+function apiService($q, $rootScope, $http) {
     var self = this;
 
     self.get = function (url, success, failurem, token) {
@@ -12,11 +12,10 @@ function apiService($q, $http) {
 
 
 
-        return $http.get(url, {
-            headers: {
+        return self._get($http, url,
+            {
                 "Authorization": token
-            }
-        }).then(function (result) {
+            }).then(function (result) {
             success(result);
         }, function (error) {
             if (failure !== null) {
@@ -26,10 +25,9 @@ function apiService($q, $http) {
     }
     self.getBrandingData = function (url, token) {
         var deferred = $q.defer();
-        $http.get(url, {
-            headers: {
+        self._get($http, url,
+            {
                 "Authorization": token
-            }
         }).then(function (result) {
 
             var _data = {};
@@ -43,5 +41,41 @@ function apiService($q, $http) {
         });
         return deferred.promise;
     }
+
+    self._get = function ($http, APIEndpoint, headers) {
+        return $http({
+            method: 'GET',
+            url: APIEndpoint,
+            headers: headers,
+            beforeSend: function () {
+                $rootScope.$broadcast('updateSessionTimeOutCount');
+            }
+        });
+    }
+
+    self._put = function ($http, APIEndpoint, requestData, headers) {
+        return $http({
+            method: 'PUT',
+            url: APIEndpoint,
+            data: requestData,
+            headers: headers,
+            beforeSend: function () {
+                $rootScope.$broadcast('updateSessionTimeOutCount');
+            }
+        });
+    }
+
+    self._post = function ($http, APIEndpoint, requestData, headers) {
+        return $http({
+            method: 'POST',
+            url: APIEndpoint,
+            data: requestData,
+            headers: headers,
+            beforeSend: function () {
+                $rootScope.$broadcast('updateSessionTimeOutCount');
+            }
+        });
+    }
+
     return self;
 }

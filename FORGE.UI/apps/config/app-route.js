@@ -2,10 +2,14 @@
     'use strict';
 
     angular
-            .module('app_router', ['ngCookies'])
+            .module('app_router', ['ngCookies', 'ngIdle'])
             .config([
-                '$stateProvider', '$urlRouterProvider',
-                function ($stateProvider, $urlRouterProvider) {
+                '$stateProvider', '$urlRouterProvider', 'IdleProvider', 'KeepaliveProvider', '$httpProvider',
+                function ($stateProvider, $urlRouterProvider, IdleProvider, KeepaliveProvider, $httpProvider) {
+
+                    // Register interceptors service
+                    $httpProvider.interceptors.push('interceptors');
+
                     $urlRouterProvider.otherwise('/');
                     $stateProvider
                         .state('sign-in', {
@@ -20,7 +24,13 @@
                             views: {
                                 '': {
                                     templateUrl: 'apps/views/_dashboard.html',
-                                    controller: ['$scope', '$cookies', '$state', 'logoimg', function ($scope,$cookies, $state, logoimg) {
+                                    controller: ['$scope', '$cookies', '$state', 'logoimg', 'Idle', '$uibModal', 'removeUserToken', function ($scope, $cookies, $state, logoimg, Idle, $uibModal, removeUserToken) {
+                                        $scope.sessionTime = 15 * 60; //15 minutes
+                                        $scope.sessionTimeOutCount = 0;
+                                        IdleProvider.timeout(0);
+                                        KeepaliveProvider.interval(1);
+                                        Idle.watch();
+
                                         var db = this,
                                             model = JSON.parse(sessionStorage._contentManagement),
                                             linkList = [];
@@ -37,16 +47,44 @@
                                         });
                                         $scope.$on("updatelogoIMG", function () {
 
-                                           $scope.logoURL= logoimg.url;
+                                            $scope.logoURL = logoimg.url;
                                         });
+
+                                        $scope.$on("updateSessionTimeOutCount", function () {
+                                            $scope.sessionTimeOutCount = 0;
+                                        });
+
+                                        function sessionTimeOut() {
+                                            sessionTimeOutModals();
+                                            $scope.warning = $uibModal.open({
+                                                templateUrl: 'warning-dialog.html',
+                                                windowClass: 'modal-danger',
+                                                controller: 'SessionLogoutCtrl',
+                                                backdrop: 'static',
+                                                keyboard: false
+                                            });
+                                            removeUserToken();
+                                        };
+
+                                        $scope.$on('Keepalive', function () {
+                                            if ($scope.sessionTimeOutCount >= $scope.sessionTime) {
+                                                sessionTimeOut();
+                                            }
+                                            $scope.sessionTimeOutCount++;
+                                        });
+
+                                        function sessionTimeOutModals() {
+                                            if ($scope.warning) {
+                                                $scope.warning.close();
+                                                $scope.warning = null;
+                                            }
+                                        }
+
                                         db.links = linkList;
                                         db.logout = function () {
-                                            if (typeof $cookies.get('profile') !== const_auth.undefined) {
-                                                $cookies.remove('profile');
-                                                sessionStorage.clear();
-
-                                                $state.go('sign-in');
-                                            }
+                                            sessionTimeOutModals();
+                                            removeUserToken();
+                                            $state.go('sign-in');
                                         }; //logout
                                     }],
                                     controllerAs: 'db'

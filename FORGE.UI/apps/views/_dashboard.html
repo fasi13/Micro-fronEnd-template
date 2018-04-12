@@ -29,3 +29,27 @@
     </div>
 
 </div>
+
+
+<script type="text/ng-template" id="warning-dialog.html">
+    <div class="modal-header modal-head" style="background-color:#01568D">
+        <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close" ng-click="logout();">×</span>
+        <h4>Notification!</h4>
+    </div>
+    <div idle-countdown="countdown" ng-init="countdown=5" class="modal-body">
+        <div class="col-sm-3">
+            <span class="image-box"><img src="imgs/alert.png" /></span>
+        </div>
+        <div class="col-sm-9 model-description">
+            <span class="clear aligncenter">
+                <b>
+                    Your session has expired. Please log in again to continue working.
+                    Thank You.
+                </b>
+            </span>
+        </div>
+    </div>
+    <div class="modal-footer modal-footer-bord">
+        <button type="button" class="btn btn-primary" style="background-color:#01568D" ng-click="logout();">Ok</button>
+    </div>
+</script>

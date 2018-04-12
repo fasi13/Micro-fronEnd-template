@@ -1,7 +1,7 @@
 ﻿var app = angular.module('modal-module', [])
 
 
-    .controller("modal_controller", function ($scope, share_data, $http, $cookies) {
+    .controller("modal_controller", function ($scope, share_data, $http, $cookies, apiService) {
         var apps = "";
 
         $scope.app = {};
@@ -33,7 +33,7 @@
                         }
                         if (found) {
                             var _token = JSON.parse($cookies.get('profile'))._token;
-                            $http.get(url, { headers: { 'Authorization': _token } })
+                            apiService._get($http, url, { 'Authorization': _token })
                             .then(function (response) {
 
                                 var parent_node = share_data.data;
@@ -277,13 +277,11 @@
 
                 if (rel == 'createApplication') {
 
-                    $http.post(url,
-                        { "name": $scope.app.name, "value": $scope.app.value }, {
-                            headers: {
-                                "Authorization": token,
-                                "Content-type": "application/json"
-                            }
-                        })
+                    apiService._post($http, url,
+                         { "name": $scope.app.name, "value": $scope.app.value }, {
+                             "Authorization": token,
+                             "Content-type": "application/json"
+                         })
                    .then(function (response) {
 
 
@@ -326,12 +324,10 @@
                     }
 
 
-                    $http.put(url,
+                    apiService._put($http, url,
                     { "name": $scope.app.name, "value": $scope.app.value }, {
-                        headers: {
-                            "Authorization": token,
-                            "Content-type": "application/json"
-                        }
+                        "Authorization": token,
+                        "Content-type": "application/json"
                     })
                .then(function (response) {
                    var child_node;
@@ -400,13 +396,11 @@
 
                 if (rel == 'createApplicationGroup') {
 
-                    $http.post(url,
-                        { "name": $scope.app.name, "isEncrypted": "false" }, {
-                            headers: {
-                                "Authorization": token,
-                                "Content-type": "application/json"
-                            }
-                        })
+                    apiService._post($http, url,
+                       { "name": $scope.app.name, "isEncrypted": "false" }, {
+                           "Authorization": token,
+                           "Content-type": "application/json"
+                       })
                    .then(function (response) {
 
                        var child_node;
@@ -452,12 +446,10 @@
                 }
                 if (rel == 'updateApplicationGroup') {
 
-                    $http.put(url,
+                    apiService._put($http, url,
                         { "name": $scope.app.name }, {
-                            headers: {
-                                "Authorization": token,
-                                "Content-type": "application/json"
-                            }
+                            "Authorization": token,
+                            "Content-type": "application/json"
                         })
                    .then(function (response) {
 
