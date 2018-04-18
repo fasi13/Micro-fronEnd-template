@@ -42,6 +42,26 @@
 
         return shareObj;
     })
+
+    .factory('isStateChange', function ($rootScope) {
+        var shareObj = {};
+
+       
+        shareObj.buttonClicked = false;
+
+
+        return shareObj;
+    })
+     .factory('stateChangeData', function ($rootScope) {
+         var shareObj = {};
+
+
+         shareObj.stateData = {};
+
+        
+
+         return shareObj;
+     })
 .factory('update_breadcrumbs', function ($rootScope) {
 
 
@@ -127,7 +147,7 @@
     collapseObj.collapse = true;
     collapseObj.closeHierarchy = function () {
         this.collapse = true;
-       
+
         this.update();
     }
 
@@ -143,14 +163,14 @@
     var contentGroups = {};
     contentGroups.groups = {};
     contentGroups.auto = false;
-   
+
     contentGroups.gotoContentView = function (contentGroups) {
         this.groups = contentGroups;
-       
+
         this.update();
     }
     contentGroups.setAuto = function (isAuto) {
-      
+
         this.auto = isAuto;
         this.update();
     }
@@ -164,15 +184,19 @@
 .factory('logoimg', function ($rootScope) {
 
     var img = {};
-    img.url= {};
-   
+    img.SecondaryLogourl = {};
+    img.PrimaryLogoURL = {};
 
-    img.setURL= function (img) {
-        this.url = img;
 
+    img.setSecondaryLogoURL = function (img) {
+        this.SecondaryLogourl = img;
         this.update();
     }
-   
+    img.setPrimaryLogoURL = function (img) {
+        this.PrimaryLogoURL = img;
+        this.update();
+    }
+
     img.update = function () {
         $rootScope.$broadcast('updatelogoIMG');
     };
@@ -185,13 +209,13 @@
 
     var shareObj = {};
 
-   
+
     shareObj.configuredNode = {};
     shareObj.configNode = function (node) {
         this.configuredNode = node;
         this.update();
     }
-   
+
     shareObj.update = function () {
         $rootScope.$broadcast('configNodeUpdated');
     };

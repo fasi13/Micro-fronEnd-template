@@ -448,7 +448,7 @@
                 }
                 if (attributeVal.name == "Primary Logo") {
                     if ($scope.isUpdate) {
-                        logoimg.setURL(attributeVal.value);
+                        logoimg.setPrimaryLogoURL(attributeVal.value);
                     }
                     $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
                 }
@@ -460,7 +460,7 @@
                 }
                 if (attributeVal.name == "Secondary Logo") {
                     if ($scope.isUpdate) {
-                        logoimg.setURL(attributeVal.value);
+                        logoimg.setSecondaryLogoURL(attributeVal.value);
                     }
                     $scope.hierarchyRightContentCreditUnionSecondaryLogo = attributeVal.value;
                 }
@@ -480,10 +480,27 @@
                 less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
             }
         }
+
+
+        $rootScope.$on("updateScroll", function (event, arg) {
+
+            if (arg.node !== undefined) {
+                $scope.clicked_node = arg.node;
+                updateSelectedNode($scope.clicked_node.unique);
+            }
+            else {
+                updateSelectedNode($scope.clicked_node.unique);
+            }
+        });
+
+
         $scope.showSelected = function () {
             var unique = $scope.clicked_node.unique;
             updateSelectedNode(unique);
         }
+
+
+
         $scope.classChange = function () {
 
             var selectedItem = $(".selected");
@@ -595,7 +612,7 @@
 
         $scope.config_breadcrumb = function (currentNode) {
             $scope.searchBox.text = "";
-            // Get branding....
+
             if (currentNode != undefined) {
                 updateConfigNode.configNode(currentNode);
                 $scope.clicked_node = currentNode;

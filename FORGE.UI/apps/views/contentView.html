@@ -1,12 +1,12 @@
 ﻿<section id="sec-email-templates" class="col-md-12">
     <div class="row paddingBot20Pixel">
 
-            <h3>
-                {{contentObj.content_name}}
-                <span class="pull-right">
-                    <button class="btn btnClass btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
-                </span>
-            </h3>
+        <h3>
+            {{contentObj.content_name}}
+            <!--<span class="pull-right">
+                <button class="btn btnClass btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
+            </span>-->
+        </h3>
     </div>
     <!--nest row-->
     <div class="row">
@@ -21,17 +21,24 @@
                 <div class="col-sm-4" ng-repeat="(key,val) in data" ng-if="key == 'name' || key == 'status' || key == 'publishDate'">
                     <div>
                         {{val}}
-                        <span ng-if="key == 'name'" class="pull-right">
-                            <a> <span class="glyphicon glyphicon-info-sign"></span> </a>
-                            <span ng-repeat="(linkKey,linkVal) in data._links">
-                                <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
-                                <!--<a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>-->
-                              
-                                
-                                <!--commenting delete icon for now as API needs to return the delete url-->
-                                <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
+                        <span class="pull-right">
+                            <span ng-if="key == 'name'">
+                                <span class="tooltips">
+                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                    <span class="tooltiptext">{{data.description}}</span>
+                                </span>
+
                             </span>
-            
+
+                            <span  ng-if="key == 'name'">
+                               
+                                <span ng-repeat="(linkKey,linkVal) in data._links">
+                                    <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
+                                    <!--<a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>-->
+                                    <!--commenting delete icon for now as API needs to return the delete url-->
+                                    <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
+                                </span>
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -40,14 +47,14 @@
     </div>
     <!--nest row-->
     <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-12 maincontent" ng-if="contentObj.contentAsGrid.length > 0">
+        <div class="col-sm-12 col-xs-12  col-md-12 maincontent" ng-if="contentObj.contentAsGrid.length > 0">
 
             <div class="col-xs-12 col-sm-12 col-md-6 nopadding">
                 <!--<div class="m-b-30">
                 <h3>{{contentObj.content_name}}</h3>
 
                 </div>-->
-                <form class="form" ng-submit="contentObj.performAction(newContent)" novalidate>
+                <form class="form" name="myform" ng-submit="contentObj.performAction(newContent)" novalidate>
                     <div ng-repeat="data in contentObj.contentAsGrid">
                         <div class="form-group" ng-if="data.dataType.name == 'Color Picker'" ng-init="newContent.Value = data.value; newContent.preVal = data.name;">
                             <div class="row">
@@ -55,12 +62,11 @@
                                 <div class="col-xs-10 col-sm-7" title="Click here to change color">
                                     <div class="input-group">
                                         <span class="input-group-addon" ng-style="{'background-color':data.value}"></span>
-                                        <input colorpicker class="form-control" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName,'red_border':validColor  && data.name == newContent.checkName}" ng-model="data.value" type="text" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="checkColorIsValid(data.value);valueChange = true" />
+                                        <input colorpicker class="form-control " ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName,'red_border':validColor  && data.name == newContent.checkName}" ng-model="data.value" type="text" ng-focus="data.showIcons = true;newContent.checkName = data.name;newContent.valueChange = false;" ng-change="checkColorIsValid(data.value);data.valueChange = true" ng-required="true" />
                                         <span ng-init="contentObj.getValue(data.value,data) "></span>
-                                        <span ng-init="contentObj.getValue(data.value,data) "></span>
-                                        <span class="rightspace" ng-if="newContent.showIcons  && data.name == newContent.checkName && validColor == false">
+                                        <span class="rightspace" ng-if="data.showIcons  && checkColorIsValid(data.value) == false">
                                             <span ng-click="contentObj.editContentCustomizeBranding(data,data.value);" class="save glyphicon glyphicon-ok-sign"></span>
-                                            <span ng-if="data.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(data,contentObj.contentAsGrid)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                            <span ng-if="data.name == newContent.checkName && data.valueChange" ng-mousedown="contentObj.setPreviousValue(contentObj.contentAsGrid,data)" class="remove glyphicon glyphicon-remove-sign"></span>
                                         </span>
 
                                     </div>
@@ -68,40 +74,42 @@
                                     <div class="red" ng-if="validColor && data.name == newContent.checkName"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="tooltips">
-                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                       <!--<span class="tooltiptext">Sample Sample Sample</span>-->
-                                    </span>
-
+                                    <a>
+                                        <span class="tooltips">
+                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                            <span class="tooltiptext">{{data.description}}</span>
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-if="data.dataType.name == 'Text'" ng-init="newContent.Value = data.value; newContent.Name = data.name;">
+                        <div class="form-group" ng-if="data.dataType.name == 'Text'" ng-init="newContent.Value = data.value; newContent.name = data.name;">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7">
-                                    <input type="text" class="form-control input-lg custom-input" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="data.value" ng-focus="newContent.showIcons = true;newContent.checkName = data.name;valueChange = false;" ng-change="valueChange = true" />
+                                    <input type="text" class="form-control input-lg custom-input" ng-class="{'borderGreen':isPropertySaved && data.name == newContent.checkName}" ng-model="data.value" ng-focus="data.showIcons = true;newContent.checkName = data.name;data.valueChange = false;" ng-change="data.valueChange = true" required />
                                     <span ng-init="contentObj.getValue(data.value,data)"></span>
-                                    <span class="rightspace" ng-if="newContent.showIcons  && data.name == newContent.checkName">
+                                    <span class="rightspace" ng-if="data.showIcons">
                                         <span ng-click="contentObj.editContentCustomizeBranding(data,data.value);" class="save glyphicon glyphicon-ok-sign"></span>
-                                        <span ng-if="data.name == newContent.checkName && valueChange" ng-click="contentObj.setPreviousValue(data,contentObj.contentAsGrid)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                        <span ng-if="data.name == newContent.checkName && data.valueChange" ng-mousedown="contentObj.setPreviousValue(contentObj.contentAsGrid,data)" class="remove glyphicon glyphicon-remove-sign"></span>
                                     </span>
                                     <div>
                                         <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="tooltips">
-                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                       <!--<span class="tooltiptext">Sample Sample Sample</span>-->
-                                    </span>
-
+                                    <a>
+                                        <span class="tooltips">
+                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                            <span class="tooltiptext">{{data.description}}</span>
+                                        </span>
+                                    </a>
                                 </div>
 
                             </div>
 
                         </div>
-                        <div ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value; imgsrc[data.id].filename = data.name " class="form-group">
+                        <div ng-if="data.dataType.name == 'Image' || data.dataType.name == 'Logo Display'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value; " class="form-group">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7" title="">
@@ -112,12 +120,12 @@
                                                     Choose File <input type="file" imgObject="{{data}}" onchange="angular.element(this).scope().imageUpload(this);" accept="image/*" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].name" required type="text">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text" />
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
                                             <span class="rightspace-img">
                                                 <span ng-if="imgsrc[data.id].showIcons">
                                                     <span ng-click="contentObj.editContentCustomizeBranding(data,imageBase64);" class="save glyphicon glyphicon-ok-sign"></span>
-                                                    <span ng-click="contentObj.setPreviousValue(imgsrc[data.id],imgsrc)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                                    <span ng-click="contentObj.setPreviousValue(imgsrc,imgsrc[data.id])" class="remove glyphicon glyphicon-remove-sign"></span>
                                                 </span>
                                                 <span class="icon-box"><img src="imgs/image-icon.png" /></span>
                                             </span>
@@ -134,15 +142,16 @@
 
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="tooltips">
-                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                        <!--<span class="tooltiptext">Sample Sample Sample</span>-->
-                                    </span>
-                                   
+                                    <a>
+                                        <span class="tooltips">
+                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                            <span class="tooltiptext">{{data.description}}</span>
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value;imgsrc[data.id].filename = data.name" class="form-group">
+                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value;" class="form-group">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7" title="">
@@ -153,12 +162,12 @@
                                                     Choose File <input type="file" documentID="{{data.id}}" onchange="angular.element(this).scope().documentUpload(this);" accept="application/pdf" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].name" required type="text">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text">
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
                                             <span class="rightspace-img">
                                                 <span ng-if="imgsrc[data.id].showIcons">
                                                     <span ng-click="contentObj.editContentCustomizeBranding(data,documentBase64);" class="save glyphicon glyphicon-ok-sign"></span>
-                                                    <span ng-click="contentObj.setPreviousValue(imgsrc[data.id],imgsrc)" class="remove glyphicon glyphicon-remove-sign"></span>
+                                                    <span ng-click="contentObj.setPreviousValue(imgsrc,imgsrc[data.id])" class="remove glyphicon glyphicon-remove-sign"></span>
                                                 </span>
                                                 <span class="pdf-icon icon-box"><img src="imgs/pdf-icon.png" /></span>
                                             </span>
@@ -177,11 +186,12 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding">
-                                    <span class="tooltips">
-                                        <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                       <!--<span class="tooltiptext">Sample Sample Sample</span>-->
-                                    </span>
-
+                                    <a>
+                                        <span class="tooltips">
+                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
+                                            <span class="tooltiptext">{{data.description}}</span>
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -201,9 +211,9 @@
 
            </div>
            </div>-->
-        <div class="col-sm-12">
+        <!--<div class="col-sm-12">
             <button class="btn btnClass pull-right btn-primary-login" data-toggle="modal" data-target="#editContent" ng-click="contentObj.setAction(true,true,true)" type="submit"> Create</button>
-        </div>
+        </div>-->
     </div>
     <!--We will use it later for back to top purpose-->
     <!--<div class="row">
@@ -256,7 +266,7 @@
                             <textarea class="form-control resizeVertical" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" placeholder="Enter HTML" ng-model="newContent.value" required></textarea>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
                         </div>
-                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display'" >
+                        <div class="form-group" ng-if="newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display'">
                             <label>Value</label>
                             <div class="input-group col-xs-12 col-sm-12">
                                 <label class="input-group-btn">
@@ -269,8 +279,8 @@
                             </div>
                             <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
-                           <p ng-if="errorDescription != undefined" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{errorDescription}}</p>
-                             <div class="contentImg" ng-if="modalImgsrc !=null && (newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display')" >
+                            <p ng-if="errorDescription != undefined" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{errorDescription}}</p>
+                            <div class="contentImg" ng-if="modalImgsrc !=null && (newContent.selectedDataType.name == 'Image' || newContent.selectedDataType.name == 'Logo Display')">
                                 <img class="thumb" ng-src="{{modalImgsrc}}" />
                             </div>
                         </div>
@@ -299,6 +309,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Navigation Modal -->
+
+
+    <div id="navigationPopup" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="myform">
+                    <div class="modal-header custom-modal-header">
+                        <button type="button" class="custom-modal-cross close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Navigation Confirmation</h4>
+                       
+                    </div>
+                    <div class="modal-body">
+                        <p>The changes you made will be lost. Click (Yes) to proceed</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btnClass" data-dismiss="modal">No</button>
+                        <button class="btn btnClass" ng-click="stateChange();">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
     <div id="IsBackToTopEnabled" class="row">
         <a href="" class="pull-right MainbackToTop"> <span class="glyphicon glyphicon-chevron-up MainbackToTopIcon"> </span> </a>
     </div>

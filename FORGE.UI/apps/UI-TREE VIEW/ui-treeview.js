@@ -568,7 +568,7 @@ angular.module('ivh.treeview').directive('ivhTreeview', ['ivhTreeviewMgr', funct
             };
             trvw.value = function (node) {
 
-                if (node.value) {
+                if (node.value && node.value != -1) {
 
                     return node.value;
                 }
@@ -1422,7 +1422,7 @@ angular.module('ivh.treeview').provider('ivhTreeviewOptions', [
                 ' <a ng-if="trvw.check_create_app_group(node)" href="#add_ag"  ng-click="trvw.share(\'add_ag\',node); $event.preventDefault();" role="button" data-toggle="modal" title="Add Application Group"><span><img src="imgs/views-icon.png" class="glif_icon"/></span></a>',
                 ' <a ng-if="trvw.check_add(node)" href="#add"  ng-click="trvw.share(\'add\',node); $event.preventDefault();" role="button" data-toggle="modal" ng-attr-title="Add {{::trvw.alt_title_add(node);}}"><span  class="glyphicon glyphicon-pencil" ></span></a>',
                 ' <a ng-if="trvw.check_edit(node)" href="#edit" ng-click="trvw.share(\'edit\',node);$event.preventDefault();" role="button" data-toggle="modal"  ng-attr-title="Edit {{::trvw.alt_title_edit(node);}}"><span  class="glyphicon glyphicon-edit"></span></a>',
-                '<a href="" ng-attr-title="Delete {{::trvw.alt_title_edit(node);}}"> <span  class="glyphicon glyphicon-trash"></span> </a>',
+                //'<a href="" ng-attr-title="Delete {{::trvw.alt_title_edit(node);}}"> <span  class="glyphicon glyphicon-trash"></span> </a>',
                '</div>',
 
                '</div>',

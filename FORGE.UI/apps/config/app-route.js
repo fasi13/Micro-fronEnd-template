@@ -47,7 +47,7 @@
                                         });
                                         $scope.$on("updatelogoIMG", function () {
 
-                                            $scope.logoURL = logoimg.url;
+                                            $scope.logoURL = logoimg.PrimaryLogoURL;
                                         });
 
                                         $scope.$on("updateSessionTimeOutCount", function () {
@@ -146,6 +146,14 @@
                          controller: "contentView"
 
                      })
+                        .state('dashboard.change-password', {
+                            url: '/change-password',
+                            cache: false,
+
+                            templateUrl: 'apps/views/change-password.html',
+                            controller: "change-password"
+
+                        }) 
 
 
                     //-

@@ -1,7 +1,7 @@
 ﻿var app = angular.module('modal-module', [])
 
 
-    .controller("modal_controller", function ($scope, share_data, $http, $cookies, apiService) {
+    .controller("modal_controller", function ($scope, share_data, $http, $cookies, apiService, $rootScope) {
         var apps = "";
 
         $scope.app = {};
@@ -135,7 +135,7 @@
                         for (var k = 0; k < parent.children.length; k++) {
 
                             $scope.new_obj.child.unique = Math.random();
-
+                            $scope.recentNode = $scope.new_obj.child;
                             if (parent.children[k].id == $scope.new_obj.id) {
 
                                 parent.children.splice(k, 1, $scope.new_obj.child);
@@ -155,6 +155,17 @@
             })(this._root);
 
         };
+
+
+        $(document).on('hidden.bs.modal', '#edit', function () {
+
+            $rootScope.$emit("updateScroll", { node: $scope.recentNode });
+        });
+        $(document).on('hidden.bs.modal', '#add', function () {
+
+            $rootScope.$emit("updateScroll", { node: $scope.recentNode });
+        });
+
 
 
         $scope.$on('handleBroadcast', function () {

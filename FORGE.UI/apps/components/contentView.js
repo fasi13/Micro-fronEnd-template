@@ -5,22 +5,11 @@
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 })
-.directive('fileModel', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            element.bind('change', function () {
-                $parse(attrs.fileModel).assign(scope, element[0].files)
-                scope.$apply();
-            });
-        }
-    };
-})
 
 
 
 
-.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope) {
+.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope, isStateChange, stateChangeData) {
 
 
     $scope.contentObj = {};
@@ -69,28 +58,31 @@
         return contentAsGrid;
     }
 
-    $scope.contentObj.setPreviousValue = function (newval, obj) {
-
-
+    $scope.contentObj.setPreviousValue = function (obj, previousObject) {
 
         for (var i = 0; i < obj.length; i++) {
-
 
             for (var j = 0; j < $scope.copyContent.length; j++) {
 
                 if (obj[i] == undefined) {
                     break;
                 }
-                if (obj[i].id == $scope.copyContent[j].id) {
-                    obj[i].filename = $scope.copyContent[j].name;
-                    obj[i].value = $scope.copyContent[j].value;
-                    $scope.newContent.showIcons = false;
-                    if (obj[i].showIcons !== undefined) {
+                if (previousObject.id == $scope.copyContent[j].id && previousObject.id == obj[i].id) {
+                    previousObject.valueChange = false;
+                    previousObject.showIcons = false;
+                    obj[i] = previousObject;
 
+
+
+                    obj[i].value = $scope.copyContent[j].value;
+
+
+                    if (obj[i].showIcons !== undefined) {
+                        obj[i].filename = "";
                         obj[i].showIcons = false;
-                        obj[i].name = "";
+
                     }
-                    break;
+                    return $scope.copyContent[j].value;
 
                 }
 
@@ -100,7 +92,7 @@
     }
     $scope.contentObj.getValue = function (value, obj) {
 
-        if (!$scope.newContent.showIcons) {
+        if (!obj.showIcons) {
             $scope.copyContent.push({ id: angular.copy(obj.id), value: angular.copy(value), name: angular.copy(obj.name) })
 
 
@@ -207,6 +199,7 @@
     $scope.checkColorIsValid = function (color) {
 
         $scope.validColor = !(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color));
+        return $scope.validColor;
     }
 
     $scope.documentUpload = function (element) {
@@ -216,14 +209,13 @@
 
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
-
-
-
         if (ext == "pdf") {
+
             if (element.attributes.documentID != undefined) {
 
                 $scope.documentID = element.attributes.documentID.value;
                 $scope.imgsrc[$scope.documentID] = {};
+                $scope.imgsrc[$scope.documentID].valueChange = true;
             }
             else {
                 $scope.newContent.filename = $scope.file.name;
@@ -238,7 +230,7 @@
                 $scope.newContent.value = $scope.documentBase64;
 
                 $scope.$apply(function () {
-                    var fileObject = { id: $scope.documentID, name: $scope.file.name, filename: $scope.file.name, value: e.target.result, showIcons: true };
+                    var fileObject = { id: $scope.documentID, filename: $scope.file.name, value: e.target.result, showIcons: true };
 
                     $scope.imgsrc[$scope.documentID] = fileObject;
                 });
@@ -280,12 +272,14 @@
 
         if (validateImageExtension(ext)) {
 
-
+            $scope.newContent.valueChange = true;
             if (element.attributes.imgObject != undefined) {
 
                 var imgObject = JSON.parse(element.attributes.imgObject.value);
                 $scope.imgsrc[imgObject.id] = {};
                 $scope.imgObject = imgObject.id;
+                $scope.imgsrc[imgObject.id].valueChange = true;
+
             }
             else {
                 $scope.newContent.filename = $scope.file.name;
@@ -306,11 +300,11 @@
 
                     $scope.modalImgsrc = "";
                     $scope.modalImgsrc = e.target.result;
-                    $scope.newContent.dataURL = e.target.result;
+
 
                     if (element.attributes.imgObject != undefined) {
 
-                        var imgObject = { id: $scope.imgObject, name: $scope.file.name, filename: $scope.file.name, value: e.target.result, showIcons: true };
+                        var imgObject = { id: $scope.imgObject, filename: $scope.file.name, value: e.target.result, showIcons: true };
                         $scope.imgsrc[$scope.imgObject] = imgObject;
                     }
                 });
@@ -426,8 +420,120 @@
             }
         }
     }
+    function isFileUploaded() {
+        var i = 0;
+
+        var length = $scope.imgsrc.length;
+        for (i; i < length; i++) {
+            if ($scope.imgsrc[i] !== undefined && $scope.imgsrc[i].showIcons) {
+
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    function isValueUpdated() {
+        if ($scope.contentObj.contentAsGrid !== undefined) {
+            var i = 0;
+
+            var length = $scope.contentObj.contentAsGrid.length;
+            for (i; i < length; i++) {
+                if ($scope.contentObj.contentAsGrid[i].valueChange) {
+
+                    return false;
+                }
+            }
+
+        }
+        return true;
+
+    }
 
 
+    function getObjectIndex(contentArray, updatedObject) {
+        var i = 0;
+
+        var Length = contentArray.length;
+        for (i = 0; i < Length; i++) {
+
+            if (updatedObject.id == contentArray[i].id) {
+
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
+
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if ((!isValueUpdated() || !isFileUploaded())) {
+            $("#navigationPopup").modal("show");
+
+            stateChangeData.stateData = { toState: toState, toParams: toParams, fromState: fromState, fromParams: fromParams };
+
+            event.preventDefault
+                ();
+
+        }
+
+    });
+
+    $scope.stateChange = function () {
+        isStateChange.buttonClicked = true;
+        restorePreviousValues();
+        restorePreviousImages();
+        $("#navigationPopup").modal("hide");
+
+    }
+    $(document).on('hidden.bs.modal', '#navigationPopup', function () {
+        if (isStateChange.buttonClicked) {
+            isStateChange.buttonClicked = false;
+            $scope.goToNewState();
+        }
+    });
+
+    $scope.goToNewState = function () {
+
+
+        $state.go(stateChangeData.stateData.toState.name, { obj: stateChangeData.stateData.toParams.obj, dataTypeURL: stateChangeData.stateData.toParams.dataTypeURL });
+
+    }
+
+    function restorePreviousImages() {
+
+        var i = 0;
+
+        var length = $scope.imgsrc.length;
+        for (i; i < length; i++) {
+            if ($scope.imgsrc[i] != undefined && $scope.imgsrc[i].showIcons) {
+
+                $scope.imgsrc[i].showIcons = false;
+
+            }
+        }
+
+    }
+
+    function restorePreviousValues() {
+        var i = 0;
+
+        var length = $scope.contentObj.contentAsGrid.length;
+        for (i; i < length; i++) {
+            if ($scope.contentObj.contentAsGrid[i].valueChange) {
+
+                $scope.contentObj.contentAsGrid[i].valueChange = false;
+
+
+            }
+        }
+
+
+    }
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
 
 
@@ -444,16 +550,31 @@
            "Content-type": "application/json"
        })
             .then(function (response) {
+                if (!isValueUpdated()) {
+
+                    restorePreviousValues();
+                }
+                var index = getObjectIndex($scope.contentObj.contentAsGrid, object);
+                if (index != -1) {
+                    $scope.contentObj.contentAsGrid[index].valueChange = false;
+                    $scope.contentObj.contentAsGrid[index].showIcons = false;
+
+                }
+                $scope.newContent.valueChange = false;
                 if ($scope.imgsrc[object.id] != undefined) {
+
                     $scope.imgsrc[object.id].value = response.data.data.value;
                     $scope.imgsrc[object.id].showIcons = false;
                     $scope.imgsrc[object.id].isPropertySaved = true;
                     $timeout(function () {
                         $scope.imgsrc[object.id].isPropertySaved = false;
                     }, 2000);
+                } else {
+
+                    $scope.isPropertySaved = true;
+
+
                 }
-                $scope.isPropertySaved = true;
-                $scope.newContent.showIcons = false;
 
                 $timeout(function () {
                     $scope.isPropertySaved = false;

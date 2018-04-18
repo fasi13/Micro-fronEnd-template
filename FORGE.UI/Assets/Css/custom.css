@@ -1300,17 +1300,24 @@ span.seach-icon {
     color: green;
 }
 
+
 .borderGreen {
     border: 1px solid green !important;
 }
 
 .modal-head > h4, .close {
-    color: #fff;
+  
     opacity: 1;
 }
-
+.custom-modal-header .modal-title{
+    color:#fff;
+}
+.custom-modal-cross{
+    margin-top:-8px !important;
+}
 .modal-header {
     padding: 5px 15px 0px 15px !important;
+   
 }
 
 .model-description {
@@ -1368,9 +1375,7 @@ span.icon-box img {
    
 }
 
-.glyphicon-info-sign {
-     color:#2664c9 !important;
-}
+
 .tooltips {
     position: relative;
     display: inline-block;
