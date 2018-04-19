@@ -1420,3 +1420,12 @@ span.icon-box img {
 .padding-10 {
     padding: 10px;
 }
+
+.height-max-60 {
+max-height:60px !important;
+}
+
+.left-nav-img {
+width: 300px !important;
+}
+

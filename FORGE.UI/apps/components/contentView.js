@@ -8,6 +8,9 @@
 
 
 
+app.config(['$compileProvider', function($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|file|blob):/);
+}])
 
 .controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope, isStateChange, stateChangeData) {
 
@@ -70,6 +73,7 @@
                 if (previousObject.id == $scope.copyContent[j].id && previousObject.id == obj[i].id) {
                     previousObject.valueChange = false;
                     previousObject.showIcons = false;
+                   
                     obj[i] = previousObject;
 
 
@@ -78,7 +82,7 @@
 
 
                     if (obj[i].showIcons !== undefined) {
-                        obj[i].filename = "";
+                       
                         obj[i].showIcons = false;
 
                     }
@@ -206,7 +210,7 @@
 
         var files = element.files;
         $scope.file = files[0];
-
+        element.value = '';
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
         if (ext == "pdf") {
@@ -230,7 +234,7 @@
                 $scope.newContent.value = $scope.documentBase64;
 
                 $scope.$apply(function () {
-                    var fileObject = { id: $scope.documentID, filename: $scope.file.name, value: e.target.result, showIcons: true };
+                    var fileObject = { id: $scope.documentID,  value:  URL.createObjectURL($scope.file), showIcons: true };
 
                     $scope.imgsrc[$scope.documentID] = fileObject;
                 });
@@ -262,11 +266,11 @@
     }
 
     $scope.imageUpload = function (element) {
-
+        
         var files = element.files;
         $scope.file = files[0];
-
-
+        element.value = '';
+        
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
 
@@ -293,18 +297,19 @@
 
             reader.readAsDataURL($scope.file);
             reader.onloadend = function (e) {
-
+                
                 $scope.imageBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
                 $scope.newContent.value = $scope.imageBase64;
+                
                 $scope.$apply(function () {
-
+                  
                     $scope.modalImgsrc = "";
-                    $scope.modalImgsrc = e.target.result;
-
-
+                    
+                    $scope.modalImgsrc = URL.createObjectURL($scope.file);
+                  
                     if (element.attributes.imgObject != undefined) {
 
-                        var imgObject = { id: $scope.imgObject, filename: $scope.file.name, value: e.target.result, showIcons: true };
+                        var imgObject = { id: $scope.imgObject,  value: $scope.modalImgsrc, showIcons: true };
                         $scope.imgsrc[$scope.imgObject] = imgObject;
                     }
                 });
@@ -328,7 +333,6 @@
         }
 
     }
-
 
 
 

@@ -23,15 +23,16 @@
                         {{val}}
                         <span class="pull-right">
                             <span ng-if="key == 'name'">
-                                <span class="tooltips">
-                                    <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                    <span class="tooltiptext">{{data.description}}</span>
-                                </span>
-
+                                <a>
+                                    <span class="tooltips">
+                                        <span class="glyphicon glyphicon-info-sign "></span>
+                                        <span class="tooltiptext">{{data.description}}</span>
+                                    </span>
+                                </a>
                             </span>
 
-                            <span  ng-if="key == 'name'">
-                               
+                            <span ng-if="key == 'name'">
+
                                 <span ng-repeat="(linkKey,linkVal) in data._links">
                                     <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
                                     <!--<a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>-->
@@ -120,7 +121,7 @@
                                                     Choose File <input type="file" imgObject="{{data}}" onchange="angular.element(this).scope().imageUpload(this);" accept="image/*" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text" />
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" required type="text" />
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
                                             <span class="rightspace-img">
                                                 <span ng-if="imgsrc[data.id].showIcons">
@@ -135,8 +136,8 @@
                                     </div>
                                     <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
 
-                                    <div class="contentImg" ng-if="imgsrc[data.id].value !=null">
-                                        <a ng-href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb" ng-src="{{imgsrc[data.id].value}}" /></a>
+                                    <div class="contentImg" ng-if="imgsrc[data.id].value !=null && imgsrc[data.id].value.length > 1">
+                                        <a  href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb" ng-src="{{imgsrc[data.id].value}}" /></a>
                                     </div>
 
 
@@ -151,7 +152,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value;" class="form-group">
+                        <div ng-if="data.dataType.name == 'Document'" ng-init="newContent.checkID = data.id;imgsrc[data.id].id = data.id; imgsrc[data.id].value = data.value;imgsrc[data.id].name = data.name" class="form-group">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 paddingTop03EM margin-bottom-5-xs">{{data.name}}</div>
                                 <div class="col-xs-10 col-sm-7" title="">
@@ -162,7 +163,7 @@
                                                     Choose File <input type="file" documentID="{{data.id}}" onchange="angular.element(this).scope().documentUpload(this);" accept="application/pdf" style="display: none;">
                                                 </span>
                                             </label>
-                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" ng-model="imgsrc[data.id].filename" required type="text">
+                                            <input ng-disabled="true" class="form-control" ng-class="{'borderGreen':imgsrc[data.id].isPropertySaved}" required type="text">
                                             <span ng-init="contentObj.getValue(data.value,data) "></span>
                                             <span class="rightspace-img">
                                                 <span ng-if="imgsrc[data.id].showIcons">
@@ -180,7 +181,7 @@
                                                 <img class="pull-left cust-icon-width" src="imgs/pdf-icon.png" />
                                             </span>
                                             <span class="paddingleft20">
-                                                {{imgsrc[data.id].filename}}
+                                                {{data.name}}
                                             </span>
                                         </a>
                                     </div>
@@ -320,7 +321,7 @@
                     <div class="modal-header custom-modal-header">
                         <button type="button" class="custom-modal-cross close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Navigation Confirmation</h4>
-                       
+
                     </div>
                     <div class="modal-body">
                         <p>The changes you made will be lost. Click (Yes) to proceed</p>

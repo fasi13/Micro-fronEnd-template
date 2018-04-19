@@ -105,6 +105,7 @@
             $scope.text_val = text;
 
             if (text.length > 2) {
+                
                 apiService.get(const_APIUrl + "/applications?keyword=" + text, SearchResultSuccess, SearchResultFail, _token);
             }
 
@@ -351,16 +352,18 @@
                 var matchItem = {};
                 matchItem.name = "";
                 matchItem.path = items[i].path;
-
+               
                 if (matchItem.path.length > 4) {
 
                     for (var j = 0; j < matchItem.path.length; j++) {
                         if (j == 2) {
 
                             for (var k = matchItem.path.length - 2; j > 0; (j-- && k++)) {
-                                matchItem.name += matchItem.path[k].name;
+                               var value =  (matchItem.path[k].value != -1 && matchItem.path[k].value !=undefined) ? " (" + matchItem.path[k].value + ")" : "";
+                                matchItem.name += matchItem.path[k].name+value ;
                                 if ((k + 1) != matchItem.path.length) {
-                                    matchItem.name += " | ";
+                                    var value = (matchItem.path[k].value != -1 && matchItem.path[k].value !=undefined) ? " (" + matchItem.path[k].value + ")" : "";
+                                    matchItem.name +=value+ " | ";
                                 }
 
 
@@ -369,10 +372,12 @@
 
                         }
                         if (j == 1) {
-                            matchItem.name += matchItem.path[j].name + " |...| ";
+                            var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
+                            matchItem.name += matchItem.path[j].name +value + " |...| ";
                         }
                         else {
-                            matchItem.name += matchItem.path[j].name + " | ";
+                            var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
+                            matchItem.name += matchItem.path[j].name+value + " | ";
 
                         }
 
@@ -382,9 +387,10 @@
                 else {
 
                     for (var j = 0; j < matchItem.path.length; j++) {
-                        matchItem.name += matchItem.path[j].name;
+                        var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
+                        matchItem.name += matchItem.path[j].name+value ;
                         if (matchItem.path.length != (j + 1)) {
-                            matchItem.name += " | ";
+                            matchItem.name += value+" | ";
                         }
 
 
@@ -397,7 +403,7 @@
 
             }
             $scope.countarrowUp = -1, $scope.countarrowDown = -1;
-            autocomplete(document.getElementById("myInput"), $scope.searchResult);
+            autocomplete(document.getElementById("searchTextBox"), $scope.searchResult);
 
         }
 
