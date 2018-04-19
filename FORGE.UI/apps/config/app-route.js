@@ -30,62 +30,67 @@
                                         IdleProvider.timeout(0);
                                         KeepaliveProvider.interval(1);
                                         Idle.watch();
-
-                                        var db = this,
-                                            model = JSON.parse(sessionStorage._contentManagement),
-                                            linkList = [];
-
-                                        db.username = JSON.parse($cookies.get('profile')).data.data.name;
-                                        var cnt = 0;
-                                        angular.forEach(model.items, function (v, k) {
-                                            linkList.push({
-                                                id: cnt++,
-                                                appId: v.id,
-                                                getApplication: v.name,
-                                                href: v._links[0].href
-                                            });
-                                        });
-                                        $scope.$on("updatelogoIMG", function () {
-
-                                            $scope.logoURL = logoimg.PrimaryLogoURL;
-                                        });
-
-                                        $scope.$on("updateSessionTimeOutCount", function () {
-                                            $scope.sessionTimeOutCount = 0;
-                                        });
-
-                                        function sessionTimeOut() {
-                                            sessionTimeOutModals();
-                                            $scope.warning = $uibModal.open({
-                                                templateUrl: 'warning-dialog.html',
-                                                windowClass: 'modal-danger',
-                                                controller: 'SessionLogoutCtrl',
-                                                backdrop: 'static',
-                                                keyboard: false
-                                            });
-                                            removeUserToken();
-                                        };
-
-                                        $scope.$on('Keepalive', function () {
-                                            if ($scope.sessionTimeOutCount >= $scope.sessionTime) {
-                                                sessionTimeOut();
-                                            }
-                                            $scope.sessionTimeOutCount++;
-                                        });
-
-                                        function sessionTimeOutModals() {
-                                            if ($scope.warning) {
-                                                $scope.warning.close();
-                                                $scope.warning = null;
-                                            }
-                                        }
-
-                                        db.links = linkList;
-                                        db.logout = function () {
-                                            sessionTimeOutModals();
-                                            removeUserToken();
+                                        if (typeof $cookies.get('profile') === const_auth.undefined) {
                                             $state.go('sign-in');
-                                        }; //logout
+                                            return;
+                                        }
+                                        else {
+                                            var db = this,
+                                                model = JSON.parse(sessionStorage._contentManagement),
+                                                linkList = [];
+
+                                            db.username = JSON.parse($cookies.get('profile')).data.data.name;
+                                            var cnt = 0;
+                                            angular.forEach(model.items, function (v, k) {
+                                                linkList.push({
+                                                    id: cnt++,
+                                                    appId: v.id,
+                                                    getApplication: v.name,
+                                                    href: v._links[0].href
+                                                });
+                                            });
+                                            $scope.$on("updatelogoIMG", function () {
+
+                                                $scope.logoURL = logoimg.PrimaryLogoURL;
+                                            });
+
+                                            $scope.$on("updateSessionTimeOutCount", function () {
+                                                $scope.sessionTimeOutCount = 0;
+                                            });
+
+                                            function sessionTimeOut() {
+                                                sessionTimeOutModals();
+                                                $scope.warning = $uibModal.open({
+                                                    templateUrl: 'warning-dialog.html',
+                                                    windowClass: 'modal-danger',
+                                                    controller: 'SessionLogoutCtrl',
+                                                    backdrop: 'static',
+                                                    keyboard: false
+                                                });
+                                                removeUserToken();
+                                            };
+
+                                            $scope.$on('Keepalive', function () {
+                                                if ($scope.sessionTimeOutCount >= $scope.sessionTime) {
+                                                    sessionTimeOut();
+                                                }
+                                                $scope.sessionTimeOutCount++;
+                                            });
+
+                                            function sessionTimeOutModals() {
+                                                if ($scope.warning) {
+                                                    $scope.warning.close();
+                                                    $scope.warning = null;
+                                                }
+                                            }
+
+                                            db.links = linkList;
+                                            db.logout = function () {
+                                                sessionTimeOutModals();
+                                                removeUserToken();
+                                                $state.go('sign-in');
+                                            }; //logout
+                                        }
                                     }],
                                     controllerAs: 'db'
                                 },
@@ -153,7 +158,7 @@
                             templateUrl: 'apps/views/change-password.html',
                             controller: "change-password"
 
-                        }) 
+                        })
 
 
                     //-

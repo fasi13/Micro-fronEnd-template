@@ -407,6 +407,7 @@
         //end of search implementation
         $scope.$on('breadcrumbsChanged', function () {
 
+           
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
 
@@ -736,9 +737,7 @@
         $scope.toggleRootNode = function (uniqueId) {
 
 
-
-
-
+          
 
             var rootElement = document.getElementById(uniqueId);
 
@@ -758,15 +757,18 @@
 
         $scope.toggleBreadCrumb = function (node) {
 
-            hc.isCollapsed = false;
 
-            if ($scope.bread_text.length > 0) {
-                toggleNodes(node);
-                if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
-                    $scope.clicked_node = node; // for branding content
-                    $scope.config_breadcrumb(node);
+            hc.isCollapsed = false;
+            $scope.clicked_node = node;
+            
+                if ($scope.bread_text.length > 0) {
+                    toggleNodes(node);
+                    if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
+                        $scope.clicked_node = node;
+                        $scope.config_breadcrumb(node);
+                    }
                 }
-            }
+            
         }
         function toggleNodes(node) {
             updateSelectedNode(node.unique);
