@@ -1429,3 +1429,40 @@ max-height:60px !important;
 width: 300px !important;
 }
 
+
+i.glyphicon.navbar-dropdown.glyphicon-chevron-up.custom {
+    padding-top: 0px !important;
+}
+.dropdown-content {
+    top:47px;
+    left:48px;
+    border-radius:2px;
+    display: none;
+    position: absolute;
+    background-color: #ffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    font-size: 15px;
+    color: black;
+    padding: 9.5px 15px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f0eeef}
+
+.dropdown-content li{
+    border-bottom:1px solid lightgrey;
+}
+
+.show-content{
+    display: block !important;
+}
+
+.p-l-15{
+    padding-left:15px !important;
+}

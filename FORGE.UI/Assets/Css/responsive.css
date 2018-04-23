@@ -141,6 +141,60 @@
   .generic-content{
       padding:0px;
   }
+      .input-group-xs {
+        display: block;
+    }
+
+    .margin-bottom-5-xs {
+        margin-bottom: 5px;
+    }
+
+    .nopadding-xs {
+        padding: 0px;
+    }
+
+    .xs {
+        padding: 0px !important;
+    }
+
+
+    p {
+        font-size: 12px;
+    }
+
+    .btn {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .right-box {
+        border: none !important;
+        margin-left: 10% !important;
+    }
+
+    .model-description {
+        margin: 10px 0px 00px 130px;
+    }
+
+    .modal-footer-bord {
+        margin-top: 20px !important;
+    }
 
 }
 
