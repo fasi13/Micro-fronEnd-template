@@ -42,7 +42,12 @@
                                          return { status: false, statusText: resp.config.url + ' ' + resp.statusText };
                                      });
                 }).catch(function (resp) {
-                    return { status: false, statusText: resp.data.error.userMessage };
+                    if (resp.data.error.userMessage != undefined) {
+                        return { status: false, statusText: resp.data.error.userMessage };
+                    }
+                    else {
+                        return { status: false, statusText: "An unexpected error occurred. Please try again. If this problem persists, please contact your program administrator." }
+                    }
                 });
 
             },
