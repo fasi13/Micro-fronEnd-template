@@ -13,7 +13,17 @@
             this._root = node;
         }
 
-
+        function IsApplicationGroup(node) {
+            var isAppGroup = false;
+            if (node != null) {
+                angular.forEach(node._links, function (linksVal, linksKey) {
+                    if (linksVal.rel == "applicationGroups") {
+                        isAppGroup = true;
+                    }
+                });
+            }
+            return isAppGroup;
+        }
         Tree.prototype.create_app_group = function (callback) {
 
 
@@ -27,6 +37,7 @@
                         for (var j = 0; j < share_data.data._links.length; j++) {
                             if (share_data.data._links[j].rel == "applications") {
                                 found = true;
+                                $scope.recentNode = share_data.data;
                                 url = share_data.data._links[j].href;
                                 break;
                             }
@@ -50,7 +61,8 @@
                                         value: response.data.data.items[k].value,
                                         _links: response.data.data.items[k]._links,
                                         type: 'C1',
-                                        children: []
+                                        children: [],
+                                        IsApplicationGroup: IsApplicationGroup(parent_node)
                                     };
 
 
@@ -95,7 +107,8 @@
                         for (var k = 0; k < currentNode.children.length; k++) {
 
                             $scope.new_obj.child.unique = Math.random();
-
+                            $scope.new_obj.child.IsApplicationGroup = IsApplicationGroup(currentNode);
+                            $scope.recentNode = $scope.new_obj.child;
                             if (currentNode.children[k].label == "No Records Found") {
 
                                 currentNode.children.splice(k, 1, $scope.new_obj.child);
@@ -166,6 +179,10 @@
             $rootScope.$emit("updateScroll", { node: $scope.recentNode });
         });
 
+        $(document).on('hidden.bs.modal', '#add_ag', function () {
+           
+            $rootScope.$emit("updateScroll", { node: $scope.recentNode });
+        });
 
 
         $scope.$on('handleBroadcast', function () {
@@ -348,9 +365,11 @@
                            id: response.data.data.id,
                            parent: share_data.data.parent,
                            unique: Math.random(),
+                           IsApplicationGroup: IsApplicationGroup(share_data.data.parent),
                            _links: response.data.data._links,
                            type: 'C1',
-                           children: []
+                           children: [],
+
                        };
 
 
@@ -369,6 +388,7 @@
                            unique: Math.random(),
                            value: response.data.data.value,
                            _links: response.data.data._links,
+                           IsApplicationGroup: IsApplicationGroup(share_data.data.parent),
                            type: 'C1',
                            children: []
                        };
@@ -470,6 +490,7 @@
                            id: response.data.data.id,
                            parent: share_data.data.parent,
                            _links: response.data.data._links,
+                           IsApplicationGroup: IsApplicationGroup(share_data.data.parent),
                            type: 'C1',
                            children: []
                        };
