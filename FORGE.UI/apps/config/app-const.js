@@ -69,6 +69,7 @@ var const_request = {
 };
 
 var const_APIUrl = "https://toolsservices-qa.awardcenter.com";
+var const_CSS_JS_Version = 1;
 
 var const_role = {
     parentAdmin: 'pAdmin',
