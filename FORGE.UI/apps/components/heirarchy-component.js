@@ -105,7 +105,7 @@
             $scope.text_val = text;
 
             if (text.length > 2) {
-                
+
                 apiService.get(const_APIUrl + "/applications?keyword=" + text, SearchResultSuccess, SearchResultFail, _token);
             }
 
@@ -352,18 +352,18 @@
                 var matchItem = {};
                 matchItem.name = "";
                 matchItem.path = items[i].path;
-               
+
                 if (matchItem.path.length > 4) {
 
                     for (var j = 0; j < matchItem.path.length; j++) {
                         if (j == 2) {
 
                             for (var k = matchItem.path.length - 2; j > 0; (j-- && k++)) {
-                               var value =  (matchItem.path[k].value != -1 && matchItem.path[k].value !=undefined) ? " (" + matchItem.path[k].value + ")" : "";
-                                matchItem.name += matchItem.path[k].name+value ;
+                                var value = (matchItem.path[k].value != -1 && matchItem.path[k].value != undefined) ? " (" + matchItem.path[k].value + ")" : "";
+                                matchItem.name += matchItem.path[k].name + value;
                                 if ((k + 1) != matchItem.path.length) {
-                                    var value = (matchItem.path[k].value != -1 && matchItem.path[k].value !=undefined) ? " (" + matchItem.path[k].value + ")" : "";
-                                    matchItem.name +=value+ " | ";
+
+                                    matchItem.name += " | ";
                                 }
 
 
@@ -373,12 +373,10 @@
                         }
                         if (j == 1) {
                             var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
-                            matchItem.name += matchItem.path[j].name +value + " |...| ";
+                            matchItem.name += matchItem.path[j].name + value + " |...| ";
                         }
                         else {
-                            var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
-                            matchItem.name += matchItem.path[j].name+value + " | ";
-
+                            matchItem.name += matchItem.path[j].name + " | ";
                         }
 
                     }
@@ -388,9 +386,9 @@
 
                     for (var j = 0; j < matchItem.path.length; j++) {
                         var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
-                        matchItem.name += matchItem.path[j].name+value ;
+                        matchItem.name += matchItem.path[j].name + value;
                         if (matchItem.path.length != (j + 1)) {
-                            matchItem.name += value+" | ";
+                            matchItem.name += " | ";
                         }
 
 
@@ -413,7 +411,7 @@
         //end of search implementation
         $scope.$on('breadcrumbsChanged', function () {
 
-           
+
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
 
@@ -490,13 +488,22 @@
 
 
         $rootScope.$on("updateScroll", function (event, arg) {
+            if (arg.node !== undefined && arg.node.IsApplicationGroup == true) {
+                var selectedItem = document.getElementById(arg.node.unique);
 
-            if (arg.node !== undefined) {
-                $scope.clicked_node = arg.node;
-                updateSelectedNode($scope.clicked_node.unique);
+                var scrollPosition = 0;
+                var scrollPosition = selectedItem.offsetTop;
+                $("#hierarchyVerticalScroll").mCustomScrollbar('scrollTo', scrollPosition);
+
             }
             else {
-                updateSelectedNode($scope.clicked_node.unique);
+                if (arg.node !== undefined) {
+                    $scope.clicked_node = arg.node;
+                    updateSelectedNode($scope.clicked_node.unique);
+                }
+                else {
+                    updateSelectedNode($scope.clicked_node.unique);
+                }
             }
         });
 
@@ -743,7 +750,7 @@
         $scope.toggleRootNode = function (uniqueId) {
 
 
-          
+
 
             var rootElement = document.getElementById(uniqueId);
 
@@ -766,15 +773,15 @@
 
             hc.isCollapsed = false;
             $scope.clicked_node = node;
-            
-                if ($scope.bread_text.length > 0) {
-                    toggleNodes(node);
-                    if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
-                        $scope.clicked_node = node;
-                        $scope.config_breadcrumb(node);
-                    }
+
+            if ($scope.bread_text.length > 0) {
+                toggleNodes(node);
+                if (node.unique != $scope.bread_text[$scope.bread_text.length - 1].unique) {
+                    $scope.clicked_node = node;
+                    $scope.config_breadcrumb(node);
                 }
-            
+            }
+
         }
         function toggleNodes(node) {
             updateSelectedNode(node.unique);
