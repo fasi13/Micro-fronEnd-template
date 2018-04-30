@@ -51,7 +51,7 @@
                 self.data = tree.genNode(result.data.data, null, true);
                 $scope.root = self.data[0];
 
-                $scope.clicked_node = $scope.root; // for branding content
+                $scope.clicked_node = $scope.root; 
 
                 updateSelectedNode($scope.root.unique);
                 $scope.toggleRootNode($scope.root.unique);
@@ -71,8 +71,7 @@
         }
         self.showTree = true;
 
-        // start of search implementation
-
+     
 
         function containNode(id) {
             if (id == undefined) {
@@ -97,7 +96,6 @@
 
 
         $scope.$on("collapseHierarchy", function () {
-
             hc.isCollapsed = true;
         });
 
@@ -105,7 +103,7 @@
             $scope.text_val = text;
 
             if (text.length > 2) {
-
+                
                 apiService.get(const_APIUrl + "/applications?keyword=" + text, SearchResultSuccess, SearchResultFail, _token);
             }
 
@@ -120,7 +118,6 @@
 
 
             var a, b, s, i, val = $scope.text_val;
-
             /*close any already open lists of autocompleted values*/
             closeAllLists();
             if (!val) { return false; }
@@ -134,6 +131,7 @@
             /*for each item in the array...*/
 
             if (arr.length == 0) {
+                // if the api returns no records.
                 b = document.createElement("DIV");
                 b.innerHTML += "<strong>No Records Found</strong>";
                 a.appendChild(b);
@@ -150,14 +148,14 @@
                         attr.value = "element" + i;
                         var objectAttr = document.createAttribute("object");
                         objectAttr.value = arr[i];
-                        s = document.createElement("SPAN");
+                        s = document.createElement("SPAN"); 
                         s.innerHTML = '<span class="seach-icon glyphicon glyphicon-search"></span>';
 
                         for (var j = 0; j < name.length; j++) {
 
                             if (j == indexvalue) {
 
-                                b.innerHTML += "<strong>" + name.substr(j, val.length) + "</strong>";
+                                b.innerHTML += "<strong>" + name.substr(j, val.length) + "</strong>"; 
                                 j = j + (val.length - 1);
                             }
                             else {
@@ -165,8 +163,8 @@
                             }
 
                         }
-                        b.onclick = startSearch.bind(self, arr[i]);
-                        b.setAttributeNode(attr);
+                        b.onclick = startSearch.bind(self, arr[i]); 
+                        b.setAttributeNode(attr); 
                         b.setAttributeNode(objectAttr);
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.appendChild(s);
@@ -198,8 +196,7 @@
         $scope.handleKeyEvents = function (event) {
             if ($scope.searchResult != null) {
 
-                if (event.keyCode === 13) {
-
+                if (event.keyCode === 13) { 
                     var clickedObject = null;
                     for (var k = 0; k < $scope.searchResult.length; k++) {
 
@@ -247,8 +244,7 @@
         }
 
         function openNode() {
-
-            var uniqueID = hc.data[0].unique;
+            var uniqueID = $scope.root.unique; 
             var el = document.getElementById(uniqueID);
             if (angular.element(el).hasClass('ivh-treeview-node')) {
                 angular.element(el).removeClass('ivh-treeview-node');
@@ -267,11 +263,10 @@
         }
 
         function startSearch(selectedObject) {
-
             $scope.searchBox.text = selectedObject.name;
             $scope.searchResponseObject = selectedObject;
 
-            var node = hc.data[0];
+            var node = $scope.root;
             if (selectedObject != undefined) {
                 hc.isCollapsed = false;
                 $scope.requiredNode = selectedObject.path[selectedObject.path.length - 1];
@@ -289,13 +284,13 @@
                         children: []
                     });
                 }
-                $scope.toggleRootNode(node.unique);
+                $scope.toggleRootNode(node.unique); 
 
 
 
                 $scope.currentNodeChild = [];
 
-                $scope.searchBox.text = "";
+                $scope.searchBox.text = ""; 
 
             }
 
@@ -305,30 +300,29 @@
         $scope.$on('childUpdated', function () {
 
 
-
-
+           
             $scope.currentNodeChild = getChild.child;
             for (var i = 1; i < $scope.nodePath.length; i++) {
+
                 var appId = $scope.nodePath[i].id, appGroupId = $scope.nodePath[i].applicationGroupId;
 
                 if (containNode(appGroupId)) {
-
-                    var newNode = containNode(appGroupId);
+                    var newNode = containNode(appGroupId); 
                     if (newNode.IsApplicationGroup) {
                         newNode.click = "autoClick";
-                        $scope.toggleRootNode(newNode.unique);
+                        $scope.toggleRootNode(newNode.unique);  
 
                     }
                 }
                 if (containNode(appId)) {
 
-                    var newNode = containNode(appId);
-                    if (!newNode.IsApplicationGroup) {
+                    var newNode = containNode(appId); 
+                    if (!newNode.IsApplicationGroup) { 
                         newNode.click = "autoClick";
-                        update_breadcrumbs.set_text(newNode, $scope.root);
+                        update_breadcrumbs.set_text(newNode, $scope.root); 
                         $scope.toggleRootNode(newNode.unique);
-                        openNode(hc.data[0].unique);
-                        updateSelectedNode(newNode.unique);
+                        openNode($scope.root.unique);
+                        updateSelectedNode(newNode.unique); 
 
                     }
                 }
@@ -344,38 +338,42 @@
 
 
         function SearchResultSuccess(response) {
-            var items = response.data.data.items;
-            $scope.searchResult = [];
+            var items = response.data.data.items; // gets all the returned items from the api.
+            $scope.searchResult = []; 
 
-
+            // this whole method creates an array of matched search Result with its path. 
             for (var i = 0; i < items.length; i++) {
-                var matchItem = {};
+                var matchItem = {}; // this object will be pushed into the $scope.searchResult array with 'name' and 'path' property.
+
                 matchItem.name = "";
                 matchItem.path = items[i].path;
 
-                if (matchItem.path.length > 4) {
-
+                if (matchItem.path.length > 4) { // works when the api returns more then four results.
+                    
                     for (var j = 0; j < matchItem.path.length; j++) {
                         if (j == 2) {
-
+                            // this section only works when the first two application added into the mathItem.name
                             for (var k = matchItem.path.length - 2; j > 0; (j-- && k++)) {
-                                var value = (matchItem.path[k].value != -1 && matchItem.path[k].value != undefined) ? " (" + matchItem.path[k].value + ")" : "";
-                                matchItem.name += matchItem.path[k].name + value;
-                                if ((k + 1) != matchItem.path.length) {
+                                var value = (matchItem.path[k].value != -1 && matchItem.path[k].value != undefined) ? " (" + matchItem.path[k].value + ")" : "";  // gets the value if the application have the property value
+                                matchItem.name += matchItem.path[k].name + value; //adding value to mathItem.name  like "applicationName(value)".
+                                if ((k + 1) != matchItem.path.length) {// it works for every iteration, but not for the last iteration.
 
-                                    matchItem.name += " | ";
+                                    matchItem.name += " | "; // its add this symbol according to search mockups. for examole : "applicationName | applicationName |"
                                 }
 
 
                             }
+                            // when the loop adds first two application Name then Loop will be ended by adding break.
                             break;
 
-                        }
+                        } 
                         if (j == 1) {
-                            var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
-                            matchItem.name += matchItem.path[j].name + value + " |...| ";
+                            // accoding to search mockups, if the applications are more than 4, after adding first two application then "|...|" this symbol will be added at the end of second application's name
+                            var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : ""; // gets the application value.
+                            matchItem.name += matchItem.path[j].name + value + " |...| "; // add "|...|" symbol at the end of the application's name.
                         }
                         else {
+                            // add "|" this symbol at every applications Name exept, when the first two applications are added
                             matchItem.name += matchItem.path[j].name + " | ";
                         }
 
@@ -383,12 +381,12 @@
 
                 }
                 else {
-
+                    // when the api return less then four or equals to 4 results.
                     for (var j = 0; j < matchItem.path.length; j++) {
                         var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : "";
-                        matchItem.name += matchItem.path[j].name + value;
-                        if (matchItem.path.length != (j + 1)) {
-                            matchItem.name += " | ";
+                        matchItem.name += matchItem.path[j].name + value; // stores the name and value property of the application 
+                        if (matchItem.path.length != (j + 1)) { // it works for every iteration, but not for the last iteration.
+                            matchItem.name += " | "; // every name have this symbol at its end position except the last name.
                         }
 
 
@@ -396,7 +394,7 @@
 
                 }
 
-
+                // mathItem Object have the "name" änd "path" property. 
                 $scope.searchResult.push(matchItem);
 
             }
@@ -408,15 +406,14 @@
         function SearchResultFail() {
 
         }
-        //end of search implementation
+        
         $scope.$on('breadcrumbsChanged', function () {
 
-
+           
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
 
             if ($scope.clicked_node.unique != undefined) {
-
                 angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
                     if (linksVal.rel == "contents") {
                         CreateHierarchyRightContent(linksVal.href, false);
