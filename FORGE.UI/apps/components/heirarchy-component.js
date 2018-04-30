@@ -51,13 +51,13 @@
                 self.data = tree.genNode(result.data.data, null, true);
                 $scope.root = self.data[0];
 
-                $scope.clicked_node = $scope.root; 
+                $scope.clicked_node = $scope.root;
 
                 updateSelectedNode($scope.root.unique);
                 $scope.toggleRootNode($scope.root.unique);
 
                 $scope.config_breadcrumb($scope.root);
-
+                temporarilyNavigateToContentManagement();
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
 
             } else {
@@ -71,7 +71,7 @@
         }
         self.showTree = true;
 
-     
+
 
         function containNode(id) {
             if (id == undefined) {
@@ -103,7 +103,7 @@
             $scope.text_val = text;
 
             if (text.length > 2) {
-                
+
                 apiService.get(const_APIUrl + "/applications?keyword=" + text, SearchResultSuccess, SearchResultFail, _token);
             }
 
@@ -148,14 +148,14 @@
                         attr.value = "element" + i;
                         var objectAttr = document.createAttribute("object");
                         objectAttr.value = arr[i];
-                        s = document.createElement("SPAN"); 
+                        s = document.createElement("SPAN");
                         s.innerHTML = '<span class="seach-icon glyphicon glyphicon-search"></span>';
 
                         for (var j = 0; j < name.length; j++) {
 
                             if (j == indexvalue) {
 
-                                b.innerHTML += "<strong>" + name.substr(j, val.length) + "</strong>"; 
+                                b.innerHTML += "<strong>" + name.substr(j, val.length) + "</strong>";
                                 j = j + (val.length - 1);
                             }
                             else {
@@ -163,8 +163,8 @@
                             }
 
                         }
-                        b.onclick = startSearch.bind(self, arr[i]); 
-                        b.setAttributeNode(attr); 
+                        b.onclick = startSearch.bind(self, arr[i]);
+                        b.setAttributeNode(attr);
                         b.setAttributeNode(objectAttr);
                         /*execute a function when someone clicks on the item value (DIV element):*/
                         b.appendChild(s);
@@ -196,7 +196,7 @@
         $scope.handleKeyEvents = function (event) {
             if ($scope.searchResult != null) {
 
-                if (event.keyCode === 13) { 
+                if (event.keyCode === 13) {
                     var clickedObject = null;
                     for (var k = 0; k < $scope.searchResult.length; k++) {
 
@@ -244,7 +244,7 @@
         }
 
         function openNode() {
-            var uniqueID = $scope.root.unique; 
+            var uniqueID = $scope.root.unique;
             var el = document.getElementById(uniqueID);
             if (angular.element(el).hasClass('ivh-treeview-node')) {
                 angular.element(el).removeClass('ivh-treeview-node');
@@ -284,13 +284,13 @@
                         children: []
                     });
                 }
-                $scope.toggleRootNode(node.unique); 
+                $scope.toggleRootNode(node.unique);
 
 
 
                 $scope.currentNodeChild = [];
 
-                $scope.searchBox.text = ""; 
+                $scope.searchBox.text = "";
 
             }
 
@@ -300,29 +300,29 @@
         $scope.$on('childUpdated', function () {
 
 
-           
+
             $scope.currentNodeChild = getChild.child;
             for (var i = 1; i < $scope.nodePath.length; i++) {
 
                 var appId = $scope.nodePath[i].id, appGroupId = $scope.nodePath[i].applicationGroupId;
 
                 if (containNode(appGroupId)) {
-                    var newNode = containNode(appGroupId); 
+                    var newNode = containNode(appGroupId);
                     if (newNode.IsApplicationGroup) {
                         newNode.click = "autoClick";
-                        $scope.toggleRootNode(newNode.unique);  
+                        $scope.toggleRootNode(newNode.unique);
 
                     }
                 }
                 if (containNode(appId)) {
 
-                    var newNode = containNode(appId); 
-                    if (!newNode.IsApplicationGroup) { 
+                    var newNode = containNode(appId);
+                    if (!newNode.IsApplicationGroup) {
                         newNode.click = "autoClick";
-                        update_breadcrumbs.set_text(newNode, $scope.root); 
+                        update_breadcrumbs.set_text(newNode, $scope.root);
                         $scope.toggleRootNode(newNode.unique);
                         openNode($scope.root.unique);
-                        updateSelectedNode(newNode.unique); 
+                        updateSelectedNode(newNode.unique);
 
                     }
                 }
@@ -339,7 +339,7 @@
 
         function SearchResultSuccess(response) {
             var items = response.data.data.items; // gets all the returned items from the api.
-            $scope.searchResult = []; 
+            $scope.searchResult = [];
 
             // this whole method creates an array of matched search Result with its path. 
             for (var i = 0; i < items.length; i++) {
@@ -349,7 +349,7 @@
                 matchItem.path = items[i].path;
 
                 if (matchItem.path.length > 4) { // works when the api returns more then four results.
-                    
+
                     for (var j = 0; j < matchItem.path.length; j++) {
                         if (j == 2) {
                             // this section only works when the first two application added into the mathItem.name
@@ -366,7 +366,7 @@
                             // when the loop adds first two application Name then Loop will be ended by adding break.
                             break;
 
-                        } 
+                        }
                         if (j == 1) {
                             // accoding to search mockups, if the applications are more than 4, after adding first two application then "|...|" this symbol will be added at the end of second application's name
                             var value = (matchItem.path[j].value != -1 && matchItem.path[j].value != undefined) ? " (" + matchItem.path[j].value + ")" : ""; // gets the application value.
@@ -406,10 +406,10 @@
         function SearchResultFail() {
 
         }
-        
+
         $scope.$on('breadcrumbsChanged', function () {
 
-           
+
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
 
@@ -652,8 +652,13 @@
                 CreateBreadcrumbForHover(currentNode, start_node);
                 hc.isCollapsed = true;
             }
-            temporarilyNavigateToContentManagement();
-
+            if ($scope.configureButtonIsClicked) {
+                $scope.configureButtonIsClicked = false;
+                temporarilyNavigateToContentManagement();
+            }
+        }
+        $scope.configureButtonClicked = function () {
+            $scope.configureButtonIsClicked = true;
         }
         function IsNodeExist(obj, list) {
             if (obj == undefined) {
