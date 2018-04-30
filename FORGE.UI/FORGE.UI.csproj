@@ -97,6 +97,7 @@
   <ItemGroup>
     <Content Include="apps\components\auth-component.js" />
     <Content Include="apps\components\bootstrap-colorpicker-module.min.js" />
+    <Content Include="apps\components\change-password.js" />
     <Content Include="apps\components\content-management-component.js" />
     <Content Include="apps\components\contentView.js" />
     <Content Include="apps\components\heirarchy-component.js" />
@@ -120,6 +121,7 @@
     <Content Include="apps\UI-TREE VIEW\tree.js" />
     <Content Include="apps\UI-TREE VIEW\ui-treeview.js" />
     <Content Include="apps\views\auth-component.html" />
+    <Content Include="apps\views\change-password.html" />
     <Content Include="apps\views\content-management-component.html" />
     <Content Include="apps\views\contentView.html" />
     <Content Include="apps\views\heirarchy-component.html" />

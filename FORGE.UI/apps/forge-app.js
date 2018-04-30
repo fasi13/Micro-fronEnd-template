@@ -20,6 +20,7 @@
             'contentsModule',
             'sessionLogoutModule',
             'modal-module',
+            'changePasswordModule',
             'app-share_data-fac',
             'app_content_management',
             'app_promotionComponent']);
