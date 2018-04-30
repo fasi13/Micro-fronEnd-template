@@ -584,7 +584,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                     $scope.isPropertySaved = false;
                 }, 2000);
                 $rootScope.$emit("Configure", {});
-                $scope.navigateToPreviouseState($scope.contentObj.completeObj.id);
+                $scope.navigateToPreviousState($scope.contentObj.completeObj.id);
 
             },
             function (error) {
@@ -674,7 +674,7 @@ app.config(['$compileProvider', function ($compileProvider) {
             }
         }
     }
-    $scope.navigateToPreviouseState = function (id) {
+    $scope.navigateToPreviousState = function (id) {
         var rootElement = document.getElementById("contentGroup" + id);
 
         $timeout(function () {
@@ -710,7 +710,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
                }, 2000);
                $rootScope.$emit("Configure", {});
-               $scope.navigateToPreviouseState($scope.contentObj.completeObj.id);
+               $scope.navigateToPreviousState($scope.contentObj.completeObj.id);
            },
            function (error) {
 
