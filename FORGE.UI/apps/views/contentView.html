@@ -22,14 +22,6 @@
                     <div>
                         {{val}}
                         <span class="pull-right">
-                            <span ng-if="key == 'name'">
-                                <a>
-                                    <span class="tooltips">
-                                        <span class="glyphicon glyphicon-info-sign "></span>
-                                        <span class="tooltiptext">{{data.description}}</span>
-                                    </span>
-                                </a>
-                            </span>
 
                             <span ng-if="key == 'name'">
 
@@ -38,6 +30,18 @@
                                     <!--<a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>-->
                                     <!--commenting delete icon for now as API needs to return the delete url-->
                                     <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
+                                </span>
+                            </span>
+                            <span ng-if="key == 'name'" class="customTooltipGridView">
+                                <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontalGridView"></span>
+
+                                <span class="tooltipTextGridView">
+                                    <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
+                                    <hr ng-if="data.description!=undefined" class="horizontalSeparator">
+                                    <span ng-repeat="(linkKey,linkVal) in data._links">
+                                        <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
+                                        <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
+                                    </span>
                                 </span>
                             </span>
                         </span>
@@ -72,15 +76,20 @@
 
                                     </div>
                                     <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
+                                    <div class="notification" ng-if="isSuccess==true && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></div>
                                     <div class="red" ng-if="validColor && data.name == newContent.checkName"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
                                 </div>
-                                <div class="col-xs-2 col-sm-1 nopadding">
-                                    <a>
-                                        <span class="tooltips">
-                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                            <span class="tooltiptext">{{data.description}}</span>
-                                        </span>
-                                    </a>
+                                <div class="col-xs-2 col-sm-1 nopadding customTooltip">
+                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
+
+                                    <div class="tooltipText">
+                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
+                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
+                                        <div ng-repeat="(linkKey,linkVal) in data._links">
+                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
+                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,15 +105,20 @@
                                     </span>
                                     <div>
                                         <div class="notification" ng-if="isPropertySaved && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>Saved Successfully</span></div>
+                                        <div class="notification" ng-if="isSuccess==true && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></div>
                                     </div>
                                 </div>
-                                <div class="col-xs-2 col-sm-1 nopadding">
-                                    <a>
-                                        <span class="tooltips">
-                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                            <span class="tooltiptext">{{data.description}}</span>
-                                        </span>
-                                    </a>
+                                <div class="col-xs-2 col-sm-1 nopadding customTooltip">
+                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
+
+                                    <div class="tooltipText">
+                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
+                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
+                                        <div ng-repeat="(linkKey,linkVal) in data._links">
+                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
+                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -135,20 +149,25 @@
                                         <span ng-show="imgsrc[data.id].isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span> Not a Valid Extension</span>
                                     </div>
                                     <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
+                                    <div class="notification" ng-if="isSuccess==true && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></div>
 
                                     <div class="contentImg" ng-if="imgsrc[data.id].value !=null && imgsrc[data.id].value.length > 1">
-                                        <a  href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb" ng-src="{{imgsrc[data.id].value}}" /></a>
+                                        <a href="{{imgsrc[data.id].value}}" target="_blank"> <img class="thumb" ng-src="{{imgsrc[data.id].value}}" /></a>
                                     </div>
 
 
                                 </div>
-                                <div class="col-xs-2 col-sm-1 nopadding">
-                                    <a>
-                                        <span class="tooltips">
-                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                            <span class="tooltiptext">{{data.description}}</span>
-                                        </span>
-                                    </a>
+                                <div class="col-xs-2 col-sm-1 nopadding customTooltip">
+                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
+
+                                    <div class="tooltipText">
+                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
+                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
+                                        <div ng-repeat="(linkKey,linkVal) in data._links">
+                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
+                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,6 +193,7 @@
                                             </span>
                                         </div>
                                         <div class="notification" ng-if="imgsrc[data.id].isPropertySaved"><span class="glyphicon glyphicon-ok-sign"></span> <span> Saved Successfully</span></div>
+                                        <div class="notification" ng-if="isSuccess==true && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></div>
                                         <span ng-show="imgsrc[data.id].isAlreadyExist" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{imgsrc[data.id].errorDescription}}</span>
                                         <span ng-show="imgsrc[data.id].isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span> Not a Valid Extension</span>
                                         <a href="{{imgsrc[data.id].value}}" class="pdf-thumbnail thumbnail" target="_blank" ng-if="imgsrc[data.id].value != undefined">
@@ -186,13 +206,16 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-xs-2 col-sm-1 nopadding">
-                                    <a>
-                                        <span class="tooltips">
-                                            <span class="glyphicon glyphicon-info-sign toolTipProp"></span>
-                                            <span class="tooltiptext">{{data.description}}</span>
-                                        </span>
-                                    </a>
+                                <div class="col-xs-2 col-sm-1 nopadding customTooltip">
+                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
+                                    <div class="tooltipText">
+                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
+                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
+                                        <div ng-repeat="(linkKey,linkVal) in data._links">
+                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
+                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

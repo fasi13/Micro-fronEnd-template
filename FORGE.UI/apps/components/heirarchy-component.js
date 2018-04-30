@@ -435,6 +435,9 @@
                     }
                     else {
                         $scope.hierarchyRightContentPrimaryColor = "#" + color;
+                        if ($scope.hierarchyRightContentPrimaryColor == "#") {
+                            $scope.hierarchyRightContentPrimaryColor = "#00568D";
+                        }
                     }
 
                 }
@@ -445,6 +448,9 @@
                     }
                     else {
                         $scope.hierarchyRightContentSecondaryColor = "#" + color;
+                        if ($scope.hierarchyRightContentSecondaryColor == "#") {
+                            $scope.hierarchyRightContentSecondaryColor = "#c85000";
+                        }
                     }
 
                 }
@@ -616,12 +622,14 @@
 
         }
 
-        $rootScope.$on("Configure", function () {
+        $rootScope.$on("Configure", function (params) {
 
             $scope.config_breadcrumb(updateConfigNode.configuredNode);
+
         });
 
         $scope.config_breadcrumb = function (currentNode) {
+            debugger;
             $scope.searchBox.text = "";
 
             if (currentNode != undefined) {

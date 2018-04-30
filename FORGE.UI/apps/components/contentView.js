@@ -8,13 +8,13 @@
 
 
 
-app.config(['$compileProvider', function($compileProvider) {
+app.config(['$compileProvider', function ($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|file|blob):/);
 }])
 
 .controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope, isStateChange, stateChangeData) {
 
-
+    $scope.isSuccess = false;
     $scope.contentObj = {};
     $scope.isCustomControls = false;
     $scope.newContent = {};
@@ -73,7 +73,7 @@ app.config(['$compileProvider', function($compileProvider) {
                 if (previousObject.id == $scope.copyContent[j].id && previousObject.id == obj[i].id) {
                     previousObject.valueChange = false;
                     previousObject.showIcons = false;
-                   
+
                     obj[i] = previousObject;
 
 
@@ -82,7 +82,7 @@ app.config(['$compileProvider', function($compileProvider) {
 
 
                     if (obj[i].showIcons !== undefined) {
-                       
+
                         obj[i].showIcons = false;
 
                     }
@@ -234,7 +234,7 @@ app.config(['$compileProvider', function($compileProvider) {
                 $scope.newContent.value = $scope.documentBase64;
 
                 $scope.$apply(function () {
-                    var fileObject = { id: $scope.documentID,  value:  URL.createObjectURL($scope.file), showIcons: true };
+                    var fileObject = { id: $scope.documentID, value: URL.createObjectURL($scope.file), showIcons: true };
 
                     $scope.imgsrc[$scope.documentID] = fileObject;
                 });
@@ -266,11 +266,11 @@ app.config(['$compileProvider', function($compileProvider) {
     }
 
     $scope.imageUpload = function (element) {
-        
+
         var files = element.files;
         $scope.file = files[0];
         element.value = '';
-        
+
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
 
@@ -297,19 +297,19 @@ app.config(['$compileProvider', function($compileProvider) {
 
             reader.readAsDataURL($scope.file);
             reader.onloadend = function (e) {
-                
+
                 $scope.imageBase64 = $scope.file.name + ":" + e.target.result.split(',')[1];
                 $scope.newContent.value = $scope.imageBase64;
-                
+
                 $scope.$apply(function () {
-                  
+
                     $scope.modalImgsrc = "";
-                    
+
                     $scope.modalImgsrc = URL.createObjectURL($scope.file);
-                  
+
                     if (element.attributes.imgObject != undefined) {
 
-                        var imgObject = { id: $scope.imgObject,  value: $scope.modalImgsrc, showIcons: true };
+                        var imgObject = { id: $scope.imgObject, value: $scope.modalImgsrc, showIcons: true };
                         $scope.imgsrc[$scope.imgObject] = imgObject;
                     }
                 });
@@ -584,7 +584,7 @@ app.config(['$compileProvider', function($compileProvider) {
                     $scope.isPropertySaved = false;
                 }, 2000);
                 $rootScope.$emit("Configure", {});
-
+                $scope.navigateToPreviouseState($scope.contentObj.completeObj.id);
 
             },
             function (error) {
@@ -674,4 +674,47 @@ app.config(['$compileProvider', function($compileProvider) {
             }
         }
     }
+    $scope.navigateToPreviouseState = function (id) {
+        debugger;
+        var rootElement = document.getElementById("contentGroup" + id);
+
+        $timeout(function () {
+
+            angular.element(rootElement).triggerHandler('click');
+
+
+        });
+
+    }
+    $scope.editContextMenu = function (url, name) {
+        var requestObject =
+            {
+                value: "",
+                status: "Published"
+            };
+        apiService._put($http, url,
+      requestObject, {
+          "Authorization": _token,
+          "Content-type": "application/json"
+      })
+           .then(function (response) {
+               $scope.isSuccess = true;
+               if (name == "Inherit") {
+                   $scope.successMessage = "Inherited Successfully"
+               }
+               else if (name == "Clear") {
+                   $scope.successMessage = "Cleared Successfully"
+               }
+
+               $timeout(function () {
+                   $scope.isSuccess = false;
+
+               }, 2000);
+               $rootScope.$emit("Configure", {});
+               $scope.navigateToPreviouseState($scope.contentObj.completeObj.id);
+           },
+           function (error) {
+
+           });
+    };
 });
