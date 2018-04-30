@@ -629,7 +629,6 @@
         });
 
         $scope.config_breadcrumb = function (currentNode) {
-            debugger;
             $scope.searchBox.text = "";
 
             if (currentNode != undefined) {

@@ -675,7 +675,6 @@ app.config(['$compileProvider', function ($compileProvider) {
         }
     }
     $scope.navigateToPreviouseState = function (id) {
-        debugger;
         var rootElement = document.getElementById("contentGroup" + id);
 
         $timeout(function () {
