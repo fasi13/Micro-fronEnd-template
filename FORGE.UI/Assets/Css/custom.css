@@ -1435,11 +1435,10 @@ i.glyphicon.navbar-dropdown.glyphicon-chevron-up.custom {
 }
 .dropdown-content {
     top:47px;
-    left:48px;
     border-radius:2px;
     display: none;
     position: absolute;
-    background-color: #ffff;
+    background-color: #fff;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
