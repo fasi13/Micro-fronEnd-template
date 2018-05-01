@@ -426,18 +426,23 @@
 
         });
         $scope.$on('CreateHierarchyRightContent', function () {
+            var updateRightSection = false;
+            if (update_brandingContent.updateSection) {
 
+                $scope.isUpdate = false;
+                updateRightSection = update_brandingContent.updateSection;
+                update_brandingContent.updateSection = false;
+
+            }
             angular.forEach(update_brandingContent.node, function (attributeVal, attributeKey) {
                 if (attributeVal.name == "Primary Color") {
+
                     var color = attributeVal.value;
                     if (color.charAt(0) == "#") {
                         $scope.hierarchyRightContentPrimaryColor = color;
                     }
                     else {
                         $scope.hierarchyRightContentPrimaryColor = "#" + color;
-                        if ($scope.hierarchyRightContentPrimaryColor == "#") {
-                            $scope.hierarchyRightContentPrimaryColor = "#00568D";
-                        }
                     }
 
                 }
@@ -448,14 +453,14 @@
                     }
                     else {
                         $scope.hierarchyRightContentSecondaryColor = "#" + color;
-                        if ($scope.hierarchyRightContentSecondaryColor == "#") {
-                            $scope.hierarchyRightContentSecondaryColor = "#c85000";
-                        }
                     }
 
                 }
                 if (attributeVal.name == "Primary Logo") {
                     if ($scope.isUpdate) {
+                        logoimg.setPrimaryLogoURL(attributeVal.value);
+                    }
+                    if (updateRightSection) {
                         logoimg.setPrimaryLogoURL(attributeVal.value);
                     }
                     $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
@@ -470,9 +475,17 @@
                     if ($scope.isUpdate) {
                         logoimg.setSecondaryLogoURL(attributeVal.value);
                     }
+                    if (updateRightSection) {
+                        logoimg.setSecondaryLogoURL(attributeVal.value);
+                    }
                     $scope.hierarchyRightContentCreditUnionSecondaryLogo = attributeVal.value;
                 }
                 if ($scope.isUpdate) {
+
+                    isColorFilled();
+                }
+                if (updateRightSection) {
+                    update_brandingContent.updateSection = false;
                     isColorFilled();
                 }
             });
@@ -484,8 +497,10 @@
                 $timeout(function () { isColorFilled(); }, 0);
             }
             else {
-
-                less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
+                 
+                if ($scope.hierarchyRightContentPrimaryColor != "#" && $scope.hierarchyRightContentSecondaryColor != "#") {
+                    less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
+                }
             }
         }
 
@@ -583,6 +598,7 @@
             var getAttributeURL = contentURL + "?name=" + attribute + "&exactMatch=true";
             var value;
             apiService.getBrandingData(getAttributeURL, _token).then(function (brandingData) {
+
                 value = update_brandingContent.set_branding(brandingData);
 
             });

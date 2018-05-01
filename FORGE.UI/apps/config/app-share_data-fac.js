@@ -110,9 +110,15 @@
 
     var shareObj = {};
     shareObj.node = {};
+    shareObj.updateSection = false;
     shareObj.set_branding = function (getAttributeURL) {
         this.node = getAttributeURL;
+        
         this.updateBranding();
+    };
+    shareObj.updateSectionValues = function (value) {
+        this.updateSection = value;
+       
     };
     shareObj.updateBranding = function () {
         $rootScope.$broadcast('CreateHierarchyRightContent');

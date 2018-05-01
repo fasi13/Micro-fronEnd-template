@@ -124,6 +124,7 @@
     <Content Include="apps\views\change-password.html" />
     <Content Include="apps\views\content-management-component.html" />
     <Content Include="apps\views\contentView.html" />
+    <Content Include="apps\views\contextMenu.html" />
     <Content Include="apps\views\heirarchy-component.html" />
     <Content Include="apps\views\iam-404p.html" />
     <Content Include="apps\views\left-menu-component.html" />

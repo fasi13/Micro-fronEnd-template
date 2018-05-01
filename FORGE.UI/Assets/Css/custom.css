@@ -1573,9 +1573,11 @@ i.glyphicon.navbar-dropdown.glyphicon-chevron-up.custom {
     margin-bottom: 4px;
     margin-top: 4px;
 }
-
+div.horizontalSeparator:last-child {
+    border-bottom: none !important;
+}
 .horizontalSeparator {
-    border-top: 1px solid #E1E1E1 !important;
+     border-bottom: 1px solid #E1E1E1 !important;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }

@@ -12,7 +12,7 @@ app.config(['$compileProvider', function ($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|file|blob):/);
 }])
 
-.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope, isStateChange, stateChangeData) {
+.controller("contentView", function ($scope, $state, $stateParams, $cookies, $http, $timeout, apiService, $rootScope, isStateChange, stateChangeData, update_brandingContent) {
 
     $scope.isSuccess = false;
     $scope.contentObj = {};
@@ -554,6 +554,9 @@ app.config(['$compileProvider', function ($compileProvider) {
            "Content-type": "application/json"
        })
             .then(function (response) {
+                $scope.newObject = response.data.data;
+                updateContentArray($scope.contentObj.contentAsGrid, $scope.newObject);
+                refreshPreviousContent($scope.newObject);
                 if (!isValueUpdated()) {
 
                     restorePreviousValues();
@@ -567,7 +570,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                 $scope.newContent.valueChange = false;
                 if ($scope.imgsrc[object.id] != undefined) {
 
-                    $scope.imgsrc[object.id].value = response.data.data.value;
+                    //$scope.imgsrc[object.id].value = response.data.data.value;
                     $scope.imgsrc[object.id].showIcons = false;
                     $scope.imgsrc[object.id].isPropertySaved = true;
                     $timeout(function () {
@@ -583,8 +586,8 @@ app.config(['$compileProvider', function ($compileProvider) {
                 $timeout(function () {
                     $scope.isPropertySaved = false;
                 }, 2000);
-                $rootScope.$emit("Configure", {});
-                $scope.navigateToPreviousState($scope.contentObj.completeObj.id);
+                //  $rootScope.$emit("Configure", {});
+                // $scope.navigateToPreviousState($scope.contentObj.completeObj.id);
 
             },
             function (error) {
@@ -685,10 +688,16 @@ app.config(['$compileProvider', function ($compileProvider) {
         });
 
     }
-    $scope.editContextMenu = function (url, name) {
+
+    $scope.editContextMenu = function (url, rel) {
+        var requestValue;
+        if (rel == "inheritContentValue") requestValue = null;
+        if (rel == "clearContentValue") requestValue = "";
+
+
         var requestObject =
             {
-                value: "",
+                value: requestValue,
                 status: "Published"
             };
         apiService._put($http, url,
@@ -697,11 +706,16 @@ app.config(['$compileProvider', function ($compileProvider) {
           "Content-type": "application/json"
       })
            .then(function (response) {
+                
+               $scope.newObject = response.data.data;
+               updateContentArray($scope.contentObj.contentAsGrid, $scope.newObject);
+
                $scope.isSuccess = true;
-               if (name == "Inherit") {
+               if (rel == "inheritContentValue") {
+                   refreshPreviousContent($scope.newObject);
                    $scope.successMessage = "Inherited Successfully"
                }
-               else if (name == "Clear") {
+               else if (rel == "clearContentValue") {
                    $scope.successMessage = "Cleared Successfully"
                }
 
@@ -709,11 +723,29 @@ app.config(['$compileProvider', function ($compileProvider) {
                    $scope.isSuccess = false;
 
                }, 2000);
-               $rootScope.$emit("Configure", {});
-               $scope.navigateToPreviousState($scope.contentObj.completeObj.id);
            },
            function (error) {
 
            });
     };
+    function refreshPreviousContent(newObject) {
+        var updatedNodes = [];
+        updatedNodes[0] = newObject;
+        update_brandingContent.updateSectionValues(true);
+        update_brandingContent.set_branding(updatedNodes);
+
+    }
+    function updateContentArray(contentArray, newObject) {
+
+        var i = 0;
+
+        var length = contentArray.length;
+        for (i; i < length; i++) {
+
+            if (newObject.id === contentArray[i].id) {
+                contentArray[i] = newObject;
+                break;
+            }
+        }
+    }
 });

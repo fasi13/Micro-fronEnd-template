@@ -35,14 +35,13 @@
                             <span ng-if="key == 'name'" class="customTooltipGridView">
                                 <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontalGridView"></span>
 
-                                <span class="tooltipTextGridView">
+                                <div class="tooltipTextGridView">
                                     <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
                                     <hr ng-if="data.description!=undefined" class="horizontalSeparator">
-                                    <span ng-repeat="(linkKey,linkVal) in data._links">
-                                        <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
-                                        <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
-                                    </span>
-                                </span>
+                                    <div ng-repeat="(linkKey,linkVal) in data._links" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" class="horizontalSeparator">
+                                        <p class="tooltipInnerText pointer"  ng-click="editContextMenu(linkVal.href,linkVal.rel);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
+                                    </div>
+                                </div>
                             </span>
                         </span>
                     </div>
@@ -80,16 +79,7 @@
                                     <div class="red" ng-if="validColor && data.name == newContent.checkName"><span class="glyphicon glyphicon-info-sign"></span> <span>Incorrect Color Code</span></div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding customTooltip">
-                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
-
-                                    <div class="tooltipText">
-                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
-                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
-                                        <div ng-repeat="(linkKey,linkVal) in data._links">
-                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
-                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
-                                        </div>
-                                    </div>
+                                   <div ng-include="'apps/views/contextMenu.html'"></div>
                                 </div>
                             </div>
                         </div>
@@ -109,16 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding customTooltip">
-                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
-
-                                    <div class="tooltipText">
-                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
-                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
-                                        <div ng-repeat="(linkKey,linkVal) in data._links">
-                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
-                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
-                                        </div>
-                                    </div>
+                                    <div ng-include="'apps/views/contextMenu.html'"></div>
                                 </div>
 
                             </div>
@@ -158,16 +139,7 @@
 
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding customTooltip">
-                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
-
-                                    <div class="tooltipText">
-                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
-                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
-                                        <div ng-repeat="(linkKey,linkVal) in data._links">
-                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
-                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
-                                        </div>
-                                    </div>
+                                    <div ng-include="'apps/views/contextMenu.html'"></div>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +168,7 @@
                                         <div class="notification" ng-if="isSuccess==true && data.name == newContent.checkName"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></div>
                                         <span ng-show="imgsrc[data.id].isAlreadyExist" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{imgsrc[data.id].errorDescription}}</span>
                                         <span ng-show="imgsrc[data.id].isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span> Not a Valid Extension</span>
-                                        <a href="{{imgsrc[data.id].value}}" class="pdf-thumbnail thumbnail" target="_blank" ng-if="imgsrc[data.id].value != undefined">
+                                        <a href="{{imgsrc[data.id].value}}" class="pdf-thumbnail thumbnail" target="_blank" ng-if="imgsrc[data.id].value != undefined && imgsrc[data.id].value !='' " >
                                             <span>
                                                 <img class="pull-left cust-icon-width" src="imgs/pdf-icon.png" />
                                             </span>
@@ -207,15 +179,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2 col-sm-1 nopadding customTooltip">
-                                    <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
-                                    <div class="tooltipText">
-                                        <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
-                                        <hr ng-if="data.description!=undefined" class="horizontalSeparator">
-                                        <div ng-repeat="(linkKey,linkVal) in data._links">
-                                            <p class="tooltipInnerText pointer" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" ng-click="editContextMenu(linkVal.href,linkVal.name);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
-                                            <hr ng-if="(linkKey != (data._links.length -2) && (linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'))" class="horizontalSeparator">
-                                        </div>
-                                    </div>
+                                    <div ng-include="'apps/views/contextMenu.html'"></div>
                                 </div>
                             </div>
                         </div>
