@@ -21,7 +21,7 @@
                 <div class="col-sm-4" ng-repeat="(key,val) in data" ng-if="key == 'name' || key == 'status' || key == 'publishDate'">
                     <div>
                         {{val}}
-                        <span class="pull-right">
+                        <span class="listViewIcons pull-right">
 
                             <span ng-if="key == 'name'">
 
@@ -32,16 +32,10 @@
                                     <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
                                 </span>
                             </span>
-                            <span ng-if="key == 'name'" class="customTooltipGridView">
-                                <span class="glyphicon glyphicon-option-horizontal glyphiconHorizontalGridView"></span>
-
-                                <div class="tooltipTextGridView">
-                                    <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
-                                    <hr ng-if="data.description!=undefined" class="horizontalSeparator">
-                                    <div ng-repeat="(linkKey,linkVal) in data._links" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'" class="horizontalSeparator">
-                                        <p class="tooltipInnerText pointer"  ng-click="editContextMenu(linkVal.href,linkVal.rel);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
-                                    </div>
-                                </div>
+                            <span ng-if="key == 'name'" class="customTooltip">
+                               
+                                    <span ng-include="'apps/views/contextMenu.html'"></span>
+                               
                             </span>
                         </span>
                     </div>

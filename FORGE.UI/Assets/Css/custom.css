@@ -1581,7 +1581,13 @@ div.horizontalSeparator:last-child {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
-
+.listViewIcons .glyphiconHorizontal {
+    margin: 0px !important;
+}
+.listViewIcons .tooltipText{
+        top: -60% !important;
+    left: 135% !important;
+}
 .pointer {
     cursor: pointer;
 }
