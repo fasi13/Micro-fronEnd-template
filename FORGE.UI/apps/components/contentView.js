@@ -40,7 +40,9 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     function getContentAsList(contents) {
         var contentAsList = [];
-        for (var i = 0; i < contents.length; i++) {
+        var i = 0;
+        var length = contents.length;
+        for (i; i < length; i++) {
 
             if (contents[i].displayAsList) {
                 contentAsList.push(contents[i]);
@@ -51,7 +53,9 @@ app.config(['$compileProvider', function ($compileProvider) {
     }
     function getContentAsGrid(contents) {
         var contentAsGrid = [];
-        for (var i = 0; i < contents.length; i++) {
+        var i = 0;
+        var length = contents.length;
+        for (i; i < length; i++) {
 
             if (!contents[i].displayAsList) {
                 contentAsGrid.push(contents[i]);
@@ -188,18 +192,6 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     }
 
-    $scope.contentObj.check_displayasList = function (content) {
-
-        if (content == undefined || content.length == 0) {
-            return true;
-        }
-
-        if (content != null) {
-
-            return content.displayAsList;
-
-        }
-    };
     $scope.checkColorIsValid = function (color) {
 
         $scope.validColor = !(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color));
@@ -388,7 +380,11 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     function getURL(links, rel) {
 
-        for (var i = 0; i < links.length; i++) {
+        var i = 0;
+        var length = links.length;
+
+
+        for (i; i < length; i++) {
 
             if (links[i].rel == rel) {
                 return links[i].href;
@@ -554,9 +550,9 @@ app.config(['$compileProvider', function ($compileProvider) {
            "Content-type": "application/json"
        })
             .then(function (response) {
-                $scope.newObject = response.data.data;
-                updateContentArray($scope.contentObj.contentAsGrid, $scope.newObject);
-                refreshPreviousContent($scope.newObject);
+                var updatedObject = response.data.data;
+                updateContentGroupsArray($scope.contentObj.content, updatedObject);
+                refreshPreviousContent(updatedObject);
                 if (!isValueUpdated()) {
 
                     restorePreviousValues();
@@ -570,7 +566,6 @@ app.config(['$compileProvider', function ($compileProvider) {
                 $scope.newContent.valueChange = false;
                 if ($scope.imgsrc[object.id] != undefined) {
 
-                    //$scope.imgsrc[object.id].value = response.data.data.value;
                     $scope.imgsrc[object.id].showIcons = false;
                     $scope.imgsrc[object.id].isPropertySaved = true;
                     $timeout(function () {
@@ -586,9 +581,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                 $timeout(function () {
                     $scope.isPropertySaved = false;
                 }, 2000);
-                //  $rootScope.$emit("Configure", {});
-                // $scope.navigateToPreviousState($scope.contentObj.completeObj.id);
-
+               
             },
             function (error) {
 
@@ -641,7 +634,9 @@ app.config(['$compileProvider', function ($compileProvider) {
              "Content-type": "application/json"
          })
         .then(function (response) {
-
+           
+            var updatedObject = response.data.data;
+            updateContentGroupsArray($scope.contentObj.content, updatedObject);
             $scope.myform.$submitted = false;
             $scope.newContent = {};
             $('#editContent').modal('hide');
@@ -662,7 +657,9 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     }
     function UpdateContentArray(currentData) {
-        for (var i = 0; i < $scope.contentObj.content.length; i++) {
+        var i = 0;
+        var length = $scope.contentObj.content.length;
+        for (i; i < length; i++) {
             if ($scope.contentObj.content[i].id == currentData.ID) {
                 $scope.contentObj.content[i].name = currentData.name;
                 $scope.contentObj.content[i].value = currentData.value;
@@ -670,24 +667,17 @@ app.config(['$compileProvider', function ($compileProvider) {
         }
     }
     function UpdateContentValueArray(currentData) {
-        for (var i = 0; i < $scope.contentObj.content.length; i++) {
+        var i = 0;
+        var length = $scope.contentObj.content.length;
+
+        for (i; i < length; i++) {
             if ($scope.contentObj.content[i].id == currentData.ID) {
 
                 $scope.contentObj.content[i].value = currentData.value;
             }
         }
     }
-    $scope.navigateToPreviousState = function (id) {
-        var rootElement = document.getElementById("contentGroup" + id);
-
-        $timeout(function () {
-
-            angular.element(rootElement).triggerHandler('click');
-
-
-        });
-
-    }
+  
 
     $scope.editContextMenu = function (url, rel) {
         var requestValue;
@@ -707,12 +697,12 @@ app.config(['$compileProvider', function ($compileProvider) {
       })
            .then(function (response) {
                 
-               $scope.newObject = response.data.data;
-               updateContentArray($scope.contentObj.contentAsGrid, $scope.newObject);
+               var updatedObject = response.data.data;
+               updateContentGroupsArray($scope.contentObj.content, updatedObject);
 
                $scope.isSuccess = true;
                if (rel == "inheritContentValue") {
-                   refreshPreviousContent($scope.newObject);
+                   refreshPreviousContent(updatedObject);
                    $scope.successMessage = "Inherited Successfully"
                }
                else if (rel == "clearContentValue") {
@@ -735,7 +725,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         update_brandingContent.set_branding(updatedNodes);
 
     }
-    function updateContentArray(contentArray, newObject) {
+    function updateContentGroupsArray(contentArray, newObject) {
 
         var i = 0;
 
@@ -747,5 +737,9 @@ app.config(['$compileProvider', function ($compileProvider) {
                 break;
             }
         }
+
+        $scope.contentObj.contentAsList = getContentAsList($scope.contentObj.content);
+        $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
+
     }
 });
