@@ -202,7 +202,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
         var files = element.files;
         $scope.file = files[0];
-        element.value = '';
+
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
         if (ext == "pdf") {
@@ -229,6 +229,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                     var fileObject = { id: $scope.documentID, value: URL.createObjectURL($scope.file), showIcons: true };
 
                     $scope.imgsrc[$scope.documentID] = fileObject;
+                    element.value = '';
                 });
 
 
@@ -240,6 +241,7 @@ app.config(['$compileProvider', function ($compileProvider) {
             $scope.documentID = element.attributes.documentID.value;
             $scope.imgsrc[$scope.documentID].isValidExtension = true;
             $scope.$apply();
+            element.value = '';
             $timeout(function () {
                 $scope.imgsrc[$scope.documentID].isValidExtension = false;
             }, 2000);
@@ -250,23 +252,25 @@ app.config(['$compileProvider', function ($compileProvider) {
 
 
     function validateImageExtension(fld) {
-        if (!/(\png|\jpg|\jpeg)$/i.test(fld)) {
-            return false;
+       
+        if (/(png|\jpg|\jpeg|svg|\gif)$/i.test(fld)) {
+            return true;
         }
         else
-            return true;
+            return false;
     }
 
     $scope.imageUpload = function (element) {
 
+
         var files = element.files;
         $scope.file = files[0];
-        element.value = '';
+
 
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
 
 
-        if (validateImageExtension(ext)) {
+        if ( validateImageExtension(ext)) {
 
             $scope.newContent.valueChange = true;
             if (element.attributes.imgObject != undefined) {
@@ -303,6 +307,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
                         var imgObject = { id: $scope.imgObject, value: $scope.modalImgsrc, showIcons: true };
                         $scope.imgsrc[$scope.imgObject] = imgObject;
+                        element.value = '';
                     }
                 });
 
@@ -319,12 +324,14 @@ app.config(['$compileProvider', function ($compileProvider) {
 
             $scope.imgsrc[$scope.imgObject].isValidExtension = true;
             $scope.$apply();
+            element.value = '';
             $timeout(function () {
                 $scope.imgsrc[$scope.imgObject].isValidExtension = false;
             }, 2000);
         }
 
     }
+
 
 
 
