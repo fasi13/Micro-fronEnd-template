@@ -57,7 +57,7 @@
                 $scope.toggleRootNode($scope.root.unique);
 
                 $scope.config_breadcrumb($scope.root);
-                temporarilyNavigateToContentManagement();
+               
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
 
             } else {
@@ -638,12 +638,7 @@
 
         }
 
-        $rootScope.$on("Configure", function (params) {
-
-            $scope.config_breadcrumb(updateConfigNode.configuredNode);
-
-        });
-
+       
         $scope.config_breadcrumb = function (currentNode) {
             $scope.searchBox.text = "";
 
@@ -675,14 +670,9 @@
                 CreateBreadcrumbForHover(currentNode, start_node);
                 hc.isCollapsed = true;
             }
-            if ($scope.configureButtonIsClicked) {
-                $scope.configureButtonIsClicked = false;
-                temporarilyNavigateToContentManagement();
-            }
-        }
-        $scope.configureButtonClicked = function () {
-            $scope.configureButtonIsClicked = true;
-        }
+               temporarilyNavigateToContentManagement();
+           }
+       
         function IsNodeExist(obj, list) {
             if (obj == undefined) {
                 return;
