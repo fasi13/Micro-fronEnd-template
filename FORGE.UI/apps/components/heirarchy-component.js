@@ -625,9 +625,10 @@
 
         }
 
-        function temporarilyNavigateToContentManagement() {
+        function navigateToContentManagement() {
 
             var rootElement = document.getElementById("contentManagementSection");
+
 
             $timeout(function () {
 
@@ -670,7 +671,7 @@
                 CreateBreadcrumbForHover(currentNode, start_node);
                 hc.isCollapsed = true;
             }
-               temporarilyNavigateToContentManagement();
+               navigateToContentManagement();
            }
        
         function IsNodeExist(obj, list) {
