@@ -1033,7 +1033,9 @@ img.glif_icon {
     content: "\e101";
     font-family: 'Glyphicons Halflings';
     line-height: 1;
-    margin: 10px;
+    /*margin: 10px;*/
+    margin: 0px !important;
+    margin-right: 10px!important;
     display: inline-block;
     color: #e40a0a;
     font-size: 12px;

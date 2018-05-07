@@ -39,9 +39,9 @@
                     <div class="input-group nofloat login-text">
                         <a href="#"> Forgot Password? </a> / <a href="#"> Forgot Login? </a>
                     </div>
-                    <div ng-if="vm.error" class="validation-summary-errors login-summary-errors" data-valmsg-summary="true">
+                    <p ng-if="vm.error" class="validation-summary-errors login-summary-errors" data-valmsg-summary="true">
                         {{vm.error}}
-                    </div>
+                    </p>
 
                     <div class="form-group">
                         <button class="btn btnClass btn-block btn-login" ng-disabled="vm.loading" ng-submit="vm.login();">
