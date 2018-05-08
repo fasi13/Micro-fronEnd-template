@@ -686,7 +686,7 @@ app.config(['$compileProvider', function ($compileProvider) {
     }
   
 
-    $scope.editContextMenu = function (url, rel) {
+    $scope.editContextMenu = function (url, rel,object) {
         var requestValue;
         if (rel == "inheritContentValue") requestValue = null;
         if (rel == "clearContentValue") requestValue = "";
@@ -722,7 +722,14 @@ app.config(['$compileProvider', function ($compileProvider) {
                }, 2000);
            },
            function (error) {
+               $scope.message = {};
+               $scope.message.errorMessage = error.data.fields.value.toString();
+               object.isErrorOccurred = true;
+               $timeout(function () {
 
+                   object.isErrorOccurred = false;
+
+               }, 2000);
            });
     };
     function refreshPreviousContent(newObject) {
@@ -749,4 +756,17 @@ app.config(['$compileProvider', function ($compileProvider) {
         $scope.contentObj.contentAsGrid = getContentAsGrid($scope.contentObj.content);
 
     }
+    $scope.isContextMenuExist = function (links) {
+        var i = 0;
+        var length = links.length;
+        for (i; i < length; i++) {
+
+            if (links[i].rel == "inheritContentValue" || links[i].rel == "clearContentValue") {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 });
