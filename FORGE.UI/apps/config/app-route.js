@@ -58,8 +58,8 @@
                                                 $scope.sessionTimeOutCount = 0;
                                             });
 
-                                            function sessionTimeOut() {
-                                                sessionTimeOutModals();
+                                            $scope.sessionTimeOut = function () {
+                                                $scope.sessionTimeOutModals();
                                                 $scope.warning = $uibModal.open({
                                                     templateUrl: 'warning-dialog.html',
                                                     windowClass: 'modal-danger',
@@ -72,12 +72,11 @@
 
                                             $scope.$on('Keepalive', function () {
                                                 if ($scope.sessionTimeOutCount >= $scope.sessionTime) {
-                                                    sessionTimeOut();
+                                                    $scope.sessionTimeOut();
                                                 }
                                                 $scope.sessionTimeOutCount++;
                                             });
-
-                                            function sessionTimeOutModals() {
+                                            $scope.sessionTimeOutModals = function () {
                                                 if ($scope.warning) {
                                                     $scope.warning.close();
                                                     $scope.warning = null;
@@ -86,7 +85,7 @@
 
                                             db.links = linkList;
                                             db.logout = function () {
-                                                sessionTimeOutModals();
+                                                $scope.sessionTimeOutModals();
                                                 removeUserToken();
                                                 $state.go('sign-in');
                                             }; //logout
