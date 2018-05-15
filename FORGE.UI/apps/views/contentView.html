@@ -122,7 +122,7 @@
                                                     <span ng-click="contentObj.editContentCustomizeBranding(data,imageBase64);" class="save glyphicon glyphicon-ok-sign"></span>
                                                     <span ng-click="contentObj.setPreviousValue(imgsrc,imgsrc[data.id])" class="remove glyphicon glyphicon-remove-sign"></span>
                                                 </span>
-                                                <span class="icon-box"><img src="imgs/image-icon.png" /></span>
+                                                <span class="icon-box"><img src="imgs/image-icon.png" title="Supported file formats: .jpg, .png, .gif and .svg"/></span>
                                             </span>
                                         </div>
                                         <span ng-show="imgsrc[data.id].isAlreadyExist" class="red"><span class="glyphicon glyphicon-info-sign"></span> {{imgsrc[data.id].errorDescription}}</span>
@@ -263,7 +263,7 @@
                                     </span>
                                 </label>
                                 <input ng-disabled="true" class="form-control" ng-class="{'red_border':myform.$submitted && (!(myform.Value.$valid))}" name="Value" ng-model="newContent.filename" required type="text">
-                                <span class="image-icon-box"><img src="imgs/image-icon.png" /></span>
+                                <span class="image-icon-box"><img src="imgs/image-icon.png" title="Supported file formats: .jpg, .png, .gif and .svg"/></span>
                             </div>
                             <span ng-show="contentValidation.isValidExtension" class="red"><span class="glyphicon glyphicon-info-sign"></span>Not a Valid Extension</span>
                             <p ng-if="myform.$submitted && (!(myform.Value.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Value is required</p>
