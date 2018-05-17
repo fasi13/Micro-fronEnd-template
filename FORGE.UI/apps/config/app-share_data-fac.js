@@ -80,7 +80,7 @@
         this.update();
     };
     shareObj.update = function () {
-        $rootScope.$broadcast('breadcrumbsChanged');
+        $rootScope.$broadcast('onApplicationSelected');
     };
 
     return shareObj;

@@ -17,6 +17,7 @@
 
     function controller($log, serviceEndpoint, $http, $cookies, $scope, apiService, $window, tree, update_breadcrumbs, update_brandingContent, share_parent, $timeout, getChild, collapseHierarchy, logoimg, updateConfigNode, $rootScope) {
         var self = this;
+        $scope.isSearch = false;
         self.data = [];
         $scope.parent = [];
         $scope.bread_text = [];
@@ -57,7 +58,7 @@
                 $scope.toggleRootNode($scope.root.unique);
 
                 $scope.config_breadcrumb($scope.root);
-               
+
                 $scope.brdcrm = { 'user': $scope.root.label, 'unique': $scope.root.unique };
 
             } else {
@@ -263,7 +264,10 @@
         }
 
         function startSearch(selectedObject) {
+
+            $scope.isSearch = true;
             $scope.searchBox.text = selectedObject.name;
+            $scope.searchBox.id = selectedObject.path[selectedObject.path.length - 1].id;
             $scope.searchResponseObject = selectedObject;
 
             var node = $scope.root;
@@ -298,8 +302,6 @@
         }
 
         $scope.$on('childUpdated', function () {
-
-
 
             $scope.currentNodeChild = getChild.child;
             for (var i = 1; i < $scope.nodePath.length; i++) {
@@ -407,25 +409,47 @@
 
         }
 
-        $scope.$on('breadcrumbsChanged', function () {
+        $scope.$on('onApplicationSelected', function () {
 
 
             $scope.clicked_node = update_breadcrumbs.node;
             $scope.parent = update_breadcrumbs.parent;
 
-            if ($scope.clicked_node.unique != undefined) {
-                angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
-                    if (linksVal.rel == "contents") {
-                        CreateHierarchyRightContent(linksVal.href, false);
-                    }
-                });
+            if (!$scope.isSearch) {
+
+
+                if ($scope.clicked_node.unique != undefined) {
+                    angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
+                        if (linksVal.rel == "contents") {
+                            CreateHierarchyRightContent(linksVal.href, false);
+                        }
+                    });
+                }
+
             }
+
+
+            if ($scope.isSearch && $scope.searchBox.id == $scope.clicked_node.id) {
+                
+
+                if ($scope.clicked_node.unique != undefined) {
+                    angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
+                        if (linksVal.rel == "contents") {
+                            CreateHierarchyRightContent(linksVal.href, false);
+                            
+                            $scope.isSearch = false;
+                        }
+                    });
+                }
+            }
+
 
 
 
 
         });
         $scope.$on('CreateHierarchyRightContent', function () {
+             
             var updateRightSection = false;
             if (update_brandingContent.updateSection) {
 
@@ -434,6 +458,7 @@
                 update_brandingContent.updateSection = false;
 
             }
+           
             angular.forEach(update_brandingContent.node, function (attributeVal, attributeKey) {
                 if (attributeVal.name == "Primary Color") {
 
@@ -497,7 +522,7 @@
                 $timeout(function () { isColorFilled(); }, 0);
             }
             else {
-                 
+
                 if ($scope.hierarchyRightContentPrimaryColor != "#" && $scope.hierarchyRightContentSecondaryColor != "#") {
                     less.modifyVars({ color1: $scope.hierarchyRightContentPrimaryColor, color2: $scope.hierarchyRightContentSecondaryColor });
                 }
@@ -583,7 +608,7 @@
             $window.alert('Branding Contents load failed');
         }
         function CreateHierarchyRightContent(contentURL, isUpdate) {
-
+            
             $scope.isUpdate = isUpdate;
             getHierarchyBrandingAttributes(contentURL, "Primary Color"),
             getHierarchyBrandingAttributes(contentURL, "Secondary Color"),
@@ -598,9 +623,16 @@
             var getAttributeURL = contentURL + "?name=" + attribute + "&exactMatch=true";
             var value;
             apiService.getBrandingData(getAttributeURL, _token).then(function (brandingData) {
+                var bradingDataCopy = {};
 
-                value = update_brandingContent.set_branding(brandingData);
-
+                if (brandingData.length == 0) {
+                    bradingDataCopy[0] = { name: attribute, value: "" };
+                }
+                else {
+                    bradingDataCopy[0] = brandingData.pop();
+                }
+                value = update_brandingContent.set_branding(bradingDataCopy);
+                
             });
 
         }
@@ -639,7 +671,7 @@
 
         }
 
-       
+
         $scope.config_breadcrumb = function (currentNode) {
             $scope.searchBox.text = "";
 
@@ -671,9 +703,9 @@
                 CreateBreadcrumbForHover(currentNode, start_node);
                 hc.isCollapsed = true;
             }
-               navigateToContentManagement();
-           }
-       
+            navigateToContentManagement();
+        }
+
         function IsNodeExist(obj, list) {
             if (obj == undefined) {
                 return;
@@ -812,8 +844,8 @@
             }
         }
 
-        //$log.info('heirachy connected');
-    }; //controller;
+       
+    }; 
     angular
         .module('app_heirarchy', ["treeModule"])
         .config(function (ivhTreeviewOptionsProvider) {
