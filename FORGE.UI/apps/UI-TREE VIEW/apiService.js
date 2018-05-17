@@ -30,10 +30,10 @@ function apiService($q, $rootScope, $http) {
                 "Authorization": token
         }).then(function (result) {
 
-            var _data = {};
+            var _data = [];
             var results = result.data.data.items;
             for (var i = 0, len = results.length; i < len; i++) {
-                _data[results[i]] = results[i];
+                _data[i] = results[i];
             }
             deferred.resolve(_data);
         }, function () {
