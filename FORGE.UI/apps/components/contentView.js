@@ -38,6 +38,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         var _token = JSON.parse($cookies.get('profile'))._token;
     }
 
+    
     function getContentAsList(contents) {
         var contentAsList = [];
         var i = 0;
@@ -75,7 +76,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                     break;
                 }
                 if (previousObject.id == $scope.copyContent[j].id && previousObject.id == obj[i].id) {
-                    previousObject.valueChange = false;
+                    previousObject.valueChanged = false;
                     previousObject.showIcons = false;
 
                     obj[i] = previousObject;
@@ -192,7 +193,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     }
 
-    $scope.checkColorIsValid = function (color) {
+    $scope.isColorValid = function (color) {
 
         $scope.validColor = !(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color));
         return $scope.validColor;
@@ -204,14 +205,12 @@ app.config(['$compileProvider', function ($compileProvider) {
         $scope.file = files[0];
 
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
-
+        var documentObject = JSON.parse(element.attributes.documentObject.value);
         if (ext == "pdf") {
 
-            if (element.attributes.documentID != undefined) {
+            if (element.attributes.documentObject != undefined) {
 
-                $scope.documentID = element.attributes.documentID.value;
-                $scope.imgsrc[$scope.documentID] = {};
-                $scope.imgsrc[$scope.documentID].valueChange = true;
+                documentObject.valueChanged = true;
             }
             else {
                 $scope.newContent.filename = $scope.file.name;
@@ -226,9 +225,10 @@ app.config(['$compileProvider', function ($compileProvider) {
                 $scope.newContent.value = $scope.documentBase64;
 
                 $scope.$apply(function () {
-                    var fileObject = { id: $scope.documentID, value: URL.createObjectURL($scope.file), showIcons: true };
+                    documentObject.value = URL.createObjectURL($scope.file);
+                    documentObject.showIcons = true;
 
-                    $scope.imgsrc[$scope.documentID] = fileObject;
+                    updateContentGroupsArray($scope.contentObj.content, documentObject);
                     element.value = '';
                 });
 
@@ -238,21 +238,20 @@ app.config(['$compileProvider', function ($compileProvider) {
         }
         else {
 
-            $scope.documentID = element.attributes.documentID.value;
-            $scope.imgsrc[$scope.documentID].isValidExtension = true;
+            documentObject.isValidExtension = true;
+            updateContentGroupsArray($scope.contentObj.content, documentObject);
             $scope.$apply();
+
             element.value = '';
             $timeout(function () {
-                $scope.imgsrc[$scope.documentID].isValidExtension = false;
+                documentObject.isValidExtension = false;
             }, 2000);
         }
 
     }
 
-
-
     function validateImageExtension(fld) {
-       
+
         if (/(png|\jpg|\jpeg|svg|\gif)$/i.test(fld)) {
             return true;
         }
@@ -266,19 +265,18 @@ app.config(['$compileProvider', function ($compileProvider) {
         var files = element.files;
         $scope.file = files[0];
 
-
+        
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
+        var imgObject = JSON.parse(element.attributes.imgObject.value);
 
+        if (validateImageExtension(ext)) {
 
-        if ( validateImageExtension(ext)) {
-
-            $scope.newContent.valueChange = true;
+            $scope.newContent.valueChanged = true;
             if (element.attributes.imgObject != undefined) {
 
                 var imgObject = JSON.parse(element.attributes.imgObject.value);
-                $scope.imgsrc[imgObject.id] = {};
-                $scope.imgObject = imgObject.id;
-                $scope.imgsrc[imgObject.id].valueChange = true;
+               
+                imgObject.valueChanged = true;
 
             }
             else {
@@ -305,8 +303,12 @@ app.config(['$compileProvider', function ($compileProvider) {
 
                     if (element.attributes.imgObject != undefined) {
 
-                        var imgObject = { id: $scope.imgObject, value: $scope.modalImgsrc, showIcons: true };
-                        $scope.imgsrc[$scope.imgObject] = imgObject;
+                        imgObject.value = $scope.modalImgsrc;
+
+                        imgObject.showIcons = true;
+                       
+                        updateContentGroupsArray($scope.contentObj.content,imgObject);
+                       
                         element.value = '';
                     }
                 });
@@ -322,11 +324,13 @@ app.config(['$compileProvider', function ($compileProvider) {
         else {
 
 
-            $scope.imgsrc[$scope.imgObject].isValidExtension = true;
+            imgObject.isValidExtension = true;
+            updateContentGroupsArray($scope.contentObj.content, imgObject);
             $scope.$apply();
             element.value = '';
+            
             $timeout(function () {
-                $scope.imgsrc[$scope.imgObject].isValidExtension = false;
+                imgObject.isValidExtension = false;
             }, 2000);
         }
 
@@ -447,7 +451,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
             var length = $scope.contentObj.contentAsGrid.length;
             for (i; i < length; i++) {
-                if ($scope.contentObj.contentAsGrid[i].valueChange) {
+                if ($scope.contentObj.contentAsGrid[i].valueChanged) {
 
                     return false;
                 }
@@ -457,6 +461,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         return true;
 
     }
+   
 
 
     function getObjectIndex(contentArray, updatedObject) {
@@ -478,6 +483,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        
         if ((!isValueUpdated() || !isFileUploaded())) {
             $("#navigationPopup").modal("show");
 
@@ -531,9 +537,9 @@ app.config(['$compileProvider', function ($compileProvider) {
 
         var length = $scope.contentObj.contentAsGrid.length;
         for (i; i < length; i++) {
-            if ($scope.contentObj.contentAsGrid[i].valueChange) {
+            if ($scope.contentObj.contentAsGrid[i].valueChanged) {
 
-                $scope.contentObj.contentAsGrid[i].valueChange = false;
+                $scope.contentObj.contentAsGrid[i].valueChanged = false;
 
 
             }
@@ -541,9 +547,25 @@ app.config(['$compileProvider', function ($compileProvider) {
 
 
     }
+
+
+    $scope.contentObj.changedFileNameAction = function () {
+
+        if ($scope.fileNameChangeForm.$valid) {
+            var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
+            var value = $scope.contentObj.CuurentObjectValue.replace($scope.file.name, $scope.changedFileName + '.' + ext);
+
+
+            $scope.contentObj.editContentCustomizeBranding($scope.contentObj.CuurentObject, value)
+            console.log($scope.file.name);
+            $("#fileNameChangeFormPopup").modal("hide");
+
+        }
+    }
+
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
 
-
+        
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
@@ -551,59 +573,62 @@ app.config(['$compileProvider', function ($compileProvider) {
         };
 
 
+        
         apiService._put($http, url,
        requestObject, {
            "Authorization": _token,
            "Content-type": "application/json"
        })
             .then(function (response) {
-                var updatedObject = response.data.data;
-                updateContentGroupsArray($scope.contentObj.content, updatedObject);
-                refreshPreviousContent(updatedObject);
-                if (!isValueUpdated()) {
 
-                    restorePreviousValues();
-                }
+              
+                
                 var index = getObjectIndex($scope.contentObj.contentAsGrid, object);
                 if (index != -1) {
-                    $scope.contentObj.contentAsGrid[index].valueChange = false;
+                    $scope.contentObj.contentAsGrid[index].valueChanged = false;
                     $scope.contentObj.contentAsGrid[index].showIcons = false;
 
                 }
-                $scope.newContent.valueChange = false;
-                if ($scope.imgsrc[object.id] != undefined) {
+                $scope.newContent.valueChanged = false;
+                var updatedObject = response.data.data;
+                refreshContentData(updatedObject);
+                updateContentGroupsArray($scope.contentObj.content, updatedObject);
+                object = updatedObject;
+                    object.isPropertySaved = true;
+                   
 
-                    $scope.imgsrc[object.id].showIcons = false;
-                    $scope.imgsrc[object.id].isPropertySaved = true;
-                    $timeout(function () {
-                        $scope.imgsrc[object.id].isPropertySaved = false;
-                    }, 2000);
-                } else {
-
-                    $scope.isPropertySaved = true;
-
-
-                }
+                
 
                 $timeout(function () {
-                    $scope.isPropertySaved = false;
+                    object.isPropertySaved = false;
+                    
+                    
                 }, 2000);
+
                
             },
             function (error) {
 
-                if ($scope.imgsrc[object.id] != undefined) {
+                
+              
+                object.isErrorOccurred = true;
+                $scope.message = {};
+                debugger;
+                
+                object.errorMessage = error.data.fields.value.toString();
+                if (object.errorMessage.indexOf("exists")) {
+                $scope.contentObj.CuurentObject = object;
+                $scope.contentObj.CuurentObjectValue = value;
+                $scope.changedFileName = $scope.file.name.substr(0,$scope.file.name.lastIndexOf('.'));
+                $("#fileNameChangeFormPopup").modal("show"); 
 
-                    $scope.imgsrc[object.id].isAlreadyExist = true;
-                    $scope.imgsrc[object.id].errorDescription = (typeof error.data.fields !== "undefined") ? error.data.fields.value.toString() : error.description.toString();
-
-
-                    $timeout(function () {
-                        $scope.imgsrc[object.id].isAlreadyExist = false;
-
-                    }, 2000);
                 }
+                $timeout(function () {
+                    $scope.message = {};
+                    object.isErrorOccurred = false;
 
+                }, 2000);
+                
             });
 
 
@@ -641,7 +666,7 @@ app.config(['$compileProvider', function ($compileProvider) {
              "Content-type": "application/json"
          })
         .then(function (response) {
-           
+
             var updatedObject = response.data.data;
             updateContentGroupsArray($scope.contentObj.content, updatedObject);
             $scope.myform.$submitted = false;
@@ -684,9 +709,8 @@ app.config(['$compileProvider', function ($compileProvider) {
             }
         }
     }
-  
 
-    $scope.editContextMenu = function (url, rel,object) {
+    $scope.editContextMenu = function (url, rel, object) {
         var requestValue;
         if (rel == "inheritContentValue") requestValue = null;
         if (rel == "clearContentValue") requestValue = "";
@@ -699,31 +723,38 @@ app.config(['$compileProvider', function ($compileProvider) {
             };
         apiService._put($http, url,
       requestObject, {
-          "Authorization": _token,
+          "Authorization":  _token,
           "Content-type": "application/json"
       })
            .then(function (response) {
-                
                var updatedObject = response.data.data;
                updateContentGroupsArray($scope.contentObj.content, updatedObject);
-
-               $scope.isSuccess = true;
+              
+               object = updatedObject;
+               object.isSuccess = true;
                if (rel == "inheritContentValue") {
-                   refreshPreviousContent(updatedObject);
-                   $scope.successMessage = "Inherited Successfully"
+                  
+                   object.successMessage = "Inherited Successfully";
+                   refreshContentData(updatedObject);
                }
                else if (rel == "clearContentValue") {
-                   $scope.successMessage = "Cleared Successfully"
+                   object.successMessage = "Cleared Successfully"
                }
+               
 
                $timeout(function () {
-                   $scope.isSuccess = false;
+                   object.isSuccess = false;
+                  
+                   
 
+                   
                }, 2000);
+              
            },
            function (error) {
-               $scope.message = {};
-               $scope.message.errorMessage = error.data.fields.value.toString();
+             
+               
+               object.errorMessage = error.data.fields.value.toString();
                object.isErrorOccurred = true;
                $timeout(function () {
 
@@ -732,7 +763,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                }, 2000);
            });
     };
-    function refreshPreviousContent(newObject) {
+    function refreshContentData(newObject) {
         var updatedNodes = [];
         updatedNodes[0] = newObject;
         update_brandingContent.updateSectionValues(true);
