@@ -100,6 +100,7 @@
     <Content Include="apps\components\change-password.js" />
     <Content Include="apps\components\content-management-component.js" />
     <Content Include="apps\components\contentView.js" />
+    <Content Include="apps\components\contentEditor.js" />
     <Content Include="apps\components\heirarchy-component.js" />
     <Content Include="apps\components\left-menu-component.js" />
     <Content Include="apps\components\promotion-component.js" />
@@ -124,6 +125,7 @@
     <Content Include="apps\views\change-password.html" />
     <Content Include="apps\views\content-management-component.html" />
     <Content Include="apps\views\contentView.html" />
+    <Content Include="apps\views\contentEditor.html" />
     <Content Include="apps\views\contextMenu.html" />
     <Content Include="apps\views\heirarchy-component.html" />
     <Content Include="apps\views\iam-404p.html" />
@@ -135,6 +137,7 @@
     <Content Include="apps\views\_nav-bar-top.html" />
     <Content Include="Assets\Css\colorpicker.min.css" />
     <Content Include="Assets\Css\custom.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Assets\Css\responsive.css" />
     <Content Include="Content\UI-TREE VIEW\ivh-treeview-theme.css" />
@@ -166,6 +169,10 @@
     <Content Include="Assets\Less\custom.less" />
     <None Include="Properties\PublishProfiles\Simon.pubxml" />
     <None Include="Properties\PublishProfiles\Vire.pubxml" />
+    <Content Include="scripts\summernote-master\angular-summernote.js" />
+    <Content Include="scripts\summernote-master\dist\font\summernote.eot" />
+    <Content Include="scripts\summernote-master\dist\font\summernote.ttf" />
+    <Content Include="scripts\summernote-master\dist\font\summernote.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -986,6 +993,9 @@
     <Content Include="scripts\jquery-2.1.1.min.js" />
     <Content Include="scripts\jquery.mCustomScrollbar.js" />
     <Content Include="scripts\less.min.js" />
+    <Content Include="scripts\summernote-master\dist\lang\summernote-de-DE.js" />
+    <Content Include="scripts\summernote-master\dist\summernote.css" />
+    <Content Include="scripts\summernote-master\dist\summernote.js" />
     <Content Include="Web.config" />
     <Content Include="scripts\version.json" />
   </ItemGroup>

@@ -630,6 +630,21 @@ span.glyphicon.glyphicon-home {
     padding: 25px;
 }
 
+.note-editor .note-btn-group .note-btn{
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+    height: 32px;
+}
+
+.note-editor .note-resizebar{
+    display:none;
+}
+
+.mainEditor{
+    padding-left:0px;
+}
+
 .customize-right-sec {
     padding: 25px;
     padding-top: 0px !important;
