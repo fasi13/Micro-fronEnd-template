@@ -150,6 +150,19 @@
                          controller: "contentView"
 
                      })
+                        .state('dashboard.content-view-edit', {
+                            url: '/content-view-edit',
+                            cache: false,
+                            params: {
+                                obj: null,
+                                retObj: null,
+                                name: "Editor Template"
+                            },
+
+                            templateUrl: 'apps/views/contentEditor.html',
+                            controller: "contentEditor"
+
+                        })
                         .state('dashboard.change-password', {
                             url: '/change-password',
                             cache: false,
