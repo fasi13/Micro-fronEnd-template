@@ -355,7 +355,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         $scope.newContent.value = result.data.data.value;
         $scope.currentContent = result.data.data;
 
-
+        $state.go("dashboard.content-view-edit", { obj: ($scope.currentContent), retObj: ($scope.contentObj.completeObj), name: $scope.contentObj.content_name });
     }
 
     function ContentValueLoadFailed(error) {

@@ -26,7 +26,7 @@
                             <span ng-if="key == 'name'">
 
                                 <span ng-repeat="(linkKey,linkVal) in data._links">
-                                    <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
+                                    <a title="Edit Content Value" ng-if="linkVal.rel=='updateContentValue'" ng-href="{{data.dataType.type = 'HTML' ? '#':'#editContent'}}"  data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,false);$event.preventDefault();"> <span class="glyphicon glyphicon-edit"></span> </a>
                                     <!--<a title="Edit Content" ng-if="linkVal.rel=='updateContent'" href="#editContent" data-toggle="modal" ng-click="contentObj.passContentForEdit(data, false,true);$event.preventDefault();"> <span class="glyphicon glyphicon-info-sign"></span> </a>-->
                                     <!--commenting delete icon for now as API needs to return the delete url-->
                                     <!--<a> <span class="glyphicon glyphicon-trash"></span></a>-->
