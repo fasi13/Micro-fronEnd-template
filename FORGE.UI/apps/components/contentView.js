@@ -580,9 +580,7 @@ app.config(['$compileProvider', function ($compileProvider) {
            "Content-type": "application/json"
        })
             .then(function (response) {
-
-              
-                
+               
                 var index = getObjectIndex($scope.contentObj.contentAsGrid, object);
                 if (index != -1) {
                     $scope.contentObj.contentAsGrid[index].valueChanged = false;
@@ -593,13 +591,10 @@ app.config(['$compileProvider', function ($compileProvider) {
                 var updatedObject = response.data.data;
                 refreshContentData(updatedObject);
                 updateContentGroupsArray($scope.contentObj.content, updatedObject);
-                object = updatedObject;
-                    object.isPropertySaved = true;
-                   
-
                 
+                    object.isPropertySaved = true;
 
-                $timeout(function () {
+                    $timeout(function () {
                     object.isPropertySaved = false;
                     
                     
@@ -613,8 +608,7 @@ app.config(['$compileProvider', function ($compileProvider) {
               
                 object.isErrorOccurred = true;
                 $scope.message = {};
-                debugger;
-                
+               
                 object.errorMessage = error.data.fields.value.toString();
                 if (object.errorMessage.indexOf("exists")) {
                 $scope.contentObj.CuurentObject = object;
@@ -770,7 +764,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         update_brandingContent.set_branding(updatedNodes);
 
     }
-    function updateContentGroupsArray(contentArray, newObject) {
+    function updateContentGroupsArray(contentArray, tempContent) {
 
         var i = 0;
 
@@ -778,7 +772,11 @@ app.config(['$compileProvider', function ($compileProvider) {
         for (i; i < length; i++) {
 
             if (newObject.id === contentArray[i].id) {
-                contentArray[i] = newObject;
+                contentArray[i].value = tempContent.value;
+                contentArray[i]._links = tempContent._links;
+                contentArray[i].label = tempContent.label;
+                contentArray[i].showIcons = tempContent.showIcons;
+
                 break;
             }
         }
