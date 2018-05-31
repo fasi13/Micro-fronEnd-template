@@ -771,7 +771,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         var length = contentArray.length;
         for (i; i < length; i++) {
 
-            if (newObject.id === contentArray[i].id) {
+            if (tempContent.id === contentArray[i].id) {
                 contentArray[i].value = tempContent.value;
                 contentArray[i]._links = tempContent._links;
                 contentArray[i].label = tempContent.label;
