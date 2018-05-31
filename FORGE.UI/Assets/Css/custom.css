@@ -643,6 +643,7 @@ span.glyphicon.glyphicon-home {
 
 .mainEditor{
     padding-left:0px;
+    position:sticky;
 }
 
 .customize-right-sec {
