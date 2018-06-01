@@ -380,6 +380,32 @@
         </div>
     </div> 
 
+    <!-- Adding updateContentDescription Model here... -->
+    <div class="modal fade " id="updateContentDescription" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+                    <h4 class="modal-title">Update Content Description</h4>
+                </div>
+                <form name="updateForm" novalidate>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            Description   <input type="text" class="form-control" ng-class="{'red_border':updateForm.$submitted && (!(updateForm.description.$valid))}" id="description" ng-model="description" name="description" placeholder="Enter decription" ng-required="true" ng-class="{'red_border':updateForm.$submitted && (!(updateForm.Value.$valid))}">
+                            <p ng-if="updateForm.$submitted && (!(updateForm.description.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Description is required</p>
+                            <span class="notification" ng-if="isSuccess==true"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btnClass" data-dismiss="modal">Cancel</button>
+                        <button class="btn btnClass" ng-click="updateContentDescription();">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End of Content description model -->
+
     <div id="IsBackToTopEnabled" class="row">
         <a href="" class="pull-right MainbackToTop"> <span class="glyphicon glyphicon-chevron-up MainbackToTopIcon"> </span> </a>
     </div>
