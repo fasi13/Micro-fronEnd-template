@@ -21,6 +21,7 @@ app.config(['$compileProvider', function ($compileProvider) {
     $scope.newContent.showIcons = false;
     $scope.contentValidation = {};
     $scope.imgsrc = [];
+    $scope.updateContentDescriptionUrl = "";
     var _token = JSON.parse($cookies.get('profile'))._token;
     $scope.contentObj.completeObj = $stateParams.obj;
     $scope.copyContent = [];
@@ -38,7 +39,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         var _token = JSON.parse($cookies.get('profile'))._token;
     }
 
-    
+
     function getContentAsList(contents) {
         var contentAsList = [];
         var i = 0;
@@ -265,7 +266,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         var files = element.files;
         $scope.file = files[0];
 
-        
+
         var ext = $scope.file.name.substr($scope.file.name.lastIndexOf('.') + 1);
         var imgObject = JSON.parse(element.attributes.imgObject.value);
 
@@ -275,7 +276,7 @@ app.config(['$compileProvider', function ($compileProvider) {
             if (element.attributes.imgObject != undefined) {
 
                 var imgObject = JSON.parse(element.attributes.imgObject.value);
-               
+
                 imgObject.valueChanged = true;
 
             }
@@ -306,9 +307,9 @@ app.config(['$compileProvider', function ($compileProvider) {
                         imgObject.value = $scope.modalImgsrc;
 
                         imgObject.showIcons = true;
-                       
-                        updateContentGroupsArray($scope.contentObj.content,imgObject);
-                       
+
+                        updateContentGroupsArray($scope.contentObj.content, imgObject);
+
                         element.value = '';
                     }
                 });
@@ -328,7 +329,7 @@ app.config(['$compileProvider', function ($compileProvider) {
             updateContentGroupsArray($scope.contentObj.content, imgObject);
             $scope.$apply();
             element.value = '';
-            
+
             $timeout(function () {
                 imgObject.isValidExtension = false;
             }, 2000);
@@ -461,7 +462,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         return true;
 
     }
-   
+
 
 
     function getObjectIndex(contentArray, updatedObject) {
@@ -483,7 +484,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        
+
         if ((!isValueUpdated() || !isFileUploaded())) {
             $("#navigationPopup").modal("show");
 
@@ -565,7 +566,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
 
-        
+
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
             value: value,
@@ -573,14 +574,14 @@ app.config(['$compileProvider', function ($compileProvider) {
         };
 
 
-        
+
         apiService._put($http, url,
        requestObject, {
            "Authorization": _token,
            "Content-type": "application/json"
        })
             .then(function (response) {
-               
+
                 var index = getObjectIndex($scope.contentObj.contentAsGrid, object);
                 if (index != -1) {
                     $scope.contentObj.contentAsGrid[index].valueChanged = false;
@@ -591,30 +592,30 @@ app.config(['$compileProvider', function ($compileProvider) {
                 var updatedObject = response.data.data;
                 refreshContentData(updatedObject);
                 updateContentGroupsArray($scope.contentObj.content, updatedObject);
-                
-                    object.isPropertySaved = true;
 
-                    $timeout(function () {
+                object.isPropertySaved = true;
+
+                $timeout(function () {
                     object.isPropertySaved = false;
-                    
-                    
+
+
                 }, 2000);
 
-               
+
             },
             function (error) {
 
-                
-              
+
+
                 object.isErrorOccurred = true;
                 $scope.message = {};
-               
+
                 object.errorMessage = error.data.fields.value.toString();
                 if (object.errorMessage.indexOf("exists")) {
-                $scope.contentObj.CuurentObject = object;
-                $scope.contentObj.CuurentObjectValue = value;
-                $scope.changedFileName = $scope.file.name.substr(0,$scope.file.name.lastIndexOf('.'));
-                $("#fileNameChangeFormPopup").modal("show"); 
+                    $scope.contentObj.CuurentObject = object;
+                    $scope.contentObj.CuurentObjectValue = value;
+                    $scope.changedFileName = $scope.file.name.substr(0, $scope.file.name.lastIndexOf('.'));
+                    $("#fileNameChangeFormPopup").modal("show");
 
                 }
                 $timeout(function () {
@@ -622,7 +623,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                     object.isErrorOccurred = false;
 
                 }, 2000);
-                
+
             });
 
 
@@ -703,7 +704,45 @@ app.config(['$compileProvider', function ($compileProvider) {
             }
         }
     }
+    $scope.updateContentDescription = function () {
+        var description = $scope.description;
+        if (description != "" && description != undefined) {
+            var url = $scope.updateContentDescriptionUrl;
+            var requestObject =
+               {
+                   description: description,
+                   status: "Published"
+               };
+            apiService._put($http, url, requestObject, {
+                "Authorization": _token,
+                "Content-type": "application/json"
+            }).then(function (response) {
 
+
+                var updatedObject = response.data.data;
+                if (response.statusText == "OK") {
+                    $scope.isSuccess = true;
+                    $scope.successMessage = "Saved Successfully";
+                    updateContentGroupsArray($scope.contentObj.content, updatedObject);
+                    $timeout(function () {
+                        $scope.isSuccess = false;
+                        $scope.successMessage = "";
+                        $("#updateContentDescription").modal('hide');
+                    }, 3000);
+                }
+
+            }, function (error) {
+
+
+            })
+        }
+
+
+    }
+    $scope.getContentDescription = function (contentLinks, description) {
+        $scope.description = description;
+        $scope.updateContentDescriptionUrl = getURL(contentLinks, "updateContentDescription");
+    }
     $scope.editContextMenu = function (url, rel, object) {
         var requestValue;
         if (rel == "inheritContentValue") requestValue = null;
@@ -717,37 +756,37 @@ app.config(['$compileProvider', function ($compileProvider) {
             };
         apiService._put($http, url,
       requestObject, {
-          "Authorization":  _token,
+          "Authorization": _token,
           "Content-type": "application/json"
       })
            .then(function (response) {
                var updatedObject = response.data.data;
                updateContentGroupsArray($scope.contentObj.content, updatedObject);
-              
+
                object = updatedObject;
                object.isSuccess = true;
                if (rel == "inheritContentValue") {
-                  
+
                    object.successMessage = "Inherited Successfully";
                    refreshContentData(updatedObject);
                }
                else if (rel == "clearContentValue") {
                    object.successMessage = "Cleared Successfully"
                }
-               
+
 
                $timeout(function () {
                    object.isSuccess = false;
-                  
-                   
 
-                   
+
+
+
                }, 2000);
-              
+
            },
            function (error) {
-             
-               
+
+
                object.errorMessage = error.data.fields.value.toString();
                object.isErrorOccurred = true;
                $timeout(function () {
@@ -774,6 +813,7 @@ app.config(['$compileProvider', function ($compileProvider) {
             if (tempContent.id === contentArray[i].id) {
                 contentArray[i].value = tempContent.value;
                 contentArray[i]._links = tempContent._links;
+                contentArray[i].description = tempContent.description;
                 contentArray[i].label = tempContent.label;
                 contentArray[i].showIcons = tempContent.showIcons;
 
