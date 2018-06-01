@@ -1,7 +1,7 @@
 ﻿<span class="glyphicon glyphicon-option-horizontal glyphiconHorizontal"></span>
 
 <div class="tooltipText">
-    <p ng-if="data.description!=''" class="tooltipInnerText">{{data.description}}</p>
+    <p ng-if="data.description!=''" ng-click="getContentDescription(data._links,data.description)" class="tooltipInnerText" data-toggle="modal" data-target="#updateContentDescription">{{data.description}}</p>
     <hr ng-if="data.description!=undefined" class="horizontalSeparator">
     <div ng-repeat="(linkKey,linkVal) in data._links" class="horizontalSeparator" ng-if="linkVal.rel=='inheritContentValue' || linkVal.rel=='clearContentValue'">
         <p class="tooltipInnerText pointer" ng-click="editContextMenu(linkVal.href,linkVal.rel,data);$event.preventDefault();newContent.checkName = data.name"> {{linkVal.name}} </p>
