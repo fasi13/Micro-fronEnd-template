@@ -945,7 +945,7 @@ h1, h2, h3 {
 
 
 .login-body {
-    background-image: url("../../imgs/login-background.jpg");
+    background-image: url("../../../imgs/login-background.jpg");
     min-height: 100%;
     background-size: cover;
     background-repeat: no-repeat;

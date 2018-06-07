@@ -116,11 +116,11 @@
     <Content Include="apps\config\app-share_data-fac.js" />
     <Content Include="apps\config\factory-service-authentication.js" />
     <Content Include="apps\forge-app.js" />
-    <Content Include="apps\UI-TREE VIEW\apiService.js" />
-    <Content Include="apps\UI-TREE VIEW\leaf.js" />
-    <Content Include="apps\UI-TREE VIEW\main.js" />
-    <Content Include="apps\UI-TREE VIEW\tree.js" />
-    <Content Include="apps\UI-TREE VIEW\ui-treeview.js" />
+    <Content Include="apps\UI-TREE-VIEW\apiService.js" />
+    <Content Include="apps\UI-TREE-VIEW\leaf.js" />
+    <Content Include="apps\UI-TREE-VIEW\main.js" />
+    <Content Include="apps\UI-TREE-VIEW\tree.js" />
+    <Content Include="apps\UI-TREE-VIEW\ui-treeview.js" />
     <Content Include="apps\views\auth-component.html" />
     <Content Include="apps\views\change-password.html" />
     <Content Include="apps\views\content-management-component.html" />
@@ -140,8 +140,8 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Assets\Css\responsive.css" />
-    <Content Include="Content\UI-TREE VIEW\ivh-treeview-theme.css" />
-    <Content Include="Content\UI-TREE VIEW\ivh-treeview.css" />
+    <Content Include="Content\UI-TREE-VIEW\ivh-treeview-theme.css" />
+    <Content Include="Content\UI-TREE-VIEW\ivh-treeview.css" />
     <Content Include="imgs\alert.png" />
     <Content Include="imgs\dragon.png" />
     <Content Include="imgs\fish.png" />
