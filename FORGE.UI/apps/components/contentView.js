@@ -705,7 +705,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         }
     }
     $scope.updateContentDescription = function () {
-        var description = $scope.description;
+       var description = $scope.description;
         if (description != "" && description != undefined) {
             var url = $scope.updateContentDescriptionUrl;
             var requestObject =
@@ -717,7 +717,6 @@ app.config(['$compileProvider', function ($compileProvider) {
                 "Authorization": _token,
                 "Content-type": "application/json"
             }).then(function (response) {
-
 
                 var updatedObject = response.data.data;
                 if (response.statusText == "OK") {
@@ -732,8 +731,11 @@ app.config(['$compileProvider', function ($compileProvider) {
                 }
 
             }, function (error) {
-
-
+                $scope.isErrorOccurred = true;
+                $scope.errorMessage = error.data.description;
+                $timeout(function () {
+                    $scope.isErrorOccurred = false;
+                }, 3000);
             })
         }
 

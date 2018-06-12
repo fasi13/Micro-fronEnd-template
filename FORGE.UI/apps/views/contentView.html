@@ -394,7 +394,8 @@
                             Description   <input type="text" class="form-control" ng-class="{'red_border':updateForm.$submitted && (!(updateForm.description.$valid))}" id="description" ng-model="description" name="description" placeholder="Enter decription" ng-required="true" ng-class="{'red_border':updateForm.$submitted && (!(updateForm.Value.$valid))}">
                             <p ng-if="updateForm.$submitted && (!(updateForm.description.$valid))" class="red"><span class="glyphicon glyphicon-info-sign"></span> Description is required</p>
                             <span class="notification" ng-if="isSuccess==true"><span class="glyphicon glyphicon-ok-sign"></span> <span>{{successMessage}}</span></span>
-                        </div>
+                            <span class="red" ng-if="isErrorOccurred" ng-show="true"><span class="glyphicon glyphicon-info-sign"></span> <span>{{errorMessage}}</span></span>
+                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btnClass" data-dismiss="modal">Cancel</button>
