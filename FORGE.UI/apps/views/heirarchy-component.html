@@ -87,10 +87,10 @@
 
 <div ng-controller="modal_controller">
 
-    <div id="{{op}}" class="modal fade">
+    <div id="addEditModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form name="myform" ng-submit="action()" novalidate>
+                <form name="myform" ng-submit="saveDataForModalDialog()" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">{{app.header}}</h4>
@@ -130,5 +130,4 @@
 </div>
 
 <section></section>
-
 
