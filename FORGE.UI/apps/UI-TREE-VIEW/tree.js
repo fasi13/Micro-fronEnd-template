@@ -23,7 +23,7 @@ function tree($compile) {
     function getNodeHtml(node) {
 
         return [
-            '<div class="ivh-treeview-node-content" title="{{::node.label}}">',
+            '<div ng-if="node.isRecordFound" class="ivh-treeview-node-content" title="{{::node.label}}">',
              '<div class="{{::node.IsApplicationGroup ? \'row add-bg\' : \' row parent\'}}" mouse-enter node="node" >',
                 '<div   class="cust-col nopadding">',
                    '<span ivh-treeview-toggle>',
@@ -110,7 +110,7 @@ function tree($compile) {
         };
         //Create dummy for speed up loading & make library show "Expand" icon
         //child nodes only load when 'leaf element click in directive
-        node.isRecordFound = (node.label == "No Records Found") ? false : true;
+        node.isRecordFound = (node.label == "") ? false : true;
         node.isEditApp = ifRelExist(node, "updateApplication", "updateApplicationGroup");
 
         node.isAddApp = ifRelExist(node, "createApplicationGroup", "createApplication");
@@ -164,7 +164,7 @@ function tree($compile) {
         // if the return list's length is zero add new child with No Records Found
         if (list.length === 0) {
 
-            list.push({ name: "No Records Found", _links: [] });
+            list.push({ name: "", _links: [] });
             node = self.makeNode(list.shift(), null, false);
 
             if (parent !== null) {
@@ -199,7 +199,7 @@ function tree($compile) {
 
             });
             // 
-            node.isRecordFound = (node.label == "No Records Found") ? false : true;
+            node.isRecordFound = (node.label == "") ? false : true;
 
             node.isEditApp = ifRelExist(node, "updateApplication", "updateApplicationGroup");
 

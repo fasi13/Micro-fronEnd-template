@@ -20,7 +20,7 @@
 
                 for (var i = 0, length = currentNode.children.length; i < length; i++) {
 
-                    if ($scope.new_obj.parentId == currentNode.children[i].id && (currentNode.children[i].children[0].label != "No Records Found" && currentNode.children[i].children[0].label != "Loading...")) {
+                    if ($scope.new_obj.parentId == currentNode.children[i].id && (currentNode.children[i].children[0].isRecordFound == true && currentNode.children[i].children[0].label != "Loading...")) {
                         var found = false, url = "";
 
                         for (var j = 0; j < shareHierarchyData.data._links.length; j++) {
@@ -77,8 +77,7 @@
 
 
                             $scope.recentNode = $scope.new_obj.child;
-                            if (currentNode.children[k].label == "No Records Found") {
-
+                            if (!currentNode.children[k].isRecordFound) {
                                 currentNode.children.splice(k, 1, $scope.new_obj.child);
                                 break;
                             }

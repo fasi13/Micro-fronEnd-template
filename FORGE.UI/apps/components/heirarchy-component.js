@@ -138,7 +138,7 @@
             if (arr.length == 0) {
                 // if the api returns no records.
                 b = document.createElement("DIV");
-                b.innerHTML += "<strong>No Records Found</strong>";
+                b.innerHTML += "";
                 a.appendChild(b);
             }
             else {
