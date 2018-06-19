@@ -425,7 +425,7 @@
                 if ($scope.clicked_node.unique != undefined) {
                     angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
                         if (linksVal.rel == "contents") {
-                            CreateHierarchyRightContent(linksVal.href, false);
+                            CreateHierarchyRightContent(linksVal.href);
                         }
                     });
                 }
@@ -439,7 +439,7 @@
                 if ($scope.clicked_node.unique != undefined) {
                     angular.forEach($scope.clicked_node._links, function (linksVal, linksKey) {
                         if (linksVal.rel == "contents") {
-                            CreateHierarchyRightContent(linksVal.href, false);
+                            CreateHierarchyRightContent(linksVal.href);
 
                             $scope.isSearch = false;
                         }
@@ -457,65 +457,68 @@
             var updateRightSection = false;
             if (update_brandingContent.updateSection) {
 
-                $scope.isUpdate = false;
+
                 updateRightSection = update_brandingContent.updateSection;
                 update_brandingContent.updateSection = false;
 
             }
 
             angular.forEach(update_brandingContent.node, function (attributeVal, attributeKey) {
-                if (attributeVal.name == "Primary Color") {
+                if (attributeVal != undefined) {
+                    if (attributeVal.name == "Primary Color") {
 
-                    var color = attributeVal.value;
-                    if (color.charAt(0) == "#") {
-                        $scope.hierarchyRightContentPrimaryColor = color;
-                    }
-                    else {
-                        $scope.hierarchyRightContentPrimaryColor = "#" + color;
-                    }
+                        var color = attributeVal.value;
+                        if (color.charAt(0) == "#") {
+                            $scope.hierarchyRightContentPrimaryColor = color;
+                        }
+                        else {
+                            $scope.hierarchyRightContentPrimaryColor = "#" + color;
+                        }
 
-                }
-                if (attributeVal.name == "Secondary Color") {
-                    var color = attributeVal.value;
-                    if (color.charAt(0) == "#") {
-                        $scope.hierarchyRightContentSecondaryColor = color;
                     }
-                    else {
-                        $scope.hierarchyRightContentSecondaryColor = "#" + color;
-                    }
+                    if (attributeVal.name == "Secondary Color") {
+                        var color = attributeVal.value;
+                        if (color.charAt(0) == "#") {
+                            $scope.hierarchyRightContentSecondaryColor = color;
+                        }
+                        else {
+                            $scope.hierarchyRightContentSecondaryColor = "#" + color;
+                        }
 
-                }
-                if (attributeVal.name == "Primary Logo") {
-                    if ($scope.isUpdate) {
-                        logoimg.setPrimaryLogoURL(attributeVal.value);
+                    }
+                    if (attributeVal.name == "Primary Logo") {
+                        if (update_brandingContent.node.updateWebsiteBranding) {
+                            logoimg.setPrimaryLogoURL(attributeVal.value);
+                        }
+                        if (updateRightSection) {
+                            logoimg.setPrimaryLogoURL(attributeVal.value);
+                        }
+                        $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
+                    }
+                    if (attributeVal.name == "Site URL") {
+                        $scope.hierarchyRightContentCreditUnionURL = attributeVal.value;
+                    }
+                    if (attributeVal.name == "Program Name") {
+                        $scope.hierarchyRightContentCreditUnionName = attributeVal.value;
+                    }
+                    if (attributeVal.name == "Secondary Logo") {
+                        if (update_brandingContent.node.updateWebsiteBranding) {
+                            logoimg.setSecondaryLogoURL(attributeVal.value);
+                        }
+                        if (updateRightSection) {
+                            logoimg.setSecondaryLogoURL(attributeVal.value);
+                        }
+                        $scope.hierarchyRightContentCreditUnionSecondaryLogo = attributeVal.value;
+                    }
+                    if (update_brandingContent.node.updateWebsiteBranding) {
+
+                        isColorFilled();
+                        update_brandingContent.node.updateWebsiteBranding = false;
                     }
                     if (updateRightSection) {
-                        logoimg.setPrimaryLogoURL(attributeVal.value);
+                        update_brandingContent.updateSection = false;
+                        isColorFilled();
                     }
-                    $scope.hierarchyRightContentCreditUnionLogo = attributeVal.value;
-                }
-                if (attributeVal.name == "Site URL") {
-                    $scope.hierarchyRightContentCreditUnionURL = attributeVal.value;
-                }
-                if (attributeVal.name == "Program Name") {
-                    $scope.hierarchyRightContentCreditUnionName = attributeVal.value;
-                }
-                if (attributeVal.name == "Secondary Logo") {
-                    if ($scope.isUpdate) {
-                        logoimg.setSecondaryLogoURL(attributeVal.value);
-                    }
-                    if (updateRightSection) {
-                        logoimg.setSecondaryLogoURL(attributeVal.value);
-                    }
-                    $scope.hierarchyRightContentCreditUnionSecondaryLogo = attributeVal.value;
-                }
-                if ($scope.isUpdate) {
-
-                    isColorFilled();
-                }
-                if (updateRightSection) {
-                    update_brandingContent.updateSection = false;
-                    isColorFilled();
                 }
             });
 
@@ -612,9 +615,8 @@
         function HierarchyBrandingAttributesLoadFailed(result) {
             alert('Branding Contents load failed');
         }
-        function CreateHierarchyRightContent(contentURL, isUpdate) {
+        function CreateHierarchyRightContent(contentURL) {
 
-            $scope.isUpdate = isUpdate;
             getHierarchyBrandingAttributes(contentURL, "Primary Color"),
             getHierarchyBrandingAttributes(contentURL, "Secondary Color"),
             getHierarchyBrandingAttributes(contentURL, "Primary Logo"),
@@ -636,6 +638,7 @@
                 else {
                     bradingDataCopy[0] = brandingData.pop();
                 }
+                bradingDataCopy.updateWebsiteBranding = $scope.clicked_node.updateWebsiteBranding;
                 value = update_brandingContent.set_branding(bradingDataCopy);
 
             });
@@ -689,10 +692,10 @@
             else {
                 currentNode = $scope.clicked_node;
             }
-
+            currentNode.updateWebsiteBranding = true;
             angular.forEach(currentNode._links, function (linksVal, linksKey) {
                 if (linksVal.rel == "contents") {
-                    CreateHierarchyRightContent(linksVal.href, true);
+                    CreateHierarchyRightContent(linksVal.href);
                 }
             });
             if ($scope.clicked_node.IsApplicationGroup) {

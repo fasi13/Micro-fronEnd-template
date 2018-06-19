@@ -205,7 +205,6 @@
 
 
         $scope.saveDataForModalDialog = function () {
-            debugger;
             var validateName = true;
             var validateValue = true;
 
