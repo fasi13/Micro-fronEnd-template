@@ -765,11 +765,10 @@ app.config(['$compileProvider', function ($compileProvider) {
                var updatedObject = response.data.data;
                updateContentGroupsArray($scope.contentObj.content, updatedObject);
 
-               object = updatedObject;
                object.isSuccess = true;
                if (rel == "inheritContentValue") {
 
-                   object.successMessage = "Inherited Successfully";
+                   object.successMessage = "Restored Successfully";
                    refreshContentData(updatedObject);
                }
                else if (rel == "clearContentValue") {
@@ -818,7 +817,7 @@ app.config(['$compileProvider', function ($compileProvider) {
                 contentArray[i].description = tempContent.description;
                 contentArray[i].label = tempContent.label;
                 contentArray[i].showIcons = tempContent.showIcons;
-
+                contentArray[i].description = tempContent.description;
                 break;
             }
         }
