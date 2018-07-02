@@ -33,7 +33,7 @@ function tree($compile) {
                      '</span>',
                   '</span>',
              '</div>',
-       '<div  class="nopadding cust-width" id="{{::node.label+node.id}}">',
+       '<div  class="nopadding cust-width">',
         '</div>',
         '</div>',
        '<div ivh-treeview-children></div>',

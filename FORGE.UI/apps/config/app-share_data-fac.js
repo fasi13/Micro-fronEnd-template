@@ -2,109 +2,97 @@
     .directive("mouseEnter", function (shareHierarchyData, tree, apiService, getChild) {
 
         return {
+            restrict: 'A',
             scope: {
                 node: "=node"
             },
             link: function (scope, element, attrs) {
                 var node = scope.node;
-                var span = element.find("span");
+                var span = $(element).find("span");
 
-                element.bind("mouseenter", function (event) {
+                $(element).bind("mouseenter", function (event) {
 
-                    var element = document.getElementById(node.label + node.id);
                     if (node.isRecordFound) {
 
+                        var divElement = document.createElement("span");
+                        divElement.classList.add("pull-right");
+                        divElement.classList.add("show-icon");
 
-                        if (element.firstElementChild && element.firstElementChild.style.display == "none") {
-                            element.firstElementChild.style.display = "block";
+                        if (node.isCreateAppGroup) {
 
+                            var spanElement = document.createElement("span");
+                            spanElement.setAttribute("title", "Add Application Group");
+
+
+                            spanElement.addEventListener("click", function (event) {
+                                shareHierarchyData.get_data(node);
+                                shareHierarchyData.get_op("add_ag");
+
+
+                                $('#addEditModal').modal('show');
+                            });
+
+
+                            var imgsrcElement = document.createElement("img");
+                            imgsrcElement.setAttribute("src", "imgs/views-icon.png");
+                            imgsrcElement.setAttribute("class", "glif_icon");
+                            spanElement.appendChild(imgsrcElement);
+
+                            divElement.appendChild(spanElement);
                         }
-                        else {
+                        if (node.isAddApp) {
+
+                            var spanElement = document.createElement("span");
+
+                            spanElement.setAttribute("title", "Add");
+                            spanElement.addEventListener("click", function (event) {
+
+                                shareHierarchyData.get_data(node);
+                                shareHierarchyData.get_op("add");
+
+                                $('#addEditModal').modal('show');
+
+                            });
 
 
-                            var divElement = document.createElement("div");
-                            divElement.classList.add("pull-right");
-                            divElement.classList.add("show-icon");
-
-                            if (node.isCreateAppGroup) {
-
-                                var anchorElement = document.createElement("a");
-                                anchorElement.setAttribute("title", "Add Application Group");
+                            spanElement.setAttribute("class", "glyphicon glyphicon-pencil");
 
 
-                                anchorElement.addEventListener("click", function (event) {
-                                    shareHierarchyData.get_data(node);
-                                    shareHierarchyData.get_op("add_ag");
-
-
-                                    $('#addEditModal').modal('show');
-                                });
-
-                                var spanElement = document.createElement("span");
-                                var imgsrcElement = document.createElement("img");
-                                imgsrcElement.setAttribute("src", "imgs/views-icon.png");
-                                imgsrcElement.setAttribute("class", "glif_icon");
-                                spanElement.appendChild(imgsrcElement);
-                                anchorElement.appendChild(spanElement);
-                                divElement.appendChild(anchorElement);
-                            }
-                            if (node.isAddApp) {
-
-                                var anchorElement = document.createElement("a");
-
-                                anchorElement.setAttribute("title", "Add");
-                                anchorElement.addEventListener("click", function (event) {
-
-                                    shareHierarchyData.get_data(node);
-                                    shareHierarchyData.get_op("add");
-
-                                    $('#addEditModal').modal('show');
-
-                                });
-
-                                var spanElement = document.createElement("span");
-                                spanElement.setAttribute("class", "glyphicon glyphicon-pencil");
-
-                                anchorElement.appendChild(spanElement);
-                                divElement.appendChild(anchorElement);
-                            }
-                            if (node.isEditApp) {
-
-                                var anchorElement = document.createElement("a");
-
-                                anchorElement.setAttribute("title", "Edit");
-                                anchorElement.addEventListener("click", function (event) {
-                                    shareHierarchyData.get_data(node);
-                                    shareHierarchyData.get_op("edit");
-
-
-                                    $('#addEditModal').modal('show');
-                                });
-
-                                var spanElement = document.createElement("span");
-                                spanElement.setAttribute("class", "glyphicon glyphicon-edit");
-
-                                anchorElement.appendChild(spanElement);
-                                divElement.appendChild(anchorElement);
-                            }
-
-
-                            element.appendChild(divElement);
-
+                            divElement.appendChild(spanElement);
                         }
+                        if (node.isEditApp) {
+
+                            var spanElement = document.createElement("span");
+
+                            spanElement.setAttribute("title", "Edit");
+                            spanElement.addEventListener("click", function (event) {
+                                shareHierarchyData.get_data(node);
+                                shareHierarchyData.get_op("edit");
+
+
+                                $('#addEditModal').modal('show');
+                            });
+
+
+                            spanElement.setAttribute("class", "glyphicon glyphicon-edit");
+
+                            divElement.appendChild(spanElement);
+                        }
+
+
+                        $(element).find('.cust-width').append(divElement);
+
                     }
+
 
                 });
 
-                element.bind('mouseleave', function (event) {
+                $(element).bind('mouseleave', function (event) {
 
                     if (node.isRecordFound) {
-                        var element = document.getElementById(node.label + node.id);
 
-                        if (element.firstElementChild) {
-                            element.firstElementChild.style.display = "none";
+                        $(element).find('.cust-width').empty();
 
-                        }
                     }
                 });
 

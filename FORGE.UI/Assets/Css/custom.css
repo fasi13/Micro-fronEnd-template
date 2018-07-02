@@ -173,7 +173,10 @@ textarea.form-control {
     border-radius: 2px;
     background: #fff;
 }
-
+.show-icon span {
+    padding-left: 7px;
+    color: #3481A5;
+}
 /* border and shadow */
 .config-btn {
     position: relative;
@@ -409,10 +412,10 @@ body {
 }
 
 .cust-width {
-    width: 95px;
+    width: 65px;
     position: absolute;
     display: inline;
-    right: 5px;
+    right: 1px;
 }
 
 .hierarchyVerticalScroll {
@@ -456,7 +459,7 @@ a {
     display: inline;
     float: left !important;
     word-wrap: break-word;
-    padding-right: 95px !important;
+    padding-right: 50px !important;
 }
 
 .breadcrumb {
