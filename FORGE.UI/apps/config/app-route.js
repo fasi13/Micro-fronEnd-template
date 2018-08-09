@@ -13,8 +13,12 @@
                     $urlRouterProvider.otherwise('/');
                     $stateProvider
                         .state('sign-in', {
-                            url: '/',
+                            url: '/?singleUseAuthenticationToken&serviceProviderErrorMessage',
                             template: '<sign-in></sign-in>',
+                            params: {
+                                singleUseAuthenticationToken: null,
+                                serviceProviderErrorMessage: null
+                            },
                             data: {
                                 requireLogin: const_request.notrequire
                             },
