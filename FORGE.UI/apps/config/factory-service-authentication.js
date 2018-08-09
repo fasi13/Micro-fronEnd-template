@@ -9,29 +9,31 @@
                     {
                         'Authorization': 'Basic ' + user,
                     })
-                .then(function (resp) {
-                    _token = resp.headers('authentication-info');
-                    return new apiService._get($http, resp.data.data._links[0].href,
+                .then(function (loginResponse) {
+                    _token = loginResponse.headers('authentication-info');
+                    // get the logged user Object
+                    var userObject = loginResponse.data.data;
+                    var userApplicationURL = userObject._links[0].href;
+                    sessionStorage.setItem("baseApplicationUrl", JSON.stringify(userApplicationURL));
+
+                    return new apiService._get($http, userApplicationURL,
                          {
                              'Authorization': _token,
                          })
-                                     .then(function (data) {
-                                         sessionStorage.setItem("baseApplicationUrl", JSON.stringify(data.data.data._links[0].href));
-                                         return new apiService._get($http, data.data.data._links[0].href,
-                                             {
-                                                 'Authorization': _token,
-                                             })
-            .then(function (data) {
+                                 
+            .then(function (userApplicationResponse) {
                 /* -assign token- */
                 if (typeof $cookies.get('profile') !== const_auth.undefined)
                     $cookies.remove('profile');
 
                 if (typeof sessionStorage._contentManagement !== const_auth.undefined)
                     sessionStorage.removeItem('_contentManagement');
-                sessionStorage.setItem('_contentManagement', JSON.stringify(data.data.data));
+                // get first application(node) from the response
+                var firstApplicationObject = userApplicationResponse.data.data;
+                sessionStorage.setItem('_contentManagement', JSON.stringify(firstApplicationObject));
 
-                resp._token = _token;
-                $cookies.put('profile', JSON.stringify(resp));
+                loginResponse._token = _token;
+                $cookies.put('profile', JSON.stringify(loginResponse));
                 $rootScope.profile = JSON.stringify($cookies.get('profile'));
                 /* end token */
                 return { status: true, toState: sessionStorage._toState };
@@ -41,14 +43,7 @@
                                      }).catch(function (resp) {
                                          return { status: false, statusText: resp.config.url + ' ' + resp.statusText };
                                      });
-                }).catch(function (resp) {
-                    if (resp.data.error.userMessage != undefined) {
-                        return { status: false, statusText: resp.data.error.userMessage };
-                    }
-                    else {
-                         return { status: false, statusText: "An unexpected error occurred, please try again. If the problem persists, contact your program administrator." }
-                    }
-                });
+               
 
             },
             authenticationToken: function (token) {
@@ -56,46 +51,41 @@
                     {
                         'Authorization': 'Token ' + token,
                     })
-                .then(function (resp) {
-                    _token = resp.headers('authentication-info');
-                    return new apiService._get($http, resp.data.data._links[0].href,
-                         {
-                             'Authorization': _token,
-                         })
-                                     .then(function (data) {
-                                         sessionStorage.setItem("baseApplicationUrl", JSON.stringify(data.data.data._links[0].href));
-                                         return new apiService._get($http, data.data.data._links[0].href,
-                                             {
-                                                 'Authorization': _token,
-                                             })
-            .then(function (data) {
-                /* -assign token- */
-                if (typeof $cookies.get('profile') !== const_auth.undefined)
-                    $cookies.remove('profile');
+                 .then(function (loginResponse) {
+                     _token = loginResponse.headers('authentication-info');
+                     // get the logged user Object
+                     var userObject = loginResponse.data.data;
+                     var userApplicationURL = userObject._links[0].href;
+                     sessionStorage.setItem("baseApplicationUrl", JSON.stringify(userApplicationURL));
 
-                if (typeof sessionStorage._contentManagement !== const_auth.undefined)
-                    sessionStorage.removeItem('_contentManagement');
-                sessionStorage.setItem('_contentManagement', JSON.stringify(data.data.data));
+                     return new apiService._get($http, userApplicationURL,
+                          {
+                              'Authorization': _token,
+                          })
 
-                resp._token = _token;
-                $cookies.put('profile', JSON.stringify(resp));
-                $rootScope.profile = JSON.stringify($cookies.get('profile'));
-                /* end token */
-                return { status: true, toState: sessionStorage._toState };
-            }).catch(function (resp) {
-                return { status: false, statusText: resp.config.url + ' ' + resp.statusText };
-            });
-                                     }).catch(function (resp) {
-                                         return { status: false, statusText: resp.config.url + ' ' + resp.statusText };
-                                     });
-                }).catch(function (resp) {
-                    if (resp.data.error.userMessage != undefined) {
-                        return { status: false, statusText: resp.data.error.userMessage };
-                    }
-                    else {
-                        return { status: false, statusText: "An unexpected error occurred, please try again. If the problem persists, contact your program administrator." }
-                    }
-                });
+             .then(function (userApplicationResponse) {
+                 /* -assign token- */
+                 if (typeof $cookies.get('profile') !== const_auth.undefined)
+                     $cookies.remove('profile');
+
+                 if (typeof sessionStorage._contentManagement !== const_auth.undefined)
+                     sessionStorage.removeItem('_contentManagement');
+                 // get first application(node) from the response
+                 var firstApplicationObject = userApplicationResponse.data.data;
+                 sessionStorage.setItem('_contentManagement', JSON.stringify(firstApplicationObject));
+
+                 loginResponse._token = _token;
+                 $cookies.put('profile', JSON.stringify(loginResponse));
+                 $rootScope.profile = JSON.stringify($cookies.get('profile'));
+                 /* end token */
+                 return { status: true, toState: sessionStorage._toState };
+             }).catch(function (resp) {
+                 return { status: false, statusText: resp.config.url + ' ' + resp.statusText };
+             });
+                 }).catch(function (resp) {
+                     return { status: false, statusText: resp.config.url + ' ' + resp.statusText };
+                 });
+
 
             },
             contentManagement: function (i) {
