@@ -1,1 +1,0 @@
-﻿angular.module("treeModule", ["ivh.treeview", "apiservice", "tree"]);

@@ -1,1 +1,0 @@
-﻿angular.module("treeModule", ["instinctcoder", "ivh.treeview","apiservice","tree"]);
