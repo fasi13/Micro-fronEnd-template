@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Base Variables */
+@import "./_base-variables.scss";
+
+/* Third-Party */
+@import "./node_modules/bootstrap/scss/bootstrap.scss";
+
+/* shared styles */
+@import "./_mixins.scss";
+
+/* Components */
+
