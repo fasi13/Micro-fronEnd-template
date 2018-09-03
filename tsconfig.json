@@ -16,6 +16,11 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@forge/core": [ "src/app/core" ],
+      "@forge/core-store": [ "src/app/core/store" ],
+      "@forge/shared": [ "src/app/shared" ],
+    }
   }
 }

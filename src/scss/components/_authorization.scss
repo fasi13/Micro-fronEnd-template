@@ -1,0 +1,29 @@
+.fge-login__container {
+    background-image: url(/assets/img/login-background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100%;
+    min-height: 100vh;
+}
+
+.fge-login__header {
+    font-size: 25px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: $color-text-white;
+    border-left: 3px solid white;
+    padding-left: 10px;
+}
+
+.fge-login__row {
+    padding-top: 50px;
+
+    .fge-login__col--title {
+        color: $color-text-white;
+    }
+
+    .fge-login__col--box {
+        background-color: white;
+    }
+}
