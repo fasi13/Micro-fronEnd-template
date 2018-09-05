@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { UserCredentials } from '../models';
+import { UserCredentials, UserToken } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,12 @@ export class UserService {
     return this.httpClient.get<Response>(url, { headers, observe: 'response' });
   }
 
+  getToken(): UserToken {
+    return localStorage.getItem('token');
+  }
+
   logout(reason: string = 'Iddle', isAuth = true): Observable<boolean> {
+    console.log('Logout - reason: ', reason);
     if (isAuth) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

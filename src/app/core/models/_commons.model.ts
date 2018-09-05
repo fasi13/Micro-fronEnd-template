@@ -8,3 +8,11 @@ export class Link {
     name: string;
     rel: string;
 }
+
+export class MappedLink {
+    method: string;
+    url: string;
+}
+export interface MappedLinks {
+    [key: string]: MappedLink
+}

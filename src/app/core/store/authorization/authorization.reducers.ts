@@ -1,5 +1,6 @@
 import { AuthorizationActions, ActionTypes } from "./authorization.actions";
 import { User } from "../../models";
+import { mapLinks } from "../util";
 
 export interface AuthorizationState {
   authenticated: boolean;
@@ -54,7 +55,7 @@ export function reducer(state: any = initialState, action: AuthorizationActions)
         authenticated: true,
         error: undefined,
         loading: false,
-        user: user
+        user: { ...user, actions: mapLinks(user._links) }
       });
 
     case ActionTypes.LOGOUT_SUCCESS: {

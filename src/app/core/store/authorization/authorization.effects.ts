@@ -6,7 +6,6 @@ import { Action, Store } from "@ngrx/store";
 import { Observable, of, timer } from "rxjs";
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
-
 import {
   ActionTypes,
   AuthenticationErrorAction,
@@ -33,7 +32,9 @@ export class AuthorizationEffects {
           .pipe(
             map((response: HttpResponse<Response>) => {
               const body: Body = response.body;
-              localStorage.setItem('token', response.headers.get('authentication-info'));
+              const authInfo = response.headers.get('authentication-info');
+              const authToken = authInfo.split(' ')[1];
+              localStorage.setItem('token', authToken);
               localStorage.setItem('user', JSON.stringify(body['data']));
               return new AuthenticationSuccessAction({ user: body['data'] as User });
             }),

@@ -1,5 +1,9 @@
+import _mapValues from 'lodash/mapValues';
+import _keyBy from 'lodash/keyBy';
+import _lowerCase from 'lodash/lowerCase';
+
 import { State } from "./store.reducers";
-import { User, UserToken } from "../models";
+import { User, UserToken, Link, MappedLinks } from "../models";
 
 const typeCache: { [label: string]: boolean } = {};
 export function ActionType<T>(label: T | string): T {
@@ -10,6 +14,15 @@ export function ActionType<T>(label: T | string): T {
   typeCache[<string>label] = true;
 
   return <T>label;
+}
+
+export function mapLinks(_links: Link[]): MappedLinks {
+  return _mapValues(_keyBy(_links, 'rel'), ({ href, method } : Link) => (
+    {
+      href,
+      method: _lowerCase(method.method)
+    }
+  ));
 }
 
 export function loadFromLocalStorage() {

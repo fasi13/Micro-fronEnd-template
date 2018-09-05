@@ -13,6 +13,8 @@ import { AuthorizationEffects } from './store/authorization';
 import { FgeReducers } from './store/store.reducers';
 import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor, UnauthorizedInterceptor } from './interceptors';
 
 @NgModule({
   imports: [
@@ -25,7 +27,7 @@ import { loadFromLocalStorage } from './store/util';
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([AuthorizationEffects, RouterEffects]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
+      maxAge: 25,
     }),
   ],
   declarations: [
@@ -37,7 +39,16 @@ import { loadFromLocalStorage } from './store/util';
     UnauthLayoutComponent
   ],
   providers: [
-    UserService
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true
+    }
   ]
 })
 export class CoreModule { }
