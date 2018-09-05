@@ -4,28 +4,69 @@
       <h2 class="mt-5 ml-5 fge-login__header">admin portal</h2>
     </div>
     <div class="row fge-login__row">
-      <div class="col-7 pl-5 text-left fge-login__col--title ">
+      <div class="col-sm-12 col-md-7 col-md-offset-1 text-left pl-5 fge-login__col--title ">
         <h2 class="text-uppercase">welcome to the admin portal</h2>
         <p>This tool can be used to modify and customize variety of content and configuration for registered clients</p>
       </div>
-      <div class="col">
+      <div class="col align-self-center">
         <div class="fge-login__col--box">
           <form name="form" (ngSubmit)="login.form.valid && onSubmitClicked()" #login="ngForm" novalidate>
+            <h4 class="pb-3">LOGIN</h4>
             <div class="form-group">
-                <input type="text" class="form-control" name="username" [(ngModel)]="userCredentials.username" #username="ngModel" [ngClass]="{ 'is-invalid': login.submitted && username.invalid }" required />
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="username"
+                  placeholder="Username"
+                  aria-label="Username"
+                  [(ngModel)]="userCredentials.username"
+                  #username="ngModel"
+                  [ngClass]="{ 'is-invalid': login.submitted && username.invalid }"
+                  [disabled]="loading$ | async"
+                  required
+                />
                 <div *ngIf="login.submitted && username.invalid" class="invalid-feedback">
-                    <div *ngIf="username.errors.required">First Name is required</div>
+                    <div *ngIf="username.errors.required"><i class="fas fa-exclamation-circle pr-1"></i>Username is required</div>
                 </div>
+              </div>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" [(ngModel)]="userCredentials.password" #password="ngModel" [ngClass]="{ 'is-invalid': login.submitted && password.invalid }" required />
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-unlock"></i>
+                  </span>
+                </div>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Password"
+                  [(ngModel)]="userCredentials.password"
+                  #password="ngModel"
+                  [ngClass]="{ 'is-invalid': login.submitted && password.invalid }"
+                  [disabled]="loading$ | async"
+                  required
+                />
                 <div *ngIf="login.submitted && password.invalid" class="invalid-feedback">
-                    <div *ngIf="password.errors.required">Password is required</div>
-                    <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                    <div *ngIf="password.errors.required"><i class="fas fa-exclamation-circle pr-1"></i>Password is required</div>
                 </div>
+              </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" [disabled]="loading$ | async">Register</button>
+              <div *ngIf="login.submitted && !password.invalid && !username.invalid && hasLoginErrors" class="fge-login__div--auth-error">
+                <i class="fas fa-exclamation-circle pr-1"></i>
+                Incorrect username or password provided. If this problem continues, please contact to your system administrator.
+              </div>
+            </div>
+            <div class="form-group mb-0">
+              <button class="btn btn-primary btn-block" [disabled]="loading$ | async"><span class="px-2">LOGIN</span><i *ngIf="loading$ | async" class="fas fa-spinner fa-spin"></i></button>
             </div>
           </form>
         </div>

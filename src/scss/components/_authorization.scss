@@ -14,6 +14,13 @@
     color: $color-text-white;
     border-left: 3px solid white;
     padding-left: 10px;
+    @include media-breakpoint-down(sm) {
+        border-left: none;
+        text-align: center;
+        width: 100%;
+        margin-left: 0px !important;
+        margin-left: 0px !important;
+    }
 }
 
 .fge-login__row {
@@ -21,9 +28,32 @@
 
     .fge-login__col--title {
         color: $color-text-white;
+        padding-top: 30px;
+        @include media-breakpoint-down(sm) {
+            padding-top: 0px; 
+            text-align: center !important;
+            padding: 0 15px !important;
+        }
     }
 
     .fge-login__col--box {
+        max-width: 365px;
+        padding: 30px;
         background-color: white;
+        border-radius: 5px;
+        margin: auto;
+        @include media-breakpoint-down(sm) {
+            max-width: 400px;
+            h4 {
+                text-align: center;
+            }
+        }
+
+        .fge-login__div--auth-error {
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 80%;
+            color: #dc3545;
+        }
     }
 }

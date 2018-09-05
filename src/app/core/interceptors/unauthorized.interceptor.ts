@@ -7,7 +7,7 @@ import {
   HttpErrorResponse,
   HttpResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { State, LogoutAction } from '@forge/core-store';
@@ -26,7 +26,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
           if (response instanceof HttpErrorResponse && response.status === 401) {
             this.store.dispatch(new LogoutAction('Unauthorized'))
           }
-          return Observable.throw(response);
+          return throwError(response);
         })
       );
   }

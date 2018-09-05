@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserCredentials, AuthenticateAction, Go } from '@forge/core';
-import { isAuthenticationLoading, State, isAuthenticated } from '../../core/store/store.reducers';
+import { isAuthenticationLoading, State, isAuthenticated, getAuthenticationError } from '../../core/store/store.reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeWhile, filter } from 'rxjs/operators';
@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   userCredentials: UserCredentials;
   loading$: Observable<boolean> | boolean = false;
+  hasLoginErrors = false;
 
   private isAliveComponent = true;
 
@@ -23,6 +24,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userCredentials = new UserCredentials();
     this.loading$ = this.store.select(isAuthenticationLoading);
+    this.store.select(getAuthenticationError)
+      .pipe(
+        takeWhile(() => this.isAliveComponent)
+      )
+      .subscribe((error) => {
+        this.hasLoginErrors = !!error;
+      })
     this.store.select(isAuthenticated)
       .pipe(
         takeWhile(() => this.isAliveComponent),

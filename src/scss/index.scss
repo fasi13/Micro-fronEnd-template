@@ -2,9 +2,17 @@
 
 /* Base Variables */
 @import "./_base-variables.scss";
+@import "./_variables.scss";
+
+/* Overwrite */
+@import "./_overwrite.scss";
 
 /* Third-Party */
 @import "./node_modules/bootstrap/scss/bootstrap.scss";
+@import "./font-awesome/fontawesome.scss";
+@import "./font-awesome/solid.scss";
+@import "./font-awesome/regular.scss";
+@import "./font-awesome/brands.scss";
 
 /* shared styles */
 @import "./_mixins.scss";
