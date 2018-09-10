@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
   { path: 'changePassword', component: ChangePasswordComponent }
-]
+];
 
 @NgModule({
   imports: [
@@ -21,6 +21,6 @@ const routes: Routes = [
     NgBootstrapModule
     ReactiveFormsModule
   ],
-  declarations: [LoginComponent]
+  declarations: [LoginComponent, ChangePasswordComponent]
 })
 export class AuthorizationModule { }
