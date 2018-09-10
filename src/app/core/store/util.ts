@@ -4,6 +4,7 @@ import _lowerCase from 'lodash/lowerCase';
 
 import { State } from "./store.reducers";
 import { User, UserToken, Link, MappedLinks } from "../models";
+import { ApplicationState } from './application/application.reducers';
 
 const typeCache: { [label: string]: boolean } = {};
 export function ActionType<T>(label: T | string): T {
@@ -26,8 +27,11 @@ export function mapLinks(_links: Link[]): MappedLinks {
 }
 
 export function loadFromLocalStorage() {
-  const user: User = JSON.parse(localStorage.getItem('user'));
+  let user: User = JSON.parse(localStorage.getItem('user'));
   const token: UserToken = localStorage.getItem('token');
+  if (user) {
+    user = { ...user, actions: mapLinks(user._links) };
+  }
   const currentState: State = {
     router: null,
     authorization: {
@@ -35,7 +39,8 @@ export function loadFromLocalStorage() {
       loaded: false,
       loading: false,
       user
-    }
+    },
+    application: {} as ApplicationState
   }
   return currentState;
 }

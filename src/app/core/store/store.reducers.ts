@@ -3,15 +3,18 @@ import { ActionReducerMap } from '@ngrx/store';
 import { createSelector } from 'reselect';
 
 import * as AuthorizationReducers from './authorization/authorization.reducers';
+import * as ApplicationReducers from './application/application.reducers';
 
 export interface State {
     router: RouterReducerState,
-    authorization: AuthorizationReducers.AuthorizationState
+    authorization: AuthorizationReducers.AuthorizationState,
+    application: ApplicationReducers.ApplicationState
 }
 
 export const FgeReducers: ActionReducerMap<State> ={
   router: routerReducer,
-  authorization: AuthorizationReducers.reducer
+  authorization: AuthorizationReducers.reducer,
+  application: ApplicationReducers.reducer
 }
 
 /**********************************************************
@@ -26,3 +29,11 @@ export const isAuthenticated = createSelector(getAuthorizationState, Authorizati
 export const isAuthenticatedLoaded = createSelector(getAuthorizationState, AuthorizationReducers.isAuthenticatedLoaded);
 export const isAuthenticationLoading = createSelector(getAuthorizationState, AuthorizationReducers.isLoading);
 export const getLogoutError = createSelector(getAuthorizationState, AuthorizationReducers.getLogoutError);
+
+/**********************************************************
+ * Application Reducers
+ *********************************************************/
+export const getApplicationState = (state: State) => {
+  return state.application;
+}
+export const getApplicationInfo = createSelector(getApplicationState, ApplicationReducers.getApplicationInfo);

@@ -1,5 +1,17 @@
-<p>
-  auth-layout works!
-  <a tabindex="0" (click)="onLogoutClicked($event)">Logout</a>
-</p>
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">{{application?.name}}</a>
+  <div class="dropdown">
+    <div class="btn-group">
+      <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-2x fa-user-circle text-light"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <h2 class="dropdown-header">{{user.name}}</h2>
+        <div class="dropdown-divider"></div>
+        <button class="btn-sm dropdown-item" type="button"><i class="fas fa-unlock pr-2"></i>Change password</button>
+        <button class="btn-sm dropdown-item" type="button" (click)="onLogoutClicked($event)"><i class="fas fa-sign-out-alt pr-2"></i>Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
 <router-outlet></router-outlet>

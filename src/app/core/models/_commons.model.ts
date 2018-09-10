@@ -1,3 +1,5 @@
+import { HateoasAction } from "./hateoas-action.model";
+
 export class Method {
     method: string
 };
@@ -9,10 +11,6 @@ export class Link {
     rel: string;
 }
 
-export class MappedLink {
-    method: string;
-    url: string;
-}
 export interface MappedLinks {
-    [key: string]: MappedLink
+    [key: string]: HateoasAction
 }

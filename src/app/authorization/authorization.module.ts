@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login/login.component';
 import { Routes, RouterModule } from '@angular/router';
+import { NgBootstrapModule } from '../ng-bootstrap.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgBootstrapModule
   ],
   declarations: [LoginComponent]
 })
