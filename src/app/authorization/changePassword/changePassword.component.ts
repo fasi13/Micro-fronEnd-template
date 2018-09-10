@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ChangePasswordComponent implements OnInit {
     changePasswordForm: FormGroup;
+    submitted = false;
 
     constructor(private formBuilder: FormBuilder) { }
 
@@ -15,6 +16,22 @@ export class ChangePasswordComponent implements OnInit {
             currentPassword: ['', Validators.required],
             newPassword: ['', [Validators.required, Validators.minLength(6)]],
             confirmNewPassword: ['', [Validators.required, Validators.minLength(6)]],
-        });
+        }, { validator: this.checkPasswords });
+    }
+
+    checkPasswords(group: FormGroup) {
+        const newPassword = group.controls.newPassword.value;
+        const confirmNewPassword = group.controls.confirmNewPassword.value;
+        return newPassword === confirmNewPassword ? null : { notSame: true };
+    }
+
+    get currentPassword() { return this.changePasswordForm.get('currentPassword'); }
+
+    get newPassword() { return this.changePasswordForm.get('newPassword'); }
+
+    get confirmNewPassword() { return this.changePasswordForm.get('confirmNewPassword'); }
+
+    onSubmit() {
+        this.submitted = true;
     }
 }
