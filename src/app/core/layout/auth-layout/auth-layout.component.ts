@@ -150,4 +150,8 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
       document.getElementsByTagName('head')[0].appendChild(css);
     }
   }
+
+  onRediretToResetPassword() {
+    this.router.navigate(['/reset-password']);
+  }
 }

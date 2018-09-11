@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 import { SearchApplicationComponent } from './components/search-application/search-application.component';
@@ -25,6 +27,7 @@ import { FieldPasswordComponent } from './components/dynamic-form/fields/field-p
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FocusInputDirective } from './directives/focus-input.directive';
+import { ResetPasswordComponent } from './reset-password/reset-password.Component';
 
 @NgModule({
   imports: [
@@ -55,7 +58,8 @@ import { FocusInputDirective } from './directives/focus-input.directive';
     FieldPasswordComponent,
     FieldToggleButtonComponent,
     ModalConfirmComponent,
-    FocusInputDirective
+    FocusInputDirective,
+    ResetPasswordComponent
   ],
   exports: [
     FormsModule,

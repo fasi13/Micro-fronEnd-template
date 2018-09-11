@@ -12,7 +12,7 @@ const routes: Routes = [
     path: 'welcome',
     component: WelcomeComponent
   }
-]
+];
 
 @NgModule({
   imports: [

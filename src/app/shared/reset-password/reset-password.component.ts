@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'fge-change-password',
-    templateUrl: './changePassword.component.html'
+    selector: 'fge-reset-password',
+    templateUrl: './reset-password.component.html'
 })
-export class ChangePasswordComponent implements OnInit {
-    changePasswordForm: FormGroup;
+export class ResetPasswordComponent implements OnInit {
+    resetPasswordForm: FormGroup;
     submitted = false;
 
     constructor(private formBuilder: FormBuilder) { }
 
     ngOnInit() {
-        this.changePasswordForm = this.formBuilder.group({
+        this.resetPasswordForm = this.formBuilder.group({
             currentPassword: ['', Validators.required],
             newPassword: ['', [Validators.required, Validators.minLength(6)]],
             confirmNewPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -25,13 +25,14 @@ export class ChangePasswordComponent implements OnInit {
         return newPassword === confirmNewPassword ? null : { notSame: true };
     }
 
-    get currentPassword() { return this.changePasswordForm.get('currentPassword'); }
+    get currentPassword() { return this.resetPasswordForm.get('currentPassword'); }
 
-    get newPassword() { return this.changePasswordForm.get('newPassword'); }
+    get newPassword() { return this.resetPasswordForm.get('newPassword'); }
 
-    get confirmNewPassword() { return this.changePasswordForm.get('confirmNewPassword'); }
+    get confirmNewPassword() { return this.resetPasswordForm.get('confirmNewPassword'); }
 
     onSubmit() {
         this.submitted = true;
+        console.log('try to submit.');
     }
 }
