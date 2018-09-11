@@ -1,11 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State, isAuthenticated, Go, LogoutAction, getAuthenticatedUser, getApplicationInfo } from '@forge/core-store';
+
 import { takeWhile, filter } from 'rxjs/operators';
-import { User } from '../../models';
+
+import { 
+  State,
+  isAuthenticated,
+  LogoutAction,
+  getAuthenticatedUser,
+  getApplicationInfo,
+  getApplicationBranding
+} from '@forge/core-store';
+import { User, ApplicationBranding } from '../../models';
 import { FetchApplicationData } from '../../store/application';
 import { Application } from '../../models/application.model';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -15,11 +24,13 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   application: Application;
   user: User;
+  branding: ApplicationBranding;
 
   private isAliveComponent = true;
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -38,7 +49,12 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
         takeWhile(() => this.isAliveComponent),
         filter(isAuthenticated => isAuthenticated),
       )
-      .subscribe(() => this.store.dispatch(new FetchApplicationData()));
+      .subscribe(() => this.store.dispatch(new FetchApplicationData(this.getCurrentTenantId())));
+    this.store.select(getApplicationBranding)
+      .pipe(
+        takeWhile(() => this.isAliveComponent)
+      )
+      .subscribe((branding: ApplicationBranding) => this.applyBranding(branding));
   }
 
   ngOnDestroy() {
@@ -47,5 +63,37 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   onLogoutClicked(event: Event): void {
     this.store.dispatch(new LogoutAction(event.type));
+  }
+
+  private getCurrentTenantId() {
+    let tenantId = this.route.firstChild.snapshot.params.tenantId;
+    if (isNaN(+tenantId)) {
+      const appUrl = this.user.actions['getApplication'].href;
+      const splittedUrl = appUrl.split('/');
+      tenantId = + splittedUrl[splittedUrl.length - 1];
+    }
+    return tenantId;
+  }
+  
+  private applyBranding(branding: ApplicationBranding): void {
+    this.branding = branding;
+    if (branding) {
+      const styles = `
+        .bg-primary {
+          background-color: ${branding.primaryColor.value} !important;
+        }
+        .bg-secondary {
+          background-color: ${branding.secondaryColor.value} !important;
+        }
+      `;
+      var css : any = document.createElement('style');
+      css.type = 'text/css';
+      if (css.styleSheet) {
+        css.styleSheet.cssText = styles;
+      } else {
+        css.appendChild(document.createTextNode(styles));
+      }
+      document.getElementsByTagName("head")[0].appendChild(css);
+    }
   }
 }

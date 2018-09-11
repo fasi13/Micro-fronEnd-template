@@ -1,5 +1,4 @@
-import { Link, MappedLinks } from "./_commons.model";
-import { HateoasAction } from "./hateoas-action.model";
+import { Link, MappedLinks } from "./commons";
 
 export class Application {
     id: number;

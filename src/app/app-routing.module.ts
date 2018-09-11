@@ -10,9 +10,24 @@ const routes: Routes = [
     canActivateChild: [ AuthorizedGuard ],
     children: [
       {
-        path: 'home',
-        loadChildren: './home/home.module#HomeModule'
-      }
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'tenant/default'
+      },
+      {
+        path: 'tenant/:tenantId',
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'home'
+          },
+          {
+            path: 'home',
+            loadChildren: './home/home.module#HomeModule'
+          }
+        ]
+      },
     ]
   }, {
     path: '',

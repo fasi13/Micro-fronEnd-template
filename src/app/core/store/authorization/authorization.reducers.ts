@@ -1,4 +1,6 @@
-import { AuthorizationActions, ActionTypes } from "./authorization.actions";
+import _assign from 'lodash/assign';
+
+import { AuthorizationActions, AuthorizationActionTypes } from "./authorization.actions";
 import { User } from "../../models";
 import { mapLinks } from "../util";
 
@@ -18,48 +20,48 @@ const initialState: AuthorizationState = {
 
 export function reducer(state: any = initialState, action: AuthorizationActions): AuthorizationState {
   switch (action.type) {
-    case ActionTypes.AUTHENTICATE:
-      return Object.assign({}, state, {
+    case AuthorizationActionTypes.AUTHENTICATE:
+      return _assign({}, state, {
         error: undefined,
         loading: true
       });
 
-    case ActionTypes.AUTHENTICATED_ERROR:
-      return Object.assign({}, state, {
+    case AuthorizationActionTypes.AUTHENTICATED_ERROR:
+      return _assign({}, state, {
         authenticated: false,
         error: action.payload.error.message,
         loaded: true
       });
 
-    case ActionTypes.AUTHENTICATED_SUCCESS:
-      return Object.assign({}, state, {
+    case AuthorizationActionTypes.AUTHENTICATED_SUCCESS:
+      return _assign({}, state, {
         authenticated: action.payload.authenticated,
         loaded: true,
         user: action.payload.user
       });
 
-    case ActionTypes.AUTHENTICATE_ERROR:
-      return Object.assign({}, state, {
+    case AuthorizationActionTypes.AUTHENTICATE_ERROR:
+      return _assign({}, state, {
         authenticated: false,
         error: action.payload.error.message,
         loading: false
       });
 
-    case ActionTypes.AUTHENTICATE_SUCCESS:
+    case AuthorizationActionTypes.AUTHENTICATE_SUCCESS:
       const user: User = action.payload.user;
 
       if (user === null) {
         return state;
       }
-      return Object.assign({}, state, {
+      return _assign({}, state, {
         authenticated: true,
         error: undefined,
         loading: false,
         user: { ...user, actions: mapLinks(user._links) }
       });
 
-    case ActionTypes.LOGOUT_SUCCESS: {
-      return Object.assign({}, state, initialState);
+    case AuthorizationActionTypes.LOGOUT_SUCCESS: {
+      return _assign({}, state, initialState);
     }
 
     default:

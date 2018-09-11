@@ -37,3 +37,4 @@ export const getApplicationState = (state: State) => {
   return state.application;
 }
 export const getApplicationInfo = createSelector(getApplicationState, ApplicationReducers.getApplicationInfo);
+export const getApplicationBranding = createSelector(getApplicationState, ApplicationReducers.getApplicationBranding);

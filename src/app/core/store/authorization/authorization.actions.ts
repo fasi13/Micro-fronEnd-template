@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
 import { User, UserCredentials, UserToken } from '../../models';
 
-export const ActionTypes = {
+export const AuthorizationActionTypes = {
     AUTHENTICATE: ActionType('AUTHENTICATE'),
     AUTHENTICATED: ActionType('AUTHENTICATED'),
     AUTHENTICATED_SUCCESS: ActionType('AUTHENTICATED_SUCCESS'),
@@ -15,47 +15,47 @@ export const ActionTypes = {
 }
 
 export class AuthenticateAction implements Action {
-    public type: string = ActionTypes.AUTHENTICATE;
+    public type: string = AuthorizationActionTypes.AUTHENTICATE;
     constructor(public payload: UserCredentials) {}
 }
 
 export class AuthenticatedAction implements Action {
-    public type: string = ActionTypes.AUTHENTICATED;
+    public type: string = AuthorizationActionTypes.AUTHENTICATED;
     constructor(public payload?: { token?: UserToken }) {}
 }
 
 export class AuthenticatedSuccessAction implements Action {
-    public type: string = ActionTypes.AUTHENTICATED_SUCCESS;
+    public type: string = AuthorizationActionTypes.AUTHENTICATED_SUCCESS;
     constructor(public payload: { authenticated: boolean, user: User }) {}
 }
 
 export class AuthenticatedErrorAction implements Action {
-    public type: string = ActionTypes.AUTHENTICATED_ERROR;
+    public type: string = AuthorizationActionTypes.AUTHENTICATED_ERROR;
     constructor(public payload?: any) {}
 }
 
 export class AuthenticationErrorAction implements Action {
-    public type: string = ActionTypes.AUTHENTICATE_ERROR;
+    public type: string = AuthorizationActionTypes.AUTHENTICATE_ERROR;
     constructor(public payload?: any) {}
 }
 
 export class AuthenticationSuccessAction implements Action {
-    public type: string = ActionTypes.AUTHENTICATE_SUCCESS;
+    public type: string = AuthorizationActionTypes.AUTHENTICATE_SUCCESS;
     constructor(public payload: { user: User }) {}
 }
 
 export class LogoutAction implements Action {
-    public type: string = ActionTypes.LOGOUT;
+    public type: string = AuthorizationActionTypes.LOGOUT;
     constructor(public payload?: any) {}
 }
 
 export class LogoutErrorAction implements Action {
-    public type: string = ActionTypes.LOGOUT_SUCCESS;
+    public type: string = AuthorizationActionTypes.LOGOUT_SUCCESS;
     constructor(public payload?: any) {}
 }
 
 export class LogoutSuccessAction implements Action {
-    public type: string = ActionTypes.LOGOUT_SUCCESS;
+    public type: string = AuthorizationActionTypes.LOGOUT_SUCCESS;
     constructor(public payload?: any) {}
 }
 

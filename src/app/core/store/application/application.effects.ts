@@ -1,19 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
+import _find from 'lodash/find';
 
-import { Observable, of } from "rxjs";
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { Observable, of, forkJoin } from "rxjs";
+import { catchError, map, switchMap, withLatestFrom, exhaustMap } from 'rxjs/operators';
 
 import {
-  ActionTypes,
+  ApplicationActionTypes,
   FetchApplicationDataError,
   FetchApplicationDataSuccess
 } from "./application.actions";
-import { User } from "../../models";
+import { User, ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent } from "../../models";
 import { State, getAuthenticatedUser } from "../store.reducers";
 import { ApplicationService } from "../../services/application.service";
-import { HttpResponse } from "@angular/common/http";
 import { Application } from "../../models/application.model";
 
 @Injectable()
@@ -21,11 +21,45 @@ export class ApplicationEffects {
 
   @Effect()
   public fetchApplicationData: Observable<Action> = this.actions$.pipe(
-    ofType(ActionTypes.FETCH_APPLICATION_DATA),
+    ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA),
     withLatestFrom(this.store$.select(getAuthenticatedUser)),
-    switchMap(([action, user]: [any, User]) => this.applicationService.performRequest(user.actions['getApplication'])
+    switchMap(([action, user]: [any, User]) => this.applicationService.getApplicationInfo(action.payload)
       .pipe(
-        map((response: HttpResponse<any>) => new FetchApplicationDataSuccess(response)),
+        exhaustMap((applicationResponse: ApiResponse<Application>) => {
+          const { href, method }: Link = _find(applicationResponse.data._links, ['rel', 'contents']);
+          const contentsHateoas: HateoasAction = { href, method: method.method };
+          return forkJoin(
+            of(applicationResponse),
+            this.applicationService.getContentFor(contentsHateoas, 'Primary Color'),
+            this.applicationService.getContentFor(contentsHateoas, 'Secondary Color'),
+            this.applicationService.getContentFor(contentsHateoas, 'Primary Logo'),
+            this.applicationService.getContentFor(contentsHateoas, 'Site URL'),
+            this.applicationService.getContentFor(contentsHateoas, 'Program Name'),
+            this.applicationService.getContentFor(contentsHateoas, 'Secondary Logo')
+          )
+        }),
+        map(([
+            info,
+            primaryColor,
+            secondaryColor,
+            primaryLogo,
+            siteUrl,
+            programName,
+            secondaryLogo
+          ]: ApiResponse<DataPaginated<ApplicationContent>>[]) => {
+            const application = {
+              info,
+              branding: {
+                primaryColor,
+                secondaryColor,
+                primaryLogo,
+                siteUrl,
+                programName,
+                secondaryLogo
+              }
+            }
+            return new FetchApplicationDataSuccess(application);
+          }),
         catchError(error => of(new FetchApplicationDataError({ error: error })))
       )
     )

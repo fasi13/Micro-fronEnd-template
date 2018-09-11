@@ -7,7 +7,7 @@ import { Observable, of, timer } from "rxjs";
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import {
-  ActionTypes,
+  AuthorizationActionTypes,
   AuthenticationErrorAction,
   AuthenticationSuccessAction,
   LogoutAction,
@@ -26,7 +26,7 @@ export class AuthorizationEffects {
   @Effect()
   public authenticate$: Observable<Action> = this.actions$
     .pipe(
-      ofType(ActionTypes.AUTHENTICATE),
+      ofType(AuthorizationActionTypes.AUTHENTICATE),
       switchMap((action: any) => {
         return this.userService.authenticate(action.payload)
           .pipe(
@@ -45,7 +45,7 @@ export class AuthorizationEffects {
 
   @Effect()
   public logout: Observable<Action> = this.actions$.pipe(
-    ofType(ActionTypes.LOGOUT),
+    ofType(AuthorizationActionTypes.LOGOUT),
     withLatestFrom(this.store$.select(isAuthenticated)),
     switchMap(([action, isAuthenticated]: [any, boolean]) => this.userService.logout(action.payload, !!isAuthenticated)
         .pipe(

@@ -1,4 +1,4 @@
-import { Link, MappedLinks } from "./_commons.model";
+import { Link, MappedLinks } from "./commons";
 
 export class User {
     id: number;
