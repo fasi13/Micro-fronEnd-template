@@ -36,6 +36,9 @@ export const isAuthenticated = createSelector(getAuthorizationState, Authorizati
 export const isAuthenticatedLoaded = createSelector(getAuthorizationState, AuthorizationReducers.isAuthenticatedLoaded);
 export const isAuthenticationLoading = createSelector(getAuthorizationState, AuthorizationReducers.isLoading);
 export const getLogoutError = createSelector(getAuthorizationState, AuthorizationReducers.getLogoutError);
+export const isReseting = createSelector(getAuthorizationState, AuthorizationReducers.isReseting);
+export const isReseted = createSelector(getAuthorizationState, AuthorizationReducers.isReseted);
+export const getResetPasswordError = createSelector(getAuthorizationState, AuthorizationReducers.getResetPasswordError);
 
 /**********************************************************
  * Application Reducers

@@ -19,7 +19,7 @@ export class UserService {
   authenticate({ username, password }: UserCredentials): Observable<HttpResponse<Response>> {
     const url = `${this.baseUrl}/me`;
     const userBtoa = btoa(`${username}:${password}`);
-    const headers = new HttpHeaders({ Authorization : `Basic ${userBtoa}` })
+    const headers = new HttpHeaders({ Authorization : `Basic ${userBtoa}` });
     return this.httpClient.get<Response>(url, { headers, observe: 'response' });
   }
 
@@ -54,5 +54,11 @@ export class UserService {
       params = params.set('limit', `${limit}`);
     }
     return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl, { params });
+  }
+
+  resetPassword({ newPassword, oldPassword }: UserResetPassword): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const url = `${this.baseUrl}/${user.id}/password`;
+    return this.httpClient.put(url, UserResetPassword);
   }
 }

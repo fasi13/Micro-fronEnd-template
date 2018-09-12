@@ -40,6 +40,8 @@ export function loadFromLocalStorage() {
       authenticated: !!token && !!user,
       loaded: false,
       loading: false,
+      reseting: false,
+      reseted: false,
       user
     },
     application: {} as ApplicationState,
