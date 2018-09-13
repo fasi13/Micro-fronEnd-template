@@ -146,8 +146,8 @@ a[aria-expanded="true"] {
 .fge-sidebar-content {
   width: 100%;
   padding: 20px;
-  min-height: 100vh;
   transition: all 0.3s;
+  // height: calc(100vh - 43px);
 }
 
 /* ---------------------------------------------------

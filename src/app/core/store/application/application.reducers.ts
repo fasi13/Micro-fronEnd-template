@@ -10,14 +10,12 @@ export interface ApplicationState {
   branding: ApplicationBranding;
   error?: string;
   loading: boolean;
-  loaded: boolean;
 }
 
 const initialState: ApplicationState = {
   info: null,
   branding: null,
-  loading: false,
-  loaded: false
+  loading: false
 };
 
 export function reducer(state: any = initialState, action: ApplicationActions): ApplicationState {
@@ -31,7 +29,7 @@ export function reducer(state: any = initialState, action: ApplicationActions): 
     case ApplicationActionTypes.FETCH_APPLICATION_DATA_ERROR:
       return _assign({}, state, {
         error: action.payload.error.message,
-        loaded: true
+        loading: false
       });
 
     case ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS: {
@@ -54,7 +52,7 @@ export function reducer(state: any = initialState, action: ApplicationActions): 
           programName: programName.data.items[0],
           secondaryLogo: secondaryLogo.data.items[0]
         },
-        loaded: true,
+        loading: false,
       });
     }
 
@@ -78,3 +76,11 @@ export const getApplicationInfo = (state: ApplicationState) => state.info;
  * @returns {Application}
  */
 export const getApplicationBranding = (state: ApplicationState) => state.branding;
+
+/**
+ * Returns the current state of application loading flag.
+ * @function isLoadingApplicationData
+ * @param {State} state
+ * @returns {boolean}
+ */
+export const isLoadingApplicationData = (state: ApplicationState) => state.loading;

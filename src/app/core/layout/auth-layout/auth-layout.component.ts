@@ -10,11 +10,13 @@ import {
   LogoutAction,
   getAuthenticatedUser,
   getApplicationInfo,
-  getApplicationBranding
+  getApplicationBranding,
+  isLoadingApplicationData
 } from '@forge/core-store';
 import { User, ApplicationBranding } from '../../models';
 import { FetchApplicationData } from '../../store/application';
 import { Application } from '../../models/application.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -25,6 +27,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   application: Application;
   user: User;
   branding: ApplicationBranding;
+  loading$: Observable<boolean> | boolean = true;
 
   private isAliveComponent = true;
 
@@ -34,6 +37,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loading$ = this.store.select(isLoadingApplicationData);
     this.store.select(getApplicationInfo)
       .pipe(
         takeWhile(() => this.isAliveComponent)

@@ -38,3 +38,4 @@ export const getApplicationState = (state: State) => {
 }
 export const getApplicationInfo = createSelector(getApplicationState, ApplicationReducers.getApplicationInfo);
 export const getApplicationBranding = createSelector(getApplicationState, ApplicationReducers.getApplicationBranding);
+export const isLoadingApplicationData = createSelector(getApplicationState, ApplicationReducers.isLoadingApplicationData);
