@@ -1,0 +1,42 @@
+<div class="fge-sidebar-container">
+  <nav [ngClass]="{'active': active}" class="fge-sidebar">
+    <ng-content select=".fge-sidebar__header"></ng-content>
+    <ul class="fge-sidebar__items">
+      <li class="active">
+        <a href="#" class="btn-sm">
+          <i class="fas fa-archive"></i>
+          <span class="fge-sidebar__item--title">Content Management</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="btn-sm">
+          <i class="fas fa-bullhorn"></i>
+          <span class="fge-sidebar__item--title">Promotions</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="btn-sm">
+          <i class="fas fa-gift"></i>
+          <span class="fge-sidebar__item--title">Campaings</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="btn-sm">
+          <i class="fas fa-cog"></i>
+          <span class="fge-sidebar__item--title">Settings</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="fge-sidebar__items fge-sidebar__items--bottom" [ngClass]="{'right-aligned-action': !active}">
+      <li>
+        <a (click)="onToggleSidebar()">
+          <i *ngIf="active" class="fas fa-angle-double-right"></i>
+          <i *ngIf="!active" class="fas fa-angle-double-left"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="fge-sidebar-content">
+    <ng-content></ng-content>
+  </div>
+</div>

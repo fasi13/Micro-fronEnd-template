@@ -17,11 +17,13 @@ import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor, UnauthorizedInterceptor } from './interceptors';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    SharedModule,
     NgbModule.forRoot(),
     ReactiveFormsModule,
     StoreModule.forRoot(FgeReducers, {
