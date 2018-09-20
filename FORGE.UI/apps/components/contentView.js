@@ -566,6 +566,10 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
 
+        if (object.name == "Program Name") {
+            // decoding special characters 
+            value = $('<textarea />').html(value).text();
+        }
 
         var url = getURL(object._links, "updateContentValue");
         var requestObject = {
@@ -705,7 +709,7 @@ app.config(['$compileProvider', function ($compileProvider) {
         }
     }
     $scope.updateContentDescription = function () {
-       var description = $scope.description;
+        var description = $scope.description;
         if (description != "" && description != undefined) {
             var url = $scope.updateContentDescriptionUrl;
             var requestObject =
