@@ -566,7 +566,7 @@ app.config(['$compileProvider', function ($compileProvider) {
 
     $scope.contentObj.editContentCustomizeBranding = function (object, value) {
 
-        if (object.name == "Program Name") {
+        if (object.dataType.name == "Text" || object.dataType.name == "HTML") {
             // decoding special characters 
             value = $('<textarea />').html(value).text();
         }
