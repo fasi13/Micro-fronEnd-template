@@ -17,6 +17,7 @@ import { User, ApplicationBranding } from '../../models';
 import { FetchApplicationData } from '../../store/application';
 import { Application } from '../../models/application.model';
 import { Observable } from 'rxjs';
+import { ContentService } from '../../services';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -28,12 +29,13 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   user: User;
   branding: ApplicationBranding;
   loading$: Observable<boolean> | boolean = true;
+  activeSidebar: boolean = true;
 
   private isAliveComponent = true;
 
   constructor(
     private store: Store<State>,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -67,6 +69,11 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   onLogoutClicked(event: Event): void {
     this.store.dispatch(new LogoutAction(event.type));
+  }
+
+  toggleSidebar(event: Event): void {
+    event.stopPropagation();
+    this.activeSidebar = !this.activeSidebar;
   }
 
   private getCurrentTenantId() {

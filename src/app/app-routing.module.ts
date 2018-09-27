@@ -20,11 +20,11 @@ const routes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'home'
+            redirectTo: 'content'
           },
           {
-            path: 'home',
-            loadChildren: './home/home.module#HomeModule'
+            path: 'content',
+            loadChildren: './content/content.module#ContentModule'
           }
         ]
       },

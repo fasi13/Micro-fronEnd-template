@@ -2,39 +2,57 @@
   <nav [ngClass]="{'active': active}" class="fge-sidebar">
     <ng-content select=".fge-sidebar__header"></ng-content>
     <ul class="fge-sidebar__items">
-      <li class="active">
-        <a href="#" class="btn-sm">
+      <li [ngClass]="{'active': isSectionActive('content')}">
+        <a
+          class="btn-sm fge-clickable"
+          *ngIf="!active"
+          data-toggle="collapse"
+          data-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample">
           <i class="fas fa-archive"></i>
           <span class="fge-sidebar__item--title">Content Management</span>
         </a>
+        <a (click)="goToContentGroups()" class="btn-sm" *ngIf="active">
+          <i class="fas fa-archive"></i>
+        </a>
       </li>
-      <li>
+      <div class="collapse" id="collapseExample" *ngIf="!active">
+        <div class="fge-sidebar-expand">
+          <a
+            class="fge-clickable"
+            (click)="goToContentGroup(contentGroup.id)"
+            tabindex="0"
+            *ngFor="let contentGroup of contentGroups">{{ contentGroup.name }}</a>
+        </div>
+      </div>
+      <li [ngClass]="{'active': isSectionActive('promotions')}">
         <a href="#" class="btn-sm">
           <i class="fas fa-bullhorn"></i>
           <span class="fge-sidebar__item--title">Promotions</span>
         </a>
       </li>
-      <li>
+      <li [ngClass]="{'active': isSectionActive('campaings')}">
         <a href="#" class="btn-sm">
           <i class="fas fa-gift"></i>
           <span class="fge-sidebar__item--title">Campaings</span>
         </a>
       </li>
-      <li>
+      <li [ngClass]="{'active': isSectionActive('settings')}">
         <a href="#" class="btn-sm">
           <i class="fas fa-cog"></i>
           <span class="fge-sidebar__item--title">Settings</span>
         </a>
       </li>
     </ul>
-    <ul class="fge-sidebar__items fge-sidebar__items--bottom" [ngClass]="{'right-aligned-action': !active}">
+    <!-- <ul class="fge-sidebar__items fge-sidebar__items--bottom" [ngClass]="{'right-aligned-action': !active}">
       <li>
         <a (click)="onToggleSidebar()">
           <i *ngIf="active" class="fas fa-angle-double-right"></i>
           <i *ngIf="!active" class="fas fa-angle-double-left"></i>
         </a>
       </li>
-    </ul>
+    </ul> -->
   </nav>
   <div class="fge-sidebar-content">
     <ng-content></ng-content>

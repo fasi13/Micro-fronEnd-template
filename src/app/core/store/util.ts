@@ -5,6 +5,7 @@ import _lowerCase from 'lodash/lowerCase';
 import { State } from "./store.reducers";
 import { User, UserToken, Link, MappedLinks } from "../models";
 import { ApplicationState } from './application/application.reducers';
+import { ContentState } from './content/content.reducers';
 
 const typeCache: { [label: string]: boolean } = {};
 export function ActionType<T>(label: T | string): T {
@@ -40,7 +41,8 @@ export function loadFromLocalStorage() {
       loading: false,
       user
     },
-    application: {} as ApplicationState
+    application: {} as ApplicationState,
+    content: {} as ContentState
   }
   return currentState;
 }

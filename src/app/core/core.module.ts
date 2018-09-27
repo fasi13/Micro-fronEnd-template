@@ -18,6 +18,8 @@ import { loadFromLocalStorage } from './store/util';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor, UnauthorizedInterceptor } from './interceptors';
 import { SharedModule } from '../shared/shared.module';
+import { ContentEffects } from './store/content';
+import { ContentService, FgeRouterService } from './services';
 
 @NgModule({
   imports: [
@@ -30,7 +32,7 @@ import { SharedModule } from '../shared/shared.module';
       initialState: loadFromLocalStorage()
     }),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([AuthorizationEffects, ApplicationEffects, RouterEffects]),
+    EffectsModule.forRoot([AuthorizationEffects, ApplicationEffects, RouterEffects, ContentEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
@@ -45,6 +47,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   providers: [
     UserService,
+    ContentService,
+    FgeRouterService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
