@@ -17,7 +17,7 @@ import { User, ApplicationBranding } from '../../models';
 import { FetchApplicationData } from '../../store/application';
 import { Application } from '../../models/application.model';
 import { Observable } from 'rxjs';
-import { ContentService } from '../../services';
+import { FetchContentGroups } from '../../store/content';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -39,6 +39,23 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.initSelectors();
+  }
+
+  ngOnDestroy() {
+    this.isAliveComponent = false;  
+  }
+
+  onLogoutClicked(event: Event): void {
+    this.store.dispatch(new LogoutAction(event.type));
+  }
+
+  toggleSidebar(event: Event): void {
+    event.stopPropagation();
+    this.activeSidebar = !this.activeSidebar;
+  }
+
+  private initSelectors(): void {
     this.loading$ = this.store.select(isLoadingApplicationData);
     this.store.select(getApplicationInfo)
       .pipe(
@@ -55,25 +72,16 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
         takeWhile(() => this.isAliveComponent),
         filter(isAuthenticated => isAuthenticated),
       )
-      .subscribe(() => this.store.dispatch(new FetchApplicationData(this.getCurrentTenantId())));
+      .subscribe(() => {
+        const applicationId = this.getCurrentTenantId();
+        this.store.dispatch(new FetchApplicationData(applicationId));
+        this.store.dispatch(new FetchContentGroups({ applicationId }))
+      });
     this.store.select(getApplicationBranding)
       .pipe(
         takeWhile(() => this.isAliveComponent)
       )
       .subscribe((branding: ApplicationBranding) => this.applyBranding(branding));
-  }
-
-  ngOnDestroy() {
-    this.isAliveComponent = false;  
-  }
-
-  onLogoutClicked(event: Event): void {
-    this.store.dispatch(new LogoutAction(event.type));
-  }
-
-  toggleSidebar(event: Event): void {
-    event.stopPropagation();
-    this.activeSidebar = !this.activeSidebar;
   }
 
   private getCurrentTenantId() {

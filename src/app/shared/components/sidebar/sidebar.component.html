@@ -23,7 +23,7 @@
             class="fge-clickable"
             (click)="goToContentGroup(contentGroup.id)"
             tabindex="0"
-            *ngFor="let contentGroup of contentGroups">{{ contentGroup.name }}</a>
+            *ngFor="let contentGroup of contentGroups$ | async">{{ contentGroup.name }}</a>
         </div>
       </div>
       <li [ngClass]="{'active': isSectionActive('promotions')}">

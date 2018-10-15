@@ -12,7 +12,7 @@ export class ContentService {
     private http: HttpClient
   ) { }
 
-  getContentGroups(fetchContent: boolean = false): Observable<ApiResponse<DataPaginated<ApplicationContent>>> {
-    return this.http.get<ApiResponse<DataPaginated<ApplicationContent>>>(`application/1/contentGroups?content=${fetchContent}`)
+  getContentGroups(applicationId: string | number, fetchContent: boolean = false): Observable<ApiResponse<DataPaginated<ApplicationContent>>> {
+    return this.http.get<ApiResponse<DataPaginated<ApplicationContent>>>(`application/${applicationId}/contentGroups?content=${fetchContent}`)
   }
 }

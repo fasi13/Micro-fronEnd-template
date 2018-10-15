@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   @Input()
   active: boolean = true;
   loading$: Observable<boolean> | boolean;
-  contentGroups: ApplicationContent[];
+  contentGroups$: Observable<ApplicationContent[]>;
 
   private isAliveComponent = true;
   private activatedSection;
@@ -27,19 +27,8 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setActivatedSection();
-    this.store.dispatch(new FetchContentGroups());
-    this.loading$ = this.store.select(isLoadingGroups);
-    this.store.select(getGroups)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
-      .subscribe((response: ApplicationContent[]) => this.contentGroups = response);
-    this.ngRouter.events.subscribe((value) => {
-      if (value instanceof NavigationEnd) {
-        this.setActivatedSection();
-      }
-    })
+    this.initRouteHandler();
+    this.initSelectors();
   }
 
   onToggleSidebar() {
@@ -50,12 +39,26 @@ export class SidebarComponent implements OnInit {
     this.fgeRouter.navigate(`content/group/${groupId}`);
   }
 
-  goToContentGroups(groupId: string): void {
+  goToContentGroups(): void {
     this.fgeRouter.navigate(`content/groups`);
   }
 
   isSectionActive(sectionName: string): boolean {
     return this.activatedSection === sectionName;
+  }
+
+  private initSelectors(): void {
+    this.loading$ = this.store.select(isLoadingGroups);
+    this.contentGroups$ = this.store.select(getGroups);
+  }
+
+  private initRouteHandler(): void {
+    this.setActivatedSection();
+    this.ngRouter.events.subscribe((value) => {
+      if (value instanceof NavigationEnd) {
+        this.setActivatedSection();
+      }
+    });
   }
 
   private setActivatedSection() {
