@@ -51,3 +51,5 @@ export const getContentState = (state: State) => {
 }
 export const isLoadingGroups = createSelector(getContentState, ContentReducers.isLoadingGroups);
 export const getGroups = createSelector(getContentState, ContentReducers.getGroups);
+export const isLoadingGroup = createSelector(getContentState, ContentReducers.isLoadingGroup);
+export const getGroup = createSelector(getContentState, ContentReducers.getGroup);

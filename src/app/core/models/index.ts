@@ -4,3 +4,4 @@ export * from './user-credentials.model';
 export * from './application.model';
 export * from './application-content.model';
 export * from './application-branding.model';
+export * from './content-group.model';

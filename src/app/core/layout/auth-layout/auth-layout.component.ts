@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { takeWhile, filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { 
   State,
@@ -11,13 +12,11 @@ import {
   getAuthenticatedUser,
   getApplicationInfo,
   getApplicationBranding,
-  isLoadingApplicationData
+  isLoadingApplicationData,
+  FetchApplicationData,
+  FetchContentGroups
 } from '@forge/core-store';
-import { User, ApplicationBranding } from '../../models';
-import { FetchApplicationData } from '../../store/application';
-import { Application } from '../../models/application.model';
-import { Observable } from 'rxjs';
-import { FetchContentGroups } from '../../store/content';
+import { User, ApplicationBranding, Application } from '@forge/core';
 
 @Component({
   selector: 'fge-auth-layout',

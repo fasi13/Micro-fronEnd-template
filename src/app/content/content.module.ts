@@ -3,6 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { GroupsListingComponent } from './groups-listing/groups-listing.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
+import { 
+  ContentTypeColorComponent,
+  ContentTypeTextComponent,
+  ContentTypeHtmlComponent,
+  ContentTypeImageComponent,
+  ContentTypeLogoComponent
+} from './shared/content-types';
 
 const routes: Routes = [
   { path: '', redirectTo: 'groups' },
@@ -11,7 +18,7 @@ const routes: Routes = [
     component: GroupsListingComponent
   },
   {
-    path: 'group/:id',
+    path: 'group/:groupId',
     component: GroupDetailsComponent
   }
 ]
@@ -23,7 +30,12 @@ const routes: Routes = [
   ],
   declarations: [
     GroupDetailsComponent,
-    GroupsListingComponent
+    GroupsListingComponent,
+    ContentTypeColorComponent,
+    ContentTypeTextComponent,
+    ContentTypeHtmlComponent,
+    ContentTypeImageComponent,
+    ContentTypeLogoComponent
   ]
 })
 export class ContentModule { }
