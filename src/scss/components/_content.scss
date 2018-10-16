@@ -15,7 +15,7 @@
   }
 }
 
-.fge-content-type__text, .fge-content-type__html, .fge-content-type__logo  {
+.fge-content-type__text, .fge-content-type__html, .fge-content-type__logo, .fge-content-type__document {
   width: 20px;
   height: 20px;
   border-radius: 2px;
@@ -32,6 +32,10 @@
 
 .fge-content-type__logo i {
   padding: 3px;
+}
+
+.fge-content-type__document i {
+  padding: 5px;
 }
 
 .fge-group--title, .fge-groups--title {

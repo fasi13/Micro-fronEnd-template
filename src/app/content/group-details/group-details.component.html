@@ -28,6 +28,7 @@
         <fge-content-type-html *ngSwitchCase="'HTML'" [value]="content?.value"></fge-content-type-html>
         <fge-content-type-image *ngSwitchCase="'Image'" [value]="content?.value"></fge-content-type-image>
         <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
+        <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
       </td>
       <td>{{ content?.status }}</td>
       <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>

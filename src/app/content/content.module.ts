@@ -8,7 +8,8 @@ import {
   ContentTypeTextComponent,
   ContentTypeHtmlComponent,
   ContentTypeImageComponent,
-  ContentTypeLogoComponent
+  ContentTypeLogoComponent,
+  ContentTypeDocumentComponent
 } from './shared/content-types';
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
     ContentTypeTextComponent,
     ContentTypeHtmlComponent,
     ContentTypeImageComponent,
-    ContentTypeLogoComponent
+    ContentTypeLogoComponent,
+    ContentTypeDocumentComponent
   ]
 })
 export class ContentModule { }
