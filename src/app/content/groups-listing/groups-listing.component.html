@@ -1,3 +1,39 @@
-<p>
-  groups-listing works!
-</p>
+<div class="fge-group--title">
+  <h4>
+    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+    Content Groups
+  </h4>
+</div>
+
+<div class="card-deck fge-groups--content">
+  <div class="card" *ngFor="let group of groups$ | async">
+    <!-- <i class="far fa-object-group fa-5x" style="margin: auto; padding-top: 20px;"></i> -->
+    <div class="card-body">
+      <h5 class="card-title">
+        <a tabindex="0" class="fge-clickable" (click)="goToContentGroup(group.id)">
+          <i class="far fa-object-group pr-2"></i>
+          {{ group?.name }}
+        </a>
+      </h5>
+      <small class="text-muted">Last updated 3 mins ago</small>
+    </div>
+    <div class="card-footer text-right">
+      <a
+        tabindex="0"
+        class="btn btn-primary bg-primary btn-sm mr-2">
+        <i class="far fa-edit"></i>
+      </a>
+      <a
+        tabindex="0"
+        class="btn btn-primary bg-primary btn-sm mr-2"
+        (click)="goToContentGroup(group.id)">
+        <i class="fas fa-info-circle"></i>
+      </a>
+      <a
+        tabindex="0"
+        class="btn btn-primary bg-primary btn-sm mr-2">
+        <i class="far fa-trash-alt"></i>
+      </a>
+    </div>
+  </div>
+</div>
