@@ -1,7 +1,7 @@
 import { Link, MappedLinks } from "./commons";
 
 export class Application {
-    id: number;
+    id: number | string;
     name: string;
     value: string;
     _links: Link[];

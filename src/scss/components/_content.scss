@@ -2,6 +2,7 @@
   width: 20px;
   height: 20px;
   border-radius: 2px;
+  padding: 0px;
 }
 
 .fge-content-type__image {
@@ -35,7 +36,8 @@
 }
 
 .fge-content-type__document i {
-  padding: 5px;
+  padding: 0 5px;
+  margin-top: -1px;
 }
 
 .fge-group--title, .fge-groups--title {

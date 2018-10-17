@@ -1,13 +1,13 @@
 <div class="fge-group--title">
-  <h4>
+  <h4 class="fge-group--title-divider my-2">
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     Content Groups
   </h4>
+  <button type="button" class="btn btn-link"><i class="far fa-plus-square fa-lg" (click)="groupFormModal.open()"></i></button>
 </div>
 
 <div class="card-deck fge-groups--content">
   <div class="card" *ngFor="let group of groups$ | async">
-    <!-- <i class="far fa-object-group fa-5x" style="margin: auto; padding-top: 20px;"></i> -->
     <div class="card-body">
       <h5 class="card-title">
         <a tabindex="0" class="fge-clickable" (click)="goToContentGroup(group.id)">
@@ -37,3 +37,5 @@
     </div>
   </div>
 </div>
+
+<fge-group-form-modal #groupFormModal></fge-group-form-modal>

@@ -1,2 +1,6 @@
-<div class="fge-content-type__color" [style.background-color]="value">
-</div>
+<ng-template #popoverContent>
+  <span [style.color]="value">{{value}}</span>
+</ng-template>
+
+<button type="button" class="btn btn-link fge-content-type__color" [style.background-color]="value" [ngbPopover]="popoverContent">
+</button>

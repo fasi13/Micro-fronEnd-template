@@ -14,3 +14,18 @@ body {
 .navbar {
   padding: 0 .5rem !important;
 }
+
+//Modal Forms
+.modal-header {
+  border-bottom: none !important;
+  padding-bottom: 0px !important;
+}
+
+.modal-body {
+  padding: 10px 30px !important;
+}
+
+.modal-footer {
+  padding-top: 0px !important;
+  border-top: none !important;
+}

@@ -21,4 +21,8 @@ export class ContentService {
   getContentGroup(applicationId: string | number, groupId: string | number, fetchContent: boolean = true):  Observable<ApiResponse<ContentGroup>> {
     return this.http.get<ApiResponse<ContentGroup>>(`application/${applicationId}/contentGroup/${groupId}?content=${fetchContent}`);
   }
+
+  addContentGroup(applicationId: string | number, name: string, published: boolean = true): Observable<any> {
+    return this.http.post<any>(`application/${applicationId}/contentGroup`, { name, published });
+  }
 }

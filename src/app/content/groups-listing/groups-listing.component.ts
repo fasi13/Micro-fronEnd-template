@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, getGroups, ApplicationContent, FgeRouterService } from '@forge/core';
+import { State, getGroups, ApplicationContent, FgeRouterService, isLoadingGroups } from '@forge/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class GroupsListingComponent implements OnInit {
 
   groups$: Observable<ApplicationContent[]>;
+  loading$: Observable<boolean> | boolean;
 
   constructor(
     private store: Store<State>,
@@ -25,6 +26,7 @@ export class GroupsListingComponent implements OnInit {
   }
 
   private initSelectors() {
+    this.loading$ = this.store.select(isLoadingGroups);
     this.groups$ = this.store.select(getGroups);
   }
 
