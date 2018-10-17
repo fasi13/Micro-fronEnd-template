@@ -20,7 +20,8 @@
     <div class="card-footer text-right">
       <a
         tabindex="0"
-        class="btn btn-primary bg-primary btn-sm mr-2">
+        class="btn btn-primary bg-primary btn-sm mr-2"
+        (click)="groupFormModal.open(group)">
         <i class="far fa-edit"></i>
       </a>
       <a
@@ -31,7 +32,7 @@
       </a>
       <a
         tabindex="0"
-        class="btn btn-primary bg-primary btn-sm mr-2">
+        class="btn btn-primary bg-primary btn-sm mr-2 disabled">
         <i class="far fa-trash-alt"></i>
       </a>
     </div>

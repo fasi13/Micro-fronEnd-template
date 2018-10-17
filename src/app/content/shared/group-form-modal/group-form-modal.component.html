@@ -1,6 +1,9 @@
 <ng-template #modalTemplate let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">New Content Group</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      <span *ngIf="mode === 'CREATE'">New Content Group</span>
+      <span *ngIf="mode === 'EDIT'">Edit Content Group</span>
+    </h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -21,8 +24,9 @@
   </div>
   <div class="modal-footer">
     <button [disabled]="loading || formControls.name.errors" type="submit" class="btn btn-primary bg-primary" (click)="onSubmit(c)">
-      Create
-      <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+      <span *ngIf="mode === 'CREATE'">Create</span>
+      <span *ngIf="mode === 'EDIT'">Save</span>
+      <i *ngIf="loading" class="fas fa-circle-notch fa-spin px-1"></i>
     </button>
     <button [disabled]="loading || formControls.name.errors" type="button" class="btn btn-secondary" (click)="d('Cancel')">Cancel</button>
   </div>
