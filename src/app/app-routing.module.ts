@@ -25,9 +25,13 @@ const routes: Routes = [
           {
             path: 'content',
             loadChildren: './content/content.module#ContentModule'
+          },
+          {
+            path: 'userManagement',
+            loadChildren: './userManagement/userManagement.module#UserManagementModule'
           }
         ]
-      },
+      }
     ]
   }, {
     path: '',
