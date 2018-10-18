@@ -10,16 +10,26 @@
     <a class="navbar-brand fge-navbar--brand" href="{{branding?.siteUrl?.value}}" target="_blank" tabindex="0">
       Admin Portal
     </a>
-    <div class="dropdown">
-      <div class="nav-item">
-        <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-2x fa-user-circle text-light"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <h2 class="dropdown-header">{{user?.name}}</h2>
-          <div class="dropdown-divider"></div>
-          <button class="btn-sm dropdown-item" type="button"><i class="fas fa-unlock pr-2"></i>Change password</button>
-          <button class="btn-sm dropdown-item" type="button" (click)="onLogoutClicked($event)"><i class="fas fa-sign-out-alt pr-2"></i>Logout</button>
+    <div class="form-inline my-2 my-lg-0">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <input type="text" placeholder="Search application..." class="form-control">
+      </div>
+      <div class="dropdown">
+        <div class="nav-item">
+          <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-2x fa-user-circle text-light"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <h2 class="dropdown-header">{{user?.name}}</h2>
+            <div class="dropdown-divider"></div>
+            <button class="btn-sm dropdown-item" type="button"><i class="fas fa-unlock pr-2"></i>Change password</button>
+            <button class="btn-sm dropdown-item" type="button" (click)="onLogoutClicked($event)"><i class="fas fa-sign-out-alt pr-2"></i>Logout</button>
+          </div>
         </div>
       </div>
     </div>

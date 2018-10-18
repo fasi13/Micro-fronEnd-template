@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { State, getApplicationInfo, Application, ContentService, FetchContentGroups, ContentGroup } from '@forge/core';
 import { Subscription } from 'rxjs';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'fge-group-form-modal',
@@ -28,7 +29,8 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private store$: Store<State>,
-    private contentService: ContentService
+    private contentService: ContentService,
+    private notifierService: NotifierService
   ) { }
 
   ngOnInit() {
@@ -80,11 +82,14 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
         }
         this.loading = false;
         this.store$.dispatch(new FetchContentGroups({ applicationId: this.applicationId }));
+        this.notifierService.notify('success', this.getNotificationMsg());
       },
       (error) => {
         this.loading = false;
         if (error.status === 400) {
           this.formControls.name.setErrors({ duplicated: true });
+        } else {
+          this.notifierService.notify('error', 'Whoops, something went wrong!. Please try again later.')
         }
       }
     ];
@@ -93,5 +98,11 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
   private initSelectors(): void {
     this.appInfoSubscription = this.store$.select(getApplicationInfo)
       .subscribe((applicationInfo: Application) => this.applicationId = applicationInfo.id);
+  }
+
+  private getNotificationMsg(): string {
+    return this.mode === 'EDIT' ?
+      'The content group has been updated successfully' :
+      'The content group has been created successfully';
   }
 }

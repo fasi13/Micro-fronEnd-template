@@ -12,7 +12,7 @@
     <form [formGroup]="groupForm" (ngSubmit)="onSubmit(c)">
       <div class="form-group">
         <label for="groupName">Name</label>
-        <input type="text" formControlName="name" id="groupName" class="form-control"
+        <input [disabled]="loading" type="text" formControlName="name" id="groupName" class="form-control"
           placeholder="Group name" [ngClass]="{ 'is-invalid': submitted && formControls.name.errors }">
         <div *ngIf="submitted && formControls.name.errors" class="invalid-feedback">
           <div *ngIf="formControls.name.errors.required">Name is required</div>
@@ -28,6 +28,6 @@
       <span *ngIf="mode === 'EDIT'">Save</span>
       <i *ngIf="loading" class="fas fa-circle-notch fa-spin px-1"></i>
     </button>
-    <button [disabled]="loading || formControls.name.errors" type="button" class="btn btn-secondary" (click)="d('Cancel')">Cancel</button>
+    <button [disabled]="loading" type="button" class="btn btn-secondary" (click)="d('Cancel')">Cancel</button>
   </div>
 </ng-template>
