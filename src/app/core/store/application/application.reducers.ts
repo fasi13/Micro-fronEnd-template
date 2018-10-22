@@ -1,24 +1,33 @@
 import _assign from 'lodash/assign';
 
 import { Application } from "../../models/application.model";
-import { ApplicationActions, ApplicationActionTypes } from "./application.actions";
+import { ApplicationAction, ApplicationActionTypes } from "./application.actions";
 import { mapLinks } from '../util';
-import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding } from "../../models";
+import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding, ApplicationPath } from "../../models";
 
 export interface ApplicationState {
   info: Application;
   branding: ApplicationBranding;
   error?: string;
   loading: boolean;
+  search: {
+    data: ApplicationPath[],
+    loading: boolean,
+    error?: string;
+  }
 }
 
 const initialState: ApplicationState = {
   info: null,
   branding: null,
-  loading: false
+  loading: false,
+  search: {
+    data: null,
+    loading: false
+  }
 };
 
-export function reducer(state: any = initialState, action: ApplicationActions): ApplicationState {
+export function reducer(state: any = initialState, action: ApplicationAction): ApplicationState {
   switch (action.type) {
     case ApplicationActionTypes.FETCH_APPLICATION_DATA:
       return _assign({}, state, {
@@ -56,6 +65,30 @@ export function reducer(state: any = initialState, action: ApplicationActions): 
       });
     }
 
+    case ApplicationActionTypes.SEARCH_APPLICATION:
+      return _assign({}, state, {
+        search: {
+          data: undefined,
+          loading: true
+        } 
+      });
+
+    case ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS:
+      return _assign({}, state, {
+        search: {
+          data: action.payload.data.items,
+          loading: false
+        }
+      });
+
+    case ApplicationActionTypes.SEARCH_APPLICATION_ERROR:
+      return _assign({}, state, {
+        search: {
+          error: action.payload.error.message,
+          loading: false
+        }
+      });
+
     default:
       return state;
   }
@@ -84,3 +117,19 @@ export const getApplicationBranding = (state: ApplicationState) => state.brandin
  * @returns {boolean}
  */
 export const isLoadingApplicationData = (state: ApplicationState) => state.loading;
+
+/**
+ * Returns the current state of search application loading flag.
+ * @function isLoadingSearchApplication
+ * @param {State} state
+ * @returns {boolean}
+ */
+export const isLoadingSearchApplication = (state: ApplicationState) => state.search.loading;
+
+/**
+ * Returns the list of application that matches with given keyword.
+ * @function getSearchApplicationList
+ * @param {State} state
+ * @returns {ApplicationPath[]}
+ */
+export const getSearchApplicationList = (state: ApplicationState) => state.search.data;

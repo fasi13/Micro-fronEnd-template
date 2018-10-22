@@ -3,7 +3,9 @@ import {
   NgbDropdownModule,
   NgbTooltipModule,
   NgbPopoverModule,
-  NgbModalModule
+  NgbModalModule,
+  NgbTypeaheadModule,
+  NgbButtonsModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -11,11 +13,15 @@ import {
     NgbDropdownModule,
     NgbTooltipModule,
     NgbPopoverModule,
-    NgbModalModule
+    NgbModalModule,
+    NgbTypeaheadModule,
+    NgbButtonsModule
   ],
   exports: [
     NgbPopoverModule,
-    NgbModalModule
+    NgbModalModule,
+    NgbTypeaheadModule,
+    NgbButtonsModule
   ]
 })
 export class NgBootstrapModule { }

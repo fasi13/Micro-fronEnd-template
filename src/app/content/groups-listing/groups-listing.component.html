@@ -2,41 +2,79 @@
   <h4 class="fge-group--title-divider my-2">
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     Content Groups
+    <div class="btn-group btn-group-toggle fge-group--btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="displayMode">
+      <label ngbButtonLabel class="btn-primary btn-sm">
+        <input ngbButton type="radio" [value]="list">
+        <i class="fas fa-list-ul"></i>
+      </label>
+      <label ngbButtonLabel class="btn-primary btn-sm">
+        <input ngbButton type="radio" value="grid">
+        <i class="fas fa-th"></i>
+      </label>
+    </div>
   </h4>
   <button type="button" class="btn btn-link"><i class="far fa-plus-square fa-lg" (click)="groupFormModal.open()"></i></button>
 </div>
+<div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>
 
-<div class="card-deck fge-groups--content">
-  <div class="card" *ngFor="let group of groups$ | async">
-    <div class="card-body">
-      <h5 class="card-title">
-        <a tabindex="0" class="fge-clickable" (click)="goToContentGroup(group.id)">
-          <i class="far fa-object-group pr-2"></i>
-          {{ group?.name }}
-        </a>
-      </h5>
-      <small class="text-muted">Last updated 3 mins ago</small>
-    </div>
-    <div class="card-footer text-right">
-      <a
-        tabindex="0"
-        class="btn btn-primary bg-primary btn-sm mr-2"
-        (click)="groupFormModal.open(group)">
-        <i class="far fa-edit"></i>
-      </a>
-      <a
-        tabindex="0"
-        class="btn btn-primary bg-primary btn-sm mr-2"
-        (click)="goToContentGroup(group.id)">
-        <i class="fas fa-info-circle"></i>
-      </a>
-      <a
-        tabindex="0"
-        class="btn btn-primary bg-primary btn-sm mr-2 disabled">
-        <i class="far fa-trash-alt"></i>
-      </a>
+<ng-template #listView>
+  <table class="table table-bordred fge-group--content-list">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Last Updated</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let group of groups$ | async">
+        <td>{{ group?.name }}</td>
+        <td>3 mins ago</td>
+        <td>
+          <ng-container [ngTemplateOutlet]="groupActions" [ngTemplateOutletContext]="{ group: group }"></ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #gridView>
+  <div class="card-deck fge-groups--content">
+    <div class="card" *ngFor="let group of groups$ | async">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a tabindex="0" class="fge-clickable" (click)="goToContentGroup(group.id)">
+            <i class="far fa-object-group pr-2"></i>
+            {{ group?.name }}
+          </a>
+        </h5>
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+      <div class="card-footer text-right">
+        <ng-container [ngTemplateOutlet]="groupActions" [ngTemplateOutletContext]="{ group: group }"></ng-container>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+<ng-template #groupActions let-group="group">
+  <a
+    tabindex="0"
+    class="btn btn-primary bg-primary btn-sm mr-2"
+    (click)="groupFormModal.open(group)">
+    <i class="far fa-edit"></i>
+  </a>
+  <a
+    tabindex="0"
+    class="btn btn-primary bg-primary btn-sm mr-2"
+    (click)="goToContentGroup(group.id)">
+    <i class="fas fa-info-circle"></i>
+  </a>
+  <a
+    tabindex="0"
+    class="btn btn-primary bg-primary btn-sm mr-2 disabled">
+    <i class="far fa-trash-alt"></i>
+  </a>
+</ng-template>
 
 <fge-group-form-modal #groupFormModal></fge-group-form-modal>

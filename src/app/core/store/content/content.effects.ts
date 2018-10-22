@@ -18,7 +18,7 @@ import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from "..
 export class ContentEffects {
 
   @Effect()
-  public fetchContentGroups: Observable<Action> = this.actions$.pipe(
+  public fetchContentGroups: Observable<Action> = this.actions.pipe(
     ofType(ContentActionTypes.FETCH_CONTENT_GROUPS),
     switchMap((action: any) => this.contentService.getContentGroups(action.payload.applicationId, action.payload.fetchContent)
         .pipe(
@@ -29,7 +29,7 @@ export class ContentEffects {
   );
 
   @Effect()
-  public fetchContentGroup: Observable<Action> = this.actions$.pipe(
+  public fetchContentGroup: Observable<Action> = this.actions.pipe(
     ofType(ContentActionTypes.FETCH_CONTENT_GROUP),
     switchMap((action: any) => this.contentService.getContentGroup(action.payload.applicationId, action.payload.groupId, action.payload.fetchContent)
         .pipe(
@@ -40,7 +40,7 @@ export class ContentEffects {
   );
 
   constructor(
-    private actions$: Actions,
+    private actions: Actions,
     private contentService: ContentService
   ) {
   }

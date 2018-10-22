@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from "@ngrx/effects";
 import { StoreRouterConnectingModule } from "@ngrx/router-store";
@@ -25,8 +25,8 @@ import { ContentService, FgeRouterService } from './services';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule,
     NgbModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(FgeReducers, {
       initialState: loadFromLocalStorage()
@@ -36,6 +36,7 @@ import { ContentService, FgeRouterService } from './services';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
+    SharedModule,
   ],
   declarations: [
     AuthLayoutComponent,

@@ -42,6 +42,8 @@ export const getApplicationState = (state: State) => {
 export const getApplicationInfo = createSelector(getApplicationState, ApplicationReducers.getApplicationInfo);
 export const getApplicationBranding = createSelector(getApplicationState, ApplicationReducers.getApplicationBranding);
 export const isLoadingApplicationData = createSelector(getApplicationState, ApplicationReducers.isLoadingApplicationData);
+export const isLoadingSearchApplication = createSelector(getApplicationState, ApplicationReducers.isLoadingSearchApplication);
+export const getSearchApplicationList = createSelector(getApplicationState, ApplicationReducers.getSearchApplicationList);
 
 /**********************************************************
  * Content Reducers

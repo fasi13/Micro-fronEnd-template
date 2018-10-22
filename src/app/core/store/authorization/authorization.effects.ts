@@ -24,7 +24,7 @@ export class AuthorizationEffects {
   INACTIVITY_TIME = 15 * 60 * 1000;
 
   @Effect()
-  public authenticate$: Observable<Action> = this.actions$
+  public authenticate$: Observable<Action> = this.actions
     .pipe(
       ofType(AuthorizationActionTypes.AUTHENTICATE),
       switchMap((action: any) => {
@@ -44,9 +44,9 @@ export class AuthorizationEffects {
     );
 
   @Effect()
-  public logout: Observable<Action> = this.actions$.pipe(
+  public logout$: Observable<Action> = this.actions.pipe(
     ofType(AuthorizationActionTypes.LOGOUT),
-    withLatestFrom(this.store$.select(isAuthenticated)),
+    withLatestFrom(this.store.select(isAuthenticated)),
     switchMap(([action, isAuthenticated]: [any, boolean]) => this.userService.logout(action.payload, !!isAuthenticated)
         .pipe(
           map(() => new LogoutSuccessAction()),
@@ -56,15 +56,15 @@ export class AuthorizationEffects {
   );
 
   @Effect()
-  inactivityTimeout$ = this.actions$
+  inactivityTimeout$ = this.actions
     .pipe(
       switchMap(() => timer(this.INACTIVITY_TIME)),
       map(() => new LogoutAction('Inactivity'))
     );
 
   constructor(
-    private actions$: Actions,
-    private store$: Store<State>,
+    private actions: Actions,
+    private store: Store<State>,
     private userService: UserService
   ) {
   }

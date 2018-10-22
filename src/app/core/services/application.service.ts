@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { HateoasAction, ApiResponse, DataPaginated, ApplicationContent, Application } from '../models';
+import { HateoasAction, ApiResponse, DataPaginated, ApplicationContent, Application, ApplicationPath } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,9 @@ export class ApplicationService {
     });
 
     return this.httpClient.get<ApiResponse<DataPaginated<ApplicationContent>>>(href, { params })
+  }
+
+  search(keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
+    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`/applications?keyword=${keyword}`);
   }
 }

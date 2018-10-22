@@ -28,7 +28,7 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    private store$: Store<State>,
+    private store: Store<State>,
     private contentService: ContentService,
     private notifierService: NotifierService
   ) { }
@@ -81,7 +81,7 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
           closeModal();
         }
         this.loading = false;
-        this.store$.dispatch(new FetchContentGroups({ applicationId: this.applicationId }));
+        this.store.dispatch(new FetchContentGroups({ applicationId: this.applicationId }));
         this.notifierService.notify('success', this.getNotificationMsg());
       },
       (error) => {
@@ -96,7 +96,7 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
   }
 
   private initSelectors(): void {
-    this.appInfoSubscription = this.store$.select(getApplicationInfo)
+    this.appInfoSubscription = this.store.select(getApplicationInfo)
       .subscribe((applicationInfo: Application) => this.applicationId = applicationInfo.id);
   }
 

@@ -1,12 +1,15 @@
 import { Action } from '@ngrx/store';
 
 import { ActionType } from '../util';
-import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding } from '../../models';
+import { ApiResponse, DataPaginated, ApplicationContent } from '../../models';
 
 export const ApplicationActionTypes = {
     FETCH_APPLICATION_DATA: ActionType('FETCH_APPLICATION_DATA'),
     FETCH_APPLICATION_DATA_SUCCESS: ActionType('FETCH_APPLICATION_DATA_SUCCESS'),
-    FETCH_APPLICATION_DATA_ERROR: ActionType('FETCH_APPLICATION_DATA_ERROR')
+    FETCH_APPLICATION_DATA_ERROR: ActionType('FETCH_APPLICATION_DATA_ERROR'),
+    SEARCH_APPLICATION: ActionType('SEARCH_APPLICATION'),
+    SEARCH_APPLICATION_SUCCESS: ActionType('SEARCH_APPLICATION_SUCCESS'),
+    SEARCH_APPLICATION_ERROR: ActionType('SEARCH_APPLICATION_ERROR')
 }
 
 export class FetchApplicationData implements Action {
@@ -27,4 +30,25 @@ export class FetchApplicationDataError implements Action {
   constructor(public payload?: any) {}
 }
 
-export type ApplicationActions = FetchApplicationData
+export class SearchApplication implements Action {
+  public type: string = ApplicationActionTypes.SEARCH_APPLICATION;
+  constructor(public payload?: any) {}
+}
+
+export class SearchApplicationSuccess implements Action {
+  public type: string = ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class SearchApplicationError implements Action {
+  public type: string = ApplicationActionTypes.SEARCH_APPLICATION_ERROR;
+  constructor(public payload?: any) {}
+}
+
+export type ApplicationAction = 
+  FetchApplicationData |
+  FetchApplicationDataSuccess |
+  FetchApplicationDataError |
+  SearchApplication |
+  SearchApplicationSuccess |
+  SearchApplicationError;
