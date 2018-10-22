@@ -1,12 +1,13 @@
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CreateUserComponent } from './createUser/createUser.component';
+import { UsersComponent } from './users/users.component';
+import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'createUser' },
-  { path: 'createUser', component: CreateUserComponent }
+  { path: '', redirectTo: 'users' },
+  { path: 'users', component: UsersComponent }
 ];
 
 @NgModule({
@@ -15,6 +16,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ CreateUserComponent ]
+  declarations: [ UsersComponent, UserFormModalComponent ]
 })
 export class UserManagementModule { }

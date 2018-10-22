@@ -39,6 +39,11 @@ export class SidebarComponent implements OnInit {
     this.fgeRouter.navigate(`content/groups`);
   }
 
+  goToUsersManagement(): void {
+    console.log(this.fgeRouter);
+    this.fgeRouter.navigate(`usersManagement`);
+  }
+
   isSectionActive(sectionName: string): boolean {
     return this.activatedSection === sectionName;
   }

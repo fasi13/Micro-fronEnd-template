@@ -20,14 +20,14 @@ const routes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'content'
+            redirectTo: 'usersManagement'
           },
           {
             path: 'content',
             loadChildren: './content/content.module#ContentModule'
           },
           {
-            path: 'userManagement',
+            path: 'usersManagement',
             loadChildren: './userManagement/userManagement.module#UserManagementModule'
           }
         ]
