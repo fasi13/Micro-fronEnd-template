@@ -1,0 +1,65 @@
+<ng-template #modalTemplate let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            <span *ngIf="mode === 'CREATE'">New User</span>
+            <span *ngIf="mode === 'EDIT'">Edit User</span>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="groupForm" (ngSubmit)="onSubmit(c)">
+            <div class="form-group">
+                <label class="col-12 col-sm-5 col-md-4 col-lg-3 col-form-label">User name</label>
+                <input type="text" class="form-control col-12 col-sm-7 col-md-5 col-lg-4">
+                <!-- <div *ngIf="submitted && formControls.name.errors" class="invalid-feedback">
+                <div *ngIf="formControls.name.errors.required">Name is required</div>
+                <div *ngIf="formControls.name.errors.minlength">Name must be at least 3 characters</div>
+                <div *ngIf="formControls.name.errors.duplicated">A content group with the specified name already exists</div> -->
+            </div>
+            <div class="form-group row">
+                <label class="col-12 col-sm-5 col-md-4 col-lg-3 col-form-label">Email</label>
+                <input type="email"
+                    class="form-control col-12 col-sm-7 col-md-5 col-lg-4">
+                <!-- <div *ngIf="newPassword.invalid && newPassword.touched"
+                        class="col-12 col-sm-7 col-md-5 col-lg-4 offset-0 offset-sm-5 offset-md-4 offset-lg-3 invalid-feedback">
+                    <i class="fas fa-exclamation-circle pr-1"></i>
+                    <span *ngIf="newPassword.errors?.required">New password is required.</span>
+                    <span *ngIf="newPassword.errors?.pattern">Password must be a minimum of 6 characters, Password must include at least 2 of the following: uppercase, lowercase, special character, number.</span>
+                </div> -->
+            </div>
+            <div class="form-group row">
+                    <label class="col-12 col-sm-5 col-md-4 col-lg-3 col-form-label"> Aplication</label>
+                   
+                    <div class="col-12 col-sm-7 col-md-5 col-lg-4 dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown button
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                    
+                    <!-- <div *ngIf="((confirmNewPassword.value !== newPassword.value) || confirmNewPassword.invalid) && confirmNewPassword.touched "
+                         class="col-12 col-sm-7 col-md-5 col-lg-4 offset-sm-5 offset-md-4 offset-lg-3 invalid-feedback">
+                        <i class="fas fa-exclamation-circle pr-1"></i>
+                        <span *ngIf="confirmNewPassword.errors?.required">Confirm new password is required.</span>
+                        <span *ngIf="confirmNewPassword !== newPassword">The confirm password provided does not match with new password.</span>
+                    </div> -->
+                    <span *ngIf="resetCompleted" class="col-12 col-sm-7 col-md-5 col-lg-4 offset-sm-5 offset-md-4 offset-lg-3 text-success"><i class="fas fa-check-circle"></i>Password changed Successfully!!</span>
+                </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button [disabled]="loading || formControls.name.errors" type="submit" class="btn btn-primary bg-primary" (click)="onSubmit(c)">
+            <span *ngIf="mode === 'CREATE'">Create</span>
+            <span *ngIf="mode === 'EDIT'">Save</span>
+            <i *ngIf="loading" class="fas fa-circle-notch fa-spin px-1"></i>
+        </button>
+        <button [disabled]="loading" type="button" class="btn btn-secondary" (click)="d('Cancel')">Cancel</button>
+    </div>
+</ng-template>
+      
