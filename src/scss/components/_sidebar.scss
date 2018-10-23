@@ -145,9 +145,8 @@ a[aria-expanded="true"] {
 ----------------------------------------------------- */
 .fge-sidebar-content {
   width: 100%;
-  padding: 20px;
+  padding: 0 20px;
   transition: all 0.3s;
-  // height: calc(100vh - 43px);
 }
 
 .fge-sidebar-expand {

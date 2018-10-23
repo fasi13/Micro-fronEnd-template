@@ -28,7 +28,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let group of groups$ | async">
-        <td>{{ group?.name }}</td>
+        <td>
+          <a tabindex="0" (click)="goToContentGroup(group.id)" class="fge-clickable">
+            {{ group?.name }}
+          </a>
+        </td>
         <td>3 mins ago</td>
         <td>
           <ng-container [ngTemplateOutlet]="groupActions" [ngTemplateOutletContext]="{ group: group }"></ng-container>
@@ -39,7 +43,7 @@
 </ng-template>
 
 <ng-template #gridView>
-  <div class="card-deck fge-groups--content">
+  <div class="card-deck fge-groups--content justify-content-center">
     <div class="card" *ngFor="let group of groups$ | async">
       <div class="card-body">
         <h5 class="card-title">
