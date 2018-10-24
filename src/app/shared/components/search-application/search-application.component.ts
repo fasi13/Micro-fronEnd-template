@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, SearchApplication, ApplicationPath, isLoadingSearchApplication, getSearchApplicationList } from '@forge/core';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -9,6 +9,9 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './search-application.component.html',
 })
 export class SearchApplicationComponent implements OnInit {
+
+  @Input() isInputForm: boolean;
+  @Output() applicationId = new EventEmitter<number>();
 
   loading$: Observable<boolean>;
   items$: Observable<ApplicationPath[]>;
@@ -76,6 +79,11 @@ export class SearchApplicationComponent implements OnInit {
       }
     });
     return strPath;
+  }
+
+  updateInput({ path }: ApplicationPath): void {
+    this.applicationId.emit(path[path.length - 1].id);
+    this.search = path[path.length - 1].name;
   }
 
   private initSelectors(): void {

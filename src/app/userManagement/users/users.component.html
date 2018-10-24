@@ -3,7 +3,7 @@
         <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
         Users Management
     </h4>
-    <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="openCreateUserModal()"></i></button>
+    <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
 </div>
 <table class="table table-bordred fge-group--content-list">
     <thead>
@@ -12,8 +12,8 @@
         <th scope="col">Fist Name</th>
         <th scope="col">Second Name</th>
         <th scope="col">Status</th>
-        <th scope="col">level</th>
-        <th scope="col">Aplication ID</th>
+        <th scope="col">Group Application</th>
+        <th scope="col">Application Name</th>
         <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -21,3 +21,5 @@
         
     </tbody>
 </table>
+
+<fge-user-form-modal #userFormModal></fge-user-form-modal>

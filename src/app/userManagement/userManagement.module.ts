@@ -1,9 +1,11 @@
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { UsersComponent } from './users/users.component';
 import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal';
 import { Routes, RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'users' },
@@ -12,9 +14,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    RouterModule.forChild(routes),
     CommonModule,
+    FormsModule,
+    NgBootstrapModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    SharedModule
   ],
   declarations: [ UsersComponent, UserFormModalComponent ]
 })

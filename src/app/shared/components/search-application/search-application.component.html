@@ -1,5 +1,5 @@
-<div class="input-group input-group-sm fge-search__input-group">
-  <div class="input-group-prepend">
+<div class="input-group" [ngClass]="{ 'input-group-sm fge-search__input-group': !isInputForm }">
+  <div class="input-group-prepend" *ngIf="!isInputForm">
     <span class="input-group-text">
       <i class="fas fa-search"></i>
     </span>
@@ -32,7 +32,7 @@
 </ng-template>
 
 <ng-template #applicationList>
-  <div class="list-group list-group-flush fge-search__list-group">
+  <div class="list-group list-group-flush fge-search__list-group" *ngIf="!isInputForm; else applicationListForm">
     <a
       tabindex="0"
       [href]="getApplicationLink(application)"
@@ -43,6 +43,22 @@
         <small fgeHighlightSearch [keyword]="search">{{ getApplicationValue(application) }}</small>
       </div>
       <small fgeHighlightSearch [keyword]="search">{{getApplicationPath(application)}}</small>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #applicationListForm>
+  <div class="list-group list-group-flush fge-search__list-group">
+    <a
+      tabindex="0"
+      (click)="updateInput(application)"
+      *ngFor="let application of items$ | async; index as i"
+      class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-1">{{ getApplicationName(application) }}</h6>
+        <small>{{ getApplicationId(application) }}</small>
+      </div>
+      <small>{{getApplicationPath(application)}}</small>
     </a>
   </div>
 </ng-template>
