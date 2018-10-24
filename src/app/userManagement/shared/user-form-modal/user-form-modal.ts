@@ -36,6 +36,8 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
             userName: [ '', Validators.required ],
             firstName: [''],
             lastName: [''],
+            password: [''],
+            confirmPassword: [''],
             email: [ '', Validators.required, Validators.email ],
             status: ['']
         });
