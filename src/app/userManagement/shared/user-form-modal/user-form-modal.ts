@@ -3,11 +3,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { UserResetPassword, ResetpasswordAction } from '@forge/core';
-// import { State, isReseted, getResetPasswordError } from '../../core/store/store.reducers';
+import { NewUser, NewUserAction } from '@forge/core';
+import { State, isNewUserCreated, getNewUserError } from '../../../core/store/store.reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeWhile, filter } from 'rxjs/operators';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
     selector: 'fge-user-form-modal',
@@ -17,18 +18,20 @@ import { takeWhile, filter } from 'rxjs/operators';
 export class UserFormModalComponent implements OnInit, OnDestroy {
     @ViewChild('modalTemplate')
     modalContent: ElementRef;
-    resetCompleted: boolean;
+    createCompleted: boolean;
     userForm: FormGroup;
     mode: 'CREATE' | 'EDIT';
     applicationId: number;
     private isAliveComponent = true;
-    // userResetPassword: UserResetPassword;
-    regexp = '(?=(.*[A-Z0-9$@$!%*#?&]){2})[A-Za-z0-9$@$!%*#?&]{6,}';
 
-    constructor(private modalService: NgbModal, private formBuilder: FormBuilder) { }
+    constructor(
+        private modalService: NgbModal,
+        private formBuilder: FormBuilder,
+        private store: Store<State>,
+        private notifierService: NotifierService) { }
 
     ngOnInit() {
-        this.resetCompleted = false;
+        this.createCompleted = false;
         this.userForm = this.formBuilder.group({
             userName: [ '', Validators.required ],
             firstName: [''],
@@ -37,15 +40,16 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
             status: ['']
         });
 
-        // this.store.select(isReseted)
-        // .pipe(
-        //     takeWhile(() => this.isAliveComponent),
-        //     filter(isReseted => isReseted)
-        // )
-        // .subscribe(() => {
-        //     this.resetPasswordForm.reset();
-        //     this.resetCompleted = true;
-        // });
+        this.store.select(isNewUserCreated)
+        .pipe(
+            takeWhile(() => this.isAliveComponent),
+            filter(isReseted => isReseted)
+        )
+        .subscribe(() => {
+            this.notifierService.notify('success', this.getNotificationMsg());
+            this.userForm.reset();
+            this.createCompleted = true;
+        });
     }
 
     ngOnDestroy() {
@@ -72,12 +76,21 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
 
     // get confirmNewPassword() { return this.resetPasswordForm.get('confirmNewPassword'); }
 
-    // onSubmit() {
-    //     this.resetCompleted = false;
-    //     const payload: UserResetPassword = {
-    //         newPassword: this.resetPasswordForm.value.newPassword,
-    //         oldPassword: this.resetPasswordForm.value.currentPassword
-    //     };
-    //     this.store.dispatch(new ResetpasswordAction(payload));
-    // }
+     onSubmit() {
+        this.createCompleted = false;
+        const payload: NewUser = {
+            login: this.userForm.value.userName,
+            firstName: this.userForm.value.firstName,
+            lastName: this.userForm.value.lastName,
+            emailAddress: this.userForm.value.email,
+            status: this.userForm.value.status,
+            applicationId: this.applicationId
+        };
+        this.store.dispatch(new NewUserAction(payload));
+    }
+    private getNotificationMsg(): string {
+        return this.mode === 'EDIT' ?
+          'The content group has been updated successfully' :
+          'The new user has been created successfully';
+      }
 }

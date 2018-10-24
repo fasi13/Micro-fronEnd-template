@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { UserCredentials, UserToken } from '../models';
+import { UserCredentials, UserToken, NewUser } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +35,11 @@ export class UserService {
       localStorage.removeItem('application_data');
     }
     return of(isAuth);
+  }
+
+  createNewUser(newUser: NewUser): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const url = `${this.baseUrl}/${user.id}/add`;
+    return this.httpClient.post(url, newUser);
   }
 }

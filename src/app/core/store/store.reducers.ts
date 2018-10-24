@@ -13,7 +13,7 @@ export interface State {
     content: ContentReducers.ContentState;
 }
 
-export const FgeReducers: ActionReducerMap<State> ={
+export const FgeReducers: ActionReducerMap<State> = {
   router: routerReducer,
   authorization: AuthorizationReducers.reducer,
   application: ApplicationReducers.reducer,
@@ -59,3 +59,10 @@ export const getGroups = createSelector(getContentState, ContentReducers.getGrou
 export const isLoadingGroup = createSelector(getContentState, ContentReducers.isLoadingGroup);
 export const getGroup = createSelector(getContentState, ContentReducers.getGroup);
 export const getContentRecordState = createSelector(getContentState, ContentReducers.getRecordState);
+
+/**********************************************************
+ * New User Reducers
+ *********************************************************/
+export const isNewUserCreating = createSelector(getAuthorizationState, AuthorizationReducers.isNewUserCreating);
+export const isNewUserCreated = createSelector(getAuthorizationState, AuthorizationReducers.isNewUserCreated);
+export const getNewUserError = createSelector(getAuthorizationState, AuthorizationReducers.getNewUserError);

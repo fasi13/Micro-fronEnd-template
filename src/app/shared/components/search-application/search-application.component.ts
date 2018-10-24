@@ -82,7 +82,7 @@ export class SearchApplicationComponent implements OnInit {
   }
 
   updateInput({ path }: ApplicationPath): void {
-    this.applicationId.emit(path[path.length - 1].id);
+    this.applicationId.emit(+path[path.length - 1].id);
     this.search = path[path.length - 1].name;
   }
 

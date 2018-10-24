@@ -13,6 +13,9 @@ import {
   LogoutAction,
   LogoutSuccessAction,
   LogoutErrorAction,
+  NewUserAction,
+  NewUserErrorAction,
+  NewUserSuccessAction
 } from "./authorization.actions";
 import { UserService } from "../../services";
 import { User } from "../../models";
@@ -62,6 +65,21 @@ export class AuthorizationEffects {
       map(() => new LogoutAction('Inactivity'))
     );
 
+  @Effect()
+  public newUser$: Observable<Action> = this.actions
+    .pipe(
+      ofType(AuthorizationActionTypes.NEW_USER),
+      switchMap((action: any) => {
+        return this.userService.createNewUser(action.payload)
+          .pipe(
+            map((response: any) => {
+              console.log('changes success using this thing.', response);
+              return new NewUserSuccessAction({ response: 'success changes.'});
+            }),
+            catchError(error => of(new NewUserErrorAction({error: error})))
+          );
+      })
+    );
   constructor(
     private actions: Actions,
     private store: Store<State>,

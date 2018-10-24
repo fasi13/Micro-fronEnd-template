@@ -39,6 +39,8 @@ export function loadFromLocalStorage() {
       authenticated: !!token && !!user,
       loaded: false,
       loading: false,
+      creatingUser: false,
+      createdUser: false,
       user
     },
     application: {} as ApplicationState,

@@ -10,12 +10,22 @@ export interface AuthorizationState {
   loaded: boolean;
   loading: boolean;
   user?: User;
+  creatingUser: boolean;
+  createdUser: boolean;
+}
+
+export interface NewUserState {
+  creatingUser: boolean;
+  createdUser: boolean;
+  error?: string;
 }
 
 const initialState: AuthorizationState = {
   authenticated: null,
   loaded: false,
-  loading: false
+  loading: false,
+  creatingUser: false,
+  createdUser: false
 };
 
 export function reducer(state: any = initialState, action: AuthorizationActions): AuthorizationState {
@@ -63,6 +73,23 @@ export function reducer(state: any = initialState, action: AuthorizationActions)
     case AuthorizationActionTypes.LOGOUT_SUCCESS: {
       return _assign({}, state, initialState);
     }
+
+    case AuthorizationActionTypes.NEW_USER:
+      return Object.assign({}, state, {
+        error: undefined,
+        creatingUser: true
+      });
+
+    case AuthorizationActionTypes.NEW_USER_ERROR:
+      return Object.assign({}, state, {
+        createdUser: false,
+        error: action.payload.error
+      });
+
+    case AuthorizationActionTypes.NEW_USER_SUCCESS:
+      return Object.assign({}, state, {
+        createdUser: true
+      });
 
     default:
       return state;
@@ -116,3 +143,28 @@ export const isLoading = (state: AuthorizationState) => state.loading;
  * @returns {Error}
  */
 export const getLogoutError = (state: AuthorizationState) => state.error;
+
+/**
+ * Returns true if request is in progress.
+ * @function isNewUserCreating
+ * @param {State} state
+ * @returns {boolean}
+ */
+export const isNewUserCreating = (state: AuthorizationState) => state.creatingUser;
+​
+/**
+ * Returns true if the password has reseted.
+ * @function isNewUserCreated
+ * @param {State} state
+ * @returns {boolean}
+ */
+export const isNewUserCreated = (state: AuthorizationState) => state.createdUser;
+​
+/**
+ * Returns the reset password error.
+ * @function getNewUserError
+ * @param {State} state
+ * @returns {Error}
+ */
+export const getNewUserError = (state: AuthorizationState) => state.error;
+
