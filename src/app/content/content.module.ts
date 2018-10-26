@@ -14,6 +14,8 @@ import {
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupFormModalComponent } from './shared/group-form-modal/group-form-modal.component';
+import { ContentFormModalComponent } from './shared/content-form-modal/content-form-modal.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'groups' },
@@ -32,8 +34,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgBootstrapModule,
-    ReactiveFormsModule
+    SharedModule
   ],
   declarations: [
     GroupDetailsComponent,
@@ -44,7 +47,11 @@ const routes: Routes = [
     ContentTypeImageComponent,
     ContentTypeLogoComponent,
     ContentTypeDocumentComponent,
-    GroupFormModalComponent
+    GroupFormModalComponent,
+    ContentFormModalComponent
+  ],
+  entryComponents: [
+    ContentFormModalComponent
   ]
 })
 export class ContentModule { }

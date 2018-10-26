@@ -3,7 +3,7 @@
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     {{ currentGroup?.name }}
   </h4>
-  <button type="button" class="btn btn-link"><i class="far fa-plus-square fa-lg"></i></button>
+  <button type="button" class="btn btn-link" (click)="openContentForm()"><i class="far fa-plus-square fa-lg"></i></button>
 </div>
 
 <table class="table table-bordred fge-group--content-list">

@@ -1,0 +1,79 @@
+.fge-dynamic-form__button {
+  letter-spacing: -0.5px;
+  cursor: pointer;
+  outline: 0;
+  line-height: 1;
+  text-align: center;
+  padding: 12px 30px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 2px;
+  display: inline-block;
+  border: none;
+  color: #fff;
+  transition: background-color .3s, box-shadow .3s;
+
+  &:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &:disabled {
+    background: rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.fge-dynamic-form__input {
+  display: block;
+  font-family: inherit;
+  font-size: 14px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  outline: none;
+  padding: 10px 15px;
+  color: rgba(0, 0, 0, 0.7);
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.fge-dynamic-form__select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: .01px;
+  text-overflow: '';
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 0;
+  color: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  outline: none;
+  background:
+    linear-gradient(45deg, transparent 50%, rgba(0, 0, 0, 0.7) 50%)
+      no-repeat calc(100% - 20px) calc(1em + 4px),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.7) 50%, transparent 50%)
+      no-repeat calc(100% - 15px) calc(1em + 4px);
+  background-size: 5px 5px, 5px 5px;
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.fge-dynamic-field {
+  margin-bottom: 15px;
+  label {
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+}

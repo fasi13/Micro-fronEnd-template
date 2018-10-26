@@ -6,6 +6,8 @@ import { Subscription, Observable } from 'rxjs';
 
 import { State, FetchContentGroup, getGroup, ApplicationContent, isLoadingGroup, ContentGroup } from '@forge/core';
 import { takeWhile } from 'rxjs/operators';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 
 @Component({
   selector: 'fge-group-details',
@@ -21,7 +23,8 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<State>
+    private store: Store<State>,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -37,6 +40,10 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   parseToDate(strDate: string): Date {
     return new Date(strDate);
+  }
+
+  openContentForm(): void {
+    const modalRef: NgbModalRef = this.modalService.open(ContentFormModalComponent);
   }
 
   private initDispatchers({ tenantId: applicationId, groupId }: any): void {

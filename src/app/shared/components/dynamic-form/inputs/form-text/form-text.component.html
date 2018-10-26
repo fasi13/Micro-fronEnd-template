@@ -1,0 +1,10 @@
+<div 
+  class="fge-dynamic-field form-input" 
+  [formGroup]="group">
+  <label>{{ config.label }}</label>
+  <input
+    type="text"
+    class="fge-dynamic-form__input"
+    [attr.placeholder]="config.placeholder"
+    [formControlName]="config.name">
+</div>
