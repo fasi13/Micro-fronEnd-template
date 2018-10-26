@@ -8,3 +8,4 @@ export * from './content-group.model';
 export * from './application-path.model';
 export * from './data-type.model';
 export * from './new-user.model';
+export * from './update-user.model';

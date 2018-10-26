@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { UserCredentials, UserToken, NewUser } from '../models';
+import { UserCredentials, UserToken, NewUser, UpdateUser } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +43,9 @@ export class UserService {
     return this.httpClient.post(url, newUser);
   }
 
-  // updetedUser(updatedUser: UpdatedUser): Observable<any> {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   const url = `${this.baseUrl}/${user.id}`;
-  //   return this.httpClient.put(url, updatedUser);
-  // }
+  updetedUser(updatedUser: UpdateUser): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const url = `${this.baseUrl}/${user.id}`;
+    return this.httpClient.put(url, updatedUser);
+  }
 }

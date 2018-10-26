@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NewUser, NewUserAction } from '@forge/core';
+import { NewUser, NewUserAction, UpdateUser } from '@forge/core';
 // import { State, isNewUserCreated, getNewUserError } from '../../../core/store/store.reducers';
 import { State, UserService } from '@forge/core';
 
@@ -11,7 +11,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeWhile, filter } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
-import { createSecureServer } from 'http2';
 
 @Component({
     selector: 'fge-user-form-modal',
@@ -26,6 +25,7 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
     mode: 'CREATE' | 'EDIT';
     applicationID: number;
     loading: Observable<boolean> | boolean = false;
+    user: any;
     // private isAliveComponent = true;
 
     constructor(
@@ -46,26 +46,26 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
             email: [ '', [Validators.required, Validators.email]],
             status: ['', Validators.required]
         });
-
-        // this.store.select(isNewUserCreated)
-        // .pipe(
-        //     takeWhile(() => this.isAliveComponent),
-        //     filter(isReseted => isReseted)
-        // )
-        // .subscribe(() => {
-        //     this.notifierService.notify('success', this.getNotificationMsg());
-        //     this.userForm.reset();
-        //     this.createCompleted = true;
-        //     this.loading = false;
-        // });
     }
 
     ngOnDestroy() {
         // this.isAliveComponent = false;
     }
 
-    open(): void {
-        this.mode = 'CREATE';
+    open(user: any): void {
+        this.mode = user ? 'EDIT' : 'CREATE';
+        if (user) {
+            this.user = user;
+            this.userForm.value.userName = user.userName;
+            const status = user.status === 'active';
+            this.userForm = this.formBuilder.group({
+                firstName: [user.firstName, Validators.required],
+                lastName: [user.lastName, Validators.required],
+                email: [ user.email, [Validators.required, Validators.email]],
+                status: [status, Validators.required]
+            });
+            this.applicationID = user.applicationId;
+        }
         this.modalService.open(this.modalContent);
       }
 
@@ -76,8 +76,11 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
      onSubmit(closeModal: Function) {
         this.createCompleted = false;
         this.loading = true;
-        this.createUser(closeModal);
-    //  this.store.dispatch(new NewUserAction(payload));
+        if (this.mode === 'EDIT') {
+            this.updateUser(closeModal);
+        } else {
+            this.createUser(closeModal);
+        }
     }
 
     private createUser(closeModal: Function): void {
@@ -94,6 +97,19 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
             .subscribe(...(this.subscriptionHandlers(closeModal)));
     }
 
+    private updateUser(closeModal: Function): void {
+        const payload: UpdateUser = {
+            id: this.user.userId,
+            firstName: this.userForm.value.firstName,
+            lastName: this.userForm.value.lastName,
+            emailAddress: this.userForm.value.email,
+            isActive: this.userForm.value.status,
+            applicationId: this.applicationID,
+        };
+        this.userService.updetedUser(payload)
+            .subscribe(...(this.subscriptionHandlers(closeModal)));
+    }
+
     private subscriptionHandlers(closeModal: Function): any[] {
         return [
             () => {
@@ -101,7 +117,6 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
                     closeModal();
                 }
                 this.loading = false;
-                // this.store.dispatch(new FetchContentGroups({ applicationId: this.applicationId }));
                 this.notifierService.notify('success', this.getNotificationMsg());
             },
             (error) => {

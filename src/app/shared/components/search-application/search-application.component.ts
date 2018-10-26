@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class SearchApplicationComponent implements OnInit {
 
   @Input() isInputForm: boolean;
+  @Input() defaultName: string;
   @Output() applicationId = new EventEmitter<number>();
 
   loading$: Observable<boolean>;
@@ -26,6 +27,7 @@ export class SearchApplicationComponent implements OnInit {
 
   ngOnInit() {
     this.initSelectors();
+    this.search = this.defaultName;
     this.searchSubject.
       pipe(
         debounceTime(300),
