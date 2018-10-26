@@ -39,7 +39,13 @@ export class UserService {
 
   createNewUser(newUser: NewUser): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user'));
-    const url = `${this.baseUrl}/${user.id}/add`;
+    const url = `${this.baseUrl}/${user.id}`;
     return this.httpClient.post(url, newUser);
   }
+
+  // updetedUser(updatedUser: UpdatedUser): Observable<any> {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   const url = `${this.baseUrl}/${user.id}`;
+  //   return this.httpClient.put(url, updatedUser);
+  // }
 }
