@@ -21,6 +21,7 @@ export class DynamicFormComponent implements OnChanges, OnInit {
   get changes() { return this.form.valueChanges; }
   get valid() { return this.form.valid; }
   get value() { return this.form.value; }
+  get currentForm() { return this.form }
 
   constructor(private fb: FormBuilder) {}
 
@@ -43,7 +44,6 @@ export class DynamicFormComponent implements OnChanges, OnInit {
           const config = this.config.find((control) => control.name === name);
           this.form.addControl(name, this.createControl(config));
         });
-
     }
   }
 
@@ -65,25 +65,21 @@ export class DynamicFormComponent implements OnChanges, OnInit {
   }
 
   setDisabled(name: string, disable: boolean) {
-    setTimeout(() => {
-      if (this.form.controls[name]) {
-        const method = disable ? 'disable': 'enable';
-        this.form.controls[name][method]();
-        return;
-      }
+    if (this.form.controls[name]) {
+      const method = disable ? 'disable': 'enable';
+      this.form.controls[name][method]();
+      return;
+    }
 
-      this.config = this.config.map((item) => {
-        if (item.name === name) {
-          item.disabled = disable;
-        }
-        return item;
-      });
-    }, 0);
+    this.config = this.config.map((item) => {
+      if (item.name === name) {
+        item.disabled = disable;
+      }
+      return item;
+    });
   }
 
   setValue(name: string, value: any) {
-    setTimeout(() => {
-      this.form.controls[name].setValue(value, {emitEvent: true});
-    }, 0);
+    this.form.controls[name].setValue(value, {emitEvent: true});
   }
 }

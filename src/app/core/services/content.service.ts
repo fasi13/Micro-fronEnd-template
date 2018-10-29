@@ -29,4 +29,8 @@ export class ContentService {
   updateContentGroup(applicationId: string | number, groupId: string | number, name: string, published: boolean = true): Observable<any> {
     return this.http.put<any>(`application/${applicationId}/contentGroup/${groupId}`, { name, published });
   }
+
+  addContentToGroup(applicationId: string | number, groupId: string | number, { dataType, description, name, status, value }: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
+    return this.http.post<ApiResponse<ApplicationContent>>(`application/${applicationId}/contentGroup/${groupId}/content`, { dataType, description, name, status, value });
+  }
 }
