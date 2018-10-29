@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { State, getApplicationInfo, Application, ContentService, FetchContentGroups, ContentGroup } from '@forge/core';
 import { Subscription } from 'rxjs';
 import { NotifierService } from 'angular-notifier';
+
+import { State, getApplicationInfo, Application, ContentService, FetchContentGroups, ContentGroup } from '@forge/core';
 
 @Component({
   selector: 'fge-group-form-modal',
@@ -12,15 +13,14 @@ import { NotifierService } from 'angular-notifier';
 })
 export class GroupFormModalComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalTemplate')
-  modalContent: ElementRef;
+  @ViewChild('modalTemplate') modalContent: ElementRef;
   groupForm: FormGroup;
   submitted = false;
   loading = false;
   mode: 'CREATE' | 'EDIT';
-  
+
   get formControls() { return this.groupForm.controls; }
-  
+
   private applicationId: string | number;
   private appInfoSubscription: Subscription;
   private contentGroup: ContentGroup;

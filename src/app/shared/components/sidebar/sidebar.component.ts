@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, isLoadingGroups, getGroups, ApplicationContent, FgeRouterService } from '@forge/core';
-import { FetchContentGroups } from '../../../core/store/content';
 import { Observable } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -12,12 +10,10 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input()
-  active: boolean = true;
+  @Input() active = true;
   loading$: Observable<boolean> | boolean;
   contentGroups$: Observable<ApplicationContent[]>;
 
-  private isAliveComponent = true;
   private activatedSection;
 
   constructor(

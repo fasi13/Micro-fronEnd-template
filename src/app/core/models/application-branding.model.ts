@@ -1,5 +1,4 @@
-import { ApiResponse, DataPaginated } from "./commons";
-import { ApplicationContent } from "./application-content.model";
+import { ApplicationContent } from './application-content.model';
 
 export class ApplicationBranding {
    primaryColor: ApplicationContent;

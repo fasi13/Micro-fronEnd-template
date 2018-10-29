@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { State, FetchContentGroup, getGroup, ApplicationContent, isLoadingGroup, ContentGroup } from '@forge/core';
+import { State, FetchContentGroup, getGroup, isLoadingGroup, ContentGroup } from '@forge/core';
 import { takeWhile } from 'rxjs/operators';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 
 @Component({
@@ -43,7 +43,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   openContentForm(): void {
-    const modalRef: NgbModalRef = this.modalService.open(ContentFormModalComponent);
+    this.modalService.open(ContentFormModalComponent);
   }
 
   private initDispatchers({ tenantId: applicationId, groupId }: any): void {

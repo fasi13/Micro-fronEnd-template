@@ -17,7 +17,6 @@ import {
   FetchContentGroups
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
-import { ApplicationService } from '../../services';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -29,15 +28,14 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   user: User;
   branding: ApplicationBranding;
   loading$: Observable<boolean> | boolean = true;
-  activeSidebar: boolean = true;
-  search: string = '';  
+  activeSidebar = true;
+  search = '';
 
   private isAliveComponent = true;
 
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
-    private applicationService: ApplicationService
   ) { }
 
   ngOnInit() {
@@ -45,7 +43,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.isAliveComponent = false;  
+    this.isAliveComponent = false;
   }
 
   onLogoutClicked(event: Event): void {

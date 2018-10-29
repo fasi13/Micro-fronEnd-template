@@ -5,27 +5,25 @@ import {
   OnChanges,
   OnInit,
   Output
-} from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+} from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { FieldConfig } from "./models/field-config.model";
+import { FieldConfig } from './models/field-config.model';
 
 @Component({
-  exportAs: "fgeDynamicForm",
-  selector: "fge-dynamic-form",
-  templateUrl: "./dynamic-form.component.html"
+  exportAs: 'fgeDynamicForm',
+  selector: 'fge-dynamic-form',
+  templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent implements OnChanges, OnInit {
-  @Input()
-  config: FieldConfig[] = [];
+  @Input() config: FieldConfig[] = [];
 
-  @Output()
-  submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
 
   get controls() {
-    return this.config.filter(({ type }) => type !== "button");
+    return this.config.filter(({ type }) => type !== 'button');
   }
   get changes() {
     return this.form.valueChanges;

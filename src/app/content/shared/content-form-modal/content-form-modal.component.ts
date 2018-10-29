@@ -1,12 +1,13 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FieldConfig } from 'src/app/shared/components/dynamic-form/models/field-config.model';
-import { DynamicFormComponent } from 'src/app/shared/components/dynamic-form/dynamic-form.component';
 import { Validators } from '@angular/forms';
-import { ContentService, State, getApplicationInfo, Application, getGroup, ContentGroup, ApplicationContent } from '@forge/core';
 import { Store } from '@ngrx/store';
 import { NotifierService } from 'angular-notifier';
-import { DataType } from 'src/app/core/models/commons/data-type.model';
+
+import { Observable } from 'rxjs';
+
+import { State, getApplicationInfo, Application, getGroup, ContentGroup } from '@forge/core';
+import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 
 @Component({
   selector: 'fge-content-form-modal',
@@ -14,14 +15,10 @@ import { DataType } from 'src/app/core/models/commons/data-type.model';
 })
 export class ContentFormModalComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('modalTemplate')
-  modalContent: ElementRef;
+  @ViewChild('modalTemplate') modalContent: ElementRef;
+  @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
   mode: 'CREATE' | 'EDIT' = 'CREATE';
-
-  @ViewChild(DynamicFormComponent)
-  form: DynamicFormComponent;
-
   config: FieldConfig[] = [
     {
       type: 'text',
@@ -82,14 +79,13 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
       validation: [Validators.required]
     }
   };
+  public info$: Observable<Application>;
+  public group$: Observable<ContentGroup>;
 
   private currentType: string;
-  private info: Application;
-  private group: ContentGroup;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private contentService: ContentService,
     private store: Store<State>,
     private notifierService: NotifierService
   ) { }
@@ -109,16 +105,14 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submit({ description, name, value }: ApplicationContent): void {
+  submit(): void {
     this.activeModal.close();
     this.notifierService.notify('success', 'The content has been created successfully');
   }
 
   private initSelectors(): void {
-    this.store.select(getApplicationInfo)
-      .subscribe(info => this.info = info);
-    this.store.select(getGroup)
-      .subscribe(group => this.group = group);
+    this.info$ = this.store.select(getApplicationInfo);
+    this.group$ = this.store.select(getGroup);
   }
 
   private switchDataType(type: string): void {
