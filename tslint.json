@@ -1,4 +1,5 @@
 {
+  "extends": ["tslint-angular"],
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
@@ -117,15 +118,37 @@
       "check-separator",
       "check-type"
     ],
-    "no-output-on-prefix": true,
+    "angular-whitespace": [true, "check-interpolation", "check-semicolon"],
+    "banana-in-box": true,
+    "templates-no-negated-async": true,
+    "use-view-encapsulation": true,
+    "no-unused-css": true,
+    "contextual-life-cycle": true,
+    "trackBy-function": true,
+    "pipe-impure": true,
+    "template-cyclomatic-complexity": [true, 5],
+    "template-conditional-complexity": [true, 4],
+    "directive-selector": [true, "attribute", "fge", "camelCase"],
+    "component-selector": [true, "element", "fge", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
+    "no-attribute-parameter-decorator": true,
     "no-input-rename": true,
+    "no-output-on-prefix": true,
     "no-output-rename": true,
+    "no-forward-ref": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true
+    "no-output-named-after-standard-event": true,
+    "max-inline-declarations": true,
+    "no-life-cycle-call": true,
+    "prefer-output-readonly": true,
+    "no-conflicting-life-cycle-hooks": true,
+    "enforce-component-selector": true,
+    "no-queries-parameter": true,
+    "prefer-inline-decorator": true,
+    "component-class-suffix": [true, "Component"],
+    "directive-class-suffix": [true, "Directive"]
   }
 }
