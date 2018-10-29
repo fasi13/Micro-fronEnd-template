@@ -6,6 +6,7 @@ import { State } from "./store.reducers";
 import { User, UserToken, Link, MappedLinks } from "../models";
 import { ApplicationState } from './application/application.reducers';
 import { ContentState } from './content/content.reducers';
+import { UserManagementStade } from './user-management/user.management.reducers';
 
 const typeCache: { [label: string]: boolean } = {};
 export function ActionType<T>(label: T | string): T {
@@ -44,7 +45,8 @@ export function loadFromLocalStorage() {
       user
     },
     application: {} as ApplicationState,
-    content: {} as ContentState
-  }
+    content: {} as ContentState,
+    userManagement: {} as UserManagementStade
+  };
   return currentState;
 }

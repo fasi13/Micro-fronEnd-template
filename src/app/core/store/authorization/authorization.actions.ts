@@ -11,11 +11,8 @@ export const AuthorizationActionTypes = {
     AUTHENTICATE_ERROR: ActionType('AUTHENTICATE_ERROR'),
     AUTHENTICATE_SUCCESS: ActionType('AUTHENTICATE_SUCCESS'),
     LOGOUT: ActionType('LOGOUT'),
-    LOGOUT_SUCCESS: ActionType('LOGOUT_SUCCESS'),
-    NEW_USER: ActionType('NEW_USER'),
-    NEW_USER_SUCCESS: ActionType('NEW_USER_SUCCESS'),
-    NEW_USER_ERROR: ActionType('NEW_USER_ERROR')
-}
+    LOGOUT_SUCCESS: ActionType('LOGOUT_SUCCESS')
+};
 
 export class AuthenticateAction implements Action {
     public type: string = AuthorizationActionTypes.AUTHENTICATE;
@@ -62,31 +59,13 @@ export class LogoutSuccessAction implements Action {
     constructor(public payload?: any) {}
 }
 
-export class NewUserAction implements Action {
-    public type: string = AuthorizationActionTypes.NEW_USER;
-    constructor(public payload?: any) {}
-}
-
-export class NewUserErrorAction implements Action {
-    public type: string = AuthorizationActionTypes.NEW_USER_ERROR;
-    constructor(public payload?: any) {}
-}
-
-export class NewUserSuccessAction implements Action {
-    public type: string = AuthorizationActionTypes.NEW_USER_SUCCESS;
-    constructor(public payload?: any) {}
-}
-
-export type AuthorizationActions = 
+export type AuthorizationActions =
     AuthenticateAction |
     AuthenticatedAction |
-    AuthenticatedSuccessAction | 
+    AuthenticatedSuccessAction |
     AuthenticatedErrorAction |
     AuthenticationErrorAction |
     AuthenticationSuccessAction |
     LogoutAction |
     LogoutErrorAction |
-    LogoutSuccessAction |
-    NewUserAction |
-    NewUserErrorAction |
-    NewUserSuccessAction;
+    LogoutSuccessAction;

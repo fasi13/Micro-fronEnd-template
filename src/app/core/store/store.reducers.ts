@@ -5,27 +5,31 @@ import { createSelector } from 'reselect';
 import * as AuthorizationReducers from './authorization/authorization.reducers';
 import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
+import * as UserManagementReducers from './user-management/user.management.reducers';
 
 export interface State {
     router: RouterReducerState;
     authorization: AuthorizationReducers.AuthorizationState;
     application: ApplicationReducers.ApplicationState;
     content: ContentReducers.ContentState;
+    userManagement: UserManagementReducers.UserManagementStade;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
   router: routerReducer,
   authorization: AuthorizationReducers.reducer,
   application: ApplicationReducers.reducer,
-  content: ContentReducers.reducer
-}
+  content: ContentReducers.reducer,
+  userManagement: UserManagementReducers.reducer
+};
 
-/**********************************************************
+/**********************************\
+ * ************************
  * Authorization Reducers
  *********************************************************/
 export const getAuthorizationState = (state: State) => {
   return state.authorization;
-}
+};
 export const getAuthenticatedUser = createSelector(getAuthorizationState, AuthorizationReducers.getAuthenticatedUser);
 export const getAuthenticationError = createSelector(getAuthorizationState, AuthorizationReducers.getAuthenticationError);
 export const isAuthenticated = createSelector(getAuthorizationState, AuthorizationReducers.isAuthenticated);
@@ -38,7 +42,7 @@ export const getLogoutError = createSelector(getAuthorizationState, Authorizatio
  *********************************************************/
 export const getApplicationState = (state: State) => {
   return state.application;
-}
+};
 export const getApplicationInfo = createSelector(getApplicationState, ApplicationReducers.getApplicationInfo);
 export const getApplicationBranding = createSelector(getApplicationState, ApplicationReducers.getApplicationBranding);
 export const getApplicationPath = createSelector(getApplicationState, ApplicationReducers.getApplicationPath);
@@ -61,8 +65,8 @@ export const getGroup = createSelector(getContentState, ContentReducers.getGroup
 export const getContentRecordState = createSelector(getContentState, ContentReducers.getRecordState);
 
 /**********************************************************
- * New User Reducers
+ * User Management Reducers
  *********************************************************/
-export const isNewUserCreating = createSelector(getAuthorizationState, AuthorizationReducers.isNewUserCreating);
-export const isNewUserCreated = createSelector(getAuthorizationState, AuthorizationReducers.isNewUserCreated);
-export const getNewUserError = createSelector(getAuthorizationState, AuthorizationReducers.getNewUserError);
+export const isNewUserCreating = createSelector(getAuthorizationState, UserManagementReducers.isNewUserCreating);
+export const isNewUserCreated = createSelector(getAuthorizationState, UserManagementReducers.isNewUserCreated);
+export const getNewUserError = createSelector(getAuthorizationState, UserManagementReducers.getNewUserError);

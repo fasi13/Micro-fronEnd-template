@@ -65,6 +65,9 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
                 status: [status, Validators.required]
             });
             this.applicationID = user.applicationId;
+        } else {
+            this.user = {};
+            this.user.applicationName = '';
         }
         this.modalService.open(this.modalContent);
       }
@@ -73,7 +76,7 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
         this.applicationID = applicationId;
     }
 
-     onSubmit(closeModal: Function) {
+    onSubmit(closeModal: Function) {
         this.createCompleted = false;
         this.loading = true;
         if (this.mode === 'EDIT') {
