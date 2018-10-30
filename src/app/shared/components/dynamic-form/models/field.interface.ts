@@ -2,6 +2,6 @@
  import { FieldConfig } from './field-config.model';
 
 export interface Field {
-  config: FieldConfig,
-  group: FormGroup
+  config: FieldConfig;
+  group: FormGroup;
 }

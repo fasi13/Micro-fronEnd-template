@@ -7,13 +7,13 @@ import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
-import { FormButtonComponent } from './components/dynamic-form/inputs/form-button/form-button.component';
-import { FormTextComponent } from './components/dynamic-form/inputs/form-text/form-text.component';
-import { FormSelectComponent } from './components/dynamic-form/inputs/form-select/form-select.component';
+import { FieldButtonComponent } from './components/dynamic-form/fields/field-button/field-button.component';
 import { DynamicFieldDirective } from './components/dynamic-form/directives/dynamic-field.directive';
-import { FormImageComponent } from './components/dynamic-form/inputs/form-image/form-image.component';
-import { FormDocumentComponent } from './components/dynamic-form/inputs/form-document/form-document.component';
-import { FormColorComponent } from './components/dynamic-form/inputs/form-color/form-color.component';
+import { FieldTextComponent } from './components/dynamic-form/fields/field-text/field-text.component';
+import { FieldSelectComponent } from './components/dynamic-form/fields/field-select/field-select.component';
+import { FieldImageComponent } from './components/dynamic-form/fields/field-image/field-image.component';
+import { FieldDocumentComponent } from './components/dynamic-form/fields/field-document/field-document.component';
+import { FieldColorComponent } from './components/dynamic-form/fields/field-color/field-color.component';
 
 @NgModule({
   imports: [
@@ -29,14 +29,15 @@ import { FormColorComponent } from './components/dynamic-form/inputs/form-color/
     SplashScreenComponent,
     SearchApplicationComponent,
     DynamicFormComponent,
-    FormButtonComponent,
-    FormTextComponent,
-    FormSelectComponent,
-    FormImageComponent,
-    FormDocumentComponent,
-    FormColorComponent
+    FieldButtonComponent,
+    FieldTextComponent,
+    FieldSelectComponent,
+    FieldImageComponent,
+    FieldDocumentComponent,
+    FieldColorComponent
   ],
   exports: [
+    FormsModule,
     ReactiveFormsModule,
     SidebarComponent,
     SplashScreenComponent,
@@ -44,12 +45,12 @@ import { FormColorComponent } from './components/dynamic-form/inputs/form-color/
     DynamicFormComponent
   ],
   entryComponents: [
-    FormButtonComponent,
-    FormTextComponent,
-    FormSelectComponent,
-    FormImageComponent,
-    FormDocumentComponent,
-    FormColorComponent
+    FieldButtonComponent,
+    FieldTextComponent,
+    FieldSelectComponent,
+    FieldImageComponent,
+    FieldDocumentComponent,
+    FieldColorComponent
   ]
 })
 export class SharedModule { }

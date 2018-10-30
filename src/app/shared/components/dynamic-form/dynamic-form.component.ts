@@ -6,7 +6,8 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, ValidatorFn, FormControl } from '@angular/forms';
+import _compact from 'lodash/compact';
 
 import { FieldConfig } from './models/field-config.model';
 
@@ -16,14 +17,20 @@ import { FieldConfig } from './models/field-config.model';
   templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent implements OnChanges, OnInit {
-  @Input() config: FieldConfig[] = [];
+  @Input()
+  set fieldsConfig(newConfig) {
+    this.config = _compact(newConfig);
+  }
+  get fieldsConfig() {
+    return this.config;
+  }
 
-  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly onsubmit: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
 
   get controls() {
-    return this.config.filter(({ type }) => type !== 'button');
+    return this.config.filter((fieldConfig: FieldConfig) => fieldConfig && fieldConfig.type !== 'button');
   }
   get changes() {
     return this.form.valueChanges;
@@ -37,6 +44,8 @@ export class DynamicFormComponent implements OnChanges, OnInit {
   get currentForm() {
     return this.form;
   }
+
+  private config: FieldConfig[] = [];
 
   constructor(private fb: FormBuilder) {}
 
@@ -72,18 +81,22 @@ export class DynamicFormComponent implements OnChanges, OnInit {
 
   createControl(config: FieldConfig) {
     const { disabled, validation, value } = config;
-    return this.fb.control({ disabled, value }, validation);
+    return this.fb.control({ disabled, value }, this.getValidators(validation));
   }
 
   handleSubmit(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.submit.emit(this.value);
+    if (this.form.valid) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.onsubmit.emit(this.value);
+    } else {
+      this.validateAllFormFields(this.form);
+    }
   }
 
   setDisabled(name: string, disable: boolean) {
     if (this.form.controls[name]) {
-      const method = disable ? "disable" : "enable";
+      const method = disable ? 'disable' : 'enable';
       this.form.controls[name][method]();
       return;
     }
@@ -99,4 +112,23 @@ export class DynamicFormComponent implements OnChanges, OnInit {
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, { emitEvent: true });
   }
+
+  private getValidators(validationConfig: any): ValidatorFn[] {
+    const validators: ValidatorFn[] = [];
+    Object.keys(validationConfig).forEach(validatorKey => {
+      validators.push(validationConfig[validatorKey].validator);
+    });
+    return validators;
+  }
+
+  private validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+}
 }

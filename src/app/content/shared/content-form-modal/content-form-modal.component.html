@@ -8,8 +8,8 @@
 </div>
 <div class="modal-body">
   <fge-dynamic-form
-    [config]="config"
+    [fieldsConfig]="config"
     #form="fgeDynamicForm"
-    (submit)="submit($event)">
+    (onsubmit)="submit($event)">
   </fge-dynamic-form>
 </div>

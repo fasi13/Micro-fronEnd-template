@@ -1,0 +1,18 @@
+<div 
+  class="fge-dynamic-field form-input" 
+  [formGroup]="group">
+  <label>{{ config.label }}</label>
+  <input
+    type="file"
+    class="form-control fge-dynamic-form__input"
+    accept=".jpg, .jpeg, .png"
+    [attr.placeholder]="config.placeholder"
+    [formControlName]="config.name">
+  <div class="invalid-feedback">
+    <div *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </div>
+  </div>
+</div>

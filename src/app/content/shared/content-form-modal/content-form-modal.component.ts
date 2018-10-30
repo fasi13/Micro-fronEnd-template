@@ -25,14 +25,36 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
       label: 'Name',
       name: 'name',
       placeholder: 'Enter name',
-      validation: [Validators.required, Validators.minLength(4)]
+      validation: {
+        required: {
+          errorMsg: 'Name is required',
+          validator: Validators.required
+        },
+        minlength: {
+          errorMsg: 'Name should have at least 2 characters',
+          validator: Validators.minLength(2)
+        },
+        maxlength: {
+          errorMsg: 'Name should not have more than 15 characters',
+          validator: Validators.maxLength(15)
+        }
+      }
     },
     {
       type: 'text',
       label: 'Description',
       name: 'description',
       placeholder: 'Enter description',
-      validation: [Validators.required, Validators.minLength(4)]
+      validation: {
+        required: {
+          errorMsg: 'Description is required',
+          validator: Validators.required
+        },
+        minlength: {
+          errorMsg: 'Description should have at least 2 characters',
+          validator: Validators.minLength(2)
+        }
+      }
     },
     {
       type: 'select',
@@ -40,7 +62,12 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
       name: 'type',
       options: ['Text', 'Color Picker', 'HTML', 'Logo Display', 'Image', 'Document'],
       placeholder: 'Select Data Type',
-      validation: [Validators.required]
+      validation: {
+        required: {
+          errorMsg: 'Please select a Data Type',
+          validator: Validators.required
+        },
+      }
     },
     {
       label: 'Save',
@@ -49,34 +76,58 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  dataTypes: {[key:string]: FieldConfig} = {
+  dataTypes: {[key: string]: FieldConfig} = {
     'Text': {
       type: 'text',
       label: 'Value',
       name: 'textValue',
       placeholder: 'Enter value',
-      validation: [Validators.required]
+      validation: {
+        required: {
+          errorMsg: 'Value is required',
+          validator: Validators.required
+        },
+        minlength: {
+          errorMsg: 'Value should have at least 2 characters',
+          validator: Validators.minLength(2)
+        }
+      }
     },
     'Image': {
       type: 'image',
       label: 'Value',
       name: 'imageValue',
       placeholder: 'Enter value',
-      validation: [Validators.required]
+      validation: {
+        required: {
+          errorMsg: 'Image is required',
+          validator: Validators.required
+        }
+      }
     },
     'Document': {
       type: 'document',
       label: 'Value',
       name: 'documentValue',
       placeholder: 'Enter value',
-      validation: [Validators.required]
+      validation: {
+        required: {
+          errorMsg: 'Document is required',
+          validator: Validators.required
+        }
+      }
     },
     'Color Picker': {
       type: 'color',
       label: 'Value',
       name: 'colorValue',
       placeholder: 'Enter value',
-      validation: [Validators.required]
+      validation: {
+        required: {
+          errorMsg: 'Color Value is required',
+          validator: Validators.required
+        }
+      }
     }
   };
   public info$: Observable<Application>;

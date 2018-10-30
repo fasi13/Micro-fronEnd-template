@@ -7,6 +7,6 @@ export class FieldConfig {
   options?: string[];
   placeholder?: string;
   type: string;
-  validation?: ValidatorFn[];
   value?: any;
+  validation?: { [key: string]: { errorMsg: string, validator: ValidatorFn }};
 }
