@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 
 import { ActionType } from '../util';
@@ -8,7 +9,8 @@ export const ContentActionTypes = {
   FETCH_CONTENT_GROUP: ActionType('FETCH_CONTENT_GROUP'),
   FETCH_CONTENT_GROUP_COMPLETED: ActionType('FETCH_CONTENT_GROUP_COMPLETED'),
   FETCH_CONTENT_ERROR: ActionType('FETCH_CONTENT_ERROR'),
-}
+  ADD_CONTENT: ActionType('ADD_CONTENT')
+};
 
 export class FetchContentGroups implements Action {
   public type: string = ContentActionTypes.FETCH_CONTENT_GROUPS;
@@ -32,6 +34,11 @@ export class FetchContentGroupCompleted implements Action {
 
 export class FetchContentError implements Action {
   public type: string = ContentActionTypes.FETCH_CONTENT_ERROR;
+  constructor(public payload?: any) {}
+}
+
+export class AddContent implements Action {
+  public type: string = ContentActionTypes.ADD_CONTENT;
   constructor(public payload?: any) {}
 }
 

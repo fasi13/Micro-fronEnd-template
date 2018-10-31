@@ -71,7 +71,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
     this.store.select(isAuthenticated)
       .pipe(
         takeWhile(() => this.isAliveComponent),
-        filter(isAuthenticated => isAuthenticated),
+        filter(isAuth => isAuth),
       )
       .subscribe(() => {
         const applicationId = this.getCurrentTenantId();

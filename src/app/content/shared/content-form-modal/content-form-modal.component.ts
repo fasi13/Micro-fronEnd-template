@@ -1,13 +1,13 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { NotifierService } from 'angular-notifier';
 
 import { Observable } from 'rxjs';
 
-import { State, getApplicationInfo, Application, getGroup, ContentGroup, getDataTypes, DataType } from '@forge/core';
+import { State, getApplicationInfo, Application, getDataTypes, DataType, AddContent } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
+import { config as FieldConfiguration } from './content-fields-modal.config';
+import { ContentDataType, dataTypes as AvailableDataTypes } from './content-data-types.config';
 
 @Component({
   selector: 'fge-content-form-modal',
@@ -17,95 +17,24 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+  @Input() groupId: string;
 
   mode: 'CREATE' | 'EDIT' = 'CREATE';
-  config: FieldConfig[] = [
-    {
-      type: 'text',
-      label: 'Name',
-      name: 'name',
-      placeholder: 'Enter name',
-      validation: {
-        required: {
-          errorMsg: 'Name is required',
-          validator: Validators.required
-        },
-        minlength: {
-          errorMsg: 'Name should have at least 2 characters',
-          validator: Validators.minLength(2)
-        },
-        maxlength: {
-          errorMsg: 'Name should not have more than 15 characters',
-          validator: Validators.maxLength(15)
-        }
-      }
-    },
-    {
-      type: 'text',
-      label: 'Description',
-      name: 'description',
-      placeholder: 'Enter description',
-      validation: {
-        required: {
-          errorMsg: 'Description is required',
-          validator: Validators.required
-        },
-        minlength: {
-          errorMsg: 'Description should have at least 2 characters',
-          validator: Validators.minLength(2)
-        }
-      }
-    },
-    {
-      type: 'select',
-      label: 'Data Type',
-      name: 'type',
-      options: [],
-      placeholder: 'Select Data Type',
-      validation: {
-        required: {
-          errorMsg: 'Please select a Data Type',
-          validator: Validators.required
-        },
-      }
-    },
-    {
-      label: 'Save',
-      name: 'save',
-      type: 'button'
-    }
-  ];
-
-  dataTypes: {[key: string]: FieldConfig} = {
-    'Text': {
-      type: 'text',
-      label: 'Value',
-      name: 'textValue',
-      placeholder: 'Enter value',
-      validation: {
-        required: {
-          errorMsg: 'Value is required',
-          validator: Validators.required
-        },
-        minlength: {
-          errorMsg: 'Value should have at least 2 characters',
-          validator: Validators.minLength(2)
-        }
-      }
-    }
-  };
-  public info$: Observable<Application>;
-  public group$: Observable<ContentGroup>;
+  applicationInfo: Application;
 
   private currentType: string;
+  private applicationDataTypes: DataType[];
+  private config: FieldConfig[];
+  private dataTypes: ContentDataType;
 
   constructor(
     public activeModal: NgbActiveModal,
     private store: Store<State>,
-    private notifierService: NotifierService
   ) { }
 
   ngOnInit() {
+    this.config = FieldConfiguration;
+    this.dataTypes = AvailableDataTypes;
     this.initSelectors();
   }
 
@@ -120,20 +49,41 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submit(formData: any): void {
-    console.log(formData);
+  submit({ name, description, type: typeStr, textValue: value }: any): void {
+    const { id: applicationId } = this.applicationInfo;
+    const contentPayload = {
+      name,
+      description,
+      dataType: this.getDataTypeFor(typeStr),
+      value
+    };
+    this.store.dispatch(new AddContent({
+      applicationId,
+      groupId: this.groupId,
+      contentPayload,
+    }));
     this.activeModal.close();
-    this.notifierService.notify('success', 'The content has been created successfully');
+  }
+
+  private getDataTypeFor(typeStr: string): DataType {
+    return this.applicationDataTypes.find((type: DataType) => type.name === typeStr);
   }
 
   private initSelectors(): void {
-    this.info$ = this.store.select(getApplicationInfo);
-    this.group$ = this.store.select(getGroup);
-    this.store.select(getDataTypes)
-      .subscribe((dataTypes: DataType[]) => {
-        const selectConfigIndex = this.config.findIndex((config: FieldConfig) => config.name === 'type');
-        this.config[selectConfigIndex].options = dataTypes.map((dataType: DataType) => dataType.name);
-      });
+    this.handleApplicationInfo(this.store.select(getApplicationInfo));
+    this.handleDataTypes(this.store.select(getDataTypes));
+  }
+
+  private handleDataTypes(dataTypes$: Observable<DataType[]>) {
+    dataTypes$.subscribe((types: DataType[]) => {
+      this.applicationDataTypes = types;
+      const selectConfigIndex = this.config.findIndex((fieldConfig: FieldConfig) => fieldConfig.name === 'type');
+      this.config[selectConfigIndex].options = types.map((dataType: DataType) => dataType.name);
+    });
+  }
+
+  private handleApplicationInfo(appInfo$: Observable<Application>) {
+    appInfo$.subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
   }
 
   private switchDataType(type: string): void {

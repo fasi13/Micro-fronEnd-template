@@ -6,7 +6,7 @@ import { Subscription, Observable } from 'rxjs';
 
 import { State, FetchContentGroup, getGroup, isLoadingGroup, ContentGroup } from '@forge/core';
 import { takeWhile } from 'rxjs/operators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 
 @Component({
@@ -20,6 +20,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   private routeParamsSubscription: Subscription;
   private isAliveComponent = true;
+  private modalRef: NgbModalRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,11 +44,12 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   openContentForm(): void {
-    this.modalService.open(ContentFormModalComponent);
+    this.modalRef = this.modalService.open(ContentFormModalComponent);
+    this.modalRef.componentInstance.groupId = this.currentGroup.id;
   }
 
   private initDispatchers({ tenantId: applicationId, groupId }: any): void {
-    this.store.dispatch(new FetchContentGroup({ applicationId, groupId }))    
+    this.store.dispatch(new FetchContentGroup({ applicationId, groupId }));
   }
 
   private initSelectors(): void {
