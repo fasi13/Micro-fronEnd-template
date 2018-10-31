@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { HateoasAction, ApiResponse, DataPaginated, ApplicationContent, Application, ApplicationPath } from '../models';
+import { HateoasAction, ApiResponse, DataPaginated, ApplicationContent, Application, ApplicationPath, DataType } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,6 @@ export class ApplicationService {
     const params = new HttpParams({
       fromObject: {
         name,
-        exactMatch: 'true'
       }
     });
 
@@ -37,5 +36,9 @@ export class ApplicationService {
 
   search(keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
     return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`/applications?keyword=${keyword}`);
+  }
+
+  getDataTypes(applicationId: number): Observable<ApiResponse<DataPaginated<DataType>>> {
+    return this.httpClient.get<ApiResponse<DataPaginated<DataType>>>(`/application/${applicationId}/dataTypes`);
   }
 }

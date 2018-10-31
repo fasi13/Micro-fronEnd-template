@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { takeWhile, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { 
+import {
   State,
   isAuthenticated,
   LogoutAction,
@@ -14,7 +14,8 @@ import {
   getApplicationBranding,
   isLoadingApplicationData,
   FetchApplicationData,
-  FetchContentGroups
+  FetchContentGroups,
+  FetchDataTypes
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
 
@@ -75,7 +76,8 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         const applicationId = this.getCurrentTenantId();
         this.store.dispatch(new FetchApplicationData(applicationId));
-        this.store.dispatch(new FetchContentGroups({ applicationId }))
+        this.store.dispatch(new FetchContentGroups({ applicationId }));
+        this.store.dispatch(new FetchDataTypes(this.getCurrentTenantId()));
       });
     this.store.select(getApplicationBranding)
       .pipe(
@@ -93,7 +95,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
     }
     return tenantId;
   }
-  
+
   private applyBranding(branding: ApplicationBranding): void {
     this.branding = branding;
     if (branding) {
@@ -105,14 +107,14 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
           background-color: ${branding.secondaryColor.value} !important;
         }
       `;
-      var css : any = document.createElement('style');
+      const css: any = document.createElement('style');
       css.type = 'text/css';
       if (css.styleSheet) {
         css.styleSheet.cssText = styles;
       } else {
         css.appendChild(document.createTextNode(styles));
       }
-      document.getElementsByTagName("head")[0].appendChild(css);
+      document.getElementsByTagName('head')[0].appendChild(css);
     }
   }
 }

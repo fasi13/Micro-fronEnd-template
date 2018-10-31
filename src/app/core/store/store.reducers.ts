@@ -7,10 +7,10 @@ import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
 
 export interface State {
-    router: RouterReducerState,
-    authorization: AuthorizationReducers.AuthorizationState,
-    application: ApplicationReducers.ApplicationState,
-    content: ContentReducers.ContentState 
+    router: RouterReducerState;
+    authorization: AuthorizationReducers.AuthorizationState;
+    application: ApplicationReducers.ApplicationState;
+    content: ContentReducers.ContentState;
 }
 
 export const FgeReducers: ActionReducerMap<State> ={
@@ -44,12 +44,14 @@ export const getApplicationBranding = createSelector(getApplicationState, Applic
 export const isLoadingApplicationData = createSelector(getApplicationState, ApplicationReducers.isLoadingApplicationData);
 export const isLoadingSearchApplication = createSelector(getApplicationState, ApplicationReducers.isLoadingSearchApplication);
 export const getSearchApplicationList = createSelector(getApplicationState, ApplicationReducers.getSearchApplicationList);
+export const isLoadingDataTypes = createSelector(getApplicationState, ApplicationReducers.isLoadingDataTypes);
+export const getDataTypes = createSelector(getApplicationState, ApplicationReducers.getDataTypes);
 
 /**********************************************************
  * Content Reducers
  *********************************************************/
 export const getContentState = (state: State) => {
-  return state.content
+  return state.content;
 }
 export const isLoadingGroups = createSelector(getContentState, ContentReducers.isLoadingGroups);
 export const getGroups = createSelector(getContentState, ContentReducers.getGroups);

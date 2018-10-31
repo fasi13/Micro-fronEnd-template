@@ -6,3 +6,4 @@ export * from './application-content.model';
 export * from './application-branding.model';
 export * from './content-group.model';
 export * from './application-path.model';
+export * from './data-type.model';

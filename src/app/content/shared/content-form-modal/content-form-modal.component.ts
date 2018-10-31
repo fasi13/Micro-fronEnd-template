@@ -6,7 +6,7 @@ import { NotifierService } from 'angular-notifier';
 
 import { Observable } from 'rxjs';
 
-import { State, getApplicationInfo, Application, getGroup, ContentGroup } from '@forge/core';
+import { State, getApplicationInfo, Application, getGroup, ContentGroup, getDataTypes, DataType } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 
 @Component({
@@ -60,7 +60,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
       type: 'select',
       label: 'Data Type',
       name: 'type',
-      options: ['Text', 'Color Picker', 'HTML', 'Logo Display', 'Image', 'Document'],
+      options: [],
       placeholder: 'Select Data Type',
       validation: {
         required: {
@@ -92,42 +92,6 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
           validator: Validators.minLength(2)
         }
       }
-    },
-    'Image': {
-      type: 'image',
-      label: 'Value',
-      name: 'imageValue',
-      placeholder: 'Enter value',
-      validation: {
-        required: {
-          errorMsg: 'Image is required',
-          validator: Validators.required
-        }
-      }
-    },
-    'Document': {
-      type: 'document',
-      label: 'Value',
-      name: 'documentValue',
-      placeholder: 'Enter value',
-      validation: {
-        required: {
-          errorMsg: 'Document is required',
-          validator: Validators.required
-        }
-      }
-    },
-    'Color Picker': {
-      type: 'color',
-      label: 'Value',
-      name: 'colorValue',
-      placeholder: 'Enter value',
-      validation: {
-        required: {
-          errorMsg: 'Color Value is required',
-          validator: Validators.required
-        }
-      }
     }
   };
   public info$: Observable<Application>;
@@ -156,7 +120,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submit(): void {
+  submit(formData: any): void {
+    console.log(formData);
     this.activeModal.close();
     this.notifierService.notify('success', 'The content has been created successfully');
   }
@@ -164,6 +129,11 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   private initSelectors(): void {
     this.info$ = this.store.select(getApplicationInfo);
     this.group$ = this.store.select(getGroup);
+    this.store.select(getDataTypes)
+      .subscribe((dataTypes: DataType[]) => {
+        const selectConfigIndex = this.config.findIndex((config: FieldConfig) => config.name === 'type');
+        this.config[selectConfigIndex].options = dataTypes.map((dataType: DataType) => dataType.name);
+      });
   }
 
   private switchDataType(type: string): void {

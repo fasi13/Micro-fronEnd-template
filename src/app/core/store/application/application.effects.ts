@@ -12,9 +12,11 @@ import {
   FetchApplicationDataSuccess,
   SearchApplicationSuccess,
   SearchApplicationError,
-  ApplicationAction
+  ApplicationAction,
+  FetchDataTypesSuccess,
+  FetchDataTypesError
 } from './application.actions';
-import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath } from '../../models';
+import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath, DataType } from '../../models';
 import { ApplicationService } from '../../services/application.service';
 import { Application } from '../../models/application.model';
 
@@ -74,6 +76,19 @@ export class ApplicationEffects {
             return new SearchApplicationSuccess(response);
           }),
           catchError(error => of(new SearchApplicationError({ error })))
+        )
+      )
+    );
+
+  @Effect() public fetchDataTypes$: Observable<Action> = this.actions
+    .pipe(
+      ofType(ApplicationActionTypes.FETCH_DATA_TYPES),
+      switchMap((action: ApplicationAction) => this.applicationService.getDataTypes(action.payload)
+        .pipe(
+          map((response: ApiResponse<DataPaginated<DataType>>) => {
+            return new FetchDataTypesSuccess(response);
+          }),
+          catchError(error => of(new FetchDataTypesError({ error })))
         )
       )
     );

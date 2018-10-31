@@ -1,9 +1,9 @@
 import _assign from 'lodash/assign';
 
-import { Application } from "../../models/application.model";
-import { ApplicationAction, ApplicationActionTypes } from "./application.actions";
+import { Application } from '../../models/application.model';
+import { ApplicationAction, ApplicationActionTypes } from './application.actions';
 import { mapLinks } from '../util';
-import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding, ApplicationPath } from "../../models";
+import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding, ApplicationPath, DataType } from '../../models';
 
 export interface ApplicationState {
   info: Application;
@@ -14,7 +14,12 @@ export interface ApplicationState {
     data: ApplicationPath[],
     loading: boolean,
     error?: string;
-  }
+  };
+  types: {
+    data: DataType[],
+    loading: boolean,
+    error?: string;
+  };
 }
 
 const initialState: ApplicationState = {
@@ -22,6 +27,10 @@ const initialState: ApplicationState = {
   branding: null,
   loading: false,
   search: {
+    data: null,
+    loading: false
+  },
+  types: {
     data: null,
     loading: false
   }
@@ -70,7 +79,7 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
         search: {
           data: undefined,
           loading: true
-        } 
+        }
       });
 
     case ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS:
@@ -84,6 +93,30 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
     case ApplicationActionTypes.SEARCH_APPLICATION_ERROR:
       return _assign({}, state, {
         search: {
+          error: action.payload.error.message,
+          loading: false
+        }
+      });
+
+      case ApplicationActionTypes.FETCH_DATA_TYPES:
+      return _assign({}, state, {
+        types: {
+          data: undefined,
+          loading: true
+        }
+      });
+
+    case ApplicationActionTypes.FETCH_DATA_TYPES_SUCCESS:
+      return _assign({}, state, {
+        types: {
+          data: action.payload.data.items,
+          loading: false
+        }
+      });
+
+    case ApplicationActionTypes.FETCH_DATA_TYPES_ERROR:
+      return _assign({}, state, {
+        types: {
           error: action.payload.error.message,
           loading: false
         }
@@ -133,3 +166,19 @@ export const isLoadingSearchApplication = (state: ApplicationState) => state.sea
  * @returns {ApplicationPath[]}
  */
 export const getSearchApplicationList = (state: ApplicationState) => state.search.data;
+
+/**
+ * Returns true if the data types are loading, otherwise false.
+ * @function isLoadingDataTypes
+ * @param {State} state
+ * @returns {boolean}
+ */
+export const isLoadingDataTypes = (state: ApplicationState) => state.types.loading;
+
+/**
+ * Returns the list of data types for given application id.
+ * @function getDataTypes
+ * @param {State} state
+ * @returns {DataType[]}
+ */
+export const getDataTypes = (state: ApplicationState) => state.types.data;

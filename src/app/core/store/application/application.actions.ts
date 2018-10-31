@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 
 import { ActionType } from '../util';
@@ -9,8 +10,11 @@ export const ApplicationActionTypes = {
     FETCH_APPLICATION_DATA_ERROR: ActionType('FETCH_APPLICATION_DATA_ERROR'),
     SEARCH_APPLICATION: ActionType('SEARCH_APPLICATION'),
     SEARCH_APPLICATION_SUCCESS: ActionType('SEARCH_APPLICATION_SUCCESS'),
-    SEARCH_APPLICATION_ERROR: ActionType('SEARCH_APPLICATION_ERROR')
-}
+    SEARCH_APPLICATION_ERROR: ActionType('SEARCH_APPLICATION_ERROR'),
+    FETCH_DATA_TYPES: ActionType('FETCH_DATA_TYPES'),
+    FETCH_DATA_TYPES_SUCCESS: ActionType('FETCH_DATA_TYPES_SUCCESS'),
+    FETCH_DATA_TYPES_ERROR: ActionType('FETCH_DATA_TYPES_ERROR')
+};
 
 export class FetchApplicationData implements Action {
     public type: string = ApplicationActionTypes.FETCH_APPLICATION_DATA;
@@ -45,10 +49,28 @@ export class SearchApplicationError implements Action {
   constructor(public payload?: any) {}
 }
 
-export type ApplicationAction = 
+export class FetchDataTypes implements Action {
+  public type: string = ApplicationActionTypes.FETCH_DATA_TYPES;
+  constructor(public payload?: any) {}
+}
+
+export class FetchDataTypesSuccess implements Action {
+  public type: string = ApplicationActionTypes.FETCH_DATA_TYPES_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class FetchDataTypesError implements Action {
+  public type: string = ApplicationActionTypes.FETCH_DATA_TYPES_ERROR;
+  constructor(public payload?: any) {}
+}
+
+export type ApplicationAction =
   FetchApplicationData |
   FetchApplicationDataSuccess |
   FetchApplicationDataError |
   SearchApplication |
   SearchApplicationSuccess |
-  SearchApplicationError;
+  SearchApplicationError |
+  FetchDataTypes |
+  FetchDataTypesSuccess |
+  FetchDataTypesError;
