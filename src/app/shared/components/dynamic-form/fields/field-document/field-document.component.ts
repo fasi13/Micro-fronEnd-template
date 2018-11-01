@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { FormField } from '../../models/form-field.abstract';
 
@@ -7,4 +7,34 @@ import { FormField } from '../../models/form-field.abstract';
   templateUrl: './field-document.component.html'
 })
 export class FieldDocumentComponent extends FormField {
+
+  constructor(
+    private changeDetector: ChangeDetectorRef
+  ) {
+    super();
+  }
+
+  onFileChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      if (this.isValidFileExtension(file.name)) {
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const newValue = {};
+          newValue[`${this.config.name}`] = reader.result;
+          const fileContent = (reader.result as String).split(',')[1];
+          const value = `${file.name}:${fileContent}`;
+          this.group.get(this.config.name).setValue(value, { emitModelToViewChange: false });
+          this.changeDetector.markForCheck();
+        };
+      }
+    }
+  }
+
+  private isValidFileExtension(fileName: string): boolean {
+    const fileExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+    return /(pdf)$/i.test(fileExt);
+  }
+
 }

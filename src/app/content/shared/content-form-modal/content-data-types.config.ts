@@ -27,11 +27,24 @@ export const dataTypes: ContentDataType = {
     type: 'image',
     label: 'Value',
     name: 'dynamicValue',
+    placeholder: 'Enter value',
     validation: {
       required: {
         errorMsg: 'Image is required',
         validator: Validators.required
       }
     }
-  }
+  },
+  'Document': {
+    type: 'document',
+    label: 'Value',
+    name: 'dynamicValue',
+    placeholder: 'Enter value',
+    validation: {
+      required: {
+        errorMsg: 'Document is required',
+        validator: Validators.required
+      }
+    }
+  },
 };

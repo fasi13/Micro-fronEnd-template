@@ -6,6 +6,7 @@
     type="file"
     class="form-control fge-dynamic-form__input"
     accept=".pdf"
+    (change)="onFileChange($event)"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name">
   <div class="invalid-feedback">
