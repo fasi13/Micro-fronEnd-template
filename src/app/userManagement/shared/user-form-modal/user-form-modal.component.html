@@ -8,6 +8,11 @@
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
+    <fge-dynamic-form
+        [fieldsConfig]="config"
+        #form="fgeDynamicForm"
+        (onsubmit)="submit($event)">
+    </fge-dynamic-form>
     <div class="modal-body">
         <form [formGroup]="userForm" (ngSubmit)="onSubmit(c)">
             <div class="form-group row" *ngIf="mode !== 'EDIT'">

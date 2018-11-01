@@ -3,14 +3,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NewUser, NewUserAction, UpdateUser } from '@forge/core';
+import { NewUser, UpdateUser } from '@forge/core';
 // import { State, isNewUserCreated, getNewUserError } from '../../../core/store/store.reducers';
-import { State, UserService } from '@forge/core';
+import { UserService } from '@forge/core';
 
-import { Store } from '@ngrx/store';
+// import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { takeWhile, filter } from 'rxjs/operators';
+// import { takeWhile, filter } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
+import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 
 @Component({
     selector: 'fge-user-form-modal',
@@ -18,8 +19,9 @@ import { NotifierService } from 'angular-notifier';
 })
 
 export class UserFormModalComponent implements OnInit, OnDestroy {
-    @ViewChild('modalTemplate')
-    modalContent: ElementRef;
+    @ViewChild('modalTemplate') modalContent: ElementRef;
+    @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+
     createCompleted: boolean;
     userForm: FormGroup;
     mode: 'CREATE' | 'EDIT';
@@ -27,11 +29,121 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
     loading: Observable<boolean> | boolean = false;
     user: any;
     // private isAliveComponent = true;
-
+    config: FieldConfig[] = [
+        {
+          type: 'text',
+          label: 'Name',
+          name: 'name',
+          placeholder: 'Enter name',
+          validation: {
+            required: {
+              errorMsg: 'Name is required',
+              validator: Validators.required
+            },
+            minlength: {
+              errorMsg: 'Name should have at least 2 characters',
+              validator: Validators.minLength(2)
+            },
+            maxlength: {
+              errorMsg: 'Name should not have more than 15 characters',
+              validator: Validators.maxLength(15)
+            }
+          }
+        },
+        {
+          type: 'text',
+          label: 'Description',
+          name: 'description',
+          placeholder: 'Enter description',
+          validation: {
+            required: {
+              errorMsg: 'Description is required',
+              validator: Validators.required
+            },
+            minlength: {
+              errorMsg: 'Description should have at least 2 characters',
+              validator: Validators.minLength(2)
+            }
+          }
+        },
+        {
+          type: 'select',
+          label: 'Data Type',
+          name: 'type',
+          options: ['Text', 'Color Picker', 'HTML', 'Logo Display', 'Image', 'Document'],
+          placeholder: 'Select Data Type',
+          validation: {
+            required: {
+              errorMsg: 'Please select a Data Type',
+              validator: Validators.required
+            },
+          }
+        },
+        {
+          label: 'Save',
+          name: 'save',
+          type: 'button'
+        }
+      ];
+    
+      dataTypes: {[key: string]: FieldConfig} = {
+        'Text': {
+          type: 'text',
+          label: 'Value',
+          name: 'textValue',
+          placeholder: 'Enter value',
+          validation: {
+            required: {
+              errorMsg: 'Value is required',
+              validator: Validators.required
+            },
+            minlength: {
+              errorMsg: 'Value should have at least 2 characters',
+              validator: Validators.minLength(2)
+            }
+          }
+        },
+        'Image': {
+          type: 'image',
+          label: 'Value',
+          name: 'imageValue',
+          placeholder: 'Enter value',
+          validation: {
+            required: {
+              errorMsg: 'Image is required',
+              validator: Validators.required
+            }
+          }
+        },
+        'Document': {
+          type: 'document',
+          label: 'Value',
+          name: 'documentValue',
+          placeholder: 'Enter value',
+          validation: {
+            required: {
+              errorMsg: 'Document is required',
+              validator: Validators.required
+            }
+          }
+        },
+        'Color Picker': {
+          type: 'color',
+          label: 'Value',
+          name: 'colorValue',
+          placeholder: 'Enter value',
+          validation: {
+            required: {
+              errorMsg: 'Color Value is required',
+              validator: Validators.required
+            }
+          }
+        }
+      };
     constructor(
         private modalService: NgbModal,
         private formBuilder: FormBuilder,
-        private store: Store<State>,
+        // private store: Store<State>,
         private userService: UserService,
         private notifierService: NotifierService) { }
 

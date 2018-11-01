@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { State, isAuthenticated } from '../store.reducers';
+import { Action } from '@ngrx/store';
+// import { State, isAuthenticated } from '../store.reducers';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import {
-    NewUserAction,
+    // NewUserAction,
     NewUserErrorAction,
     NewUserSuccessAction,
     UserManagementTypes
@@ -33,7 +33,7 @@ export class UserManagamentEffects {
       );
     constructor(
         private actions: Actions,
-        private store: Store<State>,
+        // private store: Store<State>,
         private userService: UserService
         ) {
     }

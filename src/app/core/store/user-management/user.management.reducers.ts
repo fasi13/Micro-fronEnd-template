@@ -1,6 +1,6 @@
 import _assign from 'lodash/assign';
 
-import { NewUser, UpdateUser } from '../../models';
+// import { NewUser, UpdateUser } from '../../models';
 import { UserManagementTypes, UserManagementAcctions } from './user-management.actions';
 
 export interface UserManagementStade {

@@ -20,7 +20,7 @@ const routes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'usersManagement'
+            redirectTo: 'content'
           },
           {
             path: 'content',
