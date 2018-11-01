@@ -5,8 +5,8 @@
   <input
     type="file"
     class="form-control fge-dynamic-form__input"
-    accept=".jpg, .jpeg, .png"
-    [attr.placeholder]="config.placeholder"
+    accept=".png, .jpg, .jpeg, .svg, .gif"
+    (change)="onFileChange($event)"
     [formControlName]="config.name">
   <div class="invalid-feedback">
     <div *ngFor="let validator of getObjectKeys(config?.validation)">

@@ -10,7 +10,7 @@ export const dataTypes: ContentDataType = {
   'Text': {
     type: 'text',
     label: 'Value',
-    name: 'textValue',
+    name: 'dynamicValue',
     placeholder: 'Enter value',
     validation: {
       required: {
@@ -20,6 +20,17 @@ export const dataTypes: ContentDataType = {
       minlength: {
         errorMsg: 'Value should have at least 2 characters',
         validator: Validators.minLength(2)
+      }
+    }
+  },
+  'Image': {
+    type: 'image',
+    label: 'Value',
+    name: 'dynamicValue',
+    validation: {
+      required: {
+        errorMsg: 'Image is required',
+        validator: Validators.required
       }
     }
   }

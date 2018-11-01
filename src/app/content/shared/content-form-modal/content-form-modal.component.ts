@@ -49,7 +49,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submit({ name, description, type: typeStr, textValue: value }: any): void {
+  submit({ name, description, type: typeStr, dynamicValue: value }: any): void {
     const { id: applicationId } = this.applicationInfo;
     const contentPayload = {
       name,
