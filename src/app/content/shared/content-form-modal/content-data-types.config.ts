@@ -47,4 +47,16 @@ export const dataTypes: ContentDataType = {
       }
     }
   },
+  'Color Picker': {
+    type: 'color',
+    label: 'Value',
+    name: 'dynamicValue',
+    placeholder: 'Enter value',
+    validation: {
+      required: {
+        errorMsg: 'Color Value is required',
+        validator: Validators.required
+      }
+    }
+  }
 };
