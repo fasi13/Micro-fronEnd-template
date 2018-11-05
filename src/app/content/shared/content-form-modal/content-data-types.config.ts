@@ -58,5 +58,18 @@ export const dataTypes: ContentDataType = {
         validator: Validators.required
       }
     }
+  },
+  'Logo Display':   {
+    type: 'select',
+    label: 'Logo Display',
+    name: 'dynamicValue',
+    options: [],
+    placeholder: 'Select Logo Display',
+    validation: {
+      required: {
+        errorMsg: 'Please select a Logo Display',
+        validator: Validators.required
+      },
+    }
   }
 };

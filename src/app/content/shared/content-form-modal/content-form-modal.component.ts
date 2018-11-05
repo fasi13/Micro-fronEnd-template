@@ -1,13 +1,14 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+import _clone from 'lodash/clone';
 
 import { Observable } from 'rxjs';
 
 import { State, getApplicationInfo, Application, getDataTypes, DataType, AddContent } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
-import { config as FieldConfiguration } from './content-fields-modal.config';
-import { ContentDataType, dataTypes as AvailableDataTypes } from './content-data-types.config';
+import { config as fieldConfiguration } from './content-fields-modal.config';
+import { ContentDataType, dataTypes as availableDataTypes } from './content-data-types.config';
 
 @Component({
   selector: 'fge-content-form-modal',
@@ -33,8 +34,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.config = FieldConfiguration;
-    this.dataTypes = AvailableDataTypes;
+    this.config = _clone(fieldConfiguration);
+    this.dataTypes = availableDataTypes;
     this.initSelectors();
   }
 
@@ -82,7 +83,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private handleApplicationInfo(appInfo$: Observable<Application>) {
+  private handleApplicationInfo(appInfo$: Observable<Application>): void {
     appInfo$.subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
   }
 
@@ -92,7 +93,18 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     } else {
       this.config.splice(this.config.length - 1, 0, this.dataTypes[`${type}`]);
     }
+    this.populateOptionsFor(type, 'Logo Display');
     this.config = Array.from(this.config);
     this.currentType = type;
+  }
+
+  private populateOptionsFor(currentType: string, typeName: string): void {
+    if (currentType === typeName) {
+      const displayInputIndex = this.config.findIndex((fieldConfig: FieldConfig) => fieldConfig.label === typeName);
+      if (displayInputIndex >= 0) {
+        const appDataType = this.applicationDataTypes.find((dataType: DataType) => dataType.name === typeName);
+        this.config[displayInputIndex].options = appDataType.values;
+      }
+    }
   }
 }
