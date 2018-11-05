@@ -1,5 +1,5 @@
-<div class="input-group" [ngClass]="{ 'input-group-sm fge-search__input-group': !isInputForm }">
-  <div class="input-group-prepend" *ngIf="!isInputForm">
+<div class="input-group" [ngClass]="{ 'input-group-sm fge-search__input-group': !isInputForm }" *ngIf="!isInputForm">
+  <div class="input-group-prepend">
     <span class="input-group-text">
       <i class="fas fa-search"></i>
     </span>
@@ -15,6 +15,29 @@
     (blur)="onFocusOutInput($event)">
   <div class="fge-search-application--results" [ngClass]="{'d-block': openResults}">
     <div *ngIf="search?.length < 3; then searchWarn; else searchContent">
+    </div>
+  </div>
+</div>
+
+<div class="fge-dynamic-field form-input" *ngIf="isInputForm"
+  [formGroup]="group">
+  <label>{{ config.label }}</label>
+  <input
+    #inputName
+    type="text"
+    [ngClass]="{ 'is-invalid': hasError() }"
+    class="form-control fge-dynamic-form__input"
+    [attr.placeholder]="config?.placeholder"
+    [formControlName]="config?.name"
+    [(ngModel)]="search"
+    (keyup)="onValueChanges($event)"
+    (focusin)="onFocusInput($event)"
+    (blur)="onFocusOutInput($event)">
+  <div class="invalid-feedback">
+    <div *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
     </div>
   </div>
 </div>
@@ -49,8 +72,7 @@
 
 <ng-template #applicationListForm>
   <div class="list-group list-group-flush fge-search__list-group">
-    <a
-      tabindex="0"
+    <a tabindex="0"
       (click)="updateInput(application)"
       *ngFor="let application of items$ | async; index as i"
       class="list-group-item list-group-item-action flex-column align-items-start">
