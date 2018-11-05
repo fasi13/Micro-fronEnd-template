@@ -1,4 +1,4 @@
-import { 
+import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
@@ -19,6 +19,8 @@ import { FieldSelectComponent } from '../fields/field-select/field-select.compon
 import { FieldImageComponent } from '../fields/field-image/field-image.component';
 import { FieldDocumentComponent } from '../fields/field-document/field-document.component';
 import { FieldColorComponent } from '../fields/field-color/field-color.component';
+import { FieldPasswordComponent } from '../fields/field-password/field-password.component';
+import { FieldEmailComponent } from '../fields/field-email/field-email.component';
 
 const components: {[type: string]: Type<FormField>} = {
   button: FieldButtonComponent,
@@ -26,7 +28,9 @@ const components: {[type: string]: Type<FormField>} = {
   select: FieldSelectComponent,
   image: FieldImageComponent,
   document: FieldDocumentComponent,
-  color: FieldColorComponent
+  color: FieldColorComponent,
+  password: FieldPasswordComponent,
+  email: FieldEmailComponent
 };
 
 @Directive({

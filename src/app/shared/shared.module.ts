@@ -19,6 +19,8 @@ import { FieldColorComponent } from './components/dynamic-form/fields/field-colo
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { NavigationTreeComponent } from './components/navigation-tree/navigation-tree.component';
 import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
+import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
+import { FieldEmailComponent } from './components/dynamic-form/fields/field-email/field-email.component';
 
 @NgModule({
   imports: [
@@ -44,6 +46,8 @@ import { HighlightSearchDirective } from './components/search-application/highli
     BreadCrumbComponent,
     NavigationTreeComponent,
     HighlightSearchDirective,
+    FieldPasswordComponent,
+    FieldEmailComponent
   ],
   exports: [
     FormsModule,
@@ -62,6 +66,8 @@ import { HighlightSearchDirective } from './components/search-application/highli
     FieldImageComponent,
     FieldDocumentComponent,
     FieldColorComponent,
+    FieldPasswordComponent,
+    FieldEmailComponent
   ]
 })
 export class SharedModule { }

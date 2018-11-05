@@ -28,118 +28,122 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
     applicationID: number;
     loading: Observable<boolean> | boolean = false;
     user: any;
-    // private isAliveComponent = true;
     config: FieldConfig[] = [
-        {
-          type: 'text',
-          label: 'Name',
-          name: 'name',
-          placeholder: 'Enter name',
-          validation: {
-            required: {
-              errorMsg: 'Name is required',
-              validator: Validators.required
-            },
-            minlength: {
-              errorMsg: 'Name should have at least 2 characters',
-              validator: Validators.minLength(2)
-            },
-            maxlength: {
-              errorMsg: 'Name should not have more than 15 characters',
-              validator: Validators.maxLength(15)
-            }
-          }
-        },
-        {
-          type: 'text',
-          label: 'Description',
-          name: 'description',
-          placeholder: 'Enter description',
-          validation: {
-            required: {
-              errorMsg: 'Description is required',
-              validator: Validators.required
-            },
-            minlength: {
-              errorMsg: 'Description should have at least 2 characters',
-              validator: Validators.minLength(2)
-            }
-          }
-        },
-        {
-          type: 'select',
-          label: 'Data Type',
-          name: 'type',
-          options: ['Text', 'Color Picker', 'HTML', 'Logo Display', 'Image', 'Document'],
-          placeholder: 'Select Data Type',
-          validation: {
-            required: {
-              errorMsg: 'Please select a Data Type',
-              validator: Validators.required
-            },
-          }
-        },
-        {
-          label: 'Save',
-          name: 'save',
-          type: 'button'
-        }
-      ];
-    
-      dataTypes: {[key: string]: FieldConfig} = {
-        'Text': {
-          type: 'text',
-          label: 'Value',
-          name: 'textValue',
-          placeholder: 'Enter value',
-          validation: {
-            required: {
-              errorMsg: 'Value is required',
-              validator: Validators.required
-            },
-            minlength: {
-              errorMsg: 'Value should have at least 2 characters',
-              validator: Validators.minLength(2)
-            }
-          }
-        },
-        'Image': {
-          type: 'image',
-          label: 'Value',
-          name: 'imageValue',
-          placeholder: 'Enter value',
-          validation: {
-            required: {
-              errorMsg: 'Image is required',
-              validator: Validators.required
-            }
-          }
-        },
-        'Document': {
-          type: 'document',
-          label: 'Value',
-          name: 'documentValue',
-          placeholder: 'Enter value',
-          validation: {
-            required: {
-              errorMsg: 'Document is required',
-              validator: Validators.required
-            }
-          }
-        },
-        'Color Picker': {
-          type: 'color',
-          label: 'Value',
-          name: 'colorValue',
-          placeholder: 'Enter value',
-          validation: {
-            required: {
-              errorMsg: 'Color Value is required',
-              validator: Validators.required
-            }
+      {
+        type: 'text',
+        label: 'UserName',
+        name: 'userName',
+        placeholder: 'Enter userName',
+        validation: {
+          required: {
+            errorMsg: 'UserName is required',
+            validator: Validators.required
+          },
+          minlength: {
+            errorMsg: 'Name should have at least 2 characters',
+            validator: Validators.minLength(2)
+          },
+          maxlength: {
+            errorMsg: 'Name should not have more than 15 characters',
+            validator: Validators.maxLength(15)
           }
         }
-      };
+      },
+      {
+        type: 'password',
+        label: 'Password',
+        name: 'password',
+        placeholder: 'Enter password',
+        validation: {
+          required: {
+            errorMsg: 'Password is required',
+            validator: Validators.required
+          },
+          minlength: {
+            errorMsg: 'Description should have at least 6 characters',
+            validator: Validators.minLength(6)
+          }
+        }
+      },
+      {
+        type: 'password',
+        label: 'Confirm Password',
+        name: 'confirmPassword',
+        placeholder: 'Enter confirm password',
+        validation: {
+          required: {
+            errorMsg: 'Confirm password is required',
+            validator: Validators.required
+          },
+          minlength: {
+            errorMsg: 'Description should have at least 6 characters',
+            validator: Validators.minLength(6)
+          }
+        }
+      },
+      {
+        type: 'text',
+        label: 'First Name',
+        name: 'firstName',
+        placeholder: 'Enter first name',
+        validation: {
+          required: {
+            errorMsg: 'First name is required',
+            validator: Validators.required
+          },
+          minlength: {
+            errorMsg: 'Name should have at least 2 characters',
+            validator: Validators.minLength(2)
+          },
+          maxlength: {
+            errorMsg: 'Name should not have more than 15 characters',
+            validator: Validators.maxLength(15)
+          }
+        }
+      },
+      {
+        type: 'text',
+        label: 'Last Name',
+        name: 'lastName',
+        placeholder: 'Enter last name',
+        validation: {
+          required: {
+            errorMsg: 'Last name is required',
+            validator: Validators.required
+          },
+          minlength: {
+            errorMsg: 'Name should have at least 2 characters',
+            validator: Validators.minLength(2)
+          },
+          maxlength: {
+            errorMsg: 'Name should not have more than 15 characters',
+            validator: Validators.maxLength(15)
+          }
+        }
+      },
+      {
+        type: 'email',
+        label: 'Email address',
+        name: 'emailAddress',
+        placeholder: 'Enter email address',
+        validation: {
+          required: {
+            errorMsg: 'Email address is required',
+            validator: Validators.required
+          },
+          email: {
+            errorMsg: 'Please enter a valid Email address',
+            validator: Validators.email
+          }
+        }
+      },
+      {
+        label: 'Save',
+        name: 'save',
+        type: 'button'
+      }
+    ];
+
     constructor(
         private modalService: NgbModal,
         private formBuilder: FormBuilder,

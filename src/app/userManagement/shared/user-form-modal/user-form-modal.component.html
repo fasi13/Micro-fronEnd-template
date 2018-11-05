@@ -8,13 +8,16 @@
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <fge-dynamic-form
-        [fieldsConfig]="config"
-        #form="fgeDynamicForm"
-        (onsubmit)="submit($event)">
-    </fge-dynamic-form>
     <div class="modal-body">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit(c)">
+        <fge-dynamic-form
+            [fieldsConfig]="config"
+            #form="fgeDynamicForm"
+            (onsubmit)="submit($event)">
+        </fge-dynamic-form>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit(c)"><span class="switch">
+            <input type="checkbox" class="switch" id="switch-id">
+                <label for="switch-id">Small switch</label>
+          </span>
             <div class="form-group row" *ngIf="mode !== 'EDIT'">
                 <input type="text" class="form-control col-10" placeholder="UserName" formControlName="userName"
                   [ngClass]="{ 'is-invalid': userName.invalid && userName.touched }">
