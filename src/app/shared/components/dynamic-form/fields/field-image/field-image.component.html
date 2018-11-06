@@ -7,6 +7,7 @@
     class="form-control fge-dynamic-form__input"
     accept=".png, .jpg, .jpeg, .svg, .gif"
     (change)="onFileChange($event)"
+    [ngClass]="{ 'is-invalid': hasError() }"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name">
   <div class="invalid-feedback">

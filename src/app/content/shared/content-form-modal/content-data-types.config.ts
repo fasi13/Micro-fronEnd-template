@@ -52,11 +52,16 @@ export const dataTypes: ContentDataType = {
     label: 'Value',
     name: 'dynamicValue',
     placeholder: 'Enter value',
+    value: '',
     validation: {
       required: {
         errorMsg: 'Color Value is required',
         validator: Validators.required
-      }
+      },
+      pattern: {
+        errorMsg: 'Invalid Color Value',
+        validator: Validators.pattern(`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`)
+      },
     }
   },
   'Logo Display':   {

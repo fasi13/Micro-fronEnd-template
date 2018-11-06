@@ -2,7 +2,10 @@
   class="fge-dynamic-field form-select"
   [formGroup]="group">
   <label>{{ config.label }}</label>
-  <select [formControlName]="config.name" class="fge-dynamic-form__select">
+  <select
+    [formControlName]="config.name"
+    [ngClass]="{ 'is-invalid': hasError() }"
+    class="form-control fge-dynamic-form__select">
     <option value="">{{ config.placeholder }}</option>
     <option *ngFor="let option of config.options">
       {{ option }}

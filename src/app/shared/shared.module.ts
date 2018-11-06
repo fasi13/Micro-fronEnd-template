@@ -6,6 +6,8 @@ import { SearchApplicationComponent } from './components/search-application/sear
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FieldButtonComponent } from './components/dynamic-form/fields/field-button/field-button.component';
 import { DynamicFieldDirective } from './components/dynamic-form/directives/dynamic-field.directive';
@@ -21,7 +23,8 @@ import { FieldColorComponent } from './components/dynamic-form/fields/field-colo
     FormsModule,
     ReactiveFormsModule,
     NgBootstrapModule,
-    RouterModule
+    RouterModule,
+    ColorPickerModule
   ],
   declarations: [
     DynamicFieldDirective,
@@ -42,7 +45,7 @@ import { FieldColorComponent } from './components/dynamic-form/fields/field-colo
     SidebarComponent,
     SplashScreenComponent,
     SearchApplicationComponent,
-    DynamicFormComponent
+    DynamicFormComponent,
   ],
   entryComponents: [
     FieldButtonComponent,
@@ -50,7 +53,7 @@ import { FieldColorComponent } from './components/dynamic-form/fields/field-colo
     FieldSelectComponent,
     FieldImageComponent,
     FieldDocumentComponent,
-    FieldColorComponent
+    FieldColorComponent,
   ]
 })
 export class SharedModule { }

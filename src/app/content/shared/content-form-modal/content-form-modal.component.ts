@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input } from '
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import _clone from 'lodash/clone';
+import _assign from 'lodash/assign';
 
 import { Observable } from 'rxjs';
 
@@ -40,13 +41,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    let previousValid = this.form.valid;
     this.form.changes.subscribe(({ type }) => {
       this.switchDataType(type);
-      if (this.form.valid !== previousValid) {
-        previousValid = this.form.valid;
-        this.form.setDisabled('save', !previousValid);
-      }
     });
   }
 
@@ -88,14 +84,27 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   }
 
   private switchDataType(type: string): void {
-    if (this.currentType) {
-      this.config[this.config.length - 2] = this.dataTypes[type];
-    } else {
-      this.config.splice(this.config.length - 1, 0, this.dataTypes[`${type}`]);
+    if (this.currentType !== type) {
+      if (this.currentType) {
+        this.config[this.config.length - 2] = this.dataTypes[type];
+      } else {
+        this.config.splice(this.config.length - 1, 0, this.dataTypes[type]);
+      }
+      this.populateOptionsFor(type, 'Logo Display');
+      this.config = Array.from(this.config);
+      this.currentType = type;
+      this.resetDynamicField();
     }
-    this.populateOptionsFor(type, 'Logo Display');
-    this.config = Array.from(this.config);
-    this.currentType = type;
+  }
+
+  private resetDynamicField() {
+    setTimeout(() => {
+      const dynamicValueControl = this.form.controls.dynamicValue;
+      if (dynamicValueControl) {
+        dynamicValueControl.reset();
+      }
+      this.form.validateAllFormFields();
+    }, 0);
   }
 
   private populateOptionsFor(currentType: string, typeName: string): void {

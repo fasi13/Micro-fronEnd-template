@@ -4,7 +4,8 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Output
+  Output,
+  AfterViewInit
 } from '@angular/core';
 import { FormGroup, FormBuilder, ValidatorFn, FormControl } from '@angular/forms';
 import _compact from 'lodash/compact';
@@ -16,7 +17,7 @@ import { FieldConfig } from './models/field-config.model';
   selector: 'fge-dynamic-form',
   templateUrl: './dynamic-form.component.html'
 })
-export class DynamicFormComponent implements OnChanges, OnInit {
+export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   @Input()
   set fieldsConfig(newConfig) {
     this.config = _compact(newConfig);
@@ -29,7 +30,7 @@ export class DynamicFormComponent implements OnChanges, OnInit {
 
   form: FormGroup;
 
-  get controls() {
+  get controls(): any {
     return this.config.filter((fieldConfig: FieldConfig) => fieldConfig && fieldConfig.type !== 'button');
   }
   get changes() {
@@ -71,6 +72,14 @@ export class DynamicFormComponent implements OnChanges, OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    this.changes.subscribe(() => {
+      if (this.form.valid) {
+        this.setDisabled('save', false);
+      }
+    });
+  }
+
   createGroup() {
     const group = this.fb.group({});
     this.controls.forEach(control =>
@@ -90,7 +99,8 @@ export class DynamicFormComponent implements OnChanges, OnInit {
       event.stopPropagation();
       this.onsubmit.emit(this.value);
     } else {
-      this.validateAllFormFields(this.form);
+      this.validateAllFormFields();
+      this.setDisabled('save', !this.form.valid);
     }
   }
 
@@ -121,9 +131,10 @@ export class DynamicFormComponent implements OnChanges, OnInit {
     return validators;
   }
 
-  private validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
+  validateAllFormFields(formGroup?: FormGroup) {
+    const currentGroup = formGroup || this.form;
+    Object.keys(currentGroup.controls).forEach(field => {
+      const control = currentGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {

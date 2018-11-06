@@ -7,4 +7,8 @@ import { FormField } from '../../models/form-field.abstract';
   templateUrl: './field-color.component.html'
 })
 export class FieldColorComponent extends FormField {
+
+  get currentColor() {
+    return this.group.get(this.config.name).value;
+  }
 }
