@@ -1,0 +1,18 @@
+<div class="fge-dynamic-field fge-dynammic-form__checkbox" [formGroup]="group">
+    <label class="form-check-label">
+        <input 
+            type="checkbox"
+            [ngClass]="{ 'is-invalid': hasError() }"
+            class="fge-dynammic-form__checkbox"
+            [formControlName]="config?.name">
+        <span class="fge-box"><i class="fge-check-icon fas fa-check"></i></span>
+        {{ config.label }}
+    </label>
+    <div class="invalid-feedback">
+        <div *ngFor="let validator of getObjectKeys(config?.validation)">
+            <span *ngIf="hasErrorFor(validator)">
+                {{config?.validation[validator].errorMsg}}
+            </span>
+        </div>
+    </div>
+</div>

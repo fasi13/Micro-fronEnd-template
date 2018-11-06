@@ -1,4 +1,4 @@
-<div class="input-group" [ngClass]="{ 'input-group-sm fge-search__input-group': !isInputForm }" *ngIf="!isInputForm">
+<div class="input-group" [ngClass]="{ 'input-group-sm fge-search__input-group': !isInputForm }">
   <div class="input-group-prepend">
     <span class="input-group-text">
       <i class="fas fa-search"></i>
@@ -19,22 +19,6 @@
   </div>
 </div>
 
-<div class="fge-dynamic-field form-input" *ngIf="isInputForm"
-  [formGroup]="group">
-  <label>{{ config.label }}</label>
-  <input
-    #inputName
-    type="text"
-    [ngClass]="{ 'is-invalid': hasError() }"
-    class="form-control fge-dynamic-form__input"
-    [attr.placeholder]="config?.placeholder"
-    [formControlName]="config?.name"
-    [(ngModel)]="search"
-    (keyup)="onValueChanges($event)"
-    (focusin)="onFocusInput($event)"
-    (blur)="onFocusOutInput($event)">
-</div>
-
 <ng-template #searchWarn>
   <div class="px-3">
     <small><i class="fas fa-exclamation-circle"></i> Requires at least 3 characters</small>
@@ -48,7 +32,7 @@
 </ng-template>
 
 <ng-template #applicationList>
-  <div class="list-group list-group-flush fge-search__list-group" *ngIf="!isInputForm; else applicationListForm">
+  <div class="list-group list-group-flush fge-search__list-group">
     <a
       tabindex="0"
       [href]="getApplicationLink(application)"
@@ -59,21 +43,6 @@
         <small fgeHighlightSearch [keyword]="search">{{ getApplicationValue(application) }}</small>
       </div>
       <small fgeHighlightSearch [keyword]="search">{{getApplicationPath(application)}}</small>
-    </a>
-  </div>
-</ng-template>
-
-<ng-template #applicationListForm>
-  <div class="list-group list-group-flush fge-search__list-group">
-    <a tabindex="0"
-      (click)="updateInput(application)"
-      *ngFor="let application of items$ | async; index as i"
-      class="list-group-item list-group-item-action flex-column align-items-start">
-      <div class="d-flex w-100 justify-content-between">
-        <h6 class="mb-1">{{ getApplicationName(application) }}</h6>
-        <small>{{ getApplicationId(application) }}</small>
-      </div>
-      <small>{{getApplicationPath(application)}}</small>
     </a>
   </div>
 </ng-template>
