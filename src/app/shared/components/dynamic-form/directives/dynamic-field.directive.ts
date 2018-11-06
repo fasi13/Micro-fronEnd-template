@@ -21,6 +21,7 @@ import { FieldDocumentComponent } from '../fields/field-document/field-document.
 import { FieldColorComponent } from '../fields/field-color/field-color.component';
 import { FieldPasswordComponent } from '../fields/field-password/field-password.component';
 import { FieldEmailComponent } from '../fields/field-email/field-email.component';
+import { FieldSearchApplicationComponent } from '../fields/field-serach-application/field-search-application.component';
 
 const components: {[type: string]: Type<FormField>} = {
   button: FieldButtonComponent,
@@ -30,7 +31,8 @@ const components: {[type: string]: Type<FormField>} = {
   document: FieldDocumentComponent,
   color: FieldColorComponent,
   password: FieldPasswordComponent,
-  email: FieldEmailComponent
+  email: FieldEmailComponent,
+  searchApplication: FieldSearchApplicationComponent
 };
 
 @Directive({

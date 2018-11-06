@@ -1,5 +1,27 @@
 <fge-search-application 
     [isInputForm]="true"
-    [defaultName]="user.applicationName"
+    [defaultName]=""
     (applicationId)="onApplicationId($event)">
 </fge-search-application>
+<div class="fge-dynamic-field form-input"
+  [formGroup]="group">
+  <label>{{ config.label }}</label>
+  <input
+    #inputName
+    type="text"
+    [ngClass]="{ 'is-invalid': hasError() }"
+    class="form-control fge-dynamic-form__input"
+    [attr.placeholder]="config?.placeholder"
+    [formControlName]="config?.name"
+    [(ngModel)]="search"
+    (keyup)="onValueChanges($event)"
+    (focusin)="onFocusInput($event)"
+    (blur)="onFocusOutInput($event)">
+</div>
+<div class="invalid-feedback">
+    <div *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </div>
+  </div>

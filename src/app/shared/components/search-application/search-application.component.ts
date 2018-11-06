@@ -3,12 +3,13 @@ import { Store } from '@ngrx/store';
 import { State, SearchApplication, ApplicationPath, isLoadingSearchApplication, getSearchApplicationList } from '@forge/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { FormField } from '../dynamic-form/models/form-field.abstract';
 
 @Component({
   selector: 'fge-search-application',
   templateUrl: './search-application.component.html',
 })
-export class SearchApplicationComponent implements OnInit {
+export class SearchApplicationComponent extends FormField implements OnInit {
 
   @Input() isInputForm: boolean;
   @Input() defaultName: string;
@@ -23,7 +24,9 @@ export class SearchApplicationComponent implements OnInit {
 
   constructor(
     private store: Store<State>
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.initSelectors();

@@ -33,13 +33,6 @@
     (keyup)="onValueChanges($event)"
     (focusin)="onFocusInput($event)"
     (blur)="onFocusOutInput($event)">
-  <div class="invalid-feedback">
-    <div *ngFor="let validator of getObjectKeys(config?.validation)">
-      <span *ngIf="hasErrorFor(validator)">
-        {{config?.validation[validator].errorMsg}}
-      </span>
-    </div>
-  </div>
 </div>
 
 <ng-template #searchWarn>

@@ -21,6 +21,9 @@ import { NavigationTreeComponent } from './components/navigation-tree/navigation
 import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
 import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
 import { FieldEmailComponent } from './components/dynamic-form/fields/field-email/field-email.component';
+import {
+  FieldSearchApplicationComponent
+ } from './components/dynamic-form/fields/field-serach-application/field-search-application.component';
 
 @NgModule({
   imports: [
@@ -47,7 +50,8 @@ import { FieldEmailComponent } from './components/dynamic-form/fields/field-emai
     NavigationTreeComponent,
     HighlightSearchDirective,
     FieldPasswordComponent,
-    FieldEmailComponent
+    FieldEmailComponent,
+    FieldSearchApplicationComponent
   ],
   exports: [
     FormsModule,
@@ -67,7 +71,8 @@ import { FieldEmailComponent } from './components/dynamic-form/fields/field-emai
     FieldDocumentComponent,
     FieldColorComponent,
     FieldPasswordComponent,
-    FieldEmailComponent
+    FieldEmailComponent,
+    FieldSearchApplicationComponent
   ]
 })
 export class SharedModule { }

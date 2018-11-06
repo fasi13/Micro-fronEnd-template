@@ -138,6 +138,18 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
         }
       },
       {
+        type: 'searchApplication',
+        label: 'Application Name',
+        name: 'application',
+        placeholder: 'Enter application name',
+        validation: {
+          required: {
+            errorMsg: 'Email address is required',
+            validator: Validators.required
+          }
+        }
+      },
+      {
         label: 'Save',
         name: 'save',
         type: 'button'
