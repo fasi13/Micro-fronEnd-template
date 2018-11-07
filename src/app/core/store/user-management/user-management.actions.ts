@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
 

@@ -38,14 +38,12 @@ export class UserService {
   }
 
   createNewUser(newUser: NewUser): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const url = `${this.baseUrl}/${user.id}`;
+    const url = `${this.baseUrl}`;
     return this.httpClient.post(url, newUser);
   }
 
   updetedUser(updatedUser: UpdateUser): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const url = `${this.baseUrl}/${user.id}`;
+    const url = `${this.baseUrl}`;
     return this.httpClient.put(url, updatedUser);
   }
 }

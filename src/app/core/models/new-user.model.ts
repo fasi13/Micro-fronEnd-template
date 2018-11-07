@@ -3,7 +3,7 @@ export class NewUser {
     firstName: string;
     lastName: string;
     emailAddress: string;
-    status: string;
+    isActive: boolean;
     applicationId: number;
     password: string;
 }
