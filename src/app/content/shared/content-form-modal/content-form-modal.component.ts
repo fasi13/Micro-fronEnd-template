@@ -23,10 +23,10 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
 
   mode: 'CREATE' | 'EDIT' = 'CREATE';
   applicationInfo: Application;
+  config: FieldConfig[];
 
   private currentType: string;
   private applicationDataTypes: DataType[];
-  private config: FieldConfig[];
   private dataTypes: ContentDataType;
 
   constructor(

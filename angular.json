@@ -78,7 +78,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "forge-website:build:production"
+              "browserTarget": "forge-website:build:production",
+              "proxyConfig": "proxy.conf.prod.js"
             }
           }
         },

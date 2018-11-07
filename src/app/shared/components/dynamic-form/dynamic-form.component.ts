@@ -46,7 +46,7 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
     return this.form;
   }
 
-  private config: FieldConfig[] = [];
+  config: FieldConfig[] = [];
 
   constructor(private fb: FormBuilder) {}
 

@@ -21,6 +21,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ContentEffects } from './store/content';
 import { ContentService, FgeRouterService } from './services';
 
+const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: loadFromLocalStorage });
 @NgModule({
   imports: [
     CommonModule,
@@ -28,9 +29,7 @@ import { ContentService, FgeRouterService } from './services';
     NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(FgeReducers, {
-      initialState: loadFromLocalStorage()
-    }),
+    storeModuleForRoot,
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([AuthorizationEffects, ApplicationEffects, RouterEffects, ContentEffects]),
     StoreDevtoolsModule.instrument({
