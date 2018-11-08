@@ -27,7 +27,7 @@ export const config: FieldConfig[] = [
         type: 'password',
         label: 'Password',
         name: 'password',
-        placeholder: 'Enter password',
+        placeholder: 'Password',
         validation: {
             required: {
             errorMsg: 'Password is required',
@@ -43,7 +43,7 @@ export const config: FieldConfig[] = [
         type: 'password',
         label: 'Confirm Password',
         name: 'confirmPassword',
-        placeholder: 'Enter confirm password',
+        placeholder: 'Confirm password',
         validation: {
             required: {
             errorMsg: 'Confirm password is required',
@@ -56,10 +56,17 @@ export const config: FieldConfig[] = [
         }
     },
     {
+        type: 'toggleButton',
+        label: 'Account Status',
+        name: 'activeUser',
+        validation: {},
+        value: ['Active', 'Desactive']
+    },
+    {
         type: 'text',
         label: 'First Name',
         name: 'firstName',
-        placeholder: 'Enter first name',
+        placeholder: 'First Name',
         validation: {
             required: {
             errorMsg: 'First name is required',
@@ -79,7 +86,7 @@ export const config: FieldConfig[] = [
         type: 'text',
         label: 'Last Name',
         name: 'lastName',
-        placeholder: 'Enter last name',
+        placeholder: 'Last Name',
         validation: {
             required: {
             errorMsg: 'Last name is required',
@@ -97,9 +104,9 @@ export const config: FieldConfig[] = [
     },
     {
         type: 'email',
-        label: 'Email address',
+        label: 'Email',
         name: 'emailAddress',
-        placeholder: 'Enter email address',
+        placeholder: 'Email',
         validation: {
             required: {
             errorMsg: 'Email address is required',
@@ -110,12 +117,6 @@ export const config: FieldConfig[] = [
             validator: Validators.email
             }
         }
-    },
-    {
-        type: 'checkbox',
-        label: 'Active user',
-        name: 'activeUser',
-        validation: {}
     },
     {
         label: 'Save',

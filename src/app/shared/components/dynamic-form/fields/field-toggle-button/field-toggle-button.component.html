@@ -1,0 +1,31 @@
+<div 
+  class="fge-dynamic-field form-input" 
+  [formGroup]="group">
+     <div class="btn-group btn-group-toggle fge-group--btn-group-toggle"
+        ngbRadioGroup name="radioBasic"
+        [(ngModel)]="displayMode">
+        <label ngbButtonLabel class="btn-primary btn-sm">
+            <input ngbButton type="radio" value="true">
+            active
+        </label>
+        <label ngbButtonLabel class="btn btn-sm">
+            <input ngbButton type="radio" value="false">
+            inactive
+        </label>
+
+    </div>
+  <!-- <label>{{ config.label }}</label>
+  <input
+    type="text"
+    [ngClass]="{ 'is-invalid': hasError() }"
+    class="form-control fge-dynamic-form__input"
+    [attr.placeholder]="config?.placeholder"
+    [formControlName]="config?.name">
+  <div class="invalid-feedback">
+    <div *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </div>
+  </div> -->
+</div>

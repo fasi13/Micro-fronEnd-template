@@ -22,6 +22,7 @@ import { HighlightSearchDirective } from './components/search-application/highli
 import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
 import { FieldEmailComponent } from './components/dynamic-form/fields/field-email/field-email.component';
 import { FieldCheckboxComponent } from './components/dynamic-form/fields/field-checkbox/field-checkbox.component';
+import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { FieldCheckboxComponent } from './components/dynamic-form/fields/field-c
     HighlightSearchDirective,
     FieldPasswordComponent,
     FieldEmailComponent,
-    FieldCheckboxComponent
+    FieldCheckboxComponent,
+    FieldToggleButtonComponent
   ],
   exports: [
     FormsModule,
@@ -70,7 +72,8 @@ import { FieldCheckboxComponent } from './components/dynamic-form/fields/field-c
     FieldColorComponent,
     FieldPasswordComponent,
     FieldEmailComponent,
-    FieldCheckboxComponent
+    FieldCheckboxComponent,
+    FieldToggleButtonComponent
   ]
 })
 export class SharedModule { }

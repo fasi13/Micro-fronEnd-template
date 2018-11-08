@@ -103,7 +103,7 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
     }
 
     private setCurrentApplicationId(): void {
-        this.applicationID = +this.route.params.value.tenantId;
+        this.applicationID = +this.route.params['value'].tenantId;
     }
 
     private subscriptionHandlers() {
