@@ -1,41 +1,51 @@
-  <fge-splash-screen [enabled]="loading$ | async">
-    <p class="lead text-white">
-      Loading your Application Data.
-    </p>
-  </fge-splash-screen>
-  <nav class="fge-navbar navbar navbar-dark sticky-top bg-primary">
-    <div class="navbar-toggler" (click)="toggleSidebar($event)">
-      <i class="fas fa-bars text-light"></i>
-    </div>
-    <fge-bread-crumb class="mr-auto"></fge-bread-crumb>
-    <div class="form-inline my-2 my-lg-0">
-      <fge-search-application></fge-search-application>
-      <div class="dropdown">
-        <div class="nav-item">
-          <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-2x fa-user-circle text-light"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <h2 class="dropdown-header">{{user?.name}}</h2>
-            <div class="dropdown-divider"></div>
-            <button class="btn-sm dropdown-item" type="button"><i class="fas fa-unlock pr-2"></i>Change password</button>
-            <button class="btn-sm dropdown-item" type="button" (click)="onLogoutClicked($event)"><i class="fas fa-sign-out-alt pr-2"></i>Logout</button>
-          </div>
+<fge-splash-screen [enabled]="loading$ | async">
+  <p class="lead text-white">
+    Loading your Application Data.
+  </p>
+</fge-splash-screen>
+<nav class="fge-navbar navbar navbar-dark sticky-top bg-primary">
+  <div class="navbar-toggler" (click)="toggleSidebar($event)">
+    <i class="fas fa-bars text-light"></i>
+  </div>
+  <fge-bread-crumb class="mr-auto"></fge-bread-crumb>
+  <div class="form-inline my-2 my-lg-0">
+    <fge-search-application class="px-3"></fge-search-application>
+    <i class="fas fa-sitemap text-light fge-clickable" (click)="toggleHierarchyNavigation($event)"></i>
+    <div class="dropdown">
+      <div class="nav-item">
+        <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-2x fa-user-circle text-light"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <h2 class="dropdown-header">{{user?.name}}</h2>
+          <div class="dropdown-divider"></div>
+          <button class="btn-sm dropdown-item" type="button"><i class="fas fa-unlock pr-2"></i>Change password</button>
+          <button class="btn-sm dropdown-item" type="button" (click)="onLogoutClicked($event)"><i class="fas fa-sign-out-alt pr-2"></i>Logout</button>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <fge-sidebar [active]="activeSidebar">
-    <div class="fge-sidebar__header">
-      <div class="fge-display-expanded text-center">
-        <img src="{{branding?.primaryLogo?.value}}"/>
-      </div>
-      <div class="fge-display-collapsed">
-        <img src="{{branding?.primaryLogo?.value}}" width="25px"/>
-      </div>
+<fge-sidebar [active]="activeSidebar">
+  <div class="fge-sidebar__header">
+    <div class="fge-display-expanded text-center">
+      <img src="{{branding?.primaryLogo?.value}}"/>
     </div>
-    <div *ngIf="!(loading$ | async)">
-      <router-outlet></router-outlet>
+    <div class="fge-display-collapsed">
+      <img src="{{branding?.primaryLogo?.value}}" width="25px"/>
     </div>
-  </fge-sidebar>
+  </div>
+  <div *ngIf="!(loading$ | async)">
+    <router-outlet></router-outlet>
+  </div>
+</fge-sidebar>
+
+<fge-navigation-tree
+  *ngIf="application"
+  [(opened)]="isNavigationModalOpened"
+  [rootApplicationId]="application?.id"
+  [rootApplicationName]="application?.name"
+  [currentApplicationId]="application?.id"
+  (selected)="onAppSelected($event)"
+></fge-navigation-tree>

@@ -33,7 +33,7 @@ const routes: Routes = [
     path: '',
     component: UnauthLayoutComponent,
     children: [
-      { 
+      {
         path: '',
         loadChildren: './authorization/authorization.module#AuthorizationModule'
       }

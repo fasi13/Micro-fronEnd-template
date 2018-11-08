@@ -15,13 +15,15 @@ import {
     NgbPopoverModule,
     NgbModalModule,
     NgbTypeaheadModule,
-    NgbButtonsModule
+    NgbButtonsModule,
+    NgbTooltipModule
   ],
   exports: [
     NgbPopoverModule,
     NgbModalModule,
     NgbTypeaheadModule,
-    NgbButtonsModule
+    NgbButtonsModule,
+    NgbTooltipModule
   ]
 })
 export class NgBootstrapModule { }

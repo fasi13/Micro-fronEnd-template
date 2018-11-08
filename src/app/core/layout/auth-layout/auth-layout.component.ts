@@ -16,7 +16,7 @@ import {
   FetchApplicationData,
   FetchApplicationPath,
   FetchContentGroups,
-  FetchDataTypes
+  FetchDataTypes,
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
 
@@ -32,6 +32,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean> | boolean = true;
   activeSidebar = true;
   search = '';
+  isNavigationModalOpened = false;
 
   private isAliveComponent = true;
 
@@ -55,6 +56,18 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   toggleSidebar(event: Event): void {
     event.stopPropagation();
     this.activeSidebar = !this.activeSidebar;
+  }
+
+  toggleHierarchyNavigation(event: Event): void {
+    event.stopPropagation();
+    this.isNavigationModalOpened = !this.isNavigationModalOpened;
+  }
+
+  onAppSelected(appId: string): void {
+    this.isNavigationModalOpened = false;
+    setTimeout(() => {
+      location.href = `/tenant/${appId}`;
+    }, 500);
   }
 
   private initSelectors(): void {

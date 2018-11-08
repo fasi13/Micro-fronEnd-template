@@ -1,0 +1,46 @@
+<div
+  class="fge-tree--container"
+  [ngClass]="{'fge-tree--container-opened': opened, 'fge-tree--container-closed': !opened}"
+  (click)="clickedInside($event)">
+  <p class="h4 p-3 text-center">Application Hierarchy</p>
+  <ul class="fge-tree">
+    <ng-container
+      [ngTemplateOutlet]="treeviewItem"
+      [ngTemplateOutletContext]="{item: treeData}"
+    ></ng-container>
+  </ul>
+</div>
+
+<ng-template #treeviewItem let-item="item">
+  <li>
+    <a [ngClass]="{'fge-clickable': !item?.isGroup}">
+      <i
+        *ngIf="!item?.loading && !isEmptyItem(item)"
+        class="fge-clickable fas"
+        [ngClass]="{'fa-plus-circle': item?.collapsed, 'fa-minus-circle': !item?.collapsed}"
+        (click)="toggleCollapse(item, $event)"
+      ></i>
+      <i
+        *ngIf="!item?.loading && isEmptyItem(item)"
+        class="fas fa-dot-circle"
+      ></i>
+      <i
+        *ngIf="item?.loading"
+        class="fas fa-circle-notch fa-spin"
+      ></i>
+      <span ngbTooltip="Click to change" [disableTooltip]="item?.isGroup || item?.id === currentApplicationId" placement="right">
+        <a (click)="goToApplication(item?.id)">{{item?.name}}</a>
+      </span>
+      <span *ngIf="item?.isGroup" class="ml-1 badge badge-info">Group</span>
+      <span *ngIf="item?.id === currentApplicationId" class="ml-1 badge badge-success">Current</span>
+      <span *ngIf="isEmptyItem(item)" class="ml-1 badge badge-secondary">Empty</span>
+    </a>
+    <ul *ngIf="!item?.collapsed">
+      <ng-container
+        *ngFor="let currentChild of item?.childrenData"
+        [ngTemplateOutlet]="treeviewItem"
+        [ngTemplateOutletContext]="{item: currentChild}"
+      ></ng-container>
+    </ul>
+  </li>
+</ng-template>
