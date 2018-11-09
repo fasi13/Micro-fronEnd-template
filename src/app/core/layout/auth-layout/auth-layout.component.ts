@@ -17,8 +17,10 @@ import {
   FetchApplicationPath,
   FetchContentGroups,
   FetchDataTypes,
+  getApplicationPath,
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
+import { ApplicationPath } from '../../models';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -27,6 +29,7 @@ import { User, ApplicationBranding, Application } from '@forge/core';
 export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   application: Application;
+  rootApplication: ApplicationPath;
   user: User;
   branding: ApplicationBranding;
   loading$: Observable<boolean> | boolean = true;
@@ -99,6 +102,15 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
         takeWhile(() => this.isAliveComponent)
       )
       .subscribe((branding: ApplicationBranding) => this.applyBranding(branding));
+    this.store.select(getApplicationPath)
+      .pipe(
+        takeWhile(() => this.isAliveComponent)
+      )
+      .subscribe(path => {
+        if (path && path.data) {
+          this.rootApplication = path.data[0];
+        }
+      });
   }
 
   private getCurrentTenantId() {

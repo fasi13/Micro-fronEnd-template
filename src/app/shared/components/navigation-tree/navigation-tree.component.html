@@ -32,7 +32,7 @@
         <a (click)="goToApplication(item?.id)">{{item?.name}}</a>
       </span>
       <span *ngIf="item?.isGroup" class="ml-1 badge badge-info">Group</span>
-      <span *ngIf="item?.id === currentApplicationId" class="ml-1 badge badge-success">Current</span>
+      <span *ngIf="!item?.isGroup && item?.id === currentApplicationId" class="ml-1 badge badge-success">Current</span>
       <span *ngIf="isEmptyItem(item)" class="ml-1 badge badge-secondary">Empty</span>
     </a>
     <ul *ngIf="!item?.collapsed">

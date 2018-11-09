@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isAliveComponent = false;
   }
-  
+
   onSubmitClicked() {
     const { username, password } = this.userCredentials;
     const payload: UserCredentials = {

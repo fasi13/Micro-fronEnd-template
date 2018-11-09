@@ -42,10 +42,10 @@
 </fge-sidebar>
 
 <fge-navigation-tree
-  *ngIf="application"
+  *ngIf="rootApplication"
   [(opened)]="isNavigationModalOpened"
-  [rootApplicationId]="application?.id"
-  [rootApplicationName]="application?.name"
+  [rootApplicationId]="rootApplication?.id"
+  [rootApplicationName]="rootApplication?.name"
   [currentApplicationId]="application?.id"
   (selected)="onAppSelected($event)"
 ></fge-navigation-tree>

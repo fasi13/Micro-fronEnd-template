@@ -11,11 +11,11 @@ import { ApplicationPath } from '@forge/core';
   templateUrl: './bread-crumb.component.html'
 })
 export class BreadCrumbComponent implements OnInit, OnDestroy {
-  
+
   paths: ApplicationPath[];
 
   private isAliveComponent = true;
-  
+
   constructor(
     private store: Store<State>,
   ) { }
