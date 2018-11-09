@@ -2,24 +2,26 @@
   class="fge-dynamic-field form-input"
   [formGroup]="group">
   <label>{{ config.label }}</label>
-  <input
-    [colorPicker]="currentColor"
-    cpOutputFormat="hex"
-    cpPosition="top"
-    cpPositionOffset="1%"
-    [ngClass]="{ 'is-invalid': hasError() }"
-    [value]="currentColor"
-    (colorPickerChange)="group.get(config.name).setValue($event)"
-    (cpInputChange)="group.get(config.name).setValue($event.color)"
-    (cpSliderChange)="group.get(config.name).setValue($event.color)"
-    class="form-control fge-dynamic-form__input"
-    [formControlName]="config.name"
-    [style.backgroundColor]="currentColor">
-  <div class="invalid-feedback">
-    <div *ngFor="let validator of getObjectKeys(config?.validation)">
-      <span *ngIf="hasErrorFor(validator)">
-        {{ config?.validation[validator].errorMsg }}
-      </span>
+  <div class="col pr-0">
+    <input
+      [colorPicker]="currentColor"
+      cpOutputFormat="hex"
+      cpPosition="top"
+      cpPositionOffset="1%"
+      [ngClass]="{ 'is-invalid': hasError() }"
+      [value]="currentColor"
+      (colorPickerChange)="group.get(config.name).setValue($event)"
+      (cpInputChange)="group.get(config.name).setValue($event.color)"
+      (cpSliderChange)="group.get(config.name).setValue($event.color)"
+      class="form-control fge-dynamic-form__input"
+      [formControlName]="config.name"
+      [style.backgroundColor]="currentColor">
+    <div class="invalid-feedback">
+      <div *ngFor="let validator of getObjectKeys(config?.validation)">
+        <span *ngIf="hasErrorFor(validator)">
+          {{ config?.validation[validator].errorMsg }}
+        </span>
+      </div>
     </div>
   </div>
 </div>

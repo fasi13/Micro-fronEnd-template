@@ -2,20 +2,22 @@
   class="fge-dynamic-field form-select"
   [formGroup]="group">
   <label>{{ config.label }}</label>
-  <select
-    [formControlName]="config.name"
-    [ngClass]="{ 'is-invalid': hasError() }"
-    class="form-control fge-dynamic-form__select">
-    <option value="">{{ config.placeholder }}</option>
-    <option *ngFor="let option of config.options">
-      {{ option }}
-    </option>
-  </select>
-  <div class="invalid-feedback">
-    <div *ngFor="let validator of getObjectKeys(config?.validation)">
-      <span *ngIf="hasErrorFor(validator)">
-        {{config?.validation[validator].errorMsg}}
-      </span>
+  <div class="col pr-0">
+    <select
+      [formControlName]="config.name"
+      [ngClass]="{ 'is-invalid': hasError() }"
+      class="form-control fge-dynamic-form__select">
+      <option value="">{{ config.placeholder }}</option>
+      <option *ngFor="let option of config.options">
+        {{ option }}
+      </option>
+    </select>
+    <div class="invalid-feedback">
+      <div *ngFor="let validator of getObjectKeys(config?.validation)">
+        <span *ngIf="hasErrorFor(validator)">
+          {{config?.validation[validator].errorMsg}}
+        </span>
+      </div>
     </div>
   </div>
 </div>

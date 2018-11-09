@@ -74,9 +74,13 @@
 
 .fge-dynamic-field {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   label {
+    width: 25%;
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     letter-spacing: 0px;
     margin-bottom: 10px;

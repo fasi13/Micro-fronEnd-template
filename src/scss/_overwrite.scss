@@ -30,6 +30,18 @@ body {
   border-top: none !important;
 }
 
+.modal-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-header {
+  text-align: center;
+  padding: 1rem !important;
+}
 .notifier__container {
   ul {
     margin-bottom: initial;
