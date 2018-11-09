@@ -1,0 +1,17 @@
+.fge-bread-crumb {
+    padding: 0 1rem;
+    .breadcrumb {
+        padding: 0;
+        margin-bottom: 0;
+        background-color: initial;
+        .badge {
+            font-size: 90%;
+        }
+        a {
+            color: white;
+        }
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: white; 
+    }
+}

@@ -14,7 +14,9 @@ import {
   SearchApplicationError,
   ApplicationAction,
   FetchDataTypesSuccess,
-  FetchDataTypesError
+  FetchDataTypesError,
+  FetchApplicationPathSuccess,
+  FetchApplicationPathError
 } from './application.actions';
 import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath, DataType } from '../../models';
 import { ApplicationService } from '../../services/application.service';
@@ -89,6 +91,19 @@ export class ApplicationEffects {
             return new FetchDataTypesSuccess(response);
           }),
           catchError(error => of(new FetchDataTypesError({ error })))
+        )
+      )
+    );
+
+  @Effect() public fetchApplicationPath$: Observable<Action> = this.actions
+    .pipe(
+      ofType(ApplicationActionTypes.FETCH_APPLICATION_PATH),
+      switchMap((action: ApplicationAction) => this.applicationService.getApplicationPath(action.payload)
+        .pipe(
+          map((response: ApiResponse<ApplicationPath>) => {
+            return new FetchApplicationPathSuccess(response);
+          }),
+          catchError(error => of(new FetchApplicationPathError({ error })))
         )
       )
     );

@@ -8,6 +8,9 @@ export const ApplicationActionTypes = {
     FETCH_APPLICATION_DATA: ActionType('FETCH_APPLICATION_DATA'),
     FETCH_APPLICATION_DATA_SUCCESS: ActionType('FETCH_APPLICATION_DATA_SUCCESS'),
     FETCH_APPLICATION_DATA_ERROR: ActionType('FETCH_APPLICATION_DATA_ERROR'),
+    FETCH_APPLICATION_PATH: ActionType('FETCH_APPLICATION_PATH'),
+    FETCH_APPLICATION_PATH_SUCCESS: ActionType('FETCH_APPLICATION_PATH_SUCCESS'),
+    FETCH_APPLICATION_PATH_ERROR: ActionType('FETCH_APPLICATION_PATH_ERROR'),
     SEARCH_APPLICATION: ActionType('SEARCH_APPLICATION'),
     SEARCH_APPLICATION_SUCCESS: ActionType('SEARCH_APPLICATION_SUCCESS'),
     SEARCH_APPLICATION_ERROR: ActionType('SEARCH_APPLICATION_ERROR'),
@@ -31,6 +34,21 @@ export class FetchApplicationDataSuccess implements Action {
 
 export class FetchApplicationDataError implements Action {
   public type: string = ApplicationActionTypes.FETCH_APPLICATION_DATA_ERROR;
+  constructor(public payload?: any) {}
+}
+
+export class FetchApplicationPath implements Action {
+    public type: string = ApplicationActionTypes.FETCH_APPLICATION_PATH;
+    constructor(public payload?: any) {}
+}
+
+export class FetchApplicationPathSuccess implements Action {
+  public type: string = ApplicationActionTypes.FETCH_APPLICATION_PATH_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class FetchApplicationPathError implements Action {
+  public type: string = ApplicationActionTypes.FETCH_APPLICATION_PATH_ERROR;
   constructor(public payload?: any) {}
 }
 
@@ -68,6 +86,9 @@ export type ApplicationAction =
   FetchApplicationData |
   FetchApplicationDataSuccess |
   FetchApplicationDataError |
+  FetchApplicationPath |
+  FetchApplicationPathSuccess |
+  FetchApplicationPathError |
   SearchApplication |
   SearchApplicationSuccess |
   SearchApplicationError |

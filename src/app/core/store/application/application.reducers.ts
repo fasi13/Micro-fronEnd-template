@@ -20,6 +20,11 @@ export interface ApplicationState {
     loading: boolean,
     error?: string;
   };
+  path: {
+    data: ApplicationPath[],
+    loading: boolean,
+    error?: string;
+  };
 }
 
 const initialState: ApplicationState = {
@@ -31,6 +36,10 @@ const initialState: ApplicationState = {
     loading: false
   },
   types: {
+    data: null,
+    loading: false
+  },
+  path: {
     data: null,
     loading: false
   }
@@ -74,6 +83,30 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
       });
     }
 
+    case ApplicationActionTypes.FETCH_APPLICATION_PATH:
+      return _assign({}, state, {
+        path: {
+          data: undefined,
+          loading: true
+        }
+      });
+
+    case ApplicationActionTypes.FETCH_APPLICATION_PATH_SUCCESS:
+      return _assign({}, state, {
+        path: {
+          data: action.payload.data.path,
+          loading: false
+        }
+      });
+
+    case ApplicationActionTypes.FETCH_APPLICATION_PATH_ERROR:
+      return _assign({}, state, {
+        path: {
+          error: action.payload.error.message,
+          loading: false
+        }
+      });
+    
     case ApplicationActionTypes.SEARCH_APPLICATION:
       return _assign({}, state, {
         search: {
@@ -182,3 +215,11 @@ export const isLoadingDataTypes = (state: ApplicationState) => state.types.loadi
  * @returns {DataType[]}
  */
 export const getDataTypes = (state: ApplicationState) => state.types.data;
+
+/**
+ * Returns the current application path.
+ * @function getApplicationPath
+ * @param {State} state
+ * @returns {Application}
+ */
+export const getApplicationPath = (state: ApplicationState) => state.path;

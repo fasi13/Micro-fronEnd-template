@@ -1,0 +1,13 @@
+<nav class="fge-bread-crumb" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" *ngFor="let path of paths; let last = last;">
+      <span class="badge badge-light" *ngIf="last; else notTheLast">
+        {{path.name}}
+      </span>
+      <ng-template #notTheLast>
+        <a href="{{'/tenant/' + path.id}}">{{path.name}}</a> 
+      </ng-template>
+    </li>
+  </ol>
+</nav>
+  

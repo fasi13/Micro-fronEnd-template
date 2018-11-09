@@ -7,9 +7,7 @@
     <div class="navbar-toggler" (click)="toggleSidebar($event)">
       <i class="fas fa-bars text-light"></i>
     </div>
-    <a class="navbar-brand fge-navbar--brand" href="{{branding?.siteUrl?.value}}" target="_blank" tabindex="0">
-      {{ application?.name }}
-    </a>
+    <fge-bread-crumb class="mr-auto"></fge-bread-crumb>
     <div class="form-inline my-2 my-lg-0">
       <fge-search-application></fge-search-application>
       <div class="dropdown">

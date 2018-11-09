@@ -14,6 +14,7 @@ import {
   getApplicationBranding,
   isLoadingApplicationData,
   FetchApplicationData,
+  FetchApplicationPath,
   FetchContentGroups,
   FetchDataTypes
 } from '@forge/core-store';
@@ -76,6 +77,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         const applicationId = this.getCurrentTenantId();
         this.store.dispatch(new FetchApplicationData(applicationId));
+        this.store.dispatch(new FetchApplicationPath(applicationId));
         this.store.dispatch(new FetchContentGroups({ applicationId }));
         this.store.dispatch(new FetchDataTypes(this.getCurrentTenantId()));
       });

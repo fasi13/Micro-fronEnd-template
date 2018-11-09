@@ -16,6 +16,7 @@ import { FieldSelectComponent } from './components/dynamic-form/fields/field-sel
 import { FieldImageComponent } from './components/dynamic-form/fields/field-image/field-image.component';
 import { FieldDocumentComponent } from './components/dynamic-form/fields/field-document/field-document.component';
 import { FieldColorComponent } from './components/dynamic-form/fields/field-color/field-color.component';
+import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { FieldColorComponent } from './components/dynamic-form/fields/field-colo
     FieldSelectComponent,
     FieldImageComponent,
     FieldDocumentComponent,
-    FieldColorComponent
+    FieldColorComponent,
+    BreadCrumbComponent
   ],
   exports: [
     FormsModule,
@@ -46,6 +48,7 @@ import { FieldColorComponent } from './components/dynamic-form/fields/field-colo
     SplashScreenComponent,
     SearchApplicationComponent,
     DynamicFormComponent,
+    BreadCrumbComponent
   ],
   entryComponents: [
     FieldButtonComponent,

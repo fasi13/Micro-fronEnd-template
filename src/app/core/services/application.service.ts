@@ -16,12 +16,16 @@ export class ApplicationService {
 
   performRequest<T>({ method, href }: HateoasAction, body?: any): Observable<T> {
     const httpMethod = this.httpClient[method];
-    const args = body ? [ href, body ] : [ href ]; 
+    const args = body ? [ href, body ] : [ href ];
     return httpMethod.call(this.httpClient, ...args);
   }
 
   getApplicationInfo(applicationId: number): Observable<ApiResponse<Application>> {
     return this.httpClient.get<ApiResponse<Application>>(`/application/${applicationId}`);
+  }
+
+  getApplicationPath(applicationId: number): Observable<ApiResponse<ApplicationPath>> {
+    return this.httpClient.get<ApiResponse<ApplicationPath>>(`/application/${applicationId}/path`);
   }
 
   getContentFor({ href }: HateoasAction, name: string): Observable<ApiResponse<DataPaginated<ApplicationContent>>> {
