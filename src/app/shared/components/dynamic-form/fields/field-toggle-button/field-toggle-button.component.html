@@ -1,31 +1,15 @@
-<div 
-  class="fge-dynamic-field form-input" 
-  [formGroup]="group">
-     <div class="btn-group btn-group-toggle fge-group--btn-group-toggle"
-        ngbRadioGroup name="radioBasic"
-        [(ngModel)]="displayMode">
-        <label ngbButtonLabel class="btn-primary btn-sm">
-            <input ngbButton type="radio" value="true">
-            active
-        </label>
-        <label ngbButtonLabel class="btn btn-sm">
-            <input ngbButton type="radio" value="false">
-            inactive
-        </label>
-
-    </div>
-  <!-- <label>{{ config.label }}</label>
-  <input
-    type="text"
-    [ngClass]="{ 'is-invalid': hasError() }"
-    class="form-control fge-dynamic-form__input"
-    [attr.placeholder]="config?.placeholder"
+<div class="fge-dynamic-field form-input"  [formGroup]="group">
+  <label>{{ config.label }}</label>
+  <div class="btn-group btn-group-toggle"
+    ngbRadioGroup name="radioBasic" 
     [formControlName]="config?.name">
-  <div class="invalid-feedback">
-    <div *ngFor="let validator of getObjectKeys(config?.validation)">
-      <span *ngIf="hasErrorFor(validator)">
-        {{config?.validation[validator].errorMsg}}
-      </span>
-    </div>
-  </div> -->
+    <label ngbButtonLabel
+      [ngClass]="{'btn-primary': currentControl.value === 'true', 'btn-secondary': currentControl.value === 'false'}">
+      <input ngbButton type="radio" value="true"> {{ config?.value[0] }}
+    </label>
+    <label ngbButtonLabel
+      [ngClass]="{'btn-primary': currentControl.value === 'false', 'btn-secondary': currentControl.value === 'true'}">
+      <input ngbButton type="radio" value="false"> {{ config?.value[1] }}
+    </label>
+  </div>
 </div>

@@ -46,4 +46,9 @@ export class UserService {
     const url = `${this.baseUrl}`;
     return this.httpClient.put(url, updatedUser);
   }
+
+  geUsers(): Observable<any> {
+    const url = `${this.baseUrl}`;
+    return this.httpClient.get(url);
+  }
 }

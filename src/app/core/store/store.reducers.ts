@@ -67,6 +67,17 @@ export const getContentRecordState = createSelector(getContentState, ContentRedu
 /**********************************************************
  * User Management Reducers
  *********************************************************/
-export const isNewUserCreating = createSelector(getAuthorizationState, UserManagementReducers.isNewUserCreating);
-export const isNewUserCreated = createSelector(getAuthorizationState, UserManagementReducers.isNewUserCreated);
-export const getNewUserError = createSelector(getAuthorizationState, UserManagementReducers.getNewUserError);
+export const getUserState = (state: State) => {
+  return state.userManagement;
+};
+export const isNewUserCreating = createSelector(getUserState, UserManagementReducers.isNewUserCreating);
+export const isNewUserCreated = createSelector(getUserState, UserManagementReducers.isNewUserCreated);
+export const getNewUserError = createSelector(getUserState, UserManagementReducers.getNewUserError);
+
+export const isUserUpdating = createSelector(getUserState, UserManagementReducers.isUserUpdating);
+export const isUserUpdated = createSelector(getUserState, UserManagementReducers.isUserUpdated);
+export const getUserUpdateError = createSelector(getUserState, UserManagementReducers.getUserUpdateError);
+
+export const isUserFetching = createSelector(getUserState, UserManagementReducers.isUserFetching);
+export const isFetchedUsers = createSelector(getUserState, UserManagementReducers.isFetchedUsers);
+export const getUsersError = createSelector(getUserState, UserManagementReducers.getUsersError);

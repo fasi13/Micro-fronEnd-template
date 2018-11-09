@@ -4,7 +4,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { NewUser, NewUserAction, State, isNewUserCreated, getNewUserError } from '@forge/core';
+import { NewUser, NewUserAction, State, isNewUserCreated, getNewUserError, isUserUpdated, getUserUpdateError } from '@forge/core';
 // import { State, getApplicationInfo, Application } from '../../../core/store/store.reducers';
 
 import { Store } from '@ngrx/store';
@@ -12,8 +12,7 @@ import { takeWhile, filter } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { config as fieldConfiguration } from './user-form-modal.config';
-
-
+import { configUpdate as fieldUpdateConfiguration } from './user-form-update-modal.config';
 
 @Component({
     selector: 'fge-user-form-modal',
@@ -43,7 +42,7 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
         ) { }
 
     ngOnInit() {
-      this.config = _clone(fieldConfiguration);
+        // this.config = this.mode === 'CREATE' ? _clone(fieldConfiguration) : _clone(fieldUpdateConfiguration);
     }
 
     ngOnDestroy() {
@@ -55,9 +54,12 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
         if (user) {
             this.user = user;
             this.applicationID = user.applicationId;
+            this.config = _clone(fieldUpdateConfiguration);
+            this.handleUpdateUser();
         } else {
             this.user = {};
             this.user.applicationName = '';
+            this.config = _clone(fieldConfiguration);
             this.setCurrentApplicationId();
             this.handleNewUser();
         }
@@ -76,6 +78,27 @@ export class UserFormModalComponent implements OnInit, OnDestroy {
             this.subscriptionHandlers();
         });
         this.store.select(getNewUserError)
+        .pipe(
+            takeWhile(() => this.isAliveComponent)
+        )
+        .subscribe((error) => {
+            this.error = error;
+            this.subscriptionHandlers();
+        });
+    }
+
+    private handleUpdateUser(): void {
+        this.store.select(isUserUpdated)
+        .pipe(
+            takeWhile(() => this.isAliveComponent),
+            filter(isReseted => isReseted),
+        )
+        .subscribe(() => {
+            this.notifierService.notify('success', this.getNotificationMsg());
+            this.createCompleted = true;
+            this.subscriptionHandlers();
+        });
+        this.store.select(getUserUpdateError)
         .pipe(
             takeWhile(() => this.isAliveComponent)
         )
