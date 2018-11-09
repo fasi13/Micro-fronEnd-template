@@ -1,5 +1,5 @@
-<div class="fge-group--title">
-  <h4 class="fge-group--title-divider my-2">
+<div class="fge-group--title row">
+  <h4 class="my-2 col-10">
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     Content Groups
     <div class="btn-group btn-group-toggle fge-group--btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="displayMode">
@@ -13,7 +13,7 @@
       </label>
     </div>
   </h4>
-  <button type="button" class="btn btn-link"><i class="far fa-plus-square fa-lg" (click)="groupFormModal.open()"></i></button>
+  <button type="button" class="btn btn-link col-2"><i class="fas fa-folder-plus fa-lg" (click)="groupFormModal.open()"></i></button>
 </div>
 <div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>
 
