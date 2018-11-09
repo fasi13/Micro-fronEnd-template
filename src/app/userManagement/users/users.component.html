@@ -22,7 +22,8 @@
             <td>{{user.userName}}</td>
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>
-            <td>{{user.status}}</td>
+            <td *ngIf="user.status">Active</td>
+            <td *ngIf="!user.status">Desactive</td>
             <td>{{user.groupApplication}}</td>
             <td>{{user.applicationName}}</td>
             <td>

@@ -30,17 +30,17 @@ export class NewUserSuccessAction implements Action {
 }
 
 export class UpdateUserAction implements Action {
-    public type: string = UserManagementTypes.NEW_USER;
+    public type: string = UserManagementTypes.UPDATE_USER;
     constructor(public payload?: any) {}
 }
 
 export class UpdateUserErrorAction implements Action {
-    public type: string = UserManagementTypes.NEW_USER_ERROR;
+    public type: string = UserManagementTypes.UPDATE_USER_ERROR;
     constructor(public payload?: any) {}
 }
 
 export class UpdateUserSuccessAction implements Action {
-    public type: string = UserManagementTypes.NEW_USER_SUCCESS;
+    public type: string = UserManagementTypes.UPDATE_USER_SUCCESS;
     constructor(public payload?: any) {}
 }
 

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
+import { UserFormModalComponent } from '../shared/user-form-modal/user-form-modal';
 
 @Component({
     selector: 'fge-users',
@@ -7,15 +10,20 @@ import { Component, OnInit } from '@angular/core';
 
 export class UsersComponent implements OnInit {
     userMock: Array<any>;
+    modalRef: NgbModalRef;
+
+    constructor(
+        private modalService: NgbModal
+    ) { }
     ngOnInit() {
         this.userMock = [
             {
-                userId: 1035,
-                userName: 'danielcC',
-                firstName: 'daniel',
-                lastName: 'canqui',
+                userId: 1053,
+                userName: 'fidel12',
+                firstName: 'fidel',
+                lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
-                status: 'active',
+                status: true,
                 groupApplication: 'Corporation',
                 applicationName: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
@@ -26,7 +34,7 @@ export class UsersComponent implements OnInit {
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
-                status: 'active',
+                status: false,
                 groupApplication: 'Corporation',
                 applicationName: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
@@ -37,11 +45,15 @@ export class UsersComponent implements OnInit {
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
-                status: 'active',
+                status: true,
                 groupApplication: 'Corporation',
                 applicationName: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
             }
         ];
+    }
+
+    openContentForm(): void {
+        this.modalRef = this.modalService.open(UserFormModalComponent);
     }
 }

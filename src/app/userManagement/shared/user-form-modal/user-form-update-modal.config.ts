@@ -4,13 +4,6 @@ import { FieldConfig } from '@forge/shared';
 
 export const configUpdate: FieldConfig[] = [
     {
-        type: 'toggleButton',
-        label: 'Account Status',
-        name: 'activeUser',
-        validation: {},
-        value: ['Active', 'Desactive']
-    },
-    {
         type: 'text',
         label: 'First Name',
         name: 'firstName',
@@ -65,6 +58,14 @@ export const configUpdate: FieldConfig[] = [
             validator: Validators.email
             }
         }
+    },
+    {
+        type: 'toggleButton',
+        label: 'Account Status',
+        name: 'activeUser',
+        validation: {},
+        value: true,
+        options: ['Active', 'Desactive']
     },
     {
         label: 'Save',

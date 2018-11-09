@@ -60,7 +60,8 @@ export const config: FieldConfig[] = [
         label: 'Account Status',
         name: 'activeUser',
         validation: {},
-        value: ['Active', 'Desactive']
+        value: true,
+        options: ['Active', 'Desactive']
     },
     {
         type: 'text',

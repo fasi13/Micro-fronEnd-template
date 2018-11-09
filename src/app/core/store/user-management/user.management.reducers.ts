@@ -1,6 +1,5 @@
 import _assign from 'lodash/assign';
 
-// import { NewUser, UpdateUser } from '../../models';
 import { UserManagementTypes, UserManagementAcctions } from './user-management.actions';
 
 export interface UserManagementStade {
@@ -42,7 +41,8 @@ export function reducer(state: any = initialState, action: UserManagementAcction
 
         case UserManagementTypes.NEW_USER_SUCCESS:
           return Object.assign({}, state, {
-            createdUser: true
+            createdUser: true,
+            data: action.payload
           });
           case UserManagementTypes.UPDATE_USER:
           return Object.assign({}, state, {
@@ -61,10 +61,6 @@ export function reducer(state: any = initialState, action: UserManagementAcction
             updatedUser: true
           });
 
-          case UserManagementTypes.NEW_USER_SUCCESS:
-          return Object.assign({}, state, {
-            createdUser: true
-          });
           case UserManagementTypes.FETCH_USER:
           return Object.assign({}, state, {
             error: undefined,
