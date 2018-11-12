@@ -22,13 +22,16 @@
             <td>{{user.userName}}</td>
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>
-            <td *ngIf="user.status">Active</td>
-            <td *ngIf="!user.status">Desactive</td>
+            <td *ngIf="user.isActive">Active</td>
+            <td *ngIf="!user.isActive">Desactive</td>
             <td>{{user.groupApplication}}</td>
             <td>{{user.applicationName}}</td>
             <td>
                 <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
-                    <i class="far fa-edit"></i>
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
+                    <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
                 </a>
             </td>
         </tr>

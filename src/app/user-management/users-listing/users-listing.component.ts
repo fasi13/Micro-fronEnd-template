@@ -17,7 +17,7 @@ export class UsersListgingComponent implements OnInit {
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
-                status: true,
+                isActive: true,
                 groupApplication: 'Corporation',
                 applicationName: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
@@ -28,7 +28,7 @@ export class UsersListgingComponent implements OnInit {
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
-                status: false,
+                isActive: false,
                 groupApplication: 'Corporation',
                 applicationName: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
@@ -39,7 +39,7 @@ export class UsersListgingComponent implements OnInit {
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
-                status: true,
+                isActive: true,
                 groupApplication: 'Corporation',
                 applicationName: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752

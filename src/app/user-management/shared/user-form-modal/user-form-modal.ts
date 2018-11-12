@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile, filter } from 'rxjs/operators';
@@ -27,10 +26,8 @@ export class UserFormModalComponent {
     @ViewChild('modalTemplate') modalContent: ElementRef;
     @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
-    createCompleted: boolean;
     mode: 'CREATE' | 'EDIT';
     applicationID: number;
-    loading: Observable<boolean> | boolean = false;
     user: any;
     config: FieldConfig[];
     private isAliveComponent = true;
@@ -70,7 +67,6 @@ export class UserFormModalComponent {
         )
         .subscribe((response) => {
             console.log(response);
-            this.createCompleted = true;
             this.modalService.dismissAll();
         });
     }
@@ -82,13 +78,11 @@ export class UserFormModalComponent {
             filter(isUserUpdated => isUserUpdated),
         )
         .subscribe(() => {
-            this.createCompleted = true;
             this.modalService.dismissAll();
         });
     }
 
     submit(userForm: any): void {
-        this.createCompleted = false;
         if (this.mode === 'CREATE') {
             const payload: NewUser = {
                 userName: userForm.userName,
