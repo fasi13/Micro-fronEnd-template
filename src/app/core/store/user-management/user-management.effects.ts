@@ -24,9 +24,8 @@ export class UserManagamentEffects {
       ofType(UserManagementTypes.NEW_USER),
         switchMap((action: any) => this.userService.createNewUser(action.payload)
             .pipe(
-              map((response: any) => {
+              map(() => {
                 this.notifierService.notify('success', 'The user has been created successfully');
-                console.log('changes success using this thing.', response);
                 return new NewUserSuccessAction({ response: 'success changes.'});
               }),
               catchError((error) => {
@@ -41,9 +40,8 @@ export class UserManagamentEffects {
       ofType(UserManagementTypes.UPDATE_USER),
       switchMap((action: any) => this.userService.updetedUser(action.payload)
           .pipe(
-            map((response: any) => {
+            map(() => {
               this.notifierService.notify('success', 'The user has been updated successfully');
-              console.log('Updated success using this thing.', response);
               return new UpdateUserSuccessAction({ response: 'success changes.'});
             }),
             catchError((error) => {
@@ -59,8 +57,7 @@ export class UserManagamentEffects {
       ofType(UserManagementTypes.FETCH_USER),
       switchMap(() => this.userService.geUsers()
           .pipe(
-            map((response: any) => {
-              console.log('Updated success using this thing.', response);
+            map(() => {
               return new FetchUserAction({ response: 'success changes.'});
             }),
             catchError(error => of(new FetchUserErrorAction({error: error})))

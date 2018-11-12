@@ -1,21 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
-import { UserFormModalComponent } from '../shared/user-form-modal/user-form-modal';
 
 @Component({
     selector: 'fge-users',
-    templateUrl: './users.component.html'
+    templateUrl: './users-listing.component.html'
 })
 
-export class UsersComponent implements OnInit {
+export class UsersListgingComponent implements OnInit {
     userMock: Array<any>;
-    modalRef: NgbModalRef;
 
-    constructor(
-        private modalService: NgbModal
-    ) { }
     ngOnInit() {
+        // TODO removed when API listing is implemented.
         this.userMock = [
             {
                 userId: 1053,
@@ -51,9 +45,5 @@ export class UsersComponent implements OnInit {
                 applicationId: 3752
             }
         ];
-    }
-
-    openContentForm(): void {
-        this.modalRef = this.modalService.open(UserFormModalComponent);
     }
 }

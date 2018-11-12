@@ -10,16 +10,12 @@ export interface AuthorizationState {
   loaded: boolean;
   loading: boolean;
   user?: User;
-  creatingUser: boolean;
-  createdUser: boolean;
 }
 
 const initialState: AuthorizationState = {
   authenticated: null,
   loaded: false,
-  loading: false,
-  creatingUser: false,
-  createdUser: false
+  loading: false
 };
 
 export function reducer(state: any = initialState, action: AuthorizationActions): AuthorizationState {

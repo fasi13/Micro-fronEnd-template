@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import * as AuthorizationReducers from './authorization/authorization.reducers';
 import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
-import * as UserManagementReducers from './user-management/user.management.reducers';
+import * as UserManagementReducers from './user-management/user-management.reducers';
 
 export interface State {
     router: RouterReducerState;

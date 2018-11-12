@@ -28,7 +28,7 @@ const routes: Routes = [
           },
           {
             path: 'usersManagement',
-            loadChildren: './userManagement/userManagement.module#UserManagementModule'
+            loadChildren: './user-management/user-management.module#UserManagementModule'
           }
         ]
       }

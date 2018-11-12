@@ -21,7 +21,6 @@ import { NavigationTreeComponent } from './components/navigation-tree/navigation
 import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
 import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
 import { FieldEmailComponent } from './components/dynamic-form/fields/field-email/field-email.component';
-import { FieldCheckboxComponent } from './components/dynamic-form/fields/field-checkbox/field-checkbox.component';
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 
 @NgModule({
@@ -50,7 +49,6 @@ import { FieldToggleButtonComponent } from './components/dynamic-form/fields/fie
     HighlightSearchDirective,
     FieldPasswordComponent,
     FieldEmailComponent,
-    FieldCheckboxComponent,
     FieldToggleButtonComponent
   ],
   exports: [
@@ -72,7 +70,6 @@ import { FieldToggleButtonComponent } from './components/dynamic-form/fields/fie
     FieldColorComponent,
     FieldPasswordComponent,
     FieldEmailComponent,
-    FieldCheckboxComponent,
     FieldToggleButtonComponent
   ]
 })

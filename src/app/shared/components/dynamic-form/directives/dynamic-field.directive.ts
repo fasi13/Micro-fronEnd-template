@@ -21,7 +21,6 @@ import { FieldDocumentComponent } from '../fields/field-document/field-document.
 import { FieldColorComponent } from '../fields/field-color/field-color.component';
 import { FieldPasswordComponent } from '../fields/field-password/field-password.component';
 import { FieldEmailComponent } from '../fields/field-email/field-email.component';
-import { FieldCheckboxComponent } from '../fields/field-checkbox/field-checkbox.component';
 import { FieldToggleButtonComponent } from '../fields/field-toggle-button/field-toggle-button.component';
 
 const components: {[type: string]: Type<FormField>} = {
@@ -33,7 +32,6 @@ const components: {[type: string]: Type<FormField>} = {
   color: FieldColorComponent,
   password: FieldPasswordComponent,
   email: FieldEmailComponent,
-  checkbox: FieldCheckboxComponent,
   toggleButton: FieldToggleButtonComponent
 };
 

@@ -1,22 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, SearchApplication, ApplicationPath, isLoadingSearchApplication, getSearchApplicationList } from '@forge/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { FormField } from '../dynamic-form/models/form-field.abstract';
 
 @Component({
   selector: 'fge-search-application',
   templateUrl: './search-application.component.html',
 })
-export class SearchApplicationComponent extends FormField implements OnInit {
-
-  @Input() isInputForm: boolean;
-  @Input() defaultName: string;
-  @Output() applicationId = new EventEmitter<number>();
+export class SearchApplicationComponent implements OnInit {
 
   loading$: Observable<boolean>;
-  items$: Observable<ApplicationPath[]>;
+  items$: Observable<ApplicationPath[]>
   search: string;
   openResults = false;
 
@@ -24,13 +19,10 @@ export class SearchApplicationComponent extends FormField implements OnInit {
 
   constructor(
     private store: Store<State>
-  ) {
-    super();
-  }
+  ) { }
 
   ngOnInit() {
     this.initSelectors();
-    this.search = this.defaultName;
     this.searchSubject.
       pipe(
         debounceTime(300),
@@ -84,11 +76,6 @@ export class SearchApplicationComponent extends FormField implements OnInit {
       }
     });
     return strPath;
-  }
-
-  updateInput({ path }: ApplicationPath): void {
-    this.applicationId.emit(+path[path.length - 1].id);
-    this.search = path[path.length - 1].name;
   }
 
   private initSelectors(): void {
