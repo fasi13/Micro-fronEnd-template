@@ -18,8 +18,8 @@ export const config: FieldConfig[] = [
         validator: Validators.minLength(2)
       },
       maxlength: {
-        errorMsg: 'Name should not have more than 15 characters',
-        validator: Validators.maxLength(15)
+        errorMsg: 'Name should not have more than 100 characters',
+        validator: Validators.maxLength(100)
       }
     }
   },
@@ -36,6 +36,10 @@ export const config: FieldConfig[] = [
       minlength: {
         errorMsg: 'Description should have at least 2 characters',
         validator: Validators.minLength(2)
+      },
+      maxlength: {
+        errorMsg: 'Description should not have more than 1000 characters',
+        validator: Validators.maxLength(1000)
       }
     }
   },
