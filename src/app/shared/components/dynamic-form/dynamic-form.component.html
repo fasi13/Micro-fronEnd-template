@@ -8,4 +8,26 @@
     [config]="field"
     [group]="currentForm">
   </ng-container>
+  <div class="form-group" *ngIf="errors">
+    <div class="fge-dynamic-form--error" *ngFor="let error of errors">
+      <i class="fas fa-exclamation-circle pr-1"></i>
+      {{ error }}
+    </div>
+  </div>
+  <div class="fge-dynamic-field form-button">
+    <button
+      class="fge-dynamic-form__button btn-primary bg-primary ml-auto"
+      type="submit"
+      [disabled]="loadingAsyncResponse">
+      Save
+      <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin px-1"></i>
+    </button>
+    <button
+      type="button"
+      class="fge-dynamic-form__button btn-secondary ml-2"
+      (click)="handleCancel($event)"
+      [disabled]="loadingAsyncResponse">
+      Cancel
+    </button>
+  </div>
 </form>

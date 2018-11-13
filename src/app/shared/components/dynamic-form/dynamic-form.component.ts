@@ -25,10 +25,12 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   get fieldsConfig() {
     return this.config;
   }
-
   @Output() readonly onsubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly oncancel: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
+  errors: string[];
+  loadingAsyncResponse: boolean;
 
   get controls(): any {
     return this.config.filter((fieldConfig: FieldConfig) => fieldConfig && fieldConfig.type !== 'button');
@@ -95,13 +97,33 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
 
   handleSubmit(event: Event) {
     if (this.form.valid) {
+      this.resetAsyncFlags();
       event.preventDefault();
       event.stopPropagation();
-      this.onsubmit.emit(this.value);
+      this.onsubmit.emit({
+        value: this.value,
+        success: this.asyncSuccess.bind(this),
+        error: this.asyncError.bind(this)
+      });
     } else {
       this.validateAllFormFields();
       this.setDisabled('save', !this.form.valid);
     }
+  }
+
+  handleCancel(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.oncancel.emit();
+  }
+
+  asyncSuccess() {
+    this.loadingAsyncResponse = false;
+  }
+
+  asyncError(errorMsg: string[]) {
+    this.loadingAsyncResponse = false;
+    this.errors = errorMsg;
   }
 
   setDisabled(name: string, disable: boolean) {
@@ -121,6 +143,11 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
 
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, { emitEvent: true });
+  }
+
+  private resetAsyncFlags() {
+    this.loadingAsyncResponse = true;
+    this.errors = null;
   }
 
   private getValidators(validationConfig: any): ValidatorFn[] {
