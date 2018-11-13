@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'fge-modal-confirm',
@@ -6,6 +7,11 @@ import { Component, Input } from '@angular/core';
 })
 
 export class ModalConfirmComponent {
-    @Input() title;
-    @Input() message;
+    @ViewChild('modalConfirmTemplate') modalContent: ElementRef;
+
+    constructor(private modalService: NgbModal) { }
+
+    open(): void {
+        this.modalService.open(this.modalContent);
+    }
 }

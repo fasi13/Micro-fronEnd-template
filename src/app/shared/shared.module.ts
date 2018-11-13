@@ -22,6 +22,7 @@ import { HighlightSearchDirective } from './components/search-application/highli
 import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
 import { FieldEmailComponent } from './components/dynamic-form/fields/field-email/field-email.component';
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { FieldToggleButtonComponent } from './components/dynamic-form/fields/fie
     HighlightSearchDirective,
     FieldPasswordComponent,
     FieldEmailComponent,
-    FieldToggleButtonComponent
+    FieldToggleButtonComponent,
+    ModalConfirmComponent
   ],
   exports: [
     FormsModule,
@@ -60,6 +62,7 @@ import { FieldToggleButtonComponent } from './components/dynamic-form/fields/fie
     DynamicFormComponent,
     BreadCrumbComponent,
     NavigationTreeComponent
+    ModalConfirmComponent
   ],
   entryComponents: [
     FieldButtonComponent,
