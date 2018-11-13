@@ -10,6 +10,7 @@
   <fge-dynamic-form
     [fieldsConfig]="config"
     #form="fgeDynamicForm"
-    (onsubmit)="submit($event)">
+    (onsubmit)="handleSubmit($event)"
+    (oncancel)="handleCancel()">
   </fge-dynamic-form>
 </div>

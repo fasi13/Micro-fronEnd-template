@@ -55,10 +55,5 @@ export const config: FieldConfig[] = [
         validator: Validators.required
       },
     }
-  },
-  {
-    label: 'Save',
-    name: 'save',
-    type: 'button'
   }
 ];

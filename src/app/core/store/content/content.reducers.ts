@@ -1,18 +1,22 @@
 import _assign from 'lodash/assign';
 
-import { ApplicationContent, ContentGroup } from "../../models";
+import { ApplicationContent, ContentGroup } from '../../models';
 import { ContentActionTypes, ContentActions } from './content.actions';
 
 export interface ContentState {
   groups: {
     loading: boolean,
     items: ApplicationContent[],
-  },
+  };
   group: {
     loading: boolean,
     data: ContentGroup,
-  },
-  error?: any
+  };
+  record: {
+    loading: boolean,
+    error?: any
+  };
+  error?: any;
 }
 
 const initialState: ContentState = {
@@ -23,6 +27,10 @@ const initialState: ContentState = {
   group: {
     loading: false,
     data: null
+  },
+  record: {
+    loading: false,
+    error: null
   }
 };
 
@@ -67,6 +75,30 @@ export function reducer(state: any = initialState, action: ContentActions): Cont
         error: action.payload
       });
 
+    case ContentActionTypes.CONTENT_RECORD_TRANSACTION:
+      return _assign({}, state, {
+        record: {
+          loading: true,
+          error: null
+        },
+      });
+
+    case ContentActionTypes.CONTENT_RECORD_TRANSACTION_COMPLETED:
+      return _assign({}, state, {
+        record: {
+          loading: false,
+          error: null
+        },
+      });
+
+    case ContentActionTypes.CONTENT_RECORD_TRANSACTION_ERROR:
+      return _assign({}, state, {
+        record: {
+          loading: false,
+          error: action.payload
+        },
+      });
+
     default:
       return state;
   }
@@ -76,3 +108,4 @@ export const isLoadingGroups = (state: ContentState) => state.groups.loading;
 export const isLoadingGroup = (state: ContentState) => state.group.loading;
 export const getGroups = (state: ContentState) => state.groups.items;
 export const getGroup = (state: ContentState) => state.group.data;
+export const getRecordState = (state: ContentState) => state.record;

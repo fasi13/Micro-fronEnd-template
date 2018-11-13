@@ -6,7 +6,7 @@ import _assign from 'lodash/assign';
 
 import { Observable } from 'rxjs';
 
-import { State, getApplicationInfo, Application, getDataTypes, DataType, AddContent } from '@forge/core';
+import { State, getApplicationInfo, Application, getDataTypes, DataType, TransactionContentRecord, getContentRecordState } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { config as fieldConfiguration } from './content-fields-modal.config';
 import { ContentDataType, dataTypes as availableDataTypes } from './content-data-types.config';
@@ -46,7 +46,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submit({ name, description, type: typeStr, dynamicValue }: any): void {
+  handleSubmit({ value: formData, success, error}): void {
+    const { name, description, type: typeStr, dynamicValue } = formData;
     const { id: applicationId } = this.applicationInfo;
     let value = dynamicValue;
     if (typeStr === 'Document' || typeStr === 'Image') {
@@ -58,11 +59,25 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
       dataType: this.getDataTypeFor(typeStr),
       value
     };
-    this.store.dispatch(new AddContent({
+    this.store.dispatch(new TransactionContentRecord({
       applicationId,
       groupId: this.groupId,
       contentPayload,
     }));
+    this.store.select(getContentRecordState)
+      .subscribe((recordState) => {
+        const { error: errorData, loading } = recordState;
+        if (errorData) {
+          const errors = Object.values(errorData.error.fields);
+          error(errors);
+        } else if (!loading) {
+          success();
+          this.activeModal.close();
+        }
+      });
+  }
+
+  handleCancel(): void {
     this.activeModal.close();
   }
 
@@ -89,10 +104,11 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
 
   private switchDataType(type: string): void {
     if (this.currentType !== type) {
+      const dataType = Object.assign(this.dataTypes[type], { value: '' });
       if (this.currentType) {
-        this.config[this.config.length - 2] = this.dataTypes[type];
+        this.config[this.config.length - 1] = dataType;
       } else {
-        this.config.splice(this.config.length - 1, 0, this.dataTypes[type]);
+        this.config.splice(this.config.length, 0, dataType);
       }
       this.populateOptionsFor(type, 'Logo Display');
       this.config = Array.from(this.config);

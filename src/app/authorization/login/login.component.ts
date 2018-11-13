@@ -30,15 +30,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       )
       .subscribe((error) => {
         this.hasLoginErrors = !!error;
-      })
+      });
     this.store.select(isAuthenticated)
       .pipe(
         takeWhile(() => this.isAliveComponent),
-        filter(isAuthenticated => isAuthenticated)
+        filter(isAuth => isAuth)
       )
       .subscribe(() => {
         this.store.dispatch(new Go({ path: ['/'] }));
-      })
+      });
   }
 
   ngOnDestroy() {

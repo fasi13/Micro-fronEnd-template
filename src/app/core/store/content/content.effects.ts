@@ -3,18 +3,19 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
 
 import {
   ContentActionTypes,
   FetchContentGroupsCompleted,
   FetchContentError,
   FetchContentGroupCompleted,
-  FetchContentGroup
+  FetchContentGroup,
+  TransactionContentRecordCompleted,
+  TransactionContentRecordError
 } from './content.actions';
 import { ContentService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
-import { NotifierService } from 'angular-notifier';
 
 @Injectable()
 export class ContentEffects {
@@ -41,18 +42,15 @@ export class ContentEffects {
   );
 
   @Effect() public addContent: Observable<Action> = this.actions.pipe(
-    ofType(ContentActionTypes.ADD_CONTENT),
+    ofType(ContentActionTypes.CONTENT_RECORD_TRANSACTION),
     switchMap((action: any) => this.contentService.addContentToGroup(action.payload.applicationId,
       action.payload.groupId, action.payload.contentPayload)
         .pipe(
-          map(() => {
-            this.notifierService.notify('success', 'The content has been created successfully.');
-            return new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
-          }),
-          catchError((error) => {
-            this.notifierService.notify('error', 'Error while processing your request. Please try again later.')
-            return of(error);
-          })
+          mergeMap(() => [
+            new TransactionContentRecordCompleted(),
+            new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
+          ]),
+          catchError(error => of(new TransactionContentRecordError(error)))
         )
     )
   );
@@ -60,7 +58,6 @@ export class ContentEffects {
   constructor(
     private actions: Actions,
     private contentService: ContentService,
-    private notifierService: NotifierService
   ) {
   }
 }

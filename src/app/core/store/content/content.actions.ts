@@ -9,7 +9,9 @@ export const ContentActionTypes = {
   FETCH_CONTENT_GROUP: ActionType('FETCH_CONTENT_GROUP'),
   FETCH_CONTENT_GROUP_COMPLETED: ActionType('FETCH_CONTENT_GROUP_COMPLETED'),
   FETCH_CONTENT_ERROR: ActionType('FETCH_CONTENT_ERROR'),
-  ADD_CONTENT: ActionType('ADD_CONTENT')
+  CONTENT_RECORD_TRANSACTION: ActionType('CONTENT_RECORD_TRANSACTION'),
+  CONTENT_RECORD_TRANSACTION_COMPLETED: ActionType('CONTENT_RECORD_TRANSACTION_COMPLETED'),
+  CONTENT_RECORD_TRANSACTION_ERROR: ActionType('CONTENT_RECORD_TRANSACTION_ERROR')
 };
 
 export class FetchContentGroups implements Action {
@@ -37,8 +39,18 @@ export class FetchContentError implements Action {
   constructor(public payload?: any) {}
 }
 
-export class AddContent implements Action {
-  public type: string = ContentActionTypes.ADD_CONTENT;
+export class TransactionContentRecord implements Action {
+  public type: string = ContentActionTypes.CONTENT_RECORD_TRANSACTION;
+  constructor(public payload?: any) {}
+}
+
+export class TransactionContentRecordCompleted implements Action {
+  public type: string = ContentActionTypes.CONTENT_RECORD_TRANSACTION_COMPLETED;
+  constructor(public payload?: any) {}
+}
+
+export class TransactionContentRecordError implements Action {
+  public type: string = ContentActionTypes.CONTENT_RECORD_TRANSACTION_ERROR;
   constructor(public payload?: any) {}
 }
 
