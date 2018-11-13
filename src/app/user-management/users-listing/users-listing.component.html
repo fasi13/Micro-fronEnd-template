@@ -30,7 +30,7 @@
                 <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
                     <i class="fas fa-edit"></i>
                 </a>
-                <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="modalConfirmModal.open()">
+                <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
                     <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
                 </a>
             </td>
@@ -39,4 +39,8 @@
 </table>
 
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
-<fge-modal-confirm #modalConfirmModal></fge-modal-confirm>
+<fge-modal-confirm title="{{ titleModalConfirm }}"
+    message="{{ messageConfirmModal }}"
+    (onsubmit)="submit()"
+    #modalConfirmModal>
+</fge-modal-confirm>

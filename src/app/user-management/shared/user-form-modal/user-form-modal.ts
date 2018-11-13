@@ -44,8 +44,8 @@ export class UserFormModalComponent {
             this.user = user;
             fieldUpdateConfiguration[0].value = user.firstName;
             fieldUpdateConfiguration[1].value = user.lastName;
-            fieldUpdateConfiguration[2].value = user.email;
-            fieldUpdateConfiguration[3].value = user.status;
+            fieldUpdateConfiguration[2].value = user.emailAddress;
+            fieldUpdateConfiguration[3].value = user.isActive;
             this.applicationID = user.applicationId;
             this.config = _clone(fieldUpdateConfiguration);
             this.handleUpdateUser();
@@ -65,8 +65,7 @@ export class UserFormModalComponent {
             takeWhile(() => this.isAliveComponent),
             filter(isNewUserCreated => isNewUserCreated),
         )
-        .subscribe((response) => {
-            console.log(response);
+        .subscribe(() => {
             this.modalService.dismissAll();
         });
     }
@@ -96,7 +95,7 @@ export class UserFormModalComponent {
             this.store.dispatch(new NewUserAction(payload));
         } else {
             this.store.dispatch(new UpdateUserAction({
-                id: this.user.userId,
+                id: this.user.id,
                 firstName: userForm.firstName,
                 lastName: userForm.lastName,
                 emailAddress: userForm.emailAddress,

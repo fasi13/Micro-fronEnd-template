@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import {
+    State,
+    UpdateUserAction,
+    isUserUpdated } from '@forge/core';
 
 @Component({
     selector: 'fge-users',
@@ -7,43 +13,71 @@ import { Component, OnInit } from '@angular/core';
 
 export class UsersListgingComponent implements OnInit {
     userMock: Array<any>;
+    configConfirmModal: any;
+    currentUser: any;
+    titleModalConfirm: string;
+    messageConfirmModal: string;
+    confirmModal: any;
+    constructor(private store: Store<State>) { }
 
     ngOnInit() {
         // TODO removed when API listing is implemented.
         this.userMock = [
             {
-                userId: 1053,
+                id: 1053,
                 userName: 'fidel12',
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
                 isActive: true,
                 groupApplication: 'Corporation',
-                applicationName: 'FIS LOYALTY SCORECARD PARTNER',
+                applicationPath: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
             },
             {
-                userId: 1037,
+                id: 1037,
                 userName: 'fidel',
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
                 isActive: false,
                 groupApplication: 'Corporation',
-                applicationName: 'FIS LOYALTY SCORECARD PARTNER',
+                applicationPath: 'FIS LOYALTY SCORECARD PARTNER',
                 applicationId: 3752
             },
             {
-                userId: 3038,
-                userName: 'fbarcaya',
+                id: 3038,
+                login: 'fbarcaya',
                 firstName: 'fidel',
                 lastName: 'barcaya',
                 email: 'dcanqui@hinda.com',
                 isActive: true,
                 groupApplication: 'Corporation',
-                applicationName: 'FIS LOYALTY SCORECARD PARTNER',
-                applicationId: 3752
+                applicationPath: 'FIS LOYALTY SCORECARD PARTNER'
             }
         ];
+    }
+
+    openModalConfirm(confirmModal: any, user: any): void {
+        this.confirmModal = confirmModal;
+        this.currentUser = user;
+        const labelAction = user.isActive ? 'desactive' : 'active';
+        this.titleModalConfirm = 'Active/Desactive user confirmation';
+        this.messageConfirmModal = `Do you want to ${labelAction} the user ${user.userName}?`;
+        confirmModal.open();
+    }
+
+    submit() {
+        this.store.select(isUserUpdated).subscribe(() => {
+            this.confirmModal.close();
+        });
+
+        this.store.dispatch(new UpdateUserAction({
+            id: this.currentUser.id,
+            firstName: this.currentUser.firstName,
+            lastName: this.currentUser.lastName,
+            emailAddress: this.currentUser.email,
+            isActive: !this.currentUser.isActive,
+        }));
     }
 }
