@@ -9,12 +9,11 @@ import { NotifierService } from 'angular-notifier';
 
 import {
   NewUserErrorAction,
-  NewUserSuccessAction,
   UserManagementTypes,
-  UpdateUserSuccessAction,
   UpdateUserErrorAction,
-  FetchUserAction,
-  FetchUserErrorAction
+  FetchUsersAction,
+  FetchUsersSuccessAction,
+  FetchUsersErrorAction
 } from './user-management.actions';
 import { UserService } from '../../services/user.service';
 
@@ -26,7 +25,7 @@ export class UserManagamentEffects {
             .pipe(
               map(() => {
                 this.notifierService.notify('success', 'The user has been created successfully');
-                return new NewUserSuccessAction({ response: 'success changes.'});
+                return new FetchUsersAction();
               }),
               catchError((error) => {
                 this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
@@ -42,7 +41,7 @@ export class UserManagamentEffects {
           .pipe(
             map(() => {
               this.notifierService.notify('success', 'The user has been updated successfully');
-              return new UpdateUserSuccessAction({ response: 'success changes.'});
+              return new FetchUsersAction();
             }),
             catchError((error) => {
               this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
@@ -53,14 +52,14 @@ export class UserManagamentEffects {
     ));
 
 
-    @Effect() public getUsers: Observable<Action> = this.actions.pipe(
-      ofType(UserManagementTypes.FETCH_USER),
+    @Effect() public fetchUsers: Observable<Action> = this.actions.pipe(
+      ofType(UserManagementTypes.FETCH_USERS),
       switchMap(() => this.userService.geUsers()
           .pipe(
             map(() => {
-              return new FetchUserAction({ response: 'success changes.'});
+              return new FetchUsersSuccessAction({response: 'Success response.'});
             }),
-            catchError(error => of(new FetchUserErrorAction({error: error})))
+            catchError(error => of(new FetchUsersErrorAction({error: error})))
           )
       )
     );

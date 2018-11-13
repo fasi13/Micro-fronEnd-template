@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import {
     State,
     UpdateUserAction,
-    isUserUpdated } from '@forge/core';
+    isUserUpdated,
+    isLoadingGroups,
+    getGroups,
+    ApplicationContent, } from '@forge/core';
 
 @Component({
     selector: 'fge-users',
@@ -18,9 +22,13 @@ export class UsersListgingComponent implements OnInit {
     titleModalConfirm: string;
     messageConfirmModal: string;
     confirmModal: any;
+    groups$: Observable<ApplicationContent[]>;
+    loading$: Observable<boolean> | boolean;
     constructor(private store: Store<State>) { }
 
     ngOnInit() {
+        this.initSelectors();
+
         // TODO removed when API listing is implemented.
         this.userMock = [
             {
@@ -56,6 +64,11 @@ export class UsersListgingComponent implements OnInit {
                 applicationPath: 'FIS LOYALTY SCORECARD PARTNER'
             }
         ];
+    }
+
+    private initSelectors() {
+        this.loading$ = this.store.select(isLoadingGroups);
+        this.groups$ = this.store.select(getGroups);
     }
 
     openModalConfirm(confirmModal: any, user: any): void {

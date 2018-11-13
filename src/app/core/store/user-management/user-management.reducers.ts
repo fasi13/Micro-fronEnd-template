@@ -61,19 +61,19 @@ export function reducer(state: any = initialState, action: UserManagementAcction
             updatedUser: true
           });
 
-          case UserManagementTypes.FETCH_USER:
+          case UserManagementTypes.FETCH_USERS:
           return Object.assign({}, state, {
             error: undefined,
             fetchingUser: true
           });
 
-        case UserManagementTypes.FETCH_USER_ERROR:
+        case UserManagementTypes.FETCH_USERS_ERROR:
           return Object.assign({}, state, {
             fetchedUsers: false,
             error: action.payload.error
           });
 
-        case UserManagementTypes.FETCH_USER_SUCCESS:
+        case UserManagementTypes.FETCH_USERS_SUCCESS:
           return Object.assign({}, state, {
             fetchedUsers: true
           });
@@ -132,24 +132,24 @@ export const getUserUpdateError = (state: UserManagementStade) => state.error;
 
 /**
  * Returns true if request is in progress.
- * @function isUserFetching
+ * @function areUsersFetching
  * @param {State} state
  * @returns {boolean}
  */
-export const isUserFetching = (state: UserManagementStade) => state.fetchingUsers;
+export const areUsersFetching = (state: UserManagementStade) => state.fetchingUsers;
 ​
 /**
  * Returns true if the password has reseted.
- * @function isFetchUsers
+ * @function areUsersFetched
  * @param {State} state
  * @returns {boolean}
  */
-export const isFetchedUsers = (state: UserManagementStade) => state.fetchedUsers;
+export const areUsersFetched = (state: UserManagementStade) => state.fetchedUsers;
 ​
 /**
  * Returns the reset password error.
- * @function getUsersError
+ * @function fetchUsersError
  * @param {State} state
  * @returns {Error}
  */
-export const getUsersError = (state: UserManagementStade) => state.error;
+export const fetchUsersError = (state: UserManagementStade) => state.error;

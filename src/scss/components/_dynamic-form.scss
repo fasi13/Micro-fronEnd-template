@@ -88,6 +88,10 @@
   }
 }
 
+.fge-dynamic-form__button--non-selected {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
 .fge-dynamic-form--error {
   width: 100%;
   margin-top: 0.25rem;

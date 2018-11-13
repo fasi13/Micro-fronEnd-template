@@ -9,9 +9,9 @@ export const UserManagementTypes = {
     UPDATE_USER: ActionType('UPDATE_USER'),
     UPDATE_USER_SUCCESS: ActionType('UPDATE_USER_SUCCESS'),
     UPDATE_USER_ERROR: ActionType('UPDATE_USER_ERROR'),
-    FETCH_USER: ActionType('FETCH_USER'),
-    FETCH_USER_SUCCESS: ActionType('FETCH_USER_SUCCESS'),
-    FETCH_USER_ERROR: ActionType('FETCH_USER_ERROR')
+    FETCH_USERS: ActionType('FETCH_USERS'),
+    FETCH_USERS_SUCCESS: ActionType('FETCH_USERS_SUCCESS'),
+    FETCH_USERS_ERROR: ActionType('FETCH_USERS_ERROR')
 };
 
 export class NewUserAction implements Action {
@@ -44,18 +44,18 @@ export class UpdateUserSuccessAction implements Action {
     constructor(public payload?: any) {}
 }
 
-export class FetchUserAction implements Action {
-    public type: string = UserManagementTypes.FETCH_USER;
+export class FetchUsersAction implements Action {
+    public type: string = UserManagementTypes.FETCH_USERS;
     constructor(public payload?: any) {}
 }
 
-export class FetchUserErrorAction implements Action {
-    public type: string = UserManagementTypes.FETCH_USER_ERROR;
+export class FetchUsersErrorAction implements Action {
+    public type: string = UserManagementTypes.FETCH_USERS_ERROR;
     constructor(public payload?: any) {}
 }
 
-export class FetchUserSuccessAction implements Action {
-    public type: string = UserManagementTypes.FETCH_USER_SUCCESS;
+export class FetchUsersSuccessAction implements Action {
+    public type: string = UserManagementTypes.FETCH_USERS_SUCCESS;
     constructor(public payload?: any) {}
 }
 
@@ -66,6 +66,6 @@ export type UserManagementAcctions =
     UpdateUserAction |
     UpdateUserErrorAction |
     UpdateUserSuccessAction |
-    FetchUserAction |
-    FetchUserErrorAction |
-    FetchUserSuccessAction;
+    FetchUsersAction |
+    FetchUsersErrorAction |
+    FetchUsersSuccessAction;
