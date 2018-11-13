@@ -24,7 +24,7 @@ export class FieldImageComponent extends FormField {
           const newValue = {};
           newValue[`${this.config.name}`] = reader.result;
           const fileContent = (reader.result as String).split(',')[1];
-          const value = `${file.name}:${fileContent}`;
+          const value = Object.assign(file, { formattedValue: `${file.name}:${fileContent}` });
           this.group.get(this.config.name).setValue(value, { emitModelToViewChange: false });
           this.changeDetector.markForCheck();
         };

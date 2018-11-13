@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 
-import { FieldConfig } from '@forge/shared';
+import { FieldConfig, ValidateFileSize } from '@forge/shared';
 
 export interface ContentDataType {
   [key: string]: FieldConfig;
@@ -32,6 +32,10 @@ export const dataTypes: ContentDataType = {
       required: {
         errorMsg: 'Image is required',
         validator: Validators.required
+      },
+      fileSize: {
+        errorMsg: 'File size exceed, should not be more than 3mb.',
+        validator: ValidateFileSize
       }
     }
   },

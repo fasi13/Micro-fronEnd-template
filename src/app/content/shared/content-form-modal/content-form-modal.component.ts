@@ -46,8 +46,12 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submit({ name, description, type: typeStr, dynamicValue: value }: any): void {
+  submit({ name, description, type: typeStr, dynamicValue }: any): void {
     const { id: applicationId } = this.applicationInfo;
+    let value = dynamicValue;
+    if (typeStr === 'Document' || typeStr === 'Image') {
+      value = dynamicValue.formattedValue;
+    }
     const contentPayload = {
       name,
       description,
