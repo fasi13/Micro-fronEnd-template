@@ -1,15 +1,17 @@
 <div class="fge-dynamic-field form-input"  [formGroup]="group">
   <label>{{ config.label }}</label>
-  <div class="btn-group btn-group-toggle"
-    ngbRadioGroup name="radioBasic" 
-    [formControlName]="config?.name">
-    <label ngbButtonLabel class="fge-dynamic-form__button"
-      [ngClass]="{'btn-primary bg-primary': currentControl.value === 'true' || currentControl.value === true, 'fge-dynamic-form__button--non-selected': currentControl.value === 'false' || currentControl.value === false}">
-      <input ngbButton type="radio" value="true"> {{ config?.options[0] }}
-    </label>
-    <label ngbButtonLabel class="fge-dynamic-form__button"
-      [ngClass]="{'btn-primary bg-primary': currentControl.value === 'false' || currentControl.value === false, 'fge-dynamic-form__button--non-selected': currentControl.value === 'true' || currentControl.value === true}">
-      <input ngbButton type="radio" value="false"> {{ config?.options[1] }}
-    </label>
+  <div class="col pr-0">
+    <div class="btn-group btn-group-toggle"
+      ngbRadioGroup name="radioBasic" 
+      [formControlName]="config?.name">
+      <label ngbButtonLabel class="fge-dynamic-form__button"
+        [ngClass]="{'btn-primary bg-primary': currentControl.value === 'true' || currentControl.value === true, 'fge-dynamic-form__button--non-selected': currentControl.value === 'false' || currentControl.value === false}">
+        <input ngbButton type="radio" value="true"> {{ config?.options[0] }}
+      </label>
+      <label ngbButtonLabel class="fge-dynamic-form__button"
+        [ngClass]="{'btn-primary bg-primary': currentControl.value === 'false' || currentControl.value === false, 'fge-dynamic-form__button--non-selected': currentControl.value === 'true' || currentControl.value === true}">
+        <input ngbButton type="radio" value="false"> {{ config?.options[1] }}
+      </label>
+    </div>
   </div>
 </div>

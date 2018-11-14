@@ -61,7 +61,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     SearchApplicationComponent,
     DynamicFormComponent,
     BreadCrumbComponent,
-    NavigationTreeComponent
+    NavigationTreeComponent,
     ModalConfirmComponent
   ],
   entryComponents: [

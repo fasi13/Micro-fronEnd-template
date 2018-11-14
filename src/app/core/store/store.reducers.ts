@@ -78,6 +78,6 @@ export const isUserUpdating = createSelector(getUserState, UserManagementReducer
 export const isUserUpdated = createSelector(getUserState, UserManagementReducers.isUserUpdated);
 export const getUserUpdateError = createSelector(getUserState, UserManagementReducers.getUserUpdateError);
 
-export const isUserFetching = createSelector(getUserState, UserManagementReducers.isUserFetching);
-export const isFetchedUsers = createSelector(getUserState, UserManagementReducers.isFetchedUsers);
-export const getUsersError = createSelector(getUserState, UserManagementReducers.getUsersError);
+export const areUsersFetching = createSelector(getUserState, UserManagementReducers.areUsersFetching);
+export const areUsersFetched = createSelector(getUserState, UserManagementReducers.areUsersFetched);
+export const fetchUsersError = createSelector(getUserState, UserManagementReducers.fetchUsersError);
