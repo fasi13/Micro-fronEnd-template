@@ -39,10 +39,10 @@
       *ngFor="let application of items$ | async; index as i"
       class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
-        <h6 class="mb-1">{{ getApplicationName(application) }}</h6>
-        <small>{{ getApplicationValue(application) }}</small>
+        <h6 class="mb-1" fgeHighlightSearch [keyword]="search">{{ getApplicationName(application) }}</h6>
+        <small fgeHighlightSearch [keyword]="search">{{ getApplicationValue(application) }}</small>
       </div>
-      <small>{{getApplicationPath(application)}}</small>
+      <small fgeHighlightSearch [keyword]="search">{{getApplicationPath(application)}}</small>
     </a>
   </div>
 </ng-template>

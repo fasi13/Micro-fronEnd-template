@@ -18,6 +18,7 @@ import { FieldDocumentComponent } from './components/dynamic-form/fields/field-d
 import { FieldColorComponent } from './components/dynamic-form/fields/field-color/field-color.component';
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { NavigationTreeComponent } from './components/navigation-tree/navigation-tree.component';
+import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { NavigationTreeComponent } from './components/navigation-tree/navigation
     FieldColorComponent,
     BreadCrumbComponent,
     NavigationTreeComponent,
+    HighlightSearchDirective,
   ],
   exports: [
     FormsModule,
