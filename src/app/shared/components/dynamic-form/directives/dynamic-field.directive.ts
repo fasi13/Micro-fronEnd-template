@@ -20,7 +20,6 @@ import { FieldImageComponent } from '../fields/field-image/field-image.component
 import { FieldDocumentComponent } from '../fields/field-document/field-document.component';
 import { FieldColorComponent } from '../fields/field-color/field-color.component';
 import { FieldPasswordComponent } from '../fields/field-password/field-password.component';
-import { FieldEmailComponent } from '../fields/field-email/field-email.component';
 import { FieldToggleButtonComponent } from '../fields/field-toggle-button/field-toggle-button.component';
 
 const components: {[type: string]: Type<FormField>} = {
@@ -31,7 +30,6 @@ const components: {[type: string]: Type<FormField>} = {
   document: FieldDocumentComponent,
   color: FieldColorComponent,
   password: FieldPasswordComponent,
-  email: FieldEmailComponent,
   toggleButton: FieldToggleButtonComponent
 };
 

@@ -11,7 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class SearchApplicationComponent implements OnInit {
 
   loading$: Observable<boolean>;
-  items$: Observable<ApplicationPath[]>
+  items$: Observable<ApplicationPath[]>;
   search: string;
   openResults = false;
 

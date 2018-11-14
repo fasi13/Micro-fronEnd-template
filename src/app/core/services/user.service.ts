@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { UserCredentials, UserToken, NewUser, UpdateUser } from '../models';
+import { UserCredentials, UserToken, User } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -37,17 +37,17 @@ export class UserService {
     return of(isAuth);
   }
 
-  createNewUser(newUser: NewUser): Observable<any> {
+  createNewUser(newUser: User): Observable<any> {
     const url = `${this.baseUrl}`;
     return this.httpClient.post(url, newUser);
   }
 
-  updetedUser(updatedUser: UpdateUser): Observable<any> {
+  updateUser(updatedUser: User): Observable<any> {
     const url = `${this.baseUrl}`;
     return this.httpClient.put(url, updatedUser);
   }
 
-  geUsers(): Observable<any> {
+  getUsers(): Observable<any> {
     const url = `${this.baseUrl}`;
     return this.httpClient.get(url);
   }

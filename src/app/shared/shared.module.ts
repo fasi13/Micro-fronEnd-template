@@ -20,7 +20,6 @@ import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.compon
 import { NavigationTreeComponent } from './components/navigation-tree/navigation-tree.component';
 import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
 import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
-import { FieldEmailComponent } from './components/dynamic-form/fields/field-email/field-email.component';
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 
@@ -49,7 +48,6 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     NavigationTreeComponent,
     HighlightSearchDirective,
     FieldPasswordComponent,
-    FieldEmailComponent,
     FieldToggleButtonComponent,
     ModalConfirmComponent
   ],
@@ -72,7 +70,6 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     FieldDocumentComponent,
     FieldColorComponent,
     FieldPasswordComponent,
-    FieldEmailComponent,
     FieldToggleButtonComponent
   ]
 })

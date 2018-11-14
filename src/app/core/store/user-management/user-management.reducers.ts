@@ -1,91 +1,87 @@
 import _assign from 'lodash/assign';
 
-import { UserManagementTypes, UserManagementAcctions } from './user-management.actions';
+import { UserManagementTypes, UserManagementActions } from './user-management.actions';
 
-export interface UserManagementStade {
-    loaded: boolean;
-    loading: boolean;
-    creatingUser: boolean;
-    createdUser: boolean;
-    updatingUser: boolean;
-    updatedUser: boolean;
-    fetchingUsers: boolean;
-    fetchedUsers: boolean;
-    error?: string;
-    users: any;
+export interface UserManagementState {
+  creatingUser: boolean;
+  createdUser: boolean;
+  updatingUser: boolean;
+  updatedUser: boolean;
+  fetchingUsers: boolean;
+  fetchedUsers: boolean;
+  error?: string;
+  users: any;
 }
 
-const initialState: UserManagementStade = {
-    loaded: false,
-    loading: false,
-    creatingUser: false,
-    createdUser: false,
-    updatingUser: false,
-    updatedUser: false,
-    fetchingUsers: false,
-    fetchedUsers: false,
-    users: []
+const initialState: UserManagementState = {
+  creatingUser: false,
+  createdUser: false,
+  updatingUser: false,
+  updatedUser: false,
+  fetchingUsers: false,
+  fetchedUsers: false,
+  users: []
 };
 
-export function reducer(state: any = initialState, action: UserManagementAcctions): UserManagementStade {
-    switch (action.type) {
-        case UserManagementTypes.NEW_USER:
-          return Object.assign({}, state, {
-            error: undefined,
-            creatingUser: true
-          });
+export function reducer(state: any = initialState, action: UserManagementActions): UserManagementState {
+  switch (action.type) {
+    case UserManagementTypes.NEW_USER:
+      return Object.assign({}, state, {
+        error: undefined,
+        creatingUser: true
+      });
 
-        case UserManagementTypes.NEW_USER_ERROR:
-          return Object.assign({}, state, {
-            createdUser: false,
-            error: action.payload.error
-          });
+    case UserManagementTypes.NEW_USER_ERROR:
+      return Object.assign({}, state, {
+        createdUser: false,
+        error: action.payload.error
+      });
 
-        case UserManagementTypes.NEW_USER_SUCCESS:
-          return Object.assign({}, state, {
-            createdUser: true,
-            data: action.payload
-          });
-          case UserManagementTypes.UPDATE_USER:
-          return Object.assign({}, state, {
-            error: undefined,
-            updatingUser: true
-          });
+    case UserManagementTypes.NEW_USER_SUCCESS:
+      return Object.assign({}, state, {
+        createdUser: true,
+        data: action.payload
+      });
+      case UserManagementTypes.UPDATE_USER:
+      return Object.assign({}, state, {
+        error: undefined,
+        updatingUser: true
+      });
 
-        case UserManagementTypes.UPDATE_USER_ERROR:
-          return Object.assign({}, state, {
-            updatedUser: false,
-            error: action.payload.error
-          });
+    case UserManagementTypes.UPDATE_USER_ERROR:
+      return Object.assign({}, state, {
+        updatedUser: false,
+        error: action.payload.error
+      });
 
-        case UserManagementTypes.UPDATE_USER_SUCCESS:
-          return Object.assign({}, state, {
-            updatedUser: true
-          });
+    case UserManagementTypes.UPDATE_USER_SUCCESS:
+      return Object.assign({}, state, {
+        updatedUser: true
+      });
 
-          case UserManagementTypes.FETCH_USERS:
-          return Object.assign({}, state, {
-            error: undefined,
-            fetchingUsers: true
-          });
+    case UserManagementTypes.FETCH_USERS:
+    return Object.assign({}, state, {
+      error: undefined,
+      fetchingUsers: true
+    });
 
-        case UserManagementTypes.FETCH_USERS_ERROR:
-          return Object.assign({}, state, {
-            fetchedUsers: false,
-            fetchingUsers: false,
-            users: null,
-            error: action.payload.error
-          });
+    case UserManagementTypes.FETCH_USERS_ERROR:
+      return Object.assign({}, state, {
+        fetchedUsers: false,
+        fetchingUsers: false,
+        users: null,
+        error: action.payload.error
+      });
 
-        case UserManagementTypes.FETCH_USERS_SUCCESS:
-          return Object.assign({}, state, {
-            fetchedUsers: true,
-            fetchingUsers: false,
-            users: action.payload.items
-          });
-        default:
-          return state;
-      }
+    case UserManagementTypes.FETCH_USERS_SUCCESS:
+      return Object.assign({}, state, {
+        fetchedUsers: true,
+        fetchingUsers: false,
+        users: action.payload.items
+      });
+    default:
+      return state;
+  }
 }
 
 /**
@@ -94,7 +90,7 @@ export function reducer(state: any = initialState, action: UserManagementAcction
  * @param {State} state
  * @returns {boolean}
  */
-export const isNewUserCreating = (state: UserManagementStade) => state.creatingUser;
+export const isNewUserCreating = (state: UserManagementState) => state.creatingUser;
 ​
 /**
  * Returns true if the password has reseted.
@@ -102,7 +98,7 @@ export const isNewUserCreating = (state: UserManagementStade) => state.creatingU
  * @param {State} state
  * @returns {boolean}
  */
-export const isNewUserCreated = (state: UserManagementStade) => state.createdUser;
+export const isNewUserCreated = (state: UserManagementState) => state.createdUser;
 ​
 /**
  * Returns the reset password error.
@@ -110,7 +106,7 @@ export const isNewUserCreated = (state: UserManagementStade) => state.createdUse
  * @param {State} state
  * @returns {Error}
  */
-export const getNewUserError = (state: UserManagementStade) => state.error;
+export const getNewUserError = (state: UserManagementState) => state.error;
 
 /**
  * Returns true if request is in progress.
@@ -118,7 +114,7 @@ export const getNewUserError = (state: UserManagementStade) => state.error;
  * @param {State} state
  * @returns {boolean}
  */
-export const isUserUpdating = (state: UserManagementStade) => state.updatingUser;
+export const isUserUpdating = (state: UserManagementState) => state.updatingUser;
 ​
 /**
  * Returns true if the password has reseted.
@@ -126,7 +122,7 @@ export const isUserUpdating = (state: UserManagementStade) => state.updatingUser
  * @param {State} state
  * @returns {boolean}
  */
-export const isUserUpdated = (state: UserManagementStade) => state.updatedUser;
+export const isUserUpdated = (state: UserManagementState) => state.updatedUser;
 ​
 /**
  * Returns the reset password error.
@@ -134,7 +130,7 @@ export const isUserUpdated = (state: UserManagementStade) => state.updatedUser;
  * @param {State} state
  * @returns {Error}
  */
-export const getUserUpdateError = (state: UserManagementStade) => state.error;
+export const getUserUpdateError = (state: UserManagementState) => state.error;
 
 /**
  * Returns true if request is in progress.
@@ -142,7 +138,7 @@ export const getUserUpdateError = (state: UserManagementStade) => state.error;
  * @param {State} state
  * @returns {boolean}
  */
-export const areUsersFetching = (state: UserManagementStade) => state.fetchingUsers;
+export const areUsersFetching = (state: UserManagementState) => state.fetchingUsers;
 ​
 /**
  * Returns true if the password has reseted.
@@ -150,7 +146,7 @@ export const areUsersFetching = (state: UserManagementStade) => state.fetchingUs
  * @param {State} state
  * @returns {boolean}
  */
-export const areUsersFetched = (state: UserManagementStade) => state.users;
+export const areUsersFetched = (state: UserManagementState) => state.users;
 ​
 /**
  * Returns the reset password error.
@@ -158,4 +154,4 @@ export const areUsersFetched = (state: UserManagementStade) => state.users;
  * @param {State} state
  * @returns {Error}
  */
-export const fetchUsersError = (state: UserManagementStade) => state.error;
+export const fetchUsersError = (state: UserManagementState) => state.error;

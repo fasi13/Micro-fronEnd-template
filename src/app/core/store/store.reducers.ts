@@ -8,11 +8,11 @@ import * as ContentReducers from './content/content.reducers';
 import * as UserManagementReducers from './user-management/user-management.reducers';
 
 export interface State {
-    router: RouterReducerState;
-    authorization: AuthorizationReducers.AuthorizationState;
-    application: ApplicationReducers.ApplicationState;
-    content: ContentReducers.ContentState;
-    userManagement: UserManagementReducers.UserManagementStade;
+  router: RouterReducerState;
+  authorization: AuthorizationReducers.AuthorizationState;
+  application: ApplicationReducers.ApplicationState;
+  content: ContentReducers.ContentState;
+  userManagement: UserManagementReducers.UserManagementState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -57,7 +57,7 @@ export const getDataTypes = createSelector(getApplicationState, ApplicationReduc
  *********************************************************/
 export const getContentState = (state: State) => {
   return state.content;
-}
+};
 export const isLoadingGroups = createSelector(getContentState, ContentReducers.isLoadingGroups);
 export const getGroups = createSelector(getContentState, ContentReducers.getGroups);
 export const isLoadingGroup = createSelector(getContentState, ContentReducers.isLoadingGroup);

@@ -27,7 +27,7 @@ const routes: Routes = [
             loadChildren: './content/content.module#ContentModule'
           },
           {
-            path: 'usersManagement',
+            path: 'user',
             loadChildren: './user-management/user-management.module#UserManagementModule'
           }
         ]

@@ -34,7 +34,7 @@
   font-family: inherit;
   font-size: 14px;
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: $border-box-light-green;
   outline: none;
   padding: 10px 15px;
   color: rgba(0, 0, 0, 0.7);
@@ -57,7 +57,7 @@
   padding: 10px 15px;
   border-radius: 0;
   color: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: $border-box-light-green;
   width: 100%;
   outline: none;
   background:
@@ -89,7 +89,7 @@
 }
 
 .fge-dynamic-form__button--non-selected {
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: $border-box-light-green;
   background: #fff;
   color: rgba(0, 0, 0, 0.9);
   font-weight: 400;

@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { UsersListgingComponent } from './users-listing/users-listing.component';
-import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal';
+import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'users' },
-  { path: 'users', component: UsersListgingComponent }
+  { path: '', redirectTo: 'list' },
+  { path: 'list', component: UsersListgingComponent }
 ];
 
 @NgModule({

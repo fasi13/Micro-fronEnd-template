@@ -1,44 +1,43 @@
 <div class="fge-group--title">
-    <h4 class="fge-group--title-divider my-2">
-        <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
-        Users Management
-    </h4>
-    <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
+  <h4 class="fge-group--title-divider my-2">
+    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>Users Management
+  </h4>
+  <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
 </div>
 <table class="table table-bordred fge-group--content-list">
-    <thead>
-        <tr>
-        <th scope="col">Username</th>
-        <th scope="col">Fist Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Status</th>
-        <th scope="col">Application Name</th>
-        <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users$ | async">
-            <td>{{ user.login }}</td>
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
-            <td *ngIf="user.isActive">Active</td>
-            <td *ngIf="!user.isActive">Desactive</td>
-            <td>{{ getApplicationName(user) }}</td>
-            <td>
-                <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
-                    <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
-                </a>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+    <th scope="col">Username</th>
+    <th scope="col">Fist Name</th>
+    <th scope="col">Last Name</th>
+    <th scope="col">Status</th>
+    <th scope="col">Application Name</th>
+    <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users$ | async">
+      <td>{{ user.login }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td *ngIf="user.isActive">Active</td>
+      <td *ngIf="!user.isActive">Inactive</td>
+      <td>{{ getApplicationName(user) }}</td>
+      <td>
+        <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
+          <i class="fas fa-edit"></i>
+        </a>
+        <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
+          <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
 <fge-modal-confirm title="{{ titleModalConfirm }}"
-    message="{{ messageConfirmModal }}"
-    (onsubmit)="submit()"
-    #modalConfirmModal>
+  message="{{ messageConfirmModal }}"
+  (onsubmit)="submit()"
+  #modalConfirmModal>
 </fge-modal-confirm>

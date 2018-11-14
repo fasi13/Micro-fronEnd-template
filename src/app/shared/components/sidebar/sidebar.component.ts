@@ -40,8 +40,7 @@ export class SidebarComponent implements OnInit {
   }
 
   goToUsersManagement(): void {
-    console.log(this.fgeRouter);
-    this.fgeRouter.navigate(`usersManagement`);
+    this.fgeRouter.navigate(`user`);
   }
 
   isSectionActive(sectionName: string): boolean {
