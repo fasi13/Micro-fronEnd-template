@@ -56,8 +56,9 @@ export class SearchApplicationComponent implements OnInit {
     return path[path.length - 1].name;
   }
 
-  getApplicationId({ path }: ApplicationPath): string | number {
-    return path[path.length - 1].id;
+  getApplicationValue({ path }: ApplicationPath): string | number {
+    const value = path[path.length - 1].value;
+    return value || '';
   }
 
   getApplicationLink({ path }: ApplicationPath): string {
@@ -70,7 +71,7 @@ export class SearchApplicationComponent implements OnInit {
     appPath.slice(0, appPath.length - 1).forEach((element, index, array) => {
       if (element) {
         const separator = index === array.length - 1 ? '' : '>';
-        const elementId = element.id.toString().length > 2 ? `(${element.id})` : '';
+        const elementId = (element && +element.value > -1) ? `(${element.value})` : '';
         strPath += `${element.name}${elementId}${separator}`;
       }
     });
