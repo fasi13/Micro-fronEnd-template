@@ -21,6 +21,7 @@ import { FieldDocumentComponent } from '../fields/field-document/field-document.
 import { FieldColorComponent } from '../fields/field-color/field-color.component';
 import { FieldPasswordComponent } from '../fields/field-password/field-password.component';
 import { FieldToggleButtonComponent } from '../fields/field-toggle-button/field-toggle-button.component';
+import { FieldHtmlComponent } from '../fields/field-html/field-html.component';
 
 const components: {[type: string]: Type<FormField>} = {
   button: FieldButtonComponent,
@@ -30,7 +31,8 @@ const components: {[type: string]: Type<FormField>} = {
   document: FieldDocumentComponent,
   color: FieldColorComponent,
   password: FieldPasswordComponent,
-  toggleButton: FieldToggleButtonComponent
+  toggleButton: FieldToggleButtonComponent,
+  html: FieldHtmlComponent
 };
 
 @Directive({

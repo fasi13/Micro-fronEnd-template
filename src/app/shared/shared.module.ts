@@ -7,6 +7,7 @@ import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { QuillModule } from 'ngx-quill';
 
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FieldButtonComponent } from './components/dynamic-form/fields/field-button/field-button.component';
@@ -16,6 +17,7 @@ import { FieldSelectComponent } from './components/dynamic-form/fields/field-sel
 import { FieldImageComponent } from './components/dynamic-form/fields/field-image/field-image.component';
 import { FieldDocumentComponent } from './components/dynamic-form/fields/field-document/field-document.component';
 import { FieldColorComponent } from './components/dynamic-form/fields/field-color/field-color.component';
+import { FieldHtmlComponent } from './components/dynamic-form/fields/field-html/field-html.component';
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { NavigationTreeComponent } from './components/navigation-tree/navigation-tree.component';
 import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
@@ -30,7 +32,8 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     ReactiveFormsModule,
     NgBootstrapModule,
     RouterModule,
-    ColorPickerModule
+    ColorPickerModule,
+    QuillModule
   ],
   declarations: [
     DynamicFieldDirective,
@@ -44,6 +47,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     FieldImageComponent,
     FieldDocumentComponent,
     FieldColorComponent,
+    FieldHtmlComponent,
     BreadCrumbComponent,
     NavigationTreeComponent,
     HighlightSearchDirective,
@@ -70,7 +74,8 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     FieldDocumentComponent,
     FieldColorComponent,
     FieldPasswordComponent,
-    FieldToggleButtonComponent
+    FieldToggleButtonComponent,
+    FieldHtmlComponent
   ]
 })
 export class SharedModule { }

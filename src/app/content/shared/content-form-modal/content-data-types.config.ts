@@ -80,5 +80,17 @@ export const dataTypes: ContentDataType = {
         validator: Validators.required
       },
     }
+  },
+  'HTML': {
+    type: 'html',
+    label: 'Value',
+    name: 'dynamicValue',
+    placeholder: 'Enter value',
+    validation: {
+      required: {
+        errorMsg: 'Value is required',
+        validator: Validators.required
+      }
+    }
   }
 };

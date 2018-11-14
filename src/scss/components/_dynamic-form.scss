@@ -44,6 +44,14 @@
   }
 }
 
+.fge-dynamic-form__html {
+  @extend .fge-dynamic-form__input;
+  padding: 0;
+  .ql-container {
+    height: 200px;
+  }
+}
+
 .fge-dynamic-form__select {
   height: 100%;
   border-radius: 0px;
