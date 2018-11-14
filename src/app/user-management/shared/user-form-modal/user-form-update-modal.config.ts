@@ -10,16 +10,16 @@ export const configUpdate: FieldConfig[] = [
         placeholder: 'First Name',
         validation: {
             required: {
-            errorMsg: 'First name is required',
-            validator: Validators.required
+                errorMsg: 'First name is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Name should have at least 2 characters',
-            validator: Validators.minLength(2)
+                errorMsg: 'First Name should have at least 2 characters',
+                validator: Validators.minLength(2)
             },
             maxlength: {
-            errorMsg: 'Name should not have more than 15 characters',
-            validator: Validators.maxLength(15)
+                errorMsg: 'First Name should not have more than 200 characters',
+                validator: Validators.maxLength(200)
             }
         }
     },
@@ -30,16 +30,16 @@ export const configUpdate: FieldConfig[] = [
         placeholder: 'Last Name',
         validation: {
             required: {
-            errorMsg: 'Last name is required',
-            validator: Validators.required
+                errorMsg: 'Last name is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Name should have at least 2 characters',
-            validator: Validators.minLength(2)
+                errorMsg: 'Last Name should have at least 2 characters',
+                validator: Validators.minLength(2)
             },
             maxlength: {
-            errorMsg: 'Name should not have more than 15 characters',
-            validator: Validators.maxLength(15)
+                errorMsg: 'Last Name should not have more than 200 characters',
+                validator: Validators.maxLength(200)
             }
         }
     },
@@ -56,6 +56,10 @@ export const configUpdate: FieldConfig[] = [
             email: {
             errorMsg: 'Please enter a valid Email address',
             validator: Validators.email
+            },
+            maxlength: {
+                errorMsg: 'Email should not have more than 200 characters',
+                validator: Validators.maxLength(200)
             }
         }
     },
@@ -66,10 +70,5 @@ export const configUpdate: FieldConfig[] = [
         validation: {},
         value: true,
         options: ['Active', 'Desactive']
-    },
-    {
-        label: 'Save',
-        name: 'save',
-        type: 'button'
     }
 ];

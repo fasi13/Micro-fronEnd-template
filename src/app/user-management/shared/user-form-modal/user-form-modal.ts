@@ -1,16 +1,16 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile, filter } from 'rxjs/operators';
+import { AbstractControl } from '@angular/forms';
 
 import {
     NewUser,
     NewUserAction,
     State,
-    isNewUserCreated,
-    isUserUpdated,
+    areUsersFetching,
     UpdateUserAction } from '@forge/core';
 
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
@@ -22,7 +22,7 @@ import { configUpdate as fieldUpdateConfiguration } from './user-form-update-mod
     templateUrl: './user-form-modal.component.html'
 })
 
-export class UserFormModalComponent {
+export class UserFormModalComponent implements OnDestroy {
     @ViewChild('modalTemplate') modalContent: ElementRef;
     @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
@@ -30,6 +30,7 @@ export class UserFormModalComponent {
     applicationID: number;
     user: any;
     config: FieldConfig[];
+    private success: any;
     private isAliveComponent = true;
 
     constructor(
@@ -38,73 +39,80 @@ export class UserFormModalComponent {
         private route: ActivatedRoute,
         ) { }
 
+    ngOnDestroy() {
+        this.isAliveComponent = false;
+    }
+
     open(user: any): void {
         this.mode = user ? 'EDIT' : 'CREATE';
         if (user) {
             this.user = user;
             fieldUpdateConfiguration[0].value = user.firstName;
             fieldUpdateConfiguration[1].value = user.lastName;
-            fieldUpdateConfiguration[2].value = user.emailAddress;
+            fieldUpdateConfiguration[2].value = user.email;
             fieldUpdateConfiguration[3].value = user.isActive;
             this.applicationID = user.applicationId;
             this.config = _clone(fieldUpdateConfiguration);
-            this.handleUpdateUser();
         } else {
             this.user = {};
             this.user.applicationName = '';
+            fieldConfiguration[2].validation.matchPassword.validator = this.validateMatchPassword;
             this.config = _clone(fieldConfiguration);
             this.setCurrentApplicationId();
-            this.handleNewUser();
         }
+        this.handleUser();
         this.modalService.open(this.modalContent);
     }
 
-    private handleNewUser(): void {
-        this.store.select(isNewUserCreated)
+    private handleUser(): void {
+        this.store.select(areUsersFetching)
         .pipe(
             takeWhile(() => this.isAliveComponent),
-            filter(isNewUserCreated => isNewUserCreated),
+            filter(areUsersFetching => areUsersFetching),
         )
         .subscribe(() => {
+            this.success();
             this.modalService.dismissAll();
         });
     }
 
-    private handleUpdateUser(): void {
-        this.store.select(isUserUpdated)
-        .pipe(
-            takeWhile(() => this.isAliveComponent),
-            filter(isUserUpdated => isUserUpdated),
-        )
-        .subscribe(() => {
-            this.modalService.dismissAll();
-        });
-    }
-
-    submit(userForm: any): void {
+    submit({ value: formData, success }): void {
+        this.success = success;
         if (this.mode === 'CREATE') {
             const payload: NewUser = {
-                userName: userForm.userName,
-                password: userForm.password,
-                firstName: userForm.firstName,
-                lastName: userForm.lastName,
-                emailAddress: userForm.emailAddress,
-                isActive: userForm.activeUser,
+                userName: formData.userName,
+                password: formData.password,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                emailAddress: formData.emailAddress,
+                isActive: formData.activeUser,
                 applicationId: this.applicationID
             };
             this.store.dispatch(new NewUserAction(payload));
         } else {
             this.store.dispatch(new UpdateUserAction({
                 id: this.user.id,
-                firstName: userForm.firstName,
-                lastName: userForm.lastName,
-                emailAddress: userForm.emailAddress,
-                isActive: userForm.activeUser,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                emailAddress: formData.emailAddress,
+                isActive: formData.activeUser,
             }));
         }
     }
 
+    handleCancel() {
+        this.modalService.dismissAll();
+    }
+
     private setCurrentApplicationId(): void {
         this.applicationID = +this.route.params['value'].tenantId;
+    }
+
+    validateMatchPassword(control: AbstractControl) {
+        if (control.value) {
+            const result = control.parent.controls['password'].value !== control.value;
+            return { matchPassword: result };
+        }
+        return null;
     }
 }

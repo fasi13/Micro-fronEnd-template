@@ -5,10 +5,9 @@ import { Observable } from 'rxjs';
 import {
     State,
     UpdateUserAction,
-    isUserUpdated,
-    isLoadingGroups,
-    getGroups,
-    ApplicationContent, } from '@forge/core';
+    areUsersFetching,
+    areUsersFetched,
+    FetchUsersAction } from '@forge/core';
 
 @Component({
     selector: 'fge-users',
@@ -22,13 +21,13 @@ export class UsersListgingComponent implements OnInit {
     titleModalConfirm: string;
     messageConfirmModal: string;
     confirmModal: any;
-    groups$: Observable<ApplicationContent[]>;
+    users$: Observable<any>;
     loading$: Observable<boolean> | boolean;
     constructor(private store: Store<State>) { }
 
     ngOnInit() {
         this.initSelectors();
-
+        this.store.dispatch(new FetchUsersAction());
         // TODO removed when API listing is implemented.
         this.userMock = [
             {
@@ -67,8 +66,8 @@ export class UsersListgingComponent implements OnInit {
     }
 
     private initSelectors() {
-        this.loading$ = this.store.select(isLoadingGroups);
-        this.groups$ = this.store.select(getGroups);
+        this.loading$ = this.store.select(areUsersFetching);
+        this.users$ = this.store.select(areUsersFetched);
     }
 
     openModalConfirm(confirmModal: any, user: any): void {
@@ -81,7 +80,7 @@ export class UsersListgingComponent implements OnInit {
     }
 
     submit() {
-        this.store.select(isUserUpdated).subscribe(() => {
+        this.store.select(areUsersFetching).subscribe(() => {
             this.confirmModal.close();
         });
 

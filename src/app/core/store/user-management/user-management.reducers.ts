@@ -12,6 +12,7 @@ export interface UserManagementStade {
     fetchingUsers: boolean;
     fetchedUsers: boolean;
     error?: string;
+    users: any;
 }
 
 const initialState: UserManagementStade = {
@@ -22,7 +23,8 @@ const initialState: UserManagementStade = {
     updatingUser: false,
     updatedUser: false,
     fetchingUsers: false,
-    fetchedUsers: false
+    fetchedUsers: false,
+    users: []
 };
 
 export function reducer(state: any = initialState, action: UserManagementAcctions): UserManagementStade {
@@ -64,18 +66,22 @@ export function reducer(state: any = initialState, action: UserManagementAcction
           case UserManagementTypes.FETCH_USERS:
           return Object.assign({}, state, {
             error: undefined,
-            fetchingUser: true
+            fetchingUsers: true
           });
 
         case UserManagementTypes.FETCH_USERS_ERROR:
           return Object.assign({}, state, {
             fetchedUsers: false,
+            fetchingUsers: false,
+            users: null,
             error: action.payload.error
           });
 
         case UserManagementTypes.FETCH_USERS_SUCCESS:
           return Object.assign({}, state, {
-            fetchedUsers: true
+            fetchedUsers: true,
+            fetchingUsers: false,
+            users: action.payload.data
           });
         default:
           return state;
@@ -144,7 +150,7 @@ export const areUsersFetching = (state: UserManagementStade) => state.fetchingUs
  * @param {State} state
  * @returns {boolean}
  */
-export const areUsersFetched = (state: UserManagementStade) => state.fetchedUsers;
+export const areUsersFetched = (state: UserManagementStade) => state.users;
 ​
 /**
  * Returns the reset password error.

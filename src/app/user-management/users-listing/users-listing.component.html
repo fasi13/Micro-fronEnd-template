@@ -10,22 +10,20 @@
         <tr>
         <th scope="col">Username</th>
         <th scope="col">Fist Name</th>
-        <th scope="col">Second Name</th>
+        <th scope="col">Last Name</th>
         <th scope="col">Status</th>
-        <th scope="col">Group Application</th>
         <th scope="col">Application Name</th>
         <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of userMock">
-            <td>{{user.userName}}</td>
+        <tr *ngFor="let user of users$ | async">
+            <td>{{user.login}}</td>
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>
             <td *ngIf="user.isActive">Active</td>
             <td *ngIf="!user.isActive">Desactive</td>
-            <td>{{user.groupApplication}}</td>
-            <td>{{user.applicationName}}</td>
+            <td>{{user.applicationPath.path[user.applicationPath.path.lenght - 1 ].name}</td>
             <td>
                 <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
                     <i class="fas fa-edit"></i>

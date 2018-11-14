@@ -10,17 +10,17 @@ export const config: FieldConfig[] = [
         placeholder: 'Enter userName',
         validation: {
             required: {
-            errorMsg: 'UserName is required',
-            validator: Validators.required
+                errorMsg: 'UserName is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Name should have at least 2 characters',
-            validator: Validators.minLength(2)
+                errorMsg: 'UserName should have at least 2 characters',
+                validator: Validators.minLength(2)
             },
             maxlength: {
-            errorMsg: 'Name should not have more than 15 characters',
-            validator: Validators.maxLength(15)
-            }
+                errorMsg: 'UserName should not have more than 50 characters',
+                validator: Validators.maxLength(50)
+            },
         }
     },
     {
@@ -30,13 +30,17 @@ export const config: FieldConfig[] = [
         placeholder: 'Password',
         validation: {
             required: {
-            errorMsg: 'Password is required',
-            validator: Validators.required
+                errorMsg: 'Password is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Description should have at least 6 characters',
-            validator: Validators.minLength(6)
-            }
+                errorMsg: 'Password should have at least 6 characters',
+                validator: Validators.minLength(6)
+            },
+            maxlength: {
+                errorMsg: 'Password should not have more than 500 characters',
+                validator: Validators.maxLength(500)
+            },
         }
     },
     {
@@ -46,12 +50,20 @@ export const config: FieldConfig[] = [
         placeholder: 'Confirm password',
         validation: {
             required: {
-            errorMsg: 'Confirm password is required',
-            validator: Validators.required
+                errorMsg: 'Confirm password is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Description should have at least 6 characters',
-            validator: Validators.minLength(6)
+                errorMsg: 'Confirm password should have at least 6 characters',
+                validator: Validators.minLength(6)
+            },
+            maxlength: {
+                errorMsg: 'Confirm Password should not have more than 500 characters',
+                validator: Validators.maxLength(500)
+            },
+            matchPassword: {
+                errorMsg: 'The confirm password does not match with the password',
+                validator: null
             }
         }
     },
@@ -70,16 +82,16 @@ export const config: FieldConfig[] = [
         placeholder: 'First Name',
         validation: {
             required: {
-            errorMsg: 'First name is required',
-            validator: Validators.required
+                errorMsg: 'First name is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Name should have at least 2 characters',
-            validator: Validators.minLength(2)
+                errorMsg: 'First Name should have at least 2 characters',
+                validator: Validators.minLength(2)
             },
             maxlength: {
-            errorMsg: 'Name should not have more than 15 characters',
-            validator: Validators.maxLength(15)
+                errorMsg: 'First Name should not have more than 200 characters',
+             validator: Validators.maxLength(200)
             }
         }
     },
@@ -90,16 +102,16 @@ export const config: FieldConfig[] = [
         placeholder: 'Last Name',
         validation: {
             required: {
-            errorMsg: 'Last name is required',
-            validator: Validators.required
+                errorMsg: 'Last name is required',
+                validator: Validators.required
             },
             minlength: {
-            errorMsg: 'Name should have at least 2 characters',
-            validator: Validators.minLength(2)
+                errorMsg: 'Last Name should have at least 2 characters',
+                validator: Validators.minLength(2)
             },
             maxlength: {
-            errorMsg: 'Name should not have more than 15 characters',
-            validator: Validators.maxLength(15)
+                errorMsg: 'Last Name should not have more than 200 characters',
+                validator: Validators.maxLength(200)
             }
         }
     },
@@ -110,18 +122,17 @@ export const config: FieldConfig[] = [
         placeholder: 'Email',
         validation: {
             required: {
-            errorMsg: 'Email address is required',
-            validator: Validators.required
+                errorMsg: 'Email address is required',
+                validator: Validators.required
             },
             email: {
-            errorMsg: 'Please enter a valid Email address',
-            validator: Validators.email
+                errorMsg: 'Please enter a valid Email address',
+                validator: Validators.email
+            },
+            maxlength: {
+                errorMsg: 'Email should not have more than 200 characters',
+                validator: Validators.maxLength(200)
             }
         }
-    },
-    {
-        label: 'Save',
-        name: 'save',
-        type: 'button'
     }
 ];
