@@ -81,7 +81,7 @@ export function reducer(state: any = initialState, action: UserManagementAcction
           return Object.assign({}, state, {
             fetchedUsers: true,
             fetchingUsers: false,
-            users: action.payload.data
+            users: action.payload.items
           });
         default:
           return state;

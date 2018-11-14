@@ -15,7 +15,6 @@ import {
 })
 
 export class UsersListgingComponent implements OnInit {
-    userMock: Array<any>;
     configConfirmModal: any;
     currentUser: any;
     titleModalConfirm: string;
@@ -28,41 +27,6 @@ export class UsersListgingComponent implements OnInit {
     ngOnInit() {
         this.initSelectors();
         this.store.dispatch(new FetchUsersAction());
-        // TODO removed when API listing is implemented.
-        this.userMock = [
-            {
-                id: 1053,
-                userName: 'fidel12',
-                firstName: 'fidel',
-                lastName: 'barcaya',
-                email: 'dcanqui@hinda.com',
-                isActive: true,
-                groupApplication: 'Corporation',
-                applicationPath: 'FIS LOYALTY SCORECARD PARTNER',
-                applicationId: 3752
-            },
-            {
-                id: 1037,
-                userName: 'fidel',
-                firstName: 'fidel',
-                lastName: 'barcaya',
-                email: 'dcanqui@hinda.com',
-                isActive: false,
-                groupApplication: 'Corporation',
-                applicationPath: 'FIS LOYALTY SCORECARD PARTNER',
-                applicationId: 3752
-            },
-            {
-                id: 3038,
-                login: 'fbarcaya',
-                firstName: 'fidel',
-                lastName: 'barcaya',
-                email: 'dcanqui@hinda.com',
-                isActive: true,
-                groupApplication: 'Corporation',
-                applicationPath: 'FIS LOYALTY SCORECARD PARTNER'
-            }
-        ];
     }
 
     private initSelectors() {
@@ -91,5 +55,10 @@ export class UsersListgingComponent implements OnInit {
             emailAddress: this.currentUser.email,
             isActive: !this.currentUser.isActive,
         }));
+    }
+
+    getApplicationName(user: any): string {
+        const name = user.applicationPath.path[user.applicationPath.path.length - 1 ].name;
+        return name;
     }
 }

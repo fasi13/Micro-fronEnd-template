@@ -4,7 +4,6 @@ import _clone from 'lodash/clone';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile, filter } from 'rxjs/operators';
-import { AbstractControl } from '@angular/forms';
 
 import {
     NewUser,
@@ -56,7 +55,6 @@ export class UserFormModalComponent implements OnDestroy {
         } else {
             this.user = {};
             this.user.applicationName = '';
-            fieldConfiguration[2].validation.matchPassword.validator = this.validateMatchPassword;
             this.config = _clone(fieldConfiguration);
             this.setCurrentApplicationId();
         }
@@ -106,13 +104,5 @@ export class UserFormModalComponent implements OnDestroy {
 
     private setCurrentApplicationId(): void {
         this.applicationID = +this.route.params['value'].tenantId;
-    }
-
-    validateMatchPassword(control: AbstractControl) {
-        if (control.value) {
-            const result = control.parent.controls['password'].value !== control.value;
-            return { matchPassword: result };
-        }
-        return null;
     }
 }

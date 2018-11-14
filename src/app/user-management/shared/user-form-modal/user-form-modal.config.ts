@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 
-import { FieldConfig } from '@forge/shared';
+import { FieldConfig, ValidateMatchPassword } from '@forge/shared';
 
 export const config: FieldConfig[] = [
     {
@@ -63,7 +63,7 @@ export const config: FieldConfig[] = [
             },
             matchPassword: {
                 errorMsg: 'The confirm password does not match with the password',
-                validator: null
+                validator: ValidateMatchPassword('password')
             }
         }
     },

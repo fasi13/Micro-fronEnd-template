@@ -56,8 +56,8 @@ export class UserManagamentEffects {
       ofType(UserManagementTypes.FETCH_USERS),
       switchMap(() => this.userService.geUsers()
           .pipe(
-            map(() => {
-              return new FetchUsersSuccessAction({response: 'Success response.'});
+            map((response: any) => {
+              return new FetchUsersSuccessAction(response.data);
             }),
             catchError(error => of(new FetchUsersErrorAction({error: error})))
           )
