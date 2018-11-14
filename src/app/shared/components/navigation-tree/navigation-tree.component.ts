@@ -75,6 +75,7 @@ export class NavigationTreeComponent implements OnInit {
     item.childrenData = response.data.items.map((groupData) => new TreeviewData(
       groupData.id,
       groupData.name,
+      groupData.value,
       groupData.hasOwnProperty('isEncrypted'),
       item.id
     ));

@@ -29,7 +29,10 @@
         class="fas fa-circle-notch fa-spin"
       ></i>
       <span ngbTooltip="Click to change" [disableTooltip]="item?.isGroup || item?.id === currentApplicationId" placement="right">
-        <a (click)="goToApplication(item?.id)">{{item?.name}}</a>
+        <a (click)="goToApplication(item?.id)" [ngClass]="{'fge-disabled': item?.isGroup}" >
+          {{item?.name}}
+          <span *ngIf="item?.value && item?.value >= 0">({{item?.value}})</span>
+        </a>
       </span>
       <span *ngIf="item?.isGroup" class="ml-1 badge badge-info">Group</span>
       <span *ngIf="!item?.isGroup && item?.id === currentApplicationId" class="ml-1 badge badge-success">Current</span>

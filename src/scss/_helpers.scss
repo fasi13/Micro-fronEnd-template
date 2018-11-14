@@ -2,3 +2,7 @@
   cursor: pointer;
   pointer-events: all;
 }
+
+.fge-disabled {
+  pointer-events: none;
+}
