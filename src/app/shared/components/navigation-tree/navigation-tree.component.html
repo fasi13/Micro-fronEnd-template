@@ -25,7 +25,7 @@
 
 <ng-template #treeviewItem let-item="item">
   <li>
-    <a [ngClass]="{'fge-clickable': !item?.isGroup}">
+    <a [ngClass]="{'fge-clickable': !item?.isGroup, 'fge-tree__a--group': item?.isGroup}">
       <i
         *ngIf="!item?.loading && !isEmptyItem(item)"
         class="fge-clickable fas"
@@ -40,15 +40,14 @@
         *ngIf="item?.loading"
         class="fas fa-circle-notch fa-spin"
       ></i>
-      <span ngbTooltip="Click to change" [disableTooltip]="item?.isGroup || item?.id === currentApplicationId" placement="right">
-        <a (click)="goToApplication(item?.id)" [ngClass]="{'fge-disabled': item?.isGroup}" >
+      <span ngbTooltip="Go to {{item?.name}}" [disableTooltip]="item?.isGroup || item?.id === currentApplicationId" placement="right">
+        <a
+          (click)="goToApplication(item)"
+          [ngClass]="{'text-primary font-weight-bold font-italic': !item?.isGroup && item?.id === currentApplicationId, 'font-weight-light': isEmptyItem(item)}">
           {{item?.name}}
           <span *ngIf="item?.value && item?.value >= 0">({{item?.value}})</span>
         </a>
       </span>
-      <span *ngIf="item?.isGroup" class="ml-1 badge badge-info">Group</span>
-      <span *ngIf="!item?.isGroup && item?.id === currentApplicationId" class="ml-1 badge badge-success">Current</span>
-      <span *ngIf="isEmptyItem(item)" class="ml-1 badge badge-secondary">Empty</span>
     </a>
     <ul *ngIf="!item?.collapsed">
       <ng-container

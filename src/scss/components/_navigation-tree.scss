@@ -1,3 +1,8 @@
+.fge-tree {
+  padding-inline-start: 40px;
+  padding-inline-end: 40px;
+}
+
 .fge-tree--container {
   position: fixed;
   background-color: white;
@@ -32,8 +37,10 @@
 
 .fge-tree li {
   list-style-type: none;
-  margin:10px;
+  margin: 10px 0px 10px 10px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .fge-tree li::before {
@@ -87,4 +94,9 @@ ul.fge-tree>li:first-child::before {
   bottom: 10px;
   z-index: 1;
   margin-right: 25px;
+}
+
+.fge-tree__a--group {
+  background-color: #ebebeb;
+  border-radius: 5px;
 }

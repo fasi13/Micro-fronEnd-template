@@ -57,8 +57,10 @@ export class NavigationTreeComponent implements OnInit {
     return !item.loading && item.executedFetch && (!item.childrenData || item.childrenData.length === 0);
   }
 
-  goToApplication(appId: string | number) {
-    this.selected.emit(appId as string);
+  goToApplication(item: TreeviewData) {
+    if (!item.isGroup) {
+      this.selected.emit(item.id);
+    }
   }
 
   onScrollContent(event: Event): void {
