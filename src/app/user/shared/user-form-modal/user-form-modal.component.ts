@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile, filter } from 'rxjs/operators';
 
-import { User, NewUserAction, State, areUsersFetching, UpdateUserAction } from '@forge/core';
+import { User, NewUserAction, State, isLoadingUser, UpdateUserAction } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { configNewUserFields, configUpdateUserFields } from './user-form-modal.config';
 
@@ -54,7 +54,7 @@ export class UserFormModalComponent implements OnDestroy {
   }
 
   private handleUser(): void {
-    this.store.select(areUsersFetching)
+    this.store.select(isLoadingUser)
     .pipe(
       takeWhile(() => this.isAliveComponent),
       filter(areUsersFetching => areUsersFetching),

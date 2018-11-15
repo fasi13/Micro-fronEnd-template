@@ -2,30 +2,33 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
+
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
 import { NotifierService } from 'angular-notifier';
 
 import {
   NewUserErrorAction,
-  UserManagementTypes,
+  NewUserSuccessAction,
+  UserTypes,
   UpdateUserErrorAction,
+  UpdateUserSuccessAction,
   FetchUsersAction,
   FetchUsersSuccessAction,
   FetchUsersErrorAction
-} from './user-management.actions';
+} from './user.actions';
 import { UserService } from '../../services/user.service';
 import { User, ApiResponse, DataPaginated } from '../../models';
 
 @Injectable()
-export class UserManagamentEffects {
+export class UserEffects {
   @Effect() public addNewUser: Observable<Action> = this.actions.pipe(
-    ofType(UserManagementTypes.NEW_USER),
+    ofType(UserTypes.NEW_USER),
       switchMap((action: any) => this.userService.createNewUser(action.payload)
         .pipe(
-          map(() => {
+          mergeMap(() => {
             this.notifierService.notify('success', 'The user has been created successfully');
-            return new FetchUsersAction();
+            return [new NewUserSuccessAction(), new FetchUsersAction()];
           }),
           catchError((error) => {
             this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
@@ -36,12 +39,12 @@ export class UserManagamentEffects {
   );
 
   @Effect() public updateUser: Observable<Action> = this.actions.pipe(
-    ofType(UserManagementTypes.UPDATE_USER),
+    ofType(UserTypes.UPDATE_USER),
     switchMap((action: any) => this.userService.updateUser(action.payload)
       .pipe(
-        map(() => {
+        mergeMap(() => {
           this.notifierService.notify('success', 'The user has been updated successfully');
-          return new FetchUsersAction();
+          return [new UpdateUserSuccessAction(), new FetchUsersAction()];
         }),
         catchError((error) => {
           this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
@@ -51,9 +54,8 @@ export class UserManagamentEffects {
     )
   ));
 
-
   @Effect() public fetchUsers: Observable<Action> = this.actions.pipe(
-    ofType(UserManagementTypes.FETCH_USERS),
+    ofType(UserTypes.FETCH_USERS),
     switchMap(() => this.userService.getUsers()
       .pipe(
         map((response: ApiResponse<DataPaginated<User>>) => {

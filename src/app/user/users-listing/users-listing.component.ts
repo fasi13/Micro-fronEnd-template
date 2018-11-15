@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { State, UpdateUserAction, areUsersFetching, areUsersFetched, FetchUsersAction } from '@forge/core';
+import { State, UpdateUserAction, isLoadingUsers, getUsers,  FetchUsersAction } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 @Component({
   selector: 'fge-users',
@@ -24,8 +24,8 @@ export class UsersListgingComponent implements OnInit {
   }
 
   private initSelectors() {
-    this.loading$ = this.store.select(areUsersFetching);
-    this.users$ = this.store.select(areUsersFetched);
+    this.loading$ = this.store.select(isLoadingUsers);
+    this.users$ = this.store.select(getUsers);
   }
 
   openModalConfirm(confirmModal: any, user: any): void {
@@ -35,14 +35,14 @@ export class UsersListgingComponent implements OnInit {
     this.config = {
       title: 'Active/Inactive user confirmation',
       message: `Do you want to ${labelAction} the user ${user.login}?`,
-      firstLabel: 'Accept',
-      secondLabel: 'Cancel'
+      submitLabel: 'Accept',
+      cancelLabel: 'Cancel'
     };
     confirmModal.open();
   }
 
   submit() {
-    this.store.select(areUsersFetching).subscribe(() => {
+    this.store.select(isLoadingUsers).subscribe(() => {
       this.confirmModal.close();
     });
 

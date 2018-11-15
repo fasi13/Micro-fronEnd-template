@@ -5,14 +5,14 @@ import { createSelector } from 'reselect';
 import * as AuthorizationReducers from './authorization/authorization.reducers';
 import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
-import * as UserManagementReducers from './user-management/user-management.reducers';
+import * as UserReducers from './user/user.reducers';
 
 export interface State {
   router: RouterReducerState;
   authorization: AuthorizationReducers.AuthorizationState;
   application: ApplicationReducers.ApplicationState;
   content: ContentReducers.ContentState;
-  userManagement: UserManagementReducers.UserManagementState;
+  user: UserReducers.UserState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -20,7 +20,7 @@ export const FgeReducers: ActionReducerMap<State> = {
   authorization: AuthorizationReducers.reducer,
   application: ApplicationReducers.reducer,
   content: ContentReducers.reducer,
-  userManagement: UserManagementReducers.reducer
+  user: UserReducers.reducer
 };
 
 /**********************************\
@@ -65,19 +65,24 @@ export const getGroup = createSelector(getContentState, ContentReducers.getGroup
 export const getContentRecordState = createSelector(getContentState, ContentReducers.getRecordState);
 
 /**********************************************************
- * User Management Reducers
+ * User Reducers
  *********************************************************/
 export const getUserState = (state: State) => {
-  return state.userManagement;
+  return state.user;
 };
-export const isNewUserCreating = createSelector(getUserState, UserManagementReducers.isNewUserCreating);
-export const isNewUserCreated = createSelector(getUserState, UserManagementReducers.isNewUserCreated);
-export const getNewUserError = createSelector(getUserState, UserManagementReducers.getNewUserError);
+export const isLoadingUsers = createSelector(getUserState, UserReducers.isLoadingUsers);
+export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
+export const getUsers = createSelector(getUserState, UserReducers.getUsers);
 
-export const isUserUpdating = createSelector(getUserState, UserManagementReducers.isUserUpdating);
-export const isUserUpdated = createSelector(getUserState, UserManagementReducers.isUserUpdated);
-export const getUserUpdateError = createSelector(getUserState, UserManagementReducers.getUserUpdateError);
+// export const isUserUpdating = createSelector(getUserState, UserReducers.isUserUpdating);
+// export const isUserUpdated = createSelector(getUserState, UserReducers.isUserUpdated);
+// export const getUserUpdateError = createSelector(getUserState, UserReducers.getUserUpdateError);
 
-export const areUsersFetching = createSelector(getUserState, UserManagementReducers.areUsersFetching);
-export const areUsersFetched = createSelector(getUserState, UserManagementReducers.areUsersFetched);
-export const fetchUsersError = createSelector(getUserState, UserManagementReducers.fetchUsersError);
+// export const areUsersFetching = createSelector(getUserState, UserReducers.areUsersFetching);
+// export const areUsersFetched = createSelector(getUserState, UserReducers.areUsersFetched);
+// export const fetchUsersError = createSelector(getUserState, UserReducers.fetchUsersError);
+
+
+// export const isLoadingUsers = (state: UserState) => state.users.loading;
+// export const  = (state: UserState) => state.user.loading;
+// export const getUsers = (state: UserState) => state.users.items;

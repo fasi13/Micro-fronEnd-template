@@ -23,4 +23,4 @@ const routes: Routes = [
   ],
   declarations: [ UsersListgingComponent, UserFormModalComponent ]
 })
-export class UserManagementModule { }
+export class UserModule { }

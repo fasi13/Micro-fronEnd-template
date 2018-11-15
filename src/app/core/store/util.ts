@@ -2,11 +2,11 @@ import _mapValues from 'lodash/mapValues';
 import _keyBy from 'lodash/keyBy';
 import _lowerCase from 'lodash/lowerCase';
 
-import { State } from "./store.reducers";
-import { User, UserToken, Link, MappedLinks } from "../models";
+import { State } from './store.reducers';
+import { User, UserToken, Link, MappedLinks } from '../models';
 import { ApplicationState } from './application/application.reducers';
 import { ContentState } from './content/content.reducers';
-import { UserManagementState } from './user-management/user-management.reducers';
+import { UserState } from './user/user.reducers';
 
 const typeCache: { [label: string]: boolean } = {};
 export function ActionType<T>(label: T | string): T {
@@ -44,7 +44,7 @@ export function loadFromLocalStorage() {
     },
     application: {} as ApplicationState,
     content: {} as ContentState,
-    userManagement: {} as UserManagementState
+    user: {} as UserState
   };
   return currentState;
 }

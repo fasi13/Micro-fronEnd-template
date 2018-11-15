@@ -38,17 +38,14 @@ export class UserService {
   }
 
   createNewUser(newUser: User): Observable<ApiResponse<User>> {
-    const url = `${this.baseUrl}`;
-    return this.httpClient.post<ApiResponse<User>>(url, newUser);
+    return this.httpClient.post<ApiResponse<User>>(this.baseUrl, newUser);
   }
 
   updateUser(updatedUser: User): Observable<ApiResponse<User>> {
-    const url = `${this.baseUrl}`;
-    return this.httpClient.put<ApiResponse<User>>(url, updatedUser);
+    return this.httpClient.put<ApiResponse<User>>(this.baseUrl, updatedUser);
   }
 
   getUsers(): Observable<ApiResponse<DataPaginated<User>>> {
-    const url = `${this.baseUrl}`;
-    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(url);
+    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl);
   }
 }
