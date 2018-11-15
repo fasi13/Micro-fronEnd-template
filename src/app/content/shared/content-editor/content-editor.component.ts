@@ -5,6 +5,7 @@ import _clone from 'lodash/clone';
 
 import { takeWhile } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
+import { NotifierService } from 'angular-notifier';
 
 import {
   State,
@@ -39,7 +40,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
-    private fgeRouter: FgeRouterService
+    private fgeRouter: FgeRouterService,
+    private notifierService: NotifierService
   ) { }
 
   ngOnInit() {
@@ -79,9 +81,9 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
 
   handleSubmit({ value: formData, success, error}): void {
     const { value } = formData;
-    const { id: contentId, status: currentStatus } = this.currentContent;
+    const { id: contentId, status: status } = this.currentContent;
     const contentPayload = {
-      currentStatus,
+      status,
       value
     };
     this.store.dispatch(new TransactionContentEdit({
@@ -98,6 +100,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
         } else if (!loading) {
           success();
           this.goToContentGroup();
+          this.notifierService.notify('success', 'The content has been updated successfully');
         }
       });
   }
