@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { UserCredentials, UserToken, User } from '../models';
+import { UserCredentials, UserToken, User, DataPaginated, ApiResponse, } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -37,18 +37,18 @@ export class UserService {
     return of(isAuth);
   }
 
-  createNewUser(newUser: User): Observable<any> {
+  createNewUser(newUser: User): Observable<ApiResponse<User>> {
     const url = `${this.baseUrl}`;
-    return this.httpClient.post(url, newUser);
+    return this.httpClient.post<ApiResponse<User>>(url, newUser);
   }
 
-  updateUser(updatedUser: User): Observable<any> {
+  updateUser(updatedUser: User): Observable<ApiResponse<User>> {
     const url = `${this.baseUrl}`;
-    return this.httpClient.put(url, updatedUser);
+    return this.httpClient.put<ApiResponse<User>>(url, updatedUser);
   }
 
-  getUsers(): Observable<any> {
+  getUsers(): Observable<ApiResponse<DataPaginated<User>>> {
     const url = `${this.baseUrl}`;
-    return this.httpClient.get(url);
+    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(url);
   }
 }

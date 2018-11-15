@@ -36,8 +36,7 @@
 </table>
 
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
-<fge-modal-confirm title="{{ titleModalConfirm }}"
-  message="{{ messageConfirmModal }}"
+<fge-modal-confirm [config]="config"
   (onsubmit)="submit()"
   #modalConfirmModal>
 </fge-modal-confirm>

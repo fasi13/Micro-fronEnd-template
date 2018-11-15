@@ -3,14 +3,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { State, UpdateUserAction, areUsersFetching, areUsersFetched, FetchUsersAction } from '@forge/core';
-
+import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 @Component({
   selector: 'fge-users',
   templateUrl: './users-listing.component.html'
 })
-
 export class UsersListgingComponent implements OnInit {
-  configConfirmModal: any;
+  config: ModalConfirmConfig;
   currentUser: any;
   titleModalConfirm: string;
   messageConfirmModal: string;
@@ -33,8 +32,12 @@ export class UsersListgingComponent implements OnInit {
     this.confirmModal = confirmModal;
     this.currentUser = user;
     const labelAction = user.isActive ? 'inactive' : 'active';
-    this.titleModalConfirm = 'Active/Inactive user confirmation';
-    this.messageConfirmModal = `Do you want to ${labelAction} the user ${user.login}?`;
+    this.config = {
+      title: 'Active/Inactive user confirmation',
+      message: `Do you want to ${labelAction} the user ${user.login}?`,
+      firstLabel: 'Accept',
+      secondLabel: 'Cancel'
+    };
     confirmModal.open();
   }
 

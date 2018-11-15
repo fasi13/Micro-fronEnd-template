@@ -15,6 +15,7 @@ import {
   FetchUsersErrorAction
 } from './user-management.actions';
 import { UserService } from '../../services/user.service';
+import { User, ApiResponse, DataPaginated } from '../../models';
 
 @Injectable()
 export class UserManagamentEffects {
@@ -55,7 +56,7 @@ export class UserManagamentEffects {
     ofType(UserManagementTypes.FETCH_USERS),
     switchMap(() => this.userService.getUsers()
       .pipe(
-        map((response: any) => {
+        map((response: ApiResponse<DataPaginated<User>>) => {
           return new FetchUsersSuccessAction(response.data);
         }),
         catchError(error => of(new FetchUsersErrorAction({error: error})))

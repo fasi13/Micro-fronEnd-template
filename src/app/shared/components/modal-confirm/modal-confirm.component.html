@@ -1,22 +1,22 @@
 <ng-template #modalConfirmTemplate let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">
-            <span>{{ title }}</span>
+            <span>{{ config.title }}</span>
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        {{ message }}
+        {{ config.message }}
     </div>
     <div class="modal-footer">
         <button class="fge-dynamic-form__button btn-primary bg-primary"
            (click)="handleSubmit()"
-           type="submit">Accept</button>
+           type="submit">{{ config.firstLabel }}</button>
         <button type="button" 
            class="fge-dynamic-form__button btn-secondary"
            aria-label="Close" 
-           (click)="d('Cross click')">Cancel</button>
+           (click)="handleCancel()">{{ config.secondLabel }}</button>
     </div>
 </ng-template>

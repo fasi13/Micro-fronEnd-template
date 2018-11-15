@@ -13,7 +13,6 @@ import { configNewUserFields, configUpdateUserFields } from './user-form-modal.c
   selector: 'fge-user-form-modal',
   templateUrl: './user-form-modal.component.html'
 })
-
 export class UserFormModalComponent implements OnDestroy {
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
