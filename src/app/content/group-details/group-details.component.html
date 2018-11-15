@@ -2,36 +2,72 @@
   <h4 class="my-2 col-10">
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     {{ currentGroup?.name }}
+    <button type="button" class="btn btn-sm" [ngClass]="{'btn-link': !editMode, 'btn-primary bg-primary': editMode}" (click)="toggleEditMode()">Edit</button>
   </h4>
-  <button type="button" class="btn btn-link col-2" (click)="openContentForm()"><i class="fas fa-folder-plus fa-lg"></i></button>
+  <div class="col text-right">
+    <button type="button" class="btn btn-link" (click)="openContentForm()"><i class="fas fa-folder-plus fa-lg"></i></button>
+  </div>
 </div>
 
-<table class="table table-bordred fge-group--content-list">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Type</th>
-      <th scope="col">Value</th>
-      <th scope="col">Status</th>
-      <th scope="col">Publish Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let content of currentGroup?.content">
-      <td>{{ content?.name }}</td>
-      <td>{{ content?.description }}</td>
-      <td>{{ content?.dataType?.name }}</td>
-      <td [ngSwitch]="content?.dataType?.name">
-        <fge-content-type-color *ngSwitchCase="'Color Picker'" [value]="content?.value"></fge-content-type-color>
-        <fge-content-type-text *ngSwitchCase="'Text'" [value]="content?.value"></fge-content-type-text>
-        <fge-content-type-html *ngSwitchCase="'HTML'" [value]="content?.value"></fge-content-type-html>
-        <fge-content-type-image *ngSwitchCase="'Image'" [value]="content?.value"></fge-content-type-image>
-        <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
-        <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
-      </td>
-      <td>{{ content?.status }}</td>
-      <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="editMode; then editView; else tableView"></div>
+
+<ng-template #editView>
+    <table class="table table-hover fge-table fge-group--content-list" *ngIf="contentsAsList && contentsAsList?.length > 0">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Publish Date</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let content of contentsAsList">
+          <td>{{ content?.name }}</td>
+          <td>{{ content?.description }}</td>
+          <td>{{ content?.status }}</td>
+          <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
+          <td>
+            <a
+              tabindex="0"
+              class="btn btn-primary bg-primary btn-sm mr-2">
+              <i class="far fa-edit"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</ng-template>
+
+<ng-template #tableView>
+  <table class="table fge-group--content-list">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Type</th>
+        <th scope="col">Value</th>
+        <th scope="col">Status</th>
+        <th scope="col">Publish Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let content of currentGroup?.content">
+        <td>{{ content?.name }}</td>
+        <td>{{ content?.description }}</td>
+        <td>{{ content?.dataType?.name }}</td>
+        <td [ngSwitch]="content?.dataType?.name">
+          <fge-content-type-color *ngSwitchCase="'Color Picker'" [value]="content?.value"></fge-content-type-color>
+          <fge-content-type-text *ngSwitchCase="'Text'" [value]="content?.value"></fge-content-type-text>
+          <fge-content-type-html *ngSwitchCase="'HTML'" [value]="content?.value"></fge-content-type-html>
+          <fge-content-type-image *ngSwitchCase="'Image'" [value]="content?.value"></fge-content-type-image>
+          <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
+          <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
+        </td>
+        <td>{{ content?.status }}</td>
+        <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

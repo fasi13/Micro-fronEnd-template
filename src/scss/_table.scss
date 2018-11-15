@@ -1,0 +1,14 @@
+.fge-table {
+
+  tr {
+    .fge-table--actions {
+      display: none !important;
+    }
+  }
+
+  tr:hover {
+    .fge-table--actions {
+      display: inline !important;
+    }
+  }
+}
