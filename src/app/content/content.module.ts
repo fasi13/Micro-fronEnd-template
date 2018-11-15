@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { GroupsListingComponent } from './groups-listing/groups-listing.component';
 import { GroupDetailsComponent } from './group-details/group-details.component';
-import { 
+import {
   ContentTypeColorComponent,
   ContentTypeTextComponent,
   ContentTypeHtmlComponent,
@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupFormModalComponent } from './shared/group-form-modal/group-form-modal.component';
 import { ContentFormModalComponent } from './shared/content-form-modal/content-form-modal.component';
 import { SharedModule } from '../shared/shared.module';
+import { ContentEditorComponent } from './shared/content-editor/content-editor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'groups' },
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'group/:groupId',
     component: GroupDetailsComponent
+  },
+  {
+    path: 'group/:groupId/content/:contentId/edit',
+    component: ContentEditorComponent
   }
 ];
 
@@ -48,7 +53,8 @@ const routes: Routes = [
     ContentTypeLogoComponent,
     ContentTypeDocumentComponent,
     GroupFormModalComponent,
-    ContentFormModalComponent
+    ContentFormModalComponent,
+    ContentEditorComponent
   ],
   entryComponents: [
     ContentFormModalComponent

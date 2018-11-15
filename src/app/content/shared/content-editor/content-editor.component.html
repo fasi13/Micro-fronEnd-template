@@ -1,0 +1,11 @@
+<h4 class="my-3">
+  Content Editor
+  <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+</h4>
+<fge-dynamic-form
+  [hidden]="loading$ | async"
+  [fieldsConfig]="config"
+  #form="fgeDynamicForm"
+  (onsubmit)="handleSubmit($event)"
+  (oncancel)="handleCancel()">
+</fge-dynamic-form>

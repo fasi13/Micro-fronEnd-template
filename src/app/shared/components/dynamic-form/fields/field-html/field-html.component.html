@@ -1,18 +1,21 @@
 <div 
   class="fge-dynamic-field form-input" 
   [formGroup]="group">
-  <label>{{ config.label }}</label>
-  <quill-editor
-    class="form-control fge-dynamic-form__html"
-    [ngClass]="{ 'is-invalid': hasError() }"
-    [placeholder]="config?.placeholder"
-    [formControlName]="config?.name">
-  </quill-editor>
-  <div class="invalid-feedback">
-    <div *ngFor="let validator of getObjectKeys(config?.validation)">
-      <span *ngIf="hasErrorFor(validator)">
-        {{config?.validation[validator].errorMsg}}
-      </span>
+  <label *ngIf="config.label">{{ config.label }}</label>
+  <div class="col pr-0" [ngClass]="{'pl-0': !config.label}">
+    <quill-editor
+      class="form-control fge-dynamic-form__html"
+      [ngModel]="currentContent?.value"
+      [ngClass]="{ 'is-invalid': hasError() }"
+      [placeholder]="config?.placeholder"
+      [formControlName]="config?.name">
+    </quill-editor>
+    <div class="invalid-feedback">
+      <div *ngFor="let validator of getObjectKeys(config?.validation)">
+        <span *ngIf="hasErrorFor(validator)">
+          {{config?.validation[validator].errorMsg}}
+        </span>
+      </div>
     </div>
   </div>
 </div>

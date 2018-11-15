@@ -38,4 +38,15 @@ export class ContentService {
     return this.http.post<ApiResponse<ApplicationContent>>(`application/${applicationId}/contentGroup/${groupId}/content`,
     { dataType, description, name, status, value });
   }
+
+  getContent(applicationId: string | number,
+    contentId: string | number): Observable<ApiResponse<ApplicationContent>> {
+    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}`);
+  }
+
+  updateContent(applicationId: string | number, contentId: string | number,
+    { status, value }: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
+    return this.http.put<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}/value`, { status, value });
+  }
+
 }

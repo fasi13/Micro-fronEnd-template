@@ -7,12 +7,16 @@ import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
 
 import {
   ContentActionTypes,
+  FetchContentCompleted,
   FetchContentGroupsCompleted,
   FetchContentError,
   FetchContentGroupCompleted,
   FetchContentGroup,
+  FetchContent,
   TransactionContentRecordCompleted,
-  TransactionContentRecordError
+  TransactionContentRecordError,
+  TransactionContentEditCompleted,
+  TransactionContentEditError
 } from './content.actions';
 import { ContentService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
@@ -41,6 +45,17 @@ export class ContentEffects {
     )
   );
 
+  @Effect() public fetchContent: Observable<Action> = this.actions.pipe(
+    ofType(ContentActionTypes.FETCH_CONTENT),
+    switchMap((action: any) => this.contentService.getContent(action.payload.applicationId,
+      action.payload.contentId)
+        .pipe(
+          map((response: ApiResponse<ApplicationContent>) => new FetchContentCompleted(response.data)),
+          catchError(error => of(new FetchContentError({ error: error })))
+        )
+    )
+  );
+
   @Effect() public addContent: Observable<Action> = this.actions.pipe(
     ofType(ContentActionTypes.CONTENT_RECORD_TRANSACTION),
     switchMap((action: any) => this.contentService.addContentToGroup(action.payload.applicationId,
@@ -51,6 +66,20 @@ export class ContentEffects {
             new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
           ]),
           catchError(error => of(new TransactionContentRecordError(error)))
+        )
+    )
+  );
+
+  @Effect() public updateContent: Observable<Action> = this.actions.pipe(
+    ofType(ContentActionTypes.CONTENT_EDIT_TRANSACTION),
+    switchMap((action: any) => this.contentService.updateContent(action.payload.applicationId,
+      action.payload.contentId, action.payload.contentPayload)
+        .pipe(
+          mergeMap(() => [
+            new TransactionContentEditCompleted(),
+            new FetchContent({ applicationId: action.payload.applicationId, contentId: action.payload.contentId })
+          ]),
+          catchError(error => of(new TransactionContentEditError(error)))
         )
     )
   );
