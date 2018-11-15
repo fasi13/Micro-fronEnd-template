@@ -46,6 +46,7 @@ export class UserFormModalComponent implements OnDestroy {
     } else {
       this.user = {};
       this.user.applicationName = '';
+      configNewUserFields[3].value = true;
       this.config = _clone(configNewUserFields);
     }
     this.handleUser();

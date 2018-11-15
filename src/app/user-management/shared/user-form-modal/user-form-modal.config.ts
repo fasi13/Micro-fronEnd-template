@@ -71,8 +71,7 @@ const toggleButton: FieldConfig = {
   label: 'Account Status',
   name: 'activeUser',
   validation: {},
-  value: true,
-  options: ['Active', 'Desactive']
+  options: ['Active', 'Inactive']
 };
 const firstName = {
   type: 'text',
