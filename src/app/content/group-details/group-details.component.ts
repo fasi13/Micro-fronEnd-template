@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { State, FetchContentGroup, getGroup, isLoadingGroup, ContentGroup, ApplicationContent } from '@forge/core';
+import { State, FetchContentGroup, getGroup, isLoadingGroup, ContentGroup, ApplicationContent, FgeRouterService } from '@forge/core';
 import { takeWhile } from 'rxjs/operators';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
@@ -33,7 +33,8 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private fgeRouter: FgeRouterService
   ) { }
 
   ngOnInit() {
@@ -58,6 +59,10 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+  }
+
+  goToContentEdit(contentId: string): void {
+    this.fgeRouter.navigate(`content/group/${this.currentGroup.id}/content/${contentId}/edit`);
   }
 
   private initDispatchers({ tenantId: applicationId, groupId }: any): void {
