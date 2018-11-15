@@ -34,7 +34,7 @@ const initialState: ContentState = {
   }
 };
 
-export function reducer(state: any = initialState, action: ContentActions): ContentState {
+export function reducer(state: ContentState = initialState, action: ContentActions): ContentState {
   switch (action.type) {
     case ContentActionTypes.FETCH_CONTENT_GROUPS:
       return _assign({}, state, {

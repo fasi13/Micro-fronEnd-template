@@ -10,7 +10,6 @@
   -moz-box-shadow: 0px 3px 8px grey;
   -webkit-box-shadow: 0px 3px 8px grey;
   box-shadow: 0px 3px 8px grey;
-  position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -18,7 +17,7 @@
 }
 
 .fge-tree--container-opened {
-  height: 100%;
+  height: calc(100% - 40px);
 }
 
 .fge-tree--container-closed {
@@ -27,7 +26,6 @@
 }
 
 .fge-tree ul {
-  // margin-left: 20px;
   margin-left: 10px;
   padding-inline-start: 10px;
 }
@@ -45,7 +43,6 @@
   left:-20px;
   border-left: 1px solid #ccc;
   border-bottom:1px solid #ccc;
-  // border-radius:0 0 0 0px;
   width:15px;
   height:18px;
 }
@@ -57,7 +54,6 @@
   left:-20px;
   border-left: 1px solid #ccc;
   border-top:1px solid #ccc;
-  // border-radius:0px 0 0 0;
   width:15px;
   height:100%;
 }
@@ -66,33 +62,29 @@
   display:none;
 }
 
-.fge-tree li:last-child:before{
-  // border-radius: 0 0 0 5px;
-}
-
 ul.fge-tree>li:first-child::before {
   display:none;
 }
 
-ul.fge-tree>li:first-child::after {
-  // border-radius:5px 0 0 0;
-}
-
 .fge-tree li a {
-  // border: 1px #ccc solid;
-  // border-radius: 5px;
   padding:2px 5px;
 }
 
 .fge-tree li a:hover, .fge-tree li a:hover+ul li a,
 .fge-tree li a:focus, .fge-tree li a:focus+ul li a {
   font-weight: bold;
-  // background: #ccc; color: #000; border: 1px solid #000;
 }
 
 .fge-tree li a:hover+ul li::after, .fge-tree li a:focus+ul li::after,
 .fge-tree li a:hover+ul li::before, .fge-tree li a:focus+ul li::before 
 .fge-tree li a:hover+ul::before, .fge-tree li a:focus+ul::before 
 .fge-tree li a:hover+ul ul::before, .fge-tree li a:focus+ul ul::before{
-  border-color:  #000; /*connector color on hover*/
+  border-color:  #000;
+}
+
+.fge-tree__btn--floating {
+  position: fixed;
+  bottom: 10px;
+  z-index: 1;
+  margin-right: 25px;
 }

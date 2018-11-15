@@ -133,6 +133,12 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
         .bg-secondary {
           background-color: ${branding.secondaryColor.value} !important;
         }
+        .text-primary {
+          color: ${branding.primaryColor.value} !important;
+        }
+        .text-secondary {
+          color: ${branding.primaryColor.value} !important;
+        }
       `;
       const css: any = document.createElement('style');
       css.type = 'text/css';

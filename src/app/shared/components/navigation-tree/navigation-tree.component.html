@@ -1,8 +1,20 @@
 <div
+  #scrollContainer
   class="fge-tree--container"
   [ngClass]="{'fge-tree--container-opened': opened, 'fge-tree--container-closed': !opened}"
-  (click)="clickedInside($event)">
+  (click)="clickedInside($event)"
+  (scroll)="onScrollContent($event)">
   <p class="h4 p-3 text-center">Application Hierarchy</p>
+  <a
+    title="Go to top"
+    class="fge-tree__btn--floating fge-clickable"
+    [ngStyle]="{'right':scrollContainerRef?.nativeElement?.offsetLeft + 'px'}"
+    (click)="scrollToTop($event)">
+    <i
+      *ngIf="enableScrollTopBtn"
+      class="fas fa-2x fa-chevron-circle-up text-primary"
+    ></i>
+  </a>
   <ul class="fge-tree">
     <ng-container
       [ngTemplateOutlet]="treeviewItem"

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, HostListener, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { TreeviewData } from './treeview-data.model';
 import { NavigationTreeService } from './navigation-tree.service';
 import { ApiResponse, DataPaginated } from '@forge/core';
@@ -14,8 +14,10 @@ export class NavigationTreeComponent implements OnInit {
   @Input() rootApplicationName: string;
   @Input() currentApplicationId: string | number;
   @Output() readonly selected: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('scrollContainer') scrollContainerRef: ElementRef;
 
   treeData: TreeviewData;
+  enableScrollTopBtn: boolean;
 
   @HostListener('document:click', ['$event']) clickedOutside() {
     this.opened = false;
@@ -57,6 +59,17 @@ export class NavigationTreeComponent implements OnInit {
 
   goToApplication(appId: string | number) {
     this.selected.emit(appId as string);
+  }
+
+  onScrollContent(event: Event): void {
+    event.preventDefault();
+    const scrollTop = this.scrollContainerRef.nativeElement.scrollTop;
+    this.enableScrollTopBtn = (scrollTop > 0);
+  }
+
+  scrollToTop(event: Event): void {
+    event.stopPropagation();
+    this.scrollContainerRef.nativeElement.scrollTo(0, 0);
   }
 
   private fetchDataFor(item: TreeviewData) {
