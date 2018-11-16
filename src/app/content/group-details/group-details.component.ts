@@ -27,6 +27,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     if (this.currentGroup) {
       return this.currentGroup.content.filter((content: ApplicationContent) => content.displayAsList);
     }
+    return [];
   }
 
   constructor(
