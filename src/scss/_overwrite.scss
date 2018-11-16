@@ -42,6 +42,11 @@ body {
   text-align: center;
   padding: 1rem !important;
 }
+
+.modal-content-form .modal-dialog {
+  max-width: 600px;
+}
+
 .notifier__container {
   ul {
     margin-bottom: initial;

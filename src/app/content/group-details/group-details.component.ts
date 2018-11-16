@@ -53,7 +53,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   openContentForm(): void {
-    this.modalRef = this.modalService.open(ContentFormModalComponent);
+    this.modalRef = this.modalService.open(ContentFormModalComponent, { windowClass: 'modal-content-form' });
     this.modalRef.componentInstance.groupId = this.currentGroup.id;
   }
 
