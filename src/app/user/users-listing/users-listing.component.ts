@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { State, UpdateUserAction, isLoadingUsers, getUsers,  FetchUsersAction } from '@forge/core';
+import { State, UserTransaction, isLoadingUsers, getUsers,  FetchUsers } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 @Component({
   selector: 'fge-users',
@@ -20,7 +20,7 @@ export class UsersListgingComponent implements OnInit {
 
   ngOnInit() {
     this.initSelectors();
-    this.store.dispatch(new FetchUsersAction());
+    this.store.dispatch(new FetchUsers());
   }
 
   private initSelectors() {
@@ -46,13 +46,13 @@ export class UsersListgingComponent implements OnInit {
       this.confirmModal.close();
     });
 
-    this.store.dispatch(new UpdateUserAction({
+    this.store.dispatch(new UserTransaction({
       id: this.currentUser.id,
       firstName: this.currentUser.firstName,
       lastName: this.currentUser.lastName,
       emailAddress: this.currentUser.email,
       isActive: !this.currentUser.isActive,
-    }));
+    }, 'PUT'));
   }
 
   getApplicationName(user: any): string {

@@ -1,16 +1,18 @@
 import _assign from 'lodash/assign';
 
-import { User, ContentGroup } from '../../models';
+import { User } from '../../models';
 import { UserTypes, UserActions } from './user.actions';
 
 export interface UserState {
   users: {
     loading: boolean,
     items: User[],
+    error?: any;
   };
   user: {
     loading: boolean,
-    data: ContentGroup,
+    data: User,
+    error?: any;
   };
   error?: any;
 }
@@ -18,56 +20,35 @@ export interface UserState {
 const initialState: UserState = {
   users: {
     loading: false,
-    items: null
+    items: null,
+    error: null
   },
   user: {
     loading: false,
-    data: null
+    data: null,
+    error: null
   }
 };
 
 export function reducer(state: UserState = initialState, action: UserActions): UserState {
   switch (action.type) {
-    case UserTypes.NEW_USER:
+    case UserTypes.USER_TRANSACTION:
       return _assign({}, state, {
         user: {
           loading: true
         }
       });
 
-    case UserTypes.NEW_USER_ERROR:
+    case UserTypes.USER_TRANSACTION_ERROR:
       return _assign({}, state, {
         user: {
           loading: false,
-          data: null
+          data: null,
+          error: action.payload.error
         },
-        error: action.payload.error
       });
 
-    case UserTypes.NEW_USER_SUCCESS:
-      return _assign({}, state, {
-        user: {
-          loading: false,
-          data: action.payload
-        }
-      });
-
-    case UserTypes.UPDATE_USER:
-      return _assign({}, state, {
-        user: {
-          loading: true
-        }
-      });
-
-    case UserTypes.UPDATE_USER_ERROR:
-      return _assign({}, state, {
-        user: {
-          loading: false
-        },
-        error: action.payload.error
-      });
-
-    case UserTypes.UPDATE_USER_SUCCESS:
+    case UserTypes.USER_TRANSACTION_SUCCESS:
       return _assign({}, state, {
         user: {
           loading: false,
@@ -76,18 +57,18 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       });
 
     case UserTypes.FETCH_USERS:
-    return _assign({}, state, {
-      users: {
-        loading: true
-      }
-    });
+      return _assign({}, state, {
+        users: {
+          loading: true
+        }
+      });
 
     case UserTypes.FETCH_USERS_ERROR:
       return _assign({}, state, {
         users: {
-          loading: false
-        },
-        error: action.payload.error
+          loading: false,
+          error: action.payload.error
+        }
       });
 
     case UserTypes.FETCH_USERS_SUCCESS:
@@ -105,3 +86,4 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 export const isLoadingUsers = (state: UserState) => state.users.loading;
 export const isLoadingUser = (state: UserState) => state.user.loading;
 export const getUsers = (state: UserState) => state.users.items;
+export const getUserState = (state: UserState) => state.user;

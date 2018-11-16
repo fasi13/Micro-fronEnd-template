@@ -73,16 +73,4 @@ export const getUserState = (state: State) => {
 export const isLoadingUsers = createSelector(getUserState, UserReducers.isLoadingUsers);
 export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
 export const getUsers = createSelector(getUserState, UserReducers.getUsers);
-
-// export const isUserUpdating = createSelector(getUserState, UserReducers.isUserUpdating);
-// export const isUserUpdated = createSelector(getUserState, UserReducers.isUserUpdated);
-// export const getUserUpdateError = createSelector(getUserState, UserReducers.getUserUpdateError);
-
-// export const areUsersFetching = createSelector(getUserState, UserReducers.areUsersFetching);
-// export const areUsersFetched = createSelector(getUserState, UserReducers.areUsersFetched);
-// export const fetchUsersError = createSelector(getUserState, UserReducers.fetchUsersError);
-
-
-// export const isLoadingUsers = (state: UserState) => state.users.loading;
-// export const  = (state: UserState) => state.user.loading;
-// export const getUsers = (state: UserState) => state.users.items;
+export const getUserRecordState = createSelector(getUserState, UserReducers.getUserState);

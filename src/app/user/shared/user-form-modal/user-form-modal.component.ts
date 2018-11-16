@@ -1,11 +1,10 @@
-import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { takeWhile, filter } from 'rxjs/operators';
 
-import { User, NewUserAction, State, isLoadingUser, UpdateUserAction } from '@forge/core';
+import { User, State, UserTransaction, getUserRecordState } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { configNewUserFields, configUpdateUserFields } from './user-form-modal.config';
 
@@ -13,7 +12,7 @@ import { configNewUserFields, configUpdateUserFields } from './user-form-modal.c
   selector: 'fge-user-form-modal',
   templateUrl: './user-form-modal.component.html'
 })
-export class UserFormModalComponent implements OnDestroy {
+export class UserFormModalComponent {
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
@@ -21,18 +20,12 @@ export class UserFormModalComponent implements OnDestroy {
   applicationID: number;
   user: any;
   config: FieldConfig[];
-  private success: any;
-  private isAliveComponent = true;
 
   constructor(
     private modalService: NgbModal,
     private store: Store<State>,
     private route: ActivatedRoute,
       ) { }
-
-  ngOnDestroy() {
-    this.isAliveComponent = false;
-  }
 
   open(user: any): void {
     this.mode = user ? 'EDIT' : 'CREATE';
@@ -49,24 +42,10 @@ export class UserFormModalComponent implements OnDestroy {
       configNewUserFields[3].value = true;
       this.config = _clone(configNewUserFields);
     }
-    this.handleUser();
     this.modalService.open(this.modalContent);
   }
 
-  private handleUser(): void {
-    this.store.select(isLoadingUser)
-    .pipe(
-      takeWhile(() => this.isAliveComponent),
-      filter(areUsersFetching => areUsersFetching),
-    )
-    .subscribe(() => {
-      this.success();
-      this.modalService.dismissAll();
-    });
-  }
-
-  submit({ value: formData, success }): void {
-    this.success = success;
+  submit({ value: formData, success, error}): void {
     if (this.mode === 'CREATE') {
       const payload: User = {
         userName: formData.userName,
@@ -77,16 +56,28 @@ export class UserFormModalComponent implements OnDestroy {
         isActive: formData.activeUser,
         applicationId: this.getCurrentApplicationId()
       };
-      this.store.dispatch(new NewUserAction(payload));
+      this.store.dispatch(new UserTransaction(payload, 'POST' ));
     } else {
-      this.store.dispatch(new UpdateUserAction({
+      this.store.dispatch(new UserTransaction({
         id: this.user.id,
         firstName: formData.firstName,
         lastName: formData.lastName,
         emailAddress: formData.emailAddress,
         isActive: formData.activeUser,
-      }));
+      }, 'PUT'));
     }
+
+    this.store.select(getUserRecordState)
+      .subscribe((recordState) => {
+        const { error: errorData, loading } = recordState;
+        if (errorData) {
+          const errors = Object.values(errorData.error.fields);
+          error(errors);
+        } else if (!loading) {
+          success();
+          this.modalService.dismissAll();
+        }
+      });
   }
 
   handleCancel() {

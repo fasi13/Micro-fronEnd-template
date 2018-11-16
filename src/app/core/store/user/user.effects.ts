@@ -2,66 +2,54 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
+import { NotifierService } from 'angular-notifier';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
-import { NotifierService } from 'angular-notifier';
 
 import {
-  NewUserErrorAction,
-  NewUserSuccessAction,
   UserTypes,
-  UpdateUserErrorAction,
-  UpdateUserSuccessAction,
-  FetchUsersAction,
-  FetchUsersSuccessAction,
-  FetchUsersErrorAction
+  UserTransactionSuccess,
+  UserTransactionError,
+  FetchUsers,
+  FetchUsersError,
+  FetchUsersSuccess
 } from './user.actions';
 import { UserService } from '../../services/user.service';
 import { User, ApiResponse, DataPaginated } from '../../models';
 
+enum UserMethods { POST = 'createNewUser', PUT = 'updateUser' }
+
 @Injectable()
 export class UserEffects {
-  @Effect() public addNewUser: Observable<Action> = this.actions.pipe(
-    ofType(UserTypes.NEW_USER),
-      switchMap((action: any) => this.userService.createNewUser(action.payload)
+  @Effect() public userTransaction: Observable<Action> = this.actions.pipe(
+    ofType(UserTypes.USER_TRANSACTION),
+      switchMap((action: any): any => this.userService[UserMethods[action.method]](action.payload)
         .pipe(
           mergeMap(() => {
-            this.notifierService.notify('success', 'The user has been created successfully');
-            return [new NewUserSuccessAction(), new FetchUsersAction()];
+            if (action.method === 'POST') {
+              this.notifierService.notify('success', 'The user has been created successfully');
+            } else {
+              this.notifierService.notify('success', 'The user has been updated successfully');
+            }
+            return [new UserTransactionSuccess(), new FetchUsers()];
           }),
           catchError((error) => {
             this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
-            return of(new NewUserErrorAction({error: error}));
+            return of(new UserTransactionError({error: error}));
           })
         )
       )
   );
-
-  @Effect() public updateUser: Observable<Action> = this.actions.pipe(
-    ofType(UserTypes.UPDATE_USER),
-    switchMap((action: any) => this.userService.updateUser(action.payload)
-      .pipe(
-        mergeMap(() => {
-          this.notifierService.notify('success', 'The user has been updated successfully');
-          return [new UpdateUserSuccessAction(), new FetchUsersAction()];
-        }),
-        catchError((error) => {
-          this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
-          return of(new UpdateUserErrorAction({error: error}));
-        }
-      )
-    )
-  ));
 
   @Effect() public fetchUsers: Observable<Action> = this.actions.pipe(
     ofType(UserTypes.FETCH_USERS),
     switchMap(() => this.userService.getUsers()
       .pipe(
         map((response: ApiResponse<DataPaginated<User>>) => {
-          return new FetchUsersSuccessAction(response.data);
+          return new FetchUsersSuccess(response.data);
         }),
-        catchError(error => of(new FetchUsersErrorAction({error: error})))
+        catchError(error => of(new FetchUsersError({error: error})))
       )
     )
   );
