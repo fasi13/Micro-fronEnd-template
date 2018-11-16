@@ -5,7 +5,6 @@
   <div class="col pr-0" [ngClass]="{'pl-0': !config.label}">
     <quill-editor
       class="form-control fge-dynamic-form__html"
-      [ngModel]="currentContent?.value"
       [ngClass]="{ 'is-invalid': hasError() }"
       [placeholder]="config?.placeholder"
       [formControlName]="config?.name">

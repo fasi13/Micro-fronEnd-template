@@ -45,7 +45,6 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.config = _clone(fieldConfiguration);
     this.routeParamsSubscription = this.route.params
       .subscribe(params => this.initDispatcher(params));
     this.initContent();
@@ -68,7 +67,13 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile(() => this.isAliveComponent)
       )
-      .subscribe((content: ApplicationContent) => this.currentContent = content);
+      .subscribe((content: ApplicationContent) => {
+        if (content) {
+          fieldConfiguration[0].value = content.value;
+          this.config = _clone(fieldConfiguration);
+          this.currentContent = content;
+        }
+      });
   }
 
   private goToContentGroup(): void {
