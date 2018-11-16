@@ -15,6 +15,7 @@
 @import "./font-awesome/regular.scss";
 @import "./font-awesome/brands.scss";
 @import "./node_modules/angular-notifier/styles.scss";
+@import "../../node_modules/quill/dist/quill.snow.css";
 
 /* shared styles */
 @import "./_helpers.scss";
@@ -30,5 +31,3 @@
 @import "./components/_dynamic-form.scss";
 @import "./components/_bread-crumb.scss";
 @import "./components/_navigation-tree.scss";
-
-@import "../../node_modules/quill/dist/quill.snow.css";

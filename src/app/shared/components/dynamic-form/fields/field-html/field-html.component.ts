@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { takeWhile } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 import { State, ApplicationContent, getContent } from '@forge/core';
 import { FormField } from '../../models/form-field.abstract';

@@ -1,11 +1,11 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 import _clone from 'lodash/clone';
 
-import { takeWhile } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { NotifierService } from 'angular-notifier';
+import { takeWhile } from 'rxjs/operators';
 
 import {
   State,
