@@ -65,6 +65,7 @@ export const getGroup = createSelector(getContentState, ContentReducers.getGroup
 export const isLoadingContent = createSelector(getContentState, ContentReducers.isLoadingContent);
 export const getContent = createSelector(getContentState, ContentReducers.getContent);
 export const getContentRecordState = createSelector(getContentState, ContentReducers.getRecordState);
+export const getContentEditState = createSelector(getContentState, ContentReducers.getEditState);
 
 /**********************************************************
  * User Reducers
@@ -76,4 +77,3 @@ export const isLoadingUsers = createSelector(getUserState, UserReducers.isLoadin
 export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
 export const getUsers = createSelector(getUserState, UserReducers.getUsers);
 export const getUserRecordState = createSelector(getUserState, UserReducers.getUserState);
-export const getContentEditState = createSelector(getContentState, ContentReducers.getEditState);
