@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { User, State, UserTransaction, getUserRecordState } from '@forge/core';
@@ -23,8 +22,7 @@ export class UserFormModalComponent {
 
   constructor(
     private modalService: NgbModal,
-    private store: Store<State>,
-    private route: ActivatedRoute,
+    private store: Store<State>
       ) { }
 
   open(user: any): void {
@@ -54,7 +52,7 @@ export class UserFormModalComponent {
         lastName: formData.lastName,
         emailAddress: formData.emailAddress,
         isActive: formData.activeUser,
-        applicationId: this.getCurrentApplicationId()
+        applicationId: formData.applicationId
       };
       this.store.dispatch(new UserTransaction(payload, 'POST' ));
     } else {
@@ -82,9 +80,5 @@ export class UserFormModalComponent {
 
   handleCancel() {
     this.modalService.dismissAll();
-  }
-
-  private getCurrentApplicationId(): number {
-    return +this.route.params['value'].tenantId;
   }
 }
