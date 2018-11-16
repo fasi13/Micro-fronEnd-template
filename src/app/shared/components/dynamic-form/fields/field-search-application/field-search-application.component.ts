@@ -43,7 +43,6 @@ export class FieldSearchApplicationComponent extends FormField implements OnInit
       const application = applicationResponse.data[applicationResponse.data.length - 1];
       this.search = application['name'];
       this.applicationId = application['id'];
-      console.log(application);
     });
   }
 
