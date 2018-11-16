@@ -6,7 +6,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { FormField } from '../../models/form-field.abstract';
 
-
 @Component({
   selector: 'fge-field-search-application',
   templateUrl: './field-search-application.component.html'
