@@ -21,17 +21,17 @@ export class ApplicationService {
   }
 
   getApplicationInfo(applicationId: number): Observable<ApiResponse<Application>> {
-    return this.httpClient.get<ApiResponse<Application>>(`/application/${applicationId}`);
+    return this.httpClient.get<ApiResponse<Application>>(`application/${applicationId}`);
   }
 
   getApplicationPath(applicationId: number): Observable<ApiResponse<ApplicationPath>> {
-    return this.httpClient.get<ApiResponse<ApplicationPath>>(`/application/${applicationId}/path`);
+    return this.httpClient.get<ApiResponse<ApplicationPath>>(`application/${applicationId}/path`);
   }
 
   getContentFor({ href }: HateoasAction, name: string): Observable<ApiResponse<DataPaginated<ApplicationContent>>> {
     const params = new HttpParams({
       fromObject: {
-        name,
+        name
       }
     });
 
@@ -39,10 +39,10 @@ export class ApplicationService {
   }
 
   search(keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`/applications?keyword=${keyword}`);
+    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`applications?keyword=${keyword}`);
   }
 
   getDataTypes(applicationId: number): Observable<ApiResponse<DataPaginated<DataType>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<DataType>>>(`/application/${applicationId}/dataTypes`);
+    return this.httpClient.get<ApiResponse<DataPaginated<DataType>>>(`application/${applicationId}/dataTypes`);
   }
 }

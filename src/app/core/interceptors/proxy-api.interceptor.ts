@@ -5,26 +5,21 @@ import {
   HttpHandler,
   HttpRequest
 } from '@angular/common/http';
+import _isEmpty from 'lodash/isEmpty';
 
 import { Observable } from 'rxjs';
 
-import { UserService } from '../services';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class ProxyApiInterceptor implements HttpInterceptor {
 
-  constructor(
-    private userService: UserService
-  ) {}
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = this.userService.getToken();
-    if (!!token) {
+    if (!_isEmpty(environment.apiUrl) && !request.url.startsWith('http')) {
       request = request.clone({
-        setHeaders: {
-          'Authorization': `Token ${token}`,
-          'Content-Type': 'application/json'
-        }
+        url: `${environment.apiUrl}/${request.url}`
       });
     }
     return next.handle(request);

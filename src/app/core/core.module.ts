@@ -16,7 +16,7 @@ import { FgeReducers } from './store/store.reducers';
 import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor, UnauthorizedInterceptor } from './interceptors';
+import { TokenInterceptor, UnauthorizedInterceptor, ProxyApiInterceptor } from './interceptors';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEffects } from './store/content';
 import { ContentService, FgeRouterService } from './services';
@@ -51,6 +51,10 @@ const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: load
     ContentService,
     FgeRouterService,
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ProxyApiInterceptor,
+      multi: true
+    }, {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
