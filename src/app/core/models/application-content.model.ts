@@ -1,5 +1,4 @@
-import { DataType } from "./commons/data-type.model";
-import { Link } from "./commons";
+import { Link, DataType } from './commons';
 
 export class ApplicationContent {
   dataType?: DataType;

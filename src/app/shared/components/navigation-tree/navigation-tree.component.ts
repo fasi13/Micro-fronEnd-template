@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, HostListener, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { TreeviewData } from './treeview-data.model';
 import { NavigationTreeService } from './navigation-tree.service';
-import { ApiResponse, DataPaginated } from '@forge/core';
+import { ApiResponse, DataPaginated, State, getApplicationBranding, ApplicationBranding } from '@forge/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'fge-navigation-tree',
@@ -18,6 +19,7 @@ export class NavigationTreeComponent implements OnInit {
 
   treeData: TreeviewData;
   enableScrollTopBtn: boolean;
+  applicationBranding: ApplicationBranding;
 
   @HostListener('document:click', ['$event']) clickedOutside() {
     this.opened = false;
@@ -25,6 +27,7 @@ export class NavigationTreeComponent implements OnInit {
 
   constructor(
     private navigationTreeService: NavigationTreeService,
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -38,6 +41,10 @@ export class NavigationTreeComponent implements OnInit {
     };
     this.navigationTreeService.getApplicationGroups(this.rootApplicationId)
       .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, this.treeData));
+    this.store.select(getApplicationBranding)
+      .subscribe((applicationBranding: ApplicationBranding) => {
+        this.applicationBranding = applicationBranding;
+      })
   }
 
   toggleCollapse(item: TreeviewData, event: Event) {

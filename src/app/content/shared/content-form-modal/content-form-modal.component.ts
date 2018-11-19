@@ -6,7 +6,15 @@ import _assign from 'lodash/assign';
 
 import { Observable } from 'rxjs';
 
-import { State, getApplicationInfo, Application, getDataTypes, DataType, TransactionContentRecord, getContentRecordState } from '@forge/core';
+import {
+  State,
+  getApplicationInfo,
+  Application,
+  getDataTypes,
+  DataType,
+  TransactionContentRecord,
+  getContentRecordState
+} from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { config as fieldConfiguration } from './content-fields-modal.config';
 import { ContentDataType, dataTypes as availableDataTypes } from './content-data-types.config';

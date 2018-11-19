@@ -25,8 +25,8 @@ import { FieldPasswordComponent } from './components/dynamic-form/fields/field-p
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import {
-  FieldSearchApplicationComponent
- } from './components/dynamic-form/fields/field-search-application/field-search-application.component';
+  FieldSearchApplicationComponent } from './components/dynamic-form/fields/field-search-application/field-search-application.component';
+import { FocusInputDirective } from './directives/focus-input.directive';
 
 @NgModule({
   imports: [
@@ -57,7 +57,8 @@ import {
     FieldPasswordComponent,
     FieldToggleButtonComponent,
     ModalConfirmComponent,
-    FieldSearchApplicationComponent
+    FieldSearchApplicationComponent,
+    FocusInputDirective
   ],
   exports: [
     FormsModule,
@@ -68,7 +69,8 @@ import {
     DynamicFormComponent,
     BreadCrumbComponent,
     NavigationTreeComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    DynamicFieldDirective
   ],
   entryComponents: [
     FieldButtonComponent,

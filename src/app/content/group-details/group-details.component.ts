@@ -8,6 +8,9 @@ import { State, FetchContentGroup, getGroup, isLoadingGroup, ContentGroup, Appli
 import { takeWhile } from 'rxjs/operators';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
+import { dataTypes as availableDataTypes } from '../shared/content-form-modal/content-data-types.config';
+import { FormGroup, FormBuilder, ValidatorFn } from '@angular/forms';
+import { FieldConfig } from '@forge/shared';
 
 @Component({
   selector: 'fge-group-details',
@@ -18,6 +21,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   currentGroup: ContentGroup;
   loading$: Observable<boolean> | boolean;
   editMode: boolean;
+  editableContents: any;
 
   private routeParamsSubscription: Subscription;
   private isAliveComponent = true;
@@ -34,7 +38,8 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store: Store<State>,
     private modalService: NgbModal,
-    private fgeRouter: FgeRouterService
+    private fgeRouter: FgeRouterService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -75,7 +80,39 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile(() => this.isAliveComponent)
       )
-      .subscribe((group: ContentGroup) => this.currentGroup = group);
+      .subscribe((group: ContentGroup) => {
+        this.currentGroup = group;
+        if (group) {
+          this.initEditableFields();
+        }
+      });
+  }
+
+  private initEditableFields(): void {
+    this.editableContents = this.currentGroup.content
+      .filter((content: ApplicationContent) => !content.displayAsList)
+      .map((content: ApplicationContent) => {
+      const fieldConfig: FieldConfig = availableDataTypes[content.dataType.name];
+      return {
+        config: fieldConfig,
+        group: this.createFormGroup(fieldConfig)
+      };
+    });
+  }
+
+  private createFormGroup({ disabled = false, validation, value, name }: FieldConfig): FormGroup {
+    const formGroup: FormGroup = this.formBuilder.group({});
+    const control = this.formBuilder.control({ disabled, value }, this.getValidators(validation));
+    formGroup.addControl(name, control);
+    return formGroup;
+  }
+
+  private getValidators(validationConfig: any): ValidatorFn[] {
+    const validators: ValidatorFn[] = [];
+    Object.keys(validationConfig).forEach(validatorKey => {
+      validators.push(validationConfig[validatorKey].validator);
+    });
+    return validators;
   }
 
 }

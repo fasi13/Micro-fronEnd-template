@@ -2,7 +2,16 @@
   <h4 class="my-2 col-10">
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     {{ currentGroup?.name }}
-    <button type="button" class="btn btn-sm" [ngClass]="{'btn-link': !editMode, 'btn-primary bg-primary': editMode}" (click)="toggleEditMode()">Edit</button>
+    <button
+      *ngIf="!(loading$ | async)"
+      type="button"
+      class="btn btn-sm"
+      [ngClass]="{'btn-link': !editMode, 'btn-primary bg-primary': editMode}"
+      (click)="toggleEditMode()"
+    >
+      <i class="fas fa-edit"></i>
+      Edit
+    </button>
   </h4>
   <div class="col text-right">
     <button type="button" class="btn btn-link" (click)="openContentForm()"><i class="fas fa-folder-plus fa-lg"></i></button>
@@ -12,32 +21,43 @@
 <div *ngIf="editMode; then editView; else tableView"></div>
 
 <ng-template #editView>
-    <table class="table table-hover fge-table fge-group--content-list" *ngIf="contentsAsList && contentsAsList?.length > 0">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Description</th>
-          <th scope="col">Status</th>
-          <th scope="col">Publish Date</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let content of contentsAsList">
-          <td>{{ content?.name }}</td>
-          <td>{{ content?.description }}</td>
-          <td>{{ content?.status }}</td>
-          <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
-          <td>
-            <a
-              tabindex="0"
-              class="btn btn-primary bg-primary btn-sm mr-2">
-              <i class="far fa-edit" (click)="goToContentEdit(content.id)"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <table class="table table-hover fge-table fge-group--content-list" *ngIf="contentsAsList && contentsAsList?.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Publish Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let content of contentsAsList">
+        <td>{{ content?.name }}</td>
+        <td>{{ content?.description }}</td>
+        <td>{{ content?.status }}</td>
+        <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
+        <td>
+          <a
+            tabindex="0"
+            (click)="goToContentEdit(content?.id)"
+            class="btn btn-primary bg-primary btn-sm mr-2">
+            <i class="far fa-edit"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <form class="form-inline" *ngFor="let content of editableContents">
+      <ng-container
+        fgeDynamicField
+        [config]="content?.config"
+        [group]="content?.group">
+      </ng-container>
+      <!-- <span>{{content.dataType.name}}</span> -->
+    </form>
+  </div>
 </ng-template>
 
 <ng-template #tableView>

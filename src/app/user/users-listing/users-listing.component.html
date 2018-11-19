@@ -1,8 +1,10 @@
-<div class="fge-group--title">
-  <h4 class="fge-group--title-divider my-2">
-    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>Users Management
+<div class="fge-group--title row">
+  <h4 class="fge-group--title-divider my-2 col-10">
+    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Users Management</span>
   </h4>
-  <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
+  <div class="col text-right">
+    <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
+  </div>
 </div>
 <table class="table table-bordred fge-group--content-list">
   <thead>
