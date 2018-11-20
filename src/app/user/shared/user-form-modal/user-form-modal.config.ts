@@ -9,15 +9,15 @@ const userName: FieldConfig = {
   placeholder: 'Enter userName',
   validation: {
     required: {
-      errorMsg: 'UserName is required',
+      errorMsg: 'UserName is required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'UserName should have at least 2 characters',
+      errorMsg: 'UserName should have at least 2 characters.',
       validator: Validators.minLength(2)
     },
     maxlength: {
-      errorMsg: 'UserName should not have more than 50 characters',
+      errorMsg: 'UserName should not have more than 50 characters.',
       validator: Validators.maxLength(50)
     },
   }
@@ -29,15 +29,15 @@ const password: FieldConfig = {
   placeholder: 'Password',
   validation: {
     required: {
-      errorMsg: 'Password is required',
+      errorMsg: 'Password is required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'Password should have at least 6 characters',
+      errorMsg: 'Password should have at least 6 characters.',
       validator: Validators.minLength(6)
     },
     maxlength: {
-      errorMsg: 'Password should not have more than 500 characters',
+      errorMsg: 'Password should not have more than 500 characters.',
       validator: Validators.maxLength(500)
     },
   }
@@ -49,19 +49,19 @@ const confirmPassword = {
   placeholder: 'Confirm password',
   validation: {
     required: {
-      errorMsg: 'Confirm password is required',
+      errorMsg: 'Confirm password is required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'Confirm password should have at least 6 characters',
+      errorMsg: 'Confirm password should have at least 6 characters.',
       validator: Validators.minLength(6)
     },
     maxlength: {
-      errorMsg: 'Confirm Password should not have more than 500 characters',
+      errorMsg: 'Confirm password should not have more than 500 characters.',
       validator: Validators.maxLength(500)
     },
     matchPassword: {
-      errorMsg: 'The confirm password does not match with the password',
+      errorMsg: 'Confirm password does not match with password field.',
       validator: ValidateMatchPassword('password')
     }
   }
@@ -80,15 +80,15 @@ const firstName = {
   placeholder: 'First Name',
   validation: {
     required: {
-      errorMsg: 'First name is required',
+      errorMsg: 'First name is required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'First Name should have at least 2 characters',
+      errorMsg: 'First name should have at least 2 characters',
       validator: Validators.minLength(2)
     },
     maxlength: {
-      errorMsg: 'First Name should not have more than 200 characters',
+      errorMsg: 'First name should not have more than 200 characters.',
       validator: Validators.maxLength(200)
     }
   }
@@ -100,15 +100,15 @@ const lastName: FieldConfig = {
   placeholder: 'Last Name',
   validation: {
     required: {
-      errorMsg: 'Last name is required',
+      errorMsg: 'Last name is required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'Last Name should have at least 2 characters',
+      errorMsg: 'Last name should have at least 2 characters.',
       validator: Validators.minLength(2)
     },
     maxlength: {
-      errorMsg: 'Last Name should not have more than 200 characters',
+      errorMsg: 'Last name should not have more than 200 characters.',
       validator: Validators.maxLength(200)
     }
   }
@@ -120,15 +120,15 @@ const email: FieldConfig = {
   placeholder: 'Email',
   validation: {
     required: {
-      errorMsg: 'Email address is required',
+      errorMsg: 'Email address is required.',
       validator: Validators.required
     },
     email: {
-      errorMsg: 'Please enter a valid Email address',
+      errorMsg: 'Please enter a valid Email address.',
       validator: Validators.email
     },
     maxlength: {
-      errorMsg: 'Email should not have more than 200 characters',
+      errorMsg: 'Email address should not have more than 200 characters.',
       validator: Validators.maxLength(200)
     }
   }
@@ -138,6 +138,7 @@ const searchApp: FieldConfig = {
   label: 'Applicatinon Name',
   name: 'applicationId',
   validation: {},
+  disabled: true
 };
 export const configNewUserFields: FieldConfig[] = [
   userName,
