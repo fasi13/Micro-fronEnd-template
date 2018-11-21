@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { UnauthLayoutComponent, AuthLayoutComponent, AuthorizedGuard } from '@forge/core';
+import { ResetPasswordComponent } from '@forge/shared';
 
 const routes: Routes = [
   {
@@ -32,8 +33,8 @@ const routes: Routes = [
             loadChildren: './user/user.module#UserModule'
           },
           {
-            path: 'configuration',
-            loadChildren: './shared/shared.module#SharedModule'
+            path: 'reset-password',
+            component: ResetPasswordComponent
           }
         ]
       }

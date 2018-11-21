@@ -19,11 +19,11 @@ export class ResetPasswordEffects {
   @Effect() public resetPassword$: Observable<Action> = this.actions.pipe(
     ofType(ResetPasswordTypes.RESET_PASSWORD),
     switchMap((action: any) => {
-      return this.userService.resetPassword(action.payload)
+      return this.userService.resetPassword(action.payload.userId, action.payload.resetPassword)
         .pipe(
           map(() => {
             this.notifierService.notify('success', 'The password has been updated successfully');
-            return new ResetPasswordSuccess({ response: 'success changes.'});
+            return new ResetPasswordSuccess();
           }),
           catchError((error) => {
             this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
@@ -37,5 +37,6 @@ export class ResetPasswordEffects {
     private actions: Actions,
     private userService: UserService,
     private notifierService: NotifierService
-    ) {}
+  ) {
+  }
 }

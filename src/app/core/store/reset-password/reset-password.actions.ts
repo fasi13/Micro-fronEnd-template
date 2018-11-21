@@ -10,17 +10,17 @@ export const ResetPasswordTypes = {
 
 export class ResetPassword implements Action {
   public type: string = ResetPasswordTypes.RESET_PASSWORD;
-  constructor(public payload?: any, public method?: string) {}
+  constructor(public payload?: any) {}
 }
 
 export class ResetPasswordSuccess implements Action {
   public type: string = ResetPasswordTypes.RESET_PASSWORD_SUCCESS;
-  constructor(public payload?: any, public method?: string) {}
+  constructor(public payload?: any) {}
 }
 
 export class ResetPasswordError implements Action {
   public type: string = ResetPasswordTypes.RESET_PASSWORD_ERROR;
-  constructor(public payload?: any, public method?: string) {}
+  constructor(public payload?: any) {}
 }
 
 export type ResetPasswordActions =

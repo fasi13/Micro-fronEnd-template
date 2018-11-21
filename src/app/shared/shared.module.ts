@@ -5,7 +5,7 @@ import { SplashScreenComponent } from './components/splash-screen/splash-screen.
 import { SearchApplicationComponent } from './components/search-application/search-application.component';
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { QuillModule } from 'ngx-quill';
 
@@ -25,15 +25,9 @@ import { FieldPasswordComponent } from './components/dynamic-form/fields/field-p
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FocusInputDirective } from './directives/focus-input.directive';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.Component';
-
-const routes: Routes = [
-  { path: 'reset-password', component: ResetPasswordComponent }
-];
-
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -74,7 +68,7 @@ const routes: Routes = [
     BreadCrumbComponent,
     NavigationTreeComponent,
     ModalConfirmComponent,
-    DynamicFieldDirective
+    DynamicFieldDirective,
   ],
   entryComponents: [
     FieldButtonComponent,

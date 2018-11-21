@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 
-import { FieldConfig, ValidateMatchPassword } from '@forge/shared';
+import { FieldConfig, ValidateMatchPassword } from '../dynamic-form';
 
 const currentPassword: FieldConfig = {
   type: 'password',

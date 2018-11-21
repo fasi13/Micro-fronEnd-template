@@ -56,9 +56,8 @@ export class UserService {
     return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl, { params });
   }
 
-  resetPassword(resertPassword: UserResetPassword): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const url = `${this.baseUrl}/${user.id}/password`;
-    return this.httpClient.put(url, resertPassword);
+  resetPassword(userId: number, resetPassword: UserResetPassword): Observable<ApiResponse<UserResetPassword>> {
+    const url = `${this.baseUrl}/${userId}/password`;
+    return this.httpClient.put<ApiResponse<UserResetPassword>>(url, resetPassword);
   }
 }

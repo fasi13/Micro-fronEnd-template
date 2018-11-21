@@ -4,14 +4,14 @@ import { ResetPasswordTypes, ResetPasswordActions} from './reset-password.action
 
 export interface ResetPasswordState {
   resetPassword: {
-    reseting: boolean,
+    loading: boolean,
     error?: any;
   };
 }
 
 const initialState: ResetPasswordState = {
   resetPassword: {
-    reseting: false,
+    loading: false,
     error: null
   }
 };
@@ -21,14 +21,14 @@ export function reducer(state: ResetPasswordState = initialState, action: ResetP
     case ResetPasswordTypes.RESET_PASSWORD:
       return _assign({}, state, {
         resetPassword: {
-          reseting: true
+          loading: true
         }
       });
 
     case ResetPasswordTypes.RESET_PASSWORD_ERROR:
       return _assign({}, state, {
         resetPassword: {
-          reseting: false,
+          loading: false,
           error: action.payload.error
         }
       });
@@ -36,7 +36,7 @@ export function reducer(state: ResetPasswordState = initialState, action: ResetP
     case ResetPasswordTypes.RESET_PASSWORD_SUCCESS:
       return _assign({}, state, {
         resetPassword: {
-          reseting: false,
+          loading: false,
           error: null
         }
       });
@@ -46,5 +46,5 @@ export function reducer(state: ResetPasswordState = initialState, action: ResetP
   }
 }
 
-export const isChangingPassword = (state: ResetPasswordState) => state.resetPassword.reseting;
+export const isResetPasswordLoading = (state: ResetPasswordState) => state.resetPassword.loading;
 export const getResetPassword = (state: ResetPasswordState) => state.resetPassword;

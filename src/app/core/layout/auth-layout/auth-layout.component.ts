@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { takeWhile, filter } from 'rxjs/operators';
@@ -20,6 +20,7 @@ import {
   getApplicationPath,
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
+import { FgeRouterService } from '../../services/_fge-router.service';
 import { ApplicationPath } from '../../models';
 
 @Component({
@@ -42,7 +43,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
-    private router: Router
+    private router: FgeRouterService
   ) { }
 
   ngOnInit() {
@@ -153,6 +154,6 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   onRediretToResetPassword() {
-    this.router.navigate([`/tenant/${this.getCurrentTenantId()}/configuration/reset-password`]);
+    this.router.navigate(`reset-password`);
   }
 }

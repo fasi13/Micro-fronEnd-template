@@ -87,5 +87,5 @@ export const getUserRecordState = createSelector(getUserState, UserReducers.getU
 export const getResetPasswordState = (state: State) => {
   return state.resetPassword;
 };
-export const isChangingPassword = createSelector(getResetPasswordState, ResetPasswordReducers.isChangingPassword);
+export const isResetPasswordLoading = createSelector(getResetPasswordState, ResetPasswordReducers.isResetPasswordLoading);
 export const getResetedPassword = createSelector(getResetPasswordState, ResetPasswordReducers.getResetPassword);
