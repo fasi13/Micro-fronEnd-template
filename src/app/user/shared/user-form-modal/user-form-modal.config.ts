@@ -6,18 +6,18 @@ const userName: FieldConfig = {
   type: 'text',
   label: 'UserName',
   name: 'userName',
-  placeholder: 'Enter userName',
+  placeholder: 'Enter username',
   validation: {
     required: {
-      errorMsg: 'UserName is required.',
+      errorMsg: 'Username is required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'UserName should have at least 2 characters.',
+      errorMsg: 'Username should have at least 2 characters.',
       validator: Validators.minLength(2)
     },
     maxlength: {
-      errorMsg: 'UserName should not have more than 50 characters.',
+      errorMsg: 'Username should not have more than 50 characters.',
       validator: Validators.maxLength(50)
     },
   }
@@ -71,7 +71,7 @@ const toggleButton: FieldConfig = {
   label: 'Account Status',
   name: 'activeUser',
   validation: {},
-  options: ['Active', 'Inactive']
+  options: ['Active', 'Deactive']
 };
 const firstName = {
   type: 'text',

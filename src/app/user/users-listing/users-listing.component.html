@@ -23,7 +23,7 @@
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
       <td *ngIf="user.isActive">Active</td>
-      <td *ngIf="!user.isActive">Inactive</td>
+      <td *ngIf="!user.isActive">Deactive</td>
       <td>{{ getApplicationName(user) }}</td>
       <td>
         <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
