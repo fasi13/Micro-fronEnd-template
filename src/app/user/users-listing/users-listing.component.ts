@@ -31,9 +31,9 @@ export class UsersListgingComponent implements OnInit {
   openModalConfirm(confirmModal: any, user: any): void {
     this.confirmModal = confirmModal;
     this.currentUser = user;
-    const labelAction = user.isActive ? 'inactive' : 'active';
+    const labelAction = user.isActive ? 'disable ' : 'enable';
     this.config = {
-      title: 'Active/Inactive user confirmation',
+      title: 'Enable/Disable user confirmation',
       message: `Do you want to ${labelAction} the user ${user.login}?`,
       submitLabel: 'Accept',
       cancelLabel: 'Cancel'

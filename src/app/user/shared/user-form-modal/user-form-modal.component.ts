@@ -40,7 +40,7 @@ export class UserFormModalComponent {
       configNewUserFields[3].value = true;
       this.config = _clone(configNewUserFields);
     }
-    this.modalService.open(this.modalContent);
+    this.modalService.open(this.modalContent, { windowClass: 'modal-content-form' });
   }
 
   submit({ value: formData, success, error}): void {
