@@ -49,7 +49,7 @@ const confirmNewPassword = {
       validator: Validators.minLength(6)
     },
     maxlength: {
-      errorMsg: 'Confirm Password should not have more than 500 characters',
+      errorMsg: 'Confirm password should not have more than 500 characters',
       validator: Validators.maxLength(500)
     },
     matchPassword: {
