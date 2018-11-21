@@ -35,7 +35,7 @@ export class ApplicationService {
       }
     });
 
-    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationContent>>>(href, { params })
+    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationContent>>>(href, { params });
   }
 
   search(keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {

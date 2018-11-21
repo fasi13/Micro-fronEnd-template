@@ -25,6 +25,11 @@ export interface ApplicationState {
     loading: boolean,
     error?: string;
   };
+  preview: {
+    branding: ApplicationBranding,
+    loading: boolean,
+    error?: string;
+  }
 }
 
 const initialState: ApplicationState = {
@@ -41,6 +46,10 @@ const initialState: ApplicationState = {
   },
   path: {
     data: null,
+    loading: false
+  },
+  preview: {
+    branding: null,
     loading: false
   }
 };
@@ -106,7 +115,7 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
           loading: false
         }
       });
-    
+
     case ApplicationActionTypes.SEARCH_APPLICATION:
       return _assign({}, state, {
         search: {
@@ -150,6 +159,45 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
     case ApplicationActionTypes.FETCH_DATA_TYPES_ERROR:
       return _assign({}, state, {
         types: {
+          error: action.payload.error.message,
+          loading: false
+        }
+      });
+
+      case ApplicationActionTypes.FETCH_APPLICATION_PREVIEW:
+      return _assign({}, state, {
+        preview: {
+          branding: undefined,
+          loading: true
+        }
+      });
+
+    case ApplicationActionTypes.FETCH_APPLICATION_PREVIEW_SUCCESS:
+      const {
+        primaryColor,
+        secondaryColor,
+        primaryLogo,
+        siteUrl,
+        programName,
+        secondaryLogo
+      }: { [key: string]: ApiResponse<DataPaginated<ApplicationContent>> } = action.payload.branding;
+      return _assign({}, state, {
+        preview: {
+          branding: {
+            primaryColor: primaryColor.data.items[0],
+            secondaryColor: secondaryColor.data.items[0],
+            primaryLogo: primaryLogo.data.items[0],
+            siteUrl: siteUrl.data.items[0],
+            programName: programName.data.items[0],
+            secondaryLogo: secondaryLogo.data.items[0]
+          },
+          loading: false,
+        }
+      });
+
+    case ApplicationActionTypes.FETCH_APPLICATION_PREVIEW_ERROR:
+      return _assign({}, state, {
+        preview: {
           error: action.payload.error.message,
           loading: false
         }
@@ -223,3 +271,11 @@ export const getDataTypes = (state: ApplicationState) => state.types.data;
  * @returns {Application}
  */
 export const getApplicationPath = (state: ApplicationState) => state.path;
+
+/**
+ * Returns the application preview for a given application.
+ * @function getApplicationPath
+ * @param {State} state
+ * @returns {Application}
+ */
+export const getApplicationPreview = (state: ApplicationState) => state.preview;

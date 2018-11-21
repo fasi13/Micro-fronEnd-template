@@ -9,5 +9,5 @@ export class ApplicationContent {
   publishDate?: string;
   status?: string;
   value?: string;
-  _links?: Link[]
+  _links?: Link[];
 }

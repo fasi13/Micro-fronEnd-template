@@ -51,6 +51,7 @@ export const isLoadingSearchApplication = createSelector(getApplicationState, Ap
 export const getSearchApplicationList = createSelector(getApplicationState, ApplicationReducers.getSearchApplicationList);
 export const isLoadingDataTypes = createSelector(getApplicationState, ApplicationReducers.isLoadingDataTypes);
 export const getDataTypes = createSelector(getApplicationState, ApplicationReducers.getDataTypes);
+export const getApplicationPreview = createSelector(getApplicationState, ApplicationReducers.getApplicationPreview);
 
 /**********************************************************
  * Content Reducers

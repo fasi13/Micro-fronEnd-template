@@ -28,9 +28,11 @@ export class SearchApplicationComponent implements OnInit {
         debounceTime(300),
         distinctUntilChanged(),
       )
-      .subscribe((keyword: string) =>
-        this.store.dispatch(new SearchApplication(keyword))
-      );
+      .subscribe((keyword: string) => {
+        if (keyword) {
+          this.store.dispatch(new SearchApplication(keyword))
+        }
+      });
   }
 
   onValueChanges(event: Event): void {

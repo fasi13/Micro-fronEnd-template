@@ -16,7 +16,10 @@ export const ApplicationActionTypes = {
     SEARCH_APPLICATION_ERROR: ActionType('SEARCH_APPLICATION_ERROR'),
     FETCH_DATA_TYPES: ActionType('FETCH_DATA_TYPES'),
     FETCH_DATA_TYPES_SUCCESS: ActionType('FETCH_DATA_TYPES_SUCCESS'),
-    FETCH_DATA_TYPES_ERROR: ActionType('FETCH_DATA_TYPES_ERROR')
+    FETCH_DATA_TYPES_ERROR: ActionType('FETCH_DATA_TYPES_ERROR'),
+    FETCH_APPLICATION_PREVIEW: ActionType('FETCH_APPLICATION_PREVIEW'),
+    FETCH_APPLICATION_PREVIEW_SUCCESS: ActionType('FETCH_APPLICATION_PREVIEW_SUCCESS'),
+    FETCH_APPLICATION_PREVIEW_ERROR: ActionType('FETCH_APPLICATION_PREVIEW_ERROR')
 };
 
 export class FetchApplicationData implements Action {
@@ -82,6 +85,21 @@ export class FetchDataTypesError implements Action {
   constructor(public payload?: any) {}
 }
 
+export class FetchApplicationPreview implements Action {
+  public type: string = ApplicationActionTypes.FETCH_APPLICATION_PREVIEW;
+  constructor(public payload?: any) {}
+}
+
+export class FetchApplicationPreviewSuccess implements Action {
+  public type: string = ApplicationActionTypes.FETCH_APPLICATION_PREVIEW_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class FetchApplicationPreviewError implements Action {
+  public type: string = ApplicationActionTypes.FETCH_APPLICATION_PREVIEW_ERROR;
+  constructor(public payload?: any) {}
+}
+
 export type ApplicationAction =
   FetchApplicationData |
   FetchApplicationDataSuccess |
@@ -94,4 +112,7 @@ export type ApplicationAction =
   SearchApplicationError |
   FetchDataTypes |
   FetchDataTypesSuccess |
-  FetchDataTypesError;
+  FetchDataTypesError |
+  FetchApplicationPreview |
+  FetchApplicationPreviewSuccess |
+  FetchApplicationPreviewError;

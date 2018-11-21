@@ -16,7 +16,9 @@ import {
   FetchDataTypesSuccess,
   FetchDataTypesError,
   FetchApplicationPathSuccess,
-  FetchApplicationPathError
+  FetchApplicationPathError,
+  FetchApplicationPreviewSuccess,
+  FetchApplicationPreviewError
 } from './application.actions';
 import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath, DataType } from '../../models';
 import { ApplicationService } from '../../services/application.service';
@@ -29,42 +31,20 @@ export class ApplicationEffects {
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA),
     switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
       .pipe(
-        exhaustMap((applicationResponse: ApiResponse<Application>) => {
-          const { href, method }: Link = _find(applicationResponse.data._links, ['rel', 'contents']);
-          const contentsHateoas: HateoasAction = { href, method: method.method };
-          return forkJoin(
-            of(applicationResponse),
-            this.applicationService.getContentFor(contentsHateoas, 'Primary Color'),
-            this.applicationService.getContentFor(contentsHateoas, 'Secondary Color'),
-            this.applicationService.getContentFor(contentsHateoas, 'Primary Logo'),
-            this.applicationService.getContentFor(contentsHateoas, 'Site URL'),
-            this.applicationService.getContentFor(contentsHateoas, 'Program Name'),
-            this.applicationService.getContentFor(contentsHateoas, 'Secondary Logo')
-          )
-        }),
-        map(([
-            info,
-            primaryColor,
-            secondaryColor,
-            primaryLogo,
-            siteUrl,
-            programName,
-            secondaryLogo
-          ]: ApiResponse<DataPaginated<ApplicationContent>>[]) => {
-            const application = {
-              info,
-              branding: {
-                primaryColor,
-                secondaryColor,
-                primaryLogo,
-                siteUrl,
-                programName,
-                secondaryLogo
-              }
-            }
-            return new FetchApplicationDataSuccess(application);
-          }),
+        exhaustMap(this.getApplicationBranding.bind(this)),
+        map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
         catchError(error => of(new FetchApplicationDataError({ error })))
+      )
+    )
+  );
+
+  @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(
+    ofType(ApplicationActionTypes.FETCH_APPLICATION_PREVIEW),
+    switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
+      .pipe(
+        exhaustMap(this.getApplicationBranding.bind(this)),
+        map(this.mapApplicationBrandingAs(FetchApplicationPreviewSuccess)),
+        catchError(error => of(new FetchApplicationPreviewError({ error })))
       )
     )
   );
@@ -111,6 +91,45 @@ export class ApplicationEffects {
   constructor(
     private actions: Actions,
     private applicationService: ApplicationService
-  ) {
+  ) { }
+
+  private getApplicationBranding(applicationResponse: ApiResponse<Application>):
+    Observable<ApiResponse<DataPaginated<ApplicationContent>>[]> {
+    const { href, method }: Link = _find(applicationResponse.data._links, ['rel', 'contents']);
+    const contentsHateoas: HateoasAction = { href, method: method.method };
+    return forkJoin(
+      of(applicationResponse),
+      this.applicationService.getContentFor(contentsHateoas, 'Primary Color'),
+      this.applicationService.getContentFor(contentsHateoas, 'Secondary Color'),
+      this.applicationService.getContentFor(contentsHateoas, 'Primary Logo'),
+      this.applicationService.getContentFor(contentsHateoas, 'Site URL'),
+      this.applicationService.getContentFor(contentsHateoas, 'Program Name'),
+      this.applicationService.getContentFor(contentsHateoas, 'Secondary Logo'),
+    );
+  }
+
+  private mapApplicationBrandingAs<T>(constructorFn: new (args) => T) {
+    return ([
+      info,
+      primaryColor,
+      secondaryColor,
+      primaryLogo,
+      siteUrl,
+      programName,
+      secondaryLogo
+    ]: ApiResponse<DataPaginated<ApplicationContent>>[]) => {
+      const application = {
+        info,
+        branding: {
+          primaryColor,
+          secondaryColor,
+          primaryLogo,
+          siteUrl,
+          programName,
+          secondaryLogo
+        }
+      };
+      return new constructorFn(application);
+    };
   }
 }

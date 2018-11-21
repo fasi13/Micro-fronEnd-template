@@ -1,14 +1,36 @@
-import { Component, OnInit, Input, HostListener, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { TreeviewData } from './treeview-data.model';
-import { NavigationTreeService } from './navigation-tree.service';
-import { ApiResponse, DataPaginated, State, getApplicationBranding, ApplicationBranding } from '@forge/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostListener,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  OnChanges
+} from '@angular/core';
+import {
+  ApiResponse,
+  DataPaginated,
+  State,
+  ApplicationBranding,
+  FetchApplicationPreview,
+  getApplicationPreview
+} from '@forge/core';
 import { Store } from '@ngrx/store';
+
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+
+import { NavigationTreeService } from './navigation-tree.service';
+import { TreeviewData } from './treeview-data.model';
 
 @Component({
   selector: 'fge-navigation-tree',
   templateUrl: './navigation-tree.component.html'
 })
-export class NavigationTreeComponent implements OnInit {
+export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() opened: boolean;
   @Input() rootApplicationId: string | number;
@@ -19,7 +41,11 @@ export class NavigationTreeComponent implements OnInit {
 
   treeData: TreeviewData;
   enableScrollTopBtn: boolean;
-  applicationBranding: ApplicationBranding;
+  preview: ApplicationBranding;
+  previewLoading: boolean;
+  previewId: string | number;
+
+  private mouseoverSubject: BehaviorSubject<string | number> = new BehaviorSubject<string | number>(null);
 
   @HostListener('document:click', ['$event']) clickedOutside() {
     this.opened = false;
@@ -40,11 +66,35 @@ export class NavigationTreeComponent implements OnInit {
       childrenData: []
     };
     this.navigationTreeService.getApplicationGroups(this.rootApplicationId)
-      .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, this.treeData));
-    this.store.select(getApplicationBranding)
-      .subscribe((applicationBranding: ApplicationBranding) => {
-        this.applicationBranding = applicationBranding;
-      })
+    .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, this.treeData));
+    this.mouseoverSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+        )
+        .subscribe((applicationId: string) => {
+          if (applicationId) {
+            this.store.dispatch(new FetchApplicationPreview(applicationId));
+          }
+        });
+      }
+
+  ngOnChanges() {
+    this.previewId = this.currentApplicationId;
+    if (this.currentApplicationId) {
+      this.store.dispatch(new FetchApplicationPreview(this.currentApplicationId));
+    }
+  }
+
+  ngAfterViewInit() {
+    this.store.select(getApplicationPreview)
+      .subscribe((applicationPreview) => {
+        if (applicationPreview) {
+          const { branding, loading} = applicationPreview;
+          this.preview = branding;
+          this.previewLoading = loading;
+        }
+      });
   }
 
   toggleCollapse(item: TreeviewData, event: Event) {
@@ -79,6 +129,14 @@ export class NavigationTreeComponent implements OnInit {
   scrollToTop(event: Event): void {
     event.stopPropagation();
     this.scrollContainerRef.nativeElement.scrollTo(0, 0);
+  }
+
+  onMouseoverItem(item: TreeviewData, event: Event): void {
+    event.preventDefault();
+    this.previewId = item.id;
+    if (item && !item.isGroup) {
+      this.mouseoverSubject.next(this.previewId);
+    }
   }
 
   private fetchDataFor(item: TreeviewData) {
