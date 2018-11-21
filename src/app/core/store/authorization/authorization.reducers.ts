@@ -1,8 +1,8 @@
 import _assign from 'lodash/assign';
 
-import { AuthorizationActions, AuthorizationActionTypes } from "./authorization.actions";
-import { User } from "../../models";
-import { mapLinks } from "../util";
+import { AuthorizationActions, AuthorizationActionTypes } from './authorization.actions';
+import { User } from '../../models';
+import { mapLinks } from '../util';
 
 export interface AuthorizationState {
   authenticated: boolean;
@@ -10,22 +10,12 @@ export interface AuthorizationState {
   loaded: boolean;
   loading: boolean;
   user?: User;
-  reseting: boolean;
-  reseted: boolean;
-}
-
-export interface ResetPasswordState {
-  reseting: boolean;
-  reseted: boolean;
-  error?: string;
 }
 
 const initialState: AuthorizationState = {
   authenticated: null,
   loaded: false,
-  loading: false,
-  reseting: false,
-  reseted: false
+  loading: false
 };
 
 export function reducer(state: any = initialState, action: AuthorizationActions): AuthorizationState {
@@ -73,23 +63,6 @@ export function reducer(state: any = initialState, action: AuthorizationActions)
     case AuthorizationActionTypes.LOGOUT_SUCCESS: {
       return _assign({}, state, initialState);
     }
-
-    case ActionTypes.RESET_PASSWORD:
-      return Object.assign({}, state, {
-        error: undefined,
-        reseting: true
-      });
-
-    case ActionTypes.RESET_PASSWORD_ERROR:
-      return Object.assign({}, state, {
-        reseted: false,
-        error: action.payload.error
-      });
-
-    case ActionTypes.RESET_PASSWORD_SUCCESS:
-      return Object.assign({}, state, {
-        reseted: true
-      });
 
     default:
       return state;
@@ -143,27 +116,3 @@ export const isLoading = (state: AuthorizationState) => state.loading;
  * @returns {Error}
  */
 export const getLogoutError = (state: AuthorizationState) => state.error;
-
-/**
- * Returns true if request is in progress.
- * @function isReseting
- * @param {State} state
- * @returns {boolean}
- */
-export const isReseting = (state: AuthorizationState) => state.reseting;
-
-/**
- * Returns true if the password has reseted.
- * @function isReseted
- * @param {State} state
- * @returns {boolean}
- */
-export const isReseted = (state: AuthorizationState) => state.reseted;
-
-/**
- * Returns the reset password error.
- * @function getResetPasswordError
- * @param {State} state
- * @returns {Error}
- */
-export const getResetPasswordError = (state: AuthorizationState) => state.error;

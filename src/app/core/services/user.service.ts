@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/comm
 
 import { Observable, of } from 'rxjs';
 
-import { UserCredentials, UserToken, User, DataPaginated, ApiResponse, } from '../models';
+import { UserCredentials, UserToken, User, DataPaginated, ApiResponse, UserResetPassword } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +56,9 @@ export class UserService {
     return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl, { params });
   }
 
-  resetPassword({ newPassword, oldPassword }: UserResetPassword): Observable<any> {
+  resetPassword(resertPassword: UserResetPassword): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user'));
     const url = `${this.baseUrl}/${user.id}/password`;
-    return this.httpClient.put(url, UserResetPassword);
+    return this.httpClient.put(url, resertPassword);
   }
 }

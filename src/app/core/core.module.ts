@@ -21,6 +21,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ContentEffects } from './store/content';
 import { ContentService, FgeRouterService } from './services';
 import { UserEffects } from './store/user';
+import { ResetPasswordEffects } from './store/reset-password';
 
 const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: loadFromLocalStorage });
 @NgModule({
@@ -32,7 +33,7 @@ const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: load
     ReactiveFormsModule,
     storeModuleForRoot,
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([AuthorizationEffects, ApplicationEffects, RouterEffects, ContentEffects, UserEffects]),
+    EffectsModule.forRoot([AuthorizationEffects, ApplicationEffects, RouterEffects, ContentEffects, UserEffects, ResetPasswordEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),

@@ -12,10 +12,7 @@ export const AuthorizationActionTypes = {
   AUTHENTICATE_ERROR: ActionType('AUTHENTICATE_ERROR'),
   AUTHENTICATE_SUCCESS: ActionType('AUTHENTICATE_SUCCESS'),
   LOGOUT: ActionType('LOGOUT'),
-  LOGOUT_SUCCESS: ActionType('LOGOUT_SUCCESS'),
-  RESET_PASSWORD: ActionType('RESET_PASSWORD'),
-  RESET_PASSWORD_SUCCESS: ActionType('RESET_PASSWORD_SUCCESS'),
-  RESET_PASSWORD_ERROR: ActionType('RESET_PASSWORD_ERROR')
+  LOGOUT_SUCCESS: ActionType('LOGOUT_SUCCESS')
 };
 
 export class AuthenticateAction implements Action {
@@ -63,21 +60,6 @@ export class LogoutSuccessAction implements Action {
   constructor(public payload?: any) {}
 }
 
-export class ResetpasswordAction implements Action {
-    public type: string = ActionTypes.RESET_PASSWORD;
-    constructor(public payload?: any) {}
-}
-
-export class ResetpasswordErrorAction implements Action {
-    public type: string = ActionTypes.RESET_PASSWORD_ERROR;
-    constructor(public payload?: any) {}
-}
-
-export class ResetpasswordSuccessAction implements Action {
-    public type: string = ActionTypes.RESET_PASSWORD_SUCCESS;
-    constructor(public payload?: any) {}
-}
-
 export type AuthorizationActions =
   AuthenticateAction |
   AuthenticatedAction |
@@ -87,7 +69,4 @@ export type AuthorizationActions =
   AuthenticationSuccessAction |
   LogoutAction |
   LogoutErrorAction |
-  LogoutSuccessAction |
-  ResetpasswordAction |
-  ResetpasswordErrorAction |
-  ResetpasswordSuccessAction;;
+  LogoutSuccessAction;

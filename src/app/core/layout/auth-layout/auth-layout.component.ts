@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { takeWhile, filter } from 'rxjs/operators';
@@ -42,6 +42,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -152,6 +153,6 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   onRediretToResetPassword() {
-    this.router.navigate(['/reset-password']);
+    this.router.navigate([`/tenant/${this.getCurrentTenantId()}/configuration/reset-password`]);
   }
 }

@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
@@ -13,13 +14,10 @@ import {
   LogoutAction,
   LogoutSuccessAction,
   LogoutErrorAction,
-  ResetpasswordAction,
-  ResetpasswordSuccessAction,
-  ResetpasswordErrorAction
-} from "./authorization.actions";
-import { UserService } from "../../services";
-import { User } from "../../models";
-import { State, isAuthenticated } from "../store.reducers";
+} from './authorization.actions';
+import { UserService } from '../../services';
+import { User } from '../../models';
+import { State, isAuthenticated } from '../store.reducers';
 
 @Injectable()
 export class AuthorizationEffects {
@@ -63,22 +61,6 @@ export class AuthorizationEffects {
     .pipe(
       switchMap(() => timer(this.INACTIVITY_TIME)),
       map(() => new LogoutAction('Inactivity'))
-    );
-
-  @Effect()
-  public resetPassword$: Observable<Action> = this.actions$
-    .pipe(
-      ofType(ActionTypes.RESET_PASSWORD),
-      switchMap((action: any) => {
-        return this.userService.resetPassword(action.payload)
-          .pipe(
-            map((response: any) => {
-              console.log('changes success using this thing.', response);
-              return new ResetpasswordSuccessAction({ response: 'success changes.'});
-            }),
-            catchError(error => of(new ResetpasswordErrorAction({error: error})))
-          );
-      })
     );
 
   constructor(

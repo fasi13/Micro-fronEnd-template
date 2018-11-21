@@ -6,6 +6,7 @@ import * as AuthorizationReducers from './authorization/authorization.reducers';
 import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
 import * as UserReducers from './user/user.reducers';
+import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
 
 export interface State {
   router: RouterReducerState;
@@ -13,6 +14,7 @@ export interface State {
   application: ApplicationReducers.ApplicationState;
   content: ContentReducers.ContentState;
   user: UserReducers.UserState;
+  resetPassword: ResetPasswordReducers.ResetPasswordState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -20,7 +22,8 @@ export const FgeReducers: ActionReducerMap<State> = {
   authorization: AuthorizationReducers.reducer,
   application: ApplicationReducers.reducer,
   content: ContentReducers.reducer,
-  user: UserReducers.reducer
+  user: UserReducers.reducer,
+  resetPassword: ResetPasswordReducers.reducer
 };
 
 /**********************************\
@@ -36,9 +39,6 @@ export const isAuthenticated = createSelector(getAuthorizationState, Authorizati
 export const isAuthenticatedLoaded = createSelector(getAuthorizationState, AuthorizationReducers.isAuthenticatedLoaded);
 export const isAuthenticationLoading = createSelector(getAuthorizationState, AuthorizationReducers.isLoading);
 export const getLogoutError = createSelector(getAuthorizationState, AuthorizationReducers.getLogoutError);
-export const isReseting = createSelector(getAuthorizationState, AuthorizationReducers.isReseting);
-export const isReseted = createSelector(getAuthorizationState, AuthorizationReducers.isReseted);
-export const getResetPasswordError = createSelector(getAuthorizationState, AuthorizationReducers.getResetPasswordError);
 
 /**********************************************************
  * Application Reducers
@@ -80,3 +80,12 @@ export const getUserState = (state: State) => {
 export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
 export const getUsersState = createSelector(getUserState, UserReducers.getUsersState);
 export const getUserRecordState = createSelector(getUserState, UserReducers.getUserState);
+
+/**********************************************************
+ * Reset password Reducers
+ *********************************************************/
+export const getResetPasswordState = (state: State) => {
+  return state.resetPassword;
+};
+export const isChangingPassword = createSelector(getResetPasswordState, ResetPasswordReducers.isChangingPassword);
+export const getResetedPassword = createSelector(getResetPasswordState, ResetPasswordReducers.getResetPassword);
