@@ -12,7 +12,6 @@ import {
   FetchContentError,
   FetchContentGroupCompleted,
   FetchContentGroup,
-  FetchContent,
   TransactionContentRecordCompleted,
   TransactionContentRecordError,
   TransactionContentEditCompleted,
@@ -77,7 +76,7 @@ export class ContentEffects {
         .pipe(
           mergeMap(() => [
             new TransactionContentEditCompleted(),
-            new FetchContent({ applicationId: action.payload.applicationId, contentId: action.payload.contentId })
+            new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
           ]),
           catchError(error => of(new TransactionContentEditError(error)))
         )

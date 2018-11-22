@@ -1,0 +1,36 @@
+<form class="dynamic-form" #inlineForm
+  [formGroup]="form"
+  (submit)="handleSubmit($event)">
+  <div class="row">
+    <div class="col-10">
+      <ng-container
+        fgeDynamicField
+        [config]="config[0]"
+        [group]="currentForm">
+      </ng-container>
+    </div>
+    <div class="col-2 fge-dynamic-inline-form__button"
+      *ngIf="fieldChanged && config[0].type !== 'select'">
+      <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></i>
+      <button type="submit" class="btn btn-link"
+        [disabled]="loadingAsyncResponse">
+        <i class="fas fa-check-circle fa-lg"></i>
+      </button>
+      <button type="button" class="btn btn-link"
+        [disabled]="loadingAsyncResponse"
+        (click)="handleCancel($event)">
+        <i class="fas fa-times-circle fa-lg"></i>
+      </button>
+    </div>
+  </div>
+  <div class="form-group fge-dynamic-form--success" *ngIf="message">
+    <i class="fas fa-check-circle pr-1"></i>
+    {{ message }}
+  </div>
+  <div class="form-group" *ngIf="errors">
+    <div class="fge-dynamic-form--error" *ngFor="let error of errors">
+      <i class="fas fa-exclamation-circle pr-1"></i>
+      {{ error }}
+    </div>
+  </div>
+</form>

@@ -8,5 +8,6 @@ export class FieldConfig {
   placeholder?: string;
   type: string;
   value?: any;
+  src?: string;
   validation?: { [key: string]: { errorMsg: string, validator: ValidatorFn | ValidatorFn[] }};
 }

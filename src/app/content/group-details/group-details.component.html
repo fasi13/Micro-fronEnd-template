@@ -48,15 +48,16 @@
       </tr>
     </tbody>
   </table>
-  <div>
-    <form class="form-inline" *ngFor="let content of editableContents">
-      <ng-container
-        fgeDynamicField
-        [config]="content?.config"
-        [group]="content?.group">
-      </ng-container>
-      <!-- <span>{{content.dataType.name}}</span> -->
-    </form>
+  <div class="row">
+    <div class="col-md-8">
+      <fge-content-inline-editor *ngFor="let content of editableContents"
+        [contentData]="content?.contentData"
+        [config]="content?.config">
+      </fge-content-inline-editor>
+    </div>
+    <div class="col-md-4">
+      ADA
+    </div>
   </div>
 </ng-template>
 

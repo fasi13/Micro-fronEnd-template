@@ -9,7 +9,6 @@ import { takeWhile } from 'rxjs/operators';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 import { dataTypes as availableDataTypes } from '../shared/content-form-modal/content-data-types.config';
-import { FormGroup, FormBuilder, ValidatorFn } from '@angular/forms';
 import { FieldConfig } from '@forge/shared';
 
 @Component({
@@ -38,8 +37,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store: Store<State>,
     private modalService: NgbModal,
-    private fgeRouter: FgeRouterService,
-    private formBuilder: FormBuilder
+    private fgeRouter: FgeRouterService
   ) { }
 
   ngOnInit() {
@@ -95,24 +93,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       const fieldConfig: FieldConfig = availableDataTypes[content.dataType.name];
       return {
         config: fieldConfig,
-        group: this.createFormGroup(fieldConfig)
+        contentData: content
       };
     });
-  }
-
-  private createFormGroup({ disabled = false, validation, value, name }: FieldConfig): FormGroup {
-    const formGroup: FormGroup = this.formBuilder.group({});
-    const control = this.formBuilder.control({ disabled, value }, this.getValidators(validation));
-    formGroup.addControl(name, control);
-    return formGroup;
-  }
-
-  private getValidators(validationConfig: any): ValidatorFn[] {
-    const validators: ValidatorFn[] = [];
-    Object.keys(validationConfig).forEach(validatorKey => {
-      validators.push(validationConfig[validatorKey].validator);
-    });
-    return validators;
   }
 
 }

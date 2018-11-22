@@ -17,6 +17,7 @@ import { GroupFormModalComponent } from './shared/group-form-modal/group-form-mo
 import { ContentFormModalComponent } from './shared/content-form-modal/content-form-modal.component';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEditorComponent } from './shared/content-editor/content-editor.component';
+import { ContentInlineEditorComponent } from './shared/content-inline-editor/content-inline-editor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'groups' },
@@ -54,7 +55,8 @@ const routes: Routes = [
     ContentTypeDocumentComponent,
     GroupFormModalComponent,
     ContentFormModalComponent,
-    ContentEditorComponent
+    ContentEditorComponent,
+    ContentInlineEditorComponent
   ],
   entryComponents: [
     ContentFormModalComponent

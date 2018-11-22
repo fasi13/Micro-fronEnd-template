@@ -7,8 +7,8 @@
       [formControlName]="config.name"
       [ngClass]="{ 'is-invalid': hasError() }"
       class="form-control fge-dynamic-form__select">
-      <option value="">{{ config.placeholder }}</option>
-      <option *ngFor="let option of config.options">
+      <option *ngIf="!config.value" value="">{{ config.placeholder }}</option>
+      <option [value]="option" *ngFor="let option of config.options">
         {{ option }}
       </option>
     </select>

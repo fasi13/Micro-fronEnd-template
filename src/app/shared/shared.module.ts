@@ -10,6 +10,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { QuillModule } from 'ngx-quill';
 
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DynamicInlineFormComponent } from './components/dynamic-form/dynamic-inline-form/dynamic-inline-form.component';
 import { FieldButtonComponent } from './components/dynamic-form/fields/field-button/field-button.component';
 import { DynamicFieldDirective } from './components/dynamic-form/directives/dynamic-field.directive';
 import { FieldTextComponent } from './components/dynamic-form/fields/field-text/field-text.component';
@@ -43,6 +44,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     SplashScreenComponent,
     SearchApplicationComponent,
     DynamicFormComponent,
+    DynamicInlineFormComponent,
     FieldButtonComponent,
     FieldTextComponent,
     FieldSelectComponent,
@@ -66,6 +68,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     SplashScreenComponent,
     SearchApplicationComponent,
     DynamicFormComponent,
+    DynamicInlineFormComponent,
     BreadCrumbComponent,
     NavigationTreeComponent,
     ModalConfirmComponent,
