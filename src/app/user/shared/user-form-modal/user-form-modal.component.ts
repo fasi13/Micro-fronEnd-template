@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
 import { Store } from '@ngrx/store';
 
-import { User, State, UserTransaction, getUserRecordState } from '@forge/core';
+import { User, State, UserTransaction, getUserRecordState, getApplicationPath } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { configNewUserFields, configUpdateUserFields } from './user-form-modal.config';
 
@@ -16,7 +16,7 @@ export class UserFormModalComponent {
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
   mode: 'CREATE' | 'EDIT';
-  applicationID: number;
+  applicationId: number;
   user: any;
   config: FieldConfig[];
 
@@ -35,10 +35,15 @@ export class UserFormModalComponent {
       configUpdateUserFields[3].value = user.isActive;
       this.config = _clone(configUpdateUserFields);
     } else {
-      this.user = {};
-      this.user.applicationName = '';
-      configNewUserFields[3].value = true;
-      this.config = _clone(configNewUserFields);
+      this.store.select(getApplicationPath)
+      .subscribe((applicationResponse) => {
+        const application = applicationResponse.data[applicationResponse.data.length - 1];
+        configNewUserFields[3].value = true;
+        configNewUserFields[7].value = application['name'];
+        this.applicationId = application['id'];
+        this.user = {};
+        this.config = _clone(configNewUserFields);
+      });
     }
     this.modalService.open(this.modalContent, { windowClass: 'modal-content-form' });
   }
@@ -52,7 +57,7 @@ export class UserFormModalComponent {
         lastName: formData.lastName,
         emailAddress: formData.emailAddress,
         isActive: formData.activeUser,
-        applicationId: formData.applicationId
+        applicationId: this.applicationId
       };
       this.store.dispatch(new UserTransaction(payload, 'POST' ));
     } else {

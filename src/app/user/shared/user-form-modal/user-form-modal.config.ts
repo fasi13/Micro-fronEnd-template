@@ -133,8 +133,8 @@ const email: FieldConfig = {
     }
   }
 };
-const searchApp: FieldConfig = {
-  type: 'searchApplication',
+const applicationName: FieldConfig = {
+  type: 'text',
   label: 'Applicatinon Name',
   name: 'applicationId',
   validation: {},
@@ -148,6 +148,6 @@ export const configNewUserFields: FieldConfig[] = [
   firstName,
   lastName,
   email,
-  searchApp
+  applicationName
 ];
 export const configUpdateUserFields: FieldConfig[] = [ firstName, lastName, email, toggleButton ];

@@ -24,8 +24,6 @@ import { HighlightSearchDirective } from './components/search-application/highli
 import { FieldPasswordComponent } from './components/dynamic-form/fields/field-password/field-password.component';
 import { FieldToggleButtonComponent } from './components/dynamic-form/fields/field-toggle-button/field-toggle-button.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
-import {
-  FieldSearchApplicationComponent } from './components/dynamic-form/fields/field-search-application/field-search-application.component';
 import { FocusInputDirective } from './directives/focus-input.directive';
 
 @NgModule({
@@ -57,7 +55,6 @@ import { FocusInputDirective } from './directives/focus-input.directive';
     FieldPasswordComponent,
     FieldToggleButtonComponent,
     ModalConfirmComponent,
-    FieldSearchApplicationComponent,
     FocusInputDirective
   ],
   exports: [
@@ -81,8 +78,7 @@ import { FocusInputDirective } from './directives/focus-input.directive';
     FieldColorComponent,
     FieldPasswordComponent,
     FieldToggleButtonComponent,
-    FieldHtmlComponent,
-    FieldSearchApplicationComponent
+    FieldHtmlComponent
   ]
 })
 export class SharedModule { }
