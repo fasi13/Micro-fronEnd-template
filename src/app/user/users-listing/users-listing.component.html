@@ -1,6 +1,6 @@
 <div class="fge-group--title row">
   <h4 class="fge-group--title-divider my-2 col-10">
-    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Users Management</span>
+    <i *ngIf="usersState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Users Management</span>
   </h4>
   <div class="col text-right">
     <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
@@ -18,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users$ | async">
+    <tr *ngFor="let user of usersState?.items">
       <td>{{ user.login }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
@@ -36,9 +36,22 @@
     </tr>
   </tbody>
 </table>
+<ngb-pagination
+  class="d-flex justify-content-center"
+  *ngIf="usersState?.totalCount > usersState?.limit"
+  [collectionSize]="usersState?.totalCount"
+  [(page)]="pageNumber"
+  [pageSize]="usersState?.limit"
+  [maxSize]="5"
+  [rotate]="true"
+  [ellipses]="false"
+  [boundaryLinks]="true"
+  (pageChange)="onPageChange($event)"
+  size="sm"
+></ngb-pagination>
 
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
 <fge-modal-confirm [config]="config"
-  (onsubmit)="submit()"
+  (onsubmit)="onSubmitConfirmModal()"
   #modalConfirmModal>
 </fge-modal-confirm>

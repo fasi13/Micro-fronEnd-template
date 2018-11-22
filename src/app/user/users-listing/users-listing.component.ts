@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
-import { State, UserTransaction, isLoadingUsers, getUsers,  FetchUsers } from '@forge/core';
+import { State, UserTransaction, getUsersState, FetchUsers } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 @Component({
   selector: 'fge-users',
@@ -11,21 +10,26 @@ import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-
 export class UsersListgingComponent implements OnInit {
   config: ModalConfirmConfig;
   currentUser: any;
+  usersState: any;
   titleModalConfirm: string;
   messageConfirmModal: string;
   confirmModal: any;
-  users$: Observable<any>;
-  loading$: Observable<boolean> | boolean;
+
+  get pageNumber(): number {
+    if (this.usersState) {
+      const { limit, offset } = this.usersState;
+      return Math.ceil(offset / limit) + 1;
+    }
+    return 0;
+  }
+
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
+    const initialOffset = 0;
+    const initialLimit = 12;
     this.initSelectors();
-    this.store.dispatch(new FetchUsers());
-  }
-
-  private initSelectors() {
-    this.loading$ = this.store.select(isLoadingUsers);
-    this.users$ = this.store.select(getUsers);
+    this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset }));
   }
 
   openModalConfirm(confirmModal: any, user: any): void {
@@ -41,11 +45,7 @@ export class UsersListgingComponent implements OnInit {
     confirmModal.open();
   }
 
-  submit() {
-    this.store.select(isLoadingUsers).subscribe(() => {
-      this.confirmModal.close();
-    });
-
+  onSubmitConfirmModal() {
     this.store.dispatch(new UserTransaction({
       id: this.currentUser.id,
       firstName: this.currentUser.firstName,
@@ -58,5 +58,20 @@ export class UsersListgingComponent implements OnInit {
   getApplicationName(user: any): string {
     const name = user.applicationPath.path[user.applicationPath.path.length - 1 ].name;
     return name;
+  }
+
+  onPageChange(index: number): void {
+    const { limit } = this.usersState;
+    const offset = (index - 1) * limit;
+    this.store.dispatch(new FetchUsers({ offset, limit }));
+  }
+
+  private initSelectors() {
+    this.store.select(getUsersState)
+      .subscribe(usersState => {
+        if (usersState) {
+          this.usersState = usersState;
+        }
+      });
   }
 }

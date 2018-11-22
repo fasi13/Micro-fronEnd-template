@@ -74,7 +74,6 @@ export const getContentEditState = createSelector(getContentState, ContentReduce
 export const getUserState = (state: State) => {
   return state.user;
 };
-export const isLoadingUsers = createSelector(getUserState, UserReducers.isLoadingUsers);
 export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
-export const getUsers = createSelector(getUserState, UserReducers.getUsers);
+export const getUsersState = createSelector(getUserState, UserReducers.getUsersState);
 export const getUserRecordState = createSelector(getUserState, UserReducers.getUserState);

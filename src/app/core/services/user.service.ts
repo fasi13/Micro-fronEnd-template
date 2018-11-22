@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { UserCredentials, UserToken, User, DataPaginated, ApiResponse, } from '.
 })
 export class UserService {
 
-  private baseUrl = '/users';
+  private baseUrl = 'users';
 
   constructor(
     private httpClient: HttpClient
@@ -28,8 +28,8 @@ export class UserService {
   }
 
   logout(reason: string = 'Iddle', isAuth = true): Observable<boolean> {
-    console.log('Logout - reason: ', reason);
     if (isAuth) {
+      console.log('Logout - reason: ', reason);
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('application_data');
@@ -45,7 +45,14 @@ export class UserService {
     return this.httpClient.put<ApiResponse<User>>(this.baseUrl, updatedUser);
   }
 
-  getUsers(): Observable<ApiResponse<DataPaginated<User>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl);
+  getUsers(offset?: number, limit?: number): Observable<ApiResponse<DataPaginated<User>>> {
+    let params = new HttpParams();
+    if (offset >= 0) {
+      params = params.set('offset', `${offset}`);
+    }
+    if (limit) {
+      params = params.set('limit', `${limit}`);
+    }
+    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl, { params });
   }
 }

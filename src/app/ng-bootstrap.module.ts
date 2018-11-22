@@ -5,7 +5,8 @@ import {
   NgbPopoverModule,
   NgbModalModule,
   NgbTypeaheadModule,
-  NgbButtonsModule
+  NgbButtonsModule,
+  NgbPaginationModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -16,14 +17,16 @@ import {
     NgbModalModule,
     NgbTypeaheadModule,
     NgbButtonsModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgbPaginationModule
   ],
   exports: [
     NgbPopoverModule,
     NgbModalModule,
     NgbTypeaheadModule,
     NgbButtonsModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgbPaginationModule
   ]
 })
 export class NgBootstrapModule { }

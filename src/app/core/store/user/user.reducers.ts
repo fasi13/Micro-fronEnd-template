@@ -7,6 +7,9 @@ export interface UserState {
   users: {
     loading: boolean,
     items: User[],
+    limit?: number,
+    offset?: number,
+    totalCount?: number,
     error?: any;
   };
   user: {
@@ -75,7 +78,10 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       return _assign({}, state, {
         users: {
           loading: false,
-          items: action.payload.items
+          items: action.payload.items,
+          limit: action.payload.limit,
+          offset: action.payload.offset,
+          totalCount: action.payload.totalCount
         }
       });
     default:
@@ -83,7 +89,6 @@ export function reducer(state: UserState = initialState, action: UserActions): U
   }
 }
 
-export const isLoadingUsers = (state: UserState) => state.users.loading;
 export const isLoadingUser = (state: UserState) => state.user.loading;
-export const getUsers = (state: UserState) => state.users.items;
+export const getUsersState = (state: UserState) => state.users;
 export const getUserState = (state: UserState) => state.user;
