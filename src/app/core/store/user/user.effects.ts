@@ -32,7 +32,7 @@ export class UserEffects {
             } else {
               this.notifierService.notify('success', 'The user has been updated successfully');
             }
-            return [new UserTransactionSuccess(), new FetchUsers()];
+            return [new UserTransactionSuccess(), new FetchUsers({})];
           }),
           catchError((error) => {
             this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
