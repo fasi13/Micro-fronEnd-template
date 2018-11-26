@@ -21,7 +21,7 @@
 <div *ngIf="editMode; then editView; else tableView"></div>
 
 <ng-template #editView>
-  <div class="row fge-group--container-values mx-1 my-2">
+  <div *ngIf="contentsAsList?.length > 0" class="row fge-group--container-values mx-1 my-2 pb-0">
     <table class="table table-hover fge-table fge-group--content-list" *ngIf="contentsAsList && contentsAsList?.length > 0">
       <thead>
         <tr>
@@ -57,7 +57,7 @@
         [config]="content?.config">
       </fge-content-inline-editor>
     </div>
-    <div class="col-md-5 fge-border-left" [innerHTML]="adaContent"></div>
+    <div class="col-md-5 fge-border-left" [ngClass]="{'fge-border-none': !adaContent}" [innerHTML]="adaContent"></div>
   </div>
 </ng-template>
 
