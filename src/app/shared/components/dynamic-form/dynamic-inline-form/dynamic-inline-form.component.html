@@ -1,4 +1,4 @@
-<form class="dynamic-form" #inlineForm
+<form class="dynamic-inline-form" #inlineForm
   [formGroup]="form"
   (submit)="handleSubmit($event)">
   <div class="row">
@@ -24,7 +24,8 @@
     </div>
     <div class="col-2 pt-1">
       <button type="button" class="btn btn-link"
-        (click)="handleActions($event)">
+        triggers="click" [autoClose]="'outside'"
+        placement="right" [ngbTooltip]="tipContent">
         <i class="fas fa-comment-dots fa-lg"></i>
       </button>
     </div>
@@ -39,4 +40,10 @@
       {{ error }}
     </div>
   </div>
+  <ng-template #tipContent>
+    <button type="button" class="btn btn-link text-white"
+      (click)="handleActions('clear')">
+      Clear
+    </button>
+  </ng-template>
 </form>

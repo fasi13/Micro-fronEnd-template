@@ -54,6 +54,19 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   }
 
   handleActions(): void {
+    const value = '';
+    const { id: contentId, status: status } = this.contentData;
+    const contentPayload = {
+      status,
+      value
+    };
+    this.store.dispatch(new TransactionContentEdit({
+      applicationId: this.applicationId,
+      groupId: this.groupId,
+      contentId,
+      contentPayload,
+    }));
+    this.store.select(getContentEditState);
   }
 
   handleSubmit({ value: formData, success, error}): void {

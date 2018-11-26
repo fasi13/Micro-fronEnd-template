@@ -96,14 +96,8 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
     this.setValue(this.config.name, this.config.value);
   }
 
-  handleActions(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.onactions.emit({
-      value: this.value,
-      success: this.asyncSuccess.bind(this),
-      error: this.asyncError.bind(this)
-    });
+  handleActions(action: string) {
+    this.onactions.emit(action);
   }
 
   asyncSuccess() {
