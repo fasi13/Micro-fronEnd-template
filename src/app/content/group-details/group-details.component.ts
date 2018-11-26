@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import _find from 'lodash/find';
+import _assign from 'lodash/assign';
+import _clone from 'lodash/clone';
 
 import { Subscription, Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -110,16 +112,16 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     this.editableContents = this.currentGroup.content
       .filter((content: ApplicationContent) => !content.displayAsList)
       .map((content: ApplicationContent) => {
-      const fieldConfig: FieldConfig = availableDataTypes[content.dataType.name];
-      return {
-        config: fieldConfig,
-        contentData: content
-      };
-    });
+        const fieldConfig: FieldConfig = _assign(_clone(availableDataTypes[content.dataType.name]), { label: content.name });
+        return {
+          config: fieldConfig,
+          contentData: content
+        };
+      });
   }
 
   private initAdaDispatcher(): void {
-    const { href }: Link = _find(this.currentGroup._links, ['rel', 'supportingContent']);
+    const { href }: Link = _find(this.currentGroup._links, ['rel', 'supportingContent']) || {};
     if (href) {
       const splittedUrl = href.split('/');
       const contentId = + splittedUrl[splittedUrl.length - 1];

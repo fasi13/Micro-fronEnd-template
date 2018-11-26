@@ -1,8 +1,11 @@
 .fge-dynamic-inline-form__button { 
   position: absolute;
-  right: 28%;
   width: unset;
   padding: 0;
+  z-index: 3;
+  right: 0;
+  top: 5px;
+  margin-right: 25px;
 }
 
 .fge-dynamic-form--success {

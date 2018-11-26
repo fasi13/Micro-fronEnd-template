@@ -21,33 +21,35 @@
 <div *ngIf="editMode; then editView; else tableView"></div>
 
 <ng-template #editView>
-  <table class="table table-hover fge-table fge-group--content-list" *ngIf="contentsAsList && contentsAsList?.length > 0">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Status</th>
-        <th scope="col">Publish Date</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let content of contentsAsList">
-        <td>{{ content?.name }}</td>
-        <td>{{ content?.description }}</td>
-        <td>{{ content?.status }}</td>
-        <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
-        <td>
-          <a
-            tabindex="0"
-            (click)="goToContentEdit(content?.id)"
-            class="btn btn-primary bg-primary btn-sm mr-2">
-            <i class="far fa-edit"></i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="row fge-group--container-values mx-1 my-2">
+    <table class="table table-hover fge-table fge-group--content-list" *ngIf="contentsAsList && contentsAsList?.length > 0">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Publish Date</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let content of contentsAsList">
+          <td>{{ content?.name }}</td>
+          <td>{{ content?.description }}</td>
+          <td>{{ content?.status }}</td>
+          <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
+          <td>
+            <a
+              tabindex="0"
+              (click)="goToContentEdit(content?.id)"
+              class="btn btn-primary bg-primary btn-sm mr-2">
+              <i class="far fa-edit"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="row fge-group--container-values mx-1 my-2">
     <div class="col-xs-12 col-sm-12 col-md-7">
       <fge-content-inline-editor *ngFor="let content of editableContents"
