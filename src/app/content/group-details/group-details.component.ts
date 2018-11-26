@@ -121,9 +121,8 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   private initAdaDispatcher(): void {
-    const hrefLink: Link = _find(this.currentGroup._links, ['rel', 'supportingContent']);
-    if (hrefLink) {
-      const { href } = hrefLink;
+    const { href }: Link = _find(this.currentGroup._links, ['rel', 'supportingContent']) || {};
+    if (href) {
       const splittedUrl = href.split('/');
       const contentId = + splittedUrl[splittedUrl.length - 1];
       const applicationId = this.applicationId;
