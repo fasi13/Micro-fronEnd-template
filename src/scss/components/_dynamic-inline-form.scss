@@ -14,12 +14,13 @@
   margin-left: 25%
 }
 
-.dynamic-inline-form {
+.fge-dynamic-inline-form {
   .bs-tooltip-right .arrow::before {
     border-right-color: lightgray;
   }
   
   .tooltip-inner{
-    background-color: lightgray;
+    background-color: white;
+    border: $border-box-light-grey;
   }
 }

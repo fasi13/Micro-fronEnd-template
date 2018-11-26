@@ -1,4 +1,4 @@
-<form class="dynamic-inline-form" #inlineForm
+<form class="fge-dynamic-inline-form" #inlineForm
   [formGroup]="form"
   (submit)="handleSubmit($event)">
   <div class="row">
@@ -41,7 +41,7 @@
     </div>
   </div>
   <ng-template #tipContent>
-    <button type="button" class="btn btn-link text-white"
+    <button type="button" class="btn btn-link text-black-50 font-weight-bold"
       (click)="handleActions('clear')">
       Clear
     </button>
