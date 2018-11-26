@@ -6,3 +6,16 @@
 .fge-disabled {
   pointer-events: none;
 }
+
+.fge-border-left {
+  border-left: 1px solid lightgrey;
+}
+
+.fge-thumb {
+  max-width: 100%;
+  max-height: 70px;
+}
+
+.fge-custom-icon-width {
+  max-width: 15px;
+}
