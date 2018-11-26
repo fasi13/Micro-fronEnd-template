@@ -2,15 +2,15 @@
   [formGroup]="form"
   (submit)="handleSubmit($event)">
   <div class="row">
-    <div class="col-10">
+    <div class="col-9">
       <ng-container
         fgeDynamicField
-        [config]="config[0]"
+        [config]="config"
         [group]="currentForm">
       </ng-container>
     </div>
-    <div class="col-2 fge-dynamic-inline-form__button"
-      *ngIf="fieldChanged && config[0].type !== 'select'">
+    <div class="col-2 pt-1 fge-dynamic-inline-form__button"
+      *ngIf="fieldChanged && config.type !== 'select'">
       <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></i>
       <button type="submit" class="btn btn-link"
         [disabled]="loadingAsyncResponse">
@@ -20,6 +20,12 @@
         [disabled]="loadingAsyncResponse"
         (click)="handleCancel($event)">
         <i class="fas fa-times-circle fa-lg"></i>
+      </button>
+    </div>
+    <div class="col-1 pt-1">
+      <button type="button" class="btn btn-link"
+        (click)="handleActions($event)">
+        <i class="fas fa-comment-dots fa-lg"></i>
       </button>
     </div>
   </div>

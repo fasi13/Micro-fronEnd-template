@@ -5,12 +5,9 @@ import {
   OnChanges,
   OnInit,
   Output,
-  AfterViewInit,
-  ViewChild,
-  ElementRef
+  AfterViewInit
 } from '@angular/core';
 import { FormGroup, FormBuilder, ValidatorFn, FormControl } from '@angular/forms';
-import _compact from 'lodash/compact';
 
 import { FieldConfig } from '../models/field-config.model';
 
@@ -20,27 +17,16 @@ import { FieldConfig } from '../models/field-config.model';
   templateUrl: './dynamic-inline-form.component.html'
 })
 export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewInit {
-  @Input()
-  set fieldsConfig(newConfig) {
-    this.config = _compact(newConfig);
-  }
-  get fieldsConfig() {
-    return this.config;
-  }
+  @Input() config: FieldConfig;
   @Output() readonly onsubmit: EventEmitter<any> = new EventEmitter<any>();
-  @Output() readonly oncancel: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('inlineForm') inlineForm: ElementRef;
+  @Output() readonly onactions: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
   errors: string[];
   message: string;
   loadingAsyncResponse: boolean;
-  config: FieldConfig[] = [];
   fieldChanged: boolean;
 
-  get controls(): any {
-    return this.config.filter((fieldConfig: FieldConfig) => fieldConfig && fieldConfig.type !== 'button');
-  }
   get changes() {
     return this.form.valueChanges;
   }
@@ -62,19 +48,7 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
 
   ngOnChanges() {
     if (this.form) {
-      const controls = Object.keys(this.form.controls);
-      const configControls = this.controls.map(item => item.name);
-
-      controls
-        .filter(control => !configControls.includes(control))
-        .forEach(control => this.form.removeControl(control));
-
-      configControls
-        .filter(control => !controls.includes(control))
-        .forEach(name => {
-          const config = this.config.find(control => control.name === name);
-          this.form.addControl(name, this.createControl(config));
-        });
+      this.form.addControl(name, this.createControl(this.config));
     }
   }
 
@@ -89,9 +63,7 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
 
   createGroup() {
     const group = this.fb.group({});
-    this.controls.forEach(control =>
-      group.addControl(control.name, this.createControl(control))
-    );
+    group.addControl(this.config.name, this.createControl(this.config));
     return group;
   }
 
@@ -121,8 +93,17 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
   handleCancel(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    this.setValue(this.config[0].name, this.config[0].value);
-    this.oncancel.emit();
+    this.setValue(this.config.name, this.config.value);
+  }
+
+  handleActions(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.onactions.emit({
+      value: this.value,
+      success: this.asyncSuccess.bind(this),
+      error: this.asyncError.bind(this)
+    });
   }
 
   asyncSuccess() {
@@ -136,22 +117,16 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
     this.errors = errorMsg;
   }
 
-  setDisabled(name: string, disable: boolean) {
+  private setDisabled(name: string, disable: boolean) {
     if (this.form.controls[name]) {
       const method = disable ? 'disable' : 'enable';
       this.form.controls[name][method]();
       return;
     }
-
-    this.config = this.config.map(item => {
-      if (item.name === name) {
-        item.disabled = disable;
-      }
-      return item;
-    });
+    this.config.disabled = disable;
   }
 
-  setValue(name: string, value: any) {
+  private setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, { emitEvent: true });
   }
 
@@ -169,13 +144,10 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
   }
 
   private verifyChanges(): void {
-    if (this.config[0].type === 'select') {
+    if (this.config.type === 'select') {
       this.handleSubmit();
     } else {
-      this.fieldChanged = false;
-      if (this.form.value[this.config[0].name] !== this.config[0].value) {
-        this.fieldChanged = true;
-      }
+      this.fieldChanged = this.form.value[this.config.name] !== this.config.value ? true : false;
     }
   }
 

@@ -1,6 +1,6 @@
 <fge-dynamic-inline-form
-  [fieldsConfig]="[config]"
+  [config]="config"
   #form="fgeDynamicInlineForm"
   (onsubmit)="handleSubmit($event)"
-  (oncancel)="handleCancel()">
+  (onactions)="handleActions()">
 </fge-dynamic-inline-form>

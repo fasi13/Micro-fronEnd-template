@@ -48,16 +48,14 @@
       </tr>
     </tbody>
   </table>
-  <div class="row">
-    <div class="col-md-8">
+  <div class="row maincontent mx-1 my-2">
+    <div class="col-xs-12 col-sm-12 col-md-7">
       <fge-content-inline-editor *ngFor="let content of editableContents"
         [contentData]="content?.contentData"
         [config]="content?.config">
       </fge-content-inline-editor>
     </div>
-    <div class="col-md-4">
-      ADA
-    </div>
+    <div class="col-md-5 border-left" [innerHTML]="adaContent"></div>
   </div>
 </ng-template>
 

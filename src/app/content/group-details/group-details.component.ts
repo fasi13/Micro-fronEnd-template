@@ -1,12 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import _find from 'lodash/find';
 
 import { Subscription, Observable } from 'rxjs';
-
-import { State, FetchContentGroup, getGroup, isLoadingGroup, ContentGroup, ApplicationContent, FgeRouterService } from '@forge/core';
 import { takeWhile } from 'rxjs/operators';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
+import {
+  State,
+  FetchContentGroup,
+  getGroup,
+  FetchContent,
+  getContent,
+  isLoadingGroup,
+  ContentGroup,
+  ApplicationContent,
+  FgeRouterService,
+  Link
+} from '@forge/core';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 import { dataTypes as availableDataTypes } from '../shared/content-form-modal/content-data-types.config';
 import { FieldConfig } from '@forge/shared';
@@ -21,6 +33,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean> | boolean;
   editMode: boolean;
   editableContents: any;
+  applicationId: number;
+  adaContent: string;
+  showAdaContent = false;
 
   private routeParamsSubscription: Subscription;
   private isAliveComponent = true;
@@ -62,6 +77,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+    if (this.editMode && this.showAdaContent) {
+      this.initAdaContent();
+    }
   }
 
   goToContentEdit(contentId: string): void {
@@ -70,6 +88,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   private initDispatchers({ tenantId: applicationId, groupId }: any): void {
     this.store.dispatch(new FetchContentGroup({ applicationId, groupId }));
+    this.applicationId = applicationId;
   }
 
   private initSelectors(): void {
@@ -82,6 +101,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
         this.currentGroup = group;
         if (group) {
           this.initEditableFields();
+          this.initAdaDispatcher();
         }
       });
   }
@@ -96,6 +116,29 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
         contentData: content
       };
     });
+  }
+
+  private initAdaDispatcher(): void {
+    const { href }: Link = _find(this.currentGroup._links, ['rel', 'supportingContent']);
+    if (href) {
+      const splittedUrl = href.split('/');
+      const contentId = + splittedUrl[splittedUrl.length - 1];
+      const applicationId = this.applicationId;
+      this.store.dispatch(new FetchContent({ applicationId, contentId }));
+      this.showAdaContent = true;
+    }
+  }
+
+  private initAdaContent(): void {
+    this.store.select(getContent)
+      .pipe(
+        takeWhile(() => this.isAliveComponent)
+      )
+      .subscribe((content: ApplicationContent) => {
+        if (content) {
+          this.adaContent = content.value;
+        }
+      });
   }
 
 }

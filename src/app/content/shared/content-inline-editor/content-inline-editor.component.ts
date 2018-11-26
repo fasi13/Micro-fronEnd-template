@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,7 +12,7 @@ import {
   getDataTypes,
   DataType
 } from '@forge/core';
-import { DynamicInlineFormComponent, FieldConfig } from '@forge/shared';
+import { FieldConfig } from '@forge/shared';
 
 @Component({
   selector: 'fge-content-inline-editor',
@@ -22,9 +22,6 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
   @Input() contentData: ApplicationContent;
   @Input() config: FieldConfig;
-  @ViewChild(DynamicInlineFormComponent) form: ElementRef;
-
-  loading$: Observable<boolean> | boolean;
 
   private routeParamsSubscription: Subscription;
   private applicationId: string;
@@ -56,7 +53,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     this.routeParamsSubscription.unsubscribe();
   }
 
-  handleCancel(): void {
+  handleActions(): void {
   }
 
   handleSubmit({ value: formData, success, error}): void {
