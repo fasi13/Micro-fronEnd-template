@@ -6,13 +6,11 @@
   <p class="h4 p-3 text-center fge-tree--container-header">Application Hierarchy</p>
   <a
     title="Go to top"
+    *ngIf="opened && enableScrollTopBtn"
     class="fge-tree__btn--floating fge-clickable"
     [ngStyle]="{'right':scrollContainerRef?.nativeElement?.offsetRight + 'px'}"
     (click)="scrollToTop($event)">
-    <i
-      *ngIf="enableScrollTopBtn"
-      class="fas fa-2x fa-chevron-circle-up text-primary"
-    ></i>
+    <i class="fas fa-2x fa-chevron-circle-up text-primary"></i>
   </a>
   <div class="row fge-tree--row">
     <div class="col-7">
@@ -59,7 +57,10 @@
           <span *ngIf="item?.value && item?.value >= 0">({{item?.value}})</span>
         </a>
       </span>
-      <div class="fge-tree--options">
+      <div
+        class="fge-tree--options"
+        [ngClass]="{'fge-tree--options-visible': previewId === item?.id}"
+      >
         <i
           *ngIf="!item?.isGroup"
           title="View Application Branding"

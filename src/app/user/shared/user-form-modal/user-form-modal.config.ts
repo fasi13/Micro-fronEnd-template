@@ -4,7 +4,7 @@ import { FieldConfig, ValidateMatchPassword } from '@forge/shared';
 
 const userName: FieldConfig = {
   type: 'text',
-  label: 'UserName',
+  label: 'Username',
   name: 'userName',
   placeholder: 'Enter username',
   validation: {

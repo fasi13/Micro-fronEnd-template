@@ -122,6 +122,10 @@ ul.fge-tree>li:first-child::before {
   }
 }
 
+.fge-tree--options-visible {
+  display: inline !important;
+}
+
 .fge-tree li a:hover, .fge-tree li a:hover+ul li a,
 .fge-tree li a:focus, .fge-tree li a:focus+ul li a {
   font-weight: bold;
@@ -140,6 +144,7 @@ ul.fge-tree>li:first-child::before {
   z-index: 1;
   margin-left: 25px;
 }
+
 
 .fge-tree__a--group {
   background-color: #ebebeb;
