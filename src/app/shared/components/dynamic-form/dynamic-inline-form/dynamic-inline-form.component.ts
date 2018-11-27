@@ -103,7 +103,6 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
   asyncSuccess() {
     this.loadingAsyncResponse = false;
     this.fieldChanged = false;
-    this.messageSuccess();
   }
 
   asyncError(errorMsg: string[]) {
@@ -143,13 +142,6 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
     } else {
       this.fieldChanged = this.form.value[this.config.name] !== this.config.value ? true : false;
     }
-  }
-
-  private messageSuccess(): void {
-    this.message = 'The content has been updated successfully';
-    setTimeout(() => {
-      this.message = undefined;
-    }, 3000);
   }
 
   validateAllFormFields(formGroup?: FormGroup) {

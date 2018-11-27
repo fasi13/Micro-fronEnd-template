@@ -112,7 +112,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
 
   private switchDataType(type: string): void {
     if (this.currentType !== type) {
-      const dataType = Object.assign(this.dataTypes[type], { value: '' });
+      const dataType = _assign(this.dataTypes[type], { value: '' });
       if (this.currentType) {
         this.config[this.config.length - 1] = dataType;
       } else {

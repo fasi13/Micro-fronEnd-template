@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 
 import {
   State,
@@ -13,6 +13,8 @@ import {
   DataType
 } from '@forge/core';
 import { FieldConfig } from '@forge/shared';
+import { NotifierService } from 'angular-notifier';
+import { takeUntil, takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'fge-content-inline-editor',
@@ -26,10 +28,13 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   private routeParamsSubscription: Subscription;
   private applicationId: string;
   private groupId: string;
+  private unsubscribeEdition = new Subject();
+  private isAliveComponent = true;
 
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
+    private notifierService: NotifierService
   ) { }
 
   ngOnInit() {
@@ -50,7 +55,9 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.isAliveComponent = false;
     this.routeParamsSubscription.unsubscribe();
+    this.unsubscribeEdition.complete();
   }
 
   handleActions(): void {
@@ -86,22 +93,27 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
       contentPayload,
     }));
     this.store.select(getContentEditState)
+      .pipe(takeUntil(this.unsubscribeEdition))
       .subscribe((editState) => {
         const { error: errorData, loading } = editState;
         if (errorData) {
           const errors = Object.values(errorData.error.fields);
+          this.notifierService.notify('error', `There was an error updating the content "${this.config.label}"`);
+          this.unsubscribeEdition.next();
           error(errors);
         } else if (!loading) {
+          this.notifierService.notify('success', `The content "${this.config.label}" has been updated successfully`);
+          this.unsubscribeEdition.next();
           success();
         }
       });
   }
 
   private handleDataTypes(dataTypes$: Observable<DataType[]>) {
-    dataTypes$.subscribe((types: DataType[]) => {
+    dataTypes$.pipe(takeWhile(() => this.isAliveComponent))
+    .subscribe((types: DataType[]) => {
       const appDataType = types.find((dataType: DataType) => dataType.name === 'Logo Display');
       this.config.options = appDataType.values;
     });
   }
-
 }
