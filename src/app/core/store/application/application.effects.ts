@@ -18,7 +18,7 @@ import {
   FetchApplicationPathSuccess,
   FetchApplicationPathError,
   FetchApplicationPreviewSuccess,
-  FetchApplicationPreviewError
+  FetchApplicationPreviewError,
 } from './application.actions';
 import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath, DataType } from '../../models';
 import { ApplicationService } from '../../services/application.service';
@@ -26,6 +26,23 @@ import { Application } from '../../models/application.model';
 
 @Injectable()
 export class ApplicationEffects {
+
+  /*
+   * @TODO: This is just a quick fix to update the website branding, but keep in mind that this is not the best way since
+   *  it performs an aditional request per each update transaction, so this needs to be refactored to store the content and
+   *  replace that one when its updated, instead of having an specific field for website branding. It means store all the contents
+   *  in redux using a map[key: value] and then replace when someone is updated, instead of having a multiple copies across the app.
+   */
+  @Effect() public updateApplicationData$: Observable<Action> = this.actions.pipe(
+    ofType(ApplicationActionTypes.UPDATE_APPLICATION_DATA),
+    switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
+      .pipe(
+        exhaustMap(this.getApplicationBranding.bind(this)),
+        map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
+        catchError(error => of(new FetchApplicationDataError({ error })))
+      )
+    )
+  );
 
   @Effect() public fetchApplicationData$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA),

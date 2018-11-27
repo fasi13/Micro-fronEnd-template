@@ -19,6 +19,7 @@ import {
 } from './content.actions';
 import { ContentService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
+import { UpdateApplicationData } from '../application';
 
 @Injectable()
 export class ContentEffects {
@@ -76,7 +77,8 @@ export class ContentEffects {
         .pipe(
           mergeMap(() => [
             new TransactionContentEditCompleted(),
-            new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
+            new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId }),
+            new UpdateApplicationData(action.payload.applicationId)
           ]),
           catchError(error => of(new TransactionContentEditError(error)))
         )

@@ -56,6 +56,12 @@ const initialState: ApplicationState = {
 
 export function reducer(state: any = initialState, action: ApplicationAction): ApplicationState {
   switch (action.type) {
+    case ApplicationActionTypes.UPDATE_APPLICATION_DATA:
+      return _assign({}, state, {
+        error: undefined,
+        loading: false
+      });
+
     case ApplicationActionTypes.FETCH_APPLICATION_DATA:
       return _assign({}, state, {
         error: undefined,
