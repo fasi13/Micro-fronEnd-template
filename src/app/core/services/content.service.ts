@@ -46,8 +46,11 @@ export class ContentService {
     return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}`);
   }
 
-  actionContent(link: Link, body: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
+  actionContent(link: Link, body?: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
     const { href, method } = link;
-    return this.applicationService.performRequest({ href, method: method.method.toLowerCase() }, body);
+    const meth = method.method.toLowerCase();
+    return body ?
+      this.applicationService.performRequest({ href, method: meth }, body) :
+      this.applicationService.performRequest({ href, method: meth });
   }
 }
