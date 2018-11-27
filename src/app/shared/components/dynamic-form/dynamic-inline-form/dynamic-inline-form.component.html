@@ -11,23 +11,16 @@
       <div class="fge-dynamic-inline-form__button"
         *ngIf="fieldChanged && config.type !== 'select'">
         <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></i>
-        <button type="submit" class="btn btn-link p-1"
+        <button type="submit" class="btn btn-link p-1 fge-clickable"
           [disabled]="loadingAsyncResponse">
           <i class="fas fa-check-circle fa-lg"></i>
         </button>
-        <button type="button" class="btn btn-link p-1"
+        <button type="button" class="btn btn-link p-1 fge-clickable"
           [disabled]="loadingAsyncResponse"
           (click)="handleCancel($event)">
           <i class="fas fa-times-circle fa-lg"></i>
         </button>
       </div>
-    </div>
-    <div class="col-2 pt-1">
-      <button type="button" class="btn btn-link"
-        triggers="click" [autoClose]="'outside'"
-        placement="right" [ngbTooltip]="tipContent">
-        <i class="fas fa-comment-dots fa-lg"></i>
-      </button>
     </div>
   </div>
   <div class="form-group" *ngIf="errors">
@@ -36,10 +29,4 @@
       {{ error }}
     </div>
   </div>
-  <ng-template #tipContent>
-    <button type="button" class="btn btn-link text-black-50 font-weight-bold"
-      (click)="handleActions('clear')">
-      Clear
-    </button>
-  </ng-template>
 </form>

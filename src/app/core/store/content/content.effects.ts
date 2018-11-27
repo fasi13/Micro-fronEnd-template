@@ -14,8 +14,8 @@ import {
   FetchContentGroup,
   TransactionContentRecordCompleted,
   TransactionContentRecordError,
-  TransactionContentEditCompleted,
-  TransactionContentEditError
+  LinkContentActionCompleted,
+  LinkContentActionError
 } from './content.actions';
 import { ContentService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
@@ -70,17 +70,17 @@ export class ContentEffects {
     )
   );
 
-  @Effect() public updateContent: Observable<Action> = this.actions.pipe(
-    ofType(ContentActionTypes.CONTENT_EDIT_TRANSACTION),
-    switchMap((action: any) => this.contentService.updateContent(action.payload.applicationId,
-      action.payload.contentId, action.payload.contentPayload)
+  @Effect() public actionContent: Observable<Action> = this.actions.pipe(
+    ofType(ContentActionTypes.CONTENT_ACTION_LINK),
+    switchMap((action: any) => this.contentService.actionContent(action.payload.link,
+      action.payload.contentPayload)
         .pipe(
           mergeMap(() => [
-            new TransactionContentEditCompleted(),
+            new LinkContentActionCompleted(),
             new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId }),
             new UpdateApplicationData(action.payload.applicationId)
           ]),
-          catchError(error => of(new TransactionContentEditError(error)))
+          catchError(error => of(new LinkContentActionError(error)))
         )
     )
   );

@@ -20,7 +20,7 @@ export interface ContentState {
     loading: boolean,
     error?: any
   };
-  edit: {
+  action: {
     loading: boolean,
     error?: any
   };
@@ -44,7 +44,7 @@ const initialState: ContentState = {
     loading: false,
     error: null
   },
-  edit: {
+  action: {
     loading: false,
     error: null
   }
@@ -99,9 +99,9 @@ export function reducer(state: ContentState = initialState, action: ContentActio
 
     case ContentActionTypes.FETCH_CONTENT_ERROR:
       return _assign({}, state, {
-        groups: {
+        content: {
           loading: false,
-          items: null
+          data: null
         },
         error: action.payload
       });
@@ -130,28 +130,28 @@ export function reducer(state: ContentState = initialState, action: ContentActio
         },
       });
 
-    case ContentActionTypes.CONTENT_EDIT_TRANSACTION:
+    case ContentActionTypes.CONTENT_ACTION_LINK:
       return _assign({}, state, {
-        edit: {
+        action: {
           loading: true,
           error: null
         },
       });
 
-    case ContentActionTypes.CONTENT_EDIT_TRANSACTION_COMPLETED:
+    case ContentActionTypes.CONTENT_ACTION_LINK_COMPLETED:
       return _assign({}, state, {
-        edit: {
+        action: {
           loading: false,
-          error: null
+          error: null,
         },
       });
 
-    case ContentActionTypes.CONTENT_EDIT_TRANSACTION_ERROR:
+    case ContentActionTypes.CONTENT_ACTION_LINK_ERROR:
       return _assign({}, state, {
-        edit: {
+        acttion: {
           loading: false,
           error: action.payload
-        },
+        }
       });
 
     default:
@@ -164,6 +164,6 @@ export const isLoadingGroup = (state: ContentState) => state.group.loading;
 export const isLoadingContent = (state: ContentState) => state.content.loading;
 export const getGroups = (state: ContentState) => state.groups.items;
 export const getGroup = (state: ContentState) => state.group.data;
-export const getContent = (state: ContentState) => state.content.data;
+export const getContent = (state: ContentState) => state.content ? state.content.data : null;
 export const getRecordState = (state: ContentState) => state.record;
-export const getEditState = (state: ContentState) => state.edit;
+export const getActionState = (state: ContentState) => state.action;

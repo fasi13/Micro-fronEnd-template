@@ -19,12 +19,12 @@
         (cpSliderChange)="group.get(config.name).setValue($event.color)"
         class="form-control fge-dynamic-form__input"
         [formControlName]="config.name">
-    </div>
-    <div class="invalid-feedback">
-      <div *ngFor="let validator of getObjectKeys(config?.validation)">
-        <span *ngIf="hasErrorFor(validator)">
-          {{ config?.validation[validator].errorMsg }}
-        </span>
+      <div class="invalid-feedback">
+        <div *ngFor="let validator of getObjectKeys(config?.validation)">
+          <span *ngIf="hasErrorFor(validator)">
+            {{ config?.validation[validator].errorMsg }}
+          </span>
+        </div>
       </div>
     </div>
   </div>

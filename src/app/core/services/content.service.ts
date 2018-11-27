@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { DataPaginated, ApiResponse, ApplicationContent, ContentGroup } from '../models';
+import { DataPaginated, ApiResponse, ApplicationContent, ContentGroup, Link } from '../models';
+import { ApplicationService } from './application.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { DataPaginated, ApiResponse, ApplicationContent, ContentGroup } from '..
 export class ContentService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private applicationService: ApplicationService
   ) { }
 
   getContentGroups(applicationId: string | number,
@@ -44,9 +46,8 @@ export class ContentService {
     return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}`);
   }
 
-  updateContent(applicationId: string | number, contentId: string | number,
-    { status, value }: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
-    return this.http.put<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}/value`, { status, value });
+  actionContent(link: Link, body: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
+    const { href, method } = link;
+    return this.applicationService.performRequest({ href, method: method.method.toLowerCase() }, body);
   }
-
 }

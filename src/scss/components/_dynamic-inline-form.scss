@@ -13,14 +13,3 @@
 .fge-dynamic-form--success {
   margin-left: 25%
 }
-
-.fge-dynamic-inline-form {
-  .bs-tooltip-right .arrow::before {
-    border-right-color: lightgray;
-  }
-  
-  .tooltip-inner{
-    background-color: white;
-    border: $border-box-light-grey;
-  }
-}

@@ -1,0 +1,10 @@
+.fge-content-inline-editor {
+  .bs-tooltip-right .arrow::before {
+    border-right-color: lightgray;
+  }
+  
+  .tooltip-inner{
+    background-color: white;
+    border: $border-box-light-grey;
+  }
+}

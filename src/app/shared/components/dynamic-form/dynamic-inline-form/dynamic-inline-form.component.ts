@@ -19,7 +19,6 @@ import { FieldConfig } from '../models/field-config.model';
 export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewInit {
   @Input() config: FieldConfig;
   @Output() readonly onsubmit: EventEmitter<any> = new EventEmitter<any>();
-  @Output() readonly onactions: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
   errors: string[];
@@ -94,10 +93,6 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
     event.preventDefault();
     event.stopPropagation();
     this.setValue(this.config.name, this.config.value);
-  }
-
-  handleActions(action: string) {
-    this.onactions.emit(action);
   }
 
   asyncSuccess() {

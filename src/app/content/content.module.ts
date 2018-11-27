@@ -15,6 +15,7 @@ import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupFormModalComponent } from './shared/group-form-modal/group-form-modal.component';
 import { ContentFormModalComponent } from './shared/content-form-modal/content-form-modal.component';
+import { ContentEditorModalComponent } from './shared/content-editor-modal/content-editor-modal.component';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEditorComponent } from './shared/content-editor/content-editor.component';
 import { ContentInlineEditorComponent } from './shared/content-inline-editor/content-inline-editor.component';
@@ -55,11 +56,13 @@ const routes: Routes = [
     ContentTypeDocumentComponent,
     GroupFormModalComponent,
     ContentFormModalComponent,
+    ContentEditorModalComponent,
     ContentEditorComponent,
     ContentInlineEditorComponent
   ],
   entryComponents: [
-    ContentFormModalComponent
+    ContentFormModalComponent,
+    ContentEditorModalComponent
   ]
 })
 export class ContentModule { }

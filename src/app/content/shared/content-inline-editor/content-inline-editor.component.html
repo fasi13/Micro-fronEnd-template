@@ -1,6 +1,25 @@
-<fge-dynamic-inline-form
-  [config]="config"
-  #form="fgeDynamicInlineForm"
-  (onsubmit)="handleSubmit($event)"
-  (onactions)="handleActions()">
-</fge-dynamic-inline-form>
+<div class="row fge-content-inline-editor">
+  <div class="col-10">
+    <fge-dynamic-inline-form
+      [config]="config"
+      #form="fgeDynamicInlineForm"
+      (onsubmit)="handleSubmit($event)">
+    </fge-dynamic-inline-form>
+  </div>
+  <div class="col-2 pt-1">
+    <button type="button" class="btn btn-link"
+      triggers="click" [autoClose]="'outside'"
+      placement="right" [ngbTooltip]="tipContent">
+      <i class="fas fa-comment-dots fa-lg"></i>
+    </button>
+  </div>
+  <ng-template #tipContent>
+    <div *ngFor="let link of linkActions; last as isLast">
+      <button class="btn-sm dropdown-item fge-clickable" type="button"
+        (click)="handleActions(link)">
+        {{link.rel === 'updateContentDescription' ? contentData.description : link.name}}
+      </button>
+      <div class="dropdown-divider" *ngIf="!isLast"></div>
+    </div>
+  </ng-template>
+</div>

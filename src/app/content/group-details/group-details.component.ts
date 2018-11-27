@@ -80,9 +80,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   toggleEditMode() {
     this.editMode = !this.editMode;
-    if (this.editMode && this.showAdaContent) {
-      this.initAdaContent();
-    }
   }
 
   goToContentEdit(contentId: string): void {
@@ -129,6 +126,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       const applicationId = this.applicationId;
       this.store.dispatch(new FetchContent({ applicationId, contentId }));
       this.showAdaContent = true;
+      this.initAdaContent();
+    } else {
+      this.adaContent = '';
     }
   }
 

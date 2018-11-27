@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import _clone from 'lodash/clone';
+import _find from 'lodash/find';
 
 import { Observable, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -11,11 +12,12 @@ import {
   State,
   FetchContent,
   isLoadingContent,
-  TransactionContentEdit,
+  LinkContentAction,
+  getContentActionState,
   getContent,
-  getContentEditState,
   FgeRouterService,
-  ApplicationContent
+  ApplicationContent,
+  Link
 } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { config as fieldConfiguration } from './content-editor.config';
@@ -86,28 +88,32 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
 
   handleSubmit({ value: formData, success, error}): void {
     const { value } = formData;
-    const { id: contentId, status: status } = this.currentContent;
+    const { status: status } = this.currentContent;
     const contentPayload = {
       status,
       value
     };
-    this.store.dispatch(new TransactionContentEdit({
-      applicationId: this.applicationId,
-      contentId,
-      contentPayload,
-    }));
-    this.store.select(getContentEditState)
-      .subscribe((editState) => {
-        const { error: errorData, loading } = editState;
-        if (errorData) {
-          const errors = Object.values(errorData.error.fields);
-          error(errors);
-        } else if (!loading) {
-          success();
-          this.goToContentGroup();
-          this.notifierService.notify('success', 'The content has been updated successfully');
-        }
-      });
+    const link: Link = _find(this.currentContent._links, ['rel', 'updateContentValue']);
+    if (link) {
+      this.store.dispatch(new LinkContentAction({
+        link,
+        contentPayload,
+        applicationId: this.applicationId,
+        groupId: this.groupId
+      }));
+      this.store.select(getContentActionState)
+        .subscribe((editState) => {
+          const { error: errorData, loading } = editState;
+          if (errorData) {
+            const errors = Object.values(errorData.error.fields);
+            error(errors);
+          } else if (!loading) {
+            success();
+            this.goToContentGroup();
+            this.notifierService.notify('success', 'The content has been updated successfully');
+          }
+        });
+    }
   }
 
 }
