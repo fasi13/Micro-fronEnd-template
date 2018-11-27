@@ -69,9 +69,9 @@ export function reducer(state: ContentState = initialState, action: ContentActio
 
     case ContentActionTypes.FETCH_CONTENT_GROUP:
       return _assign({}, state, {
-        group: {
+        group: _assign({}, state.group, {
           loading: true
-        }
+        })
       });
 
     case ContentActionTypes.FETCH_CONTENT_GROUP_COMPLETED:
