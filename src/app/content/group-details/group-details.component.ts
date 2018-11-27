@@ -58,6 +58,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.editMode = true;
     this.routeParamsSubscription = this.route.params
       .subscribe(params => this.initDispatchers(params));
     this.initSelectors();
