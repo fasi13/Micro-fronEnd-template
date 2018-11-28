@@ -11,10 +11,10 @@ import * as ResetPasswordReducers from './reset-password/reset-password.reducers
 export interface State {
   router: RouterReducerState;
   authorization: AuthorizationReducers.AuthorizationState;
-  application: ApplicationReducers.ApplicationState;
-  content: ContentReducers.ContentState;
-  user: UserReducers.UserState;
-  resetPassword: ResetPasswordReducers.ResetPasswordState;
+  application?: ApplicationReducers.ApplicationState;
+  content?: ContentReducers.ContentState;
+  user?: UserReducers.UserState;
+  resetPassword?: ResetPasswordReducers.ResetPasswordState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {

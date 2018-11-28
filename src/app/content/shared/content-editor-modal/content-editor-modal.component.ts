@@ -1,9 +1,10 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { NotifierService } from 'angular-notifier';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, takeWhile } from 'rxjs/operators';
 
 import {
   Application,
@@ -20,7 +21,7 @@ import { DynamicFormComponent, FieldConfig } from '@forge/shared';
   selector: 'fge-content-editor-modal',
   templateUrl: './content-editor-modal.component.html'
 })
-export class ContentEditorModalComponent implements OnInit {
+export class ContentEditorModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
@@ -32,6 +33,8 @@ export class ContentEditorModalComponent implements OnInit {
 
   private applicationInfo: Application;
   private fieldToEdit: string;
+  private unsubscribeEditor = new Subject();
+  private isAliveComponent = true;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -45,8 +48,14 @@ export class ContentEditorModalComponent implements OnInit {
     this.handleApplicationInfo(this.store.select(getApplicationInfo));
   }
 
+  ngOnDestroy() {
+    this.isAliveComponent = false;
+    this.unsubscribeEditor.complete();
+  }
+
   private handleApplicationInfo(appInfo$: Observable<Application>): void {
-    appInfo$.subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
+    appInfo$.pipe(takeWhile(() => this.isAliveComponent))
+      .subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
   }
 
   handleSubmit({ value: formData, success, error}): void {
@@ -64,13 +73,16 @@ export class ContentEditorModalComponent implements OnInit {
       groupId: this.groupId
     }));
     this.store.select(getContentActionState)
+      .pipe(takeUntil(this.unsubscribeEditor))
       .subscribe((recordState) => {
         const { error: errorData, loading } = recordState;
         if (errorData) {
           const errors = Object.values(errorData.error.fields);
+          this.unsubscribeEditor.next();
           error(errors);
         } else if (!loading) {
           this.notifierService.notify('success', `The content "${this.config.label}" has been updated successfully`);
+          this.unsubscribeEditor.next();
           success();
           this.activeModal.close();
         }

@@ -164,6 +164,6 @@ export const isLoadingGroup = (state: ContentState) => state.group.loading;
 export const isLoadingContent = (state: ContentState) => state.content.loading;
 export const getGroups = (state: ContentState) => state.groups.items;
 export const getGroup = (state: ContentState) => state.group.data;
-export const getContent = (state: ContentState) => state.content ? state.content.data : null;
+export const getContent = (state: ContentState) => state.content.data;
 export const getRecordState = (state: ContentState) => state.record;
 export const getActionState = (state: ContentState) => state.action;

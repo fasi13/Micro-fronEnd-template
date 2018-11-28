@@ -4,10 +4,6 @@ import _lowerCase from 'lodash/lowerCase';
 
 import { State } from './store.reducers';
 import { User, UserToken, Link, MappedLinks } from '../models';
-import { ApplicationState } from './application/application.reducers';
-import { ContentState } from './content/content.reducers';
-import { UserState } from './user/user.reducers';
-import { ResetPasswordState } from './reset-password/reset-password.reducers';
 
 const typeCache: { [label: string]: boolean } = {};
 export function ActionType<T>(label: T | string): T {
@@ -42,11 +38,7 @@ export function loadFromLocalStorage() {
       loaded: false,
       loading: false,
       user
-    },
-    application: {} as ApplicationState,
-    content: {} as ContentState,
-    user: {} as UserState,
-    resetPassword: {} as ResetPasswordState
+    }
   };
   return currentState;
 }

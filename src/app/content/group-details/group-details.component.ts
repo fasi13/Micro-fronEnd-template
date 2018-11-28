@@ -37,7 +37,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   editableContents: any;
   applicationId: number;
   adaContent: string;
-  showAdaContent = false;
 
   private routeParamsSubscription: Subscription;
   private isAliveComponent = true;
@@ -125,7 +124,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       const contentId = + splittedUrl[splittedUrl.length - 1];
       const applicationId = this.applicationId;
       this.store.dispatch(new FetchContent({ applicationId, contentId }));
-      this.showAdaContent = true;
       this.initAdaContent();
     } else {
       this.adaContent = '';
