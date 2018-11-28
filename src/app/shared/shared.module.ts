@@ -7,7 +7,7 @@ import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { QuillModule } from 'ngx-quill';
+import { NgxSummernoteModule } from 'ngx-summernote';
 
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DynamicInlineFormComponent } from './components/dynamic-form/dynamic-inline-form/dynamic-inline-form.component';
@@ -36,7 +36,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     NgBootstrapModule,
     RouterModule,
     ColorPickerModule,
-    QuillModule
+    NgxSummernoteModule
   ],
   declarations: [
     DynamicFieldDirective,

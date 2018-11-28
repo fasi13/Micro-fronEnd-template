@@ -4,7 +4,7 @@
 </h4>
 <fge-dynamic-form
   [hidden]="loading$ | async"
-  [fieldsConfig]="config"
+  [fieldsConfig]="[config]"
   #form="fgeDynamicForm"
   (onsubmit)="handleSubmit($event)"
   (oncancel)="handleCancel()">

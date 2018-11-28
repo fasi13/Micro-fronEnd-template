@@ -2,13 +2,13 @@
   class="fge-dynamic-field form-input" 
   [formGroup]="group">
   <label *ngIf="config.label">{{ config.label }}</label>
-  <div class="col pr-0" [ngClass]="{'pl-0': !config.label}">
-    <quill-editor
-      class="form-control fge-dynamic-form__html"
+  <div class="col pr-0 fge-dynamic-form__html" 
+    [ngClass]="{'pl-0': !config.label, 'is-invalid': hasError()}">
+    <div class="form-control"
       [ngClass]="{ 'is-invalid': hasError() }"
-      [placeholder]="config?.placeholder"
+      [ngxSummernote]="configSummernote"
       [formControlName]="config?.name">
-    </quill-editor>
+    </div>
     <div class="invalid-feedback">
       <div *ngFor="let validator of getObjectKeys(config?.validation)">
         <span *ngIf="hasErrorFor(validator)">

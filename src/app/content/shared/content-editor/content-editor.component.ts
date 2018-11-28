@@ -2,11 +2,12 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
+import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
 import _find from 'lodash/find';
 
-import { Observable, Subscription } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { takeWhile, takeUntil } from 'rxjs/operators';
 
 import {
   State,
@@ -20,7 +21,7 @@ import {
   Link
 } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
-import { config as fieldConfiguration } from './content-editor.config';
+import { dataTypes } from '../content-form-modal/content-data-types.config';
 
 @Component({
   selector: 'fge-content-editor',
@@ -30,7 +31,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
-  config: FieldConfig[];
+  config: FieldConfig;
   loading$: Observable<boolean> | boolean;
   currentContent: ApplicationContent;
 
@@ -38,6 +39,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
   private applicationId: string;
   private groupId: string;
   private isAliveComponent = true;
+  private unsubscribeEditor = new Subject();
 
   constructor(
     private store: Store<State>,
@@ -55,6 +57,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isAliveComponent = false;
     this.routeParamsSubscription.unsubscribe();
+    this.unsubscribeEditor.complete();
   }
 
   private initDispatcher({ tenantId: applicationId, groupId, contentId }: any): void {
@@ -71,8 +74,8 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
       )
       .subscribe((content: ApplicationContent) => {
         if (content) {
-          fieldConfiguration[0].value = content.value;
-          this.config = _clone(fieldConfiguration);
+          this.config = _assign(_clone(dataTypes['HTML']), { label: false });
+          this.config.value = content.value;
           this.currentContent = content;
         }
       });
@@ -87,7 +90,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit({ value: formData, success, error}): void {
-    const { value } = formData;
+    const value = formData[this.config.name];
     const { status: status } = this.currentContent;
     const contentPayload = {
       status,
@@ -102,15 +105,18 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
         groupId: this.groupId
       }));
       this.store.select(getContentActionState)
+        .pipe(takeUntil(this.unsubscribeEditor))
         .subscribe((editState) => {
           const { error: errorData, loading } = editState;
           if (errorData) {
             const errors = Object.values(errorData.error.fields);
+            this.unsubscribeEditor.next();
             error(errors);
           } else if (!loading) {
+            this.notifierService.notify('success', 'The content has been updated successfully');
+            this.unsubscribeEditor.next();
             success();
             this.goToContentGroup();
-            this.notifierService.notify('success', 'The content has been updated successfully');
           }
         });
     }

@@ -44,11 +44,26 @@
   }
 }
 
-.fge-dynamic-form__html {
-  @extend .fge-dynamic-form__input;
-  padding: 0;
-  .ql-container {
-    height: 200px;
+.fge-dynamic-form__html{
+  .note-editor.note-frame {
+    border: $border-box-light-grey;
+    .note-editable {
+      &:focus {
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      }
+    }
+    .note-icon-caret:before {
+      content: unset;
+    }
+  }
+}
+
+.fge-dynamic-form__html.is-invalid {
+  .note-editor.note-frame {
+    .note-editable {
+      border: 1px solid #dc3545;
+    }
   }
 }
 
