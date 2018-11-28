@@ -135,7 +135,7 @@ const email: FieldConfig = {
 };
 const applicationName: FieldConfig = {
   type: 'text',
-  label: 'Application Name',
+  label: 'Application',
   name: 'applicationId',
   validation: {},
   disabled: true

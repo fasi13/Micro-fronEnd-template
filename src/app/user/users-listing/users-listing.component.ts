@@ -23,13 +23,15 @@ export class UsersListgingComponent implements OnInit {
     return 0;
   }
 
+  private filters: { [key: string]: string } = {};
+  private readonly initialOffset = 0;
+  private readonly initialLimit = 12;
+
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    const initialOffset = 0;
-    const initialLimit = 12;
     this.initSelectors();
-    this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset }));
+    this.store.dispatch(new FetchUsers({ limit: this.initialLimit, offset: this.initialOffset }));
   }
 
   openModalConfirm(confirmModal: any, user: any): void {
@@ -64,6 +66,16 @@ export class UsersListgingComponent implements OnInit {
     const { limit } = this.usersState;
     const offset = (index - 1) * limit;
     this.store.dispatch(new FetchUsers({ offset, limit }));
+  }
+
+  onPerformFilter(): void {
+    const { initialLimit: limit, initialOffset: offset, filters } = this;
+    this.store.dispatch(new FetchUsers({ limit, offset, filters }));
+  }
+
+  onResetFilters(): void {
+    this.filters = {};
+    this.onPerformFilter();
   }
 
   private initSelectors() {

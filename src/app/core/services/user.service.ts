@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import _isEmpty from 'lodash/isEmpty';
 
 import { Observable, of } from 'rxjs';
 
@@ -45,13 +46,21 @@ export class UserService {
     return this.httpClient.put<ApiResponse<User>>(this.baseUrl, updatedUser);
   }
 
-  getUsers(offset?: number, limit?: number): Observable<ApiResponse<DataPaginated<User>>> {
+  getUsers(offset?: number, limit?: number, filters?: {[key: string]: string}): Observable<ApiResponse<DataPaginated<User>>> {
     let params = new HttpParams();
     if (offset >= 0) {
       params = params.set('offset', `${offset}`);
     }
     if (limit) {
       params = params.set('limit', `${limit}`);
+    }
+    if (filters) {
+      Object.keys(filters).forEach(key => {
+        const value = filters[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
     }
     return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl, { params });
   }

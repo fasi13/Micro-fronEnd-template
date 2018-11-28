@@ -1,6 +1,6 @@
 <div class="fge-group--title row">
   <h4 class="fge-group--title-divider my-2 col-10">
-    <i *ngIf="usersState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Users Management</span>
+    <i *ngIf="usersState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">User Management</span>
   </h4>
   <div class="col text-right">
     <button type="button" class="btn btn-link"><i class="fas fa-user-plus" (click)="userFormModal.open()"></i></button>
@@ -8,24 +8,76 @@
 </div>
 <table class="table table-bordred fge-group--content-list">
   <thead>
-    <tr>
-    <th scope="col">Username</th>
-    <th scope="col">Fist Name</th>
-    <th scope="col">Last Name</th>
-    <th scope="col">Status</th>
-    <th scope="col">Application Name</th>
-    <th scope="col">Actions</th>
+    <tr class="row m-0">
+      <th class="col border-bottom-0 pt-0 border-top-0">
+        <ng-container
+          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutletContext]="{label: 'Username', field: 'login'}"
+        ></ng-container>
+      </th>
+      <th class="col border-bottom-0 pt-0 border-top-0">
+        <ng-container
+          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutletContext]="{label: 'First Name', field: 'firstName'}"
+        ></ng-container>
+      </th>
+      <th class="col border-bottom-0 pt-0 border-top-0">
+        <ng-container
+          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutletContext]="{label: 'Last Name', field: 'lastName'}"
+        ></ng-container>
+      </th>
+      <th class="col border-bottom-0 pt-0 border-top-0">
+        <ng-container
+          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutletContext]="{label: 'Email', field: 'email'}"
+        ></ng-container>
+      </th>
+      <th class="col border-bottom-0 pt-0 border-top-0">
+      </th>
+      <th class="col border-bottom-0 pt-0 border-top-0">
+      </th>
+      <th class="col-1 border-bottom-0 pt-0 border-top-0">
+      </th>
+    </tr>
+    <tr class="row m-0 thead-light">
+      <th class="col">
+        Username
+      </th>
+      <th class="col">
+        Fist Name
+      </th>
+      <th class="col">
+        Last Name
+      </th>
+      <th class="col">
+        Email
+      </th>
+      <th class="col">
+        Application
+      </th>
+      <th class="col">
+        Last Login
+      </th>
+      <th class="col-1">
+        Actions
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of usersState?.items">
-      <td>{{ user.login }}</td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.lastName }}</td>
-      <td *ngIf="user.isActive">Enable</td>
-      <td *ngIf="!user.isActive">Disable</td>
-      <td>{{ getApplicationName(user) }}</td>
-      <td>
+    <tr *ngIf="usersState?.items?.length <= 0 && !usersState?.loading">
+      <td class="col text-center">
+        <h6><i class="fas fa-info-circle"></i> No users found</h6>
+      </td>
+    </tr>
+    <tr class="row m-0" *ngFor="let user of usersState?.items">
+      <td class="col">{{ user.login }}</td>
+      <td class="col">{{ user.firstName }}</td>
+      <td class="col">{{ user.lastName }}</td>
+      <td class="col">{{ user.email }}</td>
+      <td class="col">{{ getApplicationName(user) }}</td>
+      <td class="col">{{ user.lastLoginDate | date:'medium' }}</td>
+      <td class="col-1">
         <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
           <i class="fas fa-edit"></i>
         </a>
@@ -50,7 +102,25 @@
   size="sm"
 ></ngb-pagination>
 
+<ng-template #searchInput let-label="label" let-field="field">
+  <div class="input-group input-group-sm mt-1">
+    <div class="input-group-prepend fge-clickable" (click)="onPerformFilter(field, box.value)">
+      <span class="input-group-text">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <input
+      [(ngModel)]="filters[field]"
+      type="text"
+      class="form-control"
+      placeholder="{{label}}"
+      (keyup.enter)="onPerformFilter()"
+      (keyup.esc)="onResetFilters()">
+  </div>
+</ng-template>
+
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
+
 <fge-modal-confirm [config]="config"
   (onsubmit)="onSubmitConfirmModal()"
   #modalConfirmModal>

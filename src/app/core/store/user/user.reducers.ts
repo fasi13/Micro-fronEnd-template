@@ -61,9 +61,9 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 
     case UserTypes.FETCH_USERS:
       return _assign({}, state, {
-        users: {
+        users: _assign({}, state.users, {
           loading: true
-        }
+        })
       });
 
     case UserTypes.FETCH_USERS_ERROR:
