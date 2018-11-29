@@ -71,7 +71,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   onAppSelected(appId: string): void {
     this.isNavigationModalOpened = false;
     setTimeout(() => {
-      location.href = `./tenant/${appId}`;
+      location.href = `/tenant/${appId}`;
     }, 500);
   }
 
