@@ -1,17 +1,28 @@
 .fge-bread-crumb {
-    padding: 0 1rem;
-    .breadcrumb {
-        padding: 0;
-        margin-bottom: 0;
-        background-color: initial;
-        .badge {
-            font-size: 85%;
-        }
-        a {
-            color: white;
-        }
+  padding: 0 1rem;
+  overflow: auto;
+  .breadcrumb {
+    padding: 0;
+    margin-bottom: 0;
+    background-color: initial;
+    color: $color-text-white;
+    a {
+      color: $color-text-white;
     }
-    .breadcrumb-item + .breadcrumb-item::before {
-        color: white; 
-    }
+  }
+  .breadcrumb-item + .breadcrumb-item::before {
+    color: $color-text-white; 
+  }
+  .tooltip-inner{
+    max-width: initial;
+    color: $color-text-black;
+    background-color: white;
+    border: $border-box-light-grey;
+  }
+  .bs-tooltip-bottom .arrow {
+    visibility: hidden;
+  }
+  .tooltip.show.bs-tooltip-bottom {
+    left: 5% !important;
+  }
 }

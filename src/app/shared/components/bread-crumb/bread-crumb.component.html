@@ -1,13 +1,18 @@
 <nav class="fge-bread-crumb" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item" *ngFor="let path of paths; let last = last;">
-      <span class="badge badge-light" *ngIf="last; else notTheLast">
+    <li class="breadcrumb-item"
+      *ngFor="let path of pathList; last as isLast; index as position;">
+      <a *ngIf="!isLast && position !== ellipsisPosition" href="{{'/tenant/' + path.id}}">
+        {{path.name}}
+      </a>
+      <span *ngIf="position === ellipsisPosition">
+        <i class="fas fa-ellipsis-h align-bottom"
+          placement="bottom" [ngbTooltip]="fullPath">
+        </i>
+      </span>
+      <span *ngIf="isLast" class="fge-clickable" (click)="onClickPath($event)">
         {{path.name}}
       </span>
-      <ng-template #notTheLast>
-        <a href="{{'/tenant/' + path.id}}">{{path.name}}</a> 
-      </ng-template>
     </li>
   </ol>
 </nav>
-  

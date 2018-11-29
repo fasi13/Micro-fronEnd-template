@@ -1,39 +1,49 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import _ceil from 'lodash/ceil';
 
-import { takeWhile } from 'rxjs/operators';
-
-import { State, getApplicationPath } from '@forge/core-store';
 import { ApplicationPath } from '@forge/core';
 
 @Component({
   selector: 'fge-bread-crumb',
   templateUrl: './bread-crumb.component.html'
 })
-export class BreadCrumbComponent implements OnInit, OnDestroy {
+export class BreadCrumbComponent implements OnChanges {
 
-  paths: ApplicationPath[];
+  @Input() pathData: ApplicationPath[];
+  @Input() pathsToShow: number;
+  @Output() readonly clickLastPath: EventEmitter<Event> = new EventEmitter<Event>();
 
-  private isAliveComponent = true;
+  pathList: ApplicationPath[] = [];
+  ellipsisPosition: number;
+  fullPath: string;
 
-  constructor(
-    private store: Store<State>,
-  ) { }
+  constructor() {}
 
-  ngOnInit() {
-    this.initComponent();
+  ngOnChanges() {
+    if (this.pathData) {
+      this.ellipsisPosition = this.pathData.length > this.pathsToShow ? _ceil(this.pathsToShow / 2) : -1;
+      if (this.ellipsisPosition > 0) {
+        const limitPosition = this.pathData.length + this.ellipsisPosition - this.pathsToShow;
+        let position = 0;
+        this.pathData.forEach(path => {
+          if (position <= this.ellipsisPosition || position >= limitPosition) {
+            this.pathList.push(path);
+          }
+          this.generatefullPath(path['name']);
+          position++;
+        });
+      } else {
+        this.pathList = this.pathData;
+      }
+    }
   }
 
-  ngOnDestroy() {
-    this.isAliveComponent = false;
+  onClickPath(event: Event) {
+    this.clickLastPath.emit(event);
   }
 
-  private initComponent(): void {
-    this.store.select(getApplicationPath)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
-      .subscribe(paths => this.paths = paths.data);
+  private generatefullPath(pathName: string): void {
+    this.fullPath = this.fullPath ? `${this.fullPath} / ${pathName}` : pathName;
   }
 
 }

@@ -31,6 +31,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   application: Application;
   rootApplication: ApplicationPath;
+  pathData: ApplicationPath[];
   user: User;
   branding: ApplicationBranding;
   loading$: Observable<boolean> | boolean = true;
@@ -110,6 +111,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
       )
       .subscribe(path => {
         if (path && path.data) {
+          this.pathData = path.data;
           this.rootApplication = path.data[0];
         }
       });
