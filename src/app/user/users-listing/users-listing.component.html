@@ -79,7 +79,7 @@
       <td class="col">{{ user.firstName }}</td>
       <td class="col">{{ user.lastName }}</td>
       <td class="col">{{ user.email }}</td>
-      <td class="col">{{ getApplicationName(user) }}</td>
+      <td class="col">{{ getApplicationPath(user.applicationPath) }}</td>
       <td class="col-2">{{ user.lastLoginDate | date:'medium' }}</td>
       <td class="col-1">
         <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">

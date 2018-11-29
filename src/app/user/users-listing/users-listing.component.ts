@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { State, UserTransaction, getUsersState, FetchUsers } from '@forge/core';
+import { State, UserTransaction, getUsersState, FetchUsers, ApplicationPath } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { takeWhile } from 'rxjs/operators';
@@ -90,6 +90,19 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   getApplicationName(user: any): string {
     const name = user.applicationPath.path[user.applicationPath.path.length - 1 ].name;
     return name;
+  }
+
+  getApplicationPath(application: ApplicationPath): string {
+    const appPath = application.path;
+    let strPath = '';
+    appPath.forEach((element, index, array) => {
+      if (element) {
+        const separator = index === array.length - 1 ? '' : ' > ';
+        const elementId = (element && +element.value > -1) ? ` (${element.value})` : '';
+        strPath += `${element.name}${elementId}${separator}`;
+      }
+    });
+    return strPath;
   }
 
   onPageChange(index: number): void {
