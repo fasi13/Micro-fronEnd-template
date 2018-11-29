@@ -10,7 +10,7 @@ import { ApplicationPath } from '@forge/core';
 export class BreadCrumbComponent implements OnChanges {
 
   @Input() pathData: ApplicationPath[];
-  @Input() pathsToShow: number;
+  @Input() maxPathsToShow: number;
   @Output() readonly clickLastPath: EventEmitter<Event> = new EventEmitter<Event>();
 
   pathList: ApplicationPath[] = [];
@@ -21,9 +21,9 @@ export class BreadCrumbComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.pathData) {
-      this.ellipsisPosition = this.pathData.length > this.pathsToShow ? _ceil(this.pathsToShow / 2) : -1;
+      this.ellipsisPosition = this.pathData.length > this.maxPathsToShow ? _ceil(this.maxPathsToShow / 2) : -1;
       if (this.ellipsisPosition > 0) {
-        const limitPosition = this.pathData.length + this.ellipsisPosition - this.pathsToShow;
+        const limitPosition = this.pathData.length + this.ellipsisPosition - this.maxPathsToShow;
         let position = 0;
         this.pathData.forEach(path => {
           if (position <= this.ellipsisPosition || position >= limitPosition) {
