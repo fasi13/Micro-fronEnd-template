@@ -8,6 +8,7 @@ export const config: FieldConfig[] = [
     label: 'Name',
     name: 'name',
     placeholder: 'Enter name',
+    focus: true,
     validation: {
       required: {
         errorMsg: 'Name is required',

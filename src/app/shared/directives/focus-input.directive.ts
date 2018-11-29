@@ -1,15 +1,19 @@
-import { Directive, OnChanges, ElementRef } from '@angular/core';
+import { Directive, AfterViewInit, ElementRef, Input } from '@angular/core';
 
 @Directive({
   selector: '[fgeFocusInput]'
 })
-export class FocusInputDirective implements OnChanges {
+export class FocusInputDirective implements AfterViewInit {
+
+  @Input() focus: boolean;
 
   constructor(
     private element: ElementRef
   ) { }
 
-  ngOnChanges() {
-    this.element.nativeElement.focus();
+  ngAfterViewInit() {
+    if (this.focus) {
+      this.element.nativeElement.focus();
+    }
   }
 }

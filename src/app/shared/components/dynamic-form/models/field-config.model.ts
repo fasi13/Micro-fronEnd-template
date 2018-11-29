@@ -9,5 +9,6 @@ export class FieldConfig {
   type: string;
   value?: any;
   src?: string;
+  focus?: boolean;
   validation?: { [key: string]: { errorMsg: string, validator: ValidatorFn | ValidatorFn[] }};
 }

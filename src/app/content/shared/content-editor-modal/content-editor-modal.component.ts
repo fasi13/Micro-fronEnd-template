@@ -44,6 +44,7 @@ export class ContentEditorModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fieldToEdit = this.config.label;
+    this.config.focus = true;
     this.config.value = this.content[this.fieldToEdit];
     this.handleApplicationInfo(this.store.select(getApplicationInfo));
   }

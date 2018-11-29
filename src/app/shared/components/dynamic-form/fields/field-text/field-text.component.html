@@ -8,6 +8,7 @@
       [ngClass]="{ 'is-invalid': hasError() }"
       class="form-control fge-dynamic-form__input"
       [attr.placeholder]="config?.placeholder"
+      fgeFocusInput [focus]="config?.focus"
       [formControlName]="config?.name">
     <div class="invalid-feedback">
       <div *ngFor="let validator of getObjectKeys(config?.validation)">
