@@ -11,31 +11,35 @@
     <tr class="row m-0">
       <th class="col border-bottom-0 pt-0 border-top-0">
         <ng-container
-          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutlet]="filterInput"
           [ngTemplateOutletContext]="{label: 'Username', field: 'login'}"
         ></ng-container>
       </th>
       <th class="col border-bottom-0 pt-0 border-top-0">
         <ng-container
-          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutlet]="filterInput"
           [ngTemplateOutletContext]="{label: 'First Name', field: 'firstName'}"
         ></ng-container>
       </th>
       <th class="col border-bottom-0 pt-0 border-top-0">
         <ng-container
-          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutlet]="filterInput"
           [ngTemplateOutletContext]="{label: 'Last Name', field: 'lastName'}"
         ></ng-container>
       </th>
       <th class="col border-bottom-0 pt-0 border-top-0">
         <ng-container
-          [ngTemplateOutlet]="searchInput"
+          [ngTemplateOutlet]="filterInput"
           [ngTemplateOutletContext]="{label: 'Email', field: 'email'}"
         ></ng-container>
       </th>
       <th class="col border-bottom-0 pt-0 border-top-0">
       </th>
-      <th class="col border-bottom-0 pt-0 border-top-0">
+      <th class="col-2 border-bottom-0 pt-0 border-top-0">
+        <ng-container
+          [ngTemplateOutlet]="filterDate"
+          [ngTemplateOutletContext]="{label: 'Last Login', field: 'lastLoginDate'}"
+        ></ng-container>
       </th>
       <th class="col-1 border-bottom-0 pt-0 border-top-0">
       </th>
@@ -56,7 +60,7 @@
       <th class="col">
         Application
       </th>
-      <th class="col">
+      <th class="col-2">
         Last Login
       </th>
       <th class="col-1">
@@ -76,7 +80,7 @@
       <td class="col">{{ user.lastName }}</td>
       <td class="col">{{ user.email }}</td>
       <td class="col">{{ getApplicationName(user) }}</td>
-      <td class="col">{{ user.lastLoginDate | date:'medium' }}</td>
+      <td class="col-2">{{ user.lastLoginDate | date:'medium' }}</td>
       <td class="col-1">
         <a class="btn btn-primary bg-primary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
           <i class="fas fa-edit"></i>
@@ -102,7 +106,7 @@
   size="sm"
 ></ngb-pagination>
 
-<ng-template #searchInput let-label="label" let-field="field">
+<ng-template #filterInput let-label="label" let-field="field">
   <div class="input-group input-group-sm mt-1">
     <div class="input-group-prepend fge-clickable" (click)="onPerformFilter(field, box.value)">
       <span class="input-group-text">
@@ -117,6 +121,38 @@
       (keyup.enter)="onPerformFilter()"
       (keyup.esc)="onResetFilters()">
   </div>
+</ng-template>
+
+<ng-template #filterDate let-label="label" let-field="field">
+  <div class="input-group input-group-sm mt-1">
+    <div class="input-group-prepend fge-clickable" (click)="datepicker.toggle()">
+      <span class="input-group-text">
+        <i class="fas fa-calendar-alt"></i>
+      </span>
+    </div>
+    <input disabled class="form-control" [value]="range_date" placeholder="{{label}}" /> 
+    <input
+      class="form-control d-none"
+      name="dp"
+      [(ngModel)]="model"
+      ngbDatepicker
+      [dayTemplate]="dayTemplate"
+      [autoClose]="false"
+      [displayMonths]="2"
+      placement="bottom-right"
+      #datepicker="ngbDatepicker">
+  </div>
+  <ng-template #dayTemplate let-date="date" let-focused="focused">
+      <span class="fge-datepicker--day"
+        [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        (click)="onDateSelection(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null"
+      >
+      {{ date.day }}
+      </span>
+  </ng-template>
 </ng-template>
 
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
