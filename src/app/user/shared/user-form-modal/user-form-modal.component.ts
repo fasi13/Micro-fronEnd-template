@@ -41,7 +41,6 @@ export class UserFormModalComponent implements OnDestroy {
     if (user) {
       this.user = user;
       configUpdateUserFields[0].value = user.firstName;
-      configUpdateUserFields[0].focus = true;
       configUpdateUserFields[1].value = user.lastName;
       configUpdateUserFields[2].value = user.email;
       configUpdateUserFields[3].value = user.isActive;
@@ -53,7 +52,6 @@ export class UserFormModalComponent implements OnDestroy {
       )
       .subscribe((applicationResponse) => {
         const application = applicationResponse.data[applicationResponse.data.length - 1];
-        configNewUserFields[0].focus = true;
         configNewUserFields[3].value = true;
         configNewUserFields[7].value = application['name'];
         this.applicationId = application['id'];

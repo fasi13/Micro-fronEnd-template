@@ -5,10 +5,11 @@
   <div class="col pr-0">
     <input
       type="text"
-      [ngClass]="{ 'is-invalid': hasError() }"
-      class="form-control fge-dynamic-form__input"
-      [attr.placeholder]="config?.placeholder"
+      ngbAutofocus
       fgeFocusInput [focus]="config?.focus"
+      class="form-control fge-dynamic-form__input"
+      [ngClass]="{ 'is-invalid': hasError() }"
+      [attr.placeholder]="config?.placeholder"
       [formControlName]="config?.name">
     <div class="invalid-feedback">
       <div *ngFor="let validator of getObjectKeys(config?.validation)">

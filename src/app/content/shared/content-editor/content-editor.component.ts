@@ -75,6 +75,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
       .subscribe((content: ApplicationContent) => {
         if (content) {
           this.config = _assign(_clone(dataTypes['HTML']), { label: false });
+          this.config.focus = true;
           this.config.value = content.value;
           this.currentContent = content;
         }

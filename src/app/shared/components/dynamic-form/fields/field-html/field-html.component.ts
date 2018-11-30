@@ -13,6 +13,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   ngOnInit() {
     this.configSummernote = {
       placeholder: this.config.placeholder,
+      focus: this.config.focus,
       toolbar: [
         ['group1', ['style']],
         ['group2', ['bold', 'underline', 'clear']],

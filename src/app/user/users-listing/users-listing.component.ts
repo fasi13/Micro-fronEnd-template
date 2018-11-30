@@ -56,8 +56,8 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new FetchUsers({ limit: this.initialLimit, offset: this.initialOffset }));
     this.initSelectors();
+    this.store.dispatch(new FetchUsers({ limit: this.initialLimit, offset: this.initialOffset }));
   }
 
   ngOnDestroy() {
