@@ -47,9 +47,7 @@ export class UserFormModalComponent implements OnDestroy {
       this.config = _clone(configUpdateUserFields);
     } else {
       this.store.select(getApplicationPath)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
+      .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((applicationResponse) => {
         const application = applicationResponse.data[applicationResponse.data.length - 1];
         configNewUserFields[3].value = true;
