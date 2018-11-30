@@ -1,7 +1,10 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
 import { Store } from '@ngrx/store';
+
+import { Subject } from 'rxjs';
+import { takeWhile, takeUntil } from 'rxjs/operators';
 
 import { User, State, UserTransaction, getUserRecordState, getApplicationPath } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
@@ -11,7 +14,7 @@ import { configNewUserFields, configUpdateUserFields } from './user-form-modal.c
   selector: 'fge-user-form-modal',
   templateUrl: './user-form-modal.component.html'
 })
-export class UserFormModalComponent {
+export class UserFormModalComponent implements OnDestroy {
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
@@ -20,10 +23,18 @@ export class UserFormModalComponent {
   user: any;
   config: FieldConfig[];
 
+  private isAliveComponent = true;
+  private unsubscribeModal = new Subject();
+
   constructor(
     private modalService: NgbModal,
     private store: Store<State>
       ) { }
+
+  ngOnDestroy() {
+    this.isAliveComponent = false;
+    this.unsubscribeModal.complete();
+  }
 
   open(user: any): void {
     this.mode = user ? 'EDIT' : 'CREATE';
@@ -37,6 +48,9 @@ export class UserFormModalComponent {
       this.config = _clone(configUpdateUserFields);
     } else {
       this.store.select(getApplicationPath)
+      .pipe(
+        takeWhile(() => this.isAliveComponent)
+      )
       .subscribe((applicationResponse) => {
         const application = applicationResponse.data[applicationResponse.data.length - 1];
         configNewUserFields[0].focus = true;
@@ -73,12 +87,15 @@ export class UserFormModalComponent {
     }
 
     this.store.select(getUserRecordState)
+      .pipe(takeUntil(this.unsubscribeModal))
       .subscribe((recordState) => {
         const { error: errorData, loading } = recordState;
         if (errorData) {
           const errors = Object.values(errorData.error.fields);
+          this.unsubscribeModal.next();
           error(errors);
         } else if (!loading) {
+          this.unsubscribeModal.next();
           success();
           this.modalService.dismissAll();
         }

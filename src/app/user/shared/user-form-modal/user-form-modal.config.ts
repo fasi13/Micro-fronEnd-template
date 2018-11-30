@@ -1,4 +1,5 @@
 import { Validators } from '@angular/forms';
+import _clone from 'lodash/clone';
 
 import { FieldConfig, ValidateMatchPassword } from '@forge/shared';
 
@@ -150,4 +151,4 @@ export const configNewUserFields: FieldConfig[] = [
   email,
   applicationName
 ];
-export const configUpdateUserFields: FieldConfig[] = [ firstName, lastName, email, toggleButton ];
+export const configUpdateUserFields: FieldConfig[] = [ _clone(firstName), _clone(lastName), _clone(email), _clone(toggleButton) ];
