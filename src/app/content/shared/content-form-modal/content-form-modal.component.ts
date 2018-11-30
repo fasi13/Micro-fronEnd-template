@@ -1,10 +1,11 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, OnDestroy, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import _clone from 'lodash/clone';
 import _assign from 'lodash/assign';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, takeWhile } from 'rxjs/operators';
 
 import {
   State,
@@ -23,7 +24,7 @@ import { ContentDataType, dataTypes as availableDataTypes } from './content-data
   selector: 'fge-content-form-modal',
   templateUrl: './content-form-modal.component.html'
 })
-export class ContentFormModalComponent implements OnInit, AfterViewInit {
+export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
@@ -36,6 +37,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   private currentType: string;
   private applicationDataTypes: DataType[];
   private dataTypes: ContentDataType;
+  private unsubscribeForm = new Subject();
+  private isAliveComponent = true;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -52,6 +55,11 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
     this.form.changes.subscribe(({ type }) => {
       this.switchDataType(type);
     });
+  }
+
+  ngOnDestroy() {
+    this.isAliveComponent = false;
+    this.unsubscribeForm.complete();
   }
 
   handleSubmit({ value: formData, success, error}): void {
@@ -73,12 +81,15 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
       contentPayload,
     }));
     this.store.select(getContentRecordState)
+      .pipe(takeUntil(this.unsubscribeForm))
       .subscribe((recordState) => {
         const { error: errorData, loading } = recordState;
         if (errorData) {
           const errors = Object.values(errorData.error.fields);
+          this.unsubscribeForm.next();
           error(errors);
         } else if (!loading) {
+          this.unsubscribeForm.next();
           success();
           this.activeModal.close();
         }
@@ -99,7 +110,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   }
 
   private handleDataTypes(dataTypes$: Observable<DataType[]>) {
-    dataTypes$.subscribe((types: DataType[]) => {
+    dataTypes$.pipe(takeWhile(() => this.isAliveComponent))
+    .subscribe((types: DataType[]) => {
       this.applicationDataTypes = types;
       const selectConfigIndex = this.config.findIndex((fieldConfig: FieldConfig) => fieldConfig.name === 'type');
       this.config[selectConfigIndex].options = types.map((dataType: DataType) => dataType.name);
@@ -107,7 +119,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit {
   }
 
   private handleApplicationInfo(appInfo$: Observable<Application>): void {
-    appInfo$.subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
+    appInfo$.pipe(takeWhile(() => this.isAliveComponent))
+    .subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
   }
 
   private switchDataType(type: string): void {
