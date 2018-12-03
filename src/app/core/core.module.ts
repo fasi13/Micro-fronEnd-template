@@ -22,8 +22,8 @@ import { ContentEffects } from './store/content';
 import { ContentService, FgeRouterService } from './services';
 import { UserEffects } from './store/user';
 import { ResetPasswordEffects } from './store/reset-password';
+import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.component';
 
-const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: loadFromLocalStorage });
 @NgModule({
   imports: [
     CommonModule,
@@ -31,9 +31,16 @@ const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: load
     NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    storeModuleForRoot,
+    StoreModule.forRoot(FgeReducers, { initialState: loadFromLocalStorage }),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([AuthorizationEffects, ApplicationEffects, RouterEffects, ContentEffects, UserEffects, ResetPasswordEffects]),
+    EffectsModule.forRoot([
+      AuthorizationEffects,
+      ApplicationEffects,
+      RouterEffects,
+      ContentEffects,
+      UserEffects,
+      ResetPasswordEffects
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
@@ -41,7 +48,8 @@ const storeModuleForRoot = StoreModule.forRoot(FgeReducers, { initialState: load
   ],
   declarations: [
     AuthLayoutComponent,
-    UnauthLayoutComponent
+    UnauthLayoutComponent,
+    TenantLayoutComponent
   ],
   exports: [
     AuthLayoutComponent,

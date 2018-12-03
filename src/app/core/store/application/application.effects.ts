@@ -23,6 +23,7 @@ import {
 import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath, DataType } from '../../models';
 import { ApplicationService } from '../../services/application.service';
 import { Application } from '../../models/application.model';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ApplicationEffects {
@@ -39,7 +40,10 @@ export class ApplicationEffects {
       .pipe(
         exhaustMap(this.getApplicationBranding.bind(this)),
         map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-        catchError(error => of(new FetchApplicationDataError({ error })))
+        catchError(error => {
+          this.handleErrorRedirect(error.status);
+          return of(new FetchApplicationDataError({ error }));
+        })
       )
     )
   );
@@ -107,7 +111,8 @@ export class ApplicationEffects {
 
   constructor(
     private actions: Actions,
-    private applicationService: ApplicationService
+    private applicationService: ApplicationService,
+    private router: Router
   ) { }
 
   private getApplicationBranding(applicationResponse: ApiResponse<Application>):
@@ -148,5 +153,15 @@ export class ApplicationEffects {
       };
       return new constructorFn(application);
     };
+  }
+
+  private handleErrorRedirect(errorCode) {
+    switch (errorCode) {
+      case 404:
+        this.router.navigate(['error/application']);
+        break;
+      default:
+        this.router.navigate(['error']);
+    }
   }
 }

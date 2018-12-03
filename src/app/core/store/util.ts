@@ -17,7 +17,7 @@ export function ActionType<T>(label: T | string): T {
 }
 
 export function mapLinks(_links: Link[]): MappedLinks {
-  return _mapValues(_keyBy(_links, 'rel'), ({ href, method } : Link) => (
+  return _mapValues(_keyBy(_links, 'rel'), ({ href, method }: Link) => (
     {
       href,
       method: _lowerCase(method.method)

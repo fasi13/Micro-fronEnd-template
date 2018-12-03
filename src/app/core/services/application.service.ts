@@ -3,7 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { HateoasAction, ApiResponse, DataPaginated, ApplicationContent, Application, ApplicationPath, DataType } from '../models';
+import {
+  HateoasAction,
+  ApiResponse,
+  DataPaginated,
+  ApplicationContent,
+  ApplicationPath,
+  DataType,
+  Application } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +41,6 @@ export class ApplicationService {
         name
       }
     });
-
     return this.httpClient.get<ApiResponse<DataPaginated<ApplicationContent>>>(href, { params });
   }
 

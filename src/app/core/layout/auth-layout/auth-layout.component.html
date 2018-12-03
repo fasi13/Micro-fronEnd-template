@@ -3,6 +3,7 @@
     Loading your Application Data.
   </p>
 </fge-splash-screen>
+
 <nav class="fge-navbar navbar navbar-dark sticky-top bg-primary">
   <div class="navbar-toggler" (click)="toggleSidebar($event)">
     <i class="fas fa-bars text-light"></i>
@@ -40,9 +41,7 @@
       <img src="{{branding?.primaryLogo?.value}}" width="25px"/>
     </div>
   </div>
-  <div *ngIf="!(loading$ | async)">
-    <router-outlet></router-outlet>
-  </div>
+  <router-outlet></router-outlet>
 </fge-sidebar>
 
 <fge-navigation-tree

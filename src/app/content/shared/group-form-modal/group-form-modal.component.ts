@@ -97,7 +97,11 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
 
   private initSelectors(): void {
     this.appInfoSubscription = this.store.select(getApplicationInfo)
-      .subscribe((applicationInfo: Application) => this.applicationId = applicationInfo.id);
+      .subscribe((applicationInfo: Application) => {
+        if (applicationInfo) {
+          this.applicationId = applicationInfo.id;
+        }
+      });
   }
 
   private getNotificationMsg(): string {

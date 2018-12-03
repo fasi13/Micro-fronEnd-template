@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserCredentials, AuthenticateAction, Go } from '@forge/core';
+import { UserCredentials, AuthenticateAction, Go} from '@forge/core';
 import { isAuthenticationLoading, State, isAuthenticated, getAuthenticationError } from '../../core/store/store.reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private isAliveComponent = true;
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
   ) { }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UnauthLayoutComponent, AuthLayoutComponent, AuthorizedGuard } from '@forge/core';
+import { UnauthLayoutComponent, AuthLayoutComponent, AuthorizedGuard, TenantLayoutComponent } from '@forge/core';
 import { ResetPasswordComponent } from '@forge/shared';
 
 const routes: Routes = [
@@ -12,37 +12,52 @@ const routes: Routes = [
     canActivateChild: [ AuthorizedGuard ],
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'tenant/default'
-      },
-      {
-        path: 'tenant/:tenantId',
+        path: 'tenant',
         children: [
+          {
+            path: ':tenantId',
+            component: TenantLayoutComponent,
+            children: [
+              {
+                path: 'content',
+                loadChildren: './content/content.module#ContentModule'
+              },
+              {
+                path: 'user',
+                loadChildren: './user/user.module#UserModule'
+              },
+              {
+                path: 'reset-password',
+                component: ResetPasswordComponent
+              },
+              {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'content'
+              }
+            ]
+          },
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'content'
-          },
-          {
-            path: 'content',
-            loadChildren: './content/content.module#ContentModule'
-          },
-          {
-            path: 'user',
-            loadChildren: './user/user.module#UserModule'
-          },
-          {
-            path: 'reset-password',
-            component: ResetPasswordComponent
+            redirectTo: 'default'
           }
         ]
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'tenant'
       }
     ]
   }, {
     path: '',
     component: UnauthLayoutComponent,
     children: [
+      {
+        path: 'error',
+        loadChildren: './error/error.module#ErrorModule'
+      },
       {
         path: '',
         loadChildren: './authorization/authorization.module#AuthorizationModule'

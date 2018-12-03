@@ -6,10 +6,12 @@ import { mapLinks } from '../util';
 import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding, ApplicationPath, DataType } from '../../models';
 
 export interface ApplicationState {
-  info: Application;
-  branding: ApplicationBranding;
-  error?: string;
-  loading: boolean;
+  current: {
+    info: Application;
+    branding: ApplicationBranding;
+    error?: string;
+    loading: boolean;
+  };
   search: {
     data: ApplicationPath[],
     loading: boolean,
@@ -33,9 +35,11 @@ export interface ApplicationState {
 }
 
 const initialState: ApplicationState = {
-  info: null,
-  branding: null,
-  loading: false,
+  current: {
+    info: null,
+    branding: null,
+    loading: false,
+  },
   search: {
     data: null,
     loading: false
@@ -58,43 +62,44 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
   switch (action.type) {
     case ApplicationActionTypes.UPDATE_APPLICATION_DATA:
       return _assign({}, state, {
-        error: undefined,
-        loading: false
+        current: _assign({}, state.current, {
+          error: undefined,
+          loading: false
+        })
       });
 
     case ApplicationActionTypes.FETCH_APPLICATION_DATA:
       return _assign({}, state, {
-        error: undefined,
-        loading: true
+        current: _assign({}, state.current, {
+          error: undefined,
+          loading: true
+        })
       });
 
     case ApplicationActionTypes.FETCH_APPLICATION_DATA_ERROR:
       return _assign({}, state, {
-        error: action.payload.error.message,
-        loading: false
+        current: _assign({}, state.current, {
+          error: action.payload.error.message,
+          loading: false
+        })
       });
 
     case ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS: {
       const applicationInfo: Application = action.payload.info.data;
-      const {
-        primaryColor,
-        secondaryColor,
-        primaryLogo,
-        siteUrl,
-        programName,
-        secondaryLogo
-      }: { [key: string]: ApiResponse<DataPaginated<ApplicationContent>> } = action.payload.branding;
+      const fetchBranding: { [key: string]: ApiResponse<DataPaginated<ApplicationContent>> } = action.payload.branding;
       return _assign({}, state, {
-        info: { ...applicationInfo, actions: mapLinks(applicationInfo._links) },
-        branding: {
-          primaryColor: primaryColor.data.items[0],
-          secondaryColor: secondaryColor.data.items[0],
-          primaryLogo: primaryLogo.data.items[0],
-          siteUrl: siteUrl.data.items[0],
-          programName: programName.data.items[0],
-          secondaryLogo: secondaryLogo.data.items[0]
-        },
-        loading: false,
+        current: _assign({}, state.current, {
+          info: { ...applicationInfo, actions: mapLinks(applicationInfo._links) },
+          branding: {
+            primaryColor: fetchBranding.primaryColor.data.items[0],
+            secondaryColor: fetchBranding.secondaryColor.data.items[0],
+            primaryLogo: fetchBranding.primaryLogo.data.items[0],
+            siteUrl: fetchBranding.siteUrl.data.items[0],
+            programName: fetchBranding.programName.data.items[0],
+            secondaryLogo: fetchBranding.secondaryLogo.data.items[0]
+          },
+          loading: false,
+        })
       });
     }
 
@@ -179,23 +184,16 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
       });
 
     case ApplicationActionTypes.FETCH_APPLICATION_PREVIEW_SUCCESS:
-      const {
-        primaryColor,
-        secondaryColor,
-        primaryLogo,
-        siteUrl,
-        programName,
-        secondaryLogo
-      }: { [key: string]: ApiResponse<DataPaginated<ApplicationContent>> } = action.payload.branding;
+      const branding: { [key: string]: ApiResponse<DataPaginated<ApplicationContent>> } = action.payload.branding;
       return _assign({}, state, {
         preview: {
           branding: {
-            primaryColor: primaryColor.data.items[0],
-            secondaryColor: secondaryColor.data.items[0],
-            primaryLogo: primaryLogo.data.items[0],
-            siteUrl: siteUrl.data.items[0],
-            programName: programName.data.items[0],
-            secondaryLogo: secondaryLogo.data.items[0]
+            primaryColor: branding.primaryColor.data.items[0],
+            secondaryColor: branding.secondaryColor.data.items[0],
+            primaryLogo: branding.primaryLogo.data.items[0],
+            siteUrl: branding.siteUrl.data.items[0],
+            programName: branding.programName.data.items[0],
+            secondaryLogo: branding.secondaryLogo.data.items[0]
           },
           loading: false,
         }
@@ -220,7 +218,7 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
  * @param {State} state
  * @returns {Application}
  */
-export const getApplicationInfo = (state: ApplicationState) => state.info;
+export const getApplicationInfo = (state: ApplicationState) => state.current.info;
 
 /**
  * Returns the current application branding.
@@ -228,7 +226,7 @@ export const getApplicationInfo = (state: ApplicationState) => state.info;
  * @param {State} state
  * @returns {Application}
  */
-export const getApplicationBranding = (state: ApplicationState) => state.branding;
+export const getApplicationBranding = (state: ApplicationState) => state.current.branding;
 
 /**
  * Returns the current state of application loading flag.
@@ -236,7 +234,7 @@ export const getApplicationBranding = (state: ApplicationState) => state.brandin
  * @param {State} state
  * @returns {boolean}
  */
-export const isLoadingApplicationData = (state: ApplicationState) => state.loading;
+export const isLoadingApplicationData = (state: ApplicationState) => state.current.loading;
 
 /**
  * Returns the current state of search application loading flag.

@@ -1,19 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+
+import { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+
 import { State, isAuthenticated } from '../store/store.reducers';
 import { Go } from '../store/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorizedGuard implements CanActivate {
+export class AuthorizedGuard implements CanActivate, OnDestroy {
 
-  constructor(private store: Store<State>) {}
+  private isAliveGuard = true;
+
+  constructor(
+    private store: Store<State>,
+  ) {}
+
+  ngOnDestroy() {
+    this.isAliveGuard = false;
+  }
 
   canActivate(): Observable<boolean> | boolean {
-    const isAuthenticated$ = this.store.select(isAuthenticated);
+    const isAuthenticated$ = this.store.select(isAuthenticated).pipe(takeWhile(() =>  this.isAliveGuard));
     isAuthenticated$.subscribe(authenticated => {
       if (!authenticated) {
         this.store.dispatch(new Go({ path: ['/login'] }));
@@ -27,7 +38,7 @@ export class AuthorizedGuard implements CanActivate {
   }
 
   canLoad(): Observable<boolean> | Promise<boolean> | boolean {
-    const isAuthenticated$ = this.store.select(isAuthenticated);
+    const isAuthenticated$ =  this.store.select(isAuthenticated).pipe(takeWhile(() =>  this.isAliveGuard));
     isAuthenticated$.subscribe(authenticated => {
       if (!authenticated) {
         this.store.dispatch(new Go({ path: ['/login'] }));

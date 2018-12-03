@@ -1,27 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { takeWhile, filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 import {
   State,
-  isAuthenticated,
   LogoutAction,
   getAuthenticatedUser,
   getApplicationInfo,
   getApplicationBranding,
   isLoadingApplicationData,
-  FetchApplicationData,
-  FetchApplicationPath,
-  FetchContentGroups,
-  FetchDataTypes,
   getApplicationPath,
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
 import { FgeRouterService } from '../../services/_fge-router.service';
 import { ApplicationPath } from '../../models';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -43,8 +38,8 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<State>,
-    private route: ActivatedRoute,
-    private router: FgeRouterService
+    private fgeRouter: FgeRouterService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -71,40 +66,25 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   onAppSelected(appId: string): void {
     this.isNavigationModalOpened = false;
-    setTimeout(() => {
-      location.href = `/tenant/${appId}`;
-    }, 500);
+    this.router.navigate([`/tenant/${appId}`]);
   }
 
   private initSelectors(): void {
     this.loading$ = this.store.select(isLoadingApplicationData);
     this.store.select(getApplicationInfo)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
+      .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((application: Application) => this.application = application);
     this.store.select(getAuthenticatedUser)
       .pipe(
         takeWhile(() => this.isAliveComponent)
       )
       .subscribe((user: User) => this.user = user);
-    this.store.select(isAuthenticated)
-      .pipe(
-        takeWhile(() => this.isAliveComponent),
-        filter(isAuth => isAuth),
-      )
-      .subscribe(() => {
-        const applicationId = this.getCurrentTenantId();
-        this.store.dispatch(new FetchApplicationData(applicationId));
-        this.store.dispatch(new FetchApplicationPath(applicationId));
-        this.store.dispatch(new FetchContentGroups({ applicationId }));
-        this.store.dispatch(new FetchDataTypes(this.getCurrentTenantId()));
-      });
+
     this.store.select(getApplicationBranding)
       .pipe(
         takeWhile(() => this.isAliveComponent)
       )
-      .subscribe((branding: ApplicationBranding) => this.applyBranding(branding));
+      .subscribe((branding: ApplicationBranding) => this.branding = branding);
     this.store.select(getApplicationPath)
       .pipe(
         takeWhile(() => this.isAliveComponent)
@@ -117,45 +97,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getCurrentTenantId() {
-    let tenantId = this.route.firstChild.snapshot.params.tenantId;
-    if (isNaN(+tenantId)) {
-      const appUrl = this.user.actions['getApplication'].href;
-      const splittedUrl = appUrl.split('/');
-      tenantId = + splittedUrl[splittedUrl.length - 1];
-    }
-    return tenantId;
-  }
-
-  private applyBranding(branding: ApplicationBranding): void {
-    this.branding = branding;
-    if (branding) {
-      const styles = `
-        .bg-primary {
-          background-color: ${branding.primaryColor.value} !important;
-        }
-        .bg-secondary {
-          background-color: ${branding.secondaryColor.value} !important;
-        }
-        .text-primary {
-          color: ${branding.primaryColor.value} !important;
-        }
-        .text-secondary {
-          color: ${branding.primaryColor.value} !important;
-        }
-      `;
-      const css: any = document.createElement('style');
-      css.type = 'text/css';
-      if (css.styleSheet) {
-        css.styleSheet.cssText = styles;
-      } else {
-        css.appendChild(document.createTextNode(styles));
-      }
-      document.getElementsByTagName('head')[0].appendChild(css);
-    }
-  }
-
   onRediretToResetPassword() {
-    this.router.navigate(`reset-password`);
+    this.fgeRouter.navigate(`reset-password`);
   }
 }
