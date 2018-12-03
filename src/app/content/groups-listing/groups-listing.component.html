@@ -14,7 +14,7 @@
     </div>
   </h4>
   <div class="col text-right">
-    <button type="button" class="btn btn-link"><i class="fas fa-folder-plus fa-lg" (click)="groupFormModal.open()"></i></button>
+    <button type="button" class="btn btn-link" (click)="groupFormModal.open()"><i class="fas fa-folder-plus fa-lg"></i></button>
   </div>
 </div>
 <div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>
