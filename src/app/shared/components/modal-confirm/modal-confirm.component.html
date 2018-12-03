@@ -10,8 +10,9 @@
   <div class="modal-body">
     {{ config.message }}
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer pt-2">
     <button class="fge-dynamic-form__button btn-primary bg-primary"
+      ngbAutofocus
       (click)="handleSubmit()"
       type="submit">{{ config.submitLabel }}</button>
     <button type="button" 
