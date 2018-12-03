@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 
-import { State, UserTransaction, getUsersState, FetchUsers, ApplicationPath } from '@forge/core';
+import { Subject } from 'rxjs';
+import { takeWhile, takeUntil } from 'rxjs/operators';
+
+import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, ApplicationPath } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
-import { NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
-import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'fge-users',
@@ -28,6 +30,7 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   private readonly initialOffset = 0;
   private readonly initialLimit = 12;
   private isAliveComponent = true;
+  private unsubscribeListing = new Subject();
   private equals = (one: NgbDateStruct, two: NgbDateStruct) =>
             one && two && two.year === one.year && two.month === one.month && two.day === one.day
   private before = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -62,6 +65,7 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.isAliveComponent = false;
+    this.unsubscribeListing.complete();
   }
 
   openModalConfirm(confirmModal: any, user: any): void {
@@ -85,6 +89,17 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
       emailAddress: this.currentUser.email,
       isActive: !this.currentUser.isActive,
     }, 'PUT'));
+    this.store.select(getUserRecordState)
+      .pipe(takeUntil(this.unsubscribeListing))
+      .subscribe((recordState) => {
+        const { error: errorData, loading } = recordState;
+        if (errorData) {
+          this.unsubscribeListing.next();
+        } else if (!loading) {
+          this.unsubscribeListing.next();
+          this.confirmModal.close();
+        }
+      });
   }
 
   getApplicationName(user: any): string {
