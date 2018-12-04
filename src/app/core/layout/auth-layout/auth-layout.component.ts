@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { takeWhile } from 'rxjs/operators';
+import { takeWhile, delay } from 'rxjs/operators';
 
 import {
   State,
@@ -70,7 +70,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   private initSelectors(): void {
-    this.loading$ = this.store.select(isLoadingApplicationData);
+    this.loading$ = this.store.select(isLoadingApplicationData).pipe(delay(0));
     this.store.select(getApplicationInfo)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((application: Application) => this.application = application);

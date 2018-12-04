@@ -21,7 +21,7 @@ import {
 import { Store } from '@ngrx/store';
 
 import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, delay } from 'rxjs/operators';
 
 import { NavigationTreeService } from './navigation-tree.service';
 import { TreeviewData } from './treeview-data.model';
@@ -88,6 +88,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
 
   ngAfterViewInit() {
     this.store.select(getApplicationPreview)
+      .pipe(delay(0))
       .subscribe((applicationPreview) => {
         if (applicationPreview) {
           const { branding, loading} = applicationPreview;

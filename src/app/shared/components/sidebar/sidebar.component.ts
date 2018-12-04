@@ -46,9 +46,11 @@ export class SidebarComponent implements OnInit {
   goToPromotions(): void {
     this.fgeRouter.navigate(`promotions`);
   }
+
   goToCampaings(): void {
     this.fgeRouter.navigate(`campaings`);
   }
+
   goToSettings(): void {
     this.fgeRouter.navigate(`settings`);
   }
