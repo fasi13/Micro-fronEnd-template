@@ -27,13 +27,13 @@
         </div>
       </div>
       <li [ngClass]="{'active': isSectionActive('promotions')}">
-        <a href="#" class="btn-sm">
+        <a (click)="goToPromotions()" class="btn-sm fge-clickable">
           <i class="fas fa-bullhorn"></i>
           <span class="fge-sidebar__item--title">Promotions</span>
         </a>
       </li>
       <li [ngClass]="{'active': isSectionActive('campaings')}">
-        <a href="#" class="btn-sm">
+        <a (click)="goToCampaings()" class="btn-sm fge-clickable">
           <i class="fas fa-gift"></i>
           <span class="fge-sidebar__item--title">Campaings</span>
         </a>
@@ -45,7 +45,7 @@
         </a>
       </li>
       <li [ngClass]="{'active': isSectionActive('settings')}">
-        <a href="#" class="btn-sm">
+        <a (click)="goToSettings()" class="btn-sm fge-clickable">
           <i class="fas fa-cog"></i>
           <span class="fge-sidebar__item--title">Settings</span>
         </a>

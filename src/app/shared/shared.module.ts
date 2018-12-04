@@ -27,6 +27,7 @@ import { FieldToggleButtonComponent } from './components/dynamic-form/fields/fie
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { FocusInputDirective } from './directives/focus-input.directive';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     FieldToggleButtonComponent,
     ModalConfirmComponent,
     FocusInputDirective,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ComingSoonComponent
   ],
   exports: [
     FormsModule,

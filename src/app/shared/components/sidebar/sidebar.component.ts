@@ -43,6 +43,16 @@ export class SidebarComponent implements OnInit {
     this.fgeRouter.navigate(`user`);
   }
 
+  goToPromotions(): void {
+    this.fgeRouter.navigate(`promotions`);
+  }
+  goToCampaings(): void {
+    this.fgeRouter.navigate(`campaings`);
+  }
+  goToSettings(): void {
+    this.fgeRouter.navigate(`settings`);
+  }
+
   isSectionActive(sectionName: string): boolean {
     return this.activatedSection === sectionName;
   }

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UnauthLayoutComponent, AuthLayoutComponent, AuthorizedGuard, TenantLayoutComponent } from '@forge/core';
 import { ResetPasswordComponent } from '@forge/shared';
+import { ComingSoonComponent } from './shared/components/coming-soon/coming-soon.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,18 @@ const routes: Routes = [
               {
                 path: 'user',
                 loadChildren: './user/user.module#UserModule'
+              },
+              {
+                path: 'promotions',
+                component: ComingSoonComponent
+              },
+              {
+                path: 'campaings',
+                component: ComingSoonComponent
+              },
+              {
+                path: 'settings',
+                component: ComingSoonComponent
               },
               {
                 path: 'reset-password',
