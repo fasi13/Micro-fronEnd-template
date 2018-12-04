@@ -3,18 +3,18 @@
     <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
     Content Groups
     <div class="btn-group btn-group-toggle fge-group--btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="displayMode">
-      <label ngbButtonLabel class="btn-primary btn-sm">
+      <label ngbButtonLabel class="btn-secondary bg-secondary btn-sm">
         <input ngbButton type="radio" value="list">
         <i class="fas fa-list-ul"></i>
       </label>
-      <label ngbButtonLabel class="btn-primary btn-sm">
+      <label ngbButtonLabel class="btn-secondary bg-secondary btn-sm">
         <input ngbButton type="radio" value="grid">
         <i class="fas fa-th"></i>
       </label>
     </div>
   </h4>
   <div class="col text-right">
-    <button type="button" class="btn btn-link" (click)="groupFormModal.open()"><i class="fas fa-folder-plus fa-lg"></i></button>
+    <button type="button" class="btn btn-link" (click)="groupFormModal.open()"><i class="fas fa-folder-plus fa-lg text-secondary"></i></button>
   </div>
 </div>
 <div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>
@@ -66,19 +66,19 @@
 <ng-template #groupActions let-group="group">
   <a
     tabindex="0"
-    class="btn btn-primary bg-primary btn-sm mr-2"
+    class="btn btn-secondary bg-secondary btn-sm mr-2"
     (click)="groupFormModal.open(group)">
     <i class="far fa-edit"></i>
   </a>
   <a
     tabindex="0"
-    class="btn btn-primary bg-primary btn-sm mr-2"
+    class="btn btn-secondary bg-secondary btn-sm mr-2"
     (click)="goToContentGroup(group.id)">
     <i class="fas fa-info-circle"></i>
   </a>
   <a
     tabindex="0"
-    class="btn btn-primary bg-primary btn-sm mr-2 disabled">
+    class="btn btn-secondary bg-secondary btn-sm mr-2 disabled">
     <i class="far fa-trash-alt"></i>
   </a>
 </ng-template>

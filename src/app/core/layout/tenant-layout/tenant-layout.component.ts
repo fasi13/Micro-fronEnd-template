@@ -88,7 +88,11 @@ export class TenantLayoutComponent implements OnInit, OnDestroy {
           color: ${branding.primaryColor.value} !important;
         }
         .text-secondary {
-          color: ${branding.primaryColor.value} !important;
+          color: ${branding.secondaryColor.value} !important;
+        }
+        .page-item.active .page-link {
+          background-color: ${branding.primaryColor.value} !important;
+          border-color: #cacaca;
         }
       `;
       const css: any = document.createElement('style');
