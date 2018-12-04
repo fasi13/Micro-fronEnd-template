@@ -30,7 +30,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   user: User;
   branding: ApplicationBranding;
   loading$: Observable<boolean> | boolean = true;
-  activeSidebar = true;
+  activeSidebar = false;
   search = '';
   isNavigationModalOpened = false;
 
