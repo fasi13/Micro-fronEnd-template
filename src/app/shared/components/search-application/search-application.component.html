@@ -44,5 +44,8 @@
       </div>
       <small fgeHighlightSearch [keyword]="search">{{getApplicationPath(application)}}</small>
     </a>
+    <div class="px-3" *ngIf="(items$ | async)?.length === 0">
+      <small><i class="fas fa-exclamation-circle"></i> No results found</small>
+    </div>
   </div>
 </ng-template>

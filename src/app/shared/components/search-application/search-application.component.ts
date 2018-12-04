@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, SearchApplication, ApplicationPath, isLoadingSearchApplication, getSearchApplicationList } from '@forge/core';
+
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+import { State, SearchApplication, ApplicationPath, isLoadingSearchApplication, getSearchApplicationList } from '@forge/core';
 
 @Component({
   selector: 'fge-search-application',
@@ -30,7 +32,7 @@ export class SearchApplicationComponent implements OnInit {
       )
       .subscribe((keyword: string) => {
         if (keyword) {
-          this.store.dispatch(new SearchApplication(keyword))
+          this.store.dispatch(new SearchApplication(keyword));
         }
       });
   }
