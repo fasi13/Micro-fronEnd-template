@@ -1,5 +1,5 @@
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
-import { ActionReducerMap } from '@ngrx/store';
+import { ActionReducerMap, MetaReducer, Action, ActionReducer } from '@ngrx/store';
 import { createSelector } from 'reselect';
 
 import * as AuthorizationReducers from './authorization/authorization.reducers';
@@ -7,6 +7,7 @@ import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
 import * as UserReducers from './user/user.reducers';
 import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
+import { AuthorizationActionTypes } from './authorization/authorization.actions';
 
 export interface State {
   router: RouterReducerState;
@@ -25,6 +26,17 @@ export const FgeReducers: ActionReducerMap<State> = {
   user: UserReducers.reducer,
   resetPassword: ResetPasswordReducers.reducer
 };
+
+export const metaReducers: MetaReducer<State>[] = [
+  function clearState(reducer: ActionReducer<State>): ActionReducer<State> {
+    return function(state: State, action: Action): State {
+      if (action.type === AuthorizationActionTypes.LOGOUT_SUCCESS) {
+        state = undefined;
+      }
+      return reducer(state, action);
+    };
+  }
+]
 
 /**********************************\
  * ************************
