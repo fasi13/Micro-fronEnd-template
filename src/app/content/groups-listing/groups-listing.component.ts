@@ -11,7 +11,7 @@ export class GroupsListingComponent implements OnInit {
 
   groups$: Observable<ApplicationContent[]>;
   loading$: Observable<boolean> | boolean;
-  displayMode = 'grid';
+  displayMode = 'list';
 
   constructor(
     private store: Store<State>,
