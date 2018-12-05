@@ -4,6 +4,7 @@ import { isAuthenticationLoading, State, isAuthenticated, getAuthenticationError
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeWhile, filter } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'fge-login',
@@ -16,13 +17,37 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasLoginErrors = false;
 
   private isAliveComponent = true;
+  private goToRoute: string;
 
   constructor(
     private store: Store<State>,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.userCredentials = new UserCredentials();
+    this.route.queryParams.subscribe((params) => {
+      if (params && params.route) {
+        this.goToRoute = params.route;
+      }
+    });
+    this.initSelectors();
+  }
+
+  ngOnDestroy() {
+    this.isAliveComponent = false;
+  }
+
+  onSubmitClicked() {
+    const { username, password } = this.userCredentials;
+    const payload: UserCredentials = {
+      username: username.trim(),
+      password: password.trim()
+    };
+    this.store.dispatch(new AuthenticateAction(payload));
+  }
+
+  private initSelectors(): void {
     this.loading$ = this.store.select(isAuthenticationLoading);
     this.store.select(getAuthenticationError)
       .pipe(
@@ -37,20 +62,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         filter(isAuth => isAuth)
       )
       .subscribe(() => {
-        this.store.dispatch(new Go({ path: ['/'] }));
+        const routePath = this.goToRoute || '/';
+        this.store.dispatch(new Go({ path: [routePath] }));
       });
-  }
-
-  ngOnDestroy() {
-    this.isAliveComponent = false;
-  }
-
-  onSubmitClicked() {
-    const { username, password } = this.userCredentials;
-    const payload: UserCredentials = {
-      username: username.trim(),
-      password: password.trim()
-    };
-    this.store.dispatch(new AuthenticateAction(payload));
   }
 }

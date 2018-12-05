@@ -18,7 +18,7 @@ import {
 export class ApplicationService {
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) { }
 
   performRequest<T>({ method, href }: HateoasAction, body?: any): Observable<T> {

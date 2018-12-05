@@ -5,6 +5,7 @@ import _isEmpty from 'lodash/isEmpty';
 import { Observable, of } from 'rxjs';
 
 import { UserCredentials, UserToken, User, DataPaginated, ApiResponse, UserResetPassword } from '../models';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class UserService {
   private baseUrl = 'users';
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) { }
 
   authenticate({ username, password }: UserCredentials): Observable<HttpResponse<Response>> {
@@ -28,9 +30,16 @@ export class UserService {
     return localStorage.getItem('token');
   }
 
-  logout(reason: string = 'Iddle', isAuth = true): Observable<boolean> {
+  logout(reason: string = 'Action', isAuth = true): Observable<boolean> {
     if (isAuth) {
+      const navigationExtras: NavigationExtras = {};
+      if (reason === 'Inactivity') {
+        navigationExtras.queryParams = {
+          route: this.router.url
+        };
+      }
       console.log('Logout - reason: ', reason);
+      this.router.navigate(['/login'], navigationExtras);
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('application_data');
