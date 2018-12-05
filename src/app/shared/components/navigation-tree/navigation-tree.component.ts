@@ -101,6 +101,9 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   toggleCollapse(item: TreeviewData, event: Event) {
     event.stopPropagation();
     item.collapsed = !!!item.collapsed;
+    if (!item.collapsed) {
+      (event.currentTarget as any).parentElement.scrollIntoView();
+    }
     if (!item.executedFetch) {
       this.fetchDataFor(item);
     }
