@@ -12,7 +12,7 @@ import { AuthLayoutComponent, UnauthLayoutComponent } from './layout';
 import { UserService } from './services/user.service';
 import { AuthorizationEffects } from './store/authorization';
 import { ApplicationEffects } from './store/application';
-import { FgeReducers, metaReducers } from './store/store.reducers';
+import { FgeReducers, clearStateOnLogout } from './store/store.reducers';
 import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -31,7 +31,12 @@ import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.comp
     NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(FgeReducers, { initialState: loadFromLocalStorage, metaReducers }),
+    StoreModule.forRoot(FgeReducers, {
+      initialState: loadFromLocalStorage,
+      metaReducers: [
+        clearStateOnLogout
+      ]
+    }),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([
       AuthorizationEffects,

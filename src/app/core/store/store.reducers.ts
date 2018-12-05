@@ -1,5 +1,5 @@
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
-import { ActionReducerMap, MetaReducer, Action, ActionReducer } from '@ngrx/store';
+import { ActionReducerMap, Action, ActionReducer } from '@ngrx/store';
 import { createSelector } from 'reselect';
 
 import * as AuthorizationReducers from './authorization/authorization.reducers';
@@ -27,19 +27,19 @@ export const FgeReducers: ActionReducerMap<State> = {
   resetPassword: ResetPasswordReducers.reducer
 };
 
-export const metaReducers: MetaReducer<State>[] = [
-  function clearState(reducer: ActionReducer<State>): ActionReducer<State> {
-    return function(state: State, action: Action): State {
-      if (action.type === AuthorizationActionTypes.LOGOUT_SUCCESS) {
-        state = undefined;
-      }
-      return reducer(state, action);
-    };
-  }
-]
+/**********************************************************
+ * Meta Reducers
+ *********************************************************/
+export function clearStateOnLogout(reducer: ActionReducer<State>): ActionReducer<State> {
+  return function(state: State, action: Action): State {
+    if (action.type === AuthorizationActionTypes.LOGOUT_SUCCESS) {
+      state = undefined;
+    }
+    return reducer(state, action);
+  };
+}
 
-/**********************************\
- * ************************
+/**********************************************************
  * Authorization Reducers
  *********************************************************/
 export const getAuthorizationState = (state: State) => {

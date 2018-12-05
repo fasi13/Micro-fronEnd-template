@@ -6,7 +6,7 @@ import _find from 'lodash/find';
 import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
 
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
 import {
@@ -38,7 +38,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   applicationId: number;
   adaContent: string;
 
-  private routeParamsSubscription: Subscription;
   private isAliveComponent = true;
   private modalRef: NgbModalRef;
 
@@ -58,13 +57,12 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.editMode = true;
-    this.routeParamsSubscription = this.route.params
+    this.route.params
       .subscribe(params => this.initDispatchers(params));
     this.initSelectors();
   }
 
   ngOnDestroy() {
-    this.routeParamsSubscription.unsubscribe();
     this.isAliveComponent = false;
   }
 
