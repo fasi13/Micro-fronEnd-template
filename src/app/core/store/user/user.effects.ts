@@ -44,7 +44,11 @@ export class UserEffects {
 
   @Effect() public fetchUsers: Observable<Action> = this.actions.pipe(
     ofType(UserTypes.FETCH_USERS),
-    switchMap((action: any) => this.userService.getUsers(action.payload.offset, action.payload.limit, action.payload.filters)
+    switchMap((action: any) => this.userService.getUsers(
+      action.payload.offset,
+      action.payload.limit,
+      action.payload.filters,
+      action.payload.sort)
       .pipe(
         map((response: ApiResponse<DataPaginated<User>>) => {
           return new FetchUsersSuccess(response.data);

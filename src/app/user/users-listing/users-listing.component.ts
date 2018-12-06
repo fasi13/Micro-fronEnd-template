@@ -25,8 +25,9 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   fromDate: NgbDateStruct;
   toDate: NgbDateStruct;
   range_date = '';
+  private sort: { sortby: string, sortdirection: 'asc' | 'desc' };
 
-  private filters: { [key: string]: string } = {};
+  private filters: { [key: string]: string };
   private readonly initialOffset = 0;
   private readonly initialLimit = 12;
   private isAliveComponent = true;
@@ -59,8 +60,13 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.filters = {};
+    this.sort = {
+      sortby: 'login',
+      sortdirection: 'asc'
+    };
     this.initSelectors();
-    this.store.dispatch(new FetchUsers({ limit: this.initialLimit, offset: this.initialOffset }));
+    this.store.dispatch(new FetchUsers({ limit: this.initialLimit, offset: this.initialOffset, sort: this.sort }));
   }
 
   ngOnDestroy() {
@@ -123,16 +129,21 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   onPageChange(index: number): void {
     const { limit } = this.usersState;
     const offset = (index - 1) * limit;
-    this.store.dispatch(new FetchUsers({ offset, limit }));
+    const { sort } = this;
+    this.store.dispatch(new FetchUsers({ offset, limit, sort }));
   }
 
   onPerformFilter(): void {
-    const { initialLimit: limit, initialOffset: offset, filters } = this;
-    this.store.dispatch(new FetchUsers({ limit, offset, filters }));
+    const { initialLimit: limit, initialOffset: offset, filters, sort } = this;
+    this.store.dispatch(new FetchUsers({ limit, offset, filters, sort }));
   }
 
   onResetFilters(): void {
     this.filters = {};
+    this.sort = {
+      sortby: 'login',
+      sortdirection: 'asc'
+    };
     this.range_date = '';
     this.onPerformFilter();
   }
@@ -153,6 +164,19 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
       this.toDate = null;
       this.fromDate = date;
     }
+  }
+
+  sortBy(field: string): void {
+    if (this.sort.sortby === field) {
+      this.sort.sortdirection = this.sort.sortdirection === 'desc' ? 'asc' : 'desc';
+    } else {
+      this.sort = {
+        sortby: field,
+        sortdirection: 'asc'
+      };
+    }
+    const { sort, initialOffset, initialLimit, filters } = this;
+    this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset, sort, filters }));
   }
 
   private parseDateToStr(date: NgbDateStruct): string {
