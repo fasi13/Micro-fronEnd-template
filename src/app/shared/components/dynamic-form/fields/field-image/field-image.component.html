@@ -1,5 +1,6 @@
 <div 
-  class="fge-dynamic-field form-input" 
+  class="fge-dynamic-field form-input"
+  [ngClass]="{'mb-1': config?.src}"
   [formGroup]="group">
   <label>{{ config.label }}</label>
   <div class="col pr-0">
@@ -18,8 +19,10 @@
         </span>
       </div>
     </div>
-    <a *ngIf="config?.value" [href]="config?.src" target="_blank">
-      <img class="fge-thumb" [src]="config?.src">
-    </a>
   </div>
+</div>
+<div class="col fge-dynamic-field__preview">
+  <a *ngIf="config?.src" [href]="config?.src" target="_blank">
+    <img class="fge-thumb img-thumbnail" [src]="config?.src">
+  </a>
 </div>

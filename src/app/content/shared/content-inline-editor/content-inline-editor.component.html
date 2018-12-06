@@ -7,13 +7,13 @@
     </fge-dynamic-inline-form>
   </div>
   <div class="col-2 pt-1">
-    <button type="button" *ngIf="linkActions?.length > 0" class="btn btn-link"
-      triggers="click" [autoClose]="true" 
-      placement="right" [ngbTooltip]="tipContent">
+    <button type="button" *ngIf="linkActions?.length > 0"
+      class="btn btn-link" placement="right"
+      [autoClose]="true" [ngbPopover]="popContent">
       <i class="fas fa-comment-dots fa-lg text-secondary"></i>
     </button>
   </div>
-  <ng-template #tipContent>
+  <ng-template #popContent>
     <div *ngFor="let link of linkActions; last as isLast">
       <button class="btn-sm dropdown-item fge-clickable" type="button"
         (click)="handleActions(link)">

@@ -21,6 +21,8 @@ export class BreadCrumbComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.pathData) {
+      this.fullPath = '';
+      this.pathList = [];
       this.ellipsisPosition = this.pathData.length > this.maxPathsToShow ? _ceil(this.maxPathsToShow / 2) : -1;
       if (this.ellipsisPosition > 0) {
         const limitPosition = this.pathData.length + this.ellipsisPosition - this.maxPathsToShow;

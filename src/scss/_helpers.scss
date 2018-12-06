@@ -15,6 +15,11 @@
   border: none !important;
 }
 
+.fge-border-box {
+  border: $border-box-light-grey;
+  padding: 0.25rem;
+}
+
 .fge-thumb {
   max-width: 100%;
   max-height: 70px;

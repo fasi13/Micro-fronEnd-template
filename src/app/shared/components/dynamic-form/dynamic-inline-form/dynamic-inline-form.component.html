@@ -13,12 +13,12 @@
         <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></i>
         <button type="submit" class="btn btn-link p-1 fge-clickable"
           [disabled]="loadingAsyncResponse">
-          <i class="fas fa-check-circle fa-lg"></i>
+          <i class="fas fa-check-circle fa-lg text-secondary"></i>
         </button>
         <button type="button" class="btn btn-link p-1 fge-clickable"
           [disabled]="loadingAsyncResponse"
           (click)="handleCancel($event)">
-          <i class="fas fa-times-circle fa-lg"></i>
+          <i class="fas fa-times-circle fa-lg text-secondary"></i>
         </button>
       </div>
     </div>

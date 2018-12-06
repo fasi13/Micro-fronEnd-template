@@ -44,7 +44,7 @@
   }
 }
 
-.fge-dynamic-form__html{
+.fge-dynamic-form__html {
   .note-editor.note-frame {
     border: $border-box-light-grey;
     .note-editable {
@@ -125,19 +125,7 @@
   color: #dc3545;
 }
 
-.fge-dynamic-inline-form__button { 
-  margin-left: -15%;
-}
-
-.fge-dynamic-form--success {
-  margin-left: 25%
-}
-
-.thumb {
-  max-width: 100%;
-  max-height: 70px;
-}
-
-.cust-icon-width {
-  max-width: 15px;
+.fge-dynamic-field__preview {
+  margin-left: 25%;
+  margin-bottom: 15px;
 }
