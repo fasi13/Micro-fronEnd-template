@@ -25,7 +25,7 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   fromDate: NgbDateStruct;
   toDate: NgbDateStruct;
   range_date = '';
-  private sort: { sortby: string, sortdirection: 'asc' | 'desc' };
+  sort: { sortby: string, sortdirection: 'asc' | 'desc' };
 
   private filters: { [key: string]: string };
   private readonly initialOffset = 0;
