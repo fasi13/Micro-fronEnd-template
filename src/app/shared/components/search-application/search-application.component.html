@@ -1,14 +1,9 @@
 <div class="input-group input-group-sm fge-search__input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">
-      <i class="fas fa-search"></i>
-    </span>
-  </div>
   <input
     #inputName
     type="text"
     placeholder="Search application..."
-    class="form-control"
+    class="form-control fge-search__input"
     [(ngModel)]="search"
     (keyup)="onValueChanges($event)"
     (focusin)="onFocusInput($event)"

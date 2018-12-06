@@ -1,9 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
-import { takeWhile, take, tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 import { State, isAuthenticated } from '../store/store.reducers';
 import { Go } from '../store/router';
@@ -11,17 +11,11 @@ import { Go } from '../store/router';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorizedGuard implements CanActivate, OnDestroy {
-
-  private isAliveGuard = true;
+export class AuthorizedGuard implements CanActivate {
 
   constructor(
     private store: Store<State>,
   ) {}
-
-  ngOnDestroy() {
-    this.isAliveGuard = false;
-  }
 
   canActivate(): Observable<boolean> | boolean {
     return this.getAuthStateFromStore();

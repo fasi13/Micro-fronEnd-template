@@ -19,6 +19,21 @@
 
 .fge-search__input-group {
   width: 350px !important;
+
+  &:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 0.765625rem;
+    color: #6C757D;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    content: "\f002";
+  }
+}
+
+.fge-search__input {
+  border-radius: 0.2rem !important;
 }
 
 .fge-search__list-group {

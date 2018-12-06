@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Effect, Actions } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
 
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
