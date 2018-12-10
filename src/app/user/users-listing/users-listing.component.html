@@ -116,7 +116,7 @@
   class="d-flex justify-content-center"
   *ngIf="usersState?.totalCount > usersState?.limit"
   [collectionSize]="usersState?.totalCount"
-  [(page)]="pageNumber"
+  [page]="pageNumber"
   [pageSize]="usersState?.limit"
   [maxSize]="5"
   [rotate]="true"
