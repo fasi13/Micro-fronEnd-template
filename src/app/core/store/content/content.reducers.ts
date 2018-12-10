@@ -148,7 +148,7 @@ export function reducer(state: ContentState = initialState, action: ContentActio
 
     case ContentActionTypes.CONTENT_ACTION_LINK_ERROR:
       return _assign({}, state, {
-        acttion: {
+        action: {
           loading: false,
           error: action.payload
         }

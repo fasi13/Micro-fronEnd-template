@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -19,9 +19,10 @@ import {
   DataType,
   Link
 } from '@forge/core';
-import { FieldConfig } from '@forge/shared';
+import { FieldConfig, ModalConfirmComponent } from '@forge/shared';
 import { dataTypes } from '../content-form-modal/content-data-types.config';
 import { ContentEditorModalComponent } from '../content-editor-modal/content-editor-modal.component';
+import { ModalConfirmConfig } from '../../../shared/components/modal-confirm/modal-confirm.model';
 
 @Component({
   selector: 'fge-content-inline-editor',
@@ -31,8 +32,10 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
   @Input() contentData: ApplicationContent;
   @Input() config: FieldConfig;
+  @ViewChild('confirmModal') confirmModal: ModalConfirmComponent;
 
   linkActions: Link[];
+  configConfirmModal: ModalConfirmConfig;
 
   private routeParamsSubscription: Subscription;
   private applicationId: string;
@@ -40,6 +43,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   private unsubscribeEdition = new Subject();
   private isAliveComponent = true;
   private modalRef: NgbModalRef;
+  private currentLink: Link;
 
   constructor(
     private store: Store<State>,
@@ -73,18 +77,11 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   }
 
   handleActions(link: Link): void {
-    switch (link.rel) {
-      case 'clearContentValue':
-        this.dispatchContentAction(link, { value: '' });
-        this.selectContentAction({ success: 'cleaned', error: 'cleaning' });
-        break;
-      case 'inheritContentValue':
-        this.dispatchContentAction(link, { value: null });
-        this.selectContentAction({ success: 'restored', error: 'restoring' });
-        break;
-      case 'updateContentDescription':
-        this.openContentEditorModal('Text', 'description', link);
-        break;
+    if (link.rel === 'updateContentDescription') {
+      this.openContentEditorModal('Text', 'description', link);
+    } else {
+      this.currentLink = link;
+      this.openModalConfirm();
     }
   }
 
@@ -112,6 +109,20 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  onSubmitConfirmModal() {
+    switch (this.currentLink.rel) {
+      case 'clearContentValue':
+        this.dispatchContentAction(this.currentLink, { value: '' });
+        this.selectContentAction({ success: 'cleaned', error: 'cleaning' });
+        break;
+      case 'inheritContentValue':
+        this.dispatchContentAction(this.currentLink, { value: null });
+        this.selectContentAction({ success: 'restored', error: 'restoring' });
+        break;
+    }
+    this.confirmModal.close();
   }
 
   private dispatchContentAction(link: Link, payload: any) {
@@ -160,6 +171,18 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     this.modalRef.componentInstance.link = link;
     this.modalRef.componentInstance.groupId = this.groupId;
     this.modalRef.componentInstance.config = _assign(_clone(dataTypes[dataType]), { label: fieldToEdit });
+  }
+
+  private openModalConfirm(): void {
+    if (this.currentLink && this.config ) {
+      this.configConfirmModal = {
+        title: 'Action confirmation',
+        message: `Are you sure to ${this.currentLink.name.toLowerCase()} the content "${this.config.label}"?`,
+        submitLabel: 'Accept',
+        cancelLabel: 'Cancel'
+      };
+      this.confirmModal.open();
+    }
   }
 
 }
