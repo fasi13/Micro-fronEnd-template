@@ -7,7 +7,10 @@
     [(ngModel)]="search"
     (keyup)="onValueChanges($event)"
     (focusin)="onFocusInput($event)"
-    (blur)="onFocusOutInput($event)">
+    (blur)="onFocusOutInput($event)"
+    fgeClearInput
+    [(inputClear)]="search"
+    (clearClicked)="resetSearch()">
   <div class="fge-search-application--results" [ngClass]="{'d-block': openResults}">
     <div *ngIf="search?.length < 3; then searchWarn; else searchContent">
     </div>

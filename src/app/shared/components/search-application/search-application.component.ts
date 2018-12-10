@@ -82,6 +82,10 @@ export class SearchApplicationComponent implements OnInit {
     return strPath;
   }
 
+  resetSearch() {
+    this.search = '';
+  }
+
   private initSelectors(): void {
     this.loading$ = this.store.select(isLoadingSearchApplication);
     this.items$ = this.store.select(getSearchApplicationList);

@@ -28,6 +28,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
 import { FocusInputDirective } from './directives/focus-input.directive';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
+import { ClearInputDirective } from './directives/clear-input.directive';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { ComingSoonComponent } from './components/coming-soon/coming-soon.compon
     ModalConfirmComponent,
     FocusInputDirective,
     ResetPasswordComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
+    ClearInputDirective
   ],
   exports: [
     FormsModule,
@@ -74,7 +76,8 @@ import { ComingSoonComponent } from './components/coming-soon/coming-soon.compon
     BreadCrumbComponent,
     NavigationTreeComponent,
     ModalConfirmComponent,
-    DynamicFieldDirective
+    DynamicFieldDirective,
+    ClearInputDirective
   ],
   entryComponents: [
     FieldButtonComponent,
