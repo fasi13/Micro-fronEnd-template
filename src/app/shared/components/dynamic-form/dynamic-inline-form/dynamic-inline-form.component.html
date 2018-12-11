@@ -9,8 +9,8 @@
         [group]="currentForm">
       </ng-container>
       <div class="fge-dynamic-inline-form__src fge-dynamic-field__file-name"
-        *ngIf="config?.fileName && !fieldChanged">
-        {{ config.fileName }}
+        *ngIf="config?.filename && !fieldChanged">
+        {{ config.filename }}
       </div>
       <div class="fge-dynamic-inline-form__button"
         *ngIf="fieldChanged && config.type !== 'select'">

@@ -61,7 +61,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     if (this.config.type === 'image' || this.config.type === 'document') {
       this.config.src = this.contentData.value;
       const fieldSource = this.config.src.split('/');
-      this.config['fileName'] = fieldSource[fieldSource.length - 1];
+      this.config.filename = fieldSource[fieldSource.length - 1];
     } else {
       this.config.value = this.contentData.value;
     }
