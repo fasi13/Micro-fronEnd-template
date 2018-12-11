@@ -36,7 +36,7 @@
 .fge-tree--container {
   position: fixed;
   background-color: white;
-  z-index: $zindex-popover;
+  z-index: 1;
   width: 60%;
   right: 0;
   top: 40px;

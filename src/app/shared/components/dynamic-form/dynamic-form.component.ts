@@ -97,10 +97,10 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   handleSubmit(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
     if (this.form.valid) {
       this.resetAsyncFlags();
-      event.preventDefault();
-      event.stopPropagation();
       this.onsubmit.emit({
         value: this.value,
         success: this.asyncSuccess.bind(this),
@@ -110,6 +110,12 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
       this.validateAllFormFields();
       this.setDisabled('save', !this.form.valid);
     }
+  }
+
+  handleSaveAction(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.handleSubmit(event);
   }
 
   handleCancel(event: Event) {

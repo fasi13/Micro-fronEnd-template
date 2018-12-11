@@ -18,6 +18,7 @@
     <button
       class="fge-dynamic-form__button btn-primary bg-primary ml-auto"
       type="submit"
+      (click)="handleSaveAction($event)"
       [disabled]="loadingAsyncResponse">
       Save
       <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin px-1"></i>

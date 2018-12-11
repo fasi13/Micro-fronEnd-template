@@ -38,6 +38,8 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   @Input() currentApplicationId: string | number;
   @Output() readonly selected: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('scrollContainer') scrollContainerRef: ElementRef;
+  @ViewChild('overlayTemplate') overlayTemplateRef: ElementRef;
+  @ViewChild('applicationForm') applicationFormRef: ElementRef;
 
   treeData: TreeviewData;
   enableScrollTopBtn: boolean;
@@ -47,13 +49,16 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
 
   private mouseoverSubject: BehaviorSubject<string | number> = new BehaviorSubject<string | number>(null);
 
-  @HostListener('document:click', ['$event']) clickedOutside() {
-    this.opened = false;
+  @HostListener('document:click', ['$event']) clickedOutside(event: Event) {
+    this.opened = (this.elementRef.nativeElement.contains(event.target) ||
+      (event.target as Node).contains(this.applicationFormRef.nativeElement)) &&
+      !(event.target as Node).contains(this.overlayTemplateRef.nativeElement);
   }
 
   constructor(
     private navigationTreeService: NavigationTreeService,
-    private store: Store<State>
+    private store: Store<State>,
+    private elementRef: ElementRef
   ) { }
 
   ngOnInit() {

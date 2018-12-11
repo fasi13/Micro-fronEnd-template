@@ -1,4 +1,4 @@
-<div [ngClass]="{'fge-tree--overlay': opened}"></div>
+<div #overlayTemplate [ngClass]="{'fge-tree--overlay': opened}"></div>
 <div
   class="fge-tree--container"
   [ngClass]="{'fge-tree--container-opened': opened, 'fge-tree--container-closed': !opened}"
@@ -67,6 +67,16 @@
           (click)="onMouseoverItem(item, $event)"
           class="fas fa-info-circle"></i>
       </div>
+      <div class="fge-tree--options">
+        <i
+          title="New Application"
+          (click)="applicationForm.open()"
+          class="fas fa-plus"></i>
+        <i
+          title="New Application"
+          (click)="applicationGroupForm.open()"
+          class="fas fa-folder-plus"></i>
+      </div>
     </a>
     <ul *ngIf="!item?.collapsed">
       <ng-container
@@ -118,3 +128,6 @@
     </div>
   </div>
 </ng-template>
+
+<fge-application-form-modal #applicationForm></fge-application-form-modal>
+<fge-application-group-form-modal #applicationGroupForm></fge-application-group-form-modal>

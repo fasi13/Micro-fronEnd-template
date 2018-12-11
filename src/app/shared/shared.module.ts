@@ -29,6 +29,8 @@ import { FocusInputDirective } from './directives/focus-input.directive';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 import { ClearInputDirective } from './directives/clear-input.directive';
+import { ApplicationFormModalComponent } from './components/navigation-tree/application-form-modal/application-form-modal.component';
+import { ApplicationGroupFormModalComponent } from './components/navigation-tree/application-group-form-modal/application-group-form-modal.component';
 
 @NgModule({
   imports: [
@@ -63,7 +65,9 @@ import { ClearInputDirective } from './directives/clear-input.directive';
     FocusInputDirective,
     ResetPasswordComponent,
     ComingSoonComponent,
-    ClearInputDirective
+    ClearInputDirective,
+    ApplicationFormModalComponent,
+    ApplicationGroupFormModalComponent
   ],
   exports: [
     FormsModule,

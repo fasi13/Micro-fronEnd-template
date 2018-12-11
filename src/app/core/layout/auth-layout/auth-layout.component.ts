@@ -60,6 +60,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   toggleHierarchyNavigation(event: Event): void {
+    document.getElementById('sidebarHeader').click();
     event.stopPropagation();
     this.isNavigationModalOpened = !this.isNavigationModalOpened;
   }
