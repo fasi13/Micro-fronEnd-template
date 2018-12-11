@@ -132,6 +132,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
         this.config.splice(this.config.length, 0, dataType);
       }
       this.populateOptionsFor(type, 'Logo Display');
+      this.config = _clone(this.config);
       this.currentType = type;
       this.resetDynamicField();
     }

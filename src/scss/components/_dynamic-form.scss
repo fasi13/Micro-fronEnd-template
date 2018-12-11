@@ -129,3 +129,9 @@
   margin-left: 25%;
   margin-bottom: 15px;
 }
+
+.fge-dynamic-field__file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

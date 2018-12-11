@@ -9,10 +9,10 @@
       class="form-control fge-dynamic-form__input"
       accept=".png, .jpg, .jpeg, .svg, .gif"
       (change)="onFileChange($event)"
-      [ngClass]="{ 'is-invalid': hasError() }"
+      [ngClass]="{ 'is-invalid': hasError() && !config?.src }"
       [attr.placeholder]="config.placeholder"
       [formControlName]="config.name">
-    <div class="invalid-feedback">
+    <div class="invalid-feedback" *ngIf="!config?.src">
       <div *ngFor="let validator of getObjectKeys(config?.validation)">
         <span *ngIf="hasErrorFor(validator)">
           {{config?.validation[validator].errorMsg}}
@@ -21,8 +21,8 @@
     </div>
   </div>
 </div>
-<div class="col fge-dynamic-field__preview">
-  <a *ngIf="config?.src" [href]="config?.src" target="_blank">
+<div class="col-9 pr-0 fge-dynamic-field__preview" *ngIf="config?.src">
+  <a [href]="config?.src" target="_blank">
     <img class="fge-thumb img-thumbnail" [src]="config?.src">
   </a>
 </div>

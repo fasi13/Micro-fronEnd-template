@@ -9,10 +9,10 @@
       class="form-control fge-dynamic-form__input"
       accept=".pdf"
       (change)="onFileChange($event)"
-      [ngClass]="{ 'is-invalid': hasError() }"
+      [ngClass]="{ 'is-invalid': hasError() && !config?.src }"
       [attr.placeholder]="config.placeholder"
       [formControlName]="config.name">
-    <div class="invalid-feedback">
+    <div class="invalid-feedback" *ngIf="!config?.src">
       <div *ngFor="let validator of getObjectKeys(config?.validation)">
         <span *ngIf="hasErrorFor(validator)">
           {{config?.validation[validator].errorMsg}}
@@ -21,10 +21,9 @@
     </div>
   </div>
 </div>
-<div class="col fge-dynamic-field__preview">
-  <a [href]="config?.src" *ngIf="config?.src"
-    class="fge-border-box" target="_blank">
+<div class="col-9 pr-0 fge-dynamic-field__preview fge-dynamic-field__file-name" *ngIf="config?.src">
+  <a [href]="config?.src" target="_blank">
     <img class="fge-custom-icon-width" src="./assets/img/pdf-icon.png">
-    <small class="pl-2">{{config.docName}}</small>
+    <small class="pl-2">{{config?.fileName}}</small>
   </a>
 </div>

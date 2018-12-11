@@ -5,9 +5,11 @@
   <div class="col pr-0">
     <input
       type="text"
+      #textInput
       ngbAutofocus
       fgeFocusInput [focus]="config?.focus"
       class="form-control fge-dynamic-form__input"
+      [title]="config?.value && textInput.value.length > 30 ? textInput.value : ''" 
       [ngClass]="{ 'is-invalid': hasError() }"
       [attr.placeholder]="config?.placeholder"
       [formControlName]="config?.name">
