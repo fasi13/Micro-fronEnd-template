@@ -14,7 +14,6 @@
         cpPositionOffset="1%"
         [ngClass]="{ 'is-invalid': hasError() }"
         [value]="currentColor"
-        (colorPickerChange)="group.get(config.name).setValue($event)"
         (cpInputChange)="group.get(config.name).setValue($event.color)"
         (cpSliderChange)="group.get(config.name).setValue($event.color)"
         class="form-control fge-dynamic-form__input"
