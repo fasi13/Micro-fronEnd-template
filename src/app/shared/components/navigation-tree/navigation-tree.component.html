@@ -71,12 +71,12 @@
         <i
           title="New Application"
           *ngIf="hasAction(item,'createApplication')"
-          (click)="applicationForm.open()"
+          (click)="applicationForm.open('createApplication', item)"
           class="fas fa-plus"></i>
         <i
           title="New Application Group"
           *ngIf="hasAction(item,'createApplicationGroup')"
-          (click)="applicationGroupForm.open()"
+          (click)="applicationGroupForm.open('createApplicationGroup', item)"
           class="fas fa-folder-plus"></i>
       </div>
     </a>
@@ -131,5 +131,5 @@
   </div>
 </ng-template>
 
-<fge-application-form-modal #applicationForm></fge-application-form-modal>
-<fge-application-group-form-modal #applicationGroupForm></fge-application-group-form-modal>
+<fge-application-form-modal #applicationForm (onsubmit)="onSubmitApplicationForm($event)"></fge-application-form-modal>
+<fge-application-group-form-modal #applicationGroupForm (onsubmit)="onSubmitApplicationGroupForm($event)"></fge-application-group-form-modal>

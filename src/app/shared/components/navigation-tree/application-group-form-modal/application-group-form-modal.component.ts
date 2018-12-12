@@ -10,6 +10,7 @@ import { Validators } from '@angular/forms';
 export class ApplicationGroupFormModalComponent implements OnInit {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
+
   config: FieldConfig[];
 
   constructor(
@@ -17,6 +18,25 @@ export class ApplicationGroupFormModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.initFormConfig();
+  }
+
+  open(): void {
+    this.modalService.open(this.modalContent);
+  }
+
+  handleSubmit(event: Event): void {
+    console.log(event);
+  }
+
+  handleCancel(event: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.modalService.dismissAll('cancel');
+  }
+
+  private initFormConfig() {
     this.config = [
       {
         type: 'text',
@@ -31,20 +51,5 @@ export class ApplicationGroupFormModalComponent implements OnInit {
         }
       }
     ];
-  }
-
-  open(): void {
-    this.modalService.open(this.modalContent);
-  }
-
-  handleSubmit(event: Event): void {
-    console.log('Form submit', event);
-  }
-
-  handleCancel(event: Event): void {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.modalService.dismissAll('Cancel');
   }
 }
