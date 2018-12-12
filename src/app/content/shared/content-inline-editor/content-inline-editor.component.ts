@@ -6,6 +6,7 @@ import { NotifierService } from 'angular-notifier';
 import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
 import _find from 'lodash/find';
+import _includes from 'lodash/includes';
 
 import { Observable, Subscription, Subject } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
@@ -163,7 +164,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
   private filterActionTypes() {
     const relsToShow = ['updateContentDescription', 'inheritContentValue', 'clearContentValue'];
-    this.linkActions = this.contentData._links.filter((link: Link) => relsToShow.includes(link.rel));
+    this.linkActions = this.contentData._links.filter((link: Link) => _includes(relsToShow, link.rel));
   }
 
   private openContentEditorModal(dataType: string, fieldToEdit: string, link: Link): void {

@@ -8,10 +8,6 @@
         [config]="config"
         [group]="currentForm">
       </ng-container>
-      <div class="fge-dynamic-inline-form__src fge-dynamic-field__file-name"
-        *ngIf="config?.filename && !fieldChanged">
-        {{ config.filename }}
-      </div>
       <div class="fge-dynamic-inline-form__button"
         *ngIf="fieldChanged && config.type !== 'select'">
         <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></i>

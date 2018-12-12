@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder, ValidatorFn, FormControl } from '@angular/forms';
 import _compact from 'lodash/compact';
+import _includes from 'lodash/includes';
 
 import { FieldConfig } from './models/field-config.model';
 
@@ -62,11 +63,11 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
       const configControls = this.controls.map(item => item.name);
 
       controls
-        .filter(control => !configControls.includes(control))
+        .filter(control => !_includes(configControls, control))
         .forEach(control => this.form.removeControl(control));
 
       configControls
-        .filter(control => !controls.includes(control))
+        .filter(control => !_includes(controls, control))
         .forEach(name => {
           const config = this.config.find(control => control.name === name);
           this.form.addControl(name, this.createControl(config));
