@@ -70,10 +70,12 @@
       <div class="fge-tree--options">
         <i
           title="New Application"
+          *ngIf="hasAction(item,'createApplication')"
           (click)="applicationForm.open()"
           class="fas fa-plus"></i>
         <i
-          title="New Application"
+          title="New Application Group"
+          *ngIf="hasAction(item,'createApplicationGroup')"
           (click)="applicationGroupForm.open()"
           class="fas fa-folder-plus"></i>
       </div>

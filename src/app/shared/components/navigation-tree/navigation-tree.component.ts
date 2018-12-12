@@ -16,7 +16,10 @@ import {
   State,
   ApplicationBranding,
   FetchApplicationPreview,
-  getApplicationPreview
+  getApplicationPreview,
+  ObjectTransactionService,
+  Application,
+  ApplicationService
 } from '@forge/core';
 import { Store } from '@ngrx/store';
 
@@ -33,8 +36,7 @@ import { TreeviewData } from './treeview-data.model';
 export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() opened: boolean;
-  @Input() rootApplicationId: string | number;
-  @Input() rootApplicationName: string;
+  @Input() rootApplication: Application;
   @Input() currentApplicationId: string | number;
   @Output() readonly selected: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('scrollContainer') scrollContainerRef: ElementRef;
@@ -58,19 +60,24 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   constructor(
     private navigationTreeService: NavigationTreeService,
     private store: Store<State>,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private objectTransactionService: ObjectTransactionService,
+    private applicationService: ApplicationService
   ) { }
 
   ngOnInit() {
     this.treeData = {
-      name: this.rootApplicationName,
-      id: this.rootApplicationId,
+      name: this.rootApplication.name,
+      id: this.rootApplication.id,
       collapsed: false,
       executedFetch: true,
       isGroup: false,
+      _links: this.rootApplication._links,
       childrenData: []
     };
-    this.navigationTreeService.getApplicationGroups(this.rootApplicationId)
+    this.applicationService.getApplicationInfo(+this.treeData.id)
+      .subscribe((application: ApiResponse<Application>) => this.treeData._links = application.data._links);
+    this.navigationTreeService.getApplicationGroups(this.rootApplication.id)
     .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, this.treeData));
     this.mouseoverSubject
       .pipe(
@@ -148,6 +155,10 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
     }
   }
 
+  hasAction(item: TreeviewData, actionName: string): boolean {
+    return this.objectTransactionService.hasAction(item, actionName);
+  }
+
   private fetchDataFor(item: TreeviewData) {
     item.executedFetch = true;
     item.loading = true;
@@ -166,7 +177,8 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
       groupData.name,
       groupData.value,
       groupData.hasOwnProperty('isEncrypted'),
-      item.id
+      item.id,
+      groupData._links
     ));
     item.loading = false;
   }

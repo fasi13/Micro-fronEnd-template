@@ -47,8 +47,7 @@
 <fge-navigation-tree
   *ngIf="rootApplication"
   [(opened)]="isNavigationModalOpened"
-  [rootApplicationId]="rootApplication?.id"
-  [rootApplicationName]="rootApplication?.name"
+  [rootApplication]="rootApplication"
   [currentApplicationId]="application?.id"
   (selected)="onAppSelected($event)"
 ></fge-navigation-tree>

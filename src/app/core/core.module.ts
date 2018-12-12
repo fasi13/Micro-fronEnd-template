@@ -19,7 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor, UnauthorizedInterceptor, ProxyApiInterceptor } from './interceptors';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEffects } from './store/content';
-import { ContentService, FgeRouterService } from './services';
+import { ContentService, FgeRouterService, ObjectTransactionService } from './services';
 import { UserEffects } from './store/user';
 import { ResetPasswordEffects } from './store/reset-password';
 import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.component';
@@ -63,6 +63,7 @@ import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.comp
   providers: [
     UserService,
     ContentService,
+    ObjectTransactionService,
     FgeRouterService,
     {
       provide: HTTP_INTERCEPTORS,

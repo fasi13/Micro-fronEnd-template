@@ -1,3 +1,5 @@
+import { Link } from '@forge/core';
+
 export class TreeviewData {
   id: string | number;
   name: string;
@@ -8,8 +10,9 @@ export class TreeviewData {
   childrenData?: TreeviewData[];
   parentId?: string | number;
   loading?: boolean;
+  _links?: Link[];
 
-  constructor(id: string | number, name: string, value: string, isGroup: boolean, parentId: string | number) {
+  constructor(id: string | number, name: string, value: string, isGroup: boolean, parentId: string | number, links: Link[]) {
     this.id = id;
     this.name = name;
     this.value = value;
@@ -19,5 +22,6 @@ export class TreeviewData {
     this.childrenData = [];
     this.parentId = parentId;
     this.loading = false;
+    this._links = links;
   }
 }
