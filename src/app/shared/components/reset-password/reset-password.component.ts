@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import _clone from 'lodash/clone';
 import { Store } from '@ngrx/store';
+import {Location} from '@angular/common';
 
 import { Subject } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
@@ -23,7 +24,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   private isAliveComponent = true;
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -63,5 +65,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
           success();
         }
       });
+  }
+
+  cancel(): void {
+    this.location.back();
   }
 }

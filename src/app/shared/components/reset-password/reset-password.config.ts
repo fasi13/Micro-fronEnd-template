@@ -9,7 +9,7 @@ const currentPassword: FieldConfig = {
   placeholder: 'Current Password',
   validation: {
     required: {
-      errorMsg: 'Password is required',
+      errorMsg: 'Entry required.',
       validator: Validators.required
     }
   }
@@ -21,15 +21,15 @@ const newPassword: FieldConfig = {
   placeholder: 'New password',
   validation: {
     required: {
-      errorMsg: 'Password is required',
+      errorMsg: 'Entry required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'Password should have at least 6 characters',
+      errorMsg: 'Password should have at least 6 characters.',
       validator: Validators.minLength(6)
     },
     maxlength: {
-      errorMsg: 'Password should not have more than 500 characters',
+      errorMsg: 'Password should not have more than 500 characters.',
       validator: Validators.maxLength(500)
     },
   }
@@ -41,19 +41,19 @@ const confirmNewPassword = {
   placeholder: 'Confirm new password',
   validation: {
     required: {
-      errorMsg: 'Confirm password is required',
+      errorMsg: 'Entry required.',
       validator: Validators.required
     },
     minlength: {
-      errorMsg: 'Confirm password should have at least 6 characters',
+      errorMsg: 'Confirm password should have at least 6 characters.',
       validator: Validators.minLength(6)
     },
     maxlength: {
-      errorMsg: 'Confirm password should not have more than 500 characters',
+      errorMsg: 'Confirm password should not have more than 500 characters.',
       validator: Validators.maxLength(500)
     },
     matchPassword: {
-      errorMsg: 'The confirm password does not match with the password',
+      errorMsg: 'The passwords you entered do not match. Please check your typing and try again.',
       validator: ValidateMatchPassword('newPassword')
     }
   }
