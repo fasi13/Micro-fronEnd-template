@@ -35,7 +35,8 @@ export class SidebarComponent implements OnInit {
     this.fgeRouter.navigate(`content/group/${groupId}`);
   }
 
-  goToContentGroups(): void {
+  goToContentGroups(event: Event): void {
+    event.stopPropagation();
     this.fgeRouter.navigate(`content/groups`);
   }
 

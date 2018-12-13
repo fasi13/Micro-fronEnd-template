@@ -10,10 +10,10 @@
           data-target="#collapseExample"
           aria-expanded="false"
           aria-controls="collapseExample">
-          <i class="fas fa-archive"></i>
+          <i class="fas fa-archive" (click)="goToContentGroups($event)"></i>
           <span class="fge-sidebar__item--title">Content Management</span>
         </a>
-        <a (click)="goToContentGroups()" class="btn-sm fge-clickable" *ngIf="active">
+        <a (click)="goToContentGroups($event)" class="btn-sm fge-clickable" *ngIf="active">
           <i class="fas fa-archive"></i>
         </a>
       </li>
