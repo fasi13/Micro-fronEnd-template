@@ -78,6 +78,16 @@
           *ngIf="hasAction(item,'createApplicationGroup')"
           (click)="applicationGroupForm.open('createApplicationGroup', item)"
           class="fas fa-folder-plus"></i>
+        <i
+          title="Edit Application"
+          *ngIf="hasAction(item,'updateApplication') && !item?.isGroup"
+          (click)="applicationForm.open('updateApplication', item, true)"
+          class="fas fa-edit"></i>
+          <i
+          title="Edit Application Group"
+          *ngIf="hasAction(item,'updateApplicationGroup') && item?.isGroup"
+          (click)="applicationGroupForm.open('updateApplicationGroup', item, true)"
+          class="fas fa-edit"></i>
       </div>
     </a>
     <ul *ngIf="!item?.collapsed">

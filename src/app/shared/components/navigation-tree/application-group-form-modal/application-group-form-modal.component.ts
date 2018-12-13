@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
+import _assign from 'lodash/assign';
 
 import { Observable } from 'rxjs';
 
@@ -21,6 +22,7 @@ export class ApplicationGroupFormModalComponent implements OnInit {
 
   private currentActionName: string;
   private currentApplicationNode: TreeviewData;
+  private isEditMode: boolean;
 
   constructor(
     private modalService: NgbModal,
@@ -34,11 +36,11 @@ export class ApplicationGroupFormModalComponent implements OnInit {
 
   open(action: string, application: TreeviewData, edit?: boolean): void {
     if (action) {
+      this.isEditMode = !!edit;
       this.currentActionName = action;
       this.currentApplicationNode = application;
       if (edit) {
         this.config[0].value = application.name;
-        this.config[1].value = application.value;
       }
       this.modalService.open(this.modalContent);
     }
@@ -46,8 +48,8 @@ export class ApplicationGroupFormModalComponent implements OnInit {
 
   handleSubmit({ value, success, error }): void {
     (this.objectTransactionService.performAction(this.currentApplicationNode, this.currentActionName, value) as Observable<any>)
-    .subscribe(() => {
-      this.updateCurrentApplicationNode();
+    .subscribe((response: ApiResponse<any>) => {
+      this.updateCurrentApplicationNode(response);
       success();
       this.modalService.dismissAll();
       this.initFormConfig();
@@ -63,10 +65,13 @@ export class ApplicationGroupFormModalComponent implements OnInit {
     this.initFormConfig();
   }
 
-  private updateCurrentApplicationNode() {
+  private updateCurrentApplicationNode(actionResponse: ApiResponse<any>) {
     const { isGroup, parentId, id } = this.currentApplicationNode;
     this.currentApplicationNode.loading = true;
-    if (isGroup) {
+    if (this.isEditMode) {
+      const { name } = actionResponse.data;
+      _assign(this.currentApplicationNode, { name, loading: false });
+    } else if (isGroup) {
       this.navigationTreeService.getApplications(parentId, id)
         .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToCurrentNode(response, this.currentApplicationNode));
     } else {
