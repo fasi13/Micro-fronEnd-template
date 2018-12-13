@@ -41,7 +41,7 @@ const confirmNewPassword = {
   placeholder: 'Confirm new password',
   validation: {
     required: {
-      errorMsg: 'Confirm password is required.',
+      errorMsg: 'Confirm new password is required.',
       validator: Validators.required
     },
     minlength: {
