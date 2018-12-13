@@ -41,7 +41,6 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   @Output() readonly selected: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('scrollContainer') scrollContainerRef: ElementRef;
   @ViewChild('overlayTemplate') overlayTemplateRef: ElementRef;
-  @ViewChild('applicationForm') applicationFormRef: ElementRef;
 
   treeData: TreeviewData;
   enableScrollTopBtn: boolean;
@@ -53,7 +52,8 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
 
   @HostListener('document:click', ['$event']) clickedOutside(event: Event) {
     this.opened = (this.elementRef.nativeElement.contains(event.target) ||
-      (event.target as Node).contains(this.applicationFormRef.nativeElement)) &&
+      (document.getElementsByClassName('modal-dialog').length > 0 &&
+       document.getElementsByClassName('modal-dialog')[0].contains(event.target as Node))) &&
       !(event.target as Node).contains(this.overlayTemplateRef.nativeElement);
   }
 
