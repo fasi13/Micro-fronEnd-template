@@ -73,6 +73,7 @@ export class ApplicationFormModalComponent implements OnInit {
   }
 
   private mapDataToCurrentNode(response: ApiResponse<DataPaginated<any>>, item: TreeviewData) {
+    item.collapsed = false;
     item.childrenData = response.data.items.map((groupData) => new TreeviewData(
       groupData.id,
       groupData.name,

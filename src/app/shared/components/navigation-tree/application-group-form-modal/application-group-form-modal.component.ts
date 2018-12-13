@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FieldConfig } from '../../dynamic-form';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
+
+import { Observable } from 'rxjs';
+
+import { ObjectTransactionService, ApiResponse, DataPaginated } from '@forge/core';
+import { TreeviewData } from '../treeview-data.model';
+import { NavigationTreeService } from '../navigation-tree.service';
+import { FieldConfig } from '../../dynamic-form';
 
 @Component({
   selector: 'fge-application-group-form-modal',
@@ -13,20 +19,40 @@ export class ApplicationGroupFormModalComponent implements OnInit {
 
   config: FieldConfig[];
 
+  private currentActionName: string;
+  private currentApplicationNode: TreeviewData;
+
   constructor(
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private objectTransactionService: ObjectTransactionService,
+    private navigationTreeService: NavigationTreeService
   ) { }
 
   ngOnInit() {
     this.initFormConfig();
   }
 
-  open(): void {
-    this.modalService.open(this.modalContent);
+  open(action: string, application: TreeviewData, edit?: boolean): void {
+    if (action) {
+      this.currentActionName = action;
+      this.currentApplicationNode = application;
+      if (edit) {
+        this.config[0].value = application.name;
+        this.config[1].value = application.value;
+      }
+      this.modalService.open(this.modalContent);
+    }
   }
 
-  handleSubmit(event: Event): void {
-    console.log(event);
+  handleSubmit({ value, success, error }): void {
+    (this.objectTransactionService.performAction(this.currentApplicationNode, this.currentActionName, value) as Observable<any>)
+    .subscribe(() => {
+      this.updateCurrentApplicationNode();
+      success();
+      this.modalService.dismissAll();
+      this.initFormConfig();
+    },
+    (err) => error(err.error.fields.value));
   }
 
   handleCancel(event: Event): void {
@@ -34,9 +60,36 @@ export class ApplicationGroupFormModalComponent implements OnInit {
       event.stopPropagation();
     }
     this.modalService.dismissAll('cancel');
+    this.initFormConfig();
+  }
+
+  private updateCurrentApplicationNode() {
+    const { isGroup, parentId, id } = this.currentApplicationNode;
+    this.currentApplicationNode.loading = true;
+    if (isGroup) {
+      this.navigationTreeService.getApplications(parentId, id)
+        .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToCurrentNode(response, this.currentApplicationNode));
+    } else {
+      this.navigationTreeService.getApplicationGroups(id)
+        .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToCurrentNode(response, this.currentApplicationNode));
+    }
+  }
+
+  private mapDataToCurrentNode(response: ApiResponse<DataPaginated<any>>, item: TreeviewData) {
+    item.collapsed = false;
+    item.childrenData = response.data.items.map((groupData) => new TreeviewData(
+      groupData.id,
+      groupData.name,
+      groupData.value,
+      groupData.hasOwnProperty('isEncrypted'),
+      item.id,
+      groupData._links
+    ));
+    item.loading = false;
   }
 
   private initFormConfig() {
+    this.currentActionName = '';
     this.config = [
       {
         type: 'text',
