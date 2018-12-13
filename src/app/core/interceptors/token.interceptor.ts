@@ -26,6 +26,9 @@ export class TokenInterceptor implements HttpInterceptor {
           'Content-Type': 'application/json'
         }
       };
+     /*
+      * Setting no-cache headers is just a quick fix to avoid caching API requests in Internet Explorer.
+      */
       const isIE = navigator.userAgent.indexOf('MSIE ') > -1 || navigator.userAgent.indexOf('Trident/') > -1;
       if (isIE) {
         header.setHeaders['Cache-Control'] = 'no-cache';
