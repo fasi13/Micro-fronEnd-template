@@ -152,6 +152,12 @@ ul.fge-tree>li:first-child::before {
   border-radius: 5px;
 }
 
+.fge-tree__span--title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .fge-tree--branding {
 
   margin-right: 50px;
