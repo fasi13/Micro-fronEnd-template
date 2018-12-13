@@ -9,7 +9,7 @@ const currentPassword: FieldConfig = {
   placeholder: 'Current Password',
   validation: {
     required: {
-      errorMsg: 'Entry required.',
+      errorMsg: 'Password is required.',
       validator: Validators.required
     }
   }
@@ -21,7 +21,7 @@ const newPassword: FieldConfig = {
   placeholder: 'New password',
   validation: {
     required: {
-      errorMsg: 'Entry required.',
+      errorMsg: 'New password is required.',
       validator: Validators.required
     },
     minlength: {
@@ -41,7 +41,7 @@ const confirmNewPassword = {
   placeholder: 'Confirm new password',
   validation: {
     required: {
-      errorMsg: 'Entry required.',
+      errorMsg: 'Confirm password is required.',
       validator: Validators.required
     },
     minlength: {
