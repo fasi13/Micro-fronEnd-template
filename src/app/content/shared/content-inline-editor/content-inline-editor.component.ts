@@ -157,8 +157,10 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   private handleDataTypes(dataTypes$: Observable<DataType[]>) {
     dataTypes$.pipe(takeWhile(() => this.isAliveComponent))
     .subscribe((types: DataType[]) => {
-      const appDataType = types.find((dataType: DataType) => dataType.name === 'Logo Display');
-      this.config.options = appDataType.values;
+      if (types) {
+        const appDataType = types.find((dataType: DataType) => dataType.name === 'Logo Display');
+        this.config.options = appDataType.values;
+      }
     });
   }
 
