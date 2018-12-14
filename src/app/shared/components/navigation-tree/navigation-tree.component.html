@@ -32,12 +32,14 @@
 
 <ng-template #treeviewItem let-item="item">
   <li>
-    <a class="fge-tree__a--node" [ngClass]="{'fge-clickable': !item?.isGroup, 'fge-tree__a--group': item?.isGroup}">
+    <a
+      class="fge-tree__a--node fge-clickable"
+      [ngClass]="{'fge-tree__a--group': item?.isGroup}"
+      (click)="toggleCollapse(item, $event)">
       <i
         *ngIf="!item?.loading && !isEmptyItem(item)"
         class="fge-clickable fas"
         [ngClass]="{'fa-plus-circle': item?.collapsed, 'fa-minus-circle': !item?.collapsed}"
-        (click)="toggleCollapse(item, $event)"
       ></i>
       <i
         *ngIf="!item?.loading && isEmptyItem(item)"
@@ -47,11 +49,7 @@
         *ngIf="item?.loading"
         class="fas fa-circle-notch fa-spin"
       ></i>
-      <span
-        class="fge-tree__span--title"
-        ngbTooltip="Go to {{item?.name}}"
-        [disableTooltip]="item?.isGroup || item?.id === currentApplicationId"
-        placement="bottom">
+      <span class="fge-tree__span--title">
         <a
           (click)="goToApplication(item)"
           [ngClass]="{'text-primary font-weight-bold font-italic': !item?.isGroup && item?.id === currentApplicationId,
