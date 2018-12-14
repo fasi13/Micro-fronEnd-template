@@ -19,6 +19,7 @@ import { ContentEditorModalComponent } from './shared/content-editor-modal/conte
 import { SharedModule } from '../shared/shared.module';
 import { ContentEditorComponent } from './shared/content-editor/content-editor.component';
 import { ContentInlineEditorComponent } from './shared/content-inline-editor/content-inline-editor.component';
+import { GroupNotFoundComponent } from './error/group-not-found/group-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'groups' },
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'group/:groupId/content/:contentId/edit',
     component: ContentEditorComponent
+  },
+  {
+    path: 'notFound',
+    component: GroupNotFoundComponent
   }
 ];
 
@@ -58,7 +63,8 @@ const routes: Routes = [
     ContentFormModalComponent,
     ContentEditorModalComponent,
     ContentEditorComponent,
-    ContentInlineEditorComponent
+    ContentInlineEditorComponent,
+    GroupNotFoundComponent
   ],
   entryComponents: [
     ContentFormModalComponent,

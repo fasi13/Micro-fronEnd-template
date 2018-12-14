@@ -40,10 +40,7 @@ export class ApplicationEffects {
       .pipe(
         exhaustMap(this.getApplicationBranding.bind(this)),
         map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-        catchError(error => {
-          this.handleErrorRedirect(error.status);
-          return of(new FetchApplicationDataError({ error }));
-        })
+        catchError(error => of(new FetchApplicationDataError({ error })))
       )
     )
   );
@@ -54,7 +51,10 @@ export class ApplicationEffects {
       .pipe(
         exhaustMap(this.getApplicationBranding.bind(this)),
         map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-        catchError(error => of(new FetchApplicationDataError({ error })))
+        catchError(error => {
+          this.handleErrorRedirect(error.status);
+          return of(new FetchApplicationDataError({ error }));
+        })
       )
     )
   );

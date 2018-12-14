@@ -67,7 +67,8 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   onAppSelected(appId: string): void {
     this.isNavigationModalOpened = false;
-    this.router.navigate([`/tenant/${appId}`]);
+    const currentRoute = this.router.url.split('/').slice(3).join('/');
+    this.router.navigate([`/tenant/${appId}/${currentRoute}`]);
   }
 
   private initSelectors(): void {

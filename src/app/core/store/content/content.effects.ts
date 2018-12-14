@@ -17,9 +17,10 @@ import {
   LinkContentActionCompleted,
   LinkContentActionError
 } from './content.actions';
-import { ContentService } from '../../services';
+import { ContentService, FgeRouterService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
 import { UpdateApplicationData } from '../application';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ContentEffects {
@@ -40,7 +41,10 @@ export class ContentEffects {
       action.payload.groupId, action.payload.fetchContent)
         .pipe(
           map((response: ApiResponse<ContentGroup>) => new FetchContentGroupCompleted(response.data)),
-          catchError(error => of(new FetchContentError({ error: error })))
+          catchError(error => {
+            this.handleErrorRedirect(error.status);
+            return of(new FetchContentError({ error: error }));
+          })
         )
     )
   );
@@ -88,6 +92,17 @@ export class ContentEffects {
   constructor(
     private actions: Actions,
     private contentService: ContentService,
-  ) {
+    private router: Router,
+    private fgeRouter: FgeRouterService
+  ) { }
+
+  private handleErrorRedirect(errorCode) {
+    switch (errorCode) {
+      case 404:
+        this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
+        break;
+      default:
+        this.router.navigate(['error']);
+    }
   }
 }
