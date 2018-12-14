@@ -34,6 +34,7 @@
   <li>
     <a
       class="fge-tree__a--node fge-clickable"
+      title="{{item?.name}}"
       [ngClass]="{'fge-tree__a--group': item?.isGroup}"
       (click)="toggleCollapse(item, $event)">
       <i
@@ -51,7 +52,6 @@
       ></i>
       <span class="fge-tree__span--title">
         <a
-          (click)="goToApplication(item)"
           [ngClass]="{'text-primary font-weight-bold font-italic': !item?.isGroup && item?.id === currentApplicationId,
             'font-weight-light': isEmptyItem(item),
             'fge-tree--selected': !item?.isGroup && item?.id === previewId}">
@@ -61,29 +61,34 @@
       </span>
       <div class="fge-tree--options float-right">
         <i
+          *ngIf="!item?.isGroup && item?.id !== currentApplicationId"
+          title="Go to {{item?.name}}"
+          (click)="$event.stopPropagation(); goToApplication(item)"
+          class="fas fa-sign-in-alt px-1 fge-clickable"></i>
+        <i
           *ngIf="!item?.isGroup"
           title="View Application Branding"
-          (click)="onMouseoverItem(item, $event)"
-          class="fas fa-info-circle"></i>
+          (click)="$event.stopPropagation(); onMouseoverItem(item, $event)"
+          class="fas fa-info-circle px-1 fge-clickable"></i>
         <i
           title="New Application"
           *ngIf="hasAction(item,'createApplication')"
-          (click)="applicationForm.open('createApplication', item)"
+          (click)="$event.stopPropagation(); applicationForm.open('createApplication', item)"
           class="fas fa-plus-square px-1 fge-clickable"></i>
         <i
           title="New Application Group"
           *ngIf="hasAction(item,'createApplicationGroup')"
-          (click)="applicationGroupForm.open('createApplicationGroup', item)"
+          (click)="$event.stopPropagation(); applicationGroupForm.open('createApplicationGroup', item)"
           class="fas fa-folder-plus px-1 fge-clickable"></i>
         <i
           title="Edit Application"
           *ngIf="hasAction(item,'updateApplication') && !item?.isGroup"
-          (click)="applicationForm.open('updateApplication', item, true)"
+          (click)="$event.stopPropagation(); applicationForm.open('updateApplication', item, true)"
           class="fas fa-edit px-1 fge-clickable"></i>
         <i
           title="Edit Application Group"
           *ngIf="hasAction(item,'updateApplicationGroup') && item?.isGroup"
-          (click)="applicationGroupForm.open('updateApplicationGroup', item, true)"
+          (click)="$event.stopPropagation(); applicationGroupForm.open('updateApplicationGroup', item, true)"
           class="fas fa-edit px-1 fge-clickable"></i>
       </div>
     </a>
@@ -138,5 +143,5 @@
   </div>
 </ng-template>
 
-<fge-application-form-modal #applicationForm (onsubmit)="onSubmitApplicationForm($event)"></fge-application-form-modal>
-<fge-application-group-form-modal #applicationGroupForm (onsubmit)="onSubmitApplicationGroupForm($event)"></fge-application-group-form-modal>
+<fge-application-form-modal #applicationForm></fge-application-form-modal>
+<fge-application-group-form-modal #applicationGroupForm></fge-application-group-form-modal>
