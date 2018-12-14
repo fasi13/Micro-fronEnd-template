@@ -37,7 +37,7 @@
   position: fixed;
   background-color: white;
   z-index: 1;
-  width: 60%;
+  width: 80%;
   right: 0;
   top: 40px;
   overflow-x: hidden;
@@ -115,16 +115,15 @@ ul.fge-tree>li:first-child::before {
 
   &:hover {
     .fge-tree--options {
-      display: inline;
-    }  
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      justify-content: flex-end;
+    }
   }
   .fge-tree--options {
     display: none;
   }
-}
-
-.fge-tree--options-visible {
-  display: inline !important;
 }
 
 .fge-tree li a:hover, .fge-tree li a:hover+ul li a,
@@ -146,6 +145,10 @@ ul.fge-tree>li:first-child::before {
   margin-left: 25px;
 }
 
+.fge-tree__a--node {
+  display: flex;
+  align-items: center;
+}
 
 .fge-tree__a--group {
   background-color: #ebebeb;

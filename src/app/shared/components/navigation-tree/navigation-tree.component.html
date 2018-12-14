@@ -32,7 +32,7 @@
 
 <ng-template #treeviewItem let-item="item">
   <li>
-    <a [ngClass]="{'fge-clickable': !item?.isGroup, 'fge-tree__a--group': item?.isGroup}">
+    <a class="fge-tree__a--node" [ngClass]="{'fge-clickable': !item?.isGroup, 'fge-tree__a--group': item?.isGroup}">
       <i
         *ngIf="!item?.loading && !isEmptyItem(item)"
         class="fge-clickable fas"
@@ -61,17 +61,12 @@
           <span *ngIf="item?.value && item?.value >= 0">({{item?.value}})</span>
         </a>
       </span>
-      <div
-        class="fge-tree--options"
-        [ngClass]="{'fge-tree--options-visible': previewId === item?.id}"
-      >
+      <div class="fge-tree--options float-right">
         <i
           *ngIf="!item?.isGroup"
           title="View Application Branding"
           (click)="onMouseoverItem(item, $event)"
           class="fas fa-info-circle"></i>
-      </div>
-      <div class="fge-tree--options float-right">
         <i
           title="New Application"
           *ngIf="hasAction(item,'createApplication')"
