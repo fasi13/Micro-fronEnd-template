@@ -48,7 +48,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   previewLoading: boolean;
   previewId: string | number;
 
-  private mouseoverSubject: BehaviorSubject<string | number> = new BehaviorSubject<string | number>(null);
+  private fetchApplicationBrandingSubject: BehaviorSubject<string | number> = new BehaviorSubject<string | number>(null);
 
   @HostListener('document:click', ['$event']) clickedOutside(event: Event) {
     this.opened = (this.elementRef.nativeElement.contains(event.target) ||
@@ -79,7 +79,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
       .subscribe((application: ApiResponse<Application>) => this.treeData._links = application.data._links);
     this.navigationTreeService.getApplicationGroups(this.rootApplication.id)
     .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, this.treeData));
-    this.mouseoverSubject
+    this.fetchApplicationBrandingSubject
       .pipe(
         debounceTime(300),
         distinctUntilChanged()
@@ -115,6 +115,9 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
     item.collapsed = !!!item.collapsed;
     if (!item.collapsed) {
       (event.currentTarget as any).parentElement.scrollIntoView();
+      if (!item.isGroup) {
+        this.fetchApplicationBranding(item, event);
+      }
     }
     if (!item.executedFetch) {
       this.fetchDataFor(item);
@@ -147,11 +150,11 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
     this.scrollContainerRef.nativeElement.scrollTo(0, 0);
   }
 
-  onMouseoverItem(item: TreeviewData, event: Event): void {
+  fetchApplicationBranding(item: TreeviewData, event: Event): void {
     event.preventDefault();
     this.previewId = item.id;
     if (item && !item.isGroup) {
-      this.mouseoverSubject.next(this.previewId);
+      this.fetchApplicationBrandingSubject.next(this.previewId);
     }
   }
 

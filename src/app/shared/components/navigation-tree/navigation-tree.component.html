@@ -68,7 +68,7 @@
         <i
           *ngIf="!item?.isGroup"
           title="View Application Branding"
-          (click)="$event.stopPropagation(); onMouseoverItem(item, $event)"
+          (click)="$event.stopPropagation(); fetchApplicationBranding(item, $event)"
           class="fas fa-info-circle px-1 fge-clickable"></i>
         <i
           title="New Application"
