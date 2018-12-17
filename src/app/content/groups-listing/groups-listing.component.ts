@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State, getGroups, ApplicationContent, FgeRouterService, isLoadingGroups } from '@forge/core';
 import { Observable } from 'rxjs';
+import { UserPrefenceService, PreferenceType } from 'src/app/core/services/user-prefence.service';
 
 @Component({
   selector: 'fge-groups-listing',
@@ -11,19 +12,28 @@ export class GroupsListingComponent implements OnInit {
 
   groups$: Observable<ApplicationContent[]>;
   loading$: Observable<boolean> | boolean;
-  displayMode = 'list';
+  displayMode: string;
 
   constructor(
     private store: Store<State>,
-    private fgeRouter: FgeRouterService
+    private fgeRouter: FgeRouterService,
+    private userPreference: UserPrefenceService
   ) { }
 
   ngOnInit() {
     this.initSelectors();
+    this.userPreference.getPreference(PreferenceType.GROUP_LISTING_VIEW)
+      .subscribe((value: string) => {
+        this.displayMode = value || 'list';
+      });
   }
 
   goToContentGroup(groupId: string): void {
     this.fgeRouter.navigate(`content/group/${groupId}`);
+  }
+
+  updatePreference(displayMode: string): void {
+    this.userPreference.upsertPreference(PreferenceType.GROUP_LISTING_VIEW, displayMode);
   }
 
   private initSelectors() {
