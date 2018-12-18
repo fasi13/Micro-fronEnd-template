@@ -1,11 +1,11 @@
 .fge-bread-crumb {
-  padding: 0 1rem;
   overflow: auto;
   .breadcrumb {
-    padding: 0;
+    padding: 0 1rem;
     margin-bottom: 0;
     background-color: transparent;
     color: $color-text-white;
+    border-radius: 0;
     a {
       color: $color-text-white;
     }

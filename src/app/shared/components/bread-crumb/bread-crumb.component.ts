@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import _ceil from 'lodash/ceil';
 
-import { ApplicationPath } from '@forge/core';
+import { Application } from '@forge/core';
 
 @Component({
   selector: 'fge-bread-crumb',
@@ -9,11 +9,13 @@ import { ApplicationPath } from '@forge/core';
 })
 export class BreadCrumbComponent implements OnChanges {
 
-  @Input() pathData: ApplicationPath[];
+  @Input() pathData: Application[];
   @Input() maxPathsToShow: number;
+  @Input() eventMode = false;
   @Output() readonly clickLastPath: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() readonly clickPath: EventEmitter<Event> = new EventEmitter<Event>();
 
-  pathList: ApplicationPath[] = [];
+  pathList: Application[];
   ellipsisPosition: number;
   fullPath: string;
 
@@ -41,7 +43,11 @@ export class BreadCrumbComponent implements OnChanges {
   }
 
   onClickPath(event: Event) {
-    this.clickLastPath.emit(event);
+    if (this.eventMode) {
+      this.clickPath.emit(event);
+    } else {
+      this.clickLastPath.emit(event);
+    }
   }
 
   private generatefullPath(pathName: string): void {

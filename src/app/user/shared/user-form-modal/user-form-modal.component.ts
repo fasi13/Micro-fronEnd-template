@@ -19,7 +19,7 @@ export class UserFormModalComponent implements OnDestroy {
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
   mode: 'CREATE' | 'EDIT';
-  applicationId: number;
+  applicationId: string | number;
   user: any;
   config: FieldConfig[];
 
@@ -49,7 +49,7 @@ export class UserFormModalComponent implements OnDestroy {
       this.store.select(getApplicationPath)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((applicationResponse) => {
-        const application = applicationResponse.data[applicationResponse.data.length - 1];
+        const application = applicationResponse.data.path[applicationResponse.data.path.length - 1];
         configNewUserFields[3].value = true;
         configNewUserFields[7].value = application['name'];
         this.applicationId = application['id'];

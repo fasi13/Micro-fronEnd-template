@@ -23,7 +23,7 @@ export interface ApplicationState {
     error?: string;
   };
   path: {
-    data: ApplicationPath[],
+    data: ApplicationPath,
     loading: boolean,
     error?: string;
   };
@@ -31,7 +31,7 @@ export interface ApplicationState {
     branding: ApplicationBranding,
     loading: boolean,
     error?: string;
-  }
+  };
 }
 
 const initialState: ApplicationState = {
@@ -114,7 +114,7 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
     case ApplicationActionTypes.FETCH_APPLICATION_PATH_SUCCESS:
       return _assign({}, state, {
         path: {
-          data: action.payload.data.path,
+          data: action.payload.data,
           loading: false
         }
       });

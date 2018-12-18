@@ -1,8 +1,8 @@
 <nav class="fge-bread-crumb" aria-label="breadcrumb">
-  <ol class="breadcrumb">
+  <ol class="breadcrumb bg-primary">
     <li class="breadcrumb-item"
       *ngFor="let path of pathList; last as isLast; index as position;">
-      <a *ngIf="!isLast && position !== ellipsisPosition" [routerLink]="['/tenant/', path.id]">
+      <a *ngIf="!isLast && position !== ellipsisPosition && !eventMode" [routerLink]="['/tenant/', path.id]">
         {{path.name}}
       </a>
       <span *ngIf="position === ellipsisPosition">
@@ -10,7 +10,10 @@
           placement="bottom" [ngbTooltip]="fullPath">
         </i>
       </span>
-      <span *ngIf="isLast" class="fge-clickable" (click)="onClickPath($event)">
+      <span *ngIf="isLast && !eventMode" class="fge-clickable" (click)="onClickPath($event)">
+        {{path.name}}
+      </span>
+      <span *ngIf="eventMode" class="fge-clickable" [id]="path.id" (click)="onClickPath($event)">
         {{path.name}}
       </span>
     </li>

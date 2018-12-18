@@ -14,7 +14,6 @@ import {
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
 import { FgeRouterService } from '../../services/_fge-router.service';
-import { ApplicationPath } from '../../models';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -25,8 +24,8 @@ import { Router } from '@angular/router';
 export class AuthLayoutComponent implements OnInit, OnDestroy {
 
   application: Application;
-  rootApplication: ApplicationPath;
-  pathData: ApplicationPath[];
+  rootApplication: Application;
+  pathData: Application[];
   user: User;
   branding: ApplicationBranding;
   loading$: Observable<boolean> | boolean = true;
@@ -93,8 +92,8 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
       )
       .subscribe(path => {
         if (path && path.data) {
-          this.pathData = path.data;
-          this.rootApplication = path.data[0];
+          this.pathData = path.data.path;
+          this.rootApplication = this.pathData[0];
         }
       });
   }

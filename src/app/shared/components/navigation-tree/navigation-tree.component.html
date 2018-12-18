@@ -4,6 +4,12 @@
   [ngClass]="{'fge-tree--container-opened': opened, 'fge-tree--container-closed': !opened}"
   (click)="clickedInside($event)">
   <p class="h4 p-3 text-center fge-tree--container-header">Application Hierarchy</p>
+  <fge-bread-crumb
+    [pathData]="pathData"
+    [maxPathsToShow]="10"
+    [eventMode]="true"
+    (clickPath)="goToHierarchy($event)">
+  </fge-bread-crumb>
   <a
     title="Go to top"
     *ngIf="opened && enableScrollTopBtn"
@@ -31,7 +37,7 @@
 </div>
 
 <ng-template #treeviewItem let-item="item">
-  <li>
+  <li [id]="getPathId(item)">
     <a
       class="fge-tree__a--node fge-clickable"
       title="{{item?.name}}"

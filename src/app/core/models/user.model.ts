@@ -8,7 +8,7 @@ export class User {
     lastName?: string;
     emailAddress?: string;
     isActive?: boolean;
-    applicationId?: number;
+    applicationId?: string | number;
     password?: string;
     _links?: Link[];
     actions?: MappedLinks;
