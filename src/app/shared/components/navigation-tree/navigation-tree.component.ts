@@ -51,7 +51,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   private fetchApplicationBrandingSubject: BehaviorSubject<string | number> = new BehaviorSubject<string | number>(null);
 
   @HostListener('document:click', ['$event']) clickedOutside(event: Event) {
-    this.opened = (this.elementRef.nativeElement.contains(event.target) ||
+    this.opened = this.opened && (this.elementRef.nativeElement.contains(event.target) ||
       (document.getElementsByClassName('modal-dialog').length > 0 &&
        document.getElementsByClassName('modal-dialog')[0].contains(event.target as Node))) &&
       !(event.target as Node).contains(this.overlayTemplateRef.nativeElement);
