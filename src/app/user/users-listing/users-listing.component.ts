@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { Subject } from 'rxjs';
@@ -109,6 +109,7 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
     const offset = (index - 1) * limit;
     const { sort, filters } = this;
     this.store.dispatch(new FetchUsers({ offset, limit, filters, sort }));
+    window.scrollTo(0, 0);
   }
 
   onPerformFilter(): void {
