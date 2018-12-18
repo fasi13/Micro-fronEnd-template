@@ -111,16 +111,24 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   toggleCollapse(item: TreeviewData, event: Event) {
+    const elementSource = (event as any).path[1];
     event.stopPropagation();
     item.collapsed = !!!item.collapsed;
     if (!item.collapsed) {
-      (event.currentTarget as any).parentElement.scrollIntoView();
       if (!item.isGroup) {
         this.fetchApplicationBranding(item, event);
       }
     }
     if (!item.executedFetch) {
-      this.fetchDataFor(item);
+      this.fetchDataFor(item, () => {
+        if (!item.collapsed) {
+          this.scrollElementIntoView(this.scrollContainerRef.nativeElement, elementSource);
+        }
+      });
+    } else {
+      if (!item.collapsed) {
+        this.scrollElementIntoView(this.scrollContainerRef.nativeElement, elementSource);
+      }
     }
   }
 
@@ -162,19 +170,36 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
     return this.objectTransactionService.hasAction(item, actionName);
   }
 
-  private fetchDataFor(item: TreeviewData) {
+  private scrollElementIntoView(container, element) {
+    /**
+     * Required timeout since we dont know how many time will take
+     *  the change detector to detect the updated node and then render
+     *  the UI, so that currently we are using a timeout of 100ms
+     */
+    setTimeout(() => {
+      const cTop = container.scrollTop;
+      const cBottom = cTop + container.clientHeight;
+      const eTop = cTop + element.getBoundingClientRect().top;
+      const eBottom = eTop + element.parentElement.clientHeight;
+      if (eBottom > cBottom) {
+        element.parentElement.scrollIntoView();
+      }
+    }, 100);
+  }
+
+  private fetchDataFor(item: TreeviewData, completed: () => void) {
     item.executedFetch = true;
     item.loading = true;
     if (item.isGroup) {
       this.navigationTreeService.getApplications(item.parentId, item.id)
-        .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, item));
+        .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, item, completed));
     } else {
       this.navigationTreeService.getApplicationGroups(item.id)
-        .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, item));
+        .subscribe((response: ApiResponse<DataPaginated<any>>) => this.mapDataToTreeview(response, item, completed));
     }
   }
 
-  private mapDataToTreeview(response: ApiResponse<DataPaginated<any>>, item: TreeviewData): void {
+  private mapDataToTreeview(response: ApiResponse<DataPaginated<any>>, item: TreeviewData, completed?: () => void): void {
     item.childrenData = response.data.items.map((groupData) => new TreeviewData(
       groupData.id,
       groupData.name,
@@ -184,5 +209,8 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
       groupData._links
     ));
     item.loading = false;
+    if (completed) {
+      completed();
+    }
   }
 }
