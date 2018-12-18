@@ -107,8 +107,8 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
   onPageChange(index: number): void {
     const { limit } = this.usersState;
     const offset = (index - 1) * limit;
-    const { sort } = this;
-    this.store.dispatch(new FetchUsers({ offset, limit, sort }));
+    const { sort, filters } = this;
+    this.store.dispatch(new FetchUsers({ offset, limit, filters, sort }));
   }
 
   onPerformFilter(): void {
