@@ -56,10 +56,10 @@
     box-shadow: 0 0px 5px -2px grey;
     background-color: #F5F5F5;
   }
-}
 
-.fge-tree--container-header, h4 {
-  margin-bottom: 0.1rem;
+  &-header, h4 {
+    margin-bottom: 1px;
+  }
 }
 
 .fge-tree--container-opened {
