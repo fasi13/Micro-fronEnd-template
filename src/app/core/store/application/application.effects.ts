@@ -156,12 +156,8 @@ export class ApplicationEffects {
   }
 
   private handleErrorRedirect(errorCode) {
-    switch (errorCode) {
-      case 404:
-        this.router.navigate(['error/application']);
-        break;
-      default:
-        this.router.navigate(['error']);
+    if (errorCode === 404) {
+      this.router.navigate(['error/application']);
     }
   }
 }

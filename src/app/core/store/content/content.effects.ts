@@ -20,7 +20,6 @@ import {
 import { ContentService, FgeRouterService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
 import { UpdateApplicationData } from '../application';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class ContentEffects {
@@ -92,17 +91,12 @@ export class ContentEffects {
   constructor(
     private actions: Actions,
     private contentService: ContentService,
-    private router: Router,
     private fgeRouter: FgeRouterService
   ) { }
 
   private handleErrorRedirect(errorCode) {
-    switch (errorCode) {
-      case 404:
-        this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
-        break;
-      default:
-        this.router.navigate(['error']);
+    if (errorCode === 404) {
+      this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
     }
   }
 }
