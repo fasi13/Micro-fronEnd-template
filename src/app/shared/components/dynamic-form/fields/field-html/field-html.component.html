@@ -1,20 +1,21 @@
 <div 
-  class="fge-dynamic-field form-input" 
+  class="form-group row fge-dynamic-field form-input" 
   [formGroup]="group">
-  <label *ngIf="config.label">{{ config.label }}</label>
-  <div class="col pr-0 fge-dynamic-form__html" 
-    [ngClass]="{'pl-0': !config.label, 'is-invalid': hasError()}">
+  <label class="col-3 col-form-label" *ngIf="config.label">{{ config.label }}</label>
+  <div class="col fge-dynamic-form__html" 
+    [ngClass]="{'is-invalid': hasError(), 'col-9': config.label}">
     <div class="form-control"
       [ngClass]="{ 'is-invalid': hasError() }"
       [ngxSummernote]="configSummernote"
       [formControlName]="config?.name">
     </div>
-    <div class="invalid-feedback">
-      <div *ngFor="let validator of getObjectKeys(config?.validation)">
-        <span *ngIf="hasErrorFor(validator)">
-          {{config?.validation[validator].errorMsg}}
-        </span>
-      </div>
-    </div>
+  </div>
+  <div class="offset-3 col-9 invalid-feedback"
+    [ngClass]="{ 'd-block': hasError() }">
+    <span *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </span>
   </div>
 </div>

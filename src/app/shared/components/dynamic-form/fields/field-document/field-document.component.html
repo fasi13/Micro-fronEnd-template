@@ -1,9 +1,9 @@
 <div 
-  class="fge-dynamic-field form-input"
+  class="form-group row fge-dynamic-field form-input"
   [ngClass]="{'mb-1': config?.src}"
   [formGroup]="group">
-  <label>{{ config.label }}</label>
-  <div class="col pr-0">
+  <label class="col-3 col-form-label">{{ config.label }}</label>
+  <div class="col-9">
     <input
       type="file"
       class="form-control fge-dynamic-form__input"
@@ -12,18 +12,21 @@
       [ngClass]="{ 'is-invalid': hasError() && !config?.src }"
       [attr.placeholder]="config.placeholder"
       [formControlName]="config.name">
-    <div class="invalid-feedback" *ngIf="!config?.src">
-      <div *ngFor="let validator of getObjectKeys(config?.validation)">
-        <span *ngIf="hasErrorFor(validator)">
-          {{config?.validation[validator].errorMsg}}
-        </span>
-      </div>
-    </div>
+  </div>
+  <div class="offset-3 col-9 invalid-feedback" *ngIf="!config?.src"
+    [ngClass]="{ 'd-block': hasError() }">
+    <span *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </span>
   </div>
 </div>
-<div class="col-9 pr-0 fge-dynamic-field__preview fge-dynamic-field__file-name" *ngIf="config?.src">
-  <a [href]="config?.src" target="_blank">
-    <img class="fge-custom-icon-width" src="./assets/img/pdf-icon.png">
-    <small class="pl-2">{{config?.filename}}</small>
-  </a>
+<div class="row">
+  <div class="offset-3 col-9 fge-dynamic-field__preview" *ngIf="config?.src">
+    <a [href]="config?.src" target="_blank">
+      <img class="fge-custom-icon-width" src="./assets/img/pdf-icon.png">
+      <small class="pl-2">{{config?.filename}}</small>
+    </a>
+  </div>
 </div>

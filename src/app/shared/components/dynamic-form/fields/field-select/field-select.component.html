@@ -1,8 +1,8 @@
 <div 
-  class="fge-dynamic-field form-select"
+  class="form-group row fge-dynamic-field form-select"
   [formGroup]="group">
-  <label>{{ config.label }}</label>
-  <div class="col pr-0">
+  <label class="col-3 col-form-label">{{ config.label }}</label>
+  <div class="col-9">
     <select
       [formControlName]="config.name"
       [ngClass]="{ 'is-invalid': hasError() }"
@@ -12,12 +12,13 @@
         {{ option }}
       </option>
     </select>
-    <div class="invalid-feedback">
-      <div *ngFor="let validator of getObjectKeys(config?.validation)">
-        <span *ngIf="hasErrorFor(validator)">
-          {{config?.validation[validator].errorMsg}}
-        </span>
-      </div>
-    </div>
+  </div>
+  <div class="offset-3 col-9 invalid-feedback"
+    [ngClass]="{ 'd-block': hasError() }">
+    <span *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </span>
   </div>
 </div>

@@ -1,8 +1,8 @@
 <div
-  class="fge-dynamic-field form-input"
+  class="form-group row fge-dynamic-field form-input"
   [formGroup]="group">
-  <label>{{ config.label }}</label>
-  <div class="col pr-0">
+  <label class="col-3 col-form-label">{{ config.label }}</label>
+  <div class="col-9">
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text" [style.backgroundColor]="currentColor"></span>
@@ -19,13 +19,14 @@
         class="form-control fge-dynamic-form__input"
         maxlength="7"
         [formControlName]="config.name">
-      <div class="invalid-feedback">
-        <div *ngFor="let validator of getObjectKeys(config?.validation)">
-          <span *ngIf="hasErrorFor(validator)">
-            {{ config?.validation[validator].errorMsg }}
-          </span>
-        </div>
-      </div>
     </div>
+  </div>
+  <div class="offset-3 col-9 invalid-feedback"
+    [ngClass]="{ 'd-block': hasError() }">
+    <span *ngFor="let validator of getObjectKeys(config?.validation)">
+      <span *ngIf="hasErrorFor(validator)">
+        {{config?.validation[validator].errorMsg}}
+      </span>
+    </span>
   </div>
 </div>
