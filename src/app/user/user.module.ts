@@ -6,6 +6,7 @@ import { UsersListgingComponent } from './users-listing/users-listing.component'
 import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { ApplicationPathPipe } from './shared/application-path.pipe';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list' },
@@ -21,6 +22,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [ UsersListgingComponent, UserFormModalComponent ]
+  declarations: [ UsersListgingComponent, UserFormModalComponent, ApplicationPathPipe ]
 })
 export class UserModule { }

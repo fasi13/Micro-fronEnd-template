@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeWhile, takeUntil } from 'rxjs/operators';
 
-import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, ApplicationPath } from '@forge/core';
+import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, ApplicationPath, User } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 
 @Component({
@@ -91,19 +91,6 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
     return name;
   }
 
-  getApplicationPath(application: ApplicationPath): string {
-    const appPath = application.path;
-    let strPath = '';
-    appPath.forEach((element, index, array) => {
-      if (element) {
-        const separator = index === array.length - 1 ? '' : ' > ';
-        const elementId = (element && +element.value > -1) ? ` (${element.value})` : '';
-        strPath += `${element.name}${elementId}${separator}`;
-      }
-    });
-    return strPath;
-  }
-
   onPageChange(index: number): void {
     const { limit } = this.usersState;
     const offset = (index - 1) * limit;
@@ -137,6 +124,10 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
     }
     const { sort, initialOffset, initialLimit, filters } = this;
     this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset, sort, filters }));
+  }
+
+  trackByUserId(index: number, item: User) {
+    return item.id;
   }
 
   private initSelectors() {
