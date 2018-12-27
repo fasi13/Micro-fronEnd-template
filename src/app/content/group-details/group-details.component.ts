@@ -34,7 +34,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   currentGroup: ContentGroup;
   loading$: Observable<boolean> | boolean;
   editMode: boolean;
-  editableContents: any;
+  editableContents: any[];
   applicationId: number;
   adaContent: string;
 
@@ -64,10 +64,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.isAliveComponent = false;
-  }
-
-  parseToDate(strDate: string): Date {
-    return new Date(strDate);
   }
 
   openContentForm(): void {

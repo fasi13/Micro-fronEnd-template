@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeWhile, takeUntil } from 'rxjs/operators';
 
-import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, ApplicationPath, User } from '@forge/core';
+import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, User } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 
 @Component({
@@ -126,7 +126,7 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset, sort, filters }));
   }
 
-  trackByUserId(index: number, item: User) {
+  trackByUserId(index: number, item: User): number {
     return item.id;
   }
 
