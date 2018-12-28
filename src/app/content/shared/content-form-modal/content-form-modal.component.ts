@@ -140,7 +140,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
 
   private resetDynamicField() {
     setTimeout(() => {
-      const dynamicValueControl = this.form.controls.dynamicValue;
+      const dynamicValueControl = this.form.form.controls.dynamicValue;
       if (dynamicValueControl) {
         dynamicValueControl.reset();
       }
