@@ -44,6 +44,12 @@
   }
 }
 
+.fge-dynamic-form__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .fge-dynamic-form__html {
   .note-editor.note-frame {
     border: $border-box-light-grey;

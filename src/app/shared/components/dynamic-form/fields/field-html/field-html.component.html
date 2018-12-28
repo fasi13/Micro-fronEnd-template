@@ -1,7 +1,7 @@
 <div 
   class="form-group row fge-dynamic-field form-input" 
   [formGroup]="group">
-  <label class="col-3 col-form-label" *ngIf="config.label">{{ config.label }}</label>
+  <label class="col-3 col-form-label fge-dynamic-form__label" *ngIf="config.label" title="{{config.label}}">{{ config.label }}</label>
   <div class="col fge-dynamic-form__html" 
     [ngClass]="{'is-invalid': hasError(), 'col-9': config.label}">
     <div class="form-control"
