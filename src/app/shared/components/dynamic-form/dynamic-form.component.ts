@@ -79,6 +79,7 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
     this.changes.subscribe(() => {
       if (this.form.valid) {
         this.setDisabled('save', false);
+        this.errors = null;
       }
     });
   }

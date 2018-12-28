@@ -10,8 +10,8 @@
       [formControlName]="config?.name">
     </div>
   </div>
-  <div class="offset-3 col-9 invalid-feedback"
-    [ngClass]="{ 'd-block': hasError() }">
+  <div class="invalid-feedback"
+    [ngClass]="{ 'd-block': hasError(), 'offset-3 col-9': config.label, 'col-12': !config.label }">
     <span *ngFor="let validator of getObjectKeys(config?.validation)">
       <span *ngIf="hasErrorFor(validator)">
         {{config?.validation[validator].errorMsg}}

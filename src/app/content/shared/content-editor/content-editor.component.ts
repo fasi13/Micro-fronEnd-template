@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
@@ -27,7 +27,7 @@ import { dataTypes } from '../content-form-modal/content-data-types.config';
   selector: 'fge-content-editor',
   templateUrl: './content-editor.component.html'
 })
-export class ContentEditorComponent implements OnInit, OnDestroy {
+export class ContentEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
@@ -54,6 +54,12 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
     this.initContent();
   }
 
+  ngAfterViewInit() {
+    this.form.changes.subscribe(() => {
+      this.form.validateAllFormFields();
+    });
+  }
+
   ngOnDestroy() {
     this.isAliveComponent = false;
     this.routeParamsSubscription.unsubscribe();
@@ -74,9 +80,7 @@ export class ContentEditorComponent implements OnInit, OnDestroy {
       )
       .subscribe((content: ApplicationContent) => {
         if (content) {
-          this.config = _assign(_clone(dataTypes['HTML']), { label: false });
-          this.config.focus = true;
-          this.config.value = content.value;
+          this.config = _assign(_clone(dataTypes['HTML']), { label: false, value: content.value, focus: true });
           this.currentContent = content;
         }
       });
