@@ -24,6 +24,10 @@ export interface ContentState {
     loading: boolean,
     error?: any
   };
+  contentGroup: {
+    loading: boolean,
+    error?: any
+  };
   error?: any;
 }
 
@@ -45,6 +49,10 @@ const initialState: ContentState = {
     error: null
   },
   action: {
+    loading: false,
+    error: null
+  },
+  contentGroup: {
     loading: false,
     error: null
   }
@@ -154,6 +162,28 @@ export function reducer(state: ContentState = initialState, action: ContentActio
         }
       });
 
+    case ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION:
+    return _assign({}, state, {
+      contentGroup: _assign({}, state, {
+        loading: true
+      })
+    });
+
+    case ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION_COMPLETED:
+      return _assign({}, state, {
+        contentGroup: {
+          loading: false
+        }
+      });
+
+    case ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION_ERROR:
+      return _assign({}, state, {
+        contentGroup: {
+          loading: false,
+          error: action.payload
+        }
+      });
+
     default:
       return state;
   }
@@ -167,3 +197,4 @@ export const getGroup = (state: ContentState) => state.group.data;
 export const getContent = (state: ContentState) => state.content.data;
 export const getRecordState = (state: ContentState) => state.record;
 export const getActionState = (state: ContentState) => state.action;
+export const getContentGroupState = (state: ContentState) => state.contentGroup;

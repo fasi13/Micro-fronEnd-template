@@ -82,6 +82,7 @@ export const isLoadingContent = createSelector(getContentState, ContentReducers.
 export const getContent = createSelector(getContentState, ContentReducers.getContent);
 export const getContentRecordState = createSelector(getContentState, ContentReducers.getRecordState);
 export const getContentActionState = createSelector(getContentState, ContentReducers.getActionState);
+export const getContentGroupState = createSelector(getContentState, ContentReducers.getContentGroupState);
 
 /**********************************************************
  * User Reducers

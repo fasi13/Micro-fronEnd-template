@@ -15,11 +15,15 @@ import {
   TransactionContentRecordCompleted,
   TransactionContentRecordError,
   LinkContentActionCompleted,
-  LinkContentActionError
+  LinkContentActionError,
+  ContentGroupRecordTransactionCompleted,
+  ContentGroupRecordTransactionError
 } from './content.actions';
 import { ContentService, FgeRouterService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup } from '../../models';
 import { UpdateApplicationData } from '../application';
+
+enum ContentGroupMethods { POST = 'addContentGroup', PUT = 'updateContentGroup' }
 
 @Injectable()
 export class ContentEffects {
@@ -88,6 +92,20 @@ export class ContentEffects {
     )
   );
 
+  @Effect() public contentGroupTransaction: Observable<Action> = this.actions.pipe(
+    ofType(ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION),
+      switchMap((action: any): any => this.handleContentGroupRequest(action.payload, action.method)
+        .pipe(
+          mergeMap(() => {
+            return of(new ContentGroupRecordTransactionCompleted());
+          }),
+          catchError((error) => {
+            return of(new ContentGroupRecordTransactionError({error: error}));
+          })
+        )
+      )
+  );
+
   constructor(
     private actions: Actions,
     private contentService: ContentService,
@@ -97,6 +115,14 @@ export class ContentEffects {
   private handleErrorRedirect(errorCode) {
     if (errorCode === 404) {
       this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
+    }
+  }
+
+  private handleContentGroupRequest(payload, method): any {
+    if (method === 'POST') {
+      return this.contentService[ContentGroupMethods[method]](payload.applicationId, payload.groupName);
+    } else {
+      return this.contentService[ContentGroupMethods[method]](payload.applicationId, payload.id, payload.groupName);
     }
   }
 }

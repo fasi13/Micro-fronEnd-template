@@ -16,7 +16,10 @@ export const ContentActionTypes = {
   CONTENT_RECORD_TRANSACTION_ERROR: ActionType('CONTENT_RECORD_TRANSACTION_ERROR'),
   CONTENT_ACTION_LINK: ActionType('CONTENT_ACTION_LINK'),
   CONTENT_ACTION_LINK_COMPLETED: ActionType('CONTENT_ACTION_LINK_COMPLETED'),
-  CONTENT_ACTION_LINK_ERROR: ActionType('CONTENT_ACTION_LINK_ERROR')
+  CONTENT_ACTION_LINK_ERROR: ActionType('CONTENT_ACTION_LINK_ERROR'),
+  CONTENT_GROUP_RECORD_TRANSACTION: ActionType('CONTENT_GROUP_RECORD_TRANSACTION'),
+  CONTENT_GROUP_RECORD_TRANSACTION_COMPLETED: ActionType('CONTENT_GROUP_RECORD_TRANSACTION_COMPLETED'),
+  CONTENT_GROUP_RECORD_TRANSACTION_ERROR: ActionType('CONTENT_GROUP_RECORD_TRANSACTION_ERROR')
 };
 
 export class FetchContent implements Action {
@@ -81,6 +84,21 @@ export class LinkContentActionCompleted implements Action {
 
 export class LinkContentActionError implements Action {
   public type: string = ContentActionTypes.CONTENT_ACTION_LINK_ERROR;
+  constructor(public payload?: any) {}
+}
+
+export class ContentGroupRecordTransaction implements Action {
+  public type: string = ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION;
+  constructor(public payload?: any, public method?: string) {}
+}
+
+export class ContentGroupRecordTransactionCompleted implements Action {
+  public type: string = ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION_COMPLETED;
+  constructor(public payload?: any) {}
+}
+
+export class ContentGroupRecordTransactionError implements Action {
+  public type: string = ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION_ERROR;
   constructor(public payload?: any) {}
 }
 
