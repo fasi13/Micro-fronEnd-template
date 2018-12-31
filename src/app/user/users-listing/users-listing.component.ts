@@ -126,7 +126,7 @@ export class UsersListgingComponent implements OnInit, OnDestroy {
     this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset, sort, filters }));
   }
 
-  trackByUserId(index: number, item: User): number {
+  trackByUserId(_index, item: User): number {
     return item.id;
   }
 
