@@ -12,7 +12,8 @@
       <fge-dynamic-form
         [fieldsConfig]="config"
         #form="fgeDynamicForm"
-        (onsubmit)="onSubmit($event)">
+        (onsubmit)="onSubmit($event)"
+        (oncancel)="handleCancel($event)">
     </fge-dynamic-form>
   </div>
 </ng-template>

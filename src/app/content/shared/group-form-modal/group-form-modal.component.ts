@@ -82,7 +82,10 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleCancel() {
+  handleCancel(event: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.modalService.dismissAll();
   }
 
