@@ -3,6 +3,7 @@
 /* Base Variables */
 @import "./_base-variables.scss";
 @import "./_variables.scss";
+@import "./_base-styles.scss";
 
 /* Overwrite */
 @import "./_overwrite.scss";
@@ -18,7 +19,7 @@
 @import "./node_modules/angular-notifier/styles.scss";
 @import '~summernote/dist/summernote-lite.css';
 
-/* shared styles */
+/* Shared Styles */
 @import "./_helpers.scss";
 @import "./_mixins.scss";
 
