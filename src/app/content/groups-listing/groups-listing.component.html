@@ -15,8 +15,14 @@
       </label>
     </div>
   </h4>
-  <div class="col text-right">
-    <button type="button" class="btn btn-link" (click)="groupFormModal.open()"><i class="fas fa-folder-plus fa-lg text-secondary"></i></button>
+  <div class="col text-right align-self-center">
+    <button
+      type="button"
+      class="btn btn-sm btn-secondary bg-secondary"
+      (click)="groupFormModal.open()">
+      Add Group
+      <i class="fas fa-folder-plus fa-lg pl-1"></i>
+    </button>
   </div>
 </div>
 <div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>

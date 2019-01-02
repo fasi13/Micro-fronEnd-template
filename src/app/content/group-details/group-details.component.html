@@ -9,12 +9,18 @@
       [ngClass]="{'btn-link': !editMode, 'btn-primary bg-primary': editMode}"
       (click)="toggleEditMode()"
     >
-      <i class="fas fa-edit"></i>
-      Edit
+    Edit
+    <i class="fas fa-edit pl-1"></i>
     </button>
   </h4>
-  <div class="col text-right">
-    <button type="button" class="btn btn-link" (click)="openContentForm()"><i class="fas fa-folder-plus fa-lg text-secondary"></i></button>
+  <div class="col text-right align-self-center">
+    <button
+      type="button"
+      class="btn btn-sm btn-secondary bg-secondary"
+      (click)="openContentForm()">
+      Add Content
+      <i class="fas fa-folder-plus fa-lg pl-1"></i>
+    </button>
   </div>
 </div>
 
