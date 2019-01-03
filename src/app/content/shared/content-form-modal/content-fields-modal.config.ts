@@ -49,6 +49,7 @@ export const config: FieldConfig[] = [
     name: 'type',
     options: [],
     placeholder: 'Select Data Type',
+    value: '',
     validation: {
       required: {
         errorMsg: 'Please select a Data Type',

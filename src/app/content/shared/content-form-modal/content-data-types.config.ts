@@ -74,6 +74,7 @@ export const dataTypes: ContentDataType = {
     name: 'dynamicValue',
     options: [],
     placeholder: 'Select Logo Display',
+    value: '',
     validation: {
       required: {
         errorMsg: 'Please select a Logo Display',
