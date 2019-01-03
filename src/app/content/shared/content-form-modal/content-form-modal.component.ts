@@ -63,11 +63,14 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   handleSubmit({ value: formData, success, error}): void {
-    const { name, description, type: typeStr, dynamicValue } = formData;
+    const { name, description, type: typeStr,
+      textValue, imageValue, documentValue,
+      colorValue, logoValue, htmlValue } = formData;
     const { id: applicationId } = this.applicationInfo;
-    let value = dynamicValue;
+    let value = textValue || imageValue || documentValue ||
+    colorValue || logoValue || htmlValue;
     if (typeStr === 'Document' || typeStr === 'Image') {
-      value = dynamicValue.formattedValue;
+      value = value.formattedValue;
     }
     const contentPayload = {
       name,

@@ -10,7 +10,7 @@ export const dataTypes: ContentDataType = {
   'Text': {
     type: 'text',
     label: 'Value',
-    name: 'dynamicValue',
+    name: 'textValue',
     placeholder: 'Enter value',
     validation: {
       required: {
@@ -26,7 +26,7 @@ export const dataTypes: ContentDataType = {
   'Image': {
     type: 'image',
     label: 'Value',
-    name: 'dynamicValue',
+    name: 'imageValue',
     placeholder: 'Enter value',
     validation: {
       required: {
@@ -42,7 +42,7 @@ export const dataTypes: ContentDataType = {
   'Document': {
     type: 'document',
     label: 'Value',
-    name: 'dynamicValue',
+    name: 'documentValue',
     placeholder: 'Enter value',
     validation: {
       required: {
@@ -54,7 +54,7 @@ export const dataTypes: ContentDataType = {
   'Color Picker': {
     type: 'color',
     label: 'Value',
-    name: 'dynamicValue',
+    name: 'colorValue',
     placeholder: 'Enter value',
     value: '',
     validation: {
@@ -71,7 +71,7 @@ export const dataTypes: ContentDataType = {
   'Logo Display':   {
     type: 'select',
     label: 'Logo Display',
-    name: 'dynamicValue',
+    name: 'logoValue',
     options: [],
     placeholder: 'Select Logo Display',
     value: '',
@@ -85,7 +85,7 @@ export const dataTypes: ContentDataType = {
   'HTML': {
     type: 'html',
     label: 'Value',
-    name: 'dynamicValue',
+    name: 'htmlValue',
     placeholder: 'Enter value',
     validation: {
       required: {
