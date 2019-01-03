@@ -1,13 +1,12 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _clone from 'lodash/clone';
 import { Store } from '@ngrx/store';
 
 import { Subject } from 'rxjs';
 import { takeWhile, takeUntil } from 'rxjs/operators';
 
-import { User, State, UserTransaction, getUserRecordState, getApplicationPath } from '@forge/core';
-import { DynamicFormComponent, FieldConfig } from '@forge/shared';
+import { User, State, UserTransaction, getUserRecordState, getApplicationPath, FgeModalService } from '@forge/core';
+import { FieldConfig } from '@forge/shared';
 import { configNewUserFields, configUpdateUserFields } from './user-form-modal.config';
 
 @Component({
@@ -16,7 +15,6 @@ import { configNewUserFields, configUpdateUserFields } from './user-form-modal.c
 })
 export class UserFormModalComponent implements OnDestroy {
   @ViewChild('modalTemplate') modalContent: ElementRef;
-  @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
   mode: 'CREATE' | 'EDIT';
   applicationId: string | number;
@@ -27,7 +25,7 @@ export class UserFormModalComponent implements OnDestroy {
   private unsubscribeModal = new Subject();
 
   constructor(
-    private modalService: NgbModal,
+    private modalService: FgeModalService,
     private store: Store<State>
       ) { }
 

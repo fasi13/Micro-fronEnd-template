@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalConfirmConfig } from './modal-confirm.model';
+import { FgeModalService } from '@forge/core';
 
 @Component({
   selector: 'fge-modal-confirm',
@@ -13,7 +13,7 @@ export class ModalConfirmComponent {
   @Output() readonly oncancel: EventEmitter<any> = new EventEmitter<any>();
   @Input() config: ModalConfirmConfig;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: FgeModalService) { }
 
   open(): void {
     this.modalService.open(this.modalContent);

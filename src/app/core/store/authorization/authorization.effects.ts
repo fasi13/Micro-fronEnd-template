@@ -18,6 +18,7 @@ import {
 import { UserService } from '../../services';
 import { User } from '../../models';
 import { State, isAuthenticated } from '../store.reducers';
+import { FgeModalService } from '../../services/_fge-modal.service';
 
 @Injectable()
 export class AuthorizationEffects {
@@ -57,13 +58,17 @@ export class AuthorizationEffects {
   @Effect() inactivityTimeout$ = this.actions
     .pipe(
       switchMap(() => timer(this.INACTIVITY_TIME)),
-      map(() => new LogoutAction('Inactivity'))
+      map(() => {
+        this.fgeModalService.dismissAll();
+        return new LogoutAction('Inactivity');
+      })
     );
 
   constructor(
     private actions: Actions,
     private store: Store<State>,
-    private userService: UserService
+    private userService: UserService,
+    private fgeModalService: FgeModalService
   ) {
   }
 }

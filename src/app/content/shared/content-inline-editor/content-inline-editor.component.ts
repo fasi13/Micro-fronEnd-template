@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
@@ -18,7 +18,8 @@ import {
   ApplicationContent,
   getDataTypes,
   DataType,
-  Link
+  Link,
+  FgeModalService
 } from '@forge/core';
 import { FieldConfig, ModalConfirmComponent } from '@forge/shared';
 import { dataTypes } from '../content-form-modal/content-data-types.config';
@@ -50,7 +51,8 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     private store: Store<State>,
     private route: ActivatedRoute,
     private notifierService: NotifierService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private fgeModalService: FgeModalService
   ) { }
 
   ngOnInit() {
@@ -175,6 +177,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     this.modalRef.componentInstance.link = link;
     this.modalRef.componentInstance.groupId = this.groupId;
     this.modalRef.componentInstance.config = _assign(_clone(dataTypes[dataType]), { label: fieldToEdit });
+    this.fgeModalService.registerModal(this.modalRef);
   }
 
   private openModalConfirm(): void {

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _find from 'lodash/find';
 import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
@@ -18,8 +18,9 @@ import {
   isLoadingGroup,
   ContentGroup,
   ApplicationContent,
+  Link,
   FgeRouterService,
-  Link
+  FgeModalService
 } from '@forge/core';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 import { dataTypes as availableDataTypes } from '../shared/content-form-modal/content-data-types.config';
@@ -51,6 +52,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
+    private fgeModalService: FgeModalService,
     private modalService: NgbModal,
     private fgeRouter: FgeRouterService
   ) { }
@@ -69,6 +71,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   openContentForm(): void {
     this.modalRef = this.modalService.open(ContentFormModalComponent, { windowClass: 'modal-content-form' });
     this.modalRef.componentInstance.groupId = this.currentGroup.id;
+    this.fgeModalService.registerModal(this.modalRef);
   }
 
   toggleEditMode() {

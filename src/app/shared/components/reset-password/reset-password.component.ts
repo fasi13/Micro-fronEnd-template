@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import _clone from 'lodash/clone';
 import { Store } from '@ngrx/store';
 import {Location} from '@angular/common';
@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 
 import { ResetPassword, State, getResetedPassword, getAuthenticatedUser } from '@forge/core';
-import { DynamicFormComponent, FieldConfig } from '../dynamic-form';
+import { FieldConfig } from '../dynamic-form';
 import { configResetPasswordFields } from './reset-password.config';
 
 @Component({
@@ -15,7 +15,6 @@ import { configResetPasswordFields } from './reset-password.config';
   templateUrl: './reset-password.component.html'
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
-  @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
   config: FieldConfig[];
 

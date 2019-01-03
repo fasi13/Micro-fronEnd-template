@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { NotifierService } from 'angular-notifier';
 import _clone from 'lodash/clone';
@@ -7,9 +6,17 @@ import _clone from 'lodash/clone';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { State, getApplicationInfo, Application, FetchContentGroups, ContentGroup, ContentGroupRecordTransaction, getContentGroupState
+import {
+  State,
+  getApplicationInfo,
+  Application,
+  FetchContentGroups,
+  ContentGroup,
+  ContentGroupRecordTransaction,
+  getContentGroupState,
+  FgeModalService
  } from '@forge/core';
-import { DynamicFormComponent, FieldConfig } from '@forge/shared';
+import { FieldConfig } from '@forge/shared';
 import { configGroupFields } from './group-form-modal.config';
 
 @Component({
@@ -19,7 +26,7 @@ import { configGroupFields } from './group-form-modal.config';
 export class GroupFormModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
-  @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+
   submitted = false;
   loading = false;
   mode: 'CREATE' | 'EDIT';
@@ -31,7 +38,7 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
   private unsubscribeModal = new Subject();
 
   constructor(
-    private modalService: NgbModal,
+    private modalService: FgeModalService,
     private store: Store<State>,
     private notifierService: NotifierService
   ) { }

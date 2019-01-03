@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 import _assign from 'lodash/assign';
 
 import { Observable } from 'rxjs';
 
-import { ObjectTransactionService, ApiResponse, DataPaginated } from '@forge/core';
+import { ObjectTransactionService, ApiResponse, DataPaginated, FgeModalService } from '@forge/core';
 import { TreeviewData } from '../treeview-data.model';
 import { NavigationTreeService } from '../navigation-tree.service';
 import { FieldConfig } from '../../dynamic-form';
@@ -25,7 +24,7 @@ export class ApplicationGroupFormModalComponent implements OnInit {
   private isEditMode: boolean;
 
   constructor(
-    private modalService: NgbModal,
+    private modalService: FgeModalService,
     private objectTransactionService: ObjectTransactionService,
     private navigationTreeService: NavigationTreeService
   ) { }

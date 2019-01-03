@@ -3,3 +3,4 @@ export * from './application.service';
 export * from './content.service';
 export * from './user.service';
 export * from './object-transaction.service';
+export * from './_fge-modal.service';
