@@ -116,8 +116,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   toggleCollapse(item: TreeviewData, event: Event) {
-    const elementPath = (event as any).path || (event.composedPath && event.composedPath());
-    const elementSource = elementPath ? elementPath[1] : {};
+    const elementSource = event.currentTarget;
     event.stopPropagation();
     item.collapsed = !!!item.collapsed;
     if (!item.collapsed) {
@@ -157,12 +156,12 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   onScrollContent(event: Event): void {
     event.preventDefault();
     const scrollTop = this.scrollContainerRef.nativeElement.scrollTop;
-    this.enableScrollTopBtn = (scrollTop > 0);
+    this.enableScrollTopBtn = (scrollTop > 1);
   }
 
   scrollToTop(event: Event): void {
     event.stopPropagation();
-    this.scrollContainerRef.nativeElement.scrollTo(0, 0);
+    this.scrollContainerRef.nativeElement.children[0].scrollIntoView();
   }
 
   fetchApplicationBranding(item: TreeviewData, event: Event): void {
