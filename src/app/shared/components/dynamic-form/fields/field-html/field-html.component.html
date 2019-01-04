@@ -7,6 +7,7 @@
     <div class="form-control"
       [ngClass]="{ 'is-invalid': hasError() }"
       [ngxSummernote]="configSummernote"
+      (summernoteInit)="initField($event)"
       [formControlName]="config?.name">
     </div>
   </div>

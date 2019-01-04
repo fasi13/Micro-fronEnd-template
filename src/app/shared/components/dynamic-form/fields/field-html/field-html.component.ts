@@ -1,14 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, HostListener } from '@angular/core';
 
 import { FormField } from '../../models/form-field.abstract';
+import { NgxSummernoteDirective } from 'ngx-summernote';
 
 @Component({
   selector: 'fge-field-html',
   templateUrl: './field-html.component.html'
 })
-export class FieldHtmlComponent extends FormField implements OnInit {
+export class FieldHtmlComponent extends FormField implements OnInit, OnDestroy {
+
+  @ViewChild(NgxSummernoteDirective) summerNoteDirective: NgxSummernoteDirective;
 
   configSummernote: any;
+
+  private _destroyFieldCallback: () => void;
+  private _editor: any;
+
+  @HostListener('keyup') onkeyup() {
+    if (this._editor('codeview.isActivated')) {
+      const editorValue = this._editor('code');
+      const controlName = this.config.name;
+      this.group.controls[controlName].setValue(editorValue);
+    }
+  }
 
   ngOnInit() {
     this.configSummernote = {
@@ -27,5 +41,17 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     if (this.config.value !== '') {
       this.configSummernote.height = 250;
     }
+  }
+
+  ngOnDestroy() {
+    if (this._destroyFieldCallback) {
+      this._destroyFieldCallback();
+    }
+  }
+
+  initField({ initialize, destroy, getEditor }) {
+    initialize();
+    this._destroyFieldCallback = destroy;
+    this._editor = getEditor();
   }
 }
