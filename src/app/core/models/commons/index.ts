@@ -5,3 +5,4 @@ export * from './link.model';
 export * from './mapped-links.model';
 export * from './method.model';
 export * from './data-type.model';
+export * from './transaction-model.abstract';
