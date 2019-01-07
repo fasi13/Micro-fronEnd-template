@@ -1,4 +1,4 @@
-import { Link, MappedLinks } from './commons';
+import { Link, MappedLinks } from '../commons';
 
 export class Application {
     id: number | string;

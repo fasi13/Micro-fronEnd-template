@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserCredentials, AuthenticateAction, Go} from '@forge/core';
-import { isAuthenticationLoading, State, isAuthenticated, getAuthenticationError } from '../../core/store/store.reducers';
+import { isAuthenticationLoading, State, isAuthenticated, getAuthenticationError } from '@forge/core-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeWhile, filter } from 'rxjs/operators';

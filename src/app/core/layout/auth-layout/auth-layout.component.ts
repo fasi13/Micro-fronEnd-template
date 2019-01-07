@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { Observable } from 'rxjs';
 import { takeWhile, delay } from 'rxjs/operators';
 
 import {
@@ -14,8 +16,6 @@ import {
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
 import { FgeRouterService } from '../../services/_fge-router.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'fge-auth-layout',

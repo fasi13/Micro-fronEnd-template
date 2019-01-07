@@ -1,4 +1,4 @@
-import { Method } from "./method.model";
+import { Method } from './method.model';
 
 export class Link {
   href: string;

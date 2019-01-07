@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import _find from 'lodash/find';
@@ -20,10 +21,17 @@ import {
   FetchApplicationPreviewSuccess,
   FetchApplicationPreviewError,
 } from './application.actions';
-import { ApiResponse, DataPaginated, Link, HateoasAction, ApplicationContent, ApplicationPath, DataType } from '../../models';
+import {
+  ApiResponse,
+  DataPaginated,
+  Link,
+  HateoasAction,
+  ApplicationContent,
+  ApplicationPath,
+  DataType,
+  Application
+} from '../../models';
 import { ApplicationService } from '../../services/application.service';
-import { Application } from '../../models/application.model';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class ApplicationEffects {

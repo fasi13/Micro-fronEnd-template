@@ -1,4 +1,4 @@
-import { Link, DataType, TransactionModel } from './commons';
+import { Link, DataType, TransactionModel } from '../commons';
 
 export class ApplicationContent extends TransactionModel<ApplicationContent> {
   dataType?: DataType;

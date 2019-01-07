@@ -1,3 +1,3 @@
 export class Method {
-  method: string
-};
+  method: string;
+}

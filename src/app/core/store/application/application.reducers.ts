@@ -1,9 +1,16 @@
 import _assign from 'lodash/assign';
 
-import { Application } from '../../models/application.model';
+import { Application } from '../../models/application/application.model';
 import { ApplicationAction, ApplicationActionTypes } from './application.actions';
 import { mapLinks } from '../util';
-import { ApiResponse, DataPaginated, ApplicationContent, ApplicationBranding, ApplicationPath, DataType } from '../../models';
+import {
+  ApiResponse,
+  DataPaginated,
+  ApplicationContent,
+  ApplicationBranding,
+  ApplicationPath,
+  DataType
+} from '../../models';
 
 export interface ApplicationState {
   current: {
