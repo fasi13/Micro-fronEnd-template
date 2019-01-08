@@ -1,18 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationBranding, User } from '../../models';
 import { takeWhile, takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { State,
-   getApplicationBranding,
-   getAuthenticatedUser,
-   FetchDataTypes,
-   FetchContentGroups,
-   FetchApplicationPath,
-   FetchApplicationData,
-   isLoadingApplicationData,
-  } from '@forge/core-store';
+
 import { Subject, Observable } from 'rxjs';
+
+import { State,
+  getApplicationBranding,
+  getAuthenticatedUser,
+  FetchDataTypes,
+  FetchContentGroups,
+  FetchApplicationPath,
+  FetchApplicationData,
+  isLoadingApplicationData,
+ } from '@forge/core-store';
+import { ApplicationBranding, User } from '../../models';
 
 @Component({
   selector: 'fge-tenant-layout',
@@ -105,5 +107,4 @@ export class TenantLayoutComponent implements OnInit, OnDestroy {
       document.getElementsByTagName('head')[0].appendChild(css);
     }
   }
-
 }

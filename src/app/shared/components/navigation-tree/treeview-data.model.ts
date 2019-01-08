@@ -1,6 +1,6 @@
-import { Link } from '@forge/core';
+import { Link, FgeEntity } from '@forge/core';
 
-export class TreeviewData {
+export class TreeviewData implements FgeEntity {
   id: string | number;
   name: string;
   value?: string;

@@ -5,7 +5,7 @@ import _assign from 'lodash/assign';
 
 import { Observable } from 'rxjs';
 
-import { ObjectTransactionService, ApiResponse, DataPaginated } from '@forge/core';
+import { ApiResponse, DataPaginated, FgeHttpActionService } from '@forge/core';
 import { TreeviewData } from '../treeview-data.model';
 import { FieldConfig } from '../../dynamic-form';
 import { NavigationTreeService } from '../navigation-tree.service';
@@ -26,7 +26,7 @@ export class ApplicationFormModalComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private objectTransactionService: ObjectTransactionService,
+    private httpActionService: FgeHttpActionService,
     private navigationTreeService: NavigationTreeService
   ) { }
 
@@ -48,7 +48,7 @@ export class ApplicationFormModalComponent implements OnInit {
   }
 
   handleSubmit({ value, success, error }): void {
-    (this.objectTransactionService.performAction(this.currentApplicationNode, this.currentActionName, value) as Observable<any>)
+    (this.httpActionService.performAction(this.currentApplicationNode, this.currentActionName, value) as Observable<any>)
       .subscribe((response: ApiResponse<any>) => {
         this.updateCurrentApplicationNode(response);
         success();

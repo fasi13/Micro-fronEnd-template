@@ -3,18 +3,18 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Link } from '../models';
+import { Link, FgeEntity } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObjectTransactionService {
+export class FgeHttpActionService {
 
   constructor(
     private httpClient: HttpClient
   ) { }
 
-  performAction<T>(data: T, action: string, payload?: any): Observable<any> | void {
+  performAction(data: FgeEntity, action: string, payload?: any): Observable<FgeEntity | any> {
     if (data) {
       const link: Link = this.getAction(data, action);
       if (link) {
@@ -27,19 +27,24 @@ export class ObjectTransactionService {
           case 'GET':
             return this.httpClient.get(href);
           default:
-            throw Observable.throw(`${method.method} not supported by ObjectTransactionService`);
+            throw Observable.throw(`${method.method} not supported by transaction model`);
         }
       } else {
         throw Observable.throw(`${action} not found in current Object data`);
       }
+    } else {
+      throw Observable.throw(`Invalid FgeEntity value`);
     }
   }
 
-  hasAction<T>(data: T, action: string): boolean {
+  hasAction(data: FgeEntity, action: string): boolean {
     return !!this.getAction(data, action);
   }
 
-  private getAction(data: any, action: string): Link {
-    return (data._links as Link[]).find((item) => item.rel === action);
+  private getAction(data: FgeEntity, action: string): Link {
+    if (data._links) {
+      return (data._links as Link[]).find((item) => item.rel === action);
+    }
+    throw new Error('_links not found in current Object data');
   }
 }

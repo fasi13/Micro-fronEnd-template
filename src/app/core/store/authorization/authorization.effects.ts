@@ -23,7 +23,7 @@ import { FgeModalService } from '../../services/_fge-modal.service';
 @Injectable()
 export class AuthorizationEffects {
 
-  INACTIVITY_TIME = 15 * 60 * 1000;
+  readonly INACTIVITY_TIME = 15 * 60 * 1000;
 
   @Effect() authenticate$: Observable<Action> = this.actions
     .pipe(
@@ -40,7 +40,7 @@ export class AuthorizationEffects {
               return new AuthenticationSuccessAction({ user: body['data'] as User });
             }),
             catchError(error => of(new AuthenticationErrorAction({error: error})))
-          )
+          );
       })
     );
 
@@ -48,10 +48,10 @@ export class AuthorizationEffects {
     ofType(AuthorizationActionTypes.LOGOUT),
     withLatestFrom(this.store.select(isAuthenticated)),
     switchMap(([action, isAuth]: [any, boolean]) => this.userService.logout(action.payload, !!isAuth)
-        .pipe(
-          map(() => new LogoutSuccessAction()),
-          catchError(error => of(new LogoutErrorAction({error: error})))
-        )
+      .pipe(
+        map(() => new LogoutSuccessAction()),
+        catchError(error => of(new LogoutErrorAction({error: error})))
+      )
     )
   );
 
@@ -69,6 +69,5 @@ export class AuthorizationEffects {
     private store: Store<State>,
     private userService: UserService,
     private fgeModalService: FgeModalService
-  ) {
-  }
+  ) { }
 }

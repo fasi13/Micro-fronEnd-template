@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import _find from 'lodash/find';
 
 import { Observable, of, forkJoin } from 'rxjs';
-import { catchError, map, switchMap, exhaustMap } from 'rxjs/operators';
+import { catchError, map, switchMap, exhaustMap, take } from 'rxjs/operators';
 
 import {
   ApplicationActionTypes,
@@ -29,9 +29,12 @@ import {
   ApplicationContent,
   ApplicationPath,
   DataType,
-  Application
+  Application,
+  User,
 } from '../../models';
 import { ApplicationService } from '../../services/application.service';
+import { State, getAuthenticatedUser } from '../store.reducers';
+import { FgeHttpActionService } from '../../services';
 
 @Injectable()
 export class ApplicationEffects {
@@ -44,26 +47,34 @@ export class ApplicationEffects {
    */
   @Effect() public updateApplicationData$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.UPDATE_APPLICATION_DATA),
-    switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
-      .pipe(
-        exhaustMap(this.getApplicationBranding.bind(this)),
-        map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-        catchError(error => of(new FetchApplicationDataError({ error })))
-      )
+    switchMap(() =>
+      this.store.select(getAuthenticatedUser)
+        .pipe(
+          take(1),
+          switchMap((user: User) => this.fgeActionService.performAction(user, 'getApplication')),
+          exhaustMap(this.getApplicationBranding.bind(this)),
+          map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
+          catchError(error => {
+            return of(new FetchApplicationDataError({ error }));
+          })
+        )
     )
   );
 
   @Effect() public fetchApplicationData$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA),
-    switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
-      .pipe(
-        exhaustMap(this.getApplicationBranding.bind(this)),
-        map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-        catchError(error => {
-          this.handleErrorRedirect(error.status);
-          return of(new FetchApplicationDataError({ error }));
-        })
-      )
+    switchMap(() =>
+      this.store.select(getAuthenticatedUser)
+        .pipe(
+          take(1),
+          switchMap((user: User) => this.fgeActionService.performAction(user, 'getApplication')),
+          exhaustMap(this.getApplicationBranding.bind(this)),
+          map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
+          catchError(error => {
+            this.handleErrorRedirect(error.status);
+            return of(new FetchApplicationDataError({ error }));
+          })
+        )
     )
   );
 
@@ -120,7 +131,9 @@ export class ApplicationEffects {
   constructor(
     private actions: Actions,
     private applicationService: ApplicationService,
-    private router: Router
+    private router: Router,
+    private store: Store<State>,
+    private fgeActionService: FgeHttpActionService
   ) { }
 
   private getApplicationBranding(applicationResponse: ApiResponse<Application>):

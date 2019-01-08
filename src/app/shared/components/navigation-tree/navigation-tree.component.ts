@@ -17,7 +17,7 @@ import {
   ApplicationBranding,
   FetchApplicationPreview,
   getApplicationPreview,
-  ObjectTransactionService,
+  FgeHttpActionService,
   Application,
   ApplicationService
 } from '@forge/core';
@@ -64,7 +64,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
     private navigationTreeService: NavigationTreeService,
     private store: Store<State>,
     private elementRef: ElementRef,
-    private objectTransactionService: ObjectTransactionService,
+    private httpActionService: FgeHttpActionService,
     private applicationService: ApplicationService
   ) { }
 
@@ -173,7 +173,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   hasAction(item: TreeviewData, actionName: string): boolean {
-    return this.objectTransactionService.hasAction(item, actionName);
+    return this.httpActionService.hasAction(item, actionName);
   }
 
   goToHierarchy(event: Event): void {

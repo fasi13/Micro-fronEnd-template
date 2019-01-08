@@ -1,6 +1,6 @@
-import { Link, DataType, TransactionModel } from '../commons';
+import { Link, DataType } from '../commons';
 
-export class ApplicationContent extends TransactionModel<ApplicationContent> {
+export class ApplicationContent {
   dataType?: DataType;
   description?: string;
   displayAsList?: boolean;
