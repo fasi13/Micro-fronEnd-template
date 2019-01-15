@@ -17,12 +17,15 @@ import { GroupFormModalComponent } from './shared/group-form-modal/group-form-mo
 import { ContentFormModalComponent } from './shared/content-form-modal/content-form-modal.component';
 import { ContentEditorModalComponent } from './shared/content-editor-modal/content-editor-modal.component';
 import { SharedModule } from '../shared/shared.module';
-import { ContentEditorComponent } from './shared/content-editor/content-editor.component';
 import { ContentInlineEditorComponent } from './shared/content-inline-editor/content-inline-editor.component';
-import { GroupNotFoundComponent } from './error/group-not-found/group-not-found.component';
+import { ContentHtmlEditorComponent } from './content-html-editor/content-html-editor.component';
+import { GroupNotFoundComponent } from './content-error-pages/group-not-found/group-not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'groups' },
+  {
+    path: '',
+    redirectTo: 'groups'
+  },
   {
     path: 'groups',
     component: GroupsListingComponent
@@ -33,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'group/:groupId/content/:contentId/edit',
-    component: ContentEditorComponent
+    component: ContentHtmlEditorComponent
   },
   {
     path: 'notFound',
@@ -62,7 +65,7 @@ const routes: Routes = [
     GroupFormModalComponent,
     ContentFormModalComponent,
     ContentEditorModalComponent,
-    ContentEditorComponent,
+    ContentHtmlEditorComponent,
     ContentInlineEditorComponent,
     GroupNotFoundComponent
   ],

@@ -30,7 +30,10 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { ComingSoonComponent } from './components/coming-soon/coming-soon.component';
 import { ClearInputDirective } from './directives/clear-input.directive';
 import { ApplicationFormModalComponent } from './components/navigation-tree/application-form-modal/application-form-modal.component';
-import { ApplicationGroupFormModalComponent } from './components/navigation-tree/application-group-form-modal/application-group-form-modal.component';
+import {
+  ApplicationGroupFormModalComponent
+} from './components/navigation-tree/application-group-form-modal/application-group-form-modal.component';
+import { ApplicationPathPipe } from './pipes/application-path.pipe';
 
 @NgModule({
   imports: [
@@ -44,6 +47,10 @@ import { ApplicationGroupFormModalComponent } from './components/navigation-tree
   ],
   declarations: [
     DynamicFieldDirective,
+    HighlightSearchDirective,
+    FocusInputDirective,
+    ClearInputDirective,
+
     SidebarComponent,
     SplashScreenComponent,
     SearchApplicationComponent,
@@ -58,16 +65,15 @@ import { ApplicationGroupFormModalComponent } from './components/navigation-tree
     FieldHtmlComponent,
     BreadCrumbComponent,
     NavigationTreeComponent,
-    HighlightSearchDirective,
     FieldPasswordComponent,
     FieldToggleButtonComponent,
     ModalConfirmComponent,
-    FocusInputDirective,
     ResetPasswordComponent,
     ComingSoonComponent,
-    ClearInputDirective,
     ApplicationFormModalComponent,
-    ApplicationGroupFormModalComponent
+    ApplicationGroupFormModalComponent,
+
+    ApplicationPathPipe
   ],
   exports: [
     FormsModule,
@@ -81,7 +87,8 @@ import { ApplicationGroupFormModalComponent } from './components/navigation-tree
     NavigationTreeComponent,
     ModalConfirmComponent,
     DynamicFieldDirective,
-    ClearInputDirective
+    ClearInputDirective,
+    ApplicationPathPipe
   ],
   entryComponents: [
     FieldButtonComponent,

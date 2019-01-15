@@ -21,13 +21,13 @@ import {
   Link
 } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
-import { dataTypes } from '../content-form-modal/content-data-types.config';
+import { dataTypes } from '../shared/content-form-modal/content-data-types.config';
 
 @Component({
-  selector: 'fge-content-editor',
-  templateUrl: './content-editor.component.html'
+  selector: 'fge-content-html-editor',
+  templateUrl: './content-html-editor.component.html'
 })
-export class ContentEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 

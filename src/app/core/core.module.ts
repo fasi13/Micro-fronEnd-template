@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AuthLayoutComponent, UnauthLayoutComponent } from './layout';
+import { AuthLayoutComponent } from './layout';
 import { UserService } from './services/user.service';
 import { AuthorizationEffects } from './store/authorization';
 import { ApplicationEffects } from './store/application';
@@ -53,12 +53,10 @@ import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.comp
   ],
   declarations: [
     AuthLayoutComponent,
-    UnauthLayoutComponent,
     TenantLayoutComponent
   ],
   exports: [
     AuthLayoutComponent,
-    UnauthLayoutComponent
   ],
   providers: [
     UserService,

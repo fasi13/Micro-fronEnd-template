@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UnauthLayoutComponent, AuthLayoutComponent, AuthorizedGuard, TenantLayoutComponent } from '@forge/core';
+import {
+  AuthLayoutComponent,
+  AuthorizedGuard,
+  TenantLayoutComponent
+} from '@forge/core';
 import { ResetPasswordComponent } from '@forge/shared';
 import { ComingSoonComponent } from './shared/components/coming-soon/coming-soon.component';
 
@@ -19,35 +23,13 @@ const routes: Routes = [
             path: ':tenantId',
             component: TenantLayoutComponent,
             children: [
-              {
-                path: 'content',
-                loadChildren: './content/content.module#ContentModule'
-              },
-              {
-                path: 'user',
-                loadChildren: './user/user.module#UserModule'
-              },
-              {
-                path: 'promotions',
-                component: ComingSoonComponent
-              },
-              {
-                path: 'campaings',
-                component: ComingSoonComponent
-              },
-              {
-                path: 'settings',
-                component: ComingSoonComponent
-              },
-              {
-                path: 'reset-password',
-                component: ResetPasswordComponent
-              },
-              {
-                path: '',
-                pathMatch: 'full',
-                redirectTo: 'content'
-              }
+              { path: 'content', loadChildren: './content/content.module#ContentModule' },
+              { path: 'user', loadChildren: './user/user.module#UserModule' },
+              { path: 'promotions', component: ComingSoonComponent },
+              { path: 'campaings', component: ComingSoonComponent },
+              { path: 'settings', component: ComingSoonComponent },
+              { path: 'reset-password', component: ResetPasswordComponent },
+              { path: '', pathMatch: 'full', redirectTo: 'content' }
             ]
           },
           {
@@ -63,20 +45,9 @@ const routes: Routes = [
         redirectTo: 'tenant'
       }
     ]
-  }, {
-    path: '',
-    component: UnauthLayoutComponent,
-    children: [
-      {
-        path: 'error',
-        loadChildren: './error/error.module#ErrorModule'
-      },
-      {
-        path: '',
-        loadChildren: './authorization/authorization.module#AuthorizationModule'
-      }
-    ]
-  }
+  },
+  { path: 'error', loadChildren: './error/error.module#ErrorModule' },
+  { path: '', loadChildren: './authorization/authorization.module#AuthorizationModule' }
 ];
 
 @NgModule({

@@ -11,7 +11,7 @@ import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-
   selector: 'fge-users',
   templateUrl: './users-listing.component.html'
 })
-export class UsersListgingComponent implements OnInit, OnDestroy {
+export class UsersListingComponent implements OnInit, OnDestroy {
 
   config: ModalConfirmConfig;
   currentUser: any;
