@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
 import { Link, FgeEntity } from '../models';
+import { FgeLink } from '../models/commons/_fge-entity-link.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,26 +15,25 @@ export class FgeHttpActionService {
     private httpClient: HttpClient
   ) { }
 
-  performAction(data: FgeEntity, action: string, payload?: any): Observable<FgeEntity | any> {
+  performAction(data: FgeEntity, actionName: FgeLink | string, options?: {
+    body?: any;
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    params?: HttpParams | {
+      [param: string]: string | string[];
+    };
+  }): Observable<FgeEntity | any> {
     if (data) {
-      const link: Link = this.getAction(data, action);
+      const link: Link = this.getAction(data, actionName);
       if (link) {
         const { method, href } = link;
-        switch (method.method) {
-          case 'POST':
-            return this.httpClient.post(href, payload);
-          case 'PUT':
-            return this.httpClient.put(href, payload);
-          case 'GET':
-            return this.httpClient.get(href);
-          default:
-            throw Observable.throw(`${method.method} not supported by transaction model`);
-        }
+        return this.httpClient.request(method.method, href, options);
       } else {
-        throw Observable.throw(`${action} not found in current Object data`);
+        throw new Error(`${actionName} not found in current Object data`);
       }
     } else {
-      throw Observable.throw(`Invalid FgeEntity value`);
+      throw new Error(`Invalid FgeEntity value: ${data}`);
     }
   }
 
