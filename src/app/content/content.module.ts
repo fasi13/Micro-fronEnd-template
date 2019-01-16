@@ -20,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ContentInlineEditorComponent } from './shared/content-inline-editor/content-inline-editor.component';
 import { ContentHtmlEditorComponent } from './content-html-editor/content-html-editor.component';
 import { GroupNotFoundComponent } from './content-error-pages/group-not-found/group-not-found.component';
+import { GroupsListingGuard } from './_guards/groups-listing.guard';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'groups',
+    canActivate: [ GroupsListingGuard ],
     component: GroupsListingComponent
   },
   {

@@ -1,10 +1,55 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { Store } from '@ngrx/store';
+import _isEmpty from 'lodash/isEmpty';
 
-@Injectable()
+import { Observable, of } from 'rxjs';
+import {
+  tap,
+  take,
+  switchMap,
+  catchError
+} from 'rxjs/operators';
+
+import {
+  State,
+  getApplicationInfo,
+  FetchApplicationData
+} from '@forge/core-store';
+import { Application } from '../models';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class TenantGuard implements CanActivate {
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+
+  constructor(
+    private store: Store<State>,
+  ) {}
+
+  private getFromStoreOrAPI(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.store
+      .select(getApplicationInfo)
+      .pipe(
+        tap((applicationInfo: Application) => {
+          const tenantId = route.paramMap['params'].tenantId;
+          if (_isEmpty(applicationInfo) || applicationInfo.id !== +tenantId) {
+            if (tenantId === 'default') {
+              this.store.dispatch(new FetchApplicationData());
+            } else {
+              this.store.dispatch(new FetchApplicationData(tenantId));
+            }
+          }
+        }),
+        take(1)
+      );
+  }
+
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    return this.getFromStoreOrAPI(route)
+      .pipe(
+        switchMap(() => of(true)),
+        catchError(() => of(false))
+      );
   }
 }

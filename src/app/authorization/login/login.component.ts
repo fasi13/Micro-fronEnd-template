@@ -1,10 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserCredentials, AuthenticateAction, Go} from '@forge/core';
-import { isAuthenticationLoading, State, isAuthenticated, getAuthenticationError } from '@forge/core-store';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+
 import { Observable } from 'rxjs';
 import { takeWhile, filter } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+
+import {
+  UserCredentials,
+  AuthenticateAction,
+  Go
+} from '@forge/core';
+import {
+  isAuthenticationLoading,
+  State,
+  isAuthenticated,
+  getAuthenticationError
+} from '@forge/core-store';
 
 @Component({
   selector: 'fge-login',

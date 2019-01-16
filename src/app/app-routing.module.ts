@@ -4,7 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   AuthLayoutComponent,
   AuthorizedGuard,
-  TenantLayoutComponent
+  TenantLayoutComponent,
+  TenantGuard
 } from '@forge/core';
 import { ResetPasswordComponent } from '@forge/shared';
 import { ComingSoonComponent } from './shared/components/coming-soon/coming-soon.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
         children: [
           {
             path: ':tenantId',
+            canActivate: [ TenantGuard ],
             component: TenantLayoutComponent,
             children: [
               { path: 'content', loadChildren: './content/content.module#ContentModule' },

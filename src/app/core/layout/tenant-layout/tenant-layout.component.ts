@@ -10,8 +10,6 @@ import { State,
   getAuthenticatedUser,
   FetchDataTypes,
   FetchContentGroups,
-  FetchApplicationPath,
-  FetchApplicationData,
   isLoadingApplicationData,
  } from '@forge/core-store';
 import { ApplicationBranding, User } from '../../models';
@@ -51,8 +49,6 @@ export class TenantLayoutComponent implements OnInit, OnDestroy {
       .subscribe((user: User) => {
         if (user) {
           const applicationId = this.getCurrentApplicationId(tenantId, user);
-          this.store.dispatch(new FetchApplicationData(applicationId));
-          this.store.dispatch(new FetchApplicationPath(applicationId));
           this.store.dispatch(new FetchContentGroups({ applicationId }));
           this.store.dispatch(new FetchDataTypes(applicationId));
           this.userUnsubscription.next();

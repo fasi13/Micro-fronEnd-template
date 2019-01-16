@@ -6,3 +6,4 @@ export * from './mapped-links.model';
 export * from './method.model';
 export * from './data-type.model';
 export * from './_fge-entity.abstract';
+export * from './_fge-entity-link.model';

@@ -5,7 +5,7 @@ import { Action, Store } from '@ngrx/store';
 import _find from 'lodash/find';
 
 import { Observable, of, forkJoin } from 'rxjs';
-import { catchError, map, switchMap, exhaustMap, take } from 'rxjs/operators';
+import { catchError, map, switchMap, exhaustMap, withLatestFrom } from 'rxjs/operators';
 
 import {
   ApplicationActionTypes,
@@ -20,6 +20,7 @@ import {
   FetchApplicationPathError,
   FetchApplicationPreviewSuccess,
   FetchApplicationPreviewError,
+  FetchApplicationPath,
 } from './application.actions';
 import {
   ApiResponse,
@@ -31,9 +32,11 @@ import {
   DataType,
   Application,
   User,
+  UserLink,
+  ApplicationLink
 } from '../../models';
 import { ApplicationService } from '../../services/application.service';
-import { State, getAuthenticatedUser } from '../store.reducers';
+import { State, getAuthenticatedUser, getApplicationInfo } from '../store.reducers';
 import { FgeHttpActionService } from '../../services';
 
 @Injectable()
@@ -47,35 +50,45 @@ export class ApplicationEffects {
    */
   @Effect() public updateApplicationData$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.UPDATE_APPLICATION_DATA),
-    switchMap(() =>
-      this.store.select(getAuthenticatedUser)
-        .pipe(
-          take(1),
-          switchMap((user: User) => this.fgeActionService.performAction(user, 'getApplication')),
-          exhaustMap(this.getApplicationBranding.bind(this)),
-          map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-          catchError(error => {
-            return of(new FetchApplicationDataError({ error }));
-          })
-        )
-    )
+    withLatestFrom(this.store.select(getAuthenticatedUser)),
+    switchMap(([_action, user]: [ApplicationAction, User]) =>
+      this.fgeActionService.performAction(user, UserLink.GET_APPLICATION)),
+    exhaustMap(this.getApplicationBranding.bind(this)),
+    map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
+    catchError(error => {
+      return of(new FetchApplicationDataError({ error }));
+    })
   );
 
   @Effect() public fetchApplicationData$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA),
-    switchMap(() =>
-      this.store.select(getAuthenticatedUser)
-        .pipe(
-          take(1),
-          switchMap((user: User) => this.fgeActionService.performAction(user, 'getApplication')),
-          exhaustMap(this.getApplicationBranding.bind(this)),
-          map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
-          catchError(error => {
-            this.handleErrorRedirect(error.status);
-            return of(new FetchApplicationDataError({ error }));
-          })
-        )
-    )
+    withLatestFrom(this.store.select(getAuthenticatedUser)),
+    switchMap(([action, user]: [ApplicationAction, User]) => {
+      if (action.payload) {
+        /**
+         * Fetch the data of custom tenant id, this is used when user
+         * switch between apps using the hierarchy navigation component.
+         * */
+        return this.applicationService.getApplicationInfo(action.payload);
+      } else {
+        /**
+         * Fetch the data of default root tenant id, uses the link provided
+         * in _links for 'getApplication'.
+         * */
+        return this.fgeActionService.performAction(user, UserLink.GET_APPLICATION);
+      }
+    }),
+    exhaustMap(this.getApplicationBranding.bind(this)),
+    map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
+    catchError(error => {
+      this.handleErrorRedirect(error.status);
+      return of(new FetchApplicationDataError({ error }));
+    })
+  );
+
+  @Effect() public fetchApplicationDataSuccess$: Observable<Action> = this.actions.pipe(
+    ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS),
+    map(() => new FetchApplicationPath())
   );
 
   @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(
@@ -115,10 +128,11 @@ export class ApplicationEffects {
       )
     );
 
-  @Effect() public fetchApplicationPath$: Observable<Action> = this.actions
-    .pipe(
-      ofType(ApplicationActionTypes.FETCH_APPLICATION_PATH),
-      switchMap((action: ApplicationAction) => this.applicationService.getApplicationPath(action.payload)
+  @Effect() public fetchApplicationPath$: Observable<Action> = this.actions.pipe(
+    ofType(ApplicationActionTypes.FETCH_APPLICATION_PATH),
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([_action, application]: [ApplicationAction, Application]) =>
+      this.fgeActionService.performAction(application, ApplicationLink.PATH)
         .pipe(
           map((response: ApiResponse<ApplicationPath>) => {
             return new FetchApplicationPathSuccess(response);
@@ -126,7 +140,7 @@ export class ApplicationEffects {
           catchError(error => of(new FetchApplicationPathError({ error })))
         )
       )
-    );
+  );
 
   constructor(
     private actions: Actions,
