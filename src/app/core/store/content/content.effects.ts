@@ -34,7 +34,6 @@ export class ContentEffects {
     withLatestFrom(this.store.select(getApplicationInfo)),
     switchMap(([_action, applicationInfo]: [any, Application]) =>
       this.fgeActionService.performAction(applicationInfo, ApplicationLink.CONTENT_GROUPS, { params: { content: 'false' }})
-      // this.contentService.getContentGroups(action.payload.applicationId, action.payload.fetchContent)
         .pipe(
           map((response: ApiResponse<DataPaginated<ApplicationContent>>) => new FetchContentGroupsCompleted(response.data.items)),
           catchError(error => of(new FetchContentError({ error: error })))
