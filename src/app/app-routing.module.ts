@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import {
   AuthLayoutComponent,
@@ -15,7 +15,6 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     canActivate: [ AuthorizedGuard ],
-    canActivateChild: [ AuthorizedGuard ],
     children: [
       {
         path: 'tenant',
@@ -55,6 +54,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     useHash: true,
+    preloadingStrategy: PreloadAllModules,
     paramsInheritanceStrategy: 'always'
   })],
   exports: [RouterModule]

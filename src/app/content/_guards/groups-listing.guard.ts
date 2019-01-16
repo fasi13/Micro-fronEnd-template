@@ -31,7 +31,7 @@ export class GroupsListingGuard implements CanActivate {
       );
   }
 
-  canActivate(): Observable<boolean> {
+  canActivate(): Observable<boolean> | boolean {
     return this.getFromStoreOrAPI()
       .pipe(
         switchMap(() => of(true)),

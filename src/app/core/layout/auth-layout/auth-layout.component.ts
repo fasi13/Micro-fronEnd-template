@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { Observable } from 'rxjs';
-import { takeWhile, delay } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 
 import {
   State,
@@ -11,11 +10,10 @@ import {
   getAuthenticatedUser,
   getApplicationInfo,
   getApplicationBranding,
-  isLoadingApplicationData,
   getApplicationPath,
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
-import { FgeRouterService } from '../../services/_fge-router.service';
+import { FgeRouterService } from '../../services';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -28,7 +26,6 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   pathData: Application[];
   user: User;
   branding: ApplicationBranding;
-  loading$: Observable<boolean> | boolean = true;
   activeSidebar = false;
   search = '';
   isNavigationModalOpened = false;
@@ -71,25 +68,17 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   private initSelectors(): void {
-    this.loading$ = this.store.select(isLoadingApplicationData).pipe(delay(0));
     this.store.select(getApplicationInfo)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((application: Application) => this.application = application);
     this.store.select(getAuthenticatedUser)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
+      .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((user: User) => this.user = user);
-
     this.store.select(getApplicationBranding)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
+      .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((branding: ApplicationBranding) => this.branding = branding);
     this.store.select(getApplicationPath)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
+      .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe(path => {
         if (path && path.data) {
           this.pathData = path.data.path;

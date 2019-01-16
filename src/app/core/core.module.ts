@@ -23,6 +23,7 @@ import { ContentService, FgeRouterService, FgeModalService, FgeHttpActionService
 import { UserEffects } from './store/user';
 import { ResetPasswordEffects } from './store/reset-password';
 import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.component';
+import { ApplicationLoaderComponent } from './layout/application-loader/application-loader.component';
 
 @NgModule({
   imports: [
@@ -53,10 +54,11 @@ import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.comp
   ],
   declarations: [
     AuthLayoutComponent,
-    TenantLayoutComponent
+    TenantLayoutComponent,
+    ApplicationLoaderComponent,
   ],
   exports: [
-    AuthLayoutComponent,
+    ApplicationLoaderComponent
   ],
   providers: [
     UserService,

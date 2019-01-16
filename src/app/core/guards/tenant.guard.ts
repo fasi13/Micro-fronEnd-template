@@ -45,7 +45,7 @@ export class TenantGuard implements CanActivate {
       );
   }
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     return this.getFromStoreOrAPI(route)
       .pipe(
         switchMap(() => of(true)),

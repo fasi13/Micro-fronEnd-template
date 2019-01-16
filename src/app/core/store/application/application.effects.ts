@@ -5,7 +5,7 @@ import { Action, Store } from '@ngrx/store';
 import _find from 'lodash/find';
 
 import { Observable, of, forkJoin } from 'rxjs';
-import { catchError, map, switchMap, exhaustMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap, exhaustMap, withLatestFrom, mergeMap } from 'rxjs/operators';
 
 import {
   ApplicationActionTypes,
@@ -22,6 +22,7 @@ import {
   FetchApplicationPreviewError,
   FetchApplicationPath,
 } from './application.actions';
+import { FetchContentGroups } from '../content/content.actions';
 import {
   ApiResponse,
   DataPaginated,
@@ -88,7 +89,7 @@ export class ApplicationEffects {
 
   @Effect() public fetchApplicationDataSuccess$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS),
-    map(() => new FetchApplicationPath())
+    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups()])
   );
 
   @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(
