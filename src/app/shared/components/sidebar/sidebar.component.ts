@@ -1,8 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, isLoadingGroups, getGroups, ApplicationContent, FgeRouterService } from '@forge/core';
-import { Observable } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
+
+import { Observable } from 'rxjs';
+
+import {
+  State,
+  isLoadingGroups,
+  getGroups,
+  FgeRouterService,
+  ContentGroup
+} from '@forge/core';
 
 @Component({
   selector: 'fge-sidebar',
@@ -12,7 +20,7 @@ export class SidebarComponent implements OnInit {
 
   @Input() active = true;
   loading$: Observable<boolean> | boolean;
-  contentGroups$: Observable<ApplicationContent[]>;
+  contentGroups$: Observable<ContentGroup[]>;
 
   private activatedSection;
 

@@ -6,7 +6,7 @@ import { ContentActionTypes, ContentActions } from './content.actions';
 export interface ContentState {
   groups: {
     loading: boolean,
-    items: ApplicationContent[],
+    items: ContentGroup[],
   };
   group: {
     loading: boolean,

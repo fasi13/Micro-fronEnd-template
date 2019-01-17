@@ -8,7 +8,8 @@ import {
   tap,
   take,
   switchMap,
-  catchError
+  catchError,
+  filter
 } from 'rxjs/operators';
 
 import {
@@ -41,6 +42,7 @@ export class TenantGuard implements CanActivate {
             }
           }
         }),
+        filter((applicationInfo: Application) => !!applicationInfo),
         take(1)
       );
   }

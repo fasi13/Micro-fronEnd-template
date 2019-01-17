@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _find from 'lodash/find';
@@ -11,7 +10,6 @@ import { takeWhile } from 'rxjs/operators';
 
 import {
   State,
-  FetchContentGroup,
   getGroup,
   FetchContent,
   getContent,
@@ -50,7 +48,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private route: ActivatedRoute,
     private store: Store<State>,
     private fgeModalService: FgeModalService,
     private modalService: NgbModal,
@@ -59,8 +56,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.editMode = true;
-    this.route.params
-      .subscribe(params => this.initDispatchers(params));
     this.initSelectors();
   }
 
@@ -80,11 +75,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
 
   goToContentEdit(contentId: string): void {
     this.fgeRouter.navigate(`content/group/${this.currentGroup.id}/content/${contentId}/edit`);
-  }
-
-  private initDispatchers({ tenantId: applicationId, groupId }: any): void {
-    this.store.dispatch(new FetchContentGroup({ applicationId, groupId }));
-    this.applicationId = applicationId;
   }
 
   private initSelectors(): void {

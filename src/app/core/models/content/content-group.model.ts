@@ -1,7 +1,7 @@
 import { ApplicationContent } from '../application/application-content.model';
-import { Link } from '../commons';
+import { Link, FgeEntity } from '../commons';
 
-export class ContentGroup {
+export class ContentGroup extends FgeEntity {
   id: number | string;
   name: string;
   content: ApplicationContent[];

@@ -21,6 +21,7 @@ import { ContentInlineEditorComponent } from './shared/content-inline-editor/con
 import { ContentHtmlEditorComponent } from './content-html-editor/content-html-editor.component';
 import { GroupNotFoundComponent } from './content-error-pages/group-not-found/group-not-found.component';
 import { GroupsListingGuard } from './_guards/groups-listing.guard';
+import { GroupDetailsGuard } from './_guards/group-details.guard';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'group/:groupId',
+    canActivate: [ GroupDetailsGuard ],
     component: GroupDetailsComponent
   },
   {

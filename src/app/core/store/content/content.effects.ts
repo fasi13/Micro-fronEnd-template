@@ -22,7 +22,8 @@ import {
 import { ContentService, FgeRouterService, FgeHttpActionService } from '../../services';
 import { ApiResponse, DataPaginated, ApplicationContent, ContentGroup, Application, ApplicationLink } from '../../models';
 import { UpdateApplicationData } from '../application';
-import { State, getApplicationInfo } from '../store.reducers';
+import { State, getApplicationInfo, getGroups } from '../store.reducers';
+import { ContentGroupLink } from '../../models/content/content-group-link.model';
 
 enum ContentGroupMethods { POST = 'addContentGroup', PUT = 'updateContentGroup' }
 
@@ -43,16 +44,22 @@ export class ContentEffects {
 
   @Effect() public fetchContentGroup: Observable<Action> = this.actions.pipe(
     ofType(ContentActionTypes.FETCH_CONTENT_GROUP),
-    switchMap((action: any) => this.contentService.getContentGroup(action.payload.applicationId,
-      action.payload.groupId, action.payload.fetchContent)
-        .pipe(
-          map((response: ApiResponse<ContentGroup>) => new FetchContentGroupCompleted(response.data)),
-          catchError(error => {
-            this.handleErrorRedirect(error.status);
-            return of(new FetchContentError({ error: error }));
-          })
-        )
-    )
+    withLatestFrom(this.store.select(getGroups)),
+    switchMap(([action, groups]: [any, ContentGroup[]]) => {
+      const group: ContentGroup = groups.find((current: ContentGroup) => current.id === +action.payload);
+      if (group) {
+        return this.fgeActionService.performAction(group, ContentGroupLink.SELF, { params: { content: 'true' }})
+          .pipe(
+            map((response: ApiResponse<ContentGroup>) => new FetchContentGroupCompleted(response.data)),
+            catchError(error => {
+              this.handleErrorRedirect(error.status);
+              return of(new FetchContentError({ error: error }));
+            })
+          );
+      } else {
+        throw new Error(`Content group with id=${action.payload} not found in store`);
+      }
+    })
   );
 
   @Effect() public fetchContent: Observable<Action> = this.actions.pipe(
@@ -73,6 +80,7 @@ export class ContentEffects {
         .pipe(
           mergeMap(() => [
             new TransactionContentRecordCompleted(),
+            // @TODO Refactor to send only the group id
             new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
           ]),
           catchError(error => of(new TransactionContentRecordError(error)))
@@ -87,6 +95,7 @@ export class ContentEffects {
         .pipe(
           mergeMap(() => [
             new LinkContentActionCompleted(),
+            // @TODO Refactor to send only the group id
             new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId }),
             new UpdateApplicationData(action.payload.applicationId)
           ]),

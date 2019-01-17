@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, getGroups, ApplicationContent, FgeRouterService, isLoadingGroups } from '@forge/core';
+
 import { Observable } from 'rxjs';
-import { UserPrefenceService, PreferenceType } from 'src/app/core/services/user-prefence.service';
+
+import {
+  State,
+  getGroups,
+  FgeRouterService,
+  isLoadingGroups,
+  ContentGroup
+} from '@forge/core';
+import {
+  UserPrefenceService,
+  PreferenceType
+} from 'src/app/core/services/user-prefence.service';
 
 @Component({
   selector: 'fge-groups-listing',
@@ -10,7 +21,7 @@ import { UserPrefenceService, PreferenceType } from 'src/app/core/services/user-
 })
 export class GroupsListingComponent implements OnInit {
 
-  groups$: Observable<ApplicationContent[]>;
+  groups$: Observable<ContentGroup[]>;
   loading$: Observable<boolean> | boolean;
   displayMode: string;
 
