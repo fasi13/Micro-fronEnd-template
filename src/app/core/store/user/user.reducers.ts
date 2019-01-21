@@ -91,4 +91,5 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 
 export const isLoadingUser = (state: UserState) => state.user.loading;
 export const getUsersState = (state: UserState) => state.users;
+export const getUsers = (state: UserState) => state.users.items;
 export const getUserState = (state: UserState) => state.user;

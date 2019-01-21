@@ -20,8 +20,6 @@ export class UsersListingComponent implements OnInit, OnDestroy {
 
   private confirmModal: any;
   private filters: { [key: string]: string };
-  private readonly initialOffset = 0;
-  private readonly initialLimit = 12;
   private isAliveComponent = true;
   private unsubscribeListing = new Subject();
 
@@ -44,7 +42,6 @@ export class UsersListingComponent implements OnInit, OnDestroy {
       sortdirection: 'asc'
     };
     this.initSelectors();
-    this.store.dispatch(new FetchUsers({ limit: this.initialLimit, offset: this.initialOffset, sort: this.sort }));
   }
 
   ngOnDestroy() {
@@ -100,8 +97,8 @@ export class UsersListingComponent implements OnInit, OnDestroy {
   }
 
   onPerformFilter(): void {
-    const { initialLimit: limit, initialOffset: offset, filters, sort } = this;
-    this.store.dispatch(new FetchUsers({ limit, offset, filters, sort }));
+    const { filters, sort } = this;
+    this.store.dispatch(new FetchUsers({ filters, sort }));
   }
 
   onResetFilters(): void {
@@ -122,8 +119,8 @@ export class UsersListingComponent implements OnInit, OnDestroy {
         sortdirection: 'asc'
       };
     }
-    const { sort, initialOffset, initialLimit, filters } = this;
-    this.store.dispatch(new FetchUsers({ limit: initialLimit, offset: initialOffset, sort, filters }));
+    const { sort, filters } = this;
+    this.store.dispatch(new FetchUsers({ sort, filters }));
   }
 
   trackByUserId(_index, item: User): number {

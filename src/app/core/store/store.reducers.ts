@@ -92,6 +92,7 @@ export const getUserState = (state: State) => {
 };
 export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
 export const getUsersState = createSelector(getUserState, UserReducers.getUsersState);
+export const getUsers = createSelector(getUserState, UserReducers.getUsers);
 export const getUserRecordState = createSelector(getUserState, UserReducers.getUserState);
 
 /**********************************************************

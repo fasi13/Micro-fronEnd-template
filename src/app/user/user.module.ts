@@ -6,10 +6,15 @@ import { UsersListingComponent } from './users-listing/users-listing.component';
 import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { UsersListingGuard } from './_guards/users-listing.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list' },
-  { path: 'list', component: UsersListingComponent }
+  {
+    path: 'list',
+    canActivate: [ UsersListingGuard],
+    component: UsersListingComponent
+  }
 ];
 
 @NgModule({

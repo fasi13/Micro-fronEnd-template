@@ -28,7 +28,12 @@ export class UserTransactionSuccess implements Action {
 
 export class FetchUsers implements Action {
   public type: string = UserTypes.FETCH_USERS;
-  constructor(public payload?: any) {}
+  constructor(public payload: {
+    limit?: number,
+    offset?: number,
+    filters?: any,
+    sort?: any
+  } = { limit: 12, offset: 0, sort: { sortby: 'login', sortdirection: 'asc' } }) {}
 }
 
 export class FetchUsersError implements Action {
