@@ -80,7 +80,9 @@ export class ContentEffects {
         .pipe(
           mergeMap(() => [
             new TransactionContentRecordCompleted(),
-            // @TODO Refactor to send only the group id
+            /**
+             * @TODO Refactor to send only the group id
+             */
             new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
           ]),
           catchError(error => of(new TransactionContentRecordError(error)))
@@ -95,7 +97,9 @@ export class ContentEffects {
         .pipe(
           mergeMap(() => [
             new LinkContentActionCompleted(),
-            // @TODO Refactor to send only the group id
+            /**
+             * @TODO Refactor to send only the group id
+             */
             new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId }),
             new UpdateApplicationData(action.payload.applicationId)
           ]),

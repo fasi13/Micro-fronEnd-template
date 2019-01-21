@@ -6,7 +6,10 @@ export class TreeviewData implements FgeEntity {
   value?: string;
   collapsed?: boolean;
   executedFetch?: boolean;
-  isGroup?: boolean; // @TODO replace with the proper field
+  /**
+   * @TODO replace with the proper field
+   */
+  isGroup?: boolean;
   childrenData?: TreeviewData[];
   parentId?: string | number;
   loading?: boolean;

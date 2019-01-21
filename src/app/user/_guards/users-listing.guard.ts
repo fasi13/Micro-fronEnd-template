@@ -24,10 +24,10 @@ export class UsersListingGuard implements CanActivate {
 
   private getFromStoreOrAPI(): Observable<any> {
     /**
-     * @TODO: Check if users has been loaded or there a list of them in store,
+     * @TODO Check if users has been loaded or there is a list of them in store,
      *  but in order to get that completed we should refactor users listing component
-     *  to have the pagination, sorting variables in redux, then we can implement that
-     *  logic.
+     *  to have the pagination, sorting variables in redux/store, then we can implement that
+     *  logic to perform the action to fetch users.
      */
     this.store.dispatch(new FetchUsers());
     return of(true);

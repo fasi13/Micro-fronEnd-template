@@ -21,6 +21,7 @@ import {
   FetchApplicationPreviewSuccess,
   FetchApplicationPreviewError,
   FetchApplicationPath,
+  FetchDataTypes,
 } from './application.actions';
 import { FetchContentGroups } from '../content/content.actions';
 import {
@@ -43,8 +44,8 @@ import { FgeHttpActionService } from '../../services';
 @Injectable()
 export class ApplicationEffects {
 
-  /*
-   * @TODO: This is just a quick fix to update the website branding, but keep in mind that this is not the best way since
+  /**
+   * @TODO This is just a quick fix to update the website branding, but keep in mind that this is not the best way since
    *  it performs an aditional request per each update transaction, so this needs to be refactored to store the content and
    *  replace that one when its updated, instead of having an specific field for website branding. It means store all the contents
    *  in redux using a map[key: value] and then replace when someone is updated, instead of having a multiple copies across the app.
@@ -89,11 +90,15 @@ export class ApplicationEffects {
 
   @Effect() public fetchApplicationDataSuccess$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS),
-    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups()])
+    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups(), new FetchDataTypes()])
   );
 
   @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_PREVIEW),
+    /**
+     * @TODO Refactor hierarchy navigation component in order to store selected node and use the
+     *  provided _links to perform the action to get the application info.
+     */
     switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
       .pipe(
         exhaustMap(this.getApplicationBranding.bind(this)),
@@ -106,6 +111,9 @@ export class ApplicationEffects {
   @Effect() public searchApplication$: Observable<Action> = this.actions
     .pipe(
       ofType(ApplicationActionTypes.SEARCH_APPLICATION),
+      /**
+       * @TODO Refactor this once API provices a search link in Application Data
+       */
       switchMap((action: ApplicationAction) => this.applicationService.search(action.payload)
         .pipe(
           map((response: ApiResponse<DataPaginated<ApplicationPath>>) => {
@@ -119,14 +127,16 @@ export class ApplicationEffects {
   @Effect() public fetchDataTypes$: Observable<Action> = this.actions
     .pipe(
       ofType(ApplicationActionTypes.FETCH_DATA_TYPES),
-      switchMap((action: ApplicationAction) => this.applicationService.getDataTypes(action.payload)
-        .pipe(
-          map((response: ApiResponse<DataPaginated<DataType>>) => {
-            return new FetchDataTypesSuccess(response);
-          }),
-          catchError(error => of(new FetchDataTypesError({ error })))
+      withLatestFrom(this.store.select(getApplicationInfo)),
+      switchMap(([_action, application]: [ApplicationAction, Application]) =>
+        this.fgeActionService.performAction(application, ApplicationLink.DATA_TYPES)
+          .pipe(
+            map((response: ApiResponse<DataPaginated<DataType>>) => {
+              return new FetchDataTypesSuccess(response);
+            }),
+            catchError(error => of(new FetchDataTypesError({ error })))
+          )
         )
-      )
     );
 
   @Effect() public fetchApplicationPath$: Observable<Action> = this.actions.pipe(
@@ -157,6 +167,11 @@ export class ApplicationEffects {
     const contentsHateoas: HateoasAction = { href, method: method.method };
     return forkJoin(
       of(applicationResponse),
+      /**
+       * @TODO Currently API doesn't provides us a way to get the application branding, nor links
+       *  to get each content that belong to the branding stuff. So once API prices either a one or more
+       *  links to get that, refactor to use the fgeActionService instead of application service
+       */
       this.applicationService.getContentFor(contentsHateoas, 'Primary Color'),
       this.applicationService.getContentFor(contentsHateoas, 'Secondary Color'),
       this.applicationService.getContentFor(contentsHateoas, 'Primary Logo'),
