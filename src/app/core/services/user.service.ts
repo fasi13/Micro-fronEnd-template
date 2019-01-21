@@ -33,13 +33,23 @@ export class UserService {
   logout(reason: string = 'Action', isAuth = true): Observable<boolean> {
     if (isAuth) {
       const navigationExtras: NavigationExtras = {};
+      /**
+       * Checks if the logout reason is 'inactivity' to append route query param
+       * That is used to redirect to that route when user login after some iddle time
+       */
       if (reason === 'Inactivity') {
         navigationExtras.queryParams = {
           route: this.router.url
         };
       }
+      /**
+       * Redirects to login page
+       */
       console.log('Logout - reason: ', reason);
       this.router.navigate(['/login'], navigationExtras);
+      /**
+       * Cleans local storage items
+       */
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('application_data');
