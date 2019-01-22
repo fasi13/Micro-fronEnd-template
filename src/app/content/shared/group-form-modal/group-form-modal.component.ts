@@ -48,7 +48,9 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.appInfoSubscription.unsubscribe();
+    if (this.appInfoSubscription) {
+      this.appInfoSubscription.unsubscribe();
+    }
   }
 
   open(contentGroup: ContentGroup): void {
@@ -106,7 +108,7 @@ export class GroupFormModalComponent implements OnInit, OnDestroy {
 
   private updateContentGroup(formData: any): void {
     const payload = {
-      id: this.contentGroup,
+      group: this.contentGroup,
       applicationId: this.applicationId,
       groupName: formData.groupName
     };

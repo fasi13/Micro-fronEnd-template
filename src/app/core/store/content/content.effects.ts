@@ -140,7 +140,7 @@ export class ContentEffects {
     if (method === 'POST') {
       return this.contentService[ContentGroupMethods[method]](payload.applicationId, payload.groupName);
     } else {
-      return this.contentService[ContentGroupMethods[method]](payload.applicationId, payload.id, payload.groupName);
+      return this.contentService[ContentGroupMethods[method]](payload.applicationId, payload.group.id, payload.groupName);
     }
   }
 }
