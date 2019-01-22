@@ -8,6 +8,7 @@ import * as ContentReducers from './content/content.reducers';
 import * as UserReducers from './user/user.reducers';
 import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
 import { AuthorizationActionTypes } from './authorization/authorization.actions';
+import { StoreActionTypes } from './store.actions';
 
 export interface State {
   router: RouterReducerState;
@@ -34,6 +35,18 @@ export function clearStateOnLogout(reducer: ActionReducer<State>): ActionReducer
   return function(state: State, action: Action): State {
     if (action.type === AuthorizationActionTypes.LOGOUT_SUCCESS) {
       state = undefined;
+    }
+    return reducer(state, action);
+  };
+}
+
+export function clearStoredData(reducer: ActionReducer<State>): ActionReducer<State> {
+  return function(state: State, action: Action): State {
+    if (action.type === StoreActionTypes.CLEAR_STORED_DATA) {
+      state = Object.assign(state, {
+        content: ContentReducers.initialState,
+        user: UserReducers.initialState
+      });
     }
     return reducer(state, action);
   };

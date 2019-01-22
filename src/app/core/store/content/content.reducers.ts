@@ -31,7 +31,7 @@ export interface ContentState {
   error?: any;
 }
 
-const initialState: ContentState = {
+export const initialState: ContentState = {
   groups: {
     loading: false,
     items: null

@@ -12,7 +12,7 @@ export interface AuthorizationState {
   user?: User;
 }
 
-const initialState: AuthorizationState = {
+export const initialState: AuthorizationState = {
   authenticated: null,
   loaded: false,
   loading: false

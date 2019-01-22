@@ -18,6 +18,7 @@ import {
   FetchApplicationData
 } from '@forge/core-store';
 import { Application } from '../models';
+import { ClearStoredData } from '../store/store.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,7 @@ export class TenantGuard implements CanActivate {
       .pipe(
         tap((applicationInfo: Application) => {
           const tenantId = route.paramMap['params'].tenantId;
+          this.store.dispatch(new ClearStoredData());
           if (_isEmpty(applicationInfo) || applicationInfo.id !== +tenantId) {
             if (tenantId === 'default') {
               this.store.dispatch(new FetchApplicationData());

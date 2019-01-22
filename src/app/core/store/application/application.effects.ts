@@ -22,6 +22,7 @@ import {
   FetchApplicationPreviewError,
   FetchApplicationPath,
   FetchDataTypes,
+  UpdateApplicationDataSuccess,
 } from './application.actions';
 import { FetchContentGroups } from '../content/content.actions';
 import {
@@ -56,7 +57,7 @@ export class ApplicationEffects {
     switchMap(([_action, user]: [ApplicationAction, User]) =>
       this.fgeActionService.performAction(user, UserLink.GET_APPLICATION)),
     exhaustMap(this.getApplicationBranding.bind(this)),
-    map(this.mapApplicationBrandingAs(FetchApplicationDataSuccess)),
+    map(this.mapApplicationBrandingAs(UpdateApplicationDataSuccess)),
     catchError(error => {
       return of(new FetchApplicationDataError({ error }));
     })

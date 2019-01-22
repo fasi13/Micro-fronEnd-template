@@ -41,7 +41,7 @@ export interface ApplicationState {
   };
 }
 
-const initialState: ApplicationState = {
+export const initialState: ApplicationState = {
   current: {
     info: null,
     branding: null,
@@ -74,6 +74,23 @@ export function reducer(state: any = initialState, action: ApplicationAction): A
           loading: false
         })
       });
+
+    case ApplicationActionTypes.UPDATE_APPLICATION_DATA_SUCCESS: {
+      const fetchBranding: { [key: string]: ApiResponse<DataPaginated<ApplicationContent>> } = action.payload.branding;
+      return _assign({}, state, {
+        current: _assign({}, state.current, {
+          branding: {
+            primaryColor: fetchBranding.primaryColor.data.items[0],
+            secondaryColor: fetchBranding.secondaryColor.data.items[0],
+            primaryLogo: fetchBranding.primaryLogo.data.items[0],
+            siteUrl: fetchBranding.siteUrl.data.items[0],
+            programName: fetchBranding.programName.data.items[0],
+            secondaryLogo: fetchBranding.secondaryLogo.data.items[0]
+          },
+          loading: false,
+        })
+      });
+    }
 
     case ApplicationActionTypes.FETCH_APPLICATION_DATA:
       return _assign({}, state, {

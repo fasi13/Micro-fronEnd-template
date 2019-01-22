@@ -6,6 +6,7 @@ import { ApiResponse, DataPaginated, ApplicationContent } from '../../models';
 
 export const ApplicationActionTypes = {
   UPDATE_APPLICATION_DATA: ActionType('UPDATE_APPLICATION_DATA'),
+  UPDATE_APPLICATION_DATA_SUCCESS: ActionType('UPDATE_APPLICATION_DATA_SUCCESS'),
   FETCH_APPLICATION_DATA: ActionType('FETCH_APPLICATION_DATA'),
   FETCH_APPLICATION_DATA_SUCCESS: ActionType('FETCH_APPLICATION_DATA_SUCCESS'),
   FETCH_APPLICATION_DATA_ERROR: ActionType('FETCH_APPLICATION_DATA_ERROR'),
@@ -25,6 +26,11 @@ export const ApplicationActionTypes = {
 
 export class UpdateApplicationData implements Action {
   public type: string = ApplicationActionTypes.UPDATE_APPLICATION_DATA;
+  constructor(public payload?: any) {}
+}
+
+export class UpdateApplicationDataSuccess implements Action {
+  public type: string = ApplicationActionTypes.UPDATE_APPLICATION_DATA_SUCCESS;
   constructor(public payload?: any) {}
 }
 

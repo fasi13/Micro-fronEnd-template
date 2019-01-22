@@ -20,7 +20,7 @@ export interface UserState {
   error?: any;
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
   users: {
     loading: false,
     items: null,

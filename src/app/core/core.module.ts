@@ -12,7 +12,7 @@ import { AuthLayoutComponent } from './layout';
 import { UserService } from './services/user.service';
 import { AuthorizationEffects } from './store/authorization';
 import { ApplicationEffects } from './store/application';
-import { FgeReducers, clearStateOnLogout } from './store/store.reducers';
+import { FgeReducers, clearStateOnLogout, clearStoredData } from './store/store.reducers';
 import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -35,7 +35,8 @@ import { ApplicationLoaderComponent } from './layout/application-loader/applicat
     StoreModule.forRoot(FgeReducers, {
       initialState: loadFromLocalStorage,
       metaReducers: [
-        clearStateOnLogout
+        clearStateOnLogout,
+        clearStoredData
       ]
     }),
     StoreRouterConnectingModule.forRoot(),

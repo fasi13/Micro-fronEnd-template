@@ -57,7 +57,8 @@ export class ContentEffects {
             })
           );
       } else {
-        throw new Error(`Content group with id=${action.payload} not found in store`);
+        this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
+        throw new Error(`Content group with id=${action.payload} not found in current tenant store`);
       }
     })
   );
