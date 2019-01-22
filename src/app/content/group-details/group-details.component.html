@@ -93,7 +93,7 @@
           <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
         </td>
         <td>{{ content?.status }}</td>
-        <td>{{ parseToDate(content.publishDate) | date:'medium' }}</td>
+        <td>{{ content.publishDate | date:'medium' }}</td>
       </tr>
     </tbody>
   </table>

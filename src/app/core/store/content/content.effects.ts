@@ -83,7 +83,7 @@ export class ContentEffects {
             /**
              * @TODO Refactor to send only the group id
              */
-            new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId })
+            new FetchContentGroup(action.payload.groupId)
           ]),
           catchError(error => of(new TransactionContentRecordError(error)))
         )
@@ -100,7 +100,7 @@ export class ContentEffects {
             /**
              * @TODO Refactor to send only the group id
              */
-            new FetchContentGroup({ applicationId: action.payload.applicationId, groupId: action.payload.groupId }),
+            new FetchContentGroup(action.payload.groupId),
             new UpdateApplicationData(action.payload.applicationId)
           ]),
           catchError(error => of(new LinkContentActionError(error)))
@@ -137,6 +137,10 @@ export class ContentEffects {
   }
 
   private handleContentGroupRequest(payload, method): any {
+    /**
+     * @TODO Remove this useless logic, since the request should be performed
+     *  using the links from group data
+     */
     if (method === 'POST') {
       return this.contentService[ContentGroupMethods[method]](payload.applicationId, payload.groupName);
     } else {
