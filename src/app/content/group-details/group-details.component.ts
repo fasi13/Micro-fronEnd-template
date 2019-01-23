@@ -109,7 +109,12 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     if (href) {
       const splittedUrl = href.split('/');
       const contentId = + splittedUrl[splittedUrl.length - 1];
-      const applicationId = this.applicationId;
+      const applicationId = + splittedUrl[splittedUrl.length - 3];
+      /**
+       * @TODO Refactor this implementation to perform the action from effects
+       *  instead of getting the link here, should follow the current effects implementation
+       *  using the fgeActionService
+       */
       this.store.dispatch(new FetchContent({ applicationId, contentId }));
       this.initAdaContent();
     } else {
