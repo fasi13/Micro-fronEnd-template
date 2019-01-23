@@ -28,12 +28,12 @@
 <div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>
 
 <ng-template #listView>
-  <table class="table table-bordred fge-group--content-list">
-    <thead>
+  <table class="table fge-table">
+    <thead class="fge-table__header">
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Last Updated</th>
-        <th scope="col">Actions</th>
+        <th scope="col fge-table__col">Name</th>
+        <th scope="col fge-table__col">Last Updated</th>
+        <th scope="col fge-table__col">Actions</th>
       </tr>
     </thead>
     <tbody>

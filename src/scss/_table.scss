@@ -8,12 +8,14 @@
 }
 
 .fge-table {
+  font-size: 13px;
+
   &--actions {
     min-width: 100px;
   }
   
   &__row {
-    max-height: 3.5rem;
+    max-height: 3.1rem;
   }
   
   &__col {
@@ -30,7 +32,6 @@
     color: #495057;
     background-color: #e9ecef;
     font-weight: bold;
-    border-color: #dee2e6;
-    border-bottom: 2px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
   }
 }

@@ -44,83 +44,85 @@
   <div class="col-1 fge-table__col border-bottom-0 pt-0 border-top-0">
   </div>
 </div>
-<div class="row m-0 fge-table__header">
-  <div class="col fge-table__col fge-clickable" (click)="sortBy('login')">
-    Username
-    <span *ngIf="sort.sortby === 'login'">
-      <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-      <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
-    </span>
+<div class="fge-table">
+  <div class="row m-0 fge-table__header">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('login')">
+      Username
+      <span *ngIf="sort.sortby === 'login'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('firstname')">
+      First Name
+      <span *ngIf="sort.sortby === 'firstname'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('lastname')">
+      Last Name
+      <span *ngIf="sort.sortby === 'lastname'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('email')">
+      Email
+      <span *ngIf="sort.sortby === 'email'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col fge-table__col">
+      Application
+    </div>
+    <div class="col-2 fge-table__col fge-clickable" (click)="sortBy('lastlogindate')">
+      Last Login
+      <span *ngIf="sort.sortby === 'lastlogindate'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col-1 fge-table__col fge-table--actions">
+      Actions
+    </div>
   </div>
-  <div class="col fge-table__col fge-clickable" (click)="sortBy('firstname')">
-    First Name
-    <span *ngIf="sort.sortby === 'firstname'">
-      <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-      <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
-    </span>
+  <div class="row m-0" *ngIf="usersState?.items?.length <= 0 && !usersState?.loading">
+    <div class="col fge-table__col text-center">
+      <h6><i class="fas fa-info-circle"></i> No users found</h6>
+    </div>
   </div>
-  <div class="col fge-table__col fge-clickable" (click)="sortBy('lastname')">
-    Last Name
-    <span *ngIf="sort.sortby === 'lastname'">
-      <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-      <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
-    </span>
+  <div class="row fge-table__row m-0" *ngFor="let user of usersState?.items; trackBy: trackByUserId">
+    <div class="col fge-table__col" title="{{ user.login }}">{{ user.login }}</div>
+    <div class="col fge-table__col" title="{{ user.firstName }}">{{ user.firstName }}</div>
+    <div class="col fge-table__col" title="{{ user.lastName }}">{{ user.lastName }}</div>
+    <div class="col fge-table__col" title="{{ user.email }}">{{ user.email }}</div>
+    <div class="col fge-table__col--app-path" title="{{ user.applicationPath | fgeApplicationPath }}">{{ user.applicationPath | fgeApplicationPath }}</div>
+    <div class="col-2 fge-table__col" title="{{ user.lastLoginDate | date:'medium' }}">{{ user.lastLoginDate | date:'medium' }}</div>
+    <div class="col-1 fge-table__col pr-0 fge-table--actions">
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
+        <i class="fas fa-edit"></i>
+      </a>
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
+        <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
+      </a>
+    </div>
   </div>
-  <div class="col fge-table__col fge-clickable" (click)="sortBy('email')">
-    Email
-    <span *ngIf="sort.sortby === 'email'">
-      <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-      <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
-    </span>
-  </div>
-  <div class="col fge-table__col">
-    Application
-  </div>
-  <div class="col-2 fge-table__col fge-clickable" (click)="sortBy('lastlogindate')">
-    Last Login
-    <span *ngIf="sort.sortby === 'lastlogindate'">
-      <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-      <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
-    </span>
-  </div>
-  <div class="col-1 fge-table__col fge-table--actions">
-    Actions
-  </div>
+  <ngb-pagination
+    class="d-flex justify-content-center pt-3"
+    *ngIf="usersState?.totalCount > usersState?.limit"
+    [collectionSize]="usersState?.totalCount"
+    [page]="pageNumber"
+    [pageSize]="usersState?.limit"
+    [maxSize]="5"
+    [rotate]="true"
+    [ellipses]="false"
+    [boundaryLinks]="true"
+    (pageChange)="onPageChange($event)"
+    size="sm"
+  ></ngb-pagination>
 </div>
-<div class="row m-0" *ngIf="usersState?.items?.length <= 0 && !usersState?.loading">
-  <div class="col fge-table__col text-center">
-    <h6><i class="fas fa-info-circle"></i> No users found</h6>
-  </div>
-</div>
-<div class="row fge-table__row m-0" *ngFor="let user of usersState?.items; trackBy: trackByUserId">
-  <div class="col fge-table__col" title="{{ user.login }}">{{ user.login }}</div>
-  <div class="col fge-table__col" title="{{ user.firstName }}">{{ user.firstName }}</div>
-  <div class="col fge-table__col" title="{{ user.lastName }}">{{ user.lastName }}</div>
-  <div class="col fge-table__col" title="{{ user.email }}">{{ user.email }}</div>
-  <div class="col fge-table__col--app-path" title="{{ user.applicationPath | fgeApplicationPath }}">{{ user.applicationPath | fgeApplicationPath }}</div>
-  <div class="col-2 fge-table__col" title="{{ user.lastLoginDate | date:'medium' }}">{{ user.lastLoginDate | date:'medium' }}</div>
-  <div class="col-1 fge-table__col pr-0 fge-table--actions">
-    <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
-      <i class="fas fa-edit"></i>
-    </a>
-    <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
-      <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
-    </a>
-  </div>
-</div>
-<ngb-pagination
-  class="d-flex justify-content-center pt-3"
-  *ngIf="usersState?.totalCount > usersState?.limit"
-  [collectionSize]="usersState?.totalCount"
-  [page]="pageNumber"
-  [pageSize]="usersState?.limit"
-  [maxSize]="5"
-  [rotate]="true"
-  [ellipses]="false"
-  [boundaryLinks]="true"
-  (pageChange)="onPageChange($event)"
-  size="sm"
-></ngb-pagination>
 
 <ng-template #filterInput let-label="label" let-field="field">
   <div class="input-group input-group-sm mt-1">
