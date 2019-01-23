@@ -16,7 +16,7 @@
   </div>
   <div class="fge-dynamic-field form-button">
     <button
-      class="fge-dynamic-form__button btn-primary bg-primary ml-auto"
+      class="fge-dynamic-form__button btn-primary bg-secondary ml-auto"
       type="submit"
       (click)="handleSaveAction($event)"
       [disabled]="loadingAsyncResponse">
@@ -25,7 +25,7 @@
     </button>
     <button
       type="button"
-      class="fge-dynamic-form__button btn-secondary ml-2"
+      class="fge-dynamic-form__button btn-secondary fge-dynamic-form__button--cancel ml-2"
       (click)="handleCancel($event)"
       [disabled]="loadingAsyncResponse">
       Cancel

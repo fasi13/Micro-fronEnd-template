@@ -11,12 +11,12 @@
     {{ config.message }}
   </div>
   <div class="modal-footer pt-2">
-    <button class="fge-dynamic-form__button btn-primary bg-primary"
+    <button class="fge-dynamic-form__button btn-primary bg-secondary"
       ngbAutofocus
       (click)="handleSubmit()"
       type="submit">{{ config.submitLabel }}</button>
     <button type="button" 
-      class="fge-dynamic-form__button btn-secondary"
+      class="fge-dynamic-form__button btn-secondary fge-dynamic-form__button--cancel"
       aria-label="Close" 
       (click)="handleCancel()">{{ config.cancelLabel }}</button>
   </div>

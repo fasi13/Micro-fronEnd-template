@@ -25,6 +25,10 @@
     pointer-events: none;
     box-shadow: none;
   }
+
+  &--cancel {
+    background-color: #86888A;
+  }
 }
 
 .fge-dynamic-form__input {
