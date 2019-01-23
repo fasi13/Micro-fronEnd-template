@@ -31,7 +31,7 @@ export class ApplicationLoaderComponent implements OnInit {
       .pipe(
         withLatestFrom(this.store.select(isAuthenticated)),
         filter(([_loading, isAuth]: boolean[]) => isAuth),
-        throttleTime(300),
+        throttleTime(500),
         switchMap(([loading]: [boolean]) => of(loading)),
         catchError(() => of(false))
       );
