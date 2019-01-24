@@ -25,7 +25,9 @@
   &__col--app-path {
     @include fge-table-column();
     white-space: normal;
-    @include fge-line-clamp(2, 2.1);
+    span {
+      @include fge-multiline-ellipsis(13px, 1.4, 2)
+    }
   }
   
   &__header {

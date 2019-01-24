@@ -10,3 +10,19 @@
   -webkit-box-orient: vertical;
   max-height: $numLines * $lineHeight + unquote('em');
 }
+
+@mixin fge-multiline-ellipsis($font-size: 14, $line-height: 1.4, $lines-to-cut: 1) {
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  max-height: $font-size*$line-height*$lines-to-cut;
+  font-size: $font-size;
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-cut;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
