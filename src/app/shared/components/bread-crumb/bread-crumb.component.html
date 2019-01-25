@@ -13,7 +13,7 @@
       <span *ngIf="isLast && !eventMode" class="fge-clickable" (click)="onClickPath($event)">
         {{path.name}}
       </span>
-      <span *ngIf="eventMode && position !== ellipsisPosition" class="fge-clickable" [id]="path.id" (click)="onClickPath($event)">
+      <span *ngIf="eventMode && position !== ellipsisPosition" class="fge-clickable" [id]="'pathId' + path.value" (click)="onClickPath($event)">
         {{path.name}}
       </span>
     </li>

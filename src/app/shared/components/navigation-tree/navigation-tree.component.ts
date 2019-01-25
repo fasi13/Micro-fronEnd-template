@@ -22,7 +22,8 @@ import {
   ApplicationService
 } from '@forge/core';
 import { Store } from '@ngrx/store';
-import _reverse from 'lodash/reverse';
+import _filter from 'lodash/filter';
+import _some from 'lodash/some';
 
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, debounceTime, delay } from 'rxjs/operators';
@@ -49,6 +50,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   previewLoading: boolean;
   previewId: string | number;
   pathData: Application[];
+  pathDataOpen: Application[];
   treeDataOpen = {};
 
   private fetchApplicationBrandingSubject: BehaviorSubject<string | number> = new BehaviorSubject<string | number>(null);
@@ -78,7 +80,8 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
       _links: this.rootApplication._links,
       childrenData: []
     };
-    this.treeDataOpen[this.treeData.id] = this.treeData;
+    this.treeDataOpen[this.getPathId(this.treeData)] = this.treeData;
+    this.pathDataOpen = [];
     this.generatePath(this.treeData);
     this.applicationService.getApplicationInfo(+this.treeData.id)
       .subscribe((application: ApiResponse<Application>) => this.treeData._links = application.data._links);
@@ -177,13 +180,21 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   goToHierarchy(event: Event): void {
-    const itemId = event.currentTarget['id'];
+    let itemId = event.currentTarget['id'];
     if (itemId) {
+      itemId = itemId.split('pathId')[1];
       const item: TreeviewData = this.treeDataOpen[itemId];
       if (item) {
-        item.collapsed = !!!item.collapsed;
+        item.collapsed = true;
+        if (item.childrenData.length > 0) {
+          item.childrenData.forEach(child => {
+            child.collapsed = true;
+            child.executedFetch = false;
+            child.childrenData = [];
+          });
+        }
         this.toggleCollapse(item, event);
-        document.getElementById(this.getPathId(item)).scrollIntoView();
+        document.getElementById(itemId).scrollIntoView();
       }
     }
   }
@@ -237,29 +248,38 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   private generatePath(item: TreeviewData) {
-    const pathApplications: Application[] = [];
+    const itemId = this.getPathId(item);
     let parentId = item.parentId;
+    if (parentId) {
+      const parentPath = _filter(this.pathDataOpen, {'id': parentId});
+      if (parentPath.length > 0) {
+        parentId = parentPath[0].value !== itemId ? parentPath[0].value : parentPath[1].value;
+      }
+    }
+    this.pathData = [];
     if (!item.collapsed) {
-      this.treeDataOpen[item.id] = item;
-      pathApplications.push({
+      this.treeDataOpen[itemId] = item;
+      this.treeDataOpen[itemId].parentIdProcessed = parentId;
+      const path = {
         id: item.id,
         name: item.name,
-        value: this.getPathId(item),
+        value: itemId,
         _links: item._links
-      });
-    } else {
-      delete this.treeDataOpen[item.id];
+      };
+      this.pathData.unshift(path);
+      if (!_some(this.pathDataOpen, path)) {
+        this.pathDataOpen.unshift(path);
+      }
     }
     while (parentId) {
       const parent = this.treeDataOpen[parentId];
-      parentId = parent.parentId;
-      pathApplications.push({
+      parentId = parent.parentIdProcessed;
+      this.pathData.unshift({
         id: parent.id,
         name: parent.name,
         value: this.getPathId(parent),
         _links: parent._links
       });
     }
-    this.pathData = _reverse(pathApplications);
   }
 }
