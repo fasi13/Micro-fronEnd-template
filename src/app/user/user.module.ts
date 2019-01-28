@@ -7,6 +7,7 @@ import { UserFormModalComponent } from './shared/user-form-modal/user-form-modal
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { UsersListingGuard } from './_guards/users-listing.guard';
+import { UserRolesComponent } from './user-roles/user-roles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list' },
@@ -14,6 +15,10 @@ const routes: Routes = [
     path: 'list',
     canActivate: [UsersListingGuard],
     component: UsersListingComponent
+  }, {
+    path: 'roles',
+    canActivate: [ ],
+    component: UserRolesComponent
   }
 ];
 
@@ -26,6 +31,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [UsersListingComponent, UserFormModalComponent]
+  declarations: [
+    UsersListingComponent,
+    UserFormModalComponent,
+    UserRolesComponent
+  ]
 })
 export class UserModule {}

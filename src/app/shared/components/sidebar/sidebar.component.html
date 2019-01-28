@@ -7,10 +7,9 @@
           class="btn-sm fge-clickable"
           *ngIf="!active"
           data-toggle="collapse"
-          data-target="#collapseExample"
+          data-target="#groupsCollapse"
           aria-expanded="false"
-          aria-controls="collapseExample"
-        >
+          aria-controls="groupsCollapse">
           <i class="fas fa-archive" (click)="goToContentGroups($event)"></i>
           <span class="fge-sidebar__item--title">Content Management</span>
         </a>
@@ -22,7 +21,7 @@
           <i class="fas fa-archive"></i>
         </a>
       </li>
-      <div class="collapse" id="collapseExample" *ngIf="!active">
+      <div class="collapse" id="groupsCollapse" *ngIf="!active">
         <div class="fge-sidebar-expand">
           <a
             class="fge-clickable"
@@ -46,9 +45,32 @@
         </a>
       </li>
       <li [ngClass]="{ active: isSectionActive('user') }">
-        <a class="btn-sm fge-clickable" (click)="goToUsersManagement()">
-          <i class="fas fa-users-cog"></i>
-          <span class="fge-sidebar__item--title">User Management</span>
+        <div class="collapse" id="userCollapse" *ngIf="!active">
+          <div class="fge-sidebar-expand">
+            <a class="fge-clickable" tabindex="0" (click)="goToUsersManagement()">
+              <i class="fas fa-user"></i>
+              Users Management
+            </a>
+            <a class="fge-clickable" tabindex="0" (click)="goToUserRoles()">
+              <i class="fas fa-users"></i>
+              Roles Management
+            </a>
+          </div>
+        </div>
+      </li>
+      <li [ngClass]="{'active': isSectionActive('user')}">
+        <a
+          class="btn-sm fge-clickable"
+          *ngIf="!active"
+          data-toggle="collapse"
+          data-target="#userCollapse"
+          aria-expanded="false"
+          aria-controls="userCollapse">
+          <i class="fas fa-user" (click)="goToUsersManagement()"></i>
+          <span class="fge-sidebar__item--title">Users</span>
+        </a>
+        <a (click)="goToUsersManagement()" class="btn-sm fge-clickable" *ngIf="active">
+          <i class="fas fa-user"></i>
         </a>
       </li>
       <li [ngClass]="{ active: isSectionActive('report') }">
