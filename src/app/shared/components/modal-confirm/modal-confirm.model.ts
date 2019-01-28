@@ -3,4 +3,5 @@ export class ModalConfirmConfig {
   message?: string;
   submitLabel: string;
   cancelLabel: string;
+  payload?: any;
 }

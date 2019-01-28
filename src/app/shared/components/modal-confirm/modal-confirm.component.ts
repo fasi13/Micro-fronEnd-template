@@ -15,7 +15,10 @@ export class ModalConfirmComponent {
 
   constructor(private modalService: FgeModalService) { }
 
-  open(): void {
+  open(config?: ModalConfirmConfig): void {
+    if (config) {
+      this.config = config;
+    }
     this.modalService.open(this.modalContent);
   }
 
@@ -24,7 +27,7 @@ export class ModalConfirmComponent {
   }
 
   handleSubmit() {
-    this.onsubmit.emit();
+    this.onsubmit.emit(this.config.payload);
   }
 
   handleCancel() {

@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div class="fge-user--role">
+<div class="fge-user--role" (click)="toggleSelectedRole(1)">
   Role Name: Administrator
   <div>
     <button
@@ -33,13 +33,16 @@
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary ml-2"
-      (click)="userFormModal.open()">
+      (click)="deleteConfirmation($event, deleteRoleModal)">
       Delete Role
       <i class="fas fa-user-times pl-1"></i>
     </button>
   </div>
 </div>
-<div class="fge-user--role">
+<div *ngIf="selectedRole === 1" class="fge-user--role-details">
+  Container
+</div>
+<div class="fge-user--role" (click)="toggleSelectedRole(2)">
   Role Name: Administrator for banners
   <div>
     <button
@@ -59,9 +62,17 @@
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary ml-2"
-      (click)="userFormModal.open()">
+      (click)="deleteConfirmation($event, deleteRoleModal)">
       Delete Role
       <i class="fas fa-user-times pl-1"></i>
     </button>
   </div>
 </div>
+<div *ngIf="selectedRole === 2" class="fge-user--role-details">
+  Container
+</div>
+
+<fge-modal-confirm
+  (onsubmit)="onDeleteRole($event, deleteRoleModal)"
+  #deleteRoleModal>
+</fge-modal-confirm>
