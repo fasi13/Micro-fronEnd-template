@@ -6,7 +6,7 @@
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary"
-      (click)="userFormModal.open()">
+      (click)="roleFormModal.open()">
       Add Role
       <i class="fas fa-user-plus pl-1"></i>
     </button>
@@ -25,8 +25,7 @@
     </button>
     <button
       type="button"
-      class="btn btn-sm btn-secondary bg-secondary ml-2"
-      (click)="userFormModal.open()">
+      class="btn btn-sm btn-secondary bg-secondary ml-2">
       Add User
       <i class="fas fa-user-plus pl-1"></i>
     </button>
@@ -76,3 +75,5 @@
   (onsubmit)="onDeleteRole($event, deleteRoleModal)"
   #deleteRoleModal>
 </fge-modal-confirm>
+
+<fge-role-form-modal #roleFormModal></fge-role-form-modal>
