@@ -19,13 +19,16 @@
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary"
-      (click)="userFormModal.open()">
+      [ngClass]="{ 'active': selectedContainer === 'permissions' }"
+      (click)="showContainerFor($event, 'permissions')">
       Permissions
       <i class="fas fa-cog pl-1"></i>
     </button>
     <button
       type="button"
-      class="btn btn-sm btn-secondary bg-secondary ml-2">
+      class="btn btn-sm btn-secondary bg-secondary ml-2"
+      [ngClass]="{ 'active': selectedContainer === 'users' }"
+      (click)="showContainerFor($event, 'users')">
       Add User
       <i class="fas fa-user-plus pl-1"></i>
     </button>
@@ -39,37 +42,17 @@
   </div>
 </div>
 <div *ngIf="selectedRole === 1" class="fge-user--role-details">
-  Container
+  <div *ngIf="selectedContainer === 'permissions'; then permissionsContainer; else usersContainer"></div>
 </div>
-<div class="fge-user--role" (click)="toggleSelectedRole(2)">
-  Role Name: Administrator for banners
-  <div>
-    <button
-      type="button"
-      class="btn btn-sm btn-secondary bg-secondary"
-      (click)="userFormModal.open()">
-      Permissions
-      <i class="fas fa-cog pl-1"></i>
-    </button>
-    <button
-      type="button"
-      class="btn btn-sm btn-secondary bg-secondary ml-2"
-      (click)="userFormModal.open()">
-      Add User
-      <i class="fas fa-user-plus pl-1"></i>
-    </button>
-    <button
-      type="button"
-      class="btn btn-sm btn-secondary bg-secondary ml-2"
-      (click)="deleteConfirmation($event, deleteRoleModal)">
-      Delete Role
-      <i class="fas fa-user-times pl-1"></i>
-    </button>
-  </div>
-</div>
-<div *ngIf="selectedRole === 2" class="fge-user--role-details">
-  Container
-</div>
+
+
+<ng-template #permissionsContainer>
+  <h4>Permissions</h4>
+</ng-template>
+
+<ng-template #usersContainer>
+  <h4>Users in Role</h4>
+</ng-template>
 
 <fge-modal-confirm
   (onsubmit)="onDeleteRole($event, deleteRoleModal)"

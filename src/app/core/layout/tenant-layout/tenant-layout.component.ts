@@ -49,6 +49,9 @@ export class TenantLayoutComponent implements OnInit, OnDestroy {
         .bg-secondary {
           background-color: ${branding.secondaryColor.value} !important;
         }
+        .bg-secondary.active {
+          background-color: #545b62 !important;
+        }
         .text-primary {
           color: ${branding.primaryColor.value} !important;
         }
