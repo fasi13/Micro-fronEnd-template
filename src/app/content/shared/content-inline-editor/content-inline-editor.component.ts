@@ -21,7 +21,7 @@ import {
   Link,
   FgeModalService
 } from '@forge/core';
-import { FieldConfig, ModalConfirmComponent } from '@forge/shared';
+import { FieldConfig, ModalConfirmComponent, DynamicInlineFormComponent } from '@forge/shared';
 import { dataTypes } from '../content-form-modal/content-data-types.config';
 import { ContentEditorModalComponent } from '../content-editor-modal/content-editor-modal.component';
 import { ModalConfirmConfig } from '../../../shared/components/modal-confirm/modal-confirm.model';
@@ -34,6 +34,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
   @Input() contentData: ApplicationContent;
   @Input() config: FieldConfig;
+  @ViewChild(DynamicInlineFormComponent) form: DynamicInlineFormComponent;
   @ViewChild('confirmModal') confirmModal: ModalConfirmComponent;
 
   linkActions: Link[];
@@ -92,7 +93,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   handleSubmit({ value: formData, success, error}): void {
     let value = formData[this.config.name];
     if (this.config.type === 'image' || this.config.type === 'document') {
-      value = formData[this.config.name].formattedValue;
+      value = this.form.form.controls[this.config.name]['fileValue']['formattedValue'];
     }
     const link: Link = _find(this.contentData._links, ['rel', 'updateContentValue']);
     if (link) {

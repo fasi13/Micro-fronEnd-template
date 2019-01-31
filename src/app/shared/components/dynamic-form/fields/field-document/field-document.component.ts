@@ -26,7 +26,7 @@ export class FieldDocumentComponent extends FormField {
           newValue[`${this.config.name}`] = reader.result;
           const fileContent = (reader.result as String).split(',')[1];
           const value = _assign(file, { formattedValue: `${file.name}:${fileContent}` });
-          this.group.get(this.config.name).setValue(value, { emitModelToViewChange: false });
+          this.group.controls[this.config.name]['fileValue'] = value;
           this.changeDetector.markForCheck();
         };
       }

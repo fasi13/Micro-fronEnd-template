@@ -63,14 +63,12 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   handleSubmit({ value: formData, success, error}): void {
-    const { name, description, type: typeStr,
-      textValue, imageValue, documentValue,
+    const { name, description, type: typeStr, textValue,
       colorValue, logoValue, htmlValue } = formData;
     const { id: applicationId } = this.applicationInfo;
-    let value = textValue || imageValue || documentValue ||
-    colorValue || logoValue || htmlValue;
+    let value = textValue || colorValue || logoValue || htmlValue;
     if (typeStr === 'Document' || typeStr === 'Image') {
-      value = value.formattedValue;
+      value = this.form.form.controls[this.config[this.config.length - 1].name]['fileValue']['formattedValue'];
     }
     const contentPayload = {
       name,
