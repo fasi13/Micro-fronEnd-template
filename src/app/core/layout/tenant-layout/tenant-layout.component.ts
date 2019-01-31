@@ -59,6 +59,9 @@ export class TenantLayoutComponent implements OnInit, OnDestroy {
           background-color: ${branding.primaryColor.value} !important;
           border-color: #cacaca;
         }
+        .note-modal-footer .note-btn {
+          background-color: ${branding.secondaryColor.value} !important;
+        }
       `;
       const css: any = document.createElement('style');
       css.type = 'text/css';
