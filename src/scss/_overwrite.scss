@@ -62,7 +62,7 @@ ngb-pagination {
       @extend .modal-header;
       .note-modal-title {
         @extend .modal-title;
-        font-size: 1.3125rem;;
+        @extend .h4;
         margin-right: 2rem;
       }
       .close {
@@ -75,7 +75,7 @@ ngb-pagination {
         padding-bottom: 0;
       }
       .note-form-label {
-        font-size: 14px;
+        font-size: $fa-font-size-base;
         font-weight: 400;
         letter-spacing: 0px;
         padding: 0px;
