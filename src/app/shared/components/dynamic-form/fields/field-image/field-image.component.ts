@@ -1,6 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import _assign from 'lodash/assign';
-import _clone from 'lodash/clone';
 
 import { FormField } from '../../models/form-field.abstract';
 
