@@ -9,6 +9,8 @@ import { SharedModule } from '../shared/shared.module';
 import { UsersListingGuard } from './_guards/users-listing.guard';
 import { UserRolesComponent } from './user-roles/user-roles.component';
 import { RoleFormModalComponent } from './shared/role-form-modal/role-form-modal.component';
+import { RolePermissionsComponent } from './shared/role-permissions/role-permissions.component';
+import { RoleUsersComponent } from './shared/role-users/role-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list' },
@@ -36,7 +38,9 @@ const routes: Routes = [
     UsersListingComponent,
     UserFormModalComponent,
     UserRolesComponent,
-    RoleFormModalComponent
+    RoleFormModalComponent,
+    RolePermissionsComponent,
+    RoleUsersComponent
   ]
 })
 export class UserModule {}

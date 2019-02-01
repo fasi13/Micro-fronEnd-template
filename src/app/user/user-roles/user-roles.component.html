@@ -15,27 +15,30 @@
 
 <div class="fge-table">
   <div class="row m-0 fge-table__header">
-      <div class="col fge-table__col">
-        Role Name
-      </div>
-      <div class="col-1 fge-table__col fge-table--actions">
-        Actions
-      </div>
+    <div class="col fge-table__col">
+      Role Name
+    </div>
+    <div class="col-1 fge-table__col fge-table--actions">
+      Actions
+    </div>
   </div>
   <ng-container *ngFor="let role of roles; trackBy: trackByUserId" >
     <div class="row fge-table__row m-0 fge-clickable" [ngClass]="{'fge-user--role-selected': selectedRole === role.id}" (click)="toggleSelectedRole(role.id)">
-        <div class="col fge-table__col" title="{{ role.name }}">
-          <span class="m-auto">
-              {{ role.name }}
-          </span>
-        </div>
-        <div class="col-1 fge-table__col fge-table--actions">
-          <ng-container [ngTemplateOutlet]="roleActions" [ngTemplateOutletContext]="{ id: role.id }"></ng-container>
-        </div>
+      <div class="col fge-table__col" title="{{ role.name }}">
+        <span class="m-auto">
+            {{ role.name }}
+        </span>
       </div>
-      <div *ngIf="selectedRole === role.id" class="fge-user--role-details row">
-        <div *ngIf="selectedContainer === 'permissions'; then permissionsContainer; else usersContainer"></div>
+      <div class="col-1 fge-table__col fge-table--actions">
+        <ng-container [ngTemplateOutlet]="roleActions" [ngTemplateOutletContext]="{ id: role.id }"></ng-container>
       </div>
+    </div>
+    <div *ngIf="selectedRole === role.id" class="fge-user--role-details row">
+      <ng-container [ngSwitch]="selectedContainer">
+        <fge-role-permissions class="w-100" *ngSwitchCase="'permissions'"></fge-role-permissions>
+        <fge-role-users class="w-100" *ngSwitchCase="'users'"></fge-role-users>
+      </ng-container>
+    </div>
   </ng-container>
 </div>
 
@@ -62,14 +65,6 @@
       <i class="fas fa-trash"></i>
     </button>
   </div>
-</ng-template>
-
-<ng-template #permissionsContainer>
-  <h4>Permissions</h4>
-</ng-template>
-
-<ng-template #usersContainer>
-  <h4>Users in Role</h4>
 </ng-template>
 
 <fge-modal-confirm
