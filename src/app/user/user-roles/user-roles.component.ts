@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRole } from 'src/app/core/models/user/user-role.model';
 
 @Component({
   selector: 'fge-user-roles',
@@ -8,22 +9,36 @@ export class UserRolesComponent implements OnInit {
 
   selectedRole: number;
   selectedContainer: string = 'users' || 'permissions';
+  roles: UserRole[];
 
   constructor() { }
 
   ngOnInit() {
+    this.roles = [
+      {
+        id: 1,
+        name: 'Administrator'
+      }, {
+        id: 2,
+        name: 'Banners Administrator'
+      }, {
+        id: 3,
+        name: 'Content Administrator'
+      }
+    ];
   }
 
-  showContainerFor($event, containerName): void {
+  showContainerFor($event: Event, containerName: string, id: number): void {
+    $event.stopPropagation();
     if (this.selectedContainer) {
-      $event.stopPropagation();
       if (this.selectedContainer === containerName) {
         this.toggleSelectedRole();
       } else {
         this.selectedContainer = containerName;
       }
     } else {
-      this.toggleSelectedRole();
+      this.selectedContainer = containerName;
+      this.toggleSelectedRole(id);
     }
   }
 
