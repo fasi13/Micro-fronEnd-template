@@ -57,8 +57,8 @@ export class UserRolesComponent implements OnInit {
       event.stopPropagation();
     }
     const config = {
-      title: 'Delete Role confirmation',
-      message: `Do you want to delete the role named /$/{role.name}?`,
+      title: 'Delete Role Modal Confirmation',
+      message: `Do you want to delete the role /$/{role.name}?`,
       submitLabel: 'Accept',
       cancelLabel: 'Cancel',
       payload: { id: 'TBD' }

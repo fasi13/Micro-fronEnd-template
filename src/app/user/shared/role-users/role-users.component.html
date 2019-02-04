@@ -21,19 +21,17 @@
           Actions
         </div>
       </div>
-      <div class="row fge-table__row m-0">
-        <div class="col fge-table__col">klozano</div>
-        <div class="col fge-table__col">Kenji</div>
-        <div class="col fge-table__col">Lozano</div>
-        <div class="col fge-table__col">Hinda</div>
-        <div class="col-1 fge-table__col fge-table--actions">
-          <button
-            type="button"
-            class="btn btn-sm btn-secondary bg-secondary">
-            <i class="fas fa-plus"></i>
-          </button>
+      <ng-container *ngFor="let user of users$ | async; trackBy: trackByUserId">
+        <div class="row fge-table__row m-0" *ngIf="!isUserSelected(user)">
+          <div class="col fge-table__col">{{user.login}}</div>
+          <div class="col fge-table__col">{{user.firstName}}</div>
+          <div class="col fge-table__col">{{user.lastName}}</div>
+          <div class="col fge-table__col">{{ user.applicationPath | fgeApplicationPath }}</div>
+          <div class="col-1 fge-table__col fge-table--actions">
+            <ng-container [ngTemplateOutlet]="usersToAddActions" [ngTemplateOutletContext]="{ 'user': user }" ></ng-container>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
   <div class="col">
@@ -47,6 +45,33 @@
           Actions
         </div>
       </div>
+      <div class="row fge-table__row m-0" *ngFor="let user of selectedUsers; trackBy: trackByUserId">
+        <div class="col fge-table__col">{{user.login}}</div>
+        <div class="col fge-table__col">{{user.firstName}}</div>
+        <div class="col fge-table__col">{{user.lastName}}</div>
+        <div class="col fge-table__col">{{ user.applicationPath | fgeApplicationPath }}</div>
+        <div class="col-1 fge-table__col fge-table--actions">
+          <ng-container [ngTemplateOutlet]="usersAddedActions" [ngTemplateOutletContext]="{ 'user': user }" ></ng-container>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #usersToAddActions let-user="user">
+  <button
+    type="button"
+    class="btn btn-sm btn-secondary bg-secondary"
+    (click)="onAddUserClicked($event, user)">
+    <i class="fas fa-plus"></i>
+  </button>
+</ng-template>
+
+<ng-template #usersAddedActions let-user="user">
+  <button
+    type="button"
+    class="btn btn-sm btn-secondary bg-secondary"
+    (click)="onRemoveUserClicked($event, user)">
+    <i class="fas fa-trash"></i>
+  </button>
+</ng-template>

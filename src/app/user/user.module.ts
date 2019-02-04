@@ -11,6 +11,7 @@ import { UserRolesComponent } from './user-roles/user-roles.component';
 import { RoleFormModalComponent } from './shared/role-form-modal/role-form-modal.component';
 import { RolePermissionsComponent } from './shared/role-permissions/role-permissions.component';
 import { RoleUsersComponent } from './shared/role-users/role-users.component';
+import { UserRolesGuard } from './_guards/user-roles.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list' },
@@ -20,7 +21,7 @@ const routes: Routes = [
     component: UsersListingComponent
   }, {
     path: 'roles',
-    canActivate: [ ],
+    canActivate: [ UserRolesGuard ],
     component: UserRolesComponent
   }
 ];
