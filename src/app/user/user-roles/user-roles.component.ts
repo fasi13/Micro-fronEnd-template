@@ -8,7 +8,7 @@ import { UserRole } from 'src/app/core/models/user/user-role.model';
 export class UserRolesComponent implements OnInit {
 
   selectedRole: number;
-  selectedContainer: string = 'users' || 'permissions';
+  selectedContainer: string;
   roles: UserRole[];
 
   constructor() { }
