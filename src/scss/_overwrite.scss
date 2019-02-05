@@ -100,3 +100,10 @@ ngb-pagination {
     margin-bottom: auto;
   }
 }
+
+//Tables
+.table-hover {
+  .fge-table__row:hover {
+    background-color: rgba(0,0,0,.075);
+  }
+}
