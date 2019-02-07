@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap, withLatestFrom, filter } from 'rxjs/operators';
 
 import {
   ContentActionTypes,
@@ -44,23 +44,27 @@ export class ContentEffects {
 
   @Effect() public fetchContentGroup: Observable<Action> = this.actions.pipe(
     ofType(ContentActionTypes.FETCH_CONTENT_GROUP),
-    withLatestFrom(this.store.select(getGroups)),
-    switchMap(([action, groups]: [any, ContentGroup[]]) => {
-      const group: ContentGroup = groups.find((current: ContentGroup) => current.id === +action.payload);
-      if (group) {
-        return this.fgeActionService.performAction(group, ContentGroupLink.SELF, { params: { content: 'true' }})
-          .pipe(
-            map((response: ApiResponse<ContentGroup>) => new FetchContentGroupCompleted(response.data)),
-            catchError(error => {
-              this.handleErrorRedirect(error.status);
-              return of(new FetchContentError({ error: error }));
-            })
-          );
-      } else {
-        this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
-        throw new Error(`Content group with id=${action.payload} not found in current tenant store`);
-      }
-    })
+    switchMap((action: any) =>
+      this.store.select(getGroups).pipe(
+        filter(groupsList => !!groupsList),
+        switchMap((groups: ContentGroup[]) => {
+          const group: ContentGroup = groups.find((current: ContentGroup) => current.id === +action.payload);
+          if (group) {
+            return this.fgeActionService.performAction(group, ContentGroupLink.SELF, { params: { content: 'true' }})
+              .pipe(
+                map((response: ApiResponse<ContentGroup>) => new FetchContentGroupCompleted(response.data)),
+                catchError(error => {
+                  this.handleErrorRedirect(error.status);
+                  return of(new FetchContentError({ error: error }));
+                })
+              );
+          } else {
+            this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
+            throw new Error(`Content group with id=${action.payload} not found in current tenant store`);
+          }
+        })
+      )
+    )
   );
 
   @Effect() public fetchContent: Observable<Action> = this.actions.pipe(
