@@ -93,7 +93,7 @@
       <h6><i class="fas fa-info-circle"></i> No users found</h6>
     </div>
   </div>
-  <div class="row fge-table__row m-0" *ngFor="let user of usersState?.items; trackBy: trackByUserId">
+  <div class="row fge-table__row m-1" *ngFor="let user of usersState?.items; trackBy: trackByUserId">
     <div class="col fge-table__col" title="{{ user.login }}">{{ user.login }}</div>
     <div class="col fge-table__col" title="{{ user.firstName }}">{{ user.firstName }}</div>
     <div class="col fge-table__col" title="{{ user.lastName }}">{{ user.lastName }}</div>

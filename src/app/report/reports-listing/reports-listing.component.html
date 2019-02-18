@@ -1,0 +1,71 @@
+<div class="fge-group--title row">
+  <h3 class="fge-group--title-divider my-2 col-10">
+    <i *ngIf="usersState?.loading" class="fas fa-circle-notch fa-spin"></i
+    ><span class="pl-2">Reports</span>
+  </h3>
+</div>
+<div class="fge-group--subtitle row">
+  <h4 class="fge-group--title-divider my-2 col-10">
+    <span class="pl-2">Audit Reports</span>
+  </h4>
+</div>
+<div class="fge-table">
+  <div class="row m-0 fge-table__header">
+    <div class="col fge-table__col fge-table-checkbox"></div>
+    <div class="col fge-table__col--app-path">
+      Username
+    </div>
+    <div class="col fge-table__col">
+      First Name
+    </div>
+    <div class="col fge-table__col">
+      Last Name
+    </div>
+    <div class="col-2 fge-table__col">
+      Application
+    </div>
+    <div class="col-2 fge-table__col">
+      Section
+    </div>
+    <div class="col fge-table__col">
+      Activity
+    </div>
+    <div class="col-2 fge-table__col">
+      Activity Date
+    </div>
+    <div class="col fge-table__col">
+      Action
+    </div>
+  </div>
+  <div class="row fge-table__row m-0" *ngFor="let report of reports">
+    <div class="col fge-table__col fge-table-checkbox" title="{{ report.id }}">
+      {{ report.id }}
+    </div>
+    <div class="col fge-table__col--app-path" title="{{ report.login }}">
+      <span>{{ report.login }}</span>
+    </div>
+    <div class="col fge-table__col" title="{{ report.firstName }}">
+      {{ report.firstName }}
+    </div>
+    <div class="col fge-table__col" title="{{ report.lastName }}">
+      {{ report.lastName }}
+    </div>
+    <div class="col-2 fge-table__col" title="{{ report.application }}">
+      {{ report.application }}
+    </div>
+    <div class="col-2 fge-table__col" title="{{ report.section }}">
+      {{ report.section }}
+    </div>
+    <div class="col fge-table__col" title="{{ report.activity }}">
+      {{ report.activity }}
+    </div>
+    <div class="col-2 fge-table__col" title="{{ report.activityDate }}">
+      {{ report.activityDate }}
+    </div>
+    <div class="col-1 fge-table__col pr-0 fge-table--actions">
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0">
+        <i class="fas fa-edit"></i>
+      </a>
+    </div>
+  </div>
+</div>

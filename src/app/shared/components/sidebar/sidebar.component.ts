@@ -17,7 +17,6 @@ import {
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
-
   @Input() active = true;
   loading$: Observable<boolean> | boolean;
   contentGroups$: Observable<ContentGroup[]>;
@@ -28,7 +27,7 @@ export class SidebarComponent implements OnInit {
     private store: Store<State>,
     private fgeRouter: FgeRouterService,
     private ngRouter: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initRouteHandler();
@@ -64,6 +63,10 @@ export class SidebarComponent implements OnInit {
     this.fgeRouter.navigate(`settings`);
   }
 
+  goToReports(): void {
+    this.fgeRouter.navigate(`report`);
+  }
+
   isSectionActive(sectionName: string): boolean {
     return this.activatedSection === sectionName;
   }
@@ -75,7 +78,7 @@ export class SidebarComponent implements OnInit {
 
   private initRouteHandler(): void {
     this.setActivatedSection();
-    this.ngRouter.events.subscribe((value) => {
+    this.ngRouter.events.subscribe(value => {
       if (value instanceof NavigationEnd) {
         this.setActivatedSection();
       }
@@ -89,5 +92,4 @@ export class SidebarComponent implements OnInit {
       this.activatedSection = portions[3];
     }
   }
-
 }

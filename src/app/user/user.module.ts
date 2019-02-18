@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'list' },
   {
     path: 'list',
-    canActivate: [ UsersListingGuard],
+    canActivate: [UsersListingGuard],
     component: UsersListingComponent
   }
 ];
@@ -26,9 +26,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [
-    UsersListingComponent,
-    UserFormModalComponent
-  ]
+  declarations: [UsersListingComponent, UserFormModalComponent]
 })
-export class UserModule { }
+export class UserModule {}

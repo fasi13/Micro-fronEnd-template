@@ -9,17 +9,13 @@ import { switchMap, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UsersListingGuard implements CanActivate {
-
-  constructor(
-    private store: Store<State>
-  ) {}
+  constructor(private store: Store<State>) {}
 
   canActivate(): Observable<boolean> | boolean {
-    return this.getFromStoreOrAPI()
-      .pipe(
-        switchMap(() => of(true)),
-        catchError(() => of(false))
-      );
+    return this.getFromStoreOrAPI().pipe(
+      switchMap(() => of(true)),
+      catchError(() => of(false))
+    );
   }
 
   private getFromStoreOrAPI(): Observable<any> {

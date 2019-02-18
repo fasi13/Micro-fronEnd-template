@@ -16,7 +16,10 @@
   }
 }
 
-.fge-content-type__text, .fge-content-type__html, .fge-content-type__logo, .fge-content-type__document {
+.fge-content-type__text,
+.fge-content-type__html,
+.fge-content-type__logo,
+.fge-content-type__document {
   width: 20px;
   height: 20px;
   border-radius: 2px;
@@ -40,9 +43,16 @@
   margin-top: -1px;
 }
 
-.fge-group--title, .fge-groups--title {
+.fge-group--title,
+.fge-groups--title {
   padding: 10px 0;
   display: flex;
+}
+
+.fge-group--subtitle {
+  margin-top: -15px;
+  padding-left: 20px;
+  padding-bottom: 10px;
 }
 
 .fge-groups--content {
