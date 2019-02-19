@@ -2,14 +2,23 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { ReportTypes, FetchAuditDataCompleted } from './report.actions';
-import { switchMap, map } from 'rxjs/operators';
+import {
+  ReportTypes,
+  FetchAuditDataCompleted,
+  FertchAuditReportSuccess,
+  FertchAuditReportError
+} from './report.actions';
+import { switchMap, map, catchError } from 'rxjs/operators';
+import { ReportService } from '../../services/report.service';
+import { DataPaginated } from '../../models';
+
+import { Report, ApiResponse } from '../../models';
 
 @Injectable()
 export class ReportEffects {
   mockData = [
     {
-      login: 'usernamelonger1',
+      login: 'userone',
       firstName: 'Jonathan',
       lastName: 'Wiliamson',
       application: {
@@ -42,7 +51,7 @@ export class ReportEffects {
       actionDate: '2018-10-30 15:43:30'
     },
     {
-      login: 'usernamelonger2',
+      login: 'usertwo',
       firstName: 'Jonathan',
       lastName: 'Wiliamson',
       application: {
@@ -75,7 +84,7 @@ export class ReportEffects {
       actionDate: '2018-10-30 15:43:30'
     },
     {
-      login: 'usernamelonger3',
+      login: 'userthree',
       firstName: 'Jonathan',
       lastName: 'Wiliamson',
       application: {
@@ -118,5 +127,24 @@ export class ReportEffects {
     })
   );
 
-  constructor(private actions: Actions) {}
+  @Effect() public fetchAuditReports: Observable<Action> = this.actions.pipe(
+    ofType(ReportTypes.FETCH_AUDIT_REPORTS),
+    switchMap((mockData: any) =>
+      this.reportService
+        .getAuditReports(
+          mockData.payload.offset,
+          mockData.payload.limit,
+          mockData.payload.filters,
+          mockData.payload.sort
+        )
+        .pipe(
+          map((response: ApiResponse<DataPaginated<Report>>) => {
+            return new FertchAuditReportSuccess(response.data);
+          }),
+          catchError(error => of(new FertchAuditReportError({ error: error })))
+        )
+    )
+  );
+
+  constructor(private actions: Actions, private reportService: ReportService) {}
 }

@@ -1,6 +1,7 @@
 import { ReportTypes, ReportActions } from './report.actions';
 
 import _assign from 'lodash/assign';
+import { ReportEffects } from './report.effects';
 
 export interface ReportState {
   audit: {
@@ -32,6 +33,12 @@ export function reducer(
         audit: _assign({}, state.audit, {
           items: action.payload,
           loading: false
+        })
+      });
+    case ReportTypes.FETCH_AUDIT_REPORTS:
+      return _assign({}, state, {
+        audit: _assign({}, state.audit, {
+          loading: true
         })
       });
   }
