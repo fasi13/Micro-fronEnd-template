@@ -12,18 +12,32 @@ import { AuthLayoutComponent } from './layout';
 import { UserService } from './services/user.service';
 import { AuthorizationEffects } from './store/authorization';
 import { ApplicationEffects } from './store/application';
-import { FgeReducers, clearStateOnLogout, clearStoredData } from './store/store.reducers';
+import {
+  FgeReducers,
+  clearStateOnLogout,
+  clearStoredData
+} from './store/store.reducers';
 import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor, UnauthorizedInterceptor, ProxyApiInterceptor } from './interceptors';
+import {
+  TokenInterceptor,
+  UnauthorizedInterceptor,
+  ProxyApiInterceptor
+} from './interceptors';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEffects } from './store/content';
-import { ContentService, FgeRouterService, FgeModalService, FgeHttpActionService } from './services';
+import {
+  ContentService,
+  FgeRouterService,
+  FgeModalService,
+  FgeHttpActionService
+} from './services';
 import { UserEffects } from './store/user';
 import { ResetPasswordEffects } from './store/reset-password';
 import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.component';
 import { ApplicationLoaderComponent } from './layout/application-loader/application-loader.component';
+import { ReportEffects } from './store/report';
 
 @NgModule({
   imports: [
@@ -34,10 +48,7 @@ import { ApplicationLoaderComponent } from './layout/application-loader/applicat
     ReactiveFormsModule,
     StoreModule.forRoot(FgeReducers, {
       initialState: loadFromLocalStorage,
-      metaReducers: [
-        clearStateOnLogout,
-        clearStoredData
-      ]
+      metaReducers: [clearStateOnLogout, clearStoredData]
     }),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([
@@ -46,21 +57,20 @@ import { ApplicationLoaderComponent } from './layout/application-loader/applicat
       RouterEffects,
       ContentEffects,
       UserEffects,
-      ResetPasswordEffects
+      ResetPasswordEffects,
+      ReportEffects
     ]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25,
+      maxAge: 25
     }),
-    SharedModule,
+    SharedModule
   ],
   declarations: [
     AuthLayoutComponent,
     TenantLayoutComponent,
-    ApplicationLoaderComponent,
-  ],
-  exports: [
     ApplicationLoaderComponent
   ],
+  exports: [ApplicationLoaderComponent],
   providers: [
     UserService,
     ContentService,
@@ -71,15 +81,17 @@ import { ApplicationLoaderComponent } from './layout/application-loader/applicat
       provide: HTTP_INTERCEPTORS,
       useClass: ProxyApiInterceptor,
       multi: true
-    }, {
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }, {
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: UnauthorizedInterceptor,
       multi: true
     }
   ]
 })
-export class CoreModule { }
+export class CoreModule {}

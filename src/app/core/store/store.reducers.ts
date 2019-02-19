@@ -7,6 +7,7 @@ import * as ApplicationReducers from './application/application.reducers';
 import * as ContentReducers from './content/content.reducers';
 import * as UserReducers from './user/user.reducers';
 import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
+import * as ReportReducers from './report/report.reducers';
 import { AuthorizationActionTypes } from './authorization/authorization.actions';
 import { StoreActionTypes } from './store.actions';
 
@@ -17,6 +18,7 @@ export interface State {
   content?: ContentReducers.ContentState;
   user?: UserReducers.UserState;
   resetPassword?: ResetPasswordReducers.ResetPasswordState;
+  report?: ReportReducers.ReportState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -25,13 +27,16 @@ export const FgeReducers: ActionReducerMap<State> = {
   application: ApplicationReducers.reducer,
   content: ContentReducers.reducer,
   user: UserReducers.reducer,
-  resetPassword: ResetPasswordReducers.reducer
+  resetPassword: ResetPasswordReducers.reducer,
+  report: ReportReducers.reducer
 };
 
 /**********************************************************
  * Meta Reducers
  *********************************************************/
-export function clearStateOnLogout(reducer: ActionReducer<State>): ActionReducer<State> {
+export function clearStateOnLogout(
+  reducer: ActionReducer<State>
+): ActionReducer<State> {
   return function(state: State, action: Action): State {
     if (action.type === AuthorizationActionTypes.LOGOUT_SUCCESS) {
       state = undefined;
@@ -40,7 +45,9 @@ export function clearStateOnLogout(reducer: ActionReducer<State>): ActionReducer
   };
 }
 
-export function clearStoredData(reducer: ActionReducer<State>): ActionReducer<State> {
+export function clearStoredData(
+  reducer: ActionReducer<State>
+): ActionReducer<State> {
   return function(state: State, action: Action): State {
     if (action.type === StoreActionTypes.CLEAR_STORED_DATA) {
       state = Object.assign(state, {
@@ -58,12 +65,30 @@ export function clearStoredData(reducer: ActionReducer<State>): ActionReducer<St
 export const getAuthorizationState = (state: State) => {
   return state.authorization;
 };
-export const getAuthenticatedUser = createSelector(getAuthorizationState, AuthorizationReducers.getAuthenticatedUser);
-export const getAuthenticationError = createSelector(getAuthorizationState, AuthorizationReducers.getAuthenticationError);
-export const isAuthenticated = createSelector(getAuthorizationState, AuthorizationReducers.isAuthenticated);
-export const isAuthenticatedLoaded = createSelector(getAuthorizationState, AuthorizationReducers.isAuthenticatedLoaded);
-export const isAuthenticationLoading = createSelector(getAuthorizationState, AuthorizationReducers.isLoading);
-export const getLogoutError = createSelector(getAuthorizationState, AuthorizationReducers.getLogoutError);
+export const getAuthenticatedUser = createSelector(
+  getAuthorizationState,
+  AuthorizationReducers.getAuthenticatedUser
+);
+export const getAuthenticationError = createSelector(
+  getAuthorizationState,
+  AuthorizationReducers.getAuthenticationError
+);
+export const isAuthenticated = createSelector(
+  getAuthorizationState,
+  AuthorizationReducers.isAuthenticated
+);
+export const isAuthenticatedLoaded = createSelector(
+  getAuthorizationState,
+  AuthorizationReducers.isAuthenticatedLoaded
+);
+export const isAuthenticationLoading = createSelector(
+  getAuthorizationState,
+  AuthorizationReducers.isLoading
+);
+export const getLogoutError = createSelector(
+  getAuthorizationState,
+  AuthorizationReducers.getLogoutError
+);
 
 /**********************************************************
  * Application Reducers
@@ -71,15 +96,42 @@ export const getLogoutError = createSelector(getAuthorizationState, Authorizatio
 export const getApplicationState = (state: State) => {
   return state.application;
 };
-export const getApplicationInfo = createSelector(getApplicationState, ApplicationReducers.getApplicationInfo);
-export const getApplicationBranding = createSelector(getApplicationState, ApplicationReducers.getApplicationBranding);
-export const getApplicationPath = createSelector(getApplicationState, ApplicationReducers.getApplicationPath);
-export const isLoadingApplicationData = createSelector(getApplicationState, ApplicationReducers.isLoadingApplicationData);
-export const isLoadingSearchApplication = createSelector(getApplicationState, ApplicationReducers.isLoadingSearchApplication);
-export const getSearchApplicationList = createSelector(getApplicationState, ApplicationReducers.getSearchApplicationList);
-export const isLoadingDataTypes = createSelector(getApplicationState, ApplicationReducers.isLoadingDataTypes);
-export const getDataTypes = createSelector(getApplicationState, ApplicationReducers.getDataTypes);
-export const getApplicationPreview = createSelector(getApplicationState, ApplicationReducers.getApplicationPreview);
+export const getApplicationInfo = createSelector(
+  getApplicationState,
+  ApplicationReducers.getApplicationInfo
+);
+export const getApplicationBranding = createSelector(
+  getApplicationState,
+  ApplicationReducers.getApplicationBranding
+);
+export const getApplicationPath = createSelector(
+  getApplicationState,
+  ApplicationReducers.getApplicationPath
+);
+export const isLoadingApplicationData = createSelector(
+  getApplicationState,
+  ApplicationReducers.isLoadingApplicationData
+);
+export const isLoadingSearchApplication = createSelector(
+  getApplicationState,
+  ApplicationReducers.isLoadingSearchApplication
+);
+export const getSearchApplicationList = createSelector(
+  getApplicationState,
+  ApplicationReducers.getSearchApplicationList
+);
+export const isLoadingDataTypes = createSelector(
+  getApplicationState,
+  ApplicationReducers.isLoadingDataTypes
+);
+export const getDataTypes = createSelector(
+  getApplicationState,
+  ApplicationReducers.getDataTypes
+);
+export const getApplicationPreview = createSelector(
+  getApplicationState,
+  ApplicationReducers.getApplicationPreview
+);
 
 /**********************************************************
  * Content Reducers
@@ -87,15 +139,42 @@ export const getApplicationPreview = createSelector(getApplicationState, Applica
 export const getContentState = (state: State) => {
   return state.content;
 };
-export const isLoadingGroups = createSelector(getContentState, ContentReducers.isLoadingGroups);
-export const getGroups = createSelector(getContentState, ContentReducers.getGroups);
-export const isLoadingGroup = createSelector(getContentState, ContentReducers.isLoadingGroup);
-export const getGroup = createSelector(getContentState, ContentReducers.getGroup);
-export const isLoadingContent = createSelector(getContentState, ContentReducers.isLoadingContent);
-export const getContent = createSelector(getContentState, ContentReducers.getContent);
-export const getContentRecordState = createSelector(getContentState, ContentReducers.getRecordState);
-export const getContentActionState = createSelector(getContentState, ContentReducers.getActionState);
-export const getContentGroupState = createSelector(getContentState, ContentReducers.getContentGroupState);
+export const isLoadingGroups = createSelector(
+  getContentState,
+  ContentReducers.isLoadingGroups
+);
+export const getGroups = createSelector(
+  getContentState,
+  ContentReducers.getGroups
+);
+export const isLoadingGroup = createSelector(
+  getContentState,
+  ContentReducers.isLoadingGroup
+);
+export const getGroup = createSelector(
+  getContentState,
+  ContentReducers.getGroup
+);
+export const isLoadingContent = createSelector(
+  getContentState,
+  ContentReducers.isLoadingContent
+);
+export const getContent = createSelector(
+  getContentState,
+  ContentReducers.getContent
+);
+export const getContentRecordState = createSelector(
+  getContentState,
+  ContentReducers.getRecordState
+);
+export const getContentActionState = createSelector(
+  getContentState,
+  ContentReducers.getActionState
+);
+export const getContentGroupState = createSelector(
+  getContentState,
+  ContentReducers.getContentGroupState
+);
 
 /**********************************************************
  * User Reducers
@@ -103,10 +182,22 @@ export const getContentGroupState = createSelector(getContentState, ContentReduc
 export const getUserState = (state: State) => {
   return state.user;
 };
-export const isLoadingUser = createSelector(getUserState, UserReducers.isLoadingUser);
-export const getUsersState = createSelector(getUserState, UserReducers.getUsersState);
-export const getUsers = createSelector(getUserState, UserReducers.getUsers);
-export const getUserRecordState = createSelector(getUserState, UserReducers.getUserState);
+export const isLoadingUser = createSelector(
+  getUserState,
+  UserReducers.isLoadingUser
+);
+export const getUsersState = createSelector(
+  getUserState,
+  UserReducers.getUsersState
+);
+export const getUsers = createSelector(
+  getUserState,
+  UserReducers.getUsers
+);
+export const getUserRecordState = createSelector(
+  getUserState,
+  UserReducers.getUserState
+);
 
 /**********************************************************
  * Reset password Reducers
@@ -114,5 +205,20 @@ export const getUserRecordState = createSelector(getUserState, UserReducers.getU
 export const getResetPasswordState = (state: State) => {
   return state.resetPassword;
 };
-export const isResetPasswordLoading = createSelector(getResetPasswordState, ResetPasswordReducers.isResetPasswordLoading);
-export const getResetedPassword = createSelector(getResetPasswordState, ResetPasswordReducers.getResetPassword);
+export const isResetPasswordLoading = createSelector(
+  getResetPasswordState,
+  ResetPasswordReducers.isResetPasswordLoading
+);
+export const getResetedPassword = createSelector(
+  getResetPasswordState,
+  ResetPasswordReducers.getResetPassword
+);
+
+/**********************************************************
+ * Report Reducers
+ *********************************************************/
+export const getReportState = (state: State) => state.report;
+export const getAuditData = createSelector(
+  getReportState,
+  ReportReducers.getAuditData
+);

@@ -37,9 +37,9 @@
       Action
     </div>
   </div>
-  <div class="row fge-table__row m-0" *ngFor="let report of reports">
+  <div class="row fge-table__row m-0" *ngFor="let report of (reports$ | async)">
     <div class="col fge-table__col fge-table-checkbox" title="{{ report.id }}">
-      {{ report.id }}
+      <input type="checkbox" class="cbox" style="margin-top: 12px;" />
     </div>
     <div class="col fge-table__col--app-path" title="{{ report.login }}">
       <span>{{ report.login }}</span>
@@ -50,17 +50,20 @@
     <div class="col fge-table__col" title="{{ report.lastName }}">
       {{ report.lastName }}
     </div>
-    <div class="col-2 fge-table__col" title="{{ report.application }}">
-      {{ report.application }}
+    <div
+      class="col-2 fge-table__col"
+      title="{{ report.application | fgeApplicationPath }}"
+    >
+      {{ report.application | fgeApplicationPath }}
     </div>
     <div class="col-2 fge-table__col" title="{{ report.section }}">
       {{ report.section }}
     </div>
-    <div class="col fge-table__col" title="{{ report.activity }}">
-      {{ report.activity }}
+    <div class="col fge-table__col" title="{{ report.actionPerformed }}">
+      {{ report.actionPerformed }}
     </div>
-    <div class="col-2 fge-table__col" title="{{ report.activityDate }}">
-      {{ report.activityDate }}
+    <div class="col-2 fge-table__col" title="{{ report.actionDate }}">
+      {{ report.actionDate }}
     </div>
     <div class="col-1 fge-table__col pr-0 fge-table--actions">
       <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0">

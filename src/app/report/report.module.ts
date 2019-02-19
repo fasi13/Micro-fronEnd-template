@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReportsListingComponent } from './reports-listing/reports-listing.component';
+import { ReportsAuditListingComponent } from './reports-audit-listing/reports-audit-listing.component';
 import { Routes, RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'audit' },
   {
     path: 'audit',
-    component: ReportsListingComponent
+    component: ReportsAuditListingComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
-  declarations: [ReportsListingComponent]
+  imports: [RouterModule.forChild(routes), SharedModule, CommonModule],
+  declarations: [ReportsAuditListingComponent]
 })
 export class ReportModule {}
