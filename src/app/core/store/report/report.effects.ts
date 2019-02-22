@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs'; // , of
 import { Action } from '@ngrx/store';
-import {
-  ReportTypes,
-  FetchAuditDataCompleted,
-  FertchAuditReportSuccess,
-  FertchAuditReportError
-} from './report.actions';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { ReportTypes, FetchAuditDataCompleted } from './report.actions';
+
+import { switchMap, map } from 'rxjs/operators';
+
 import { ReportService } from '../../services/report.service';
-import { DataPaginated } from '../../models';
-
-import { Report, ApiResponse } from '../../models';
-
+import { ReportRecord, ApiResponse, DataPaginated } from '../../models';
 @Injectable()
 export class ReportEffects {
   mockData = [
@@ -118,33 +112,25 @@ export class ReportEffects {
     }
   ];
 
-  @Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
+  /*@Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
     ofType(ReportTypes.FETCH_AUDIT_DATA),
     switchMap(() => {
       return of(this.mockData).pipe(
         map((data: any) => new FetchAuditDataCompleted(data))
       );
     })
-  );
+  );*/
 
-  @Effect() public fetchAuditReports: Observable<Action> = this.actions.pipe(
-    ofType(ReportTypes.FETCH_AUDIT_REPORTS),
-    switchMap((mockData: any) =>
-      this.reportService
-        .getAuditReports(
-          mockData.payload.offset,
-          mockData.payload.limit,
-          mockData.payload.filters,
-          mockData.payload.sort
-        )
-        .pipe(
-          map((response: ApiResponse<DataPaginated<Report>>) => {
-            return new FertchAuditReportSuccess(response.data);
-          }),
-          catchError(error => of(new FertchAuditReportError({ error: error })))
-        )
+  @Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
+    ofType(ReportTypes.FETCH_AUDIT_DATA),
+    switchMap(() => this.reportService.getReportData()
+      .pipe(
+        map((response: ApiResponse<DataPaginated<ReportRecord>>) => {
+          return new FetchAuditDataCompleted(response.data.items);
+        })
+      )
     )
   );
 
-  constructor(private actions: Actions, private reportService: ReportService) {}
+  constructor(private actions: Actions, private reportService: ReportService) {} // , private reportService: ReportService
 }

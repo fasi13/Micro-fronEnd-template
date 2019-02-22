@@ -1,6 +1,6 @@
 import { ApplicationPath } from '../application';
 
-export class Report {
+export class ReportRecord {
   login: string;
   firstName: string;
   lastName: string;

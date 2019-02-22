@@ -1,34 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { Report } from '../../core/models/report/report-model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ReportRecord } from '../../core/models/report/report-record-model';
 import { Store } from '@ngrx/store';
 import {
   State,
   FetchAuditData,
   getAuditData,
-  FetchAuditReports
+  getAuditDataState
 } from '@forge/core';
 import { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'fge-reports-listing',
   templateUrl: './reports-audit-listing.component.html'
 })
-export class ReportsAuditListingComponent implements OnInit {
-  reports$: Observable<Report[]>;
+export class ReportsAuditListingComponent implements OnInit, OnDestroy {
+  reports$: Observable<ReportRecord[]>;
 
   reportsState: any;
   sort: { sortby: string; sortdirection: 'asc' | 'desc' };
 
   private filters: { [key: string]: string };
-  /*get page umber(): number {
+  private isAliveComponent = true;
+  constructor(private store: Store<State>) {}
+
+  get pageNumber(): number {
     if (this.reportsState) {
       const { limit, offset } = this.reportsState;
       return Math.ceil(offset / limit) + 1;
     }
     return 0;
-  }*/
-
-  constructor(private store: Store<State>) {}
+  }
 
   ngOnInit() {
     this.store.dispatch(new FetchAuditData());
@@ -38,19 +40,24 @@ export class ReportsAuditListingComponent implements OnInit {
       sortby: 'login',
       sortdirection: 'asc'
     };
+    this.initSelectors();
   }
 
-  /*onPageChange(index: number): void {
+  ngOnDestroy() {
+    this.isAliveComponent = false;
+  }
+
+  onPageChange(index: number): void {
     const { limit } = this.reportsState;
     const offset = (index - 1) * limit;
     const { sort, filters } = this;
-    this.store.dispatch(new FetchReports({ offset, limit, filters, sort }));
+    this.store.dispatch(new FetchAuditData({ offset, limit, filters, sort }));
     window.scrollTo(0, 0);
-  }*/
+  }
 
   onPerformFilter(): void {
     const { filters, sort } = this;
-    this.store.dispatch(new FetchAuditReports({ filters, sort }));
+    this.store.dispatch(new FetchAuditData({ filters, sort }));
   }
 
   onResetFilters(): void {
@@ -60,5 +67,15 @@ export class ReportsAuditListingComponent implements OnInit {
       sortdirection: 'asc'
     };
     this.onPerformFilter();
+  }
+
+  private initSelectors() {
+    this.store.select(getAuditDataState)
+    .pipe(takeWhile(() => this.isAliveComponent))
+    .subscribe(reportsState => {
+      if (reportsState) {
+        this.reportsState = reportsState;
+      }
+    });
   }
 }

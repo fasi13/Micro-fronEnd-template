@@ -222,3 +222,7 @@ export const getAuditData = createSelector(
   getReportState,
   ReportReducers.getAuditData
 );
+export const getAuditDataState = createSelector(
+  getReportState,
+  ReportReducers.getAuditDataState
+);
