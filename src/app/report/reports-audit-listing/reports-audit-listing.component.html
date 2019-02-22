@@ -101,7 +101,12 @@
       Action
     </div>
   </div>
-  <div class="row fge-table__row m-0" *ngFor="let report of (reports$ | async)">
+  <div class="row m-0" *ngIf="reportsState?.items?.length <= 0 && !reportsState?.loading">
+    <div class="col fge-table__col text-center">
+      <h6><i class="fas fa-info-circle"></i> No users found</h6>
+    </div>
+  </div>
+  <div class="row fge-table__row m-1" *ngFor="let report of (reports$ | async)">
     <div class="col fge-table__col fge-table-checkbox" title="{{ report.id }}">
       <input type="checkbox" class="col-sm-2 fge-table__col" />
     </div>

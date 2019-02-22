@@ -7,8 +7,8 @@ import {
   getAuditData,
   getAuditDataState
 } from '@forge/core';
-import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'fge-reports-listing',
@@ -16,13 +16,11 @@ import { takeWhile } from 'rxjs/operators';
 })
 export class ReportsAuditListingComponent implements OnInit, OnDestroy {
   reports$: Observable<ReportRecord[]>;
-
   reportsState: any;
   sort: { sortby: string; sortdirection: 'asc' | 'desc' };
 
   private filters: { [key: string]: string };
   private isAliveComponent = true;
-  constructor(private store: Store<State>) {}
 
   get pageNumber(): number {
     if (this.reportsState) {
@@ -31,6 +29,8 @@ export class ReportsAuditListingComponent implements OnInit, OnDestroy {
     }
     return 0;
   }
+
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.store.dispatch(new FetchAuditData());

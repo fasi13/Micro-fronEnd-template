@@ -4,7 +4,7 @@ import { ActionType } from '../util';
 
 export const ReportTypes = {
   FETCH_AUDIT_DATA: ActionType('FETCH_AUDIT_DATA'),
-  FETCH_AUDIT_DATA_COMPLETED: ActionType('FETCH_AUDIT_DATA_COMPLETED'),
+  // FETCH_AUDIT_DATA_COMPLETED: ActionType('FETCH_AUDIT_DATA_COMPLETED'),
   FETCH_AUDIT_REPORTS_SUCCESS: ActionType('FETCH_AUDIT_REPORTS_SUCCESS'),
   FETCH_AUDIT_REPORTS_ERROR: ActionType('FETCH_AUDIT_REPORTS_ERROR'),
 };
@@ -23,10 +23,10 @@ export class FetchAuditData implements Action {
   }) {}
 }
 
-export class FetchAuditDataCompleted implements Action {
+/*export class FetchAuditDataCompleted implements Action {
   public type: string = ReportTypes.FETCH_AUDIT_DATA_COMPLETED;
   constructor(public payload?: any) {}
-}
+}*/
 
 export class FertchAuditReportSuccess implements Action {
   public type: string = ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS;
@@ -40,6 +40,6 @@ export class FertchAuditReportError implements Action {
 
 export type ReportActions =
   FetchAuditData |
-  FetchAuditDataCompleted |
+  // FetchAuditDataCompleted |
   FertchAuditReportSuccess |
   FertchAuditReportError;

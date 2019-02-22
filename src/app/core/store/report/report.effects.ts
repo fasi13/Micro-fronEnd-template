@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs'; // , of
+import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { ReportTypes, FetchAuditDataCompleted } from './report.actions';
+import { ReportTypes, FertchAuditReportSuccess, FertchAuditReportError } from './report.actions';
 
-import { switchMap, map } from 'rxjs/operators';
+import { catchError, switchMap, map } from 'rxjs/operators';
 
 import { ReportService } from '../../services/report.service';
 import { ReportRecord, ApiResponse, DataPaginated } from '../../models';
 @Injectable()
 export class ReportEffects {
-  mockData = [
+  /*mockData = [
     {
       login: 'userone',
       firstName: 'Jonathan',
@@ -112,7 +112,7 @@ export class ReportEffects {
     }
   ];
 
-  /*@Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
+  @Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
     ofType(ReportTypes.FETCH_AUDIT_DATA),
     switchMap(() => {
       return of(this.mockData).pipe(
@@ -123,11 +123,16 @@ export class ReportEffects {
 
   @Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
     ofType(ReportTypes.FETCH_AUDIT_DATA),
-    switchMap(() => this.reportService.getReportData()
+    switchMap((action: any) => this.reportService.getReportData(
+      action.payload.offset,
+      action.payload.limit,
+      action.payload.filters,
+      action.payload.sort)
       .pipe(
         map((response: ApiResponse<DataPaginated<ReportRecord>>) => {
-          return new FetchAuditDataCompleted(response.data.items);
-        })
+          return new FertchAuditReportSuccess(response.data.items);
+        }),
+        catchError(error => of(new  FertchAuditReportError({ error: error })))
       )
     )
   );

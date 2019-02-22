@@ -35,29 +35,29 @@ export function reducer(
           sort: action.payload.sort
         })
       });
-    case ReportTypes.FETCH_AUDIT_DATA_COMPLETED:
+    /*case ReportTypes.FETCH_AUDIT_DATA_COMPLETED:
       return _assign({}, state, {
         audit: _assign({}, state.audit, {
           items: action.payload,
           loading: false
         })
-      });
+      });*/
     case ReportTypes.FETCH_AUDIT_REPORTS_ERROR:
       return _assign({}, state, {
         audit: {
           loading: false
         }
       });
-      case ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS:
+    case ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS:
       return _assign({}, state, {
-        audit: {
+        audit: _assign({}, state.audit, {
           loading: false,
-          items: action.payload.items,
+          items: action.payload,
           limit: action.payload.limit,
           offset: action.payload.offset
-        }
+        })
       });
-      default:
+    default:
        return state;
   }
 }
