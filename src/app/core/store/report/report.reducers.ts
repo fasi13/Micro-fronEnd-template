@@ -9,6 +9,7 @@ export interface ReportState {
     limit?: number,
     offset?: number,
     filters: string,
+    totalCount?: number,
     sort: string
   };
 }
@@ -35,13 +36,6 @@ export function reducer(
           sort: action.payload.sort
         })
       });
-    /*case ReportTypes.FETCH_AUDIT_DATA_COMPLETED:
-      return _assign({}, state, {
-        audit: _assign({}, state.audit, {
-          items: action.payload,
-          loading: false
-        })
-      });*/
     case ReportTypes.FETCH_AUDIT_REPORTS_ERROR:
       return _assign({}, state, {
         audit: {
@@ -52,9 +46,10 @@ export function reducer(
       return _assign({}, state, {
         audit: _assign({}, state.audit, {
           loading: false,
-          items: action.payload,
+          items: action.payload.items,
           limit: action.payload.limit,
-          offset: action.payload.offset
+          offset: action.payload.offset,
+          totalCount: action.payload.totalCount
         })
       });
     default:

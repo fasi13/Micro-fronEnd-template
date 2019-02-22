@@ -13,12 +13,6 @@ export class ReportService {
 
   constructor(private httpClient: HttpClient) {}
 
-  /*getReportData(): Observable<ApiResponse<DataPaginated<ReportRecord>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<ReportRecord>>>(
-      'audits?sortby=name&sortdirection=desc'
-    );
-  }*/
-
   getReportData(offset?: number, limit?: number, filters?: {[key: string]: string},
     sort?: { sortby: string, sortdirection: string }): Observable<ApiResponse<DataPaginated<ReportRecord>>> {
     let params = new HttpParams();
