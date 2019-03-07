@@ -218,6 +218,10 @@ export const getResetedPassword = createSelector(
  * Report Reducers
  *********************************************************/
 export const getReportState = (state: State) => state.report;
+export const isAuditLoading = createSelector(
+  getReportState,
+  ReportReducers.isAuditLoading
+);
 export const getAuditData = createSelector(
   getReportState,
   ReportReducers.getAuditData

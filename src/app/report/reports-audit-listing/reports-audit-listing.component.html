@@ -76,26 +76,50 @@
 <div class="fge-table">
   <div class="row m-0 fge-table__header">
     <div class="col fge-table__col fge-table-checkbox"></div>
-    <div class="col fge-table__col">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('login')">
       Username
+      <span *ngIf="sort.sortby === 'login'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
     </div>
-    <div class="col fge-table__col">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('firstName')">
       First Name
+      <span *ngIf="sort.sortby === 'firstName'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
     </div>
-    <div class="col fge-table__col">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('lastName')">
       Last Name
+      <span *ngIf="sort.sortby === 'lastName'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
     </div>
     <div class="col-2 fge-table__col">
       Application
     </div>
-    <div class="col-2 fge-table__col">
+    <div class="col-2 fge-table__col fge-clickable" (click)="sortBy('section')">
       Section
+      <span *ngIf="sort.sortby === 'section'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
     </div>
-    <div class="col fge-table__col">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('actionPerformed')">
       Activity
+      <span *ngIf="sort.sortby === 'actionPerformed'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
     </div>
-    <div class="col fge-table__col">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('actionDate')">
       Activity Date
+      <span *ngIf="sort.sortby === 'actionDate'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
     </div>
     <div class="col fge-table__col">
       Action

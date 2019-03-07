@@ -1,30 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { ReportTypes, FertchAuditReportSuccess, FertchAuditReportError } from './report.actions';
+import { Action, Store } from '@ngrx/store';
+import { ReportTypes, FertchAuditReportError, FetchAuditReportSuccess } from './report.actions';
+import { FgeHttpActionService } from '../../services';
+import { catchError, switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { State, getApplicationInfo } from '../store.reducers';
+import { ApiResponse, DataPaginated, Application, ApplicationLink, ReportRecord } from '../../models';
 
-import { catchError, switchMap, map } from 'rxjs/operators';
-
-import { ReportService } from '../../services/report.service';
-import { ReportRecord, ApiResponse, DataPaginated } from '../../models';
 @Injectable()
 export class ReportEffects {
   @Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
     ofType(ReportTypes.FETCH_AUDIT_DATA),
-    switchMap((action: any) => this.reportService.getReportData(
-      action.payload.offset,
-      action.payload.limit,
-      action.payload.filters,
-      action.payload.sort)
-      .pipe(
-        map((response: ApiResponse<DataPaginated<ReportRecord>>) => {
-          return new FertchAuditReportSuccess(response.data);
-        }),
-        catchError(error => of(new  FertchAuditReportError({ error: error })))
-      )
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([action, applicationInfo]: [any, Application]) =>
+      this.fgeActionService.performAction(applicationInfo, ApplicationLink.AUDIT, { params: {
+        offset: action.payload.offset,
+        limit: action.payload.limit,
+        ...action.payload.sort,
+        ...action.payload.filters
+       }})
+        .pipe(
+          map((response: ApiResponse<DataPaginated<ReportRecord>>) =>  new FetchAuditReportSuccess(response.data)),
+          catchError(error => of(new FertchAuditReportError({ error : error })))
+        )
     )
   );
 
-  constructor(private actions: Actions, private reportService: ReportService) {}
+  @Effect() public filterAuditData: Observable<Action> = this.actions.pipe(
+    ofType(ReportTypes.FILTER_AUDIT_DATA),
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([action, applicationInfo]: [any, Application]) =>
+      this.fgeActionService.performAction(applicationInfo, ApplicationLink.AUDIT, { params: {
+        ...action.payload.sort,
+        ...action.payload.filters
+       }})
+        .pipe(
+          map((response: ApiResponse<DataPaginated<ReportRecord>>) =>  new FetchAuditReportSuccess(response.data)),
+          catchError(error => of(new FertchAuditReportError({ error : error })))
+        )
+    )
+  );
+
+  constructor(
+    private actions: Actions,
+    private store: Store<State>,
+    private fgeActionService: FgeHttpActionService
+  ) {}
 }

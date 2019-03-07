@@ -28,14 +28,20 @@ export function reducer(
   action: ReportActions
 ): ReportState {
   switch (action.type) {
+    case ReportTypes.FILTER_AUDIT_DATA:
+      return _assign({}, state, {
+        audit: _assign({}, state.audit, {
+          loading: true,
+        })
+      });
+
     case ReportTypes.FETCH_AUDIT_DATA:
       return _assign({}, state, {
         audit: _assign({}, state.audit, {
           loading: true,
-          filters: action.payload.filters,
-          sort: action.payload.sort
         })
       });
+
     case ReportTypes.FETCH_AUDIT_REPORTS_ERROR:
       return _assign({}, state, {
         audit: {
@@ -57,5 +63,6 @@ export function reducer(
   }
 }
 
+export const isAuditLoading = (state: ReportState) => state.audit.loading;
 export const getAuditData = (state: ReportState) => state.audit.items;
 export const getAuditDataState = (state: ReportState) => state.audit;
