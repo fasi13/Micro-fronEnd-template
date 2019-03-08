@@ -1,1 +1,1 @@
-export * from './report-record-model';
+export * from './report-record.model';

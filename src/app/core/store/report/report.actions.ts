@@ -7,18 +7,7 @@ export const ReportTypes = {
   FETCH_AUDIT_DATA: ActionType('FETCH_AUDIT_DATA'),
   FETCH_AUDIT_REPORTS_SUCCESS: ActionType('FETCH_AUDIT_REPORTS_SUCCESS'),
   FETCH_AUDIT_REPORTS_ERROR: ActionType('FETCH_AUDIT_REPORTS_ERROR'),
-  FILTER_AUDIT_DATA: ActionType('FILTER_AUDIT_DATA'),
 };
-
-export class FilterAuditData implements Action{
-  public type: string = ReportTypes.FILTER_AUDIT_DATA;
-  constructor(public payload: {
-    filters?: any,
-    sort?: any
-  } = {
-    sort: { sortby: 'login', sortdirection: 'asc' }
-  }) {}
-}
 
 export class FetchAuditData implements Action {
   public type: string = ReportTypes.FETCH_AUDIT_DATA;
@@ -52,5 +41,4 @@ export class FertchAuditReportError implements Action {
 export type ReportActions =
   FetchAuditData |
   FetchAuditReportSuccess |
-  FertchAuditReportError|
-  FilterAuditData;
+  FertchAuditReportError;

@@ -1,26 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ReportRecord } from '../../core/models/report/report-record-model';
+import { ReportRecord } from '../../core/models/report/report-record.model';
 import { Store } from '@ngrx/store';
 import {
   State,
   FetchAuditData,
   getAuditData,
   getAuditDataState,
-  FilterAuditData
 } from '@forge/core';
 import { takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import {
-  UserPrefenceService,
-  PreferenceType
-} from 'src/app/core/services/user-prefence.service';
-
 @Component({
   selector: 'fge-reports-listing',
-  templateUrl: './reports-audit-listing.component.html'
+  templateUrl: './audit-report.component.html'
 })
-export class ReportsAuditListingComponent implements OnInit, OnDestroy {
+export class AuditReportComponent implements OnInit, OnDestroy {
 
   reports$: Observable<ReportRecord[]>;
   loading$: Observable<boolean> | boolean;
@@ -41,7 +35,6 @@ export class ReportsAuditListingComponent implements OnInit, OnDestroy {
 
   constructor (
     private store: Store<State>,
-    private userPreference: UserPrefenceService
   ) {}
 
   ngOnInit() {
@@ -53,10 +46,6 @@ export class ReportsAuditListingComponent implements OnInit, OnDestroy {
       sortdirection: 'asc'
     };
     this.initSelectors();
-    this.userPreference.getPreference(PreferenceType.GROUP_LISTING_VIEW)
-    .subscribe((value: string) => {
-      this.displayMode = value || 'list';
-    });
   }
 
   ngOnDestroy() {
@@ -81,8 +70,8 @@ export class ReportsAuditListingComponent implements OnInit, OnDestroy {
   }
 
   onPerformFilter(): void {
-    const { filters, sort } = this;
-    this.store.dispatch(new FilterAuditData({ filters, sort }));
+    const { filters} = this;
+    this.store.dispatch(new FetchAuditData({ filters }));
   }
 
   sortBy(field: string): void {
@@ -97,7 +86,6 @@ export class ReportsAuditListingComponent implements OnInit, OnDestroy {
       };
     }
     const { sort, filters } = this;
-    console.log(limit, offset, sort, filters);
     this.store.dispatch(new FetchAuditData({limit, offset, sort, filters}));
   }
 

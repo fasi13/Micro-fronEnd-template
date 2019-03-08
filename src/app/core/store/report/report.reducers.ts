@@ -28,13 +28,6 @@ export function reducer(
   action: ReportActions
 ): ReportState {
   switch (action.type) {
-    case ReportTypes.FILTER_AUDIT_DATA:
-      return _assign({}, state, {
-        audit: _assign({}, state.audit, {
-          loading: true,
-        })
-      });
-
     case ReportTypes.FETCH_AUDIT_DATA:
       return _assign({}, state, {
         audit: _assign({}, state.audit, {

@@ -15,25 +15,10 @@ export class ReportEffects {
     withLatestFrom(this.store.select(getApplicationInfo)),
     switchMap(([action, applicationInfo]: [any, Application]) =>
       this.fgeActionService.performAction(applicationInfo, ApplicationLink.AUDIT, { params: {
+        ...action.payload.filters,
+        ...action.payload.sort,
         offset: action.payload.offset,
-        limit: action.payload.limit,
-        ...action.payload.sort,
-        ...action.payload.filters
-       }})
-        .pipe(
-          map((response: ApiResponse<DataPaginated<ReportRecord>>) =>  new FetchAuditReportSuccess(response.data)),
-          catchError(error => of(new FertchAuditReportError({ error : error })))
-        )
-    )
-  );
-
-  @Effect() public filterAuditData: Observable<Action> = this.actions.pipe(
-    ofType(ReportTypes.FILTER_AUDIT_DATA),
-    withLatestFrom(this.store.select(getApplicationInfo)),
-    switchMap(([action, applicationInfo]: [any, Application]) =>
-      this.fgeActionService.performAction(applicationInfo, ApplicationLink.AUDIT, { params: {
-        ...action.payload.sort,
-        ...action.payload.filters
+        limit: action.payload.limit
        }})
         .pipe(
           map((response: ApiResponse<DataPaginated<ReportRecord>>) =>  new FetchAuditReportSuccess(response.data)),
