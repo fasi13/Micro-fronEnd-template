@@ -1,29 +1,49 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ReportRecord } from '../../core/models/report/report-record.model';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+
 import {
   State,
   FetchAuditData,
   getAuditData,
   getAuditDataState,
 } from '@forge/core';
-import { takeWhile } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+
+import { NgbInputDatepicker, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ReportRecord } from '../../core/models/report/report-record.model';
 
 @Component({
-  selector: 'fge-reports-listing',
+  selector: 'fge-audit-report',
   templateUrl: './audit-report.component.html'
 })
 export class AuditReportComponent implements OnInit, OnDestroy {
+  @ViewChild('datepicker') input: NgbInputDatepicker;
 
   reports$: Observable<ReportRecord[]>;
   loading$: Observable<boolean> | boolean;
   reportsState: any;
-  displayMode: string;
   sort: { sortby: string; sortdirection: 'asc' | 'desc' };
 
-  private filters: { [key: string]: string };
+  titleModalConfirm: string;
+  messageConfirmModal: string;
+  confirmModal: any;
+
+  hoveredDate: any;
+  fromDate: NgbDateStruct;
+  toDate: NgbDateStruct;
+  range_date = '';
+
+  private filters: { [key: string]: string } = {};
   private isAliveComponent = true;
+  private equals = (one: NgbDateStruct, two: NgbDateStruct) =>
+            one && two && two.year === one.year && two.month === one.month && two.day === one.day
+  private before = (one: NgbDateStruct, two: NgbDateStruct) =>
+            !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
+            ? false : one.day < two.day : one.month < two.month : one.year < two.year
+  private after = (one: NgbDateStruct, two: NgbDateStruct) =>
+          !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
+          ? false : one.day > two.day : one.month > two.month : one.year > two.year
 
   get pageNumber(): number {
     if (this.reportsState) {
@@ -33,11 +53,18 @@ export class AuditReportComponent implements OnInit, OnDestroy {
     return 0;
   }
 
+  isHovered = date => this.fromDate && !this.toDate && this.hoveredDate
+              && this.after(date, this.fromDate) && this.before(date, this.hoveredDate)
+  isInside = date => this.after(date, this.fromDate) && this.before(date, this.toDate);
+  isFrom = date => this.equals(date, this.fromDate);
+  isTo = date => this.equals(date, this.toDate);
+
   constructor (
     private store: Store<State>,
   ) {}
 
   ngOnInit() {
+    this.initSelectors();
     this.store.dispatch(new FetchAuditData());
     this.reports$ = this.store.select(getAuditData);
     this.filters = {};
@@ -45,7 +72,6 @@ export class AuditReportComponent implements OnInit, OnDestroy {
       sortby: 'login',
       sortdirection: 'asc'
     };
-    this.initSelectors();
   }
 
   ngOnDestroy() {
@@ -66,12 +92,31 @@ export class AuditReportComponent implements OnInit, OnDestroy {
       sortby: 'login',
       sortdirection: 'asc'
     };
+    this.range_date = '';
     this.onPerformFilter();
   }
 
   onPerformFilter(): void {
     const { filters} = this;
     this.store.dispatch(new FetchAuditData({ filters }));
+  }
+
+  onDateSelection(date: NgbDateStruct) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && this.after(date, this.fromDate)) {
+      const toDateStr =  this.parseDateToStr(date);
+      const fromDateStr = this.parseDateToStr(this.fromDate);
+      this.toDate = date;
+      this.range_date = `${fromDateStr} to ${toDateStr}`;
+      this.filters.from = fromDateStr;
+      this.filters.to = toDateStr;
+      this.input.close();
+      this.onPerformFilter();
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
   }
 
   sortBy(field: string): void {
@@ -87,6 +132,14 @@ export class AuditReportComponent implements OnInit, OnDestroy {
     }
     const { sort, filters } = this;
     this.store.dispatch(new FetchAuditData({limit, offset, sort, filters}));
+  }
+
+  private parseDateToStr(date: NgbDateStruct): string {
+    let dateStr = '';
+    if (date) {
+      dateStr = `${date.year}-${date.month}-${date.day}`;
+    }
+    return dateStr;
   }
 
   private initSelectors() {

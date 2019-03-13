@@ -41,3 +41,12 @@
     border-bottom: 1px solid #dee2e6;
   }
 }
+
+.fge-table-report-col{
+  overflow: initial;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-height: 1px;
+  padding: 0.5rem;
+  border-top: 1px solid #dee2e6;
+}

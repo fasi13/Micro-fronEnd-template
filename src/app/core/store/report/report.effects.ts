@@ -17,9 +17,9 @@ export class ReportEffects {
       this.fgeActionService.performAction(applicationInfo, ApplicationLink.AUDIT, { params: {
         ...action.payload.filters,
         ...action.payload.sort,
+        limit: action.payload.limit,
         offset: action.payload.offset,
-        limit: action.payload.limit
-       }})
+        }})
         .pipe(
           map((response: ApiResponse<DataPaginated<ReportRecord>>) =>  new FetchAuditReportSuccess(response.data)),
           catchError(error => of(new FertchAuditReportError({ error : error })))
