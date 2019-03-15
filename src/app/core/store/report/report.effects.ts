@@ -7,7 +7,7 @@ import { FgeHttpActionService } from '../../services';
 import { catchError, switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { State, getApplicationInfo } from '../store.reducers';
 import { ApiResponse, DataPaginated, Application, ApplicationLink, ReportRecord } from '../../models';
-
+import { AuditService } from '../../services/audit.service';
 @Injectable()
 export class ReportEffects {
   @Effect() public fetchAuditData: Observable<Action> = this.actions.pipe(
@@ -27,7 +27,22 @@ export class ReportEffects {
     )
   );
 
+  @Effect() public ExportAudit: Observable<Action> = this.actions.pipe(
+    ofType(ReportTypes.EXPORT_AUDIT_DATA),
+    switchMap((action: any) => this.auditService.getReportAudit(
+      action.payload.filters,
+      action.payload.sort)
+      .pipe(
+        map((response: ApiResponse<DataPaginated<ReportRecord>>) => {
+          return new FetchAuditReportSuccess(response.data);
+        }),
+        catchError(error => of(new FertchAuditReportError({error: error})))
+      )
+    )
+  );
+
   constructor(
+    private auditService: AuditService,
     private actions: Actions,
     private store: Store<State>,
     private fgeActionService: FgeHttpActionService

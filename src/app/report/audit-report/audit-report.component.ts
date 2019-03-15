@@ -6,6 +6,7 @@ import { takeWhile } from 'rxjs/operators';
 import {
   State,
   FetchAuditData,
+  ExportAuditData,
   getAuditData,
   getAuditDataState,
 } from '@forge/core';
@@ -61,7 +62,7 @@ export class AuditReportComponent implements OnInit, OnDestroy {
 
   constructor (
     private store: Store<State>,
-  ) {}
+    ) {}
 
   ngOnInit() {
     this.initSelectors();
@@ -97,7 +98,7 @@ export class AuditReportComponent implements OnInit, OnDestroy {
   }
 
   onPerformFilter(): void {
-    const { filters} = this;
+    const { filters } = this;
     this.store.dispatch(new FetchAuditData({ filters }));
   }
 
@@ -150,5 +151,31 @@ export class AuditReportComponent implements OnInit, OnDestroy {
         this.reportsState = reportsState;
       }
     });
+  }
+
+  exportReports(): void {
+    const { filters, sort } = this;
+    this.store.dispatch(new ExportAuditData({sort, filters}));
+
+    // const file = this.reports$.forEach();
+    const file = this.reportsState.items;
+
+    console.log(file);
+    this.download(file);
+  }
+
+  download(file) {
+    const blob = new Blob([file], { type: 'text/csv'});
+    const url = window.URL.createObjectURL(blob);
+    const element = document.createElement('a');
+    element.setAttribute('href', url);
+    element.setAttribute('download', 'ExportAuditReport.csv');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
   }
 }

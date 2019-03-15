@@ -35,6 +35,13 @@ export function reducer(
         })
       });
 
+    case ReportTypes.EXPORT_AUDIT_DATA:
+      return _assign({}, state, {
+        audit: _assign({}, state.audit, {
+          loading: true,
+        })
+      });
+
     case ReportTypes.FETCH_AUDIT_REPORTS_ERROR:
       return _assign({}, state, {
         audit: {
@@ -52,7 +59,7 @@ export function reducer(
         })
       });
     default:
-       return state;
+      return state;
   }
 }
 
