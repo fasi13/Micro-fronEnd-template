@@ -7,10 +7,6 @@
   border-top: 1px solid #dee2e6;
 }
 
-.fge-table-checkbox {
-  margin-right: -90px;
-}
-
 .fge-table {
   font-size: 13px;
 
@@ -26,6 +22,10 @@
     @include fge-table-column();
   }
 
+  &__col--checkbox {
+    margin-right: -90px;
+  }
+
   &__col--app-path {
     @include fge-table-column();
     white-space: normal;
@@ -34,19 +34,25 @@
     }
   }
 
+  &__row--filter {
+    padding-left: 42px;
+  }
+
   &__header {
     color: #495057;
     background-color: #e9ecef;
     font-weight: bold;
     border-bottom: 1px solid #dee2e6;
   }
+
+  &__col--action--date {
+    overflow: initial;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 1px;
+    padding: 0.5rem;
+    border-top: 1px solid #dee2e6;
+  }
 }
 
-.fge-table-report-col{
-  overflow: initial;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-height: 1px;
-  padding: 0.5rem;
-  border-top: 1px solid #dee2e6;
-}
+

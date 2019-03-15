@@ -35,19 +35,13 @@ export function reducer(
         })
       });
 
-    case ReportTypes.EXPORT_AUDIT_DATA:
-      return _assign({}, state, {
-        audit: _assign({}, state.audit, {
-          loading: true,
-        })
-      });
-
     case ReportTypes.FETCH_AUDIT_REPORTS_ERROR:
       return _assign({}, state, {
         audit: {
           loading: false
         }
       });
+
     case ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS:
       return _assign({}, state, {
         audit: _assign({}, state.audit, {
@@ -58,6 +52,7 @@ export function reducer(
           totalCount: action.payload.totalCount
         })
       });
+      
     default:
       return state;
   }
@@ -65,4 +60,4 @@ export function reducer(
 
 export const isAuditLoading = (state: ReportState) => state.audit.loading;
 export const getAuditData = (state: ReportState) => state.audit.items;
-export const getAuditDataState = (state: ReportState) => state.audit;
+export const getAuditState = (state: ReportState) => state.audit;

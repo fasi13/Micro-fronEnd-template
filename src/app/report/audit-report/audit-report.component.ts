@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
-
 import {
   State,
   FetchAuditData,
   ExportAuditData,
   getAuditData,
-  getAuditDataState,
+  getAuditState,
 } from '@forge/core';
-
 import { NgbInputDatepicker, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 import { ReportRecord } from '../../core/models/report/report-record.model';
 
 @Component({
@@ -22,13 +20,8 @@ export class AuditReportComponent implements OnInit, OnDestroy {
   @ViewChild('datepicker') input: NgbInputDatepicker;
 
   reports$: Observable<ReportRecord[]>;
-  loading$: Observable<boolean> | boolean;
   reportsState: any;
   sort: { sortby: string; sortdirection: 'asc' | 'desc' };
-
-  titleModalConfirm: string;
-  messageConfirmModal: string;
-  confirmModal: any;
 
   hoveredDate: any;
   fromDate: NgbDateStruct;
@@ -62,17 +55,15 @@ export class AuditReportComponent implements OnInit, OnDestroy {
 
   constructor (
     private store: Store<State>,
-    ) {}
+  ) {}
 
   ngOnInit() {
-    this.initSelectors();
-    this.store.dispatch(new FetchAuditData());
-    this.reports$ = this.store.select(getAuditData);
     this.filters = {};
     this.sort = {
       sortby: 'login',
       sortdirection: 'asc'
     };
+    this.initSelectors();
   }
 
   ngOnDestroy() {
@@ -143,39 +134,20 @@ export class AuditReportComponent implements OnInit, OnDestroy {
     return dateStr;
   }
 
+  exportReport(): void {
+    const { filters, sort } = this;
+    this.store.dispatch(new ExportAuditData({sort, filters}));
+  }
+
   private initSelectors() {
-    this.store.select(getAuditDataState)
+    this.store.select(getAuditState)
     .pipe(takeWhile(() => this.isAliveComponent))
     .subscribe(reportsState => {
       if (reportsState) {
         this.reportsState = reportsState;
       }
     });
-  }
-
-  exportReports(): void {
-    const { filters, sort } = this;
-    this.store.dispatch(new ExportAuditData({sort, filters}));
-
-    // const file = this.reports$.forEach();
-    const file = this.reportsState.items;
-
-    console.log(file);
-    this.download(file);
-  }
-
-  download(file) {
-    const blob = new Blob([file], { type: 'text/csv'});
-    const url = window.URL.createObjectURL(blob);
-    const element = document.createElement('a');
-    element.setAttribute('href', url);
-    element.setAttribute('download', 'ExportAuditReport.csv');
-
-    element.style.display = 'none';
-    document.body.appendChild(element);
-
-    element.click();
-
-    document.body.removeChild(element);
+    this.store.dispatch(new FetchAuditData());
+    this.reports$ = this.store.select(getAuditData);
   }
 }

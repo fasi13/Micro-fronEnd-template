@@ -44,7 +44,7 @@ export class FetchAuditReportSuccess implements Action {
   }) {}
 }
 
-export class FertchAuditReportError implements Action {
+export class FetchAuditReportError implements Action {
   public type: string = ReportTypes.FETCH_AUDIT_REPORTS_ERROR;
   constructor(public payload?: any) {}
 }
@@ -53,4 +53,4 @@ export type ReportActions =
   ExportAuditData |
   FetchAuditData |
   FetchAuditReportSuccess |
-  FertchAuditReportError;
+  FetchAuditReportError;

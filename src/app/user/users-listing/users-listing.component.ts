@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-
+import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, User } from '@forge/core';
 import { Subject } from 'rxjs';
 import { takeWhile, takeUntil } from 'rxjs/operators';
-
-import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, User } from '@forge/core';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
 
 @Component({
