@@ -64,7 +64,7 @@ export class UserEffects {
     )
   );
 
-  @Effect() public ExportAudit: Observable<Action> = this.actions.pipe(
+  @Effect() public ExportUser: Observable<Action> = this.actions.pipe(
     ofType(UserTypes.EXPORT_USER_DATA),
     withLatestFrom(this.store.select(getApplicationInfo)),
     switchMap(([action, applicationInfo]: [any, Application]) => this.userService.exportUserList(
@@ -85,12 +85,12 @@ export class UserEffects {
       )
     )
   );
+
   constructor(
     private actions: Actions,
     private userService: UserService,
     private notifierService: NotifierService,
     private store: Store<State>,
     private resourceService: ResourceService
-    ) {
-  }
+    ) {}
 }
