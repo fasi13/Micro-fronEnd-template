@@ -65,7 +65,7 @@ export class UserService {
     return this.httpClient.put<ApiResponse<User>>(this.baseUrl, updatedUser);
   }
 
-  getUsers(offset?: number, limit?: number, filters?: {[key: string]: string},
+  getUsers(applicationId: string | number, offset?: number, limit?: number, filters?: {[key: string]: string},
     sort?: { sortby: string, sortdirection: string }): Observable<ApiResponse<DataPaginated<User>>> {
     let params = new HttpParams();
     if (offset >= 0) {
@@ -90,7 +90,8 @@ export class UserService {
         }
       });
     }
-    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(this.baseUrl, { params });
+    const url = `application/${applicationId}/users`;
+    return this.httpClient.get<ApiResponse<DataPaginated<User>>>(url, { params });
   }
 
   resetPassword(userId: number, resetPassword: UserResetPassword): Observable<ApiResponse<UserResetPassword>> {
