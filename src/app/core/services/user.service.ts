@@ -94,6 +94,30 @@ export class UserService {
     return this.httpClient.get<ApiResponse<DataPaginated<User>>>(url, { params });
   }
 
+  exportUserList(applicationId: string | number, filters?: {[key: string]: string},
+    sort?: { sortby: string, sortdirection: string }): Observable<HttpResponse<any>> {
+    let params = new HttpParams();
+    if (filters) {
+      Object.keys(filters).forEach(key => {
+        const value = filters[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
+    if (sort) {
+      Object.keys(sort).forEach(key => {
+        const value = sort[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
+    const url = `application/${applicationId}/users/export`;
+    return this.httpClient.get<HttpResponse<any>>(url,
+      { params, responseType: 'text' as 'json', observe: 'response' });
+  }
+
   resetPassword(userId: number, resetPassword: UserResetPassword): Observable<ApiResponse<UserResetPassword>> {
     const url = `${this.baseUrl}/${userId}/password`;
     return this.httpClient.put<ApiResponse<UserResetPassword>>(url, resetPassword);

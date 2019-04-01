@@ -5,6 +5,15 @@
   <div class="col text-right align-self-center">
     <button
       type="button"
+      class="btn btn-sm btn-secondary bg-secondary mr-2"
+      (click)="exportUserData()"
+      title="Click to export"
+    >
+      Export
+      <i class="far fa-file-excel pl-1"></i>
+    </button>
+    <button
+      type="button"
       class="btn btn-sm btn-secondary bg-secondary"
       (click)="userFormModal.open()">
       Add User

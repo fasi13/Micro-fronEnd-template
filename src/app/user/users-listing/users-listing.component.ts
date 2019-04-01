@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, User } from '@forge/core';
+import { State, UserTransaction, getUserRecordState, getUsersState, FetchUsers, User, ExportUserData } from '@forge/core';
 import { Subject } from 'rxjs';
 import { takeWhile, takeUntil } from 'rxjs/operators';
 import { ModalConfirmConfig } from '../../shared/components/modal-confirm/modal-confirm.model';
@@ -123,6 +123,11 @@ export class UsersListingComponent implements OnInit, OnDestroy {
 
   trackByUserId(_index, item: User): number {
     return item.id;
+  }
+
+  exportUserData() {
+    const { filters, sort } = this;
+    this.store.dispatch(new ExportUserData({ sort, filters }));
   }
 
   private initSelectors() {

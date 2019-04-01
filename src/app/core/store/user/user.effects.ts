@@ -18,6 +18,9 @@ import {
 import { UserService } from '../../services/user.service';
 import { User, ApiResponse, DataPaginated, Application } from '../../models';
 import { State, getApplicationInfo } from '../store.reducers';
+import { HttpResponse } from '@angular/common/http';
+import { ResourceService } from '../../services';
+import { EmptyAction } from '../store.actions';
 
 enum UserMethods { POST = 'createNewUser', PUT = 'updateUser' }
 
@@ -60,11 +63,34 @@ export class UserEffects {
       )
     )
   );
+
+  @Effect() public ExportAudit: Observable<Action> = this.actions.pipe(
+    ofType(UserTypes.EXPORT_USER_DATA),
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([action, applicationInfo]: [any, Application]) => this.userService.exportUserList(
+      applicationInfo.id,
+      action.payload.sort,
+      action.payload.filters,
+    ).pipe(
+        map((response: HttpResponse<Blob>) => {
+          const fileName = 'ExportUserReport.csv';
+          /**
+          * @TODO Refactor this implementation since the link to export url should be provided
+          * in links array and shouldn't use custom services anymore
+          */
+          this.resourceService.downloadHttpResource(response, fileName);
+          return new EmptyAction();
+        }),
+        catchError(error => of(new FetchUsersError({error: error})))
+      )
+    )
+  );
   constructor(
     private actions: Actions,
     private userService: UserService,
     private notifierService: NotifierService,
-    private store: Store<State>
+    private store: Store<State>,
+    private resourceService: ResourceService
     ) {
   }
 }

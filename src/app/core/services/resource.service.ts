@@ -7,13 +7,18 @@ import { HttpResponse } from '@angular/common/http';
 export class ResourceService {
 
   constructor() { }
-  /** 
-  *@TODO Refactor this once that get the name (fileName) that it in the answer 
-  * in the header part in the Content-Disposition. For now will be send as a parameter 
+
+  /**
+  * @TODO Refactor this once that get the name (fileName) that it in the answer
+  * in the header part in the Content-Disposition. For now will be send as a parameter
   * to filename with the name of the file. When the file name is from eader the parameter
   * filename will be removed.
+  *
+  * UPDATE by Kenji: Seems that API content disposition header wasn't exposed by service,
+  * for more details please take a look at:
+  * https://stackoverflow.com/questions/45892875/unable-to-view-content-disposition-headers-in-angular4-get-response
   */
-  dowloaderResource(response: HttpResponse<any>, filename: string) {
+  downloadHttpResource(response: HttpResponse<any>, filename: string) {
     const blob = new Blob([response.body], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const element = document.createElement('a');

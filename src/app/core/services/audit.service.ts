@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class AuditService {
   constructor(private httpClient: HttpClient) { }
-  /** 
-  *@TODO refactor this implemmentation to perform the action from effects.
+  /**
+  * @TODO refactor this implemmentation to perform the action from effects.
   * Instead of getting the link here, according to the instruction, must return a list of _link
   * to do the export to follow the implementation of the current effects. Using the fgeActionServices
   */

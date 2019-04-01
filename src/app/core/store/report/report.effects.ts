@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
+
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, map, withLatestFrom } from 'rxjs/operators';
+
 import { EmptyAction } from '../store.actions';
 import { State, getApplicationInfo } from '../store.reducers';
 import { AuditService } from '../../services/audit.service';
@@ -41,12 +43,12 @@ export class ReportEffects {
     ).pipe(
         map((response: HttpResponse<Blob>) => {
           const fileName = 'ExportAuditReport.csv';
-          /** 
-          *@TODO Refactor this once that get the name (fileName) that it in the answer 
-          * in the header part in the Content-Disposition. For now the name will be send 
+          /**
+          * @TODO Refactor this once that get the name (fileName) that it in the answer
+          * in the header part in the Content-Disposition. For now the name will be send
           * as a date hardcode.
           */
-          this.resourceService.dowloaderResource(response, fileName);
+          this.resourceService.downloadHttpResource(response, fileName);
           return new EmptyAction();
         }),
         catchError(error => of(new FetchAuditReportError({error: error})))

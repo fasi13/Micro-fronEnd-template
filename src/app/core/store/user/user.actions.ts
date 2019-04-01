@@ -8,6 +8,7 @@ export const UserTypes = {
   USER_TRANSACTION_ERROR: ActionType('USER_TRANSACTION_ERROR'),
   FETCH_USERS: ActionType('FETCH_USERS'),
   FETCH_USERS_SUCCESS: ActionType('FETCH_USERS_SUCCESS'),
+  EXPORT_USER_DATA: ActionType('EXPORT_USER_DATA'),
   FETCH_USERS_ERROR: ActionType('FETCH_USERS_ERROR')
 };
 
@@ -43,6 +44,11 @@ export class FetchUsersError implements Action {
 
 export class FetchUsersSuccess implements Action {
   public type: string = UserTypes.FETCH_USERS_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class ExportUserData implements Action {
+  public type: string = UserTypes.EXPORT_USER_DATA;
   constructor(public payload?: any) {}
 }
 
