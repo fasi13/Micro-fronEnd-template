@@ -44,20 +44,6 @@
           <span class="fge-sidebar__item--title">Campaings</span>
         </a>
       </li>
-      <li [ngClass]="{ active: isSectionActive('user') }">
-        <div class="collapse" id="userCollapse" *ngIf="!active">
-          <div class="fge-sidebar-expand">
-            <a class="fge-clickable" tabindex="0" (click)="goToUsersManagement()">
-              <i class="fas fa-user"></i>
-              Users Management
-            </a>
-            <a class="fge-clickable" tabindex="0" (click)="goToUserRoles()">
-              <i class="fas fa-users"></i>
-              Roles Management
-            </a>
-          </div>
-        </div>
-      </li>
       <li [ngClass]="{'active': isSectionActive('user')}">
         <a
           class="btn-sm fge-clickable"
@@ -73,6 +59,18 @@
           <i class="fas fa-user"></i>
         </a>
       </li>
+      <div class="collapse" id="userCollapse" *ngIf="!active">
+        <div class="fge-sidebar-expand">
+          <a class="fge-clickable" tabindex="0" (click)="goToUsersManagement()">
+            <i class="fas fa-user"></i>
+            Users Management
+          </a>
+          <a class="fge-clickable" tabindex="0" (click)="goToUserRoles()">
+            <i class="fas fa-users"></i>
+            Roles Management
+          </a>
+        </div>
+      </div>
       <li [ngClass]="{ active: isSectionActive('report') }">
         <a
           class="btn-sm fge-clickable"
