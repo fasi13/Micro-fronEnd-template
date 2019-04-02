@@ -1,8 +1,8 @@
 <div class="fge-group--title row">
-  <h3 class="fge-group--title-divider my-2 col-10">
+  <h4 class="fge-group--title-divider my-2 col-10">
     <i *ngIf="reportsState?.loading" class="fas fa-circle-notch fa-spin"></i
-    ><span class="pl-2">Reports</span>
-  </h3>
+    ><span class="pl-2">Reports / Audit Reports</span>
+  </h4>
   <div class="col text-right align-self-center">
     <button
       type="button"
@@ -15,13 +15,10 @@
     </button>
   </div>
 </div>
-<div class="fge-group--subtitle row">
-  <h4 class="fge-group--title-divider my-2 col-10">
-    <span class="pl-2">Audit Reports</span>
-  </h4>
-</div>
-<div class="row m-0 fge-table__row--filter">
-  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
+<div class="row m-0">
+    <div class="col--checkbox fge-table__col border-bottom-0 pt-0 border-top-0">
+      </div>
+    <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
     <ng-container
       [ngTemplateOutlet]="filterInput"
       [ngTemplateOutletContext]="{ label: 'Username', field: 'login' }"
@@ -56,19 +53,19 @@
     >
     </ng-container>
   </div>
-  <div class="col-2 fge-table__col--action--date border-bottom-0 pt-0 border-top-0 lc">
+  <div class="col-2 fge-table__col--action--date border-bottom-0 pt-0 border-top-0">
     <ng-container
       [ngTemplateOutlet]="filterDate"
       [ngTemplateOutletContext]="{ label: 'Date', field: 'actionDate' }"
     >
     </ng-container>
   </div>
-  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
+  <div class="col-1 fge-table__col border-bottom-0 pt-0 border-top-0 fge-table--actions">
   </div>
 </div>
 <div class="fge-table">
   <div class="row m-0 fge-table__header">
-    <div class="col fge-table__col--checkbox"></div>
+    <div class="col--checkbox fge-table__col"></div>
     <div class="col fge-table__col fge-clickable" (click)="sortBy('login')">
       Username
       <span *ngIf="sort.sortby === 'login'">
@@ -111,7 +108,7 @@
         <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
       </span>
     </div>
-    <div class="col fge-table__col">
+    <div class="col-1 fge-table__col fge-table--actions">
       Action
     </div>
   </div>
@@ -121,31 +118,18 @@
     </div>
   </div>
   <div class="row fge-table__row m-1" *ngFor="let report of (reports$ | async)">
-    <div class="col fge-table__col--checkbox" title="{{ report.id }}">
-      <input type="checkbox" class="col-sm-2 fge-table__col" />
+    <div class="col--checkbox fge-table__col" title="{{ report.id }}">
+      <input type="checkbox"/>
     </div>
-    <div class="col fge-table__col" title="{{ report.login }}">
-      {{ report.login }}
-    </div>
-    <div class="col fge-table__col" title="{{ report.firstName }}">
-      {{ report.firstName }}
-    </div>
-    <div class="col fge-table__col" title="{{ report.lastName }}">
-      {{ report.lastName }}
-    </div>
-    <div
-      class="col-2 fge-table__col"
-      title="{{ report.application | fgeApplicationPath }}"
-    >
+    <div class="col fge-table__col" title="{{ report.login }}">{{ report.login }}</div>
+    <div class="col fge-table__col" title="{{ report.firstName }}">{{ report.firstName }}</div>
+    <div class="col fge-table__col" title="{{ report.lastName }}">{{ report.lastName }}</div>
+    <div class="col-2 fge-table__col--app-path" title="{{ report.application | fgeApplicationPath }}">
       <span>{{ report.application | fgeApplicationPath }}</span>
     </div>
-    <div class="col fge-table__col" title="{{ report.actionPerformed }}">
-      {{ report.actionPerformed }}
-    </div>
-    <div class="col-2 fge-table__col" title="{{ report.actionDate | date:'medium' }}">
-      {{ report.actionDate | date:'medium'}}
-    </div>
-    <div class="col fge-table__col pr-0 fge-table--actions">
+    <div class="col fge-table__col" title="{{ report.actionPerformed }}">{{ report.actionPerformed }}</div>
+    <div class="col-2 fge-table__col" title="{{ report.actionDate | date:'medium' }}">{{ report.actionDate | date:'medium'}}</div>
+    <div class="col-1 fge-table__col pr-0 fge-table--actions">
       <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0">
         <i class="fas fa-edit"></i>
       </a>

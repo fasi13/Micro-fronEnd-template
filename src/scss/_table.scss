@@ -7,6 +7,14 @@
   border-top: 1px solid #dee2e6;
 }
 
+.col--checkbox {
+    width: 15px;
+    margin-bottom: 8px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
 .fge-table {
   font-size: 13px;
 
@@ -20,10 +28,6 @@
 
   &__col {
     @include fge-table-column();
-  }
-
-  &__col--checkbox {
-    margin-right: -90px;
   }
 
   &__col--app-path {
