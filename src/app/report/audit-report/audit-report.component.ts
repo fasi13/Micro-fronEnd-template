@@ -101,8 +101,8 @@ export class AuditReportComponent implements OnInit, OnDestroy {
       const fromDateStr = this.parseDateToStr(this.fromDate);
       this.toDate = date;
       this.range_date = `${fromDateStr} to ${toDateStr}`;
-      this.filters.from = fromDateStr;
-      this.filters.to = toDateStr;
+      this.filters.actionDateStart = fromDateStr;
+      this.filters.actionDateEnd = toDateStr;
       this.input.close();
       this.onPerformFilter();
     } else {

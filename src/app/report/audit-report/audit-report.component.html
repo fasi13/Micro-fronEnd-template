@@ -168,26 +168,6 @@
 </ng-template>
 
 <ng-template #filterDate let-label="label" let-field="field">
-  <div class="input-group input-group-sm mt-1">
-    <div class="input-group-prepend fge-clickable" (click)="datepicker.toggle()">
-      <span class="input-group-text">
-        <i class="fas fa-calendar-alt"></i>
-      </span>
-    </div>
-    <input disabled class="form-control" [value]="range_date" placeholder="{{ label }}" /> 
-    <input
-      class="form-control d-none"
-      name="dp"
-      [(ngModel)]="model"
-      ngbDatepicker
-      [dayTemplate]="dayTemplate"
-      [autoClose]="false"
-      [displayMonths]="2"
-      placement="bottom-right"
-      #datepicker="ngbDatepicker">
-  </div>
-
-  <ng-template #filterDate let-label="label" let-field="field">
     <div class="input-group input-group-sm mt-1">
       <div class="input-group-prepend fge-clickable" (click)="datepicker.toggle()">
         <span class="input-group-text">
@@ -206,8 +186,8 @@
         placement="bottom-right"
         #datepicker="ngbDatepicker">
     </div>
-  </ng-template>
-  <ng-template #dayTemplate let-date="date" let-focused="focused">
+</ng-template>
+<ng-template #dayTemplate let-date="date" let-focused="focused">
     <span class="fge-datepicker--day"
       [class.focused]="focused"
       [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
@@ -216,6 +196,6 @@
       (mouseenter)="hoveredDate = date"
       (mouseleave)="hoveredDate = null"
     >
-    {{ date.day }}
+        {{ date.day }}
     </span>
-  </ng-template>
+</ng-template>
