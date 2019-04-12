@@ -134,7 +134,7 @@ export class AuditReportComponent implements OnInit, OnDestroy {
     return dateStr;
   }
 
-  exportAuditData(): void {
+  exportAuditData() {
     const { filters, sort } = this;
     this.store.dispatch(new ExportAuditData({sort, filters}));
   }

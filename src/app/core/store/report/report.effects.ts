@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
+import { NotifierService } from 'angular-notifier';
 
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, map, withLatestFrom } from 'rxjs/operators';
@@ -49,15 +50,20 @@ export class ReportEffects {
           * as a date hardcode.
           */
           this.resourceService.downloadHttpResource(response, fileName);
+          this.notifierService.notify('success', 'Your audit report has been successfully exported');
           return new EmptyAction();
         }),
-        catchError(error => of(new FetchAuditReportError({error: error})))
+        catchError(error => {
+            this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
+            return of(new FetchAuditReportError({error: error}));
+        })
       )
     )
   );
   constructor(
     private auditService: AuditService,
     private resourceService: ResourceService,
+    private notifierService: NotifierService,
     private actions: Actions,
     private store: Store<State>,
     private fgeActionService: FgeHttpActionService
