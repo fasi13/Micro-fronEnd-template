@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { NotifierService } from 'angular-notifier';
+import _assign from 'lodash/assign';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, mergeMap, withLatestFrom } from 'rxjs/operators';
@@ -13,14 +14,19 @@ import {
   UserTransactionError,
   FetchUsers,
   FetchUsersError,
-  FetchUsersSuccess
+  FetchUsersSuccess,
+  FetchRolesSuccess,
+  FetchRolesError,
+  FetchRolePermissionsSuccess
 } from './user.actions';
 import { UserService } from '../../services/user.service';
-import { User, ApiResponse, DataPaginated, Application } from '../../models';
+import { User, ApiResponse, DataPaginated, Application, ApplicationLink, UserRoleLink } from '../../models';
 import { State, getApplicationInfo } from '../store.reducers';
 import { HttpResponse } from '@angular/common/http';
 import { ResourceService } from '../../services';
 import { EmptyAction } from '../store.actions';
+import { FgeHttpActionService } from '../../services';
+import { UserRole } from '../../models/user/user-role.model';
 
 enum UserMethods { POST = 'createNewUser', PUT = 'updateUser' }
 
@@ -86,11 +92,48 @@ export class UserEffects {
     )
   );
 
+  @Effect() public fetchRoles: Observable<Action> = this.actions.pipe(
+    ofType(UserTypes.FETCH_ROLES),
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([action, applicationInfo]: [any, Application]) => this.fgeActionService.performAction(
+      applicationInfo,
+      ApplicationLink.ROLES,
+      {
+        params: {
+          offset: action.payload.offset,
+          limit: action.payload.limit
+        }
+      }
+    )
+      .pipe(
+        map((response: ApiResponse<DataPaginated<UserRole>>) => {
+          return new FetchRolesSuccess(response.data);
+        }),
+        catchError(error => of(new FetchRolesError({error: error})))
+      )
+  ));
+
+  @Effect() public fetchRolePermissions: Observable<Action> = this.actions.pipe(
+    ofType(UserTypes.FETCH_ROLE_PERMISSIONS),
+    switchMap(({ payload: userRole }: any) => this.fgeActionService.performAction(
+      userRole,
+      UserRoleLink.PERMISSIONS
+    )
+      .pipe(
+        map((response: ApiResponse<DataPaginated<any>>) => {
+          const role: UserRole = _assign({}, userRole, { permissions: response.data });
+          return new FetchRolePermissionsSuccess(role);
+        }),
+        catchError(error => of(new FetchRolesError({ error: error })))
+      )
+  ));
+
   constructor(
     private actions: Actions,
     private userService: UserService,
     private notifierService: NotifierService,
     private store: Store<State>,
-    private resourceService: ResourceService
-    ) {}
+    private resourceService: ResourceService,
+    private fgeActionService: FgeHttpActionService
+  ) { }
 }

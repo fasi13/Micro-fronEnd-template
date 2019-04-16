@@ -2,6 +2,7 @@ import _assign from 'lodash/assign';
 
 import { User } from '../../models';
 import { UserTypes, UserActions } from './user.actions';
+import { UserRole } from '../../models/user/user-role.model';
 
 export interface UserState {
   users: {
@@ -17,6 +18,15 @@ export interface UserState {
     data: User,
     error?: any;
   };
+  roles: {
+    loading: boolean,
+    items: UserRole[],
+    limit?: number,
+    offset?: number,
+    totalCount?: number,
+    selected?: any
+    error?: any;
+  };
   error?: any;
 }
 
@@ -30,6 +40,14 @@ export const initialState: UserState = {
     loading: false,
     data: null,
     error: null
+  },
+  roles: {
+    loading: false,
+    items: null,
+    error: null,
+    selected: {
+      loading: true
+    }
   }
 };
 
@@ -84,6 +102,43 @@ export function reducer(state: UserState = initialState, action: UserActions): U
           totalCount: action.payload.totalCount
         }
       });
+
+    case UserTypes.FETCH_ROLES:
+      return _assign({}, state, {
+        roles: _assign({}, state.roles, {
+          loading: true
+        })
+      });
+
+    case UserTypes.FETCH_ROLES_ERROR:
+      return _assign({}, state, {
+        roles: {
+          loading: false,
+          error: action.payload.error
+        }
+      });
+
+    case UserTypes.FETCH_ROLES_SUCCESS:
+      return _assign({}, state, {
+        roles: {
+          loading: false,
+          items: action.payload.items,
+          limit: action.payload.limit,
+          offset: action.payload.offset,
+          totalCount: action.payload.totalCount
+        }
+      });
+
+    case UserTypes.FETCH_ROLE_PERMISSIONS:
+      return _assign({}, state,
+        { roles: _assign({}, state.roles, { selected: { loading: true }})});
+
+    case UserTypes.FETCH_ROLE_PERMISSIONS_SUCCESS:
+        return _assign({}, state,
+          { roles: _assign({}, state.roles,
+            { selected: _assign({}, state.roles.selected, { loading: false }, { ...action.payload })}
+          )});
+
     default:
       return state;
   }
@@ -93,3 +148,4 @@ export const isLoadingUser = (state: UserState) => state.user.loading;
 export const getUsersState = (state: UserState) => state.users;
 export const getUsers = (state: UserState) => state.users.items;
 export const getUserState = (state: UserState) => state.user;
+export const getRoles = (state: UserState) => state.roles;

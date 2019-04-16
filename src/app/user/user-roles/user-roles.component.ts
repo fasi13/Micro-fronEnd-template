@@ -1,34 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { takeWhile } from 'rxjs/operators';
+
+import { State, FetchRoles, getRoles, FetchRolePermissions } from '@forge/core';
 import { UserRole } from 'src/app/core/models/user/user-role.model';
 
 @Component({
   selector: 'fge-user-roles',
   templateUrl: './user-roles.component.html',
 })
-export class UserRolesComponent implements OnInit {
+export class UserRolesComponent implements OnInit, OnDestroy {
 
   selectedRole: number;
   selectedContainer: string;
-  roles: UserRole[];
+  rolesState: any;
 
-  constructor() { }
+  private isAliveComponent = true;
+
+  constructor(
+    private store: Store<State>
+  ) { }
 
   ngOnInit() {
-    this.roles = [
-      {
-        id: 1,
-        name: 'Administrator'
-      }, {
-        id: 2,
-        name: 'Banners Administrator'
-      }, {
-        id: 3,
-        name: 'Content Administrator'
-      }
-    ];
+    this.initDispatchers();
+    this.initSelectors();
   }
 
-  showContainerFor($event: Event, containerName: string, id: number): void {
+  ngOnDestroy() {
+    this.isAliveComponent = false;
+  }
+
+  showContainerFor($event: Event, containerName: string, role: UserRole): void {
     $event.stopPropagation();
     if (this.selectedContainer) {
       if (this.selectedContainer === containerName) {
@@ -38,14 +41,15 @@ export class UserRolesComponent implements OnInit {
       }
     } else {
       this.selectedContainer = containerName;
-      this.toggleSelectedRole(id);
+      this.toggleSelectedRole(role);
     }
   }
 
-  toggleSelectedRole(id?: number): void {
-    if (id && this.selectedRole !== id) {
-      this.selectedRole = id;
+  toggleSelectedRole(role?: UserRole): void {
+    if (role.id && this.selectedRole !== role.id) {
+      this.selectedRole = role.id;
       this.selectedContainer = this.selectedContainer || 'permissions';
+      this.fetchDataFor(this.selectedContainer, role);
     } else {
       delete this.selectedRole;
       delete this.selectedContainer;
@@ -69,5 +73,25 @@ export class UserRolesComponent implements OnInit {
   onDeleteRole(payload: any, confirmModal: any): void {
     console.log(`OnDelete called with payload: ${payload}`);
     confirmModal.close();
+  }
+
+  private initDispatchers(): void {
+    this.store.dispatch(new FetchRoles());
+  }
+
+  private initSelectors(): void {
+    this.store.select(getRoles)
+      .pipe(
+        takeWhile(() => this.isAliveComponent)
+      )
+      .subscribe((rolesState: any) => {
+        this.rolesState = rolesState;
+      });
+  }
+
+  private fetchDataFor(containerName: string, role: UserRole) {
+    if (containerName === 'permissions') {
+      this.store.dispatch(new FetchRolePermissions(role));
+    }
   }
 }
