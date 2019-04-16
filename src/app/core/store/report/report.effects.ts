@@ -28,7 +28,9 @@ export class ReportEffects {
         offset: action.payload.offset,
         }})
         .pipe(
-          map((response: ApiResponse<DataPaginated<ReportRecord>>) =>  new FetchAuditReportSuccess(response.data)),
+          map((response: ApiResponse<DataPaginated<ReportRecord>>) => {
+              return new FetchAuditReportSuccess(response.data);
+            }),
           catchError(error => of(new FetchAuditReportError({ error : error })))
         )
     )

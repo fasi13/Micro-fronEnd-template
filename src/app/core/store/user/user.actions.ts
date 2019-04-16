@@ -1,7 +1,7 @@
 /* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
-
+import { FilterSettingModel, ResponseParameter } from '../../models';
 export const UserTypes = {
   USER_TRANSACTION: ActionType('USER_TRANSACTION'),
   USER_TRANSACTION_SUCCESS: ActionType('USER_TRANSACTION_SUCCESS'),
@@ -27,14 +27,11 @@ export class UserTransactionSuccess implements Action {
   constructor(public payload?: any) {}
 }
 
-export class FetchUsers implements Action {
+export class FetchUsers extends ResponseParameter implements Action {
   public type: string = UserTypes.FETCH_USERS;
-  constructor(public payload: {
-    limit?: number,
-    offset?: number,
-    filters?: any,
-    sort?: any
-  } = { limit: 12, offset: 0, sort: { sortby: 'login', sortdirection: 'asc' } }) {}
+  constructor(public model?: FilterSettingModel) {
+    super(model,  {limit: 12, offset: 0, sort: { sortby: 'login', sortdirection: 'asc' } });
+  }
 }
 
 export class FetchUsersError implements Action {
