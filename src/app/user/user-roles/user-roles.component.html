@@ -34,7 +34,10 @@
       </div>
     </div>
     <div *ngIf="selectedRole === role.id" class="fge-user--role-details row">
-      <ng-container [ngSwitch]="selectedContainer">
+      <span class="w-100 text-center" *ngIf="rolesState?.selected?.loading">
+        <i class="fas fa-lg fa-circle-notch fa-spin"></i>
+      </span>
+      <ng-container [ngSwitch]="selectedContainer" *ngIf="!rolesState?.selected?.loading">
         <fge-role-permissions class="w-100" *ngSwitchCase="'permissions'" [permissions]="rolesState?.selected?.permissions"></fge-role-permissions>
         <fge-role-users class="w-100" *ngSwitchCase="'users'"></fge-role-users>
       </ng-container>
