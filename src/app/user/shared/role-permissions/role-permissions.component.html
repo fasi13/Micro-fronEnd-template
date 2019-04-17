@@ -5,7 +5,7 @@
         Section
       </div>
     </div>
-    <ng-container *ngFor="let section of sections; trackBy: trackBySectionId">
+    <ng-container *ngFor="let section of permissions?.items; trackBy: trackBySectionId">
       <div class="row fge-table__row m-0">
         <div class="col fge-table__col d-flex justify-content-between" (click)="onClickPermissionSection($event, section)">
           {{section.name}}
@@ -16,7 +16,7 @@
           <div class="row fge-table__row m-0 fge-clickable" *ngFor="let permission of section?.permissions">
             <div class="col fge-table__col d-flex justify-content-between px-5" (click)="onClickPermissionItem($event, permission)">
               {{permission.name}}
-              <input type="checkbox" [ngModel]="permission.enabled">
+              <input type="checkbox" [ngModel]="permission.isAssigned">
             </div>
           </div>
       </ng-container>

@@ -35,7 +35,7 @@
     </div>
     <div *ngIf="selectedRole === role.id" class="fge-user--role-details row">
       <ng-container [ngSwitch]="selectedContainer">
-        <fge-role-permissions class="w-100" *ngSwitchCase="'permissions'"></fge-role-permissions>
+        <fge-role-permissions class="w-100" *ngSwitchCase="'permissions'" [permissions]="rolesState?.selected?.permissions"></fge-role-permissions>
         <fge-role-users class="w-100" *ngSwitchCase="'users'"></fge-role-users>
       </ng-container>
     </div>
