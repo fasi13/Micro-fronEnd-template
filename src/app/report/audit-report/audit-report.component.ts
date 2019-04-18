@@ -54,7 +54,7 @@ export class AuditReportComponent implements OnInit, OnDestroy {
   isTo = date => this.equals(date, this.toDate);
 
   constructor (
-    private store: Store<State>,
+    private store: Store<State>
   ) {}
 
   ngOnInit() {
