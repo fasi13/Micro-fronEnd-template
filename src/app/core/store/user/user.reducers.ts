@@ -132,7 +132,7 @@ export function reducer(state: UserState = initialState, action: UserActions): U
     case UserTypes.FETCH_ROLE_PERMISSIONS:
     case UserTypes.FETCH_ROLE_USERS:
       return _assign({}, state,
-        { roles: _assign({}, state.roles, { selected: { loading: true }})});
+        { roles: _assign({}, state.roles, { selected: { id: action.payload.id, loading: true }})});
 
     case UserTypes.FETCH_ROLE_PERMISSIONS_SUCCESS:
     case UserTypes.FETCH_ROLE_USERS_SUCCESS:
