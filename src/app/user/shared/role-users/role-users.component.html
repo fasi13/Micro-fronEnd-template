@@ -19,13 +19,13 @@
         </div>
       </div>
       <ng-container *ngFor="let user of users$ | async; trackBy: trackByUserId">
-        <div class="row fge-table__row m-0" *ngIf="!isUserSelected(user)">
+        <div class="row fge-table__row m-0">
           <div class="col fge-table__col">{{user.login}}</div>
           <div class="col fge-table__col">{{user.firstName}}</div>
           <div class="col fge-table__col">{{user.lastName}}</div>
           <div class="col fge-table__col">{{ user.applicationPath | fgeApplicationPath }}</div>
           <div class="col-1 fge-table__col fge-table--actions">
-            <ng-container [ngTemplateOutlet]="usersToAddActions" [ngTemplateOutletContext]="{ 'user': user }" ></ng-container>
+            <ng-container *ngIf="!isUserSelected(user)" [ngTemplateOutlet]="usersToAddActions" [ngTemplateOutletContext]="{ 'user': user }" ></ng-container>
           </div>
         </div>
       </ng-container>
