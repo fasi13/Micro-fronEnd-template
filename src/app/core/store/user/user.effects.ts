@@ -17,7 +17,8 @@ import {
   FetchUsersSuccess,
   FetchRolesSuccess,
   FetchRolesError,
-  FetchRolePermissionsSuccess
+  FetchRolePermissionsSuccess,
+  FetchRoleUsersSuccess
 } from './user.actions';
 import { UserService } from '../../services/user.service';
 import { User, ApiResponse, DataPaginated, Application, ApplicationLink, UserRoleLink } from '../../models';
@@ -123,6 +124,22 @@ export class UserEffects {
         map((response: ApiResponse<DataPaginated<any>>) => {
           const role: UserRole = _assign({}, userRole, { permissions: response.data });
           return new FetchRolePermissionsSuccess(role);
+        }),
+        catchError(error => of(new FetchRolesError({ error: error })))
+      )
+  ));
+
+
+  @Effect() public fetchRoleUsers: Observable<Action> = this.actions.pipe(
+    ofType(UserTypes.FETCH_ROLE_USERS),
+    switchMap(({ payload: userRole }: any) => this.fgeActionService.performAction(
+      userRole,
+      UserRoleLink.USERS_BY_ROLE
+    )
+      .pipe(
+        map((response: ApiResponse<DataPaginated<any>>) => {
+          const role: UserRole = _assign({}, userRole, { users: response.data });
+          return new FetchRoleUsersSuccess(role);
         }),
         catchError(error => of(new FetchRolesError({ error: error })))
       )

@@ -18,28 +18,28 @@
     <div class="col fge-table__col">
       Role Name
     </div>
-    <div class="col-1 fge-table__col fge-table--actions">
+    <div class="col-1 fge-table__col fge-table--actions-3">
       Actions
     </div>
   </div>
   <ng-container *ngFor="let role of rolesState?.items; trackBy: trackByUserId" >
-    <div class="row fge-table__row m-0 fge-clickable" [ngClass]="{'fge-user--role-selected': selectedRole === role.id}" (click)="toggleSelectedRole(role)">
+    <div class="row fge-table__row m-0 fge-clickable" [ngClass]="{'fge-user--role-selected': rolesState?.selected?.id === role.id}" (click)="setSelectedRole(role)">
       <div class="col fge-table__col" title="{{ role.name }}">
         <span class="m-auto">
             {{ role.name }}
         </span>
       </div>
-      <div class="col-1 fge-table__col fge-table--actions">
+      <div class="col-1 fge-table__col fge-table--actions-3">
         <ng-container [ngTemplateOutlet]="roleActions" [ngTemplateOutletContext]="{ role: role }"></ng-container>
       </div>
     </div>
-    <div *ngIf="selectedRole === role.id" class="fge-user--role-details row">
+    <div *ngIf="rolesState?.selected?.id === role.id" class="fge-user--role-details row">
       <span class="w-100 text-center" *ngIf="rolesState?.selected?.loading">
         <i class="fas fa-lg fa-circle-notch fa-spin"></i>
       </span>
       <ng-container [ngSwitch]="selectedContainer" *ngIf="!rolesState?.selected?.loading">
         <fge-role-permissions class="w-100" *ngSwitchCase="'permissions'" [permissions]="rolesState?.selected?.permissions"></fge-role-permissions>
-        <fge-role-users class="w-100" *ngSwitchCase="'users'"></fge-role-users>
+        <fge-role-users class="w-100" *ngSwitchCase="'users'" [users]="rolesState?.selected?.users"></fge-role-users>
       </ng-container>
     </div>
   </ng-container>
@@ -50,15 +50,15 @@
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary"
-      [ngClass]="{ 'active': selectedRole === id && selectedContainer === 'permissions' }"
-      (click)="showContainerFor($event, 'permissions', role)">
+      [ngClass]="{ 'active': rolesState?.selected?.id === id && selectedContainer === 'permissions' }"
+      (click)="showContainerFor($event, role, 'permissions')">
       <i class="fas fa-cog"></i>
     </button>
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary ml-2"
-      [ngClass]="{ 'active': selectedRole === id && selectedContainer === 'users' }"
-      (click)="showContainerFor($event, 'users', role)">
+      [ngClass]="{ 'active': rolesState?.selected?.id === id && selectedContainer === 'users' }"
+      (click)="showContainerFor($event, role, 'users')">
       <i class="fas fa-user"></i>
     </button>
     <button

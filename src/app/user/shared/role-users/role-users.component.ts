@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State, getUsers, User } from '@forge/core';
+import { State, getUsers, User, DataPaginated } from '@forge/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,15 +9,22 @@ import { Observable } from 'rxjs';
 })
 export class RoleUsersComponent implements OnInit {
 
+  @Input()
+  set users(data: DataPaginated<User>) {
+    if (data && data.items) {
+      this.selectedUsers = data.items;
+    }
+  }
+
   users$: Observable<User[]>;
-  selectedUsers: User[];
+  private selectedUsers: User[] = [];
+
 
   constructor(
     private store: Store<State>
   ) { }
 
   ngOnInit() {
-    this.selectedUsers = [];
     this.users$ = this.store.select(getUsers);
   }
 
@@ -43,5 +50,4 @@ export class RoleUsersComponent implements OnInit {
       this.selectedUsers.splice(index, 1);
     }
   }
-
 }

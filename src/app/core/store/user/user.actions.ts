@@ -16,7 +16,9 @@ export const UserTypes = {
   FETCH_ROLES_SUCCESS: ActionType('FETCH_ROLES_SUCCESS'),
   FETCH_ROLES_ERROR: ActionType('FETCH_ROLES_ERROR'),
   FETCH_ROLE_PERMISSIONS: ActionType('FETCH_ROLE_PERMISSIONS'),
-  FETCH_ROLE_PERMISSIONS_SUCCESS: ActionType('FETCH_ROLE_PERMISSIONS_SUCCESS')
+  FETCH_ROLE_PERMISSIONS_SUCCESS: ActionType('FETCH_ROLE_PERMISSIONS_SUCCESS'),
+  FETCH_ROLE_USERS: ActionType('FETCH_ROLE_USERS'),
+  FETCH_ROLE_USERS_SUCCESS: ActionType('FETCH_ROLE_USERS_SUCCESS')
 };
 
 export class UserTransaction implements Action {
@@ -85,6 +87,16 @@ export class FetchRolePermissionsSuccess implements Action {
   constructor(public payload: UserRole) {}
 }
 
+export class FetchRoleUsers implements Action {
+  public type: string = UserTypes.FETCH_ROLE_USERS;
+  constructor(public payload: UserRole) {}
+}
+
+export class FetchRoleUsersSuccess implements Action {
+  public type: string = UserTypes.FETCH_ROLE_USERS_SUCCESS;
+  constructor(public payload: UserRole) {}
+}
+
 export type UserActions =
   UserTransaction |
   UserTransactionSuccess |
@@ -96,4 +108,6 @@ export type UserActions =
   FetchRolesSuccess |
   FetchRolesError |
   FetchRolePermissions |
-  FetchRolePermissionsSuccess;
+  FetchRolePermissionsSuccess |
+  FetchRoleUsers |
+  FetchRoleUsersSuccess;

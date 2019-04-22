@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { takeWhile } from 'rxjs/operators';
 
-import { State, FetchRoles, getRoles, FetchRolePermissions } from '@forge/core';
+import { State, FetchRoles, getRoles, FetchRolePermissions, FetchRoleUsers } from '@forge/core';
 import { UserRole } from 'src/app/core/models/user/user-role.model';
 
 @Component({
@@ -12,7 +12,6 @@ import { UserRole } from 'src/app/core/models/user/user-role.model';
 })
 export class UserRolesComponent implements OnInit, OnDestroy {
 
-  selectedRole: number;
   selectedContainer: string;
   rolesState: any;
 
@@ -31,29 +30,20 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     this.isAliveComponent = false;
   }
 
-  showContainerFor($event: Event, containerName: string, role: UserRole): void {
+  showContainerFor($event: Event, role: UserRole, containerName: string = 'permissions'): void {
     $event.stopPropagation();
-    if (this.selectedContainer) {
-      if (this.selectedContainer === containerName) {
-        this.toggleSelectedRole();
-      } else {
-        this.selectedContainer = containerName;
-      }
+    const { selected = {} } = this.rolesState;
+    if (this.selectedContainer === containerName && role.id === selected.id) {
+      delete this.rolesState.selected;
     } else {
       this.selectedContainer = containerName;
-      this.toggleSelectedRole(role);
+      this.setSelectedRole(role);
     }
   }
 
-  toggleSelectedRole(role?: UserRole): void {
-    if (role.id && this.selectedRole !== role.id) {
-      this.selectedRole = role.id;
-      this.selectedContainer = this.selectedContainer || 'permissions';
-      this.fetchDataFor(this.selectedContainer, role);
-    } else {
-      delete this.selectedRole;
-      delete this.selectedContainer;
-    }
+  setSelectedRole(role?: UserRole): void {
+    this.selectedContainer = this.selectedContainer || 'permissions';
+    this.fetchDataFor(this.selectedContainer, role);
   }
 
   deleteConfirmation(event: Event, confirmModal: any): void {
@@ -92,6 +82,8 @@ export class UserRolesComponent implements OnInit, OnDestroy {
   private fetchDataFor(containerName: string, role: UserRole) {
     if (containerName === 'permissions') {
       this.store.dispatch(new FetchRolePermissions(role));
+    } else {
+      this.store.dispatch(new FetchRoleUsers(role));
     }
   }
 }
