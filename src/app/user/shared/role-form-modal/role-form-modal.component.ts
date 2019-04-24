@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FieldConfig } from '@forge/shared';
-import { FgeModalService } from '@forge/core';
+import { FgeModalService, State, ExecuteRoleAction, UserRoleLink } from '@forge/core';
 import { Validators } from '@angular/forms';
+import { UserRole } from 'src/app/core/models/user/user-role.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'fge-role-form-modal',
@@ -15,7 +17,8 @@ export class RoleFormModalComponent implements OnInit {
   config: FieldConfig[];
 
   constructor(
-    private modalService: FgeModalService
+    private modalService: FgeModalService,
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -31,20 +34,19 @@ export class RoleFormModalComponent implements OnInit {
             validator: Validators.required
           },
           minlength: {
-            errorMsg: 'Role Name should have at least 2 characters',
-            validator: Validators.minLength(2)
+            errorMsg: 'Role Name should have at least 3 characters',
+            validator: Validators.minLength(3)
           },
           maxlength: {
-            errorMsg: 'Role Name should not have more than 200 characters.',
-            validator: Validators.maxLength(200)
+            errorMsg: 'Role Name should not have more than 100 characters.',
+            validator: Validators.maxLength(100)
           }
         }
       }
     ];
   }
 
-  /** @TODO Add a proper type for Role */
-  open(role: any): void {
+  open(role: UserRole): void {
     this.mode = role ? 'EDIT' : 'CREATE';
     if (this.mode === 'CREATE') {
       delete this.config[0].value;
@@ -55,7 +57,13 @@ export class RoleFormModalComponent implements OnInit {
   }
 
   handleSubmit({ value: formData, success}): void {
-    console.log(formData);
+    this.store.dispatch(new ExecuteRoleAction({
+      action: UserRoleLink.CREATE_ROLE,
+      actionPayload: {
+        ...formData,
+        isInherited: false
+      }
+    }));
     success();
   }
 

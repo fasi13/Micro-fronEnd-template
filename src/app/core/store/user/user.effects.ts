@@ -18,7 +18,10 @@ import {
   FetchRolesSuccess,
   FetchRolesError,
   FetchRolePermissionsSuccess,
-  FetchRoleUsersSuccess
+  FetchRoleUsersSuccess,
+  ExecuteRoleActionSuccess,
+  FetchRoles,
+  ExecuteRoleActionError
 } from './user.actions';
 import { UserService } from '../../services/user.service';
 import { User, ApiResponse, DataPaginated, Application, ApplicationLink, UserRoleLink } from '../../models';
@@ -144,6 +147,27 @@ export class UserEffects {
         catchError(error => of(new FetchRolesError({ error: error })))
       )
   ));
+
+  @Effect() public executeRoleAction: Observable<Action> = this.actions.pipe(
+    ofType(UserTypes.EXECUTE_ROLE_ACTION),
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([action, applicationInfo]: [any, Application]): any => this.fgeActionService.performAction(
+      action.payload.role || applicationInfo,
+      action.payload.action,
+      {
+        body: action.payload.actionPayload
+      })
+      .pipe(
+        mergeMap(() => {
+          return [new ExecuteRoleActionSuccess(), new FetchRoles()];
+        }),
+        catchError((error) => {
+          this.notifierService.notify('error', 'Error while processing your request. Please try again later.');
+          return of(new ExecuteRoleActionError({error: error}));
+        })
+      )
+    )
+  );
 
   constructor(
     private actions: Actions,

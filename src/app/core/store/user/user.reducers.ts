@@ -26,6 +26,11 @@ export interface UserState {
     totalCount?: number,
     selected?: any
     error?: any;
+    action?: {
+      name?: string,
+      loading: boolean,
+      error?: any
+    }
   };
   error?: any;
 }
@@ -140,6 +145,18 @@ export function reducer(state: UserState = initialState, action: UserActions): U
         { roles: _assign({}, state.roles,
           { selected: _assign({}, state.roles.selected, { loading: false }, { ...action.payload })}
         )});
+
+    case UserTypes.EXECUTE_ROLE_ACTION:
+      return _assign({}, state,
+        { roles: _assign({}, state.roles, { action: { name: action.payload.action, loading: true }})});
+
+    case UserTypes.EXECUTE_ROLE_ACTION_ERROR:
+      return _assign({}, state,
+        { roles: _assign({}, state.roles, { action: { error: action.payload.error, loading: true }})});
+
+    case UserTypes.USER_TRANSACTION_SUCCESS:
+      return _assign({}, state,
+        { roles: _assign({}, state.roles, { action: { name: action.payload.action, loading: false }})});
 
     default:
       return state;

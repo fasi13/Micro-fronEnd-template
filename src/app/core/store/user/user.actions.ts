@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
 import { ListingParams, FgeStoreAction } from '../../models';
 import { UserRole } from '../../models/user/user-role.model';
+import { UserRoleLink } from '../../models';
 
 export const UserTypes = {
   USER_TRANSACTION: ActionType('USER_TRANSACTION'),
@@ -18,7 +19,10 @@ export const UserTypes = {
   FETCH_ROLE_PERMISSIONS: ActionType('FETCH_ROLE_PERMISSIONS'),
   FETCH_ROLE_PERMISSIONS_SUCCESS: ActionType('FETCH_ROLE_PERMISSIONS_SUCCESS'),
   FETCH_ROLE_USERS: ActionType('FETCH_ROLE_USERS'),
-  FETCH_ROLE_USERS_SUCCESS: ActionType('FETCH_ROLE_USERS_SUCCESS')
+  FETCH_ROLE_USERS_SUCCESS: ActionType('FETCH_ROLE_USERS_SUCCESS'),
+  EXECUTE_ROLE_ACTION: ActionType('EXECUTE_ROLE_ACTION'),
+  EXECUTE_ROLE_ACTION_SUCCESS: ActionType('EXECUTE_ROLE_ACTION_SUCCESS'),
+  EXECUTE_ROLE_ACTION_ERROR: ActionType('EXECUTE_ROLE_ACTION_ERROR')
 };
 
 export class UserTransaction implements Action {
@@ -97,6 +101,25 @@ export class FetchRoleUsersSuccess implements Action {
   constructor(public payload: UserRole) {}
 }
 
+export class ExecuteRoleAction implements Action {
+  public type: string = UserTypes.EXECUTE_ROLE_ACTION;
+  constructor(public payload: {
+    role?: UserRole,
+    action: UserRoleLink,
+    actionPayload: any
+  }) {}
+}
+
+export class ExecuteRoleActionSuccess implements Action {
+  public type: string = UserTypes.EXECUTE_ROLE_ACTION_SUCCESS;
+  constructor(public payload?: any) {}
+}
+
+export class ExecuteRoleActionError implements Action {
+  public type: string = UserTypes.EXECUTE_ROLE_ACTION_ERROR;
+  constructor(public payload: any) {}
+}
+
 export type UserActions =
   UserTransaction |
   UserTransactionSuccess |
@@ -110,4 +133,7 @@ export type UserActions =
   FetchRolePermissions |
   FetchRolePermissionsSuccess |
   FetchRoleUsers |
-  FetchRoleUsersSuccess;
+  FetchRoleUsersSuccess |
+  ExecuteRoleAction |
+  ExecuteRoleActionSuccess |
+  ExecuteRoleActionError;
