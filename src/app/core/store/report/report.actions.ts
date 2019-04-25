@@ -1,7 +1,7 @@
 /* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
-import {FilterSettingModel, ResponseParameter } from '../../models';
+import { ListingParams, ResponseParameter } from '../../models';
 export const ReportTypes = {
   FETCH_AUDIT_DATA: ActionType('FETCH_AUDIT_DATA'),
   FETCH_AUDIT_REPORTS_SUCCESS: ActionType('FETCH_AUDIT_REPORTS_SUCCESS'),
@@ -11,21 +11,21 @@ export const ReportTypes = {
 
 export class FetchAuditData extends ResponseParameter implements Action {
   public type: string = ReportTypes.FETCH_AUDIT_DATA;
-  constructor(public model?: FilterSettingModel) {
+  constructor(public model?: ListingParams) {
     super(model,  {limit: 12, offset: 0 });
   }
 }
 
 export class ExportAuditData extends ResponseParameter implements Action {
   public type: string = ReportTypes.EXPORT_AUDIT_DATA;
-  constructor(public model?: FilterSettingModel) {
+  constructor(public model?: ListingParams) {
     super(model, { sortby: 'login', sortdirection: 'asc' });
   }
 }
 
 export class FetchAuditReportSuccess extends ResponseParameter implements Action {
   public type: string = ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS;
-  constructor(public model?: FilterSettingModel) {
+  constructor(public model?: ListingParams) {
     super(model, {});
   }
 }
