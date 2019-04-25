@@ -1,7 +1,7 @@
 /* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
-import { ListingParams, ResponseParameter } from '../../models';
+import { ListingParams, FgeStoreAction } from '../../models';
 export const ReportTypes = {
   FETCH_AUDIT_DATA: ActionType('FETCH_AUDIT_DATA'),
   FETCH_AUDIT_REPORTS_SUCCESS: ActionType('FETCH_AUDIT_REPORTS_SUCCESS'),
@@ -9,24 +9,21 @@ export const ReportTypes = {
   EXPORT_AUDIT_DATA: ActionType('EXPORT_AUDIT_DATA'),
 };
 
-export class FetchAuditData extends ResponseParameter implements Action {
-  public type: string = ReportTypes.FETCH_AUDIT_DATA;
+export class FetchAuditData extends FgeStoreAction {
   constructor(public model?: ListingParams) {
-    super(model,  {limit: 12, offset: 0 });
+    super(ReportTypes.FETCH_AUDIT_DATA, model,  {limit: 12, offset: 0 });
   }
 }
 
-export class ExportAuditData extends ResponseParameter implements Action {
-  public type: string = ReportTypes.EXPORT_AUDIT_DATA;
+export class ExportAuditData extends FgeStoreAction {
   constructor(public model?: ListingParams) {
-    super(model, { sortby: 'login', sortdirection: 'asc' });
+    super(ReportTypes.EXPORT_AUDIT_DATA, model, { sortby: 'login', sortdirection: 'asc' });
   }
 }
 
-export class FetchAuditReportSuccess extends ResponseParameter implements Action {
-  public type: string = ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS;
+export class FetchAuditReportSuccess extends FgeStoreAction {
   constructor(public model?: ListingParams) {
-    super(model, {});
+    super(ReportTypes.FETCH_AUDIT_REPORTS_SUCCESS, model);
   }
 }
 
