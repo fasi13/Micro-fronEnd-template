@@ -130,7 +130,8 @@ export function reducer(state: UserState = initialState, action: UserActions): U
           items: action.payload.items,
           limit: action.payload.limit,
           offset: action.payload.offset,
-          totalCount: action.payload.totalCount
+          totalCount: action.payload.totalCount,
+          action: state.roles.action
         }
       });
 
@@ -154,7 +155,7 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       return _assign({}, state,
         { roles: _assign({}, state.roles, { action: { error: action.payload.error, loading: true }})});
 
-    case UserTypes.USER_TRANSACTION_SUCCESS:
+    case UserTypes.EXECUTE_ROLE_ACTION_SUCCESS:
       return _assign({}, state,
         { roles: _assign({}, state.roles, { action: { name: action.payload.action, loading: false }})});
 
@@ -168,3 +169,4 @@ export const getUsersState = (state: UserState) => state.users;
 export const getUsers = (state: UserState) => state.users.items;
 export const getUserState = (state: UserState) => state.user;
 export const getRoles = (state: UserState) => state.roles;
+export const getRoleActionState = (state: UserState) => state.roles.action;

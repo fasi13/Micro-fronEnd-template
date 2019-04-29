@@ -159,7 +159,7 @@ export class UserEffects {
       })
       .pipe(
         mergeMap(() => {
-          return [new ExecuteRoleActionSuccess(), new FetchRoles()];
+          return [new ExecuteRoleActionSuccess({ ...action.payload }), new FetchRoles()];
         }),
         catchError((error) => {
           this.notifierService.notify('error', 'Error while processing your request. Please try again later.');

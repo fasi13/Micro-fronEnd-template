@@ -1,20 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FieldConfig } from '@forge/shared';
-import { FgeModalService, State, ExecuteRoleAction, UserRoleLink } from '@forge/core';
+import { FgeModalService, State, ExecuteRoleAction, UserRoleLink, getRoleActionState } from '@forge/core';
 import { Validators } from '@angular/forms';
 import { UserRole } from 'src/app/core/models/user/user-role.model';
 import { Store } from '@ngrx/store';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'fge-role-form-modal',
   templateUrl: './role-form-modal.component.html',
 })
-export class RoleFormModalComponent implements OnInit {
+export class RoleFormModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
 
   mode: 'CREATE' | 'EDIT';
   config: FieldConfig[];
+
+  private unsubscribeEditor = new Subject();
 
   constructor(
     private modalService: FgeModalService,
@@ -46,6 +50,10 @@ export class RoleFormModalComponent implements OnInit {
     ];
   }
 
+  ngOnDestroy() {
+    this.unsubscribeEditor.complete();
+  }
+
   open(role: UserRole): void {
     this.mode = role ? 'EDIT' : 'CREATE';
     if (this.mode === 'CREATE') {
@@ -56,19 +64,30 @@ export class RoleFormModalComponent implements OnInit {
     this.modalService.open(this.modalContent, { windowClass: 'modal-content-form' });
   }
 
-  handleSubmit({ value: formData, success}): void {
+  handleSubmit({ value: formData, success, error}): void {
     this.store.dispatch(new ExecuteRoleAction({
       action: UserRoleLink.CREATE_ROLE,
       actionPayload: {
-        ...formData,
-        isInherited: false
+        ...formData
       }
     }));
-    success();
+    this.store.select(getRoleActionState)
+      .pipe(takeUntil(this.unsubscribeEditor))
+      .subscribe((recordState) => {
+        const { error: errorData, loading } = recordState;
+        if (errorData) {
+          const errors = Object.values(errorData.error.fields);
+          this.unsubscribeEditor.next();
+          error(errors);
+        } else if (!loading) {
+          this.unsubscribeEditor.next();
+          success();
+          this.modalService.dismissAll();
+        }
+      });
   }
 
   handleCancel() {
     this.modalService.dismissAll();
   }
-
 }

@@ -31,8 +31,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
-    NgBootstrapModule,
     ReactiveFormsModule,
+    NgBootstrapModule,
     SharedModule
   ],
   declarations: [

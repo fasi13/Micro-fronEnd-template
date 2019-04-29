@@ -202,6 +202,10 @@ export const getRoles = createSelector(
   getUserState,
   UserReducers.getRoles
 );
+export const getRoleActionState = createSelector(
+  getUserState,
+  UserReducers.getRoleActionState
+);
 
 /**********************************************************
  * Reset password Reducers
