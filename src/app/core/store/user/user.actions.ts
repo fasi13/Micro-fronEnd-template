@@ -106,7 +106,7 @@ export class ExecuteRoleAction implements Action {
   constructor(public payload: {
     role?: UserRole,
     action: UserRoleLink,
-    actionPayload: any
+    actionPayload?: any
   }) {}
 }
 

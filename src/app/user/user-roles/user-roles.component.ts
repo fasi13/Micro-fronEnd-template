@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { takeWhile } from 'rxjs/operators';
 
-import { State, FetchRoles, getRoles, FetchRolePermissions, FetchRoleUsers } from '@forge/core';
+import { State, FetchRoles, getRoles, FetchRolePermissions, FetchRoleUsers, ExecuteRoleAction, UserRoleLink } from '@forge/core';
 import { UserRole } from 'src/app/core/models/user/user-role.model';
 
 @Component({
@@ -46,22 +46,25 @@ export class UserRolesComponent implements OnInit, OnDestroy {
     this.fetchDataFor(this.selectedContainer, role);
   }
 
-  deleteConfirmation(event: Event, confirmModal: any): void {
+  deleteConfirmation(event: Event, confirmModal: any, role: UserRole): void {
     if (event) {
       event.stopPropagation();
     }
     const config = {
       title: 'Delete Role Modal Confirmation',
-      message: `Do you want to delete the role /$/{role.name}?`,
+      message: `Do you want to delete the role '${role.name}'?`,
       submitLabel: 'Accept',
       cancelLabel: 'Cancel',
-      payload: { id: 'TBD' }
+      payload: { role }
     };
     confirmModal.open(config);
   }
 
-  onDeleteRole(payload: any, confirmModal: any): void {
-    console.log(`OnDelete called with payload: ${payload}`);
+  onDeleteRole({ role }, confirmModal: any): void {
+    this.store.dispatch(new ExecuteRoleAction({
+      role,
+      action: UserRoleLink.DELETE_ROLE
+    }));
     confirmModal.close();
   }
 
