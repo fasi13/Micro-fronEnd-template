@@ -46,6 +46,14 @@ export class RoleFormModalComponent implements OnInit, OnDestroy {
             validator: Validators.maxLength(100)
           }
         }
+      },
+      {
+        type: 'toggleButton',
+        label: 'Enable Inheritance',
+        name: 'isInherited',
+        validation: {},
+        value: true,
+        options: ['Yes', 'No']
       }
     ];
   }
