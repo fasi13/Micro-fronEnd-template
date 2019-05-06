@@ -19,19 +19,15 @@ import {
 } from './store/store.reducers';
 import { RouterEffects } from './store/router';
 import { loadFromLocalStorage } from './store/util';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-  TokenInterceptor,
-  UnauthorizedInterceptor,
-  ProxyApiInterceptor
-} from './interceptors';
+import { httpInterceptorProviders } from './interceptors';
 import { SharedModule } from '../shared/shared.module';
 import { ContentEffects } from './store/content';
 import {
   ContentService,
   FgeRouterService,
   FgeModalService,
-  FgeHttpActionService
+  FgeHttpActionService,
+  FgeNotificationService
 } from './services';
 import { UserEffects } from './store/user';
 import { ResetPasswordEffects } from './store/reset-password';
@@ -75,23 +71,10 @@ import { ReportEffects } from './store/report';
     UserService,
     ContentService,
     FgeHttpActionService,
+    FgeNotificationService,
     FgeRouterService,
     FgeModalService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ProxyApiInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: UnauthorizedInterceptor,
-      multi: true
-    }
+    httpInterceptorProviders
   ]
 })
 export class CoreModule {}

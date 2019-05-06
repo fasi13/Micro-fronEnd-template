@@ -6,3 +6,4 @@ export * from './audit.service';
 export * from './resource.service';
 export * from './_fge-http-action.service';
 export * from './_fge-modal.service';
+export * from './_fge-notification/_fge-notification.service';
