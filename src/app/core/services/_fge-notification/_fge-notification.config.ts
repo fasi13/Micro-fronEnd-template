@@ -1,8 +1,8 @@
 export const notificationConfigurations = {
-  POST: {
-    '^(ftp|http|https):\/\/.*\/.*$': {
-      success: 'Success message',
-      error: 'Error MSG'
+  DELETE: {
+    '^(ftp|http|https):\/\/.*\/application\/.*\/role\/.*$': {
+      success: 'Role has been deleted successfully.',
+      error: 'Error while deleting role, please try again later.'
     }
   }
 };
