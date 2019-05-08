@@ -35,7 +35,7 @@ const routes: Routes = [
               { path: 'user', loadChildren: './user/user.module#UserModule' },
               { path: 'promotions', component: ComingSoonComponent },
               { path: 'campaings', component: ComingSoonComponent },
-              { path: 'settings', component: ComingSoonComponent },
+              { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
               { path: 'reset-password', component: ResetPasswordComponent },
               { path: '', pathMatch: 'full', redirectTo: 'content' }
             ]
