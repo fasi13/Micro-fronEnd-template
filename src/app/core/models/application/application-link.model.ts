@@ -7,6 +7,6 @@ export enum ApplicationLink {
   CONTENT_GROUPS = 'contentGroups',
   AUDIT = 'audit',
   CREATE_CONTENT_GROUP = 'createContentGroup',
-  DATA_TYPES = 'dataTypes',
+  DATA_TYPES = 'contentDataTypes',
   PATH = 'path'
 }
