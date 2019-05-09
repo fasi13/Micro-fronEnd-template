@@ -41,6 +41,7 @@ import {
 import { ApplicationService } from '../../services/application.service';
 import { State, getAuthenticatedUser, getApplicationInfo } from '../store.reducers';
 import { FgeHttpActionService } from '../../services';
+import { FetchSettingGroups } from '../settings';
 
 @Injectable()
 export class ApplicationEffects {
@@ -91,7 +92,7 @@ export class ApplicationEffects {
 
   @Effect() public fetchApplicationDataSuccess$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS),
-    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups(), new FetchDataTypes()])
+    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups(), new FetchDataTypes(), new FetchSettingGroups()])
   );
 
   @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(

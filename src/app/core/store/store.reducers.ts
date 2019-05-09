@@ -8,6 +8,7 @@ import * as ContentReducers from './content/content.reducers';
 import * as UserReducers from './user/user.reducers';
 import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
 import * as ReportReducers from './report/report.reducers';
+import * as SettingsReducers from './settings/settings.reducers';
 import { AuthorizationActionTypes } from './authorization/authorization.actions';
 import { StoreActionTypes } from './store.actions';
 
@@ -19,6 +20,7 @@ export interface State {
   user?: UserReducers.UserState;
   resetPassword?: ResetPasswordReducers.ResetPasswordState;
   report?: ReportReducers.ReportState;
+  settings?: SettingsReducers.SettingState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -28,7 +30,8 @@ export const FgeReducers: ActionReducerMap<State> = {
   content: ContentReducers.reducer,
   user: UserReducers.reducer,
   resetPassword: ResetPasswordReducers.reducer,
-  report: ReportReducers.reducer
+  report: ReportReducers.reducer,
+  settings: SettingsReducers.reducer
 };
 
 /**********************************************************
@@ -237,4 +240,13 @@ export const getAuditData = createSelector(
 export const getAuditState = createSelector(
   getReportState,
   ReportReducers.getAuditState
+);
+
+/**********************************************************
+ * Setting Reducers
+ *********************************************************/
+export const getSettingState = (state: State) => state.settings;
+export const getSettingGroups = createSelector(
+  getSettingState,
+  SettingsReducers.getSettingGroups
 );

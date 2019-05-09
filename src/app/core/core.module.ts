@@ -34,6 +34,7 @@ import { ResetPasswordEffects } from './store/reset-password';
 import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.component';
 import { ApplicationLoaderComponent } from './layout/application-loader/application-loader.component';
 import { ReportEffects } from './store/report';
+import { SettingsEffects } from './store/settings';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { ReportEffects } from './store/report';
       ContentEffects,
       UserEffects,
       ResetPasswordEffects,
-      ReportEffects
+      ReportEffects,
+      SettingsEffects
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25

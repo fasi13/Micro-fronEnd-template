@@ -2,6 +2,7 @@
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
 import { ListingParams, FgeStoreAction } from '../../models';
+
 export const ReportTypes = {
   FETCH_AUDIT_DATA: ActionType('FETCH_AUDIT_DATA'),
   FETCH_AUDIT_REPORTS_SUCCESS: ActionType('FETCH_AUDIT_REPORTS_SUCCESS'),
