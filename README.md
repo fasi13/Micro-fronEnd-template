@@ -70,9 +70,13 @@ Along with that we have some enviroment configured with npm scripts. (For more d
 
 To run using configured environments:
 
-* Run development server using the staging configuration.
+* Run development server using the qa configuration.
 ```
-npm run start:staging
+npm run start:qa
+```
+* Run development server using the uat configuration.
+```
+npm run start:uat
 ```
 * Run development server using the production configuration.
 ```
@@ -81,9 +85,13 @@ npm run start:prod
 
 To build using configured environments:
 
-* Build application using the staging configuration.
+* Build application using the qa configuration.
 ```
-npm run build:staging
+npm run build:qa
+```
+* Build application using the uat configuration.
+```
+npm run build:uat
 ```
 * Build application using the production configuration
 ```
@@ -116,7 +124,7 @@ website-forge
 │   ├── assets/                     
 │   │   ├── fonts                   # Place where is the custom fonts along with font-awesome fonts
 │   │   └── img                     # Images used across the application
-│   ├── environments/               # Environments configuration folder where is the prod and staging configs
+│   ├── environments/               # Environments configuration folder where is the prod, qa and uat configs
 │   ├── imgs/                       # Specific folder for some dynamic resources provided by backend (should not be modified)
 │   ├── scss/                       # Stylesheet filed that has its own file structure (More details under Styles section)
 │   ├── browserslist                # Css autoprefixer file
