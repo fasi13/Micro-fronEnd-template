@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://toolsservices-qa.awardcenter.com'
+  apiUrl: 'https://toolsservices.awardcenter.com'
 };
