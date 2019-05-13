@@ -1,3 +1,110 @@
-<p>
-  groups-listing works!
-</p>
+<div class="fge-group--title row">
+  <h4 class="fge-group--title-divider my-2 col-10">
+    <i *ngIf="groupsState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Setting Groups</span>
+  </h4>
+  <div class="col text-right align-self-center">
+    <button
+      type="button"
+      disabled
+      class="btn btn-sm btn-secondary bg-secondary mr-2"
+      title="Click to export"
+    >
+      Export
+      <i class="far fa-file-excel pl-1"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-secondary bg-secondary"
+      (click)="settingGroupFormModal.open()">
+      Add Group
+      <i class="fas fa-user-plus pl-1"></i>
+    </button>
+  </div>
+</div>
+<div class="row m-0">
+  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
+    <ng-container
+      [ngTemplateOutlet]="filterInput"
+      [ngTemplateOutletContext]="{label: 'Username', field: 'login'}">
+    </ng-container>
+  </div>
+  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
+  </div>
+  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
+  </div>
+</div>
+<div class="fge-table">
+  <div class="row m-0 fge-table__header">
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('name')">
+      Setting Group Name
+      <span *ngIf="sort.sortby === 'name'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col fge-table__col fge-clickable" (click)="sortBy('lastUpdate')">
+      Last Update
+      <span *ngIf="sort.sortby === 'firstname'">
+        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
+        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+      </span>
+    </div>
+    <div class="col-1 fge-table__col fge-table--actions">
+      Actions
+    </div>
+  </div>
+  <div class="row m-0" *ngIf="groupsState?.items?.length <= 0 && !groupsState?.loading">
+    <div class="col fge-table__col text-center">
+      <h6><i class="fas fa-info-circle"></i> No setting groups found</h6>
+    </div>
+  </div>
+  <div class="row fge-table__row m-1" *ngFor="let settingGroup of groupsState?.items; trackBy: trackByGroupId">
+    <div class="col fge-table__col" title="{{ settingGroup.name }}">{{ settingGroup.name }}</div>
+    <div class="col fge-table__col" title="{{ settingGroup.lastUpdate | date:'medium' }}">{{ settingGroup.lastUpdate | date:'medium' }}</div>
+    <div class="col-1 fge-table__col pr-0 fge-table--actions">
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="settingGroupFormModal.open(user)">
+        <i class="fas fa-edit"></i>
+      </a>
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
+        <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
+      </a>
+    </div>
+  </div>
+  <ngb-pagination
+    class="d-flex justify-content-center pt-3"
+    *ngIf="groupsState?.totalCount > groupsState?.limit"
+    [collectionSize]="groupsState?.totalCount"
+    [page]="pageNumber"
+    [pageSize]="groupsState?.limit"
+    [maxSize]="5"
+    [rotate]="true"
+    [ellipses]="false"
+    [boundaryLinks]="true"
+    (pageChange)="onPageChange($event)"
+    size="sm"
+  ></ngb-pagination>
+</div>
+
+<ng-template #filterInput let-label="label" let-field="field">
+  <div class="input-group input-group-sm mt-1">
+    <div class="input-group-prepend fge-clickable" (click)="onPerformFilter()">
+      <span class="input-group-text">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <input
+      [(ngModel)]="filters[field]"
+      type="text"
+      class="form-control"
+      placeholder="{{label}}"
+      (keyup.enter)="onPerformFilter()"
+      (keyup.esc)="onResetFilters()">
+  </div>
+</ng-template>
+
+<fge-setting-group-modal #settingGroupFormModal></fge-setting-group-modal>
+
+<fge-modal-confirm [config]="config"
+  (onsubmit)="onSubmitConfirmModal()"
+  #modalConfirmModal>
+</fge-modal-confirm>

@@ -5,6 +5,7 @@ import { GroupsListingComponent } from './groups-listing/groups-listing.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { SharedModule } from '../shared/shared.module';
+import { SettingGroupModalComponent } from './shared/setting-group-modal/setting-group-modal.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     SharedModule
   ],
   declarations: [
-    GroupsListingComponent
+    GroupsListingComponent,
+    SettingGroupModalComponent
   ]
 })
 export class SettingsModule { }
