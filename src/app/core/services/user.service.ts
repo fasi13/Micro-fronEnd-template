@@ -57,12 +57,12 @@ export class UserService {
     return of(isAuth);
   }
 
-  createNewUser(newUser: User): Observable<ApiResponse<User>> {
-    return this.httpClient.post<ApiResponse<User>>(this.baseUrl, newUser);
+  createNewUser(applicationId: string, newUser: User): Observable<ApiResponse<User>> {
+    return this.httpClient.post<ApiResponse<User>>(`application/${applicationId}/${this.baseUrl}`, newUser);
   }
 
-  updateUser(updatedUser: User): Observable<ApiResponse<User>> {
-    return this.httpClient.put<ApiResponse<User>>(this.baseUrl, updatedUser);
+  updateUser(applicationId: string, updatedUser: User): Observable<ApiResponse<User>> {
+    return this.httpClient.put<ApiResponse<User>>(`application/${applicationId}/${this.baseUrl}`, updatedUser);
   }
 
   getUsers(applicationId: string | number, offset?: number, limit?: number, filters?: {[key: string]: string},

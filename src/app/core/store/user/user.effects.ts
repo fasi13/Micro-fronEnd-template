@@ -38,7 +38,9 @@ enum UserMethods { POST = 'createNewUser', PUT = 'updateUser' }
 export class UserEffects {
   @Effect() public userTransaction: Observable<Action> = this.actions.pipe(
     ofType(UserTypes.USER_TRANSACTION),
-    switchMap((action: any): any => this.userService[UserMethods[action.method]](action.payload)
+    withLatestFrom(this.store.select(getApplicationInfo)),
+    switchMap(([action, applicationInfo]: [any, Application]) =>
+      this.userService[UserMethods[action.method]](applicationInfo.id, { ...action.payload, roleIds: [] })
       .pipe(
         mergeMap(() => {
           if (action.method === 'POST') {
