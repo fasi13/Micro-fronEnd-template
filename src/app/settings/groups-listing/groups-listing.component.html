@@ -62,11 +62,11 @@
     <div class="col fge-table__col" title="{{ settingGroup.name }}">{{ settingGroup.name }}</div>
     <div class="col fge-table__col" title="{{ settingGroup.lastUpdate | date:'medium' }}">{{ settingGroup.lastUpdate | date:'medium' }}</div>
     <div class="col-1 fge-table__col pr-0 fge-table--actions">
-      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="settingGroupFormModal.open(user)">
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="settingGroupFormModal.open(settingGroup)">
         <i class="fas fa-edit"></i>
       </a>
-      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
-        <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, settingGroup)">
+        <i class="fas fa-trash"></i>
       </a>
     </div>
   </div>

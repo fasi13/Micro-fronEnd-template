@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { State, getSettingGroups } from '@forge/core';
-import { Store } from '@ngrx/store';
+import { State, getSettingGroups, SettingGroup, FgeHttpActionService, SettingGroupLink } from '@forge/core';
+import { Store, select } from '@ngrx/store';
+
 import { takeWhile } from 'rxjs/operators';
+
 import { FetchSettingGroups } from 'src/app/core/store/settings';
+import { ModalConfirmConfig } from 'src/app/shared/components/modal-confirm/modal-confirm.model';
 
 @Component({
   selector: 'fge-groups-listing',
@@ -12,12 +15,16 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
 
   groupsState: any;
   sort: { sortby: string, sortdirection: 'asc' | 'desc' };
+  config: ModalConfirmConfig;
 
   private isAliveComponent = true;
   private filters: { [key: string]: string };
+  private confirmModal: any;
+  private selectedSettingGroup: SettingGroup;
 
   constructor(
     private store: Store<State>,
+    private fgeActionService: FgeHttpActionService
   ) { }
 
   ngOnInit() {
@@ -72,12 +79,28 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
   }
 
-  private initSelectors() {
-    this.store.select(getSettingGroups)
-      .pipe(
-        takeWhile(() => this.isAliveComponent)
-      )
-      .subscribe((state) => this.groupsState = state);
+  openModalConfirm(confirmModal: any, selectedSettingGroup: SettingGroup): void {
+    this.confirmModal = confirmModal;
+    this.selectedSettingGroup = selectedSettingGroup;
+    this.config = {
+      title: 'Delete Setting Group',
+      message: `Do you want to delete the Setting Group "${selectedSettingGroup.name}"`,
+      submitLabel: 'Accept',
+      cancelLabel: 'Cancel'
+    };
+    confirmModal.open();
   }
 
+  onSubmitConfirmModal() {
+    this.fgeActionService.performAction(this.selectedSettingGroup, SettingGroupLink.DELETE_SETTING_GROUP)
+      .subscribe(() => this.confirmModal.close());
+  }
+
+  private initSelectors() {
+    this.store.pipe(
+      select(getSettingGroups),
+      takeWhile(() => this.isAliveComponent)
+    )
+    .subscribe((state) => this.groupsState = state);
+  }
 }
