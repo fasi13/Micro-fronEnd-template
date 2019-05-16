@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 
 import { Link, FgeEntity } from '../models';
 import { FgeLink } from '../models/commons/_fge-entity-link.model';
+import { select, Store } from '@ngrx/store';
+import { State } from '@forge/core-store';
+import { take, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,8 @@ import { FgeLink } from '../models/commons/_fge-entity-link.model';
 export class FgeHttpActionService {
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private store: Store<State>
   ) { }
 
   performAction(data: FgeEntity, actionName: FgeLink | string, options?: {
@@ -35,6 +39,22 @@ export class FgeHttpActionService {
     } else {
       throw new Error(`Invalid FgeEntity value: ${data}`);
     }
+  }
+
+  performActionWithSelector(selector: any, actionName: FgeLink, options?: {
+    body?: any;
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    params?: HttpParams | {
+      [param: string]: string | string[];
+    };
+  }): Observable<FgeEntity | any> {
+    return this.store.pipe(
+      select(selector),
+      switchMap((data: FgeEntity) => this.performAction(data, actionName, options)),
+      take(1)
+    );
   }
 
   hasAction(data: FgeEntity, action: string): boolean {

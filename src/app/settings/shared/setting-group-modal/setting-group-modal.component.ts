@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import _clone from 'lodash/clone';
 
-import { FgeModalService, SettingGroup } from '@forge/core';
+import { FgeModalService, SettingGroup, FgeHttpActionService, getApplicationInfo, ApplicationLink } from '@forge/core';
 import { FieldConfig } from '@forge/shared';
 import { configGroupFields } from './setting-group-modal.config';
 
@@ -19,7 +19,8 @@ export class SettingGroupModalComponent implements OnInit {
   config: FieldConfig[];
 
   constructor(
-    private modalService: FgeModalService
+    private modalService: FgeModalService,
+    private fgeActionService: FgeHttpActionService
   ) { }
 
   ngOnInit() {
@@ -32,14 +33,13 @@ export class SettingGroupModalComponent implements OnInit {
     this.modalService.open(this.modalContent);
   }
 
-  onSubmit({ value: formData, success }): void {
+  onSubmit({ value: formData, success, error }): void {
     this.submitted = true;
     if (this.mode === 'EDIT') {
       this.updateSettingGroup(formData);
     } else {
-      this.addSettingGroup(formData);
+      this.addSettingGroup(formData, success, error);
     }
-    success();
   }
 
   handleCancel(event: Event) {
@@ -49,8 +49,13 @@ export class SettingGroupModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  private addSettingGroup(_formData: any): void {
-    console.log('Add new setting group');
+  private addSettingGroup(formData: any, success, error): void {
+    this.fgeActionService.performActionWithSelector(getApplicationInfo, ApplicationLink.CREATE_SETTING_GROUP, {
+      body: formData
+    }).subscribe(() => {
+      success();
+      this.modalService.dismissAll();
+    }, (err) => error(Object.values(err.error.fields)));
   }
 
   private updateSettingGroup(_formData: any): void {

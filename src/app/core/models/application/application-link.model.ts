@@ -9,5 +9,8 @@ export enum ApplicationLink {
   CREATE_CONTENT_GROUP = 'createContentGroup',
   DATA_TYPES = 'contentDataTypes',
   PATH = 'path',
-  ROLES = 'GetRoles'
+  ROLES = 'GetRoles',
+  CREATE_USER = 'createUser',
+  UPDATE_USER = 'EditUser',
+  CREATE_SETTING_GROUP = 'createSettingGroup'
 }

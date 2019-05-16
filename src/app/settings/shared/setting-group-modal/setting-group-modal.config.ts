@@ -5,7 +5,7 @@ import { FieldConfig } from '@forge/shared';
 const groupName: FieldConfig = {
   type: 'text',
   label: 'Group Name',
-  name: 'groupName',
+  name: 'name',
   placeholder: 'Setting Group Name',
   validation: {
     required: {
