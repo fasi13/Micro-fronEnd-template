@@ -45,12 +45,8 @@ export class ReportEffects {
       action.payload.filters,
     ).pipe(
         map((response: HttpResponse<Blob>) => {
-          const fileName = 'ExportAuditReport.csv';
-          /**
-          * @TODO Refactor this once that get the name (fileName) that it in the answer
-          * in the header part in the Content-Disposition. For now the name will be send
-          * as a date hardcode.
-          */
+          const fileName = response.headers.get('X-FileName');
+          console.log(fileName);
           this.resourceService.downloadHttpResource(response, fileName);
           this.notifierService.notify('success', 'Your audit report has been successfully exported');
           return new EmptyAction();

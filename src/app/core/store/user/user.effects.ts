@@ -85,7 +85,7 @@ export class UserEffects {
       action.payload.filters,
     ).pipe(
         map((response: HttpResponse<Blob>) => {
-          const fileName = 'ExportUserReport.csv';
+            const fileName = response.headers.get('X-FileName');
           /**
           * @TODO Refactor this implementation since the link to export url should be provided
           * in links array and shouldn't use custom services anymore
