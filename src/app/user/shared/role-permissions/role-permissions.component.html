@@ -5,7 +5,7 @@
         Section
       </div>
     </div>
-    <ng-container *ngFor="let section of permissions?.items; trackBy: trackBySectionId">
+    <ng-container *ngFor="let section of permissions?.items">
       <div class="row fge-table__row m-0">
         <div class="col fge-table__col d-flex justify-content-between" (click)="onClickPermissionSection($event, section)">
           {{section.name}}

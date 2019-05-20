@@ -22,7 +22,7 @@
       Actions
     </div>
   </div>
-  <ng-container *ngFor="let role of rolesState?.items; trackBy: trackByUserId" >
+  <ng-container *ngFor="let role of rolesState?.items" >
     <div class="row fge-table__row m-0 fge-clickable" [ngClass]="{'fge-user--role-selected': rolesState?.selected?.id === role.id}" (click)="setSelectedRole(role)">
       <div class="col fge-table__col" title="{{ role.name }}">
         <span class="m-auto">

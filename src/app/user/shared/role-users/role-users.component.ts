@@ -17,7 +17,7 @@ export class RoleUsersComponent implements OnInit {
   }
 
   users$: Observable<User[]>;
-  private selectedUsers: User[] = [];
+  selectedUsers: User[] = [];
 
 
   constructor(

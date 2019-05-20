@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class RolePermissionsComponent implements OnInit {
 
-  @Input() permissions: any[];
+  @Input() permissions: any;
 
   constructor() { }
 
