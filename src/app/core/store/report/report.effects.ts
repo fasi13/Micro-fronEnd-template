@@ -46,7 +46,6 @@ export class ReportEffects {
     ).pipe(
         map((response: HttpResponse<Blob>) => {
           const fileName = response.headers.get('X-FileName');
-          console.log(fileName);
           this.resourceService.downloadHttpResource(response, fileName);
           this.notifierService.notify('success', 'Your audit report has been successfully exported');
           return new EmptyAction();
