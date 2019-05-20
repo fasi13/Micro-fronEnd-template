@@ -11,7 +11,7 @@ export const SettingsTypes = {
 
 export class FetchSettingGroups extends FgeStoreAction {
   constructor(public model?: ListingParams) {
-    super(SettingsTypes.FETCH_SETTING_GROUPS, model,  {limit: 12, offset: 0 });
+    super(SettingsTypes.FETCH_SETTING_GROUPS, model,  { limit: 12, offset: 0 });
   }
 }
 

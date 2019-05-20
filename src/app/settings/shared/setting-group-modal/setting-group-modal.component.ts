@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import _clone from 'lodash/clone';
 
 import {
@@ -19,6 +19,8 @@ import { SettingGroupLink } from 'src/app/core/models/settings/setting-group-lin
 export class SettingGroupModalComponent implements OnInit {
 
   @ViewChild('modalTemplate') modalContent: ElementRef;
+
+  @Output() readonly transactionCompleted: EventEmitter<any> = new EventEmitter<any>();
 
   submitted = false;
   loading = false;
@@ -62,18 +64,26 @@ export class SettingGroupModalComponent implements OnInit {
   private addSettingGroup(formData: any, success, error): void {
     this.fgeActionService.performActionWithSelector(getApplicationInfo, ApplicationLink.CREATE_SETTING_GROUP, {
       body: formData
-    }).subscribe(() => {
-      success();
-      this.modalService.dismissAll();
-    }, (err) => error(Object.values(err.error.fields)));
+    })
+    .subscribe(
+      () => {
+        success();
+        this.modalService.dismissAll();
+      },
+      err => error(Object.values(err.error.fields)),
+      () => this.transactionCompleted.emit()
+    );
   }
 
   private updateSettingGroup(data: FgeEntity, formData: any, success, error): void {
     this.fgeActionService.performAction(data, SettingGroupLink.UPDATE_SETTING_GROUP, {
       body: formData
-    }).subscribe(() => {
-      success();
-      this.modalService.dismissAll();
-    }, err => error(Object.values(err.error.fields)));
+    }).subscribe(
+      () => {
+        success();
+        this.modalService.dismissAll();
+      },
+      err => error(Object.values(err.error.fields)),
+      () => this.transactionCompleted.emit());
   }
 }

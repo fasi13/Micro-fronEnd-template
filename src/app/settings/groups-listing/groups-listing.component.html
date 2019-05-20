@@ -65,7 +65,7 @@
       <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="settingGroupFormModal.open(settingGroup)">
         <i class="fas fa-edit"></i>
       </a>
-      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, settingGroup)">
+      <a class="btn btn-secondary bg-secondary btn-sm mr-2 fge-disabled" tabindex="0" (click)="openModalConfirm(modalConfirmModal, settingGroup)">
         <i class="fas fa-trash"></i>
       </a>
     </div>
@@ -102,7 +102,9 @@
   </div>
 </ng-template>
 
-<fge-setting-group-modal #settingGroupFormModal></fge-setting-group-modal>
+<fge-setting-group-modal
+  #settingGroupFormModal
+  (transactionCompleted)="onTransactionCompleted()"></fge-setting-group-modal>
 
 <fge-modal-confirm [config]="config"
   (onsubmit)="onSubmitConfirmModal()"

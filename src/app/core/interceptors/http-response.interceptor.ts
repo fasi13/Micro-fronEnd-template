@@ -9,8 +9,8 @@ import {
 } from '@angular/common/http';
 import _isEmpty from 'lodash/isEmpty';
 
-import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { FgeNotificationService } from '../services';
 
 @Injectable()
@@ -23,21 +23,11 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap(event => {
-          if (event instanceof HttpResponse) {
+          if (event instanceof HttpResponse || event instanceof HttpErrorResponse) {
             this.fgeNotificationService.handleResponse(event, request);
           }
         }
-      ),
-      catchError((error: any) => {
-        if (error instanceof HttpErrorResponse) {
-          try {
-            this.fgeNotificationService.handleResponse(error, request);
-          } catch (e) {
-            this.fgeNotificationService.displayUnexpectedError(e);
-          }
-        }
-        return of(error);
-      })
+      )
     );
   }
 }

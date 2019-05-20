@@ -28,11 +28,7 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.sort = {
-      sortby: 'name',
-      sortdirection: 'asc'
-    };
-    this.filters = {};
+    this.initDefaultFilterSorting();
     this.initSelectors();
   }
 
@@ -79,6 +75,11 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
   }
 
+  onTransactionCompleted(): void {
+    this.initDefaultFilterSorting();
+    this.onPageChange(1);
+  }
+
   openModalConfirm(confirmModal: any, selectedSettingGroup: SettingGroup): void {
     this.confirmModal = confirmModal;
     this.selectedSettingGroup = selectedSettingGroup;
@@ -102,5 +103,13 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
       takeWhile(() => this.isAliveComponent)
     )
     .subscribe((state) => this.groupsState = state);
+  }
+
+  private initDefaultFilterSorting() {
+    this.sort = {
+      sortby: 'name',
+      sortdirection: 'asc'
+    };
+    this.filters = {};
   }
 }
