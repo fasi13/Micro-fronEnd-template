@@ -44,7 +44,7 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
   onResetFilters(): void {
     this.filters = {};
     this.sort = {
-      sortby: 'login',
+      sortby: 'name',
       sortdirection: 'asc'
     };
     this.onPerformFilter();

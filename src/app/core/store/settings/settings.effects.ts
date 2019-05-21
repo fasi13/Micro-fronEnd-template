@@ -5,7 +5,7 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, map } from 'rxjs/operators';
 
-import { DataPaginated, SettingGroup, ApiResponse } from '../../models';
+import { DataPaginated, SettingGroup, ApiResponse, FgeStoreAction } from '../../models';
 import { SettingsTypes, FetchSettingGroupsSuccess, FetchSettingGroupsError } from './settings.actions';
 import { SettingsService } from '../../services/settings.service';
 
@@ -13,8 +13,13 @@ import { SettingsService } from '../../services/settings.service';
 export class SettingsEffects {
   @Effect() public fetch: Observable<Action> = this.actions.pipe(
     ofType(SettingsTypes.FETCH_SETTING_GROUPS),
-    switchMap(() =>
-        this.settingsService.getSettingGroups()
+    switchMap((action: FgeStoreAction) =>
+        this.settingsService.getSettingGroups(
+          action.payload.offset,
+          action.payload.limit,
+          action.payload.filters,
+          action.payload.sort
+        )
         .pipe(
           map((response: ApiResponse<DataPaginated<SettingGroup>>) => {
             return new FetchSettingGroupsSuccess(response.data);
