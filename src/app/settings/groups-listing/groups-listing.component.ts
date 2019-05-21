@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { State, getSettingGroups, SettingGroup, FgeHttpActionService, SettingGroupLink } from '@forge/core';
+import { State, getSettingGroups, SettingGroup, FgeHttpActionService, SettingGroupLink, FgeRouterService } from '@forge/core';
 import { Store, select } from '@ngrx/store';
 
 import { takeWhile } from 'rxjs/operators';
@@ -24,7 +24,8 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<State>,
-    private fgeActionService: FgeHttpActionService
+    private fgeActionService: FgeHttpActionService,
+    private fgeRouter: FgeRouterService
   ) { }
 
   ngOnInit() {
@@ -95,6 +96,10 @@ export class GroupsListingComponent implements OnInit, OnDestroy {
   onSubmitConfirmModal() {
     this.fgeActionService.performAction(this.selectedSettingGroup, SettingGroupLink.DELETE_SETTING_GROUP)
       .subscribe(() => this.confirmModal.close());
+  }
+
+  goToGroupDetails(groupId: string): void {
+    this.fgeRouter.navigate(`settings/group/${groupId}`);
   }
 
   private initSelectors() {

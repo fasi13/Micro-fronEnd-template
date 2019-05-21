@@ -1,5 +1,5 @@
 <div class="fge-group--title row">
-  <h4 class="fge-group--title-divider my-2 col-10">
+  <h4 class="fge-group--title-divider my-2 col-8">
     <i *ngIf="groupsState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Setting Groups</span>
   </h4>
   <div class="col text-right align-self-center">
@@ -59,7 +59,11 @@
     </div>
   </div>
   <div class="row fge-table__row m-1" *ngFor="let settingGroup of groupsState?.items; trackBy: trackByGroupId">
-    <div class="col fge-table__col" title="{{ settingGroup.name }}">{{ settingGroup.name }}</div>
+    <div class="col fge-table__col" title="{{ settingGroup.name }}">
+      <a tabindex="0" (click)="goToGroupDetails(settingGroup.id)" class="fge-clickable">
+          {{ settingGroup?.name }}
+      </a>
+    </div>
     <div class="col fge-table__col" title="{{ settingGroup.lastUpdate | date:'medium' }}">{{ settingGroup.lastUpdate | date:'medium' }}</div>
     <div class="col-1 fge-table__col pr-0 fge-table--actions">
       <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="settingGroupFormModal.open(settingGroup)">

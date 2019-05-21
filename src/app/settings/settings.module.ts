@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { GroupsListingComponent } from './groups-listing/groups-listing.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { GroupsListingComponent } from './groups-listing/groups-listing.component';
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { SharedModule } from '../shared/shared.module';
 import { SettingGroupModalComponent } from './shared/setting-group-modal/setting-group-modal.component';
+import { GroupDetailsComponent } from './group-details/group-details.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,10 @@ const routes: Routes = [
   {
     path: 'groups',
     component: GroupsListingComponent
+  },
+  {
+    path: 'group/:groupId',
+    component: GroupDetailsComponent
   }
 ];
 
@@ -29,7 +35,8 @@ const routes: Routes = [
   ],
   declarations: [
     GroupsListingComponent,
-    SettingGroupModalComponent
+    SettingGroupModalComponent,
+    GroupDetailsComponent
   ]
 })
 export class SettingsModule { }
