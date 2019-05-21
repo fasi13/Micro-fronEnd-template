@@ -1,4 +1,5 @@
 export interface ListingParams<T = any> {
+    id?: any;
     items?: T;
     limit?: number;
     offset?: number;

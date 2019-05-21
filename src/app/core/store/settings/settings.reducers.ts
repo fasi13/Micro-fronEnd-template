@@ -4,10 +4,14 @@ import { SettingsTypes, SettingsActions } from './settings.actions';
 
 export interface SettingState {
   settingGroups: any;
+  settingGroup: any;
 }
 
 export const initialState: SettingState = {
   settingGroups: {
+    loading: false
+  },
+  settingGroup: {
     loading: false
   }
 };
@@ -44,9 +48,34 @@ export function reducer(
         })
       });
 
+      case SettingsTypes.FETCH_SETTING_GROUP:
+        return _assign({}, state, {
+          settingGroup: _assign({}, state.settingGroup, {
+            loading: true,
+            error: {}
+          })
+        });
+
+      case SettingsTypes.FETCH_SETTING_GROUP_ERROR:
+        return _assign({}, state, {
+          settingGroup: {
+            loading: false,
+            error: action.payload
+          }
+        });
+
+      case SettingsTypes.FETCH_SETTING_GROUP_SUCCESS:
+        return _assign({}, state, {
+          settingGroup: _assign({}, state.settingGroup, {
+            loading: false,
+            ...action.payload
+          })
+        });
+
     default:
       return state;
   }
 }
 
 export const getSettingGroups = (state: SettingState) => state.settingGroups;
+export const getSettingGroup = (state: SettingState) => state.settingGroup;

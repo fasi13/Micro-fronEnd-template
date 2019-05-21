@@ -7,6 +7,9 @@ export const SettingsTypes = {
   FETCH_SETTING_GROUPS: ActionType('FETCH_SETTING_GROUPS'),
   FETCH_SETTING_GROUPS_SUCCESS: ActionType('FETCH_SETTING_GROUPS_SUCCESS'),
   FETCH_SETTING_GROUPS_ERROR: ActionType('FETCH_SETTING_GROUPS_ERROR'),
+  FETCH_SETTING_GROUP: ActionType('FETCH_SETTING_GROUP'),
+  FETCH_SETTING_GROUP_SUCCESS: ActionType('FETCH_SETTING_GROUP_SUCCESS'),
+  FETCH_SETTING_GROUP_ERROR: ActionType('FETCH_SETTING_GROUP_ERROR'),
 };
 
 export class FetchSettingGroups extends FgeStoreAction {
@@ -26,7 +29,27 @@ export class FetchSettingGroupsError implements Action {
   constructor(public payload?: any) {}
 }
 
+export class FetchSettingGroup extends FgeStoreAction {
+  constructor(public model?: ListingParams) {
+    super(SettingsTypes.FETCH_SETTING_GROUP, model);
+  }
+}
+
+export class FetchSettingGroupSuccess extends FgeStoreAction {
+  constructor(public data?: any) {
+    super(SettingsTypes.FETCH_SETTING_GROUP_SUCCESS, data);
+  }
+}
+
+export class FetchSettingGroupError implements Action {
+  public type: string = SettingsTypes.FETCH_SETTING_GROUP_ERROR;
+  constructor(public payload?: any) {}
+}
+
 export type SettingsActions =
   FetchSettingGroups |
   FetchSettingGroupsSuccess |
-  FetchSettingGroupsError;
+  FetchSettingGroupsError |
+  FetchSettingGroup |
+  FetchSettingGroupSuccess |
+  FetchSettingGroupError;

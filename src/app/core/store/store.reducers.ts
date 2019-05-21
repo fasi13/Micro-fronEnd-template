@@ -250,3 +250,7 @@ export const getSettingGroups = createSelector(
   getSettingState,
   SettingsReducers.getSettingGroups
 );
+export const getSettingGroup = createSelector(
+  getSettingState,
+  SettingsReducers.getSettingGroup
+);

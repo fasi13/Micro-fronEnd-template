@@ -17,7 +17,7 @@
       class="btn btn-sm btn-secondary bg-secondary"
       (click)="settingGroupFormModal.open()">
       Add Group
-      <i class="fas fa-user-plus pl-1"></i>
+      <i class="fas fa-plus pl-1"></i>
     </button>
   </div>
 </div>
@@ -44,7 +44,7 @@
     </div>
     <div class="col fge-table__col fge-clickable" (click)="sortBy('lastUpdate')">
       Last Update
-      <span *ngIf="sort.sortby === 'firstname'">
+      <span *ngIf="sort.sortby === 'lastUpdate'">
         <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
         <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
       </span>
