@@ -115,7 +115,7 @@ export class ApplicationFormModalComponent implements OnInit {
             errorMsg: 'Value is required',
             validator: Validators.required
           },
-          number: {
+          pattern: {
             errorMsg: 'Value should be a number',
             validator: Validators.pattern(/^-?(0|[1-9]\d*)?$/)
           }
