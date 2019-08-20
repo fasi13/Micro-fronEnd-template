@@ -115,9 +115,9 @@ export class ApplicationFormModalComponent implements OnInit {
             errorMsg: 'Value is required',
             validator: Validators.required
           },
-          pattern: {
-            errorMsg: 'Value should be a number',
-            validator: Validators.pattern(/^-?(0|[1-9]\d*)?$/)
+          maxlength: {
+            errorMsg: 'Name should not have more than 50 characters',
+            validator: Validators.maxLength(50)
           }
         }
       }
