@@ -22,12 +22,18 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '8.x'
-  displayName: 'Install Node.js'
+  displayName: 'Check/Install Node.js'
 
 - task: Npm@1
-  displayName: 'Install Dependencies'
+  displayName: 'Install Npm Dependencies'
   inputs:
     command: install
+
+- task: Npm@1
+  displayName: 'Run Tests'
+  inputs:
+    command: custom
+    customCommand: 'run test --watch=false'
 
 - task: Npm@1
   displayName: 'Build Project'
