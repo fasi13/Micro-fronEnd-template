@@ -9,8 +9,7 @@ trigger:
 - develop
 
 pool:
-  name: Local                    
-  vmImage: 'windows-latest'
+  name: Local
 
 variables:
   MajorVersion: 0
