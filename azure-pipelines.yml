@@ -1,0 +1,48 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)
+
+trigger:
+- develop
+
+pool:
+  name: Local
+
+variables:
+  MajorVersion: 0
+  MinorVersion: 0
+  PatchVersion: 0
+  RevisionVersion: $[counter('revision-counter', 0)]
+  buildConfiguration: 'Release'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+  displayName: 'Check/Install Node.js'
+
+- task: Npm@1
+  displayName: 'Install Npm Dependencies'
+  inputs:
+    command: install
+
+- task: Npm@1
+  displayName: 'Run Tests'
+  inputs:
+    command: custom
+    customCommand: 'run test --watch=false'
+
+- task: Npm@1
+  displayName: 'Build Project'
+  inputs:
+    command: custom
+    customCommand: run build
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Artifact'
+  inputs:
+    artifactName: 'E2E.Loyalty.Forge.UI@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
+    targetPath: 'dist'
