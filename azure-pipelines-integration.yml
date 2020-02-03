@@ -13,8 +13,8 @@ steps:
   inputs:
     SonarQube: 'sonarqube-loyalty'
     scannerMode: 'MSBuild'
-    projectKey: '$(project)'
-    projectName: '$(project)'
+    projectKey: 'E2E.Loyalty.Forge.UI'
+    projectName: 'E2E.Loyalty.Forge.UI'
     extraProperties: |
        sonar.cs.vscoveragexml.reportsPaths=$(System.DefaultWorkingDirectory)/**/*coverage.xml
 
