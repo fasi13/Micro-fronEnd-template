@@ -47,6 +47,12 @@ steps:
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
     failIfCoverageEmpty: true
     
+- task: Npm@1
+  displayName: 'Build Project'
+  inputs:
+    command: custom
+    customCommand: run build
+    
 - task: SonarQubeAnalyze@4
   displayName: 'SonarQube Analyze'
 
