@@ -34,4 +34,4 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     artifactName: 'E2E.Loyalty.Forge.UI'
-    targetPath: 'www'
+    targetPath: 'dist'
