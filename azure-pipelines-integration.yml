@@ -22,7 +22,7 @@ steps:
   displayName: 'Run Tests'
   inputs:
     command: custom
-    customCommand: 'run test'
+    customCommand: 'run test --watch=false'
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
