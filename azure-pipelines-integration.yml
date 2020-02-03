@@ -12,7 +12,7 @@ steps:
   displayName: 'SonarQube Prepare'
   inputs:
     SonarQube: 'sonarqube-loyalty'
-    scannerMode: 'MSBuild'
+    scannerMode: CLI
     projectKey: 'E2E.Loyalty.Forge.UI'
     projectName: 'E2E.Loyalty.Forge.UI'
     extraProperties: |
