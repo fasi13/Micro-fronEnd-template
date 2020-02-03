@@ -1,0 +1,64 @@
+name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)
+
+# CI builds nightly
+trigger: 
+- none
+
+schedules:
+- cron: '00 0 * * *'
+  displayName: Every night at 00:00
+  branches:
+    include:
+    - develop
+
+pool:
+  name: Local
+
+variables:
+  MajorVersion: 1
+  MinorVersion: 0
+  PatchVersion: 0
+  RevisionVersion: $[counter('revision-counter', 0)]
+  buildConfiguration: 'Release'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+  displayName: 'Check/Install Node.js'
+
+- task: Npm@1
+  displayName: 'Install Npm Dependencies'
+  inputs:
+    command: install
+
+- task: Npm@1
+  displayName: 'Run Tests'
+  inputs:
+    command: custom
+    customCommand: 'run test'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: './junit.xml'
+
+- task: PublishCodeCoverageResults@1
+  inputs: 
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+    failIfCoverageEmpty: true
+    
+- task: Npm@1
+  displayName: 'Build Project'
+  inputs:
+    command: custom
+    customCommand: run build
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Artifact'
+  inputs:
+    artifactName: 'E2E.Loyalty.Forge.UI@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
+    targetPath: 'www'

@@ -23,15 +23,16 @@ steps:
   inputs:
     command: custom
     customCommand: 'run test'
-    
-- task: Npm@1
-  displayName: 'Build Project'
-  inputs:
-    command: custom
-    customCommand: run build
 
-- task: PublishPipelineArtifact@0
-  displayName: 'Publish Artifact'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    artifactName: 'E2E.Loyalty.Forge.UI'
-    targetPath: 'www'
+    testRunner: JUnit
+    testResultsFiles: './junit.xml'
+
+- task: PublishCodeCoverageResults@1
+  inputs: 
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+    failIfCoverageEmpty: true
