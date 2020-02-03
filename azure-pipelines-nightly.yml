@@ -61,4 +61,4 @@ steps:
   displayName: 'Publish Artifact'
   inputs:
     artifactName: 'E2E.Loyalty.Forge.UI@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
-    targetPath: 'www'
+    targetPath: 'dist'
