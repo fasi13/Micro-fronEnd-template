@@ -16,7 +16,7 @@ steps:
     projectKey: 'E2E.Loyalty.Forge.UI'
     projectName: 'E2E.Loyalty.Forge.UI'
     extraProperties: |
-       sonar.cs.vscoveragexml.reportsPaths=$(System.DefaultWorkingDirectory)/**/*coverage.xml
+       sonar.branch.name=$(Build.SourceBranchName)
 
 - task: NodeTool@0
   inputs:
@@ -46,12 +46,6 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
     failIfCoverageEmpty: true
-    
-- task: Npm@1
-  displayName: 'Build Project'
-  inputs:
-    command: custom
-    customCommand: run build
     
 - task: SonarQubeAnalyze@4
   displayName: 'SonarQube Analyze'
