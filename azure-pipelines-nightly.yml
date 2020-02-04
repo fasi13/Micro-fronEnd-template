@@ -19,9 +19,30 @@ variables:
   MinorVersion: 0
   PatchVersion: 0
   RevisionVersion: $[counter('revision-counter', 0)]
-  buildConfiguration: 'Release'
+  project: 'E2E.Loyalty.Forge.UI'
 
 steps:
+- task: SonarQubePrepare@4
+  displayName: 'SonarQube Prepare'
+  inputs:
+    SonarQube: 'sonarqube-loyalty'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: '$(project)'
+    cliProjectName: '$(project)'
+    cliSources: '.'
+    extraProperties: |
+        sonar.login=admin
+        sonar.password=admin
+        sonar.projectVersion=1.0
+        sonar.sourceEncoding=UTF-8
+        sonar.sources=src
+        sonar.exclusions=**/node_modules/**
+        sonar.tests=src
+        sonar.test.inclusions=**/*.spec.ts;**/*.spec.js
+        sonar.typescript.lcov.reportPaths=coverage/lcov.info
+        sonar.branch.name=$(Build.SourceBranchName)
+
 - task: NodeTool@0
   inputs:
     versionSpec: '8.x'
@@ -42,7 +63,7 @@ steps:
   condition: succeededOrFailed()
   inputs:
     testRunner: JUnit
-    testResultsFiles: './junit.xml'
+    testResultsFiles: '**/test-results.xml'
 
 - task: PublishCodeCoverageResults@1
   inputs: 
@@ -51,14 +72,21 @@ steps:
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
     failIfCoverageEmpty: true
     
-- task: Npm@1
-  displayName: 'Build Project'
+- task: SonarQubeAnalyze@4
+  displayName: 'SonarQube Analyze'
+
+- task: SonarQubePublish@4
+  displayName: 'SonarQube Publish'
   inputs:
-    command: custom
-    customCommand: run build
+    pollingTimeoutSec: '300'
+    
+- task: sonar-buildbreaker@8
+  displayName: 'SonarQube Build Breaker'
+  inputs:
+    SonarQube: 'sonarqube-loyalty'
 
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Artifact'
   inputs:
-    artifactName: 'E2E.Loyalty.Forge.UI@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
+    artifactName: '$(project)@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
     targetPath: 'dist'
