@@ -5,7 +5,7 @@ pool:
   name: Local
 
 variables:
-  buildConfiguration: 'Release'
+  project: 'E2E.Loyalty.Forge.UI'
 
 steps:
 - task: SonarQubePrepare@4
@@ -14,8 +14,8 @@ steps:
     SonarQube: 'sonarqube-loyalty'
     scannerMode: 'CLI'
     configMode: 'manual'
-    cliProjectKey: 'E2E.Loyalty.Forge.UI'
-    cliProjectName: 'E2E.Loyalty.Forge.UI'
+    cliProjectKey: '$(project)'
+    cliProjectName: '$(project)'
     cliSources: '.'
     extraProperties: |
         sonar.login=admin
