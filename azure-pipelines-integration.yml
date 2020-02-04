@@ -12,10 +12,19 @@ steps:
   displayName: 'SonarQube Prepare'
   inputs:
     SonarQube: 'sonarqube-loyalty'
-    scannerMode: CLI
-    projectKey: 'E2E.Loyalty.Forge.UI'
-    projectName: 'E2E.Loyalty.Forge.UI'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'E2E.Loyalty.Forge.UI'
+    cliProjectName: 'E2E.Loyalty.Forge.UI'
+    cliSources: '.'
     extraProperties: |
+       sonar.projectVersion=1.0
+       sonar.sourceEncoding=UTF-8
+       sonar.sources=src
+       sonar.exclusions=**/node_modules/**
+       sonar.tests=src
+       sonar.test.inclusions=**/*.spec.ts;**/*.spec.js
+       sonar.typescript.lcov.reportPaths=coverage/lcov.info
        sonar.branch.name=$(Build.SourceBranchName)
 
 - task: NodeTool@0
