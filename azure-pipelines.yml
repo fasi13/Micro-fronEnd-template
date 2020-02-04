@@ -5,7 +5,7 @@ pool:
   name: Local
 
 variables:
-  buildConfiguration: 'Release'
+  project: 'E2E.Loyalty.Forge.UI'
 
 steps:
 - task: NodeTool@0
@@ -33,5 +33,5 @@ steps:
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Artifact'
   inputs:
-    artifactName: 'E2E.Loyalty.Forge.UI'
+    artifactName: '$(project)'
     targetPath: 'dist'
