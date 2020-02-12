@@ -84,6 +84,12 @@ steps:
   displayName: 'SonarQube Build Breaker'
   inputs:
     SonarQube: 'sonarqube-loyalty'
+    
+- task: Npm@1
+  displayName: 'Build Project'
+  inputs:
+    command: custom
+    customCommand: run build
 
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Artifact'
