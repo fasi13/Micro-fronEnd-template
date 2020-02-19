@@ -26,8 +26,8 @@ steps:
         sonar.tests=src
         sonar.test.inclusions=**/*.spec.ts;**/*.spec.js
         sonar.typescript.lcov.reportPaths=coverage/lcov.info
-        sonar.branch.name=$(System.PullRequest.SourceBranch)
-        sonar.branch.target=$(System.PullRequest.TargetBranch)
+        sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
+        sonar.pullrequest.base=$(System.PullRequest.TargetBranch)
 
 - task: NodeTool@0
   inputs:
