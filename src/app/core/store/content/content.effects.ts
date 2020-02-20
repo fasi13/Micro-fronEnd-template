@@ -60,7 +60,7 @@ export class ContentEffects {
               );
           } else {
             this.fgeRouter.navigate('content/notFound', { skipLocationChange: true });
-            throw new Error(`Content group with id=${action.payload} not found in current tenant store`);
+            return of(new FetchContentError({ error: new Error(`Content group with id=${action.payload} not found in current tenant store`) }));
           }
         })
       )
