@@ -19,12 +19,12 @@ export class ContentService {
   getContentGroups(applicationId: string | number,
     fetchContent: boolean = false): Observable<ApiResponse<DataPaginated<ApplicationContent>>> {
     return this.http.get<ApiResponse<DataPaginated<ApplicationContent>>>(
-      `application/${applicationId}/contentGroups?content=${fetchContent}`);
+      `application/${applicationId}/contentGroups?content=${fetchContent}&replaceEmbeddedData=false`);
   }
 
   getContentGroup(applicationId: string | number,
     groupId: string | number, fetchContent: boolean = true):  Observable<ApiResponse<ContentGroup>> {
-    return this.http.get<ApiResponse<ContentGroup>>(`application/${applicationId}/contentGroup/${groupId}?content=${fetchContent}`);
+    return this.http.get<ApiResponse<ContentGroup>>(`application/${applicationId}/contentGroup/${groupId}?content=${fetchContent}&replaceEmbeddedData=false`);
   }
 
   addContentGroup(applicationId: string | number, name: string, published: boolean = true): Observable<any> {
@@ -43,7 +43,7 @@ export class ContentService {
 
   getContent(applicationId: string | number,
     contentId: string | number): Observable<ApiResponse<ApplicationContent>> {
-    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}`);
+    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}?replaceEmbeddedData=false`);
   }
 
   actionContent(link: Link, body?: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
