@@ -50,7 +50,7 @@ export class ContentEffects {
         switchMap((groups: ContentGroup[]) => {
           const group: ContentGroup = groups.find((current: ContentGroup) => current.id === +action.payload);
           if (group) {
-            return this.fgeActionService.performAction(group, ContentGroupLink.SELF, { params: { content: 'true' }})
+            return this.fgeActionService.performAction(group, ContentGroupLink.SELF, { params: { content: 'true', replaceEmbeddedData: 'false' }})
               .pipe(
                 map((response: ApiResponse<ContentGroup>) => new FetchContentGroupCompleted(response.data)),
                 catchError(error => {
