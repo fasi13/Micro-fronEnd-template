@@ -1,16 +1,16 @@
 trigger: none
 
 pool:
-  name: Local
+  name: Rideau
 
 variables:
-  project: 'E2E.Loyalty.Forge.UI'
+  project: 'E2E.Forge.UI'
 
 steps:
 - task: SonarQubePrepare@4
   displayName: 'SonarQube Prepare'
   inputs:
-    SonarQube: 'sonarqube-loyalty'
+    SonarQube: 'SonarQube-Rideau-PD'
     scannerMode: 'CLI'
     configMode: 'manual'
     cliProjectKey: '$(project)'
@@ -70,4 +70,4 @@ steps:
 - task: sonar-buildbreaker@8
   displayName: 'SonarQube Build Breaker'
   inputs:
-    SonarQube: 'sonarqube-loyalty'
+    SonarQube: 'SonarQube-Rideau-PD'
