@@ -12,6 +12,7 @@ export class FieldHtmlComponent extends FormField implements OnInit, OnDestroy {
   @ViewChild(NgxSummernoteDirective) summerNoteDirective: NgxSummernoteDirective;
 
   configSummernote: any;
+  configCkEditor:any;
 
   private _destroyFieldCallback: () => void;
   private _editor: any;
@@ -25,6 +26,44 @@ export class FieldHtmlComponent extends FormField implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.configCkEditor = {
+      placeholder: this.config.placeholder,
+      startupFocus : true,
+      embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
+      extraPlugins : ['tableresize', 'font', 'justify', 'colorbutton', 'embed'],
+      toolbar: [
+        { name: 'styles', items: [ 'Format' ] },
+        { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
+        { name: 'styles', items: [ 'Font', 'TextColor', 'BGColor' ] },
+        { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+        { name: 'table', items: [ 'Table' ] },
+        { name: 'links', items: [ 'Link', 'Unlink', 'Image', 'Embed' ] },
+        { name: 'tools', items: [ 'Maximize' ] },
+        { name: 'document', items: [ 'Source' ] },
+        { name: 'about', items: [ 'About' ] }
+      ]};
+
+      // this.configCkEditor = {
+      //   placeholder: this.config.placeholder,
+      //   startupFocus : true,
+      //   toolbarGroups : [
+      //     { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+      //     { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+      //     { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+      //     { name: 'forms', groups: [ 'forms' ] },
+      //     '/',
+      //     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+      //     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+      //     { name: 'links', groups: [ 'links' ] },
+      //     { name: 'insert', groups: [ 'insert' ] },
+      //     '/',
+      //     { name: 'colors', groups: [ 'colors' ] },
+      //     { name: 'tools', groups: [ 'tools' ] },
+      //     { name: 'about', groups: [ 'about' ] }
+      //   ] };
+
+
     this.configSummernote = {
       placeholder: this.config.placeholder,
       focus: this.config.focus,
@@ -38,6 +77,7 @@ export class FieldHtmlComponent extends FormField implements OnInit, OnDestroy {
         ['group7', ['fullscreen', 'codeview', 'help']]
       ]
     };
+
     if (this.config.value !== '') {
       this.configSummernote.height = 250;
     }

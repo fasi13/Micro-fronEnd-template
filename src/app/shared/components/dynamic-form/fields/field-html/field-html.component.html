@@ -1,15 +1,16 @@
-<div 
-  class="form-group row fge-dynamic-field form-input" 
+<div
+  class="form-group row fge-dynamic-field form-input"
   [formGroup]="group">
   <label class="col-3 col-form-label fge-dynamic-form__label" *ngIf="config.label" title="{{config.label}}">{{ config.label }}</label>
-  <div class="col fge-dynamic-form__html" 
+  <div class="col fge-dynamic-form__html"
     [ngClass]="{'is-invalid': hasError(), 'col-9': config.label}">
-    <div class="form-control"
+    <ckeditor [formControlName]="config?.name" [ngClass]="{ 'is-invalid': hasError() }" [config]="configCkEditor" editorUrl="/assets/packages/ckeditor4/ckeditor.js"></ckeditor>
+    <!-- <div class="form-control"
       [ngClass]="{ 'is-invalid': hasError() }"
       [ngxSummernote]="configSummernote"
       (summernoteInit)="initField($event)"
       [formControlName]="config?.name">
-    </div>
+    </div> -->
   </div>
   <div class="invalid-feedback"
     [ngClass]="{ 'd-block': hasError(), 'offset-3 col-9': config.label, 'col-12': !config.label }">
