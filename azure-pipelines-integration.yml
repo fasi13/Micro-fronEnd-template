@@ -4,7 +4,7 @@ pool:
   name: Rideau
 
 variables:
-  project: 'E2E.Forge.UI'
+  project: 'E2E.Content.Management.UI'
 
 steps:
 - task: SonarQubePrepare@4
