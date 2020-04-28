@@ -2,10 +2,10 @@ trigger:
 - develop
 
 pool:
-  name: Local
+  name: Rideau
 
 variables:
-  project: 'E2E.Loyalty.Forge.UI'
+  project: 'E2E.Content.Management.UI'
 
 steps:
 - task: NodeTool@0
