@@ -1,11 +1,12 @@
 <div class="row fge-content-inline-editor">
-  <div class="col-10">
+  <div class="col-9">
     <fge-dynamic-inline-form
       [config]="config"
       #form="fgeDynamicInlineForm"
       (onsubmit)="handleSubmit($event)">
     </fge-dynamic-inline-form>
-  </div>
+  </div><div class="col-1 inline-version"><button type="button" class="btn btn-link" (click)="openVersionHistory(form)">v.{{contentData.currentVersion}}</button></div>
+
   <div class="col-2 pt-1">
     <button type="button" *ngIf="linkActions?.length > 0"
       class="btn btn-link" placement="right"

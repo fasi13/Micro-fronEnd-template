@@ -57,7 +57,7 @@
     </table>
   </div>
   <div class="row fge-group--container-values mx-1 my-2" *ngIf="editableContents?.length > 0">
-    <div class="col-xs-12 col-sm-12 col-md-7">
+    <div class="col-xs-12 col-sm-12 col-md-8">
       <fge-content-inline-editor *ngFor="let content of editableContents"
         [contentData]="content?.contentData"
         [config]="content?.config">
@@ -75,6 +75,7 @@
         <th scope="col fge-table__col">Description</th>
         <th scope="col fge-table__col">Type</th>
         <th scope="col fge-table__col">Value</th>
+        <th scope="col fge-table__col">Version</th>
         <th scope="col fge-table__col">Status</th>
         <th scope="col fge-table__col">Publish Date</th>
       </tr>
@@ -92,6 +93,7 @@
           <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
           <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
         </td>
+        <td>v.{{content.currentVersion}}</td>
         <td>{{ content?.status }}</td>
         <td>{{ content.publishDate | date:'medium' }}</td>
       </tr>

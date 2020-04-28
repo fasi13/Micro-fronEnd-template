@@ -113,7 +113,7 @@ export class ContentEffects {
     )
   );
 
-  @Effect() public contentGroupTransaction: Observable<Action> = this.actions.pipe(
+  @Effect() public contentGroupTransaction: Observable<{}> = this.actions.pipe(
     ofType(ContentActionTypes.CONTENT_GROUP_RECORD_TRANSACTION),
       switchMap((action: any): any => this.handleContentGroupRequest(action.payload, action.method)
         .pipe(
