@@ -14,15 +14,16 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     this.configCkEditor = {
       placeholder: this.config.placeholder,
       startupFocus : true,
+      filebrowserUploadUrl : 'base64',
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
-      extraPlugins : ['tableresize', 'font', 'justify', 'colorbutton', 'embed', 'e2ea11yhelp'],
+      extraPlugins : ['tableresize', 'font', 'justify', 'colorbutton', 'embed', 'e2ea11yhelp','base64image'],
       toolbar: [
         { name: 'styles', items: [ 'Format' ] },
         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
         { name: 'styles', items: [ 'Font', 'TextColor', 'BGColor' ] },
         { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
         { name: 'table', items: [ 'Table' ] },
-        { name: 'links', items: [ 'Link', 'Unlink', 'Image', 'Embed' ] },
+        { name: 'links', items: [ 'Link', 'Unlink', 'base64image', 'Embed' ] },
         { name: 'tools', items: [ 'Maximize' ] },
         { name: 'document', items: [ 'Source' ] },
         { name: 'about', items: [ 'About', 'E2EA11yHelp' ] }
