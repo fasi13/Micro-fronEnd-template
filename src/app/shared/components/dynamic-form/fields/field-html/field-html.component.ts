@@ -15,7 +15,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       placeholder: this.config.placeholder,
       startupFocus : true,
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
-      extraPlugins : ['tableresize', 'font', 'justify', 'colorbutton', 'embed'],
+      extraPlugins : ['tableresize', 'font', 'justify', 'colorbutton', 'embed', 'e2ea11yhelp'],
       toolbar: [
         { name: 'styles', items: [ 'Format' ] },
         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
@@ -25,7 +25,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         { name: 'links', items: [ 'Link', 'Unlink', 'Image', 'Embed' ] },
         { name: 'tools', items: [ 'Maximize' ] },
         { name: 'document', items: [ 'Source' ] },
-        { name: 'about', items: [ 'About' ] }
+        { name: 'about', items: [ 'About', 'E2EA11yHelp' ] }
       ]};
   }
 }
