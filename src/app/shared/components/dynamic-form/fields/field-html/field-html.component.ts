@@ -16,7 +16,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       startupFocus : true,
       filebrowserUploadUrl : 'base64',
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
-      extraPlugins : ['tableresize', 'font', 'justify', 'colorbutton', 'embed', 'e2ea11yhelp','base64image'],
+      extraPlugins : ['e2ea11yhelp'],
       toolbar: [
         { name: 'styles', items: [ 'Format' ] },
         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
