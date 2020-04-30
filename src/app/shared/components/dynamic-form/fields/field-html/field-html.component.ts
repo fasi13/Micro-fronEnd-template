@@ -15,7 +15,6 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       placeholder: this.config.placeholder,
       startupFocus : true,
       allowedContent : true,
-      filebrowserUploadUrl : 'base64',
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
       extraPlugins : ['e2ea11yhelp'],
       toolbar: [
