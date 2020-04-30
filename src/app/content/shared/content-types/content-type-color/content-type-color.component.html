@@ -4,3 +4,5 @@
 
 <button type="button" class="btn btn-link fge-content-type__color" [style.background-color]="value" [ngbPopover]="popoverContent">
 </button>
+<span [style.color]="value" *ngIf="renderer;">&nbsp;{{value}}</span>
+

@@ -77,7 +77,8 @@ const routes: Routes = [
   ],
   entryComponents: [
     ContentFormModalComponent,
-    ContentEditorModalComponent
+    ContentEditorModalComponent,
+    VersionHistoryModalComponent
   ]
 })
 export class ContentModule { }

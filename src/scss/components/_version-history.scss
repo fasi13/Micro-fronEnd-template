@@ -1,0 +1,28 @@
+.fge-version-history {
+  .modal-body .card-header {
+    padding: 0;
+  }
+
+  .version-info {
+    color: $black;
+    padding-left: 25px;
+  }
+
+  .card-body {
+    padding: 0;
+
+    .content-value {
+      padding: 20px;
+    }
+
+    .modal-footer button {
+      opacity: 0.2;
+    }
+
+    &:hover .modal-footer button {
+      opacity: 1;
+    }
+  }
+
+  padding-bottom: 2rem;
+}

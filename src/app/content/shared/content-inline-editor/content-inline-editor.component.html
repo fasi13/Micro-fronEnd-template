@@ -5,7 +5,7 @@
       #form="fgeDynamicInlineForm"
       (onsubmit)="handleSubmit($event)">
     </fge-dynamic-inline-form>
-  </div><div class="col-1 inline-version"><button type="button" class="btn btn-link" (click)="openVersionHistory(form)">v.{{contentData.currentVersion}}</button></div>
+  </div><div class="col-1 content-version"><button type="button" class="btn btn-link" (click)="openVersionHistory(contentData)">v.{{contentData.currentVersion}}</button></div>
 
   <div class="col-2 pt-1">
     <button type="button" *ngIf="linkActions?.length > 0"
@@ -27,4 +27,7 @@
 <fge-modal-confirm [config]="configConfirmModal"
   (onsubmit)="onSubmitConfirmModal()"
   #confirmModal>
+</fge-modal-confirm>
+<fge-modal-confirm [config]="configConfirmModal"
+  #copyConfirmModal>
 </fge-modal-confirm>
