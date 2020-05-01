@@ -8,4 +8,7 @@
   .content-version{
     padding: 5px 0 0 0;
   }
+  .content-version.edited span::after {
+    content: '*';
+  }
 }

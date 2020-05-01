@@ -134,17 +134,18 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     this.confirmModal.close();
   }
 
-  openVersionHistory(contentData: ApplicationContent): void {
+  openVersionHistory(): void {
     this.modalRef = this.modalService.open(VersionHistoryModalComponent, { windowClass: 'modal-content-form' });
-    this.modalRef.componentInstance.contentData = contentData;
+    this.modalRef.componentInstance.contentData = this.contentData;
+    this.modalRef.componentInstance.form = this.form.form;
+    this.modalRef.componentInstance.config = this.config;
     this.fgeModalService.registerModal(this.modalRef);
     this.modalRef.result.then((contentVersion: ContentVersion) => {
-
-    if (this.form.form.value[this.form.config.name] !== contentData.value) {
-
+    if (!contentVersion) {return; }
+    if (this.form.form.value[this.config.name] !== this.contentData.value) {
         this.configConfirmModal = {
           title: 'Copy confirmation',
-          message: 'Are you sure you want to copy the content? Your latest input changes will be overridden.',
+          message: 'Are you sure you want to copy the content? Your latest changes will be overridden.',
           submitLabel: 'Accept',
           cancelLabel: 'Cancel',
         };

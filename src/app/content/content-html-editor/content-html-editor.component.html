@@ -1,13 +1,17 @@
 <div class="fge-content-html-editor">
       <h4 class="my-3">
         <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+        <span *ngIf="currentContent && form">
         Content Editor: {{currentContent.name}}
-        <span class="content-version">
+        <span class="content-version"
+        [ngClass]="{'edited': form.value[config.name] !== currentContent.value}"
+        >
+
           <button type="button" class="btn btn-link" (click)="openVersionHistory()" *ngIf="currentContent">
-            Version: {{ currentContent.currentVersion }}
+            <span>Version: {{ currentContent.currentVersion }}</span>
           </button>
         </span>
-
+      </span>
       </h4>
   <fge-dynamic-form
     [hidden]="loading$ | async"

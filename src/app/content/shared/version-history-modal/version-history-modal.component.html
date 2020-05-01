@@ -1,42 +1,97 @@
 <div class="fge-version-history">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
-      <span><i>"{{contentData.name}}"</i> - Version History</span>
+      <span
+        ><i>"{{ contentData.name }}"</i> - Version History</span
+      >
     </h4>
     <button
       type="button"
       class="close"
       aria-label="Close"
-      (click)="activeModal.dismiss('Cross click')"
+      (click)="handleCancel()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <ngb-accordion #accordion>
+    <ngb-accordion #accordion activeIds="v{{ contentData.currentVersion }}">
       <ngb-panel id="v{{ v.version }}" *ngFor="let v of versions">
         <ng-template ngbPanelTitle>
-          <span>version {{ v.version }} <span class="version-info">{{v.authorFullName}} (#{{v.authorId}})&nbsp;&nbsp; {{v.creationDate |  date:'medium'}}
+          <span
+            >version {{ v.version }}
+            <span class="version-info"
+              >{{ v.authorFullName }} (#{{ v.authorId }})&nbsp;&nbsp;
+              {{ v.creationDate | date: "medium" }}
 
-            <span *ngIf="contentData.currentVersion === v.version" class="disabled">&nbsp;&nbsp;(Current version)</span>
-          </span></span>
-
+              <span
+                *ngIf="contentData.currentVersion === v.version"
+                class="disabled"
+                >&nbsp;&nbsp;(Current version)</span
+              >
+            </span></span
+          >
         </ng-template>
         <ng-template ngbPanelContent>
-          <div [ngSwitch]="contentData.dataType?.name" class="content-value">
-            <fge-content-type-color *ngSwitchCase="'Color Picker'" [value]="v.value"  renderer="true"></fge-content-type-color>
-            <fge-content-type-text *ngSwitchCase="'Text'" [value]="v.value" renderer="true"></fge-content-type-text>
-            <fge-content-type-html *ngSwitchCase="'HTML'" [value]="v.value" renderer="true"></fge-content-type-html>
-            <fge-content-type-image *ngSwitchCase="'Image'" [value]="v.value"></fge-content-type-image>
-            <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="v.value"></fge-content-type-logo>
-            <fge-content-type-document *ngSwitchCase="'Document'" [value]="v.value"></fge-content-type-document>
+          <div *ngIf="v.value">
+            <div [ngSwitch]="contentData.dataType?.name" class="content-value">
+              <fge-content-type-color
+                *ngSwitchCase="'Color Picker'"
+                [value]="v.value"
+                renderer="true"
+              ></fge-content-type-color>
+              <fge-content-type-text
+                *ngSwitchCase="'Text'"
+                [value]="v.value"
+                renderer="true"
+              ></fge-content-type-text>
+              <fge-content-type-html
+                *ngSwitchCase="'HTML'"
+                [value]="v.value"
+                renderer="true"
+              ></fge-content-type-html>
+              <fge-content-type-image
+                *ngSwitchCase="'Image'"
+                [value]="v.value"
+              ></fge-content-type-image>
+              <fge-content-type-logo
+                *ngSwitchCase="'Logo Display'"
+                [value]="v.value"
+              ></fge-content-type-logo>
+              <fge-content-type-document
+                *ngSwitchCase="'Document'"
+                [value]="v.value"
+              ></fge-content-type-document>
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-sm btn-primary"
+                [ngClass]="{
+                  disabled: v.value == form.value[config.name]
+                }"
+                (click)="copyVersion(v)"
+              >
+                {{v.value == form.value[config.name] ? 'Current Value':'Copy this version'}}
+              </button>
+            </div>
           </div>
-          <div class="modal-footer">
-          <button class="btn btn-sm btn-primary" (click)="copyVersion(v)">Copy this version</button>
-
-        </div>
+          <div class="fge-spinner" *ngIf="!v.value">
+            <div class="fge-bounce1"></div>
+            <div class="fge-bounce2"></div>
+            <div class="fge-bounce3"></div>
+          </div>
         </ng-template>
       </ngb-panel>
     </ngb-accordion>
+    <div class="fge-spinner" *ngIf="!$ready">
+      <div class="fge-bounce1"></div>
+      <div class="fge-bounce2"></div>
+      <div class="fge-bounce3"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="handleCancel()">
+        Close
+      </button>
+    </div>
   </div>
 </div>
