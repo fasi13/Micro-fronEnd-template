@@ -16,7 +16,8 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       startupFocus : true,
       allowedContent : true,
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
-      extraPlugins : ['e2ea11yhelp'],
+      extraPlugins : ['e2ea11yhelp', 'placeholder', 'placeholder_select'],
+      placeholder_select : [['allo'], ['bye']],
       toolbar: [
         { name: 'styles', items: [ 'Format' ] },
         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
@@ -26,7 +27,10 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         { name: 'links', items: [ 'Link', 'Unlink', 'base64image', 'Embed' ] },
         { name: 'tools', items: [ 'Maximize' ] },
         { name: 'document', items: [ 'Source' ] },
-        { name: 'about', items: [ 'About', 'E2EA11yHelp' ] }
+        { name: 'about', items: [ 'About', 'E2EA11yHelp' ] },
+        '/',
+        { name: 'placeholders', items: ['CreatePlaceholder']}
       ]};
+
   }
 }
