@@ -17,10 +17,6 @@ steps:
     cliProjectName: '$(project)'
     cliSources: '.'
     extraProperties: |
-        sonar.login=admin
-        sonar.password=admin
-        sonar.projectVersion=1.0
-        sonar.sourceEncoding=UTF-8
         sonar.sources=src
         sonar.exclusions=**/node_modules/**,src/assets/**
         sonar.tests=src
