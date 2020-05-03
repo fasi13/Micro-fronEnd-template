@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { FormField } from '../../models/form-field.abstract';
 
@@ -6,11 +6,20 @@ import { FormField } from '../../models/form-field.abstract';
   selector: 'fge-field-html',
   templateUrl: './field-html.component.html'
 })
+
 export class FieldHtmlComponent extends FormField implements OnInit {
   configCkEditor: any;
+  private _editor: any;
 
+  @HostListener('keyup') onkeyup() {
+    debugger;
+    if (this._editor.editor.mode === 'source') {
+      const editorValue = this._editor.editor.getData();
+      const controlName = this.config.name;
+      this.group.controls[controlName].setValue(editorValue);
+    }
+  }
   ngOnInit() {
-
     this.configCkEditor = {
       placeholder: this.config.placeholder,
       startupFocus : true,
@@ -28,5 +37,9 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         { name: 'document', items: [ 'Source' ] },
         { name: 'about', items: [ 'About', 'E2EA11yHelp' ] }
       ]};
+  }
+
+  editorReady(editor) {
+    this._editor = editor;
   }
 }
