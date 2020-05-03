@@ -86,14 +86,14 @@
         <td>{{ content?.description }}</td>
         <td>{{ content?.dataType?.name }}</td>
         <td [ngSwitch]="content?.dataType?.name">
-          <!-- <fge-content-type-color *ngSwitchCase="'Color Picker'" [value]="content?.value"></fge-content-type-color> -->
-          <!-- <fge-content-type-text *ngSwitchCase="'Text'" [value]="content?.value"></fge-content-type-text> -->
-          <!-- <fge-content-type-html *ngSwitchCase="'HTML'" [value]="content?.value"></fge-content-type-html> -->
-          <!-- <fge-content-type-image *ngSwitchCase="'Image'" [value]="content?.value"></fge-content-type-image> -->
+          <fge-content-type-color *ngSwitchCase="'Color Picker'" [value]="content?.value"></fge-content-type-color>
+          <fge-content-type-text *ngSwitchCase="'Text'" [value]="content?.value"></fge-content-type-text>
+          <fge-content-type-html *ngSwitchCase="'HTML'" [value]="content?.value"></fge-content-type-html>
+          <fge-content-type-image *ngSwitchCase="'Image'" [value]="content?.value"></fge-content-type-image>
           <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
-          <!-- <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document> -->
+          <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
         </td>
-        <td>v.{{content.currentVersion}}</td>
+        <td>v{{content.currentVersion}}</td>
         <td>{{ content?.status }}</td>
         <td>{{ content.publishDate | date:'medium' }}</td>
       </tr>

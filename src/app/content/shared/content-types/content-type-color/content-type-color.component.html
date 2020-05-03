@@ -2,7 +2,7 @@
   <span [style.color]="value">{{value}}</span>
 </ng-template>
 
-<button type="button" class="btn btn-link fge-content-type__color" [style.background-color]="value" [ngbPopover]="popoverContent">
+<button type="button" class="btn btn-link fge-content-type__color" [style.background-color]="value" [style.border-color]="'black'" [ngbPopover]="popoverContent">
 </button>
-<span [style.color]="value" *ngIf="renderer;">&nbsp;{{value}}</span>
+<span *ngIf="renderer;">&nbsp;&nbsp;{{value}}</span>
 

@@ -21,7 +21,9 @@
           <span
             >version {{ v.version }}
             <span class="version-info"
-              ><span *ngIf="v.authorId">{{ v.authorFullName }} (#{{ v.authorId }})</span>&nbsp;&nbsp;
+              ><span *ngIf="v.authorId"
+                >{{ v.authorFullName }} (#{{ v.authorId }})</span
+              >&nbsp;&nbsp;
               {{ v.creationDate | date: "medium" }}
 
               <span
@@ -29,18 +31,19 @@
                 class="disabled"
                 >&nbsp;&nbsp;(Current version)</span
               >
-              <span
-                *ngIf="0 === v.version"
-                class="disabled"
+              <span *ngIf="0 === v.version" class="disabled"
                 >&nbsp;&nbsp;(Inherited)</span
               >
-
             </span></span
           >
         </ng-template>
         <ng-template ngbPanelContent>
-          <div *ngIf="v.value">
-            <div [ngSwitch]="contentData.dataType?.name" class="content-value">
+          <div *ngIf="v.value !== null">
+            <div
+              [ngSwitch]="contentData.dataType?.name"
+              class="content-value"
+              *ngIf="v.value"
+            >
               <fge-content-type-color
                 *ngSwitchCase="'Color Picker'"
                 [value]="v.value"
@@ -69,6 +72,9 @@
                 [value]="v.value"
               ></fge-content-type-document>
             </div>
+            <div *ngIf="v.value === ''">
+              (Empty)
+            </div>
             <div class="modal-footer">
               <button
                 class="btn btn-sm btn-primary"
@@ -77,11 +83,16 @@
                 }"
                 (click)="copyVersion(v)"
               >
-                {{v.value == form.value[config.name] ? 'Current Value':'Copy this version'}}
+                {{
+                  v.value == form.value[config.name]
+                    ? "Current Value"
+                    : "Copy this version"
+                }}
               </button>
             </div>
           </div>
-          <div class="fge-spinner" *ngIf="!v.value">
+
+          <div class="fge-spinner" *ngIf="v.value === null">
             <div class="fge-bounce1"></div>
             <div class="fge-bounce2"></div>
             <div class="fge-bounce3"></div>

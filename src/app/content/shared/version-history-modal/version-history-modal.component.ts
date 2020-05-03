@@ -61,7 +61,7 @@ export class VersionHistoryModalComponent
     this.accordeon.panelChange.subscribe((panel: NgbPanelChangeEvent) => {
       const versionNumber = parseInt(panel.panelId.substr(1), 0);
       const versionItem = this.versions.find(v => v.version === versionNumber);
-      if (versionItem.value) { return; }
+      if (versionItem.value !== null) { return; }
       this.contentService.getContentVersion(this.applicationInfo.id, this.contentData.id, versionNumber).subscribe(response => {
         versionItem.value = response.data.value;
       });
