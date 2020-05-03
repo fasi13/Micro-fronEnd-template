@@ -21,7 +21,7 @@
           <span
             >version {{ v.version }}
             <span class="version-info"
-              >{{ v.authorFullName }} (#{{ v.authorId }})&nbsp;&nbsp;
+              ><span *ngIf="v.authorId">{{ v.authorFullName }} (#{{ v.authorId }})</span>&nbsp;&nbsp;
               {{ v.creationDate | date: "medium" }}
 
               <span
@@ -29,6 +29,12 @@
                 class="disabled"
                 >&nbsp;&nbsp;(Current version)</span
               >
+              <span
+                *ngIf="0 === v.version"
+                class="disabled"
+                >&nbsp;&nbsp;(Inherited)</span
+              >
+
             </span></span
           >
         </ng-template>
