@@ -39,6 +39,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         { name: 'about', items: [ 'About', 'E2EA11yHelp' ] }
       ]};
   }
+get editor() {return this._editor; }
 
   editorReady(editor) {
     this._editor = editor;

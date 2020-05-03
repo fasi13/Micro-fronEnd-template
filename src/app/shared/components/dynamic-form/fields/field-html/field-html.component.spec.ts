@@ -1,3 +1,4 @@
+import { config } from './../../../../../content/shared/content-form-modal/content-fields-modal.config';
 import { CKEditorModule } from 'ckeditor4-angular';
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -44,7 +45,6 @@ describe('FieldHtmlComponent', () => {
     component.group = new FormGroup({
       [component.config.name]: new FormControl(),
     });
-    spyOn(component, 'editorReady');
     fixture.detectChanges();
   });
 
@@ -54,5 +54,19 @@ describe('FieldHtmlComponent', () => {
 
   it('should configure CkEditor', () => {
     expect(component.configCkEditor).toBeTruthy();
+  });
+
+  it('should update formValue when keyUp in source mode', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    const html = '<h1>Test</h1>';
+    setTimeout(function() {
+      component.editor.editor.mode = 'source';
+      component.editor.editor.setData(html);
+      compiled.dispatchEvent(new KeyboardEvent('keyup'), {
+        'key': 'Enter'
+    });
+      expect(component.group.value[component.config.name]).toBe(html);
+    }, 3000);
+
   });
 });
