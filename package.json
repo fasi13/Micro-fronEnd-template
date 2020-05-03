@@ -34,6 +34,7 @@
     "@ngrx/store": "^6.1.0",
     "@ngrx/store-devtools": "^6.1.0",
     "angular-notifier": "^4.1.1",
+    "angular-spec-generator": "^1.1.0",
     "bootstrap": "^4.4.0",
     "ckeditor4-angular": "^1.1.0",
     "core-js": "^2.5.4",

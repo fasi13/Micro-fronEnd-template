@@ -18,9 +18,11 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       this.group.controls[controlName].setValue(editorValue);
     }
   }
+
   ngOnInit() {
     this.configCkEditor = {
-      placeholder: this.config.placeholder,
+
+      placeholder: this.config ? this.config.placeholder : '',
       startupFocus : true,
       allowedContent : true,
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',

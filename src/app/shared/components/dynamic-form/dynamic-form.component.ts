@@ -162,6 +162,7 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
 
   private getValidators(validationConfig: any): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
+    debugger;
     Object.keys(validationConfig).forEach(validatorKey => {
       validators.push(validationConfig[validatorKey].validator);
     });

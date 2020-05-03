@@ -1,10 +1,19 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="HeadlessChrome 0.0.0 (Windows 10 0.0.0)" package="" timestamp="2020-05-01T19:37:54" id="0" hostname="VYU" tests="1" errors="0" failures="0" time="0.002">
+  <testsuite name="HeadlessChrome 81.0.4044 (Windows 10.0.0)" package="" timestamp="2020-05-03T18:49:56" id="0" hostname="MHassairi-new">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/81.0.4044.129 Safari/537.36"/>
     </properties>
-    <testcase name="should check equal values" time="0.002" classname="HeadlessChrome 0.0.0 (Windows 10 0.0.0).App tests"/>
+  </testsuite>
+  <testsuite name="HeadlessChrome 81.0.4044 (Windows 10.0.0)" package="" timestamp="2020-05-03T18:49:59" id="0" hostname="MHassairi-new" tests="3" errors="0" failures="0" time="0.482">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/81.0.4044.129 Safari/537.36"/>
+    </properties>
+    <testcase name="should configure CkEditor" time="0.274" classname="HeadlessChrome 81.0.4044 (Windows 10.0.0).FieldHtmlComponent"/>
+    <testcase name="should create" time="0.208" classname="HeadlessChrome 81.0.4044 (Windows 10.0.0).FieldHtmlComponent"/>
+    <testcase name="should check equal values" time="0" classname="HeadlessChrome 81.0.4044 (Windows 10.0.0).App tests">
+      <skipped/>
+    </testcase>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>

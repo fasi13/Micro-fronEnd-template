@@ -36,7 +36,7 @@ enum UserMethods { POST = 'createNewUser', PUT = 'updateUser' }
 
 @Injectable()
 export class UserEffects {
-  @Effect() public userTransaction: Observable<Action> = this.actions.pipe(
+  @Effect() public userTransaction: Observable<{}> = this.actions.pipe(
     ofType(UserTypes.USER_TRANSACTION),
     withLatestFrom(this.store.select(getApplicationInfo)),
     switchMap(([action, applicationInfo]: [any, Application]) =>
@@ -150,7 +150,7 @@ export class UserEffects {
       )
   ));
 
-  @Effect() public executeRoleAction: Observable<Action> = this.actions.pipe(
+  @Effect() public executeRoleAction: Observable<{}> = this.actions.pipe(
     ofType(UserTypes.EXECUTE_ROLE_ACTION),
     withLatestFrom(this.store.select(getApplicationInfo)),
     switchMap(([action, applicationInfo]: [any, Application]): any => this.fgeActionService.performAction(
