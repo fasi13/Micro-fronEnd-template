@@ -12,7 +12,6 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   private _editor: any;
 
   @HostListener('keyup') onkeyup() {
-    debugger;
     if (this._editor.editor.mode === 'source') {
       const editorValue = this._editor.editor.getData();
       const controlName = this.config.name;
