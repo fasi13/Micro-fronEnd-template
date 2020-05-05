@@ -19,7 +19,10 @@
       <ngb-panel id="v{{ v.version }}" *ngFor="let v of versions">
         <ng-template ngbPanelTitle>
           <span
-            >version {{ v.version }}
+            >
+            <span *ngIf="0 !==v.version">version {{ v.version }}</span>
+            <span *ngIf="0 === v.version" class="disabled">Inherited</span>
+
             <span class="version-info"
               ><span *ngIf="v.authorId"
                 >{{ v.authorFullName }} (#{{ v.authorId }})</span
@@ -31,11 +34,9 @@
                 class="disabled"
                 >&nbsp;&nbsp;(Current version)</span
               >
-              <span *ngIf="0 === v.version" class="disabled"
-                >&nbsp;&nbsp;(Inherited)</span
-              >
-            </span></span
-          >
+
+            </span>
+          </span>
         </ng-template>
         <ng-template ngbPanelContent>
           <div *ngIf="v.value !== null">
