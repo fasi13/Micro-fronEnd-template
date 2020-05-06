@@ -9,7 +9,7 @@
   <div class="col-1 content-version"
   [ngClass]="{'edited':form.value[config.name] && form.value[config.name] !== contentData.value }">
   <button type="button" class="btn btn-link" (click)="openVersionHistory()">
-    <span>v{{contentData.currentVersion}}</span>
+    <span>v{{contentData.version}}</span>
   </button>
   </div>
 

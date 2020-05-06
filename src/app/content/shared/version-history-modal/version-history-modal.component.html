@@ -15,7 +15,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <ngb-accordion #accordion activeIds="v{{ contentData.currentVersion }}">
+    <ngb-accordion #accordion activeIds="v{{ contentData.version }}">
       <ngb-panel id="v{{ v.version }}" *ngFor="let v of versions">
         <ng-template ngbPanelTitle>
           <span
@@ -30,7 +30,7 @@
               {{ v.creationDate | date: "medium" }}
 
               <span
-                *ngIf="contentData.currentVersion === v.version"
+                *ngIf="contentData.version === v.version"
                 class="disabled"
                 >&nbsp;&nbsp;(Current version)</span
               >

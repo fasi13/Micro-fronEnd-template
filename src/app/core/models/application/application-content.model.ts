@@ -10,5 +10,5 @@ export class ApplicationContent {
   status?: string;
   value?: string;
   _links?: Link[];
-  currentVersion: number;
+  version: number;
 }

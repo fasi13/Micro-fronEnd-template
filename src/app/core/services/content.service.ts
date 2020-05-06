@@ -43,8 +43,8 @@ export class ContentService {
   }
 
   getContent(applicationId: string | number,
-    contentId: string | number): Observable<ApiResponse<ApplicationContent>> {
-    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}?replaceEmbeddedData=false`);
+    contentId: string | number, version?: string | number): Observable<ApiResponse<ApplicationContent>> {
+    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}?replaceEmbeddedData=false${version != null ? '&version=' + version : '' }`);
   }
 
   actionContent(link: Link, body?: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
@@ -59,11 +59,5 @@ export class ContentService {
     contentId: string | number): Observable<ApiResponse<DataPaginated<ContentVersion>>> {
     return this.http.get<ApiResponse<DataPaginated<ContentVersion>>>(`application/${applicationId}/content/${contentId}/history?replaceEmbeddedData=false`);
   }
-
-  getContentVersion(applicationId: string | number,
-    contentId: string | number, version: string | number): Observable<ApiResponse<ContentVersion>> {
-    return this.http.get<ApiResponse<ContentVersion>>(`application/${applicationId}/content/${contentId}/v/${version}?replaceEmbeddedData=false`);
-  }
-
 
 }

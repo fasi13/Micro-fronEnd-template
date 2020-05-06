@@ -62,7 +62,7 @@ export class VersionHistoryModalComponent
       const versionNumber = parseInt(panel.panelId.substr(1), 0);
       const versionItem = this.versions.find(v => v.version === versionNumber);
       if (versionItem.value !== null) { return; }
-      this.contentService.getContentVersion(this.applicationInfo.id, this.contentData.id, versionNumber).subscribe(response => {
+      this.contentService.getContent(this.applicationInfo.id, this.contentData.id, versionNumber).subscribe(response => {
         versionItem.value = response.data.value;
       });
 
@@ -92,7 +92,7 @@ export class VersionHistoryModalComponent
         (response: ApiResponse<DataPaginated<ContentVersion>>) => {
 
         this.versions = response.data.items.map(item => {
-          return {...item, value : item.version === this.contentData.currentVersion ? this.contentData.value : null }; });
+          return {...item, value : item.version === this.contentData.version ? this.contentData.value : null }; });
       this.$ready = true;
       });
 
