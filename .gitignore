@@ -7,7 +7,7 @@
 
 # dependencies
 /node_modules
-
+/src/test-results*
 # IDEs and editors
 /.idea
 .project

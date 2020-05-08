@@ -7,7 +7,7 @@ import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { NgxSummernoteModule } from 'ngx-summernote';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DynamicInlineFormComponent } from './components/dynamic-form/dynamic-inline-form/dynamic-inline-form.component';
@@ -43,7 +43,7 @@ import { ApplicationPathPipe } from './pipes/application-path.pipe';
     NgBootstrapModule,
     RouterModule,
     ColorPickerModule,
-    NgxSummernoteModule
+    CKEditorModule
   ],
   declarations: [
     DynamicFieldDirective,
