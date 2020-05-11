@@ -1,9 +1,9 @@
+
+import { SwitchCultureAction, ReadCultureAction, ReadAvailableCulturesAction } from './../../store/culture/culture.actions';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
 import { takeWhile } from 'rxjs/operators';
-
 import {
   State,
   LogoutAction,
@@ -14,6 +14,7 @@ import {
 } from '@forge/core-store';
 import { User, ApplicationBranding, Application } from '@forge/core';
 import { FgeRouterService } from '../../services';
+import { getCurrentCulture , getAvailableCultures } from './../../store/store.reducers';
 
 @Component({
   selector: 'fge-auth-layout',
@@ -29,8 +30,10 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   activeSidebar = false;
   search = '';
   isNavigationModalOpened = false;
-
+  currentCulture: string;
   private isAliveComponent = true;
+  mySubscription: any;
+  availableCultures: string[];
 
   constructor(
     private store: Store<State>,
@@ -39,7 +42,12 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.InitDispatcher();
     this.initSelectors();
+  }
+  InitDispatcher() {
+    this.store.dispatch(new ReadAvailableCulturesAction());
+    this.store.dispatch(new ReadCultureAction());
   }
 
   ngOnDestroy() {
@@ -67,6 +75,10 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
     this.router.navigate([`/tenant/${appId}/${currentRoute}`]);
   }
 
+
+setContentCulture(cultureCode: string) {
+this.store.dispatch(new SwitchCultureAction({cultureCode: cultureCode}));
+}
   private initSelectors(): void {
     this.store.select(getApplicationInfo)
       .pipe(takeWhile(() => this.isAliveComponent))
@@ -85,6 +97,20 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
           this.rootApplication = this.pathData[0];
         }
       });
+      this.store.select(getAvailableCultures)
+      .pipe(takeWhile(() => this.isAliveComponent))
+      .subscribe((cultures: string[]) => {
+         this.availableCultures = cultures;
+        });
+
+    this.store.select(getCurrentCulture)
+      .pipe(takeWhile(() => this.isAliveComponent))
+      .subscribe((cultureCode: string) => {
+         if (cultureCode && this.currentCulture && cultureCode !== this.currentCulture) {
+         window.location.reload();
+         }
+         this.currentCulture = cultureCode;
+        });
   }
 
   onRediretToResetPassword() {

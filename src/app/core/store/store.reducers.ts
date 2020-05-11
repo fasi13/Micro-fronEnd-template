@@ -9,8 +9,10 @@ import * as UserReducers from './user/user.reducers';
 import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
 import * as ReportReducers from './report/report.reducers';
 import * as SettingsReducers from './settings/settings.reducers';
+import * as CultureReducers from './culture/culture.reducers';
 import { AuthorizationActionTypes } from './authorization/authorization.actions';
 import { StoreActionTypes } from './store.actions';
+
 
 export interface State {
   router: RouterReducerState;
@@ -21,6 +23,7 @@ export interface State {
   resetPassword?: ResetPasswordReducers.ResetPasswordState;
   report?: ReportReducers.ReportState;
   settings?: SettingsReducers.SettingState;
+  culture?: CultureReducers.CultureState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -31,7 +34,8 @@ export const FgeReducers: ActionReducerMap<State> = {
   user: UserReducers.reducer,
   resetPassword: ResetPasswordReducers.reducer,
   report: ReportReducers.reducer,
-  settings: SettingsReducers.reducer
+  settings: SettingsReducers.reducer,
+  culture: CultureReducers.reducer,
 };
 
 /**********************************************************
@@ -254,3 +258,18 @@ export const getSettingGroup = createSelector(
   getSettingState,
   SettingsReducers.getSettingGroup
 );
+
+/**********************************************************
+ * Culture Reducers
+ *********************************************************/
+export const getCultureState = (state: State) => state.culture;
+export const getCurrentCulture = createSelector(
+   getCultureState,
+   CultureReducers.getCurrentCulture
+);
+
+export const getAvailableCultures = createSelector(
+   getCultureState,
+   CultureReducers.getAvailableCultures
+);
+

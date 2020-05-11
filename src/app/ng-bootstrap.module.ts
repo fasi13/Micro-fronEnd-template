@@ -20,7 +20,8 @@ import {
     NgbButtonsModule,
     NgbTooltipModule,
     NgbPaginationModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbDropdownModule
   ],
   exports: [
     NgbPopoverModule,

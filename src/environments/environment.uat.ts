@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://toolsservices-uat.awardcenter.com'
+  apiUrl: 'https://toolsservices-uat.awardcenter.com',
+  cultures : ['en-US', 'en-CA', 'fr-CA' ]
 };
