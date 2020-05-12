@@ -10,7 +10,7 @@ export class CultureService {
   }
 
   getCurrentCulture(): string {
-    return localStorage.getItem('cultureCode');
+    return localStorage.getItem('cultureCode') || 'en-US';
   }
 
   setCurrentCulture(cultureCode: string) {
