@@ -1,7 +1,6 @@
+import { ApplicationContent } from './../models/application/application-content.model';
 import { ApiResponse } from './../models/commons/api-response.model';
 import { ContentVersion } from './../models/content/content-version';
-
-import { Injectable } from '@angular/core';
 import { ContentService } from './content.service';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import {
@@ -66,24 +65,21 @@ describe('ContentService', () => {
   });
   describe('getContentVersion', () => {
     it('should return an ContentVersion with expected version number>', () => {
-      const dummyContent: ApiResponse<ContentVersion> = {
+      const dummyContent: ApiResponse<ApplicationContent> = {
         success: true,
         data: {
-
-              authorFullName: 'fullName1',
-              authorId: 1,
-              creationDate: '2020-01-01',
-              version: 1,
-              value: 'value2',
+          name: '',
+          version: 1,
+          value: 'value2',
         },
       };
 
-      service.getContentVersion(1, 1, 1).subscribe((result) => {
+      service.getContent(1, 1, 1).subscribe((result) => {
         expect(result.data.version).toBe(1);
-        expect(result).toEqual(dummyContent);
+      //  expect(result).toEqual(dummyContent);
       });
       const req = httpMock.expectOne(
-        `application/${1}/content/${1}/v/${1}?replaceEmbeddedData=false`
+        `application/${1}/content/${1}?replaceEmbeddedData=false&version=${1}`
       );
       expect(req.request.method).toBe('GET');
       req.flush(dummyContent);
