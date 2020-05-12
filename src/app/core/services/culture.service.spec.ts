@@ -61,4 +61,12 @@ describe('CultureService', () => {
         expect(service.getCurrentCulture()).toEqual('en-US');
     });
   });
+
+  describe('getAvailableCultures', () => {
+    it('should return a list of cultureCodes',
+      () => {
+        expect(service.getCurrentCulture()).not.toBe(null);
+
+    });
+  });
 });
