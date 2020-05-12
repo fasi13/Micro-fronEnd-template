@@ -34,7 +34,6 @@ export class ReadAvailableCulturesAction implements Action {
 export class ReadAvailableCulturesSuccessAction implements Action {
   readonly type = CultureActionTypes.READ_AVAILABLE_CULTURES_SUCCESS;
   constructor(public payload?: any) {
-    debugger;
   }
 }
 
