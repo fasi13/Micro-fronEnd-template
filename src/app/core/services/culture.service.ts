@@ -14,8 +14,7 @@ export class CultureService {
   }
 
   setCurrentCulture(cultureCode: string) {
-    console.log('Storage: ' + localStorage.getItem('cultureCode'));
     localStorage.setItem('cultureCode', cultureCode);
-    console.log('Storage: ' + localStorage.getItem('cultureCode'));
+    return cultureCode;
   }
 }
