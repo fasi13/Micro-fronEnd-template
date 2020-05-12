@@ -26,7 +26,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       startupFocus : true,
       allowedContent : true,
       embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
-      extraPlugins : ['e2ea11yhelp'],
+      extraPlugins : ['e2ea11yhelp', 'e2etriggerimage'],
       toolbar: [
         { name: 'styles', items: [ 'Format' ] },
         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
@@ -36,12 +36,24 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         { name: 'links', items: [ 'Link', 'Unlink', 'base64image', 'Embed' ] },
         { name: 'tools', items: [ 'Maximize' ] },
         { name: 'document', items: [ 'Source' ] },
-        { name: 'about', items: [ 'About', 'E2EA11yHelp' ] }
+        { name: 'about', items: [ 'About', 'E2EA11yHelp', 'E2ETriggerImage' ] }
       ]};
   }
-get editor() {return this._editor; }
+  get editor() {return this._editor; }
 
   editorReady(editor) {
     this._editor = editor;
+    this._editor.editor.on('imageevent', event => this.imageevent(event));
   }
+
+  imageaction(editor) {
+    editor.insertHtml("[[https://res.cloudinary.com/sfp/image/upload/q_60/cste/f6e7c858-2e8a-4500-b850-a88236a2b4c7.png]]");
+    console.log('image Action executed' + editor);
+  }
+  imageevent(event) {
+    console.log('image button Event caught' + event);
+    this.imageaction(event.editor);
+  }
+
+
 }
