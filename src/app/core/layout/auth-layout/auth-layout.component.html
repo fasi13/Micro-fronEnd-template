@@ -14,7 +14,7 @@
     <div class="dropdown mr-4">
       <div class="nav-item">
         <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-globe text-light" tooltipClass="select-lang-tooltip" placement="bottom" ngbTooltip="Select content language"> {{currentCulture}}</i>
+          <em class="fas fa-globe text-light" tooltipClass="select-lang-tooltip" placement="bottom" ngbTooltip="Select content language"> {{currentCulture}}</em>
 
         </a>
         <div class="dropdown-menu dropdown-menu-right">
@@ -22,7 +22,7 @@
           <div class="dropdown-divider"></div>
         <ng-container *ngFor="let culture of availableCultures">
           <button class="btn-sm dropdown-item fge-clickable" type="button" (click)="setContentCulture(culture)">
-            <i class="fas fa-language  pr-2"></i>{{culture}}
+            <em class="fas fa-language  pr-2"></em>{{culture}}
           </button>
         </ng-container>
         </div>
