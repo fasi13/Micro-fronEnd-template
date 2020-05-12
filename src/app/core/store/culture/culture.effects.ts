@@ -23,8 +23,8 @@ export class CultureEffects {
     switchMap(([_action, _cultureCode]: [CultureAction, string]) =>
      of(this.cultureService.setCurrentCulture(_action.payload.cultureCode))
       .pipe(
-        map(() => {
-          return new ReadCultureSuccessAction({ cultureCode: _action.payload.cultureCode });
+        map((newCulture) => {
+          return new ReadCultureSuccessAction({ cultureCode: newCulture });
         }),
       )
     )
