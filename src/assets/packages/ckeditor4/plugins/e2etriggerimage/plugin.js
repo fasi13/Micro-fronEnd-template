@@ -1,22 +1,20 @@
-﻿ /**
-  * this plugin is derived from a11yhelp plugin from ckeditor.
-  * it adds the ability to have a button in the toolbar to show the accessibility help dialog
-  */
-( function() {
+﻿( function() {
 	CKEDITOR.plugins.add( 'e2etriggerimage', {
     icons: 'e2etriggerimage',
 		init: function( editor ) {
 
+      //we add the definition of our widget to ckeditor.
       editor.widgets.add( 'e2etriggerimage', {
-				//defines what element of editor is your widget
-				template: '<img class="imagewidget"></img>',
-
         //set the text that is going to be saved (that's what you see in source mode)
+        //it replace the widget you see in wysywig mode with the text you want to save in database instead of the widget html
 				downcast: function() {
+
 					return new CKEDITOR.htmlParser.text( '[[' + this.data.image + ']]' );
         },
+
         //initialize this.data.image with the content inside the "src" attribute of your <img> tag
         init: function() {
+
           this.setData( 'image', $(this.element)[0].getAttribute("src") );
 				}
 			});
@@ -38,6 +36,8 @@
         toolbar: 'tools'
       });
     },
+
+    //afterInit will be used to define what we want see in wysywig editor for a given pattern
     afterInit: function( editor ) {
 			var widgetReplaceRegex = /\[\[([^\[\]])+\]\]/g;
 
@@ -50,25 +50,25 @@
 					// but upcast placeholder in custom elements (no DTD).
 					if ( dtd && !dtd.span )
 						return;
-
           //replace the [[imageUrl]] with an <img> tag in editor mode
 					return text.replace( widgetReplaceRegex, function( match ) {
             var matchWithoutBracket = match.slice( 2, -2 );
-            debugger;
+
 						// Creating widget code.
-						var widgetWrapper = null,
-							innerElement = new CKEDITOR.htmlParser.element( 'img', {
-                'class': 'imagewidget',
-                'src': matchWithoutBracket,
+            //define the element that will appear in widget container in wysywig editor
+            innerElement = new CKEDITOR.htmlParser.element( 'img', {
+              'class': 'imagewidget',
+              'src': matchWithoutBracket,
 
-              } );
+            } );
 
+            //wrap the innerElement within a "widget container",
+            //specifying it's for e2etriggerimage widget
+						var widgetElement = editor.widgets.wrapElement( innerElement, 'e2etriggerimage' );
 
-						widgetWrapper = editor.widgets.wrapElement( innerElement, 'e2etriggerimage' );
-
-						// Return outerhtml of widget wrapper so it will be placed
-						// as replacement.
-						return widgetWrapper.getOuterHtml();
+						// Return outerhtml of widget element so it will be placed
+						// as replacement in wysywig.
+						return widgetElement.getOuterHtml();
 					} );
 				}
 			} );
