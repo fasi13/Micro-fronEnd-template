@@ -1,6 +1,7 @@
 ﻿( function() {
 	CKEDITOR.plugins.add( 'e2etriggerimage', {
     icons: 'e2etriggerimage',
+    require:['ajax'],
 		init: function( editor ) {
 
       //we add the definition of our widget to ckeditor.
@@ -45,6 +46,7 @@
 				text: function( text, node ) {
 					var dtd = node.parent && CKEDITOR.dtd[ node.parent.name ];
 
+
           //[VY] i don't understand this condition
 					// Skip the case when widget is in elements like <title> or <textarea>
 					// but upcast placeholder in custom elements (no DTD).
@@ -54,13 +56,19 @@
 					return text.replace( widgetReplaceRegex, function( match ) {
             var matchWithoutBracket = match.slice( 2, -2 );
 
+            var imageUrl = matchWithoutBracket;
+            //TODO: set imageUrl with result of ajax call to api that will return image url. jquery works here $.ajax(...)
+            //another way to do ajax call is CKEDITOR.ajax.load(...)
+
 						// Creating widget code.
             //define the element that will appear in widget container in wysywig editor
             innerElement = new CKEDITOR.htmlParser.element( 'img', {
               'class': 'imagewidget',
-              'src': matchWithoutBracket,
+              'src': imageUrl,
 
             } );
+
+
 
             //wrap the innerElement within a "widget container",
             //specifying it's for e2etriggerimage widget
