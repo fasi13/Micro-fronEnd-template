@@ -16,7 +16,7 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class CultureEffects {
 
-  @Effect() public switchAction$: Observable<Action> = this.actions$
+  @Effect() public switchCulture$: Observable<Action> = this.actions$
   .pipe(
     ofType(CultureActionTypes.SWITCH_CULTURE),
     withLatestFrom(this.store.select(getCurrentCulture)),
