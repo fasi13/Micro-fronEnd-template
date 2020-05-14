@@ -1,11 +1,27 @@
-<h4 class="my-3">
-  <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
-  Content Editor
-</h4>
-<fge-dynamic-form
-  [hidden]="loading$ | async"
-  [fieldsConfig]="[config]"
-  #form="fgeDynamicForm"
-  (onsubmit)="handleSubmit($event)"
-  (oncancel)="handleCancel()">
-</fge-dynamic-form>
+<div class="fge-content-html-editor">
+      <h4 class="my-3">
+        <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+        <span *ngIf="currentContent && form">
+        Content Editor: {{currentContent.name}}
+        <span class="content-version"
+        [ngClass]="{'edited': form.value[config.name] !== currentContent.value}"
+        >
+
+          <button type="button" class="btn btn-link" (click)="openVersionHistory()" *ngIf="currentContent">
+            <span>Version: {{ currentContent.version }}</span>
+          </button>
+        </span>
+      </span>
+      </h4>
+  <fge-dynamic-form
+    [hidden]="loading$ | async"
+    [fieldsConfig]="[config]"
+    #form="fgeDynamicForm"
+    (onsubmit)="handleSubmit($event)"
+    (oncancel)="handleCancel()"
+  >
+  </fge-dynamic-form>
+</div>
+<fge-modal-confirm [config]="configConfirmModal"
+  #copyConfirmModal>
+</fge-modal-confirm>

@@ -6,12 +6,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ContentTypeTextComponent implements OnInit {
 
-  @Input()
-  value: string;
+  @Input() value: string;
 
-  constructor() { }
+  @Input() renderer: boolean;
+  constructor() {
+
+     }
 
   ngOnInit() {
+
+
   }
 
 }

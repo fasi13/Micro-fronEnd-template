@@ -1,3 +1,4 @@
+import { ContentVersion } from './../models/content/content-version';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -42,8 +43,8 @@ export class ContentService {
   }
 
   getContent(applicationId: string | number,
-    contentId: string | number): Observable<ApiResponse<ApplicationContent>> {
-    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}?replaceEmbeddedData=false`);
+    contentId: string | number, version?: string | number): Observable<ApiResponse<ApplicationContent>> {
+    return this.http.get<ApiResponse<ApplicationContent>>(`application/${applicationId}/content/${contentId}?replaceEmbeddedData=false${version != null ? '&version=' + version : '' }`);
   }
 
   actionContent(link: Link, body?: ApplicationContent): Observable<ApiResponse<ApplicationContent>> {
@@ -53,4 +54,10 @@ export class ContentService {
       this.applicationService.performRequest({ href, method: meth }, body) :
       this.applicationService.performRequest({ href, method: meth });
   }
+
+  getContentVersionHistory(applicationId: string | number,
+    contentId: string | number): Observable<ApiResponse<DataPaginated<ContentVersion>>> {
+    return this.http.get<ApiResponse<DataPaginated<ContentVersion>>>(`application/${applicationId}/content/${contentId}/history?replaceEmbeddedData=false`);
+  }
+
 }

@@ -22,6 +22,7 @@ import { ContentHtmlEditorComponent } from './content-html-editor/content-html-e
 import { GroupNotFoundComponent } from './content-error-pages/group-not-found/group-not-found.component';
 import { GroupsListingGuard } from './_guards/groups-listing.guard';
 import { GroupDetailsGuard } from './_guards/group-details.guard';
+import { VersionHistoryModalComponent } from './shared/version-history-modal/version-history-modal.component';
 
 const routes: Routes = [
   {
@@ -71,11 +72,13 @@ const routes: Routes = [
     ContentEditorModalComponent,
     ContentHtmlEditorComponent,
     ContentInlineEditorComponent,
-    GroupNotFoundComponent
+    GroupNotFoundComponent,
+    VersionHistoryModalComponent
   ],
   entryComponents: [
     ContentFormModalComponent,
-    ContentEditorModalComponent
+    ContentEditorModalComponent,
+    VersionHistoryModalComponent
   ]
 })
 export class ContentModule { }
