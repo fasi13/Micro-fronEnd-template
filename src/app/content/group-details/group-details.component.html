@@ -93,7 +93,7 @@
           <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
           <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
         </td>
-        <td>v{{content.currentVersion}}</td>
+        <td>v{{content?.version}}</td>
         <td>{{ content?.status }}</td>
         <td>{{ content.publishDate | date:'medium' }}</td>
       </tr>
