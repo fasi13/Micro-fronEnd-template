@@ -27,6 +27,7 @@ import {
 } from '@forge/core';
 import { ContentVersion } from 'src/app/core/models/content/content-version';
 import { FieldConfig } from '@forge/shared';
+import { CultureService } from '../../../core/services/culture.service';
 
 
 @Component({
@@ -44,17 +45,21 @@ export class VersionHistoryModalComponent
   config:  FieldConfig;
 
   private isAliveComponent = true;
+  private defaultCultureCode = 'en-US';
+  public isDefaultCultureCode: boolean;
   versions: ContentVersion[];
   $ready: boolean;
 
   constructor(
     public activeModal: NgbActiveModal,
     private store: Store<State>,
-    private contentService: ContentService
+    private contentService: ContentService,
+    private cultureService: CultureService
   ) {}
 
   ngOnInit() {
     this.initSelectors();
+    this.isDefaultCultureCode = (this.defaultCultureCode.toLowerCase() === this.cultureService.getCurrentCulture().toLowerCase());
   }
 
   ngAfterViewInit() {
@@ -87,10 +92,8 @@ export class VersionHistoryModalComponent
     .pipe(takeWhile(() => this.isAliveComponent))
     .subscribe((applicationInfo: Application) => {
       this.applicationInfo = applicationInfo;
-
       this.contentService.getContentVersionHistory(this.applicationInfo.id, this.contentData.id).subscribe(
         (response: ApiResponse<DataPaginated<ContentVersion>>) => {
-
         this.versions = response.data.items.map(item => {
           return {...item, value : item.version === this.contentData.version ? this.contentData.value : null }; });
       this.$ready = true;
