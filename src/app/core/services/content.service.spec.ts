@@ -76,10 +76,31 @@ describe('ContentService', () => {
 
       service.getContent(1, 1, 1).subscribe((result) => {
         expect(result.data.version).toBe(1);
-      //  expect(result).toEqual(dummyContent);
+        //  expect(result).toEqual(dummyContent);
       });
       const req = httpMock.expectOne(
         `application/${1}/content/${1}?replaceEmbeddedData=false&version=${1}`
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(dummyContent);
+    });
+
+    it('should return an ContentVersion with last version', () => {
+      const dummyContent: ApiResponse<ApplicationContent> = {
+        success: true,
+        data: {
+          name: '',
+          version: 99,
+          value: 'value2',
+        },
+      };
+
+      service.getContent(1, 1).subscribe((result) => {
+        expect(result.data.version).toBe(99);
+        //  expect(result).toEqual(dummyContent);
+      });
+      const req = httpMock.expectOne(
+        `application/${1}/content/${1}?replaceEmbeddedData=false`
       );
       expect(req.request.method).toBe('GET');
       req.flush(dummyContent);
