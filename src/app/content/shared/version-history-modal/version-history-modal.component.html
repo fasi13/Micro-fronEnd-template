@@ -22,8 +22,8 @@
             <span *ngIf="0 === v.version" class="disabled">Inherited</span>
 
             <span class="version-info"
-              ><span *ngIf="v.authorId"
-                >{{ v.authorFullName }} (#{{ v.authorId }})</span
+              ><span *ngIf="v.authorFullName"
+                >{{ v.authorFullName }}</span
               >&nbsp;&nbsp;
               {{ v.creationDate | date: "medium" }}
 
