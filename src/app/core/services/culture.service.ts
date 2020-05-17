@@ -1,8 +1,9 @@
+
 import { environment } from './../../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CultureService {
   getAvailableCultures(): string[] {
@@ -10,11 +11,20 @@ export class CultureService {
   }
 
   getCurrentCulture(): string {
-    return localStorage.getItem('cultureCode') || 'en-US';
+    return localStorage.getItem('cultureCode') || this.DefaultCulture;
   }
 
   setCurrentCulture(cultureCode: string) {
     localStorage.setItem('cultureCode', cultureCode);
-    return cultureCode;
+    return this.getCurrentCulture();
+  }
+
+  resetCurrentCultureToDefault() {
+    this.setCurrentCulture(this.DefaultCulture);
+    return this.getCurrentCulture();
+  }
+
+  get DefaultCulture(): string {
+    return this.getAvailableCultures()[0];
   }
 }

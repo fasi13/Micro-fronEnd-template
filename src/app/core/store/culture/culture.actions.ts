@@ -1,4 +1,3 @@
-
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
 /* tslint:disable:max-classes-per-file */
@@ -8,7 +7,10 @@ export const CultureActionTypes = {
   READ_CULTURE: ActionType('READ_CULTURE'),
   READ_CULTURE_SUCCESS: ActionType('READ_CULTURE_SUCCES'),
   READ_AVAILABLE_CULTURES: ActionType('READ_AVAILABLE_CULTURES'),
-  READ_AVAILABLE_CULTURES_SUCCESS: ActionType('READ_AVAILABLE_CULTURES_SUCCESS'),
+  READ_AVAILABLE_CULTURES_SUCCESS: ActionType(
+    'READ_AVAILABLE_CULTURES_SUCCESS'
+  ),
+  RESET_CULTURE: ActionType('RESET_CULTURE'),
 };
 
 export class SwitchCultureAction implements Action {
@@ -33,8 +35,12 @@ export class ReadAvailableCulturesAction implements Action {
 
 export class ReadAvailableCulturesSuccessAction implements Action {
   readonly type = CultureActionTypes.READ_AVAILABLE_CULTURES_SUCCESS;
-  constructor(public payload?: any) {
-  }
+  constructor(public payload?: any) {}
+}
+
+export class ResetCultureAction implements Action {
+  readonly type = CultureActionTypes.RESET_CULTURE;
+  constructor(public payload?: any) {}
 }
 
 export type CultureAction =
@@ -42,4 +48,5 @@ export type CultureAction =
   | ReadCultureAction
   | ReadCultureSuccessAction
   | ReadAvailableCulturesAction
-  | ReadAvailableCulturesSuccessAction;
+  | ReadAvailableCulturesSuccessAction
+  | ResetCultureAction;

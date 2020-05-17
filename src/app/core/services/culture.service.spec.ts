@@ -1,9 +1,6 @@
 import { CultureService } from './culture.service';
 import { TestBed, getTestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+
 
 
 describe('CultureService', () => {
@@ -40,6 +37,15 @@ describe('CultureService', () => {
 
   });
 
+  describe('resetToDefault', () => {
+    it('should clear the localstorage',
+      () => {
+        service.setCurrentCulture('cul-CUL');
+        service.resetCurrentCultureToDefault();
+        expect(localStorage.getItem('cultureCode')).toBe('en-US');
+    });
+  });
+
   describe('setCurrentCulture', () => {
     it('should store the cultureCode',
       () => {
@@ -47,6 +53,7 @@ describe('CultureService', () => {
         expect(localStorage.getItem('cultureCode')).toEqual('cul-CUL');
     });
   });
+
   describe('getCurrentCulture', () => {
     it('should return stored cultureCode if exists',
       () => {

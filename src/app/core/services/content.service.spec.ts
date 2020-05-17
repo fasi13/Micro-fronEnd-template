@@ -36,14 +36,14 @@ describe('ContentService', () => {
           items: [
             {
               authorFullName: 'fullName1',
-              authorId: 1,
+
               creationDate: '2020-01-01',
               version: 1,
               value: 'value2',
             },
             {
               authorFullName: 'fullName2',
-              authorId: 1,
+
               creationDate: '2020-01-02',
               version: 1,
               value: 'value2',

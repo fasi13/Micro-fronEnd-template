@@ -59,7 +59,8 @@ export function clearStoredData(
     if (action.type === StoreActionTypes.CLEAR_STORED_DATA) {
       state = Object.assign(state, {
         content: ContentReducers.initialState,
-        user: UserReducers.initialState
+        user: UserReducers.initialState,
+        culture: CultureReducers.initialState
       });
     }
     return reducer(state, action);

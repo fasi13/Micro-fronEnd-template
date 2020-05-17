@@ -5,6 +5,7 @@ import {
   SwitchCultureAction,
   ReadAvailableCulturesAction,
   ReadAvailableCulturesSuccessAction,
+  ResetCultureAction,
 } from './culture.actions';
 import { CultureEffects } from './culture.effects';
 import { TestBed } from '@angular/core/testing';
@@ -21,7 +22,11 @@ describe('CultureEffects', () => {
   let service: CultureService;
   let currentCulture: string;
   let availables: string[];
+  let originalTimeout: number;
   beforeEach(() => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({ ...CultureReducers.reducer })],
       providers: [
@@ -37,19 +42,21 @@ describe('CultureEffects', () => {
     spyOn(store, 'select').and.callFake(() => currentCulture);
     spyOn(service, 'setCurrentCulture').and.callFake((value) => {
       currentCulture = value;
-      console.log('Set currentCulture ' + currentCulture);
+      // console.log('Set currentCulture ' + currentCulture);
       return currentCulture;
     });
 
     spyOn(service, 'getCurrentCulture').and.callFake(() => {
-      console.log('Get currentCulture ' + currentCulture);
+      // console.log('Get currentCulture ' + currentCulture);
       return currentCulture;
     });
 
     spyOn(service, 'getAvailableCultures').and.callFake(() => {
-      console.log('Get available cultures ' + JSON.stringify(availables));
+      // console.log('Get available cultures ' + JSON.stringify(availables));
       return availables;
     });
+
+    spyOn(service, 'resetCurrentCultureToDefault').and.callThrough();
 
     effects = TestBed.get(CultureEffects);
   });
@@ -87,6 +94,25 @@ describe('CultureEffects', () => {
       });
       const expected = cold('--b', { b: completion });
       expect(effect).toBeObservable(expected);
+
     });
+  });
+
+  it('Reset should return a stream with string read success action Default', () => {
+    const action = new ResetCultureAction();
+    actions = hot('--a-', { a: action });
+    const effect = effects.resetCulture$.subscribe(() => {
+      const completion = new ReadCultureSuccessAction({
+        cultureCode: currentCulture,
+      });
+      const expected = cold('--b', { b: completion });
+      expect(effect).toBeObservable(expected);
+
+    });
+  });
+
+
+  afterEach(function () {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 });

@@ -1,5 +1,5 @@
 
-import { SwitchCultureAction, ReadCultureAction, ReadAvailableCulturesAction } from './../../store/culture/culture.actions';
+import { SwitchCultureAction, ReadCultureAction, ReadAvailableCulturesAction, ResetCultureAction } from './../../store/culture/culture.actions';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -55,6 +55,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   }
 
   onLogoutClicked(event: Event): void {
+    this.store.dispatch(new ResetCultureAction());
     this.store.dispatch(new LogoutAction(event.type));
   }
 

@@ -58,6 +58,20 @@ export class CultureEffects {
   )
 );
 
+@Effect() public resetCulture$: Observable<Action> = this.actions$
+.pipe(
+  ofType(CultureActionTypes.RESET_CULTURE),
+  withLatestFrom(this.store.select(getCurrentCulture)),
+  switchMap(([_action, _cultureCode]: [CultureAction, string]) =>
+   of(this.cultureService.resetCurrentCultureToDefault())
+    .pipe(
+      map((newCulture) => {
+        return new ReadCultureSuccessAction({ cultureCode: newCulture });
+      }),
+    )
+  )
+);
+
   constructor(
     private actions$: Actions,
     private store: Store<State>,

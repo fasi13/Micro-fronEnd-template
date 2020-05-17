@@ -1,21 +1,24 @@
-
-
-import { CultureActionTypes,  CultureAction } from './culture.actions';
+import { CultureActionTypes, CultureAction } from './culture.actions';
 
 export interface CultureState {
   currentCulture: string;
   availableCultures: string[];
 }
-export const initialState: CultureState = { currentCulture : null , availableCultures : [] };
+export const initialState: CultureState = {
+  currentCulture: null,
+  availableCultures: [],
+};
 
-export function reducer(state: CultureState = initialState, action: CultureAction): CultureState {
-
+export function reducer(
+  state: CultureState = initialState,
+  action: CultureAction
+): CultureState {
   switch (action.type) {
-      case CultureActionTypes.READ_CULTURE_SUCCESS:
-       return {...state, currentCulture : action.payload.cultureCode};
-       case CultureActionTypes.READ_AVAILABLE_CULTURES_SUCCESS:
-        return {...state, availableCultures : action.payload.availableCultures};
-       default:
+    case CultureActionTypes.READ_CULTURE_SUCCESS:
+      return { ...state, currentCulture: action.payload.cultureCode };
+    case CultureActionTypes.READ_AVAILABLE_CULTURES_SUCCESS:
+      return { ...state, availableCultures: action.payload.availableCultures };
+    default:
       return state;
   }
 }
@@ -27,6 +30,5 @@ export function reducer(state: CultureState = initialState, action: CultureActio
  * @returns {string}
  */
 export const getCurrentCulture = (state: CultureState) => state.currentCulture;
-export const getAvailableCultures = (state: CultureState) => state.availableCultures;
-
-
+export const getAvailableCultures = (state: CultureState) =>
+  state.availableCultures;
