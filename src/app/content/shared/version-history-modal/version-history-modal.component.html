@@ -19,9 +19,9 @@
           <span
             >
             <span *ngIf="0 !==v.version">Version {{ v.version }}</span>
-            <span *ngIf="0 === v.version" class="disabled">Inherited</span>
-
-            <span class="version-info"
+            <span *ngIf="0 === v.version && isDefaultCultureCode" class="disabled">Inherited</span>
+            <span *ngIf="0 === v.version && !isDefaultCultureCode" class="disabled">Default en-US</span>
+            <span class="version-info" *ngIf="0 !== v.version && !isDefaultCultureCode"
               ><span *ngIf="v.authorFullName"
                 >{{ v.authorFullName }}</span
               >&nbsp;&nbsp;
