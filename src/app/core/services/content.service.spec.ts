@@ -36,14 +36,14 @@ describe('ContentService', () => {
           items: [
             {
               authorFullName: 'fullName1',
-              authorId: 1,
+
               creationDate: '2020-01-01',
               version: 1,
               value: 'value2',
             },
             {
               authorFullName: 'fullName2',
-              authorId: 1,
+
               creationDate: '2020-01-02',
               version: 1,
               value: 'value2',
@@ -64,7 +64,7 @@ describe('ContentService', () => {
     });
   });
   describe('getContentVersion', () => {
-    it('should return an ContentVersion with expected version number>', () => {
+    it('should return an ContentVersion with expected version number', () => {
       const dummyContent: ApiResponse<ApplicationContent> = {
         success: true,
         data: {
@@ -76,7 +76,7 @@ describe('ContentService', () => {
 
       service.getContent(1, 1, 1).subscribe((result) => {
         expect(result.data.version).toBe(1);
-        //  expect(result).toEqual(dummyContent);
+        expect(result).toEqual(dummyContent);
       });
       const req = httpMock.expectOne(
         `application/${1}/content/${1}?replaceEmbeddedData=false&version=${1}`
@@ -97,7 +97,7 @@ describe('ContentService', () => {
 
       service.getContent(1, 1).subscribe((result) => {
         expect(result.data.version).toBe(99);
-        //  expect(result).toEqual(dummyContent);
+        expect(result).toEqual(dummyContent);
       });
       const req = httpMock.expectOne(
         `application/${1}/content/${1}?replaceEmbeddedData=false`
