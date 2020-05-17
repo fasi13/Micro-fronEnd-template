@@ -7,7 +7,8 @@ import {
   NgbTypeaheadModule,
   NgbButtonsModule,
   NgbPaginationModule,
-  NgbDatepickerModule
+  NgbDatepickerModule,
+  NgbAccordionModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -20,8 +21,8 @@ import {
     NgbButtonsModule,
     NgbTooltipModule,
     NgbPaginationModule,
-    NgbDatepickerModule
-
+    NgbDatepickerModule,
+    NgbAccordionModule
   ],
   exports: [
     NgbPopoverModule,
@@ -30,7 +31,8 @@ import {
     NgbButtonsModule,
     NgbTooltipModule,
     NgbPaginationModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbAccordionModule
   ]
 })
 export class NgBootstrapModule { }
