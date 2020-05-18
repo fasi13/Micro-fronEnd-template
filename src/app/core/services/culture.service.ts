@@ -1,5 +1,5 @@
 
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class CultureService {
   getAvailableCultures(): string[] {
-    return environment.cultures;
+    return (environment as any).cultures;
   }
 
   getCurrentCulture(): string {
