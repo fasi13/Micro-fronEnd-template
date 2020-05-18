@@ -101,12 +101,15 @@ this.store.dispatch(new SwitchCultureAction({cultureCode: cultureCode}));
       this.store.select(getAvailableCultures)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((cultures: string[]) => {
-         this.availableCultures = cultures;
+        if (cultures && cultures.length) {
+          this.availableCultures = cultures;
+        }
         });
 
     this.store.select(getCurrentCulture)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((cultureCode: string) => {
+        if (!cultureCode) {return; }
          if (cultureCode && this.currentCulture && cultureCode !== this.currentCulture) {
          window.location.reload();
          }
