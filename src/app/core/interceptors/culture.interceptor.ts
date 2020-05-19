@@ -18,7 +18,7 @@ export class CultureInterceptor implements HttpInterceptor {
     const culture: string = this.cultureService.getCurrentCulture();
     const header = {
       setHeaders: {
-        CultureCode: culture || 'en-US',
+        'Accept-Language': culture || 'en-US',
       },
     };
     req = req.clone(header);
