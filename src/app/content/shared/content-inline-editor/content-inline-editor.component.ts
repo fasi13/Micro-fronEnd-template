@@ -1,3 +1,5 @@
+import { ContentVersion } from './../../../core/models/content/content-version';
+import { VersionHistoryModalComponent } from './../version-history-modal/version-history-modal.component';
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
@@ -36,6 +38,8 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   @Input() config: FieldConfig;
   @ViewChild(DynamicInlineFormComponent) form: DynamicInlineFormComponent;
   @ViewChild('confirmModal') confirmModal: ModalConfirmComponent;
+  @ViewChild('copyConfirmModal') copyConfirmModal: ModalConfirmComponent;
+
 
   linkActions: Link[];
   configConfirmModal: ModalConfirmConfig;
@@ -128,6 +132,32 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
         break;
     }
     this.confirmModal.close();
+  }
+
+  openVersionHistory(): void {
+    this.modalRef = this.modalService.open(VersionHistoryModalComponent, { windowClass: 'modal-content-form' });
+    this.modalRef.componentInstance.contentData = this.contentData;
+    this.modalRef.componentInstance.form = this.form.form;
+    this.modalRef.componentInstance.config = this.config;
+    this.fgeModalService.registerModal(this.modalRef);
+    this.modalRef.result.then((contentVersion: ContentVersion) => {
+    if (!contentVersion) {return; }
+    if (this.form.form.value[this.config.name] !== this.contentData.value) {
+        this.configConfirmModal = {
+          title: 'Copy confirmation',
+          message: 'Are you sure you want to copy the content? Your latest changes will be overridden.',
+          submitLabel: 'Accept',
+          cancelLabel: 'Cancel',
+        };
+        this.copyConfirmModal.onsubmit.subscribe(() => {
+        this.form.form.patchValue({[this.form.config.name]: contentVersion.value});
+        this.copyConfirmModal.close();
+        });
+        this.copyConfirmModal.open();
+    } else {
+      this.form.form.patchValue({[this.form.config.name]: contentVersion.value});
+    }
+    });
   }
 
   private dispatchContentAction(link: Link, payload: any) {

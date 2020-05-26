@@ -1,3 +1,6 @@
-<div class="fge-content-type__html">
-  <i class="fas fa-code"></i>
-</div>
+<ng-template #icon>
+  <div class="fge-content-type__html">
+    <i class="fas fa-code"></i>
+  </div>
+</ng-template>
+<div *ngIf="renderer; else icon" [innerHTML]="value"></div>
