@@ -7,14 +7,12 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store, Action } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { ContentState } from 'src/app/core/store/content/content.reducers';
 import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
-import { InitialState } from '@ngrx/store/src/models';
 import { State } from 'src/app/core/store/store.reducers';
-import * as ContentActions   from './../../core/store/content/content.actions';
+
 
 
 describe('ContentHtmlEditorComponent', () => {
@@ -153,4 +151,4 @@ describe('ContentHtmlEditorComponent', () => {
 
 });
 
-})
+
