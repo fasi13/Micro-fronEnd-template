@@ -115,6 +115,7 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
 
 
   private goToContentGroup(): void {
+    /* istanbul ignore next */
     this.fgeRouter.navigate(`content/group/${this.groupId}`);
   }
 
