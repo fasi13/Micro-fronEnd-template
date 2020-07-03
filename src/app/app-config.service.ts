@@ -10,7 +10,7 @@ export class AppConfigService {
     const jsonFile = '/assets/config/app-config.json?v=' + cacheBuster;
     return new Promise<void>((resolve, reject) => {
         this.http.get(jsonFile).toPromise().then((response: IAppConfig) => {
-            this._config = <IAppConfig>response;
+            this._config = response;
             resolve();
         }).catch(() => {
             reject('Failed to load the app-config.json file');
