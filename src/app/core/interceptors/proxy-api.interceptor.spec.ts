@@ -41,17 +41,20 @@ describe(`ProxyApiInterceptor`, () => {
     appConfigService = TestBed.get(AppConfigService);
     service = TestBed.get(DummyHttpService);
     httpMock = TestBed.get(HttpTestingController);
+    spyOnProperty(appConfigService, 'config', 'get').and.returnValue({apiUrl:'http://goodjob.com'});
   });
 
   it('should not add api url', () => {
-    spyOnProperty(appConfigService, 'config', 'get').and.returnValue({apiUrl:'http://goodjob.com'});
     service.load('app-config.json');
     httpMock.expectOne('app-config.json');
   });
 
   it('should add api url', () => {
-    spyOnProperty(appConfigService, 'config', 'get').and.returnValue({apiUrl:'http://goodjob.com'});
     service.load('hello');
     httpMock.expectOne('http://goodjob.com/hello');
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 });
