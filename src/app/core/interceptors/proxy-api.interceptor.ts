@@ -8,18 +8,20 @@ import {
 import _isEmpty from 'lodash/isEmpty';
 
 import { Observable } from 'rxjs';
+import { AppConfigService } from 'src/app/app-config.service';
 
-import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ProxyApiInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private appConfigService: AppConfigService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!_isEmpty(environment.apiUrl) && !request.url.startsWith('http')) {
+    if (request.url.indexOf('app-config.json') === -1
+      && !_isEmpty(this.appConfigService.config.apiUrl)
+      && !request.url.startsWith('http')) {
       request = request.clone({
-        url: `${environment.apiUrl}/${request.url}`
+        url: `${this.appConfigService.config.apiUrl}/${request.url}`
       });
     }
     return next.handle(request);
