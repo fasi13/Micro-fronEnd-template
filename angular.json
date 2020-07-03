@@ -81,12 +81,6 @@
           "configurations": {
             "production": {
               "browserTarget": "forge-website:build:production"
-            },
-            "qa": {
-              "browserTarget": "forge-website:build:qa"
-            },
-            "uat": {
-              "browserTarget": "forge-website:build:uat"
             }
           }
         },
