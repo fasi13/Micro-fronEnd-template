@@ -28,10 +28,18 @@ steps:
   displayName: 'Build Project'
   inputs:
     command: custom
-    customCommand: run build
-
-- task: PublishPipelineArtifact@0
+    customCommand: run build        
+   
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'dist\forge-website'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(project).zip'
+    replaceExistingArchive: true
+- task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
-    artifactName: '$(project)'
-    targetPath: 'dist'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(project)'
+    publishLocation: 'Container'        
