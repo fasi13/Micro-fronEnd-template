@@ -17,11 +17,14 @@ export class ProxyApiInterceptor implements HttpInterceptor {
   constructor(private appConfigService: AppConfigService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     if (request.url.indexOf('app-config.json') === -1
-      && !_isEmpty(this.appConfigService.config.apiUrl)
+      && !_isEmpty(this.appConfigService.config.apis)
       && !request.url.startsWith('http')) {
+        debugger;
+        const api = this.appConfigService.config.apis.find(a => new RegExp(a.routePatern).test(request.url));
       request = request.clone({
-        url: `${this.appConfigService.config.apiUrl}/${request.url}`
+        url: `${api.url}/${request.url}`
       });
     }
     return next.handle(request);

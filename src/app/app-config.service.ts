@@ -23,7 +23,10 @@ export class AppConfigService {
 }
 
 export interface IAppConfig {
-  apiUrl: string;
+  apis: {
+  name: string;
+  routePatern: RegExp;
+  url: string; }[];
 }
 
 export function initializeApp(appConfigService: AppConfigService) {

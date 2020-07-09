@@ -1,3 +1,14 @@
 {
-  "apiUrl": "https://localhost:44391"
+  "apis": [
+    {
+      "name": "ContentManagement.API",
+      "routePatern": "application\/|users\/",
+      "url": "https://localhost:44391"
+    },
+    {
+      "name": "E2E.Hiearchy.API",
+      "routePatern": "applications\/",
+      "url": "http://localhost:54042"
+    }
+  ]
 }

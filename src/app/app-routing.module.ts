@@ -66,7 +66,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
       preloadingStrategy: PreloadAllModules,
-      paramsInheritanceStrategy: 'always'
+      paramsInheritanceStrategy: 'always',
+      enableTracing: true
     })
   ],
   exports: [RouterModule]

@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         filter(isAuth => isAuth)
       )
       .subscribe(() => {
+        debugger;
         const routePath = this.goToRoute || '/';
         this.store.dispatch(new Go({ path: [routePath] }));
       });
