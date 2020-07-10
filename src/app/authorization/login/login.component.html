@@ -16,7 +16,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <i class="fas fa-user"></i>
+                    <span class="fas fa-user"></span>
                   </span>
                 </div>
                 <input
@@ -33,7 +33,7 @@
                   required
                 />
                 <div *ngIf="login.submitted && username.invalid" class="invalid-feedback">
-                    <div *ngIf="username.errors.required"><i class="fas fa-exclamation-circle pr-1"></i>Username is required</div>
+                    <div *ngIf="username.errors.required"><span class="fas fa-exclamation-circle pr-1"></span>Username is required</div>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <i class="fas fa-unlock"></i>
+                    <span class="fas fa-unlock"></span>
                   </span>
                 </div>
                 <input
@@ -56,18 +56,18 @@
                   required
                 />
                 <div *ngIf="login.submitted && password.invalid" class="invalid-feedback">
-                    <div *ngIf="password.errors.required"><i class="fas fa-exclamation-circle pr-1"></i>Password is required</div>
+                    <div *ngIf="password.errors.required"><span class="fas fa-exclamation-circle pr-1"></span>Password is required</div>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <div *ngIf="login.submitted && !password.invalid && !username.invalid && hasLoginErrors" class="fge-login__div--auth-error">
-                <i class="fas fa-exclamation-circle pr-1"></i>
+                <span class="fas fa-exclamation-circle pr-1"></span>
                 Incorrect username or password provided. If this problem continues, please contact to your system administrator.
               </div>
             </div>
             <div class="form-group mb-0">
-              <button class="btn btn-primary btn-block" [disabled]="loading$ | async"><span class="px-2">LOGIN</span><i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i></button>
+              <button class="btn btn-primary btn-block" [disabled]="loading$ | async"><span class="px-2">LOGIN</span><span *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></span></button>
             </div>
           </form>
         </div>

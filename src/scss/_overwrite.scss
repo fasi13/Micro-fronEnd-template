@@ -23,6 +23,8 @@ ngb-pagination {
 .modal-header {
   border-bottom: none !important;
   padding-bottom: 0px !important;
+  text-align: center;
+  padding: 1rem !important;
 }
 
 .modal-body {
@@ -40,11 +42,6 @@ ngb-pagination {
   right: 0;
   margin-left: auto;
   margin-right: auto;
-}
-
-.modal-header {
-  text-align: center;
-  padding: 1rem !important;
 }
 
 .modal-content-form .modal-dialog {
