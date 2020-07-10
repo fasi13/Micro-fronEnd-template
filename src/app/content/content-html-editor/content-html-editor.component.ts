@@ -112,6 +112,13 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
     this.groupId = groupId;
   }
 
+
+
+  private goToContentGroup(): void {
+    /* istanbul ignore next */
+    this.fgeRouter.navigate(`content/group/${this.groupId}`);
+  }
+
   private initContent(): void {
     this.store.select(getContent)
       .pipe(
@@ -123,10 +130,6 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
           this.currentContent = content;
         }
       });
-  }
-
-  private goToContentGroup(): void {
-    this.fgeRouter.navigate(`content/group/${this.groupId}`);
   }
 
   handleCancel(): void {
