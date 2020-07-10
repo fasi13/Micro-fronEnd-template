@@ -1,6 +1,6 @@
 <div class="fge-group--title row">
   <h4 class="my-2 col-10">
-    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+    <span *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></span>
     {{ currentGroup?.name }}
     <button
       *ngIf="!(loading$ | async)"
@@ -10,7 +10,7 @@
       (click)="toggleEditMode()"
     >
     Edit
-    <i class="fas fa-edit pl-1"></i>
+    <span class="fas fa-edit pl-1"></span>
     </button>
   </h4>
   <div class="col text-right align-self-center">
@@ -19,7 +19,7 @@
       class="btn btn-sm btn-secondary bg-secondary"
       (click)="openContentForm()">
       Add Content
-      <i class="fas fa-folder-plus fa-lg pl-1"></i>
+      <span class="fas fa-folder-plus fa-lg pl-1"></span>
     </button>
   </div>
 </div>

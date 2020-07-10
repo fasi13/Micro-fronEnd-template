@@ -10,22 +10,22 @@
       </ng-container>
       <div class="fge-dynamic-inline-form__button"
         *ngIf="fieldChanged && config.type !== 'select'">
-        <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></i>
+        <span *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin"></span>
         <button type="submit" class="btn btn-link p-1 fge-clickable"
           [disabled]="loadingAsyncResponse || form.invalid">
-          <i class="fas fa-check-circle fa-lg text-secondary"></i>
+          <span class="fas fa-check-circle fa-lg text-secondary"></span>
         </button>
         <button type="button" class="btn btn-link p-1 fge-clickable"
           [disabled]="loadingAsyncResponse"
           (click)="handleCancel($event)">
-          <i class="fas fa-times-circle fa-lg text-secondary"></i>
+          <span class="fas fa-times-circle fa-lg text-secondary"></span>
         </button>
       </div>
     </div>
   </div>
   <div class="form-group" *ngIf="errors">
     <div class="fge-dynamic-form--error" *ngFor="let error of errors">
-      <i class="fas fa-exclamation-circle pr-1"></i>
+      <span class="fas fa-exclamation-circle pr-1"></span>
       {{ error }}
     </div>
   </div>
