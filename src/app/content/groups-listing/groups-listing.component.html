@@ -1,17 +1,17 @@
 <div class="fge-group--title row">
   <h4 class="my-2 col-10">
-    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+    <span *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></span>
     Content Groups
     <div class="btn-group btn-group-toggle fge-group--btn-group-toggle"
       ngbRadioGroup name="radioBasic" [(ngModel)]="displayMode"
       (ngModelChange)="updatePreference($event)">
       <label ngbButtonLabel class="btn-secondary bg-secondary btn-sm">
         <input ngbButton type="radio" value="list">
-        <i class="fas fa-list-ul"></i>
+        <span class="fas fa-list-ul"></span>
       </label>
       <label ngbButtonLabel class="btn-secondary bg-secondary btn-sm">
         <input ngbButton type="radio" value="grid">
-        <i class="fas fa-th"></i>
+        <span class="fas fa-th"></span>
       </label>
     </div>
   </h4>
@@ -21,7 +21,7 @@
       class="btn btn-sm btn-secondary bg-secondary"
       (click)="groupFormModal.open()">
       Add Group
-      <i class="fas fa-folder-plus fa-lg pl-1"></i>
+      <span class="fas fa-folder-plus fa-lg pl-1"></span>
     </button>
   </div>
 </div>
@@ -58,7 +58,7 @@
       <div class="card-body">
         <h5 class="card-title">
           <a tabindex="0" class="fge-clickable" (click)="goToContentGroup(group.id)">
-            <i class="far fa-object-group pr-2"></i>
+            <span class="far fa-object-group pr-2"></span>
             {{ group?.name }}
           </a>
         </h5>
@@ -76,18 +76,18 @@
     tabindex="0"
     class="btn btn-secondary bg-secondary btn-sm mr-2"
     (click)="groupFormModal.open(group)">
-    <i class="far fa-edit"></i>
+    <span class="far fa-edit"></span>
   </a>
   <a
     tabindex="0"
     class="btn btn-secondary bg-secondary btn-sm mr-2"
     (click)="goToContentGroup(group.id)">
-    <i class="fas fa-info-circle"></i>
+    <span class="fas fa-info-circle"></span>
   </a>
   <a
     tabindex="0"
     class="btn btn-secondary bg-secondary btn-sm mr-2 disabled">
-    <i class="far fa-trash-alt"></i>
+    <span class="far fa-trash-alt"></span>
   </a>
 </ng-template>
 

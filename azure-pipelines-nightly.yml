@@ -33,7 +33,7 @@ steps:
     cliSources: '.'
     extraProperties: |
         sonar.sources=src
-        sonar.exclusions=**/node_modules/**
+        sonar.exclusions=**/node_modules/**,src/assets/**
         sonar.tests=src
         sonar.test.inclusions=**/*.spec.ts;**/*.spec.js
         sonar.typescript.lcov.reportPaths=coverage/lcov.info

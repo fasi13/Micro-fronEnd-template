@@ -1,6 +1,6 @@
 <div class="fge-group--title row">
   <h4 class="fge-group--title-divider my-2 col-10">
-    <i *ngIf="rolesState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">Role Management</span>
+    <span *ngIf="rolesState?.loading" class="fas fa-circle-notch fa-spin"></span><span class="pl-2">Role Management</span>
   </h4>
   <div class="col text-right align-self-center">
     <button
@@ -8,7 +8,7 @@
       class="btn btn-sm btn-secondary bg-secondary"
       (click)="roleFormModal.open()">
       Add Role
-      <i class="fas fa-user-plus pl-1"></i>
+      <span class="fas fa-user-plus pl-1"></span>
     </button>
   </div>
 </div>
@@ -35,7 +35,7 @@
     </div>
     <div *ngIf="rolesState?.selected?.id === role.id" class="fge-user--role-details row">
       <span class="w-100 text-center" *ngIf="rolesState?.selected?.loading">
-        <i class="fas fa-lg fa-circle-notch fa-spin"></i>
+        <span class="fas fa-lg fa-circle-notch fa-spin"></span>
       </span>
       <ng-container [ngSwitch]="selectedContainer" *ngIf="!rolesState?.selected?.loading">
         <fge-role-permissions class="w-100" *ngSwitchCase="'permissions'" [permissions]="rolesState?.selected?.permissions"></fge-role-permissions>
@@ -52,20 +52,20 @@
       class="btn btn-sm btn-secondary bg-secondary"
       [ngClass]="{ 'active': rolesState?.selected?.id === id && selectedContainer === 'permissions' }"
       (click)="showContainerFor($event, role, 'permissions')">
-      <i class="fas fa-cog"></i>
+      <span class="fas fa-cog"></span>
     </button>
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary ml-2"
       [ngClass]="{ 'active': rolesState?.selected?.id === id && selectedContainer === 'users' }"
       (click)="showContainerFor($event, role, 'users')">
-      <i class="fas fa-user"></i>
+      <span class="fas fa-user"></span>
     </button>
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary ml-2"
       (click)="deleteConfirmation($event, deleteRoleModal, role)">
-      <i class="fas fa-trash"></i>
+      <span class="fas fa-trash"></span>
     </button>
   </div>
 </ng-template>
