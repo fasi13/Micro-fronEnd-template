@@ -1,3 +1,4 @@
+import { HttpResponseLinksInterceptor } from './http-response.links.interceptors';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProxyApiInterceptor } from './proxy-api.interceptor';
@@ -23,6 +24,11 @@ export const httpInterceptorProviders = [{
   }, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpResponseInterceptor,
+    multi: true
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpResponseLinksInterceptor,
     multi: true
   }
 ];

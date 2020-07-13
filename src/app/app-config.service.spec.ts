@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { AppConfigService, IAppConfig, initializeApp } from './app-config.service';
 import { HttpRequest } from '@angular/common/http';
+import { Link } from './core/models';
 
 describe('AppConfigService', () => {
   let injector: TestBed;
@@ -23,15 +24,30 @@ describe('AppConfigService', () => {
 
   it('config should return a given config', (done) => {
     const dummyConfig: IAppConfig = {
-      apiUrl: 'url1'
+      apis: [
+        {
+          name: 'test.api',
+          routePatern: new RegExp('endPoint/|galileo/'),
+          url: 'url1',
+
+        }, {
+          name: 'testLinks.api',
+          routePatern: new RegExp('links/'),
+          url: 'http://linksApi.com',
+        },
+      ],
     };
+
+
     service.load().then(() => {
-      expect(service.config.apiUrl).toBe('url1');
+      expect(service.config).toBeTruthy();
+    //  expect(service.config.apis[0].AddLinks._links.length = 2);
       done();
     });
     const req = httpMock.expectOne((request: HttpRequest<any>) => request.url.indexOf('assets/config/app-config.json?v=') !== -1);
     expect(req.request.method).toBe('GET');
     req.flush(dummyConfig);
+
   });
 
   it('when error loading json config should raise an error', (done) => {
@@ -49,10 +65,16 @@ describe('AppConfigService', () => {
 
   it('initializeApp should setup the app config', (done) => {
     const dummyConfig: IAppConfig = {
-      apiUrl: 'url1'
+      apis: [
+        {
+          name: 'test.api',
+          routePatern: new RegExp('endPoint/|galileo/'),
+          url: 'url1',
+        },
+      ],
     };
     initializeApp(service)().then(() => {
-      expect(service.config.apiUrl).toBe('url1');
+      expect(service.config).toBeTruthy();
       done();
     });
     const req = httpMock.expectOne((request: HttpRequest<any>) => request.url.indexOf('assets/config/app-config.json?v=') !== -1);
