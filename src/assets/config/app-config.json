@@ -11,7 +11,8 @@
       "url": "http://localhost:54042",
       "AddLinks": {
         "apiName": "E2E.Content.Management.API",
-        "endPoint": "application/1"
+        "endPoint": "application"
+
       }
     }
   ]

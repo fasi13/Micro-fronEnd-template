@@ -1,4 +1,4 @@
-
+import { Link } from './../models/commons/link.model';
 import { AppConfigService } from './../../app-config.service';
 import { Injectable } from '@angular/core';
 import {
@@ -13,11 +13,12 @@ import _isEmpty from 'lodash/isEmpty';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
+
+
 @Injectable()
 export class HttpResponseLinksInterceptor implements HttpInterceptor {
-  constructor(
-    private appConfigService: AppConfigService
-  ) {}
+  constructor(private appConfigService: AppConfigService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -30,9 +31,17 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
             request.headers.get('apiname')
           );
           if (api && api.AddLinks) {
-            debugger;
-          const newBody =  { ...event.body,
-            data: {...event.body.data, _links: [...event.body.data._links, ...api.AddLinks._links] }};
+            const newBody = {
+              ...event.body,
+              data: {
+                ...event.body.data,
+                _links: [
+                  ...event.body.data._links,
+                  ...this.getLinks(request.url, api.AddLinks._links, api.routePatern),
+                ],
+              },
+            };
+
             event = event.clone({
               body: newBody,
             });
@@ -41,5 +50,11 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
         return event;
       })
     );
+  }
+  getLinks(url: string, links: Link[], patern: RegExp): Link[] {
+    const endpoint = url.match(patern)[0];
+    const params = url.substring(url.lastIndexOf(endpoint)) ;
+    const applicationId = params.split('/')[1];
+    return links.map((link: Link) => ({ ...link, href: link.href.replace('/0/', `/${applicationId}/`) }));
   }
 }

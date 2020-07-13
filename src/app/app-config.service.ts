@@ -33,7 +33,7 @@ export class AppConfigService {
   }
 
   getApiByRoute(url: string) {
-    console.log('>>>>>>>>>>>>>>>>>>>>> ' + this.config);
+
     return this.config ? this.config.apis.find(a => new RegExp(a.routePatern).test(url)) : null;
   }
   getApiByName(name: string) {
@@ -46,7 +46,7 @@ export interface IAppConfig {
   name: string;
   routePatern: RegExp;
   url: string;
-  AddLinks?: {apiName: string, endPoint: string, _links: Link[]} }[];
+  AddLinks?: {apiName: string, endPoint: string, _links: Link[], paramName: string } }[];
 
 }
 
