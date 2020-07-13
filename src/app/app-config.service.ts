@@ -18,7 +18,7 @@ export class AppConfigService {
           const linkApi = this.getApiByName(
             api.AddLinks.apiName
           );
-          const links = await this.http.get<{data: {_links: Link[]}}>(`${linkApi.url}/${api.AddLinks.endPoint}`).toPromise();
+          const links = await this.http.get<{data: {_links: Link[]}}>(`${linkApi.url}/${api.AddLinks.endPoint}/0`).toPromise();
           api.AddLinks._links = links.data._links;
         });
 
