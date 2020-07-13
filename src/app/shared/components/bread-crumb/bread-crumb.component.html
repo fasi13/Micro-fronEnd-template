@@ -6,9 +6,8 @@
         {{path.name}}
       </a>
       <span *ngIf="position === ellipsisPosition">
-        <i class="fas fa-ellipsis-h align-bottom"
-          placement="bottom" [ngbTooltip]="fullPath">
-        </i>
+        <span class="fas fa-ellipsis-h align-bottom" placement="bottom" [ngbTooltip]="fullPath">
+      </span>
       </span>
       <span *ngIf="isLast && !eventMode" class="fge-clickable" (click)="onClickPath($event)">
         {{path.name}}

@@ -43,19 +43,19 @@
       title="{{item?.name}}"
       [ngClass]="{'fge-tree__a--group': item?.isGroup}"
       (click)="toggleCollapse(item, $event)">
-      <i
+      <span
         *ngIf="!item?.loading && !isEmptyItem(item)"
         class="fge-clickable fas"
         [ngClass]="{'fa-plus-circle': item?.collapsed, 'fa-minus-circle': !item?.collapsed}"
-      ></i>
-      <i
+      ></span>
+      <span
         *ngIf="!item?.loading && isEmptyItem(item)"
         class="fas fa-dot-circle"
-      ></i>
-      <i
+      ></span>
+      <span
         *ngIf="item?.loading"
         class="fas fa-circle-notch fa-spin"
-      ></i>
+      ></span>
       <span class="fge-tree__span--title">
         <a
           [ngClass]="{'text-primary font-weight-bold font-italic': !item?.isGroup && item?.id === currentApplicationId,
@@ -66,36 +66,36 @@
         </a>
       </span>
       <div class="fge-tree--options float-right">
-        <i
+        <span
           *ngIf="!item?.isGroup && item?.id !== currentApplicationId"
           title="Go to {{item?.name}}"
           (click)="$event.stopPropagation(); goToApplication(item)"
-          class="fas fa-sign-in-alt px-1 fge-clickable"></i>
-        <i
+          class="fas fa-sign-in-alt px-1 fge-clickable"></span>
+        <span
           *ngIf="!item?.isGroup"
           title="View Application Branding"
           (click)="$event.stopPropagation(); fetchApplicationBranding(item, $event)"
-          class="fas fa-info-circle px-1 fge-clickable"></i>
-        <i
+          class="fas fa-info-circle px-1 fge-clickable"></span>
+        <span
           title="New Application"
           *ngIf="hasAction(item,'createApplication')"
           (click)="$event.stopPropagation(); applicationForm.open('createApplication', item)"
-          class="fas fa-plus-square px-1 fge-clickable"></i>
-        <i
+          class="fas fa-plus-square px-1 fge-clickable"></span>
+        <span
           title="New Application Group"
           *ngIf="hasAction(item,'createApplicationGroup')"
           (click)="$event.stopPropagation(); applicationGroupForm.open('createApplicationGroup', item)"
-          class="fas fa-folder-plus px-1 fge-clickable"></i>
-        <i
+          class="fas fa-folder-plus px-1 fge-clickable"></span>
+        <span
           title="Edit Application"
           *ngIf="hasAction(item,'updateApplication') && !item?.isGroup"
           (click)="$event.stopPropagation(); applicationForm.open('updateApplication', item, true)"
-          class="fas fa-edit px-1 fge-clickable"></i>
-        <i
+          class="fas fa-edit px-1 fge-clickable"></span>
+        <span
           title="Edit Application Group"
           *ngIf="hasAction(item,'updateApplicationGroup') && item?.isGroup"
           (click)="$event.stopPropagation(); applicationGroupForm.open('updateApplicationGroup', item, true)"
-          class="fas fa-edit px-1 fge-clickable"></i>
+          class="fas fa-edit px-1 fge-clickable"></span>
       </div>
     </a>
     <ul *ngIf="!item?.collapsed">
