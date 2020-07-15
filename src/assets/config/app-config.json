@@ -3,12 +3,12 @@
     {
       "name": "E2E.Content.Management.API",
       "routePatern": "application\/|users\/",
-      "url": "https://localhost:44391"
+      "url": "https://qa-content-management-api.cxsrecognize.com"
     },
     {
-      "name": "E2E.Hiearchy.API",
+      "name": "E2E.Hierarchy.API",
       "routePatern": "applications\/",
-      "url": "http://localhost:54042",
+      "url": "https://qa-hierarchy-api.cxsrecognize.com",
       "AddLinks": {
         "apiName": "E2E.Content.Management.API",
         "endPoint": "application"

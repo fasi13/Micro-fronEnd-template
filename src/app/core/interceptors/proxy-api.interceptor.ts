@@ -21,7 +21,7 @@ export class ProxyApiInterceptor implements HttpInterceptor {
     if (request.url.indexOf('app-config.json') === -1
       && !_isEmpty(this.appConfigService.config.apis)
       && !request.url.startsWith('http')) {
-        debugger;
+
         const api = this.appConfigService.getApiByRoute(request.url);
       request = request.clone({
         setHeaders: {

@@ -41,7 +41,6 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
                 ],
               },
             };
-debugger;
             event = event.clone({
               body: newBody,
             });
