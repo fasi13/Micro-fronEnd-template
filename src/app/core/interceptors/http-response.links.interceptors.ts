@@ -19,7 +19,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class HttpResponseLinksInterceptor implements HttpInterceptor {
   constructor(private appConfigService: AppConfigService) {}
-
+/* istanbul ignore next */
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -30,6 +30,7 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
           const api = this.appConfigService.getApiByName(
             request.headers.get('apiname')
           );
+
           if (api && api.AddLinks) {
             const newBody = {
               ...event.body,
@@ -45,7 +46,9 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
               body: newBody,
             });
           }
+
         }
+
         return event;
       })
     );
