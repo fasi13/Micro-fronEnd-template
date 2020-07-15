@@ -89,7 +89,7 @@ export class ApplicationEffects {
       return of(new FetchApplicationDataError({ error }));
     })
   );
-
+/* istanbul ignore next */
   @Effect() public fetchApplicationDataSuccess$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS),
     mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups(), new FetchDataTypes()])
