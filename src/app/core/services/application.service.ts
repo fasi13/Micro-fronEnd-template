@@ -44,8 +44,8 @@ export class ApplicationService {
     return this.httpClient.get<ApiResponse<DataPaginated<ApplicationContent>>>(href, { params });
   }
 
-  search(keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`applications?keyword=${keyword}`);
+  search(applicationId: number | string, keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
+    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`applications/${applicationId}/paths/?keyword=${keyword}`);
   }
 
   getDataTypes(applicationId: number): Observable<ApiResponse<DataPaginated<DataType>>> {
