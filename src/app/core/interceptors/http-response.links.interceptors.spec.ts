@@ -1,3 +1,4 @@
+import { ApiResponse } from './../models/commons/api-response.model';
 import { HttpResponseLinksInterceptor } from './http-response.links.interceptors';
 import { TestBed } from '@angular/core/testing';
 import {
@@ -19,8 +20,11 @@ import { Injectable } from '@angular/core';
 })
 export class DummyHttpService {
   constructor(private http: HttpClient) {}
-  get(url: string) {
-    return this.http.get(url);
+  getTest(url: string) {
+    return this.http.get(url, { headers: { apiname: 'test.api' } });
+  }
+  getTest2(url: string) {
+    return this.http.get(url, { headers: { apiname: 'test2.api' } });
   }
 }
 
@@ -60,31 +64,39 @@ describe(`HttpResponseLinksInterceptor`, () => {
           AddLinks: {
             apiName: 'test.api',
             endPoint: 'links',
-            _links: [
-              {
-                rel: 'rel',
-                name: 'addedLink',
-                href: 'http://href',
-                method: { method: 'GET' },
-              },
-            ],
-            paramName: '',
           },
         },
       ],
     };
 
-    spyOn(appConfigService, 'getApiByName')
-      .and.callFake(() => {})
-      .and.returnValue(dummyConfig.apis[1]);
+    spyOnProperty(appConfigService, 'config', 'get').and.returnValue(
+      dummyConfig
+    );
   });
 
-  // it('should not add the links', (done) => {
-  //   service.get('hello').subscribe((results) => {
+  it('should not add the links', (done) => {
+    service.getTest('hello/papa').subscribe((results: ApiResponse<any>) => {
+      expect(results).toBeTruthy();
+      expect(results.data._links).toEqual([]);
+    });
+    httpMock.expectOne('hello/papa').flush({ data: { _links: [] } });
+    done();
+  });
+
+ // it('should call link api & add the links to the response when configured', (done) => {
+  //   service.get('bye/1').subscribe((results: ApiResponse<any>) => {
   //     expect(results).toBeTruthy();
-  //    // expect(results.body.data._links).toEqual([]);
+  //     expect(results.data._links).toEqual([
+  //       { url: 'OriginalUrl1' },
+  //       { url: 'AddedUrl1' },
+  //     ]);
   //   });
-  //   httpMock.expectOne('hello').flush({});
+  //   httpMock
+  //     .expectOne('bye/1')
+  //     .flush({ data: { _links: [{ url: 'OriginalUrl1' }] } });
+  //   httpMock
+  //     .expectOne('http://sayhi.com/links/1')
+  //     .flush({ data: { _links: [{ url: 'AddedUrl1' }] } });
   //   done();
   // });
 
