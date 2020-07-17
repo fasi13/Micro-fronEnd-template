@@ -6,7 +6,7 @@ import { cold, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 
 
-describe('My Effects', () => {
+describe('Application Effects', () => {
   let effects: ApplicationEffects;
   let actions: Observable<any>;
 
