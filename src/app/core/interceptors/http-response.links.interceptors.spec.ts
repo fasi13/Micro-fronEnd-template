@@ -74,7 +74,7 @@ describe(`HttpResponseLinksInterceptor`, () => {
     );
   });
 
-  it('should not add the links', (done) => {
+  it('should not add the links  when the api not configured to addlink', (done) => {
     service.getTest('hello/papa').subscribe((results: ApiResponse<any>) => {
       expect(results).toBeTruthy();
       expect(results.data._links).toEqual([]);
@@ -83,22 +83,22 @@ describe(`HttpResponseLinksInterceptor`, () => {
     done();
   });
 
- // it('should call link api & add the links to the response when configured', (done) => {
-  //   service.get('bye/1').subscribe((results: ApiResponse<any>) => {
-  //     expect(results).toBeTruthy();
-  //     expect(results.data._links).toEqual([
-  //       { url: 'OriginalUrl1' },
-  //       { url: 'AddedUrl1' },
-  //     ]);
-  //   });
-  //   httpMock
-  //     .expectOne('bye/1')
-  //     .flush({ data: { _links: [{ url: 'OriginalUrl1' }] } });
-  //   httpMock
-  //     .expectOne('http://sayhi.com/links/1')
-  //     .flush({ data: { _links: [{ url: 'AddedUrl1' }] } });
-  //   done();
-  // });
+  it('should call link api & add the links to the response when configured', (done) => {
+    service.getTest2('bye/1').subscribe((results: ApiResponse<any>) => {
+      expect(results).toBeTruthy();
+      expect(results.data._links).toEqual([
+        { url: 'OriginalUrl1' },
+        { url: 'AddedUrl1' },
+      ]);
+    });
+    httpMock
+      .expectOne('bye/1')
+      .flush({ data: { _links: [{ url: 'OriginalUrl1' }] } });
+    httpMock
+      .expectOne('http://sayhi.com/links/1')
+      .flush({ data: { _links: [{ url: 'AddedUrl1' }] } });
+    done();
+  });
 
   afterEach(() => {
     httpMock.verify();
