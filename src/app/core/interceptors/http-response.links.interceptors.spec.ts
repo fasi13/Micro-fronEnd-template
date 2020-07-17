@@ -93,10 +93,10 @@ describe(`HttpResponseLinksInterceptor`, () => {
     });
     httpMock
       .expectOne('bye/1')
-      .flush({ data: { _links: [{ url: 'OriginalUrl1' }] } });
+      .flush({ data: { id: 1,  _links: [{ url: 'OriginalUrl1' }] } });
     httpMock
       .expectOne('http://sayhi.com/links/1')
-      .flush({ data: { _links: [{ url: 'AddedUrl1' }] } });
+      .flush({ data: { id: 1, _links: [{ url: 'AddedUrl1' }] } });
     done();
   });
 

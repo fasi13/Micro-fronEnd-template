@@ -38,12 +38,7 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
         const linksApi = this.appConfigService.getApiByName(
           api.AddLinks.apiName
         );
-        const applicationId = this.appConfigService.getApplicationIdfromUrl(
-          request.url,
-          api.routePatern
-        );
-
-
+        const applicationId = event.body.data.id;
         return this.httpClient
           .get(`${linksApi.url}/${api.AddLinks.endPoint}/${applicationId}`)
           .pipe(

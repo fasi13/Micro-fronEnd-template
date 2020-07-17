@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Link } from './core/models';
+
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
@@ -25,11 +25,7 @@ export class AppConfigService {
   get config() {
     return this._config;
   }
-  getApplicationIdfromUrl(requestUrl: string, routePatern: RegExp) {
-    const endpoint = requestUrl.match(routePatern)[0];
-    const params = requestUrl.substring(requestUrl.lastIndexOf(endpoint));
-    return params.split('/')[1];
-  }
+
   getApiByRoute(url: string) {
     return this.config
       ? this.config.apis.find((a) => {

@@ -1,9 +1,11 @@
+import { Router } from '@angular/router';
 import { FetchApplicationDataSuccess, FetchApplicationPath } from './application.actions';
 import { ApplicationEffects } from './application.effects';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 
 describe('Application Effects', () => {
@@ -19,6 +21,7 @@ describe('Application Effects', () => {
         ApplicationEffects,
         provideMockActions(() => actions),
         // other providers
+
       ],
     });
 

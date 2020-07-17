@@ -122,15 +122,6 @@ describe('AppConfigService', () => {
     done();
   });
 
-  it('sould return applicationid from given url', (done) => {
-    const result = service.getApplicationIdfromUrl(
-      'http//site.com/app/appid/data/dataId',
-      new RegExp('app/|company/')
-    );
-    expect(result).toBe('appid');
-    done();
-  });
-
   afterEach(() => {
     httpMock.verify();
   });
