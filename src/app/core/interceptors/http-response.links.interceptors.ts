@@ -31,7 +31,7 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
         const api = this.appConfigService.getApiByName(
           request.headers.get('apiname')
         );
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>> API ${api.url}`);
+
         if (!(event instanceof HttpResponse) || !api || !api.AddLinks) {
           return of(event);
         }
@@ -43,12 +43,12 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
           api.routePatern
         );
 
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>${linksApi.url}/${api.AddLinks.endPoint}/${applicationId}`);
+
         return this.httpClient
           .get(`${linksApi.url}/${api.AddLinks.endPoint}/${applicationId}`)
           .pipe(
             map((response: ApiResponse<Application>) => {
-              console.log(response);
+
               const body = event.body;
               body.data._links = [...body.data._links, ...response.data._links];
               return event.clone({
