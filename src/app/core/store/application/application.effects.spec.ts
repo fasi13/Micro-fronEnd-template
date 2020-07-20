@@ -3,6 +3,7 @@ import {
   SearchApplication,
   SearchApplicationSuccess,
   ApplicationActionTypes,
+  FetchDataTypes,
 } from './application.actions';
 import { ApplicationEffects } from './application.effects';
 import { RouterModule } from '@angular/router';
@@ -18,6 +19,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FetchApplicationDataSuccess, FetchApplicationPath } from '.';
 import { ApiResponse, DataPaginated, ApplicationPath } from '../../models';
+import { FetchContentGroups } from '../content/content.actions';
 
 describe('application effects ', () => {
   let effects: ApplicationEffects;
@@ -54,9 +56,18 @@ describe('application effects ', () => {
     const completion = new FetchApplicationPath();
 
     actions = hot('--a-', { a: action });
-    const expected = cold('--b', { b: completion });
+    const expected = cold('-(bcd)', { // the ( ) groups the values into the same timeframe
+      b: new FetchApplicationPath(),
+      c: new FetchContentGroups(),
+      d: new FetchDataTypes()
+    });
+    const list: string[] = ['FETCH_APPLICATION_PATH', 'FETCH_CONTENT_GROUPS', 'FETCH_DATA_TYPES'];
+
     expected.subscribe((data) => {
-      expect(data.type).toBe(ApplicationActionTypes.FETCH_APPLICATION_PATH);
+      console.log(data);
+      if (data && data.type) {
+        expect(list).toContain(data.type);
+      }
     });
   });
 
