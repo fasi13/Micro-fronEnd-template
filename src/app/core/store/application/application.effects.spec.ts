@@ -53,22 +53,14 @@ describe('application effects ', () => {
 
   it('fetchApplicationDataSuccess should return a stream with action FetchAppPath', () => {
     const action = new FetchApplicationDataSuccess();
-    const completion = new FetchApplicationPath();
-
-    actions = hot('--a-', { a: action });
-    const expected = cold('-(bcd)', { // the ( ) groups the values into the same timeframe
+    actions = hot('--a', { a: action });
+    const expected = cold('--(bcd)', { // the ( ) groups the values into the same timeframe
       b: new FetchApplicationPath(),
       c: new FetchContentGroups(),
       d: new FetchDataTypes()
     });
-    const list: string[] = ['FETCH_APPLICATION_PATH', 'FETCH_CONTENT_GROUPS', 'FETCH_DATA_TYPES'];
 
-    expected.subscribe((data) => {
-      console.log(data);
-      if (data && data.type) {
-        expect(list).toContain(data.type);
-      }
-    });
+    expect(effects.fetchApplicationDataSuccess$).toBeObservable(expected);
   });
 
   it('search should return a stream with applicationPath result', () => {
