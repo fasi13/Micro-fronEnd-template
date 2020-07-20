@@ -30,17 +30,18 @@ export class HttpResponseLinksInterceptor implements HttpInterceptor {
       mergeMap((event) => {
         const api = this.appConfigService.getApiByName(
           request.headers.get('apiname')
+
         );
 
-        if (!(event instanceof HttpResponse) || !api || !api.AddLinks) {
+        if (!(event instanceof HttpResponse) || !api || !api.AddLinks || !event.body.data.id) {
           return of(event);
         }
         const linksApi = this.appConfigService.getApiByName(
           api.AddLinks.apiName
         );
-        const applicationId = event.body.data.id;
+
         return this.httpClient
-          .get(`${linksApi.url}/${api.AddLinks.endPoint}/${applicationId}`)
+          .get(`${linksApi.url}/${api.AddLinks.endPoint}/${event.body.data.id}`)
           .pipe(
             map((response: ApiResponse<Application>) => {
 
