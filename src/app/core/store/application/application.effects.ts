@@ -118,7 +118,7 @@ export class ApplicationEffects {
        */
       withLatestFrom(this.store.select(getAuthenticatedUser)),
       switchMap(([_action, user]: [ApplicationAction, User]) =>
-        this.applicationService.search(user.applicationId, _action.payload.keyword)
+        this.applicationService.search(user.applicationId, _action.payload)
         .pipe(
           map((response: ApiResponse<DataPaginated<ApplicationPath>>) => {
             return new SearchApplicationSuccess(response);
