@@ -16,7 +16,7 @@
     class="fge-tree__btn--floating fge-clickable"
     [ngStyle]="{'right':scrollContainerRef?.nativeElement?.offsetRight + 'px'}"
     (click)="scrollToTop($event)">
-    <i class="fas fa-2x fa-chevron-circle-up text-primary"></i>
+    <span class="fas fa-2x fa-chevron-circle-up text-primary"></span>
   </a>
   <div class="row fge-tree--row">
     <div class="col-7">
@@ -43,19 +43,19 @@
       title="{{item?.name}}"
       [ngClass]="{'fge-tree__a--group': item?.isGroup}"
       (click)="toggleCollapse(item, $event)">
-      <i
+      <span
         *ngIf="!item?.loading && !isEmptyItem(item)"
         class="fge-clickable fas"
         [ngClass]="{'fa-plus-circle': item?.collapsed, 'fa-minus-circle': !item?.collapsed}"
-      ></i>
-      <i
+      ></span>
+      <span
         *ngIf="!item?.loading && isEmptyItem(item)"
         class="fas fa-dot-circle"
-      ></i>
-      <i
+      ></span>
+      <span
         *ngIf="item?.loading"
         class="fas fa-circle-notch fa-spin"
-      ></i>
+      ></span>
       <span class="fge-tree__span--title">
         <a
           [ngClass]="{'text-primary font-weight-bold font-italic': !item?.isGroup && item?.id === currentApplicationId,
@@ -66,36 +66,36 @@
         </a>
       </span>
       <div class="fge-tree--options float-right">
-        <i
+        <span
           *ngIf="!item?.isGroup && item?.id !== currentApplicationId"
           title="Go to {{item?.name}}"
           (click)="$event.stopPropagation(); goToApplication(item)"
-          class="fas fa-sign-in-alt px-1 fge-clickable"></i>
-        <i
+          class="fas fa-sign-in-alt px-1 fge-clickable"></span>
+        <span
           *ngIf="!item?.isGroup"
           title="View Application Branding"
           (click)="$event.stopPropagation(); fetchApplicationBranding(item, $event)"
-          class="fas fa-info-circle px-1 fge-clickable"></i>
-        <i
+          class="fas fa-info-circle px-1 fge-clickable"></span>
+        <span
           title="New Application"
           *ngIf="hasAction(item,'createApplication')"
           (click)="$event.stopPropagation(); applicationForm.open('createApplication', item)"
-          class="fas fa-plus-square px-1 fge-clickable"></i>
-        <i
+          class="fas fa-plus-square px-1 fge-clickable"></span>
+        <span
           title="New Application Group"
           *ngIf="hasAction(item,'createApplicationGroup')"
           (click)="$event.stopPropagation(); applicationGroupForm.open('createApplicationGroup', item)"
-          class="fas fa-folder-plus px-1 fge-clickable"></i>
-        <i
+          class="fas fa-folder-plus px-1 fge-clickable"></span>
+        <span
           title="Edit Application"
           *ngIf="hasAction(item,'updateApplication') && !item?.isGroup"
           (click)="$event.stopPropagation(); applicationForm.open('updateApplication', item, true)"
-          class="fas fa-edit px-1 fge-clickable"></i>
-        <i
+          class="fas fa-edit px-1 fge-clickable"></span>
+        <span
           title="Edit Application Group"
           *ngIf="hasAction(item,'updateApplicationGroup') && item?.isGroup"
           (click)="$event.stopPropagation(); applicationGroupForm.open('updateApplicationGroup', item, true)"
-          class="fas fa-edit px-1 fge-clickable"></i>
+          class="fas fa-edit px-1 fge-clickable"></span>
       </div>
     </a>
     <ul *ngIf="!item?.collapsed">
@@ -109,7 +109,7 @@
 </ng-template>
 
 <ng-template #branding>
-  <h5 class="text-center fge-tree--branding-header mb-3">Branding <i *ngIf="previewLoading" class="fas fa-circle-notch fa-spin"></i></h5>
+  <h5 class="text-center fge-tree--branding-header mb-3">Branding <span *ngIf="previewLoading" class="fas fa-circle-notch fa-spin"></span></h5>
   <div class="row text-left">
     <label class="col-5"> Color Scheme:</label>
     <div class="col d-flex">
@@ -132,13 +132,13 @@
   <div class="row text-left">
     <label class="col-5"> Primary Logo:</label>
     <div class="col" [ngClass]="{'fge-tree--branding-loading-col': previewLoading}">
-      <img *ngIf="!previewLoading && preview?.primaryLogo?.value" class="fge-tree--branding-img my-1" [src]="preview?.primaryLogo?.value"/>
+      <img *ngIf="!previewLoading && preview?.primaryLogo?.value" class="fge-tree--branding-img my-1" [src]="preview?.primaryLogo?.value" alt="Logo"/>
     </div>
   </div>
   <div class="row text-left">
     <label class="col-5"> Secondary Logo:</label>
     <div class="col" [ngClass]="{'fge-tree--branding-loading-col': previewLoading}">
-      <img *ngIf="!previewLoading && preview?.secondaryLogo?.value" class="fge-tree--branding-img my-1" [src]="preview?.secondaryLogo?.value"/>
+      <img *ngIf="!previewLoading && preview?.secondaryLogo?.value" class="fge-tree--branding-img my-1" [src]="preview?.secondaryLogo?.value" alt="Secondary Logo"/>
     </div>
   </div>
   <div class="row text-left">

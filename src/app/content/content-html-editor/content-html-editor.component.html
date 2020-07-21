@@ -1,6 +1,6 @@
 <div class="fge-content-html-editor">
       <h4 class="my-3">
-        <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+        <span *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></span>
         <span *ngIf="currentContent && form">
         Content Editor: {{currentContent.name}}
         <span class="content-version"

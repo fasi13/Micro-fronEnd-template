@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44391',
+
   cultures : ['en-US', 'en-CA', 'fr-CA' ]
 };
 

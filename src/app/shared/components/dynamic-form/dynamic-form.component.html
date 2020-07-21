@@ -10,7 +10,7 @@
   </ng-container>
   <div class="form-group" *ngIf="errors">
     <div class="fge-dynamic-form--error" *ngFor="let error of errors">
-      <i class="fas fa-exclamation-circle pr-1"></i>
+      <span class="fas fa-exclamation-circle pr-1"></span>
       {{ error }}
     </div>
   </div>
@@ -21,7 +21,7 @@
       (click)="handleSaveAction($event)"
       [disabled]="loadingAsyncResponse">
       Save
-      <i *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin px-1"></i>
+      <span *ngIf="loadingAsyncResponse" class="fas fa-circle-notch fa-spin px-1"></span>
     </button>
     <button
       type="button"

@@ -9,7 +9,7 @@
       <div class="row fge-table__row m-0">
         <div class="col fge-table__col d-flex justify-content-between" (click)="onClickPermissionSection($event, section)">
           {{section.name}}
-          <i class="fas fa-lg" [ngClass]="{'fa-caret-right': !section.opened, 'fa-caret-down': section.opened}"></i>
+          <span class="fas fa-lg" [ngClass]="{'fa-caret-right': !section.opened, 'fa-caret-down': section.opened}"></span>
         </div>
       </div>
        <ng-container *ngIf="section.opened" >

@@ -1,45 +1,82 @@
 <nav class="fge-navbar navbar navbar-dark sticky-top bg-primary">
   <div class="navbar-toggler" (click)="toggleSidebar($event)">
-    <i class="fas fa-bars text-light"></i>
+    <span class="fas fa-bars text-light"></span>
   </div>
-  <fge-bread-crumb class="mr-auto"
+  <fge-bread-crumb
+    class="mr-auto"
     [pathData]="pathData"
     [maxPathsToShow]="4"
-    (clickLastPath)="toggleHierarchyNavigation($event)">
+    (clickLastPath)="toggleHierarchyNavigation($event)"
+  >
   </fge-bread-crumb>
   <div class="form-inline my-2 my-lg-0">
     <fge-search-application class="px-3"></fge-search-application>
-    <i class="fas fa-sitemap text-light fge-clickable" (click)="toggleHierarchyNavigation($event)"></i>
+
+    <span
+      class="fas fa-sitemap text-light fge-clickable mr-4"
+      (click)="toggleHierarchyNavigation($event)"
+    ></span>
 
     <div class="dropdown mr-4">
       <div class="nav-item">
-        <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <em class="fas fa-globe text-light" tooltipClass="select-lang-tooltip" placement="bottom" ngbTooltip="Select content language"> {{currentCulture}}</em>
-
+        <a
+          class="btn"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <em
+            class="fas fa-globe text-light"
+            tooltipClass="select-lang-tooltip"
+            placement="bottom"
+            ngbTooltip="Select content language"
+          >
+            {{ currentCulture }}</em
+          >
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <h2 class="dropdown-header">Content Language</h2>
           <div class="dropdown-divider"></div>
-        <ng-container *ngFor="let culture of availableCultures">
-          <button class="btn-sm dropdown-item fge-clickable" type="button" (click)="setContentCulture(culture)">
-            <em class="fas fa-language  pr-2"></em>{{culture}}
-          </button>
-        </ng-container>
+          <ng-container *ngFor="let culture of availableCultures">
+            <button
+              class="btn-sm dropdown-item fge-clickable"
+              type="button"
+              (click)="setContentCulture(culture)"
+            >
+              <em class="fas fa-language pr-2"></em>{{ culture }}
+            </button>
+          </ng-container>
         </div>
-
       </div>
     </div>
 
     <div class="dropdown">
       <div class="nav-item">
-        <a class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-2x fa-user-circle text-light"></i>
+        <a
+          class="btn"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="fas fa-2x fa-user-circle text-light"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-          <h2 class="dropdown-header">{{user?.firstName}}</h2>
+          <h2 class="dropdown-header">{{ user?.firstName }}</h2>
           <div class="dropdown-divider"></div>
-          <button class="btn-sm dropdown-item fge-clickable" type="button" (click)="onRediretToResetPassword()"><i class="fas fa-unlock pr-2"></i>Change password</button>
-          <button class="btn-sm dropdown-item fge-clickable" type="button" (click)="onLogoutClicked($event)"><i class="fas fa-sign-out-alt pr-2"></i>Logout</button>
+          <button
+            class="btn-sm dropdown-item fge-clickable"
+            type="button"
+            (click)="onRediretToResetPassword()"
+          >
+            <span class="fas fa-unlock pr-2"></span>Change password
+          </button>
+          <button
+            class="btn-sm dropdown-item fge-clickable"
+            type="button"
+            (click)="onLogoutClicked($event)"
+          >
+            <span class="fas fa-sign-out-alt pr-2"></span>Logout
+          </button>
         </div>
       </div>
     </div>
@@ -49,10 +86,10 @@
 <fge-sidebar [active]="activeSidebar">
   <div id="sidebarHeader" class="fge-sidebar__header">
     <div class="fge-display-expanded text-center">
-      <img src="{{branding?.primaryLogo?.value}}"/>
+      <img src="{{ branding?.primaryLogo?.value }}" alt="Logo" />
     </div>
     <div class="fge-display-collapsed">
-      <img src="{{branding?.primaryLogo?.value}}" width="25px"/>
+      <img src="{{ branding?.primaryLogo?.value }}" alt="Logo" width="25px" />
     </div>
   </div>
   <router-outlet></router-outlet>

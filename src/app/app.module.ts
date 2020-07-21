@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { AppConfigService, initializeApp } from './app-config.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,10 @@ import { CoreModule } from './core/core.module';
       }
     })
   ],
-  providers: [],
+  providers: [
+    AppConfigService,
+    { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfigService], multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
