@@ -3,6 +3,7 @@ import {
   SearchApplication,
   SearchApplicationSuccess,
   ApplicationActionTypes,
+  FetchDataTypes,
 } from './application.actions';
 import { ApplicationEffects } from './application.effects';
 import { RouterModule } from '@angular/router';
@@ -18,6 +19,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FetchApplicationDataSuccess, FetchApplicationPath } from '.';
 import { ApiResponse, DataPaginated, ApplicationPath } from '../../models';
+import { FetchContentGroups } from '../content/content.actions';
 
 describe('application effects ', () => {
   let effects: ApplicationEffects;
@@ -51,13 +53,14 @@ describe('application effects ', () => {
 
   it('fetchApplicationDataSuccess should return a stream with action FetchAppPath', () => {
     const action = new FetchApplicationDataSuccess();
-    const completion = new FetchApplicationPath();
-
-    actions = hot('--a-', { a: action });
-    const expected = cold('--b', { b: completion });
-    expected.subscribe((data) => {
-      expect(data.type).toBe(ApplicationActionTypes.FETCH_APPLICATION_PATH);
+    actions = hot('--a', { a: action });
+    const expected = cold('--(bcd)', { // the ( ) groups the values into the same timeframe
+      b: new FetchApplicationPath(),
+      c: new FetchContentGroups(),
+      d: new FetchDataTypes()
     });
+
+    expect(effects.fetchApplicationDataSuccess$).toBeObservable(expected);
   });
 
   it('search should return a stream with applicationPath result', () => {
