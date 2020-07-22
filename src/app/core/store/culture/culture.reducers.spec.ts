@@ -15,13 +15,7 @@ describe('CultureReducers', () => {
   });
 
   it('should update current culture ', () => {
-    const InitialState: CultureState = {
-      currentCulture: 'en-US',
-      availableCultures: ['cul1', 'cul2']
-    };
-
-    const state = reducer(InitialState, new ReadCultureSuccessAction({cultureCode: 'fr-CA'}));
-
+    const state = reducer(undefined, new ReadCultureSuccessAction({cultureCode: 'fr-CA'}));
     expect(state.currentCulture).toBe('fr-CA');
   });
 
