@@ -61,6 +61,7 @@ export class VersionHistoryModalComponent
 
   ngOnInit() {
     this.initSelectors();
+    /* istanbul ignore file */
     this.isDefaultCultureCode = (this.defaultCultureCode.toLowerCase() === this.cultureService.getCurrentCulture().toLowerCase());
   }
 
