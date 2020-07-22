@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { FormGroup } from '@angular/forms';
 
 import {
