@@ -3,19 +3,23 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS, HttpRequest, HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpRequest,
+  HttpClient,
+} from '@angular/common/http';
 import { ProxyApiInterceptor } from './proxy-api.interceptor';
 import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
 import { ContentService } from '../services';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DummyHttpService {
   constructor(private http: HttpClient) {}
   load(url: string) {
-      return this.http.get(url).toPromise();
+    return this.http.get(url).toPromise();
   }
 }
 
@@ -33,15 +37,27 @@ describe(`ProxyApiInterceptor`, () => {
         {
           provide: HTTP_INTERCEPTORS,
           useClass: ProxyApiInterceptor,
-          multi: true
-        }
+          multi: true,
+        },
       ],
     });
 
     appConfigService = TestBed.get(AppConfigService);
     service = TestBed.get(DummyHttpService);
     httpMock = TestBed.get(HttpTestingController);
-    spyOnProperty(appConfigService, 'config', 'get').and.returnValue({apiUrl:'http://goodjob.com'});
+    const dummyConfig: IAppConfig = {
+      apis: [
+        {
+          name: 'test.api',
+          routePatern: new RegExp('hello\/|goodmorning\/"'),
+          url: 'http://sayhi.com',
+        },
+      ],
+    };
+
+    spyOnProperty(appConfigService, 'config', 'get').and.returnValue(
+      dummyConfig
+    );
   });
 
   it('should not add api url', () => {
@@ -50,8 +66,8 @@ describe(`ProxyApiInterceptor`, () => {
   });
 
   it('should add api url', () => {
-    service.load('hello');
-    httpMock.expectOne('http://goodjob.com/hello');
+    service.load('hello/papa');
+    httpMock.expectOne('http://sayhi.com/hello/papa');
   });
 
   afterEach(() => {
