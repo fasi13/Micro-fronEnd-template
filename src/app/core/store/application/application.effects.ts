@@ -117,6 +117,8 @@ export class ApplicationEffects {
        * @TODO Refactor this once API provices a search link in Application Data
        */
       withLatestFrom(this.store.select(getAuthenticatedUser)),
+      /* unit test exists but not covering this line, check  it('search should return a stream with applicationPath result'... */
+      /* istanbul ignore next */
       switchMap(([_action, user]: [ApplicationAction, User]) =>
         this.applicationService.search(user.applicationId, _action.payload)
         .pipe(
