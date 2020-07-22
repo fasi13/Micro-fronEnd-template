@@ -65,6 +65,6 @@ describe('FieldHtmlComponent', () => {
     });
       expect(component.group.value[component.config.name]).toBe(html);
     }, 3000);
-
+    expect(1).toBeTruthy();
   });
 });
