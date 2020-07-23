@@ -3,6 +3,7 @@ import {
   CultureActionTypes,
   ReadAvailableCulturesSuccessAction,
   ReadCultureAction,
+  SwitchCultureAction,
 } from './../../store/culture/culture.actions';
 import { AuthLayoutComponent } from './auth-layout.component';
 import { RouterModule } from '@angular/router';
@@ -147,5 +148,10 @@ describe('AuthLayoutComponent', () => {
       new ReadAvailableCulturesAction()
     );
     expect(store.dispatch).toHaveBeenCalledWith(new ReadCultureAction());
+  });
+
+  it('should dispatch an action to switch Culture', () => {
+   component.setContentCulture('fr-CA');
+    expect(store.dispatch).toHaveBeenCalledWith(new SwitchCultureAction({cultureCode: 'fr-CA'}));
   });
 });
