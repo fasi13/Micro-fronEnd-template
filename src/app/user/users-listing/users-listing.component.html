@@ -83,9 +83,7 @@
         <span class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></span>
       </span>
     </div>
-    <div class="col fge-table__col">
-      Application
-    </div>
+
     <div class="col-2 fge-table__col fge-clickable" (click)="sortBy('lastlogindate')">
       Last Login
       <span *ngIf="sort.sortby === 'lastlogindate'">
@@ -107,11 +105,11 @@
     <div class="col fge-table__col" title="{{ user.firstName }}">{{ user.firstName }}</div>
     <div class="col fge-table__col" title="{{ user.lastName }}">{{ user.lastName }}</div>
     <div class="col fge-table__col" title="{{ user.email }}">{{ user.email }}</div>
-    <div class="col fge-table__col--app-path" title="{{ user.applicationPath | fgeApplicationPath }}">
+    <!-- <div class="col fge-table__col--app-path" title="{{ user.applicationPath | fgeApplicationPath }}">
       <span>
         {{ user.applicationPath | fgeApplicationPath }}
       </span>
-    </div>
+    </div> -->
     <div class="col-2 fge-table__col" title="{{ user.lastLoginDate | date:'medium' }}">{{ user.lastLoginDate | date:'medium' }}</div>
     <div class="col-1 fge-table__col pr-0 fge-table--actions">
       <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
