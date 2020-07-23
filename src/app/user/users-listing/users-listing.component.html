@@ -83,7 +83,9 @@
         <span class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></span>
       </span>
     </div>
-
+    <!-- <div class="col fge-table__col">
+      Application
+    </div> -->
     <div class="col-2 fge-table__col fge-clickable" (click)="sortBy('lastlogindate')">
       Last Login
       <span *ngIf="sort.sortby === 'lastlogindate'">
