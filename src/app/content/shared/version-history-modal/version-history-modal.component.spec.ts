@@ -79,12 +79,6 @@ describe('VersionHistoryModalComponent', () => {
     loading: false,
     error: null
   }},
-  settings: { settingGroups: {
-    loading: false
-  },
-  settingGroup: {
-    loading: false
-  }},
   user: { users: {
     loading: false,
     items: null,
