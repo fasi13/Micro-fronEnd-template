@@ -28,11 +28,11 @@ export class ApplicationService {
   }
 
   getApplicationInfo(applicationId: number): Observable<ApiResponse<Application>> {
-    return this.httpClient.get<ApiResponse<Application>>(`application/${applicationId}`);
+    return this.httpClient.get<ApiResponse<Application>>(`applications/${applicationId}`);
   }
 
   getApplicationPath(applicationId: number): Observable<ApiResponse<ApplicationPath>> {
-    return this.httpClient.get<ApiResponse<ApplicationPath>>(`application/${applicationId}/path`);
+    return this.httpClient.get<ApiResponse<ApplicationPath>>(`applications/${applicationId}/path`);
   }
 
   getContentFor({ href }: HateoasAction, name: string): Observable<ApiResponse<DataPaginated<ApplicationContent>>> {
@@ -44,11 +44,11 @@ export class ApplicationService {
     return this.httpClient.get<ApiResponse<DataPaginated<ApplicationContent>>>(href, { params });
   }
 
-  search(keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`applications?keyword=${keyword}`);
+  search(applicationId: number | string, keyword: string): Observable<ApiResponse<DataPaginated<ApplicationPath>>> {
+    return this.httpClient.get<ApiResponse<DataPaginated<ApplicationPath>>>(`applications/${applicationId}/paths/?keyword=${keyword}`);
   }
 
   getDataTypes(applicationId: number): Observable<ApiResponse<DataPaginated<DataType>>> {
-    return this.httpClient.get<ApiResponse<DataPaginated<DataType>>>(`application/${applicationId}/dataTypes`);
+    return this.httpClient.get<ApiResponse<DataPaginated<DataType>>>(`application/${applicationId}/contentdataTypes`);
   }
 }

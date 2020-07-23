@@ -35,7 +35,7 @@ import { ResetPasswordEffects } from './store/reset-password';
 import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.component';
 import { ApplicationLoaderComponent } from './layout/application-loader/application-loader.component';
 import { ReportEffects } from './store/report';
-import { SettingsEffects } from './store/settings';
+
 import { CultureService } from './services/culture.service';
 
 @NgModule({
@@ -58,7 +58,7 @@ import { CultureService } from './services/culture.service';
       UserEffects,
       ResetPasswordEffects,
       ReportEffects,
-      SettingsEffects,
+      
       CultureEffects
     ]),
     StoreDevtoolsModule.instrument({

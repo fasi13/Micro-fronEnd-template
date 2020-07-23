@@ -19,13 +19,13 @@
 
 <ng-template #searchWarn>
   <div class="px-3">
-    <small><i class="fas fa-exclamation-circle"></i> Requires at least 3 characters</small>
+    <small><span class="fas fa-exclamation-circle"></span> Requires at least 3 characters</small>
   </div>
 </ng-template>
 
 <ng-template #searchContent>
   <div class="text-center" *ngIf="loading$ | async; else applicationList">
-    <i class="fas fa-circle-notch fa-spin"></i>
+    <span class="fas fa-circle-notch fa-spin"></span>
   </div>
 </ng-template>
 
@@ -43,7 +43,7 @@
       <small fgeHighlightSearch [keyword]="search">{{getApplicationPath(application)}}</small>
     </a>
     <div class="px-3" *ngIf="(items$ | async)?.length === 0">
-      <small><i class="fas fa-exclamation-circle"></i> No results found</small>
+      <small><span class="fas fa-exclamation-circle"></span> No results found</small>
     </div>
   </div>
 </ng-template>

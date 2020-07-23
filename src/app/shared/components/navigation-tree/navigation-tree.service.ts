@@ -14,11 +14,11 @@ export class NavigationTreeService {
 
   getApplications(applicationId: string | number, applicationGroupId: string | number): Observable<ApiResponse<DataPaginated<any>>> {
     return this.httpClient.get<ApiResponse<DataPaginated<any>>>(
-      `application/${applicationId}/applicationGroup/${applicationGroupId}/applications`);
+      `applications/${applicationId}/applicationGroup/${applicationGroupId}/applications`);
   }
 
   getApplicationGroups(applicationId: string | number): Observable<ApiResponse<DataPaginated<any>>> {
     return this.httpClient.get<ApiResponse<DataPaginated<any>>>(
-      `application/${applicationId}/applicationGroups`);
+      `applications/${applicationId}/applicationGroups`);
   }
 }

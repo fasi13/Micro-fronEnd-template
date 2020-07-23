@@ -155,6 +155,7 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
 
   goToApplication(item: TreeviewData) {
     if (!item.isGroup) {
+      /* istanbul ignore next */
       this.store.dispatch(new ResetCultureAction());
       this.selected.emit(item.id);
     }
