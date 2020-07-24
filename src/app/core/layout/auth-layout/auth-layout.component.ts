@@ -101,6 +101,7 @@ this.store.dispatch(new SwitchCultureAction({cultureCode: cultureCode}));
       this.store.select(getAvailableCultures)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((cultures: string[]) => {
+        /* istanbul ignore next */
         if (cultures && cultures.length) {
           this.availableCultures = cultures;
         }
@@ -109,8 +110,11 @@ this.store.dispatch(new SwitchCultureAction({cultureCode: cultureCode}));
     this.store.select(getCurrentCulture)
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe((cultureCode: string) => {
+        /* istanbul ignore next */
         if (!cultureCode) {return; }
+        /* istanbul ignore next */
          if (cultureCode && this.currentCulture && cultureCode !== this.currentCulture) {
+           /* istanbul ignore next */
          window.location.reload();
          }
          this.currentCulture = cultureCode;
