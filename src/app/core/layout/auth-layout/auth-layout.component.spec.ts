@@ -4,6 +4,7 @@ import {
   ReadAvailableCulturesSuccessAction,
   ReadCultureAction,
   SwitchCultureAction,
+  ResetCultureAction,
 } from './../../store/culture/culture.actions';
 import { AuthLayoutComponent } from './auth-layout.component';
 import { RouterModule } from '@angular/router';
@@ -151,10 +152,38 @@ describe('AuthLayoutComponent', () => {
   });
 
   it('should dispatch an action to switch Culture', () => {
-   component.setContentCulture('fr-CA');
-    expect(store.dispatch).toHaveBeenCalledWith(new SwitchCultureAction({cultureCode: 'fr-CA'}));
+    component.setContentCulture('fr-CA');
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new SwitchCultureAction({ cultureCode: 'fr-CA' })
+    );
   });
 
+  it('should dispatch an action to reset Culture', (done) => {
+    component.onLogoutClicked(new Event('type'));
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetCultureAction());
+    done();
+  });
+
+  it('should not update available cultures when empty', (done) => {
+    store.dispatch(
+      new ReadAvailableCulturesSuccessAction({ availableCultures: [] })
+    );
+    expect(component.availableCultures).toEqual(
+      initialState.culture.availableCultures
+    );
+    done();
+  });
+
+
+  it('should not update current cultures when falsy ', (done) => {
+    store.dispatch(
+      new ReadCultureAction({ currentCulture: null })
+    );
+    expect(component.currentCulture).toEqual(
+      initialState.culture.currentCulture
+    );
+    done();
+  });
   afterEach(() => {
     fixture.destroy();
   });
