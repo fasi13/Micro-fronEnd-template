@@ -141,22 +141,25 @@ describe('AuthLayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should be created', (done) => {
     expect(component).toBeTruthy();
+    done();
   });
 
-  it('should dispatch an action to load data when created', () => {
+  it('should dispatch an action to load data when created', (done) => {
     expect(store.dispatch).toHaveBeenCalledWith(
       new ReadAvailableCulturesAction()
     );
     expect(store.dispatch).toHaveBeenCalledWith(new ReadCultureAction());
+    done();
   });
 
-  it('should dispatch an action to switch Culture', () => {
+  it('should dispatch an action to switch Culture', (done) => {
     component.setContentCulture('fr-CA');
     expect(store.dispatch).toHaveBeenCalledWith(
       new SwitchCultureAction({ cultureCode: 'fr-CA' })
     );
+    done();
   });
 
   it('should dispatch an action to reset Culture', (done) => {
