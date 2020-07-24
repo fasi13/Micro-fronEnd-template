@@ -144,6 +144,10 @@ describe('ContentHtmlEditorComponent', () => {
       ].includes(a.type)).toBeTruthy());
     });
 
+    afterEach(() => {
+      fixture.destroy();
+    });
+
 });
 
 

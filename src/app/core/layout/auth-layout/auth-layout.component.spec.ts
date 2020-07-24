@@ -154,4 +154,8 @@ describe('AuthLayoutComponent', () => {
    component.setContentCulture('fr-CA');
     expect(store.dispatch).toHaveBeenCalledWith(new SwitchCultureAction({cultureCode: 'fr-CA'}));
   });
+
+  afterEach(() => {
+    fixture.destroy();
+  });
 });
