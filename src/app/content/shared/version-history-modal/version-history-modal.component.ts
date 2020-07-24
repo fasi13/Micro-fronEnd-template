@@ -1,7 +1,4 @@
-/* istanbul ignore file */
-
 import { FormGroup } from '@angular/forms';
-
 import {
   Component,
   ViewChild,
@@ -14,10 +11,7 @@ import { NgbActiveModal, NgbAccordion, NgbPanelChangeEvent } from '@ng-bootstrap
 import { Store } from '@ngrx/store';
 import _clone from 'lodash/clone';
 import _assign from 'lodash/assign';
-
-
 import { takeWhile } from 'rxjs/operators';
-
 import {
   State,
   getApplicationInfo,
@@ -31,7 +25,6 @@ import { ContentVersion } from 'src/app/core/models/content/content-version';
 import { FieldConfig } from '@forge/shared';
 import { CultureService } from '../../../core/services/culture.service';
 
-
 @Component({
   selector: 'fge-version-history-modal',
   templateUrl: './version-history-modal.component.html',
@@ -39,7 +32,6 @@ import { CultureService } from '../../../core/services/culture.service';
 export class VersionHistoryModalComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('accordion') accordeon: NgbAccordion;
-
 
   applicationInfo: Application;
   contentData: ApplicationContent;
@@ -61,7 +53,6 @@ export class VersionHistoryModalComponent
 
   ngOnInit() {
     this.initSelectors();
-    /* istanbul ignore file */
     this.isDefaultCultureCode = (this.defaultCultureCode.toLowerCase() === this.cultureService.getCurrentCulture().toLowerCase());
   }
 
@@ -87,8 +78,8 @@ export class VersionHistoryModalComponent
 
   copyVersion(contentVersion: ContentVersion) {
     this.activeModal.close(contentVersion);
-
   }
+
   private initSelectors(): void {
     const  appInfo$ = this.store.select(getApplicationInfo);
     appInfo$
@@ -101,9 +92,6 @@ export class VersionHistoryModalComponent
           return {...item, value : item.version === this.contentData.version ? this.contentData.value : null }; });
       this.$ready = true;
       });
-
     });
   }
-
-
 }
