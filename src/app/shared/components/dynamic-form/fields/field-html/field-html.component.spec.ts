@@ -67,4 +67,8 @@ describe('FieldHtmlComponent', () => {
     }, 3000);
     expect(1).toBeTruthy();
   });
+
+  afterEach(() => {
+    fixture.destroy();
+  });
 });

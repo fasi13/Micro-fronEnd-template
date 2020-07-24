@@ -1,5 +1,4 @@
 import { FormGroup } from '@angular/forms';
-
 import {
   Component,
   ViewChild,
@@ -12,10 +11,7 @@ import { NgbActiveModal, NgbAccordion, NgbPanelChangeEvent } from '@ng-bootstrap
 import { Store } from '@ngrx/store';
 import _clone from 'lodash/clone';
 import _assign from 'lodash/assign';
-
-
 import { takeWhile } from 'rxjs/operators';
-
 import {
   State,
   getApplicationInfo,
@@ -27,7 +23,7 @@ import {
 } from '@forge/core';
 import { ContentVersion } from 'src/app/core/models/content/content-version';
 import { FieldConfig } from '@forge/shared';
-
+import { CultureService } from '../../../core/services/culture.service';
 
 @Component({
   selector: 'fge-version-history-modal',
@@ -37,24 +33,27 @@ export class VersionHistoryModalComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('accordion') accordeon: NgbAccordion;
 
-
   applicationInfo: Application;
   contentData: ApplicationContent;
   form:  FormGroup;
   config:  FieldConfig;
 
   private isAliveComponent = true;
+  private defaultCultureCode = 'en-US';
+  public isDefaultCultureCode: boolean;
   versions: ContentVersion[];
   $ready: boolean;
 
   constructor(
     public activeModal: NgbActiveModal,
     private store: Store<State>,
-    private contentService: ContentService
+    private contentService: ContentService,
+    private cultureService: CultureService
   ) {}
 
   ngOnInit() {
     this.initSelectors();
+    this.isDefaultCultureCode = (this.defaultCultureCode.toLowerCase() === this.cultureService.getCurrentCulture().toLowerCase());
   }
 
   ngAfterViewInit() {
@@ -79,25 +78,20 @@ export class VersionHistoryModalComponent
 
   copyVersion(contentVersion: ContentVersion) {
     this.activeModal.close(contentVersion);
-
   }
+
   private initSelectors(): void {
     const  appInfo$ = this.store.select(getApplicationInfo);
     appInfo$
     .pipe(takeWhile(() => this.isAliveComponent))
     .subscribe((applicationInfo: Application) => {
       this.applicationInfo = applicationInfo;
-
       this.contentService.getContentVersionHistory(this.applicationInfo.id, this.contentData.id).subscribe(
         (response: ApiResponse<DataPaginated<ContentVersion>>) => {
-
         this.versions = response.data.items.map(item => {
           return {...item, value : item.version === this.contentData.version ? this.contentData.value : null }; });
       this.$ready = true;
       });
-
     });
   }
-
-
 }

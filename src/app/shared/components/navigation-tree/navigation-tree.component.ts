@@ -1,3 +1,4 @@
+
 import {
   Component,
   OnInit,
@@ -20,6 +21,7 @@ import {
   FgeHttpActionService,
   Application,
   ApplicationService
+
 } from '@forge/core';
 import { Store } from '@ngrx/store';
 import _filter from 'lodash/filter';
@@ -30,6 +32,7 @@ import { distinctUntilChanged, debounceTime, delay } from 'rxjs/operators';
 
 import { NavigationTreeService } from './navigation-tree.service';
 import { TreeviewData } from './treeview-data.model';
+import { ResetCultureAction } from './../../../core/store/culture/culture.actions';
 
 @Component({
   selector: 'fge-navigation-tree',
@@ -152,6 +155,8 @@ export class NavigationTreeComponent implements OnInit, AfterViewInit, OnChanges
 
   goToApplication(item: TreeviewData) {
     if (!item.isGroup) {
+      /* istanbul ignore next */
+      this.store.dispatch(new ResetCultureAction());
       this.selected.emit(item.id);
     }
   }

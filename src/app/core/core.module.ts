@@ -1,3 +1,4 @@
+import { CultureEffects } from './store/culture/culture.effects';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -35,6 +36,7 @@ import { TenantLayoutComponent } from './layout/tenant-layout/tenant-layout.comp
 import { ApplicationLoaderComponent } from './layout/application-loader/application-loader.component';
 import { ReportEffects } from './store/report';
 
+import { CultureService } from './services/culture.service';
 
 @NgModule({
   imports: [
@@ -55,7 +57,9 @@ import { ReportEffects } from './store/report';
       ContentEffects,
       UserEffects,
       ResetPasswordEffects,
-      ReportEffects
+      ReportEffects,
+      
+      CultureEffects
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
@@ -75,7 +79,9 @@ import { ReportEffects } from './store/report';
     FgeNotificationService,
     FgeRouterService,
     FgeModalService,
-    httpInterceptorProviders
+    CultureService,
+    httpInterceptorProviders,
+
   ]
 })
 export class CoreModule {}
