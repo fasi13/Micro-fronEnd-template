@@ -165,9 +165,12 @@ describe('AuthLayoutComponent', () => {
     done();
   });
 
-  it('should not update available cultures when empty', (done) => {
+  it('should not update available cultures when null or empty', (done) => {
     store.dispatch(
       new ReadAvailableCulturesSuccessAction({ availableCultures: [] })
+    );
+    store.dispatch(
+      new ReadAvailableCulturesSuccessAction({ availableCultures: null })
     );
     expect(component.availableCultures).toEqual(
       initialState.culture.availableCultures
