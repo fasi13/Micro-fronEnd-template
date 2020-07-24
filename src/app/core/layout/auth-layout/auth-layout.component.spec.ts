@@ -5,6 +5,7 @@ import {
   ReadCultureAction,
   SwitchCultureAction,
   ResetCultureAction,
+  ReadCultureSuccessAction,
 } from './../../store/culture/culture.actions';
 import { AuthLayoutComponent } from './auth-layout.component';
 import { RouterModule } from '@angular/router';
@@ -177,7 +178,7 @@ describe('AuthLayoutComponent', () => {
 
   it('should not update current cultures when falsy ', (done) => {
     store.dispatch(
-      new ReadCultureAction({ currentCulture: null })
+      new ReadCultureSuccessAction({ currentCulture: null })
     );
     expect(component.currentCulture).toEqual(
       initialState.culture.currentCulture
