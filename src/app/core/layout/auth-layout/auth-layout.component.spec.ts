@@ -179,7 +179,7 @@ describe('AuthLayoutComponent', () => {
   });
 
 
-  it('should not update current cultures when falsy ', (done) => {
+  it('should not update current culture when null', (done) => {
     store.dispatch(
       new ReadCultureSuccessAction({ currentCulture: null })
     );
@@ -188,6 +188,17 @@ describe('AuthLayoutComponent', () => {
     );
     done();
   });
+
+  it('should not update current culture when same is returned', (done) => {
+    store.dispatch(
+      new ReadCultureSuccessAction({ currentCulture: initialState.culture.currentCulture })
+    );
+    expect(component.currentCulture).toEqual(
+      initialState.culture.currentCulture
+    );
+    done();
+  });
+
   afterEach(() => {
     fixture.destroy();
   });
