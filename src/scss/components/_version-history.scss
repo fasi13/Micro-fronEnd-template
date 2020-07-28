@@ -49,4 +49,16 @@
   }
 
 
+  .fge-content-type__image {
+    width: 70%;
+    height: initial;
+    border-radius: 2px;
+
+    img {
+      max-width: 70%;
+      max-height: initial;
+    }
+  }
+
+
 }
