@@ -94,7 +94,8 @@ this.store.dispatch(new SwitchCultureAction({cultureCode: cultureCode}));
       .pipe(takeWhile(() => this.isAliveComponent))
       .subscribe(path => {
         if (path && path.data) {
-          this.pathData = path.data.path;
+          const index = path.data.path.findIndex(application => application.id === this.user.applicationId);
+          this.pathData = path.data.path.slice(index);
           this.rootApplication = this.pathData[0];
         }
       });
