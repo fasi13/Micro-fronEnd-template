@@ -46,7 +46,7 @@ export class ApplicationGroupFormModalComponent implements OnInit {
   }
 
   handleSubmit({ value, success, error }): void {
-    (this.httpActionService.performAction(this.currentApplicationNode, this.currentActionName, { body: value }) as Observable<any>)
+    (this.httpActionService.performAction(this.currentApplicationNode, this.currentActionName, { body: value }))
     .subscribe((response: ApiResponse<any>) => {
       this.updateCurrentApplicationNode(response);
       success();

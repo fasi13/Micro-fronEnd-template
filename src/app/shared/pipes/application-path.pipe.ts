@@ -12,7 +12,7 @@ export class ApplicationPathPipe implements PipeTransform {
     appPath.forEach((element, index, array) => {
       if (element) {
         const separator = index === array.length - 1 ? '' : ' > ';
-        const elementId = (element && +element.value > -1) ? ` (${element.value})` : '';
+        const elementId = (+element.value > -1) ? ` (${element.value})` : '';
         strPath += `${element.name}${elementId}${separator}`;
       }
     });
