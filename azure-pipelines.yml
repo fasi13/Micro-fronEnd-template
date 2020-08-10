@@ -28,7 +28,7 @@ steps:
   displayName: 'Build Project'
   inputs:
     command: custom
-    customCommand: run build        
+    customCommand: run build:prod       
    
 - task: ArchiveFiles@2
   inputs:
