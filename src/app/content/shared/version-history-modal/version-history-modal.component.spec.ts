@@ -114,7 +114,7 @@ describe('VersionHistoryModalComponent', () => {
   }));
 
   beforeEach(() => {
-    history = {data: { items: [{authorFullName: '1', version: 1, value : '1', creationDate: 'test'}],
+    history = {data: { items: [{authorFullName: '1', version: 1, value : '1', creationDate: '2020-01-01'}],
       limit: 1,
       offset: 1,
       totalCount: 1,
