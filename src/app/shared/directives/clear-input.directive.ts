@@ -18,8 +18,8 @@ export class ClearInputDirective implements OnInit {
     if (current.nodeName.toUpperCase() !== 'INPUT') {
       throw new Error('Invalid input type for clearableInput:' + current);
     }
-    const wrapper = document.createElement('span') as HTMLSpanElement;
-    const clearIcon = document.createElement('i') as HTMLElement;
+    const wrapper = document.createElement('span');
+    const clearIcon = document.createElement('i');
     clearIcon.id = 'clearIcon';
 
     clearIcon.addEventListener('click', () => this.clearValue());

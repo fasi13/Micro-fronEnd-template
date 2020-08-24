@@ -135,7 +135,7 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
     if (this.config.type === 'select') {
       this.handleSubmit();
     } else {
-      this.fieldChanged = this.form.value[this.config.name] !== this.config.value ? true : false;
+      this.fieldChanged = this.form.value[this.config.name] !== this.config.value;
     }
   }
 

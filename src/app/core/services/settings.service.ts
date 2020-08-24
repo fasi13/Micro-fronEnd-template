@@ -25,29 +25,7 @@ export class SettingsService {
     return this.store.pipe(
         select(getApplicationInfo),
         switchMap((application: Application) => {
-          let params = new HttpParams();
-          if (offset >= 0) {
-            params = params.set('offset', `${offset}`);
-          }
-          if (limit) {
-            params = params.set('limit', `${limit}`);
-          }
-          if (filters) {
-            Object.keys(filters).forEach(key => {
-              const value = filters[key];
-              if (!_isEmpty(value)) {
-                params = params.set(key, value);
-              }
-            });
-          }
-          if (sort) {
-            Object.keys(sort).forEach(key => {
-              const value = sort[key];
-              if (!_isEmpty(value)) {
-                params = params.set(key, value);
-              }
-            });
-          }
+          const params: HttpParams = this.setParams(offset, limit, filters, sort);
           return this.httpClient.get<ApiResponse<DataPaginated<SettingGroup>>>(`application/${application.id}/settingGroups`, { params });
         })
       );
@@ -60,30 +38,35 @@ export class SettingsService {
 
   getGroupSettings(applicationId: string | number, groupId: number, offset?: number, limit?: number, filters?: {[key: string]: string},
     sort?: { sortby: string, sortdirection: string }): Observable<ApiResponse<DataPaginated<Setting>>> {
-      let params = new HttpParams();
-      if (offset >= 0) {
-        params = params.set('offset', `${offset}`);
-      }
-      if (limit) {
-        params = params.set('limit', `${limit}`);
-      }
-      if (filters) {
-        Object.keys(filters).forEach(key => {
-          const value = filters[key];
-          if (!_isEmpty(value)) {
-            params = params.set(key, value);
-          }
-        });
-      }
-      if (sort) {
-        Object.keys(sort).forEach(key => {
-          const value = sort[key];
-          if (!_isEmpty(value)) {
-            params = params.set(key, value);
-          }
-        });
-      }
+      const params: HttpParams = this.setParams(offset, limit, filters, sort);
       return this.httpClient.get<ApiResponse<DataPaginated<Setting>>>(
         `application/${applicationId}/settingGroup/${groupId}/settings`, { params });
+  }
+
+  setParams(offset?: number, limit?: number, filters?: {[key: string]: string}, sort?: { sortby: string, sortdirection: string }) {
+    let params = new HttpParams();
+    if (offset >= 0) {
+      params = params.set('offset', `${offset}`);
+    }
+    if (limit) {
+      params = params.set('limit', `${limit}`);
+    }
+    if (filters) {
+      Object.keys(filters).forEach(key => {
+        const value = filters[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
+    if (sort) {
+      Object.keys(sort).forEach(key => {
+        const value = sort[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
+    return params;
   }
 }
