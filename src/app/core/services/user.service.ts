@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 
 import { UserCredentials, UserToken, User, DataPaginated, ApiResponse, UserResetPassword } from '../models';
 import { Router, NavigationExtras } from '@angular/router';
-import { PARAMETERS } from '@angular/core/src/util/decorators';
 
 @Injectable({
   providedIn: 'root'
