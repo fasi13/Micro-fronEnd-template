@@ -48,12 +48,12 @@ steps:
 #     testRunner: JUnit
 #     testResultsFiles: '**/test-results.xml'
 
-- task: PublishCodeCoverageResults@1
-  inputs: 
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
-    failIfCoverageEmpty: true
+# - task: PublishCodeCoverageResults@1
+#   inputs: 
+#     codeCoverageTool: Cobertura
+#     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+#     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+#     failIfCoverageEmpty: true
     
 - task: SonarQubeAnalyze@4
   displayName: 'SonarQube Analyze'
