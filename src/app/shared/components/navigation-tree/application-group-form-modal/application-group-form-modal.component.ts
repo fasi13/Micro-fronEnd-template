@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Validators } from '@angular/forms';
 import _assign from 'lodash/assign';
 
-import { Observable } from 'rxjs';
-
 import { FgeHttpActionService, ApiResponse, DataPaginated, FgeModalService } from '@forge/core';
 import { TreeviewData } from '../treeview-data.model';
 import { NavigationTreeService } from '../navigation-tree.service';

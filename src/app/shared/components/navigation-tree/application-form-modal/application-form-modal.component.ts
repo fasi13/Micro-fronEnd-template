@@ -3,8 +3,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 import _assign from 'lodash/assign';
 
-import { Observable } from 'rxjs';
-
 import { ApiResponse, DataPaginated, FgeHttpActionService } from '@forge/core';
 import { TreeviewData } from '../treeview-data.model';
 import { FieldConfig } from '../../dynamic-form';
