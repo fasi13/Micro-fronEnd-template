@@ -104,7 +104,8 @@
             "assets": [
               "src/favicon.png",
               "src/assets",
-              "src/imgs"
+              "src/imgs",
+              "src/web.config"
             ]
           }
         },
