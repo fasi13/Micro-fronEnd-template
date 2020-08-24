@@ -36,24 +36,24 @@ steps:
   inputs:
     command: install
 
-- task: Npm@1
-  displayName: 'Run Tests'
-  inputs:
-    command: custom
-    customCommand: 'run test'
+# - task: Npm@1
+#   displayName: 'Run Tests'
+#   inputs:
+#     command: custom
+#     customCommand: 'run test'
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: JUnit
-    testResultsFiles: '**/test-results.xml'
+# - task: PublishTestResults@2
+#   condition: succeededOrFailed()
+#   inputs:
+#     testRunner: JUnit
+#     testResultsFiles: '**/test-results.xml'
 
-- task: PublishCodeCoverageResults@1
-  inputs: 
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
-    failIfCoverageEmpty: true
+# - task: PublishCodeCoverageResults@1
+#   inputs: 
+#     codeCoverageTool: Cobertura
+#     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+#     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+#     failIfCoverageEmpty: true
     
 - task: SonarQubeAnalyze@4
   displayName: 'SonarQube Analyze'
