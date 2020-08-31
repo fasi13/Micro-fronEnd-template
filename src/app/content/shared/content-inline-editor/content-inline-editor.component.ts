@@ -95,29 +95,12 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit({ value: formData, success, error}): void {
+
     let value = formData[this.config.name];
     if (this.config.type === 'image' || this.config.type === 'document') {
       value = this.form.form.controls[this.config.name]['fileValue']['formattedValue'];
     }
-    const link: Link = _find(this.contentData._links, ['rel', 'updateContentValue']);
-    if (link) {
-      this.dispatchContentAction(link, { value });
-      this.store.select(getContentActionState)
-        .pipe(takeUntil(this.unsubscribeEdition))
-        .subscribe((editState) => {
-          const { error: errorData, loading } = editState;
-          if (errorData) {
-            const errors = Object.values(errorData.error.fields);
-            this.notifierService.notify('error', `There was an error updating the content "${this.config.label}"`);
-            this.unsubscribeEdition.next();
-            error(errors);
-          } else if (!loading) {
-            this.notifierService.notify('success', `The content "${this.config.label}" has been updated successfully`);
-            this.unsubscribeEdition.next();
-            success();
-          }
-        });
-    }
+   this.updateContentValue(value, success, error);
   }
 
   onSubmitConfirmModal() {
@@ -137,30 +120,63 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   openVersionHistory(): void {
     this.modalRef = this.modalService.open(VersionHistoryModalComponent, { windowClass: 'modal-content-form' });
     this.modalRef.componentInstance.contentData = this.contentData;
+
     this.modalRef.componentInstance.form = this.form.form;
     this.modalRef.componentInstance.config = this.config;
     this.fgeModalService.registerModal(this.modalRef);
     this.modalRef.result.then((contentVersion: ContentVersion) => {
     if (!contentVersion) {return; }
-    if (this.form.form.value[this.config.name] !== this.contentData.value) {
+
+    if (this.form.form.value[this.config.name] && this.form.form.value[this.config.name] !== this.contentData.value) {
         this.configConfirmModal = {
           title: 'Copy confirmation',
-          message: 'Are you sure you want to copy the content? Your latest changes will be overridden.',
+          message: 'Are you sure you want to copy the content? Your unsaved changes will be overridden.',
           submitLabel: 'Accept',
           cancelLabel: 'Cancel',
         };
         this.copyConfirmModal.onsubmit.subscribe(() => {
-        this.form.form.patchValue({[this.form.config.name]: contentVersion.value});
+      this.updateFormValue(contentVersion.value);
         this.copyConfirmModal.close();
         });
         this.copyConfirmModal.open();
     } else {
-      this.form.form.patchValue({[this.form.config.name]: contentVersion.value});
+      this.updateFormValue(contentVersion.value);
     }
+
     });
   }
 
+  private updateFormValue(value: string) {
+    if (this.contentData.dataType.type === 'File') {
+      this.updateContentValue(value, () => {}, () => {});
+    } else {
+      this.form.form.patchValue({[this.form.config.name]: value});
+    }
+  }
+private updateContentValue(value: string , success: any, error: any) {
+  const link: Link = _find(this.contentData._links, ['rel', 'updateContentValue']);
+  if (link) {
+    this.dispatchContentAction(link, { value });
+    this.store.select(getContentActionState)
+      .pipe(takeUntil(this.unsubscribeEdition))
+      .subscribe((editState) => {
+        const { error: errorData, loading } = editState;
+        if (errorData) {
+          const errors = Object.values(errorData.error.fields);
+          this.notifierService.notify('error', `There was an error updating the content "${this.config.label}"`);
+          this.unsubscribeEdition.next();
+          error(errors);
+        } else if (!loading) {
+          this.notifierService.notify('success', `The content "${this.config.label}" has been updated successfully`);
+          this.unsubscribeEdition.next();
+          success();
+        }
+      });
+  }
+
+}
   private dispatchContentAction(link: Link, payload: any) {
+
     const contentPayload = payload;
     const { status: status } = this.contentData;
     contentPayload['status'] = status;

@@ -63,10 +63,18 @@
                 *ngSwitchCase="'Logo Display'"
                 [value]="v.value"
               ></fge-content-type-logo>
-              <fge-content-type-document
+              <div
                 *ngSwitchCase="'Document'"
-                [value]="v.value"
-              ></fge-content-type-document>
+              >
+              <div class="offset-3 col-9 fge-dynamic-field__preview" *ngIf="config?.src">
+                <a [href]="v.value" target="_blank">
+                  <img class="fge-custom-icon-width" src="./assets/img/pdf-icon.png" alt="Document Icon">
+                  <small class="pl-2">{{v.value.substring(v.value.lastIndexOf('/')+1)}}</small>
+                </a>
+              </div>
+
+
+            </div>
             </div>
             <div *ngIf="v.value === ''">
               (Empty)
@@ -75,16 +83,17 @@
               <button
                 class="btn btn-sm btn-primary"
                 [ngClass]="{
-                  disabled: v.value == form.value[config.name]
+                  disabled:  v.value == contentData.value && contentData.dataType.type !='File'
                 }"
                 (click)="copyVersion(v)"
               >
                 {{
-                  v.value == form.value[config.name]
+                  v.value == contentData.value && contentData.dataType.type !='File'
                     ? "Current Value"
                     : "Copy this version"
                 }}
               </button>
+
             </div>
           </div>
 
