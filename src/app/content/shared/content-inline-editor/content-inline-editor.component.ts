@@ -151,7 +151,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 //
       this.configConfirmModal = {
         title: 'Copy confirmation',
-        message: 'This will create a new version with the selection value from the history. No file will be uploaded.',
+        message: 'This will create a new version with the selected value from the history. No file will be uploaded.',
         submitLabel: 'Accept',
         cancelLabel: 'Cancel',
       };
