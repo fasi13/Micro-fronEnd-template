@@ -148,7 +148,19 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
   private updateFormValue(value: string) {
     if (this.contentData.dataType.type === 'File') {
-      this.updateContentValue(value, () => {}, () => {});
+//
+      this.configConfirmModal = {
+        title: 'Copy confirmation',
+        message: 'This will create a new version with the selection value from the history. No file will be uploaded.',
+        submitLabel: 'Accept',
+        cancelLabel: 'Cancel',
+      };
+      this.copyConfirmModal.onsubmit.subscribe(() => {
+        this.updateContentValue(value, () => {}, () => {});
+      this.copyConfirmModal.close();
+      });
+      this.copyConfirmModal.open();
+
     } else {
       this.form.form.patchValue({[this.form.config.name]: value});
     }
