@@ -10,8 +10,8 @@ import {
   withLatestFrom,
   filter,
   switchMap,
-  catchError,
-  throttleTime
+  catchError
+
 } from 'rxjs/operators';
 
 @Component({
@@ -27,11 +27,12 @@ export class ApplicationLoaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+       /* istanbul ignore next */
     this.loadingApplicationData$ = this.store.select(isLoadingApplicationData)
       .pipe(
         withLatestFrom(this.store.select(isAuthenticated)),
         filter(([_loading, isAuth]: boolean[]) => isAuth),
-        throttleTime(500),
+
         switchMap(([loading]: [boolean]) => of(loading)),
         catchError(() => of(false))
       );
