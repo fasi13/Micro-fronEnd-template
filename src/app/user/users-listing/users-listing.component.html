@@ -1,6 +1,7 @@
 <div class="fge-group--title row">
   <h4 class="fge-group--title-divider my-2 col-10">
-    <i *ngIf="usersState?.loading" class="fas fa-circle-notch fa-spin"></i><span class="pl-2">User Management</span>
+    <span *ngIf="usersState?.loading" class="fas fa-circle-notch fa-spin"></span
+    ><span class="pl-2">User Management</span>
   </h4>
   <div class="col text-right align-self-center">
     <button
@@ -10,14 +11,15 @@
       title="Click to export"
     >
       Export
-      <i class="far fa-file-excel pl-1"></i>
+      <span class="far fa-file-excel pl-1"></span>
     </button>
     <button
       type="button"
       class="btn btn-sm btn-secondary bg-secondary"
-      (click)="userFormModal.open()">
+      (click)="userFormModal.open()"
+    >
       Add User
-      <i class="fas fa-user-plus pl-1"></i>
+      <span class="fas fa-user-plus pl-1"></span>
     </button>
   </div>
 </div>
@@ -25,100 +27,160 @@
   <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
     <ng-container
       [ngTemplateOutlet]="filterInput"
-      [ngTemplateOutletContext]="{label: 'Username', field: 'login'}">
+      [ngTemplateOutletContext]="{ label: 'Username', field: 'login' }"
+    >
     </ng-container>
   </div>
   <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
     <ng-container
       [ngTemplateOutlet]="filterInput"
-      [ngTemplateOutletContext]="{label: 'First Name', field: 'firstName'}">
+      [ngTemplateOutletContext]="{ label: 'First Name', field: 'firstName' }"
+    >
     </ng-container>
   </div>
   <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
     <ng-container
       [ngTemplateOutlet]="filterInput"
-      [ngTemplateOutletContext]="{label: 'Last Name', field: 'lastName'}">
+      [ngTemplateOutletContext]="{ label: 'Last Name', field: 'lastName' }"
+    >
     </ng-container>
   </div>
   <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
     <ng-container
       [ngTemplateOutlet]="filterInput"
-      [ngTemplateOutletContext]="{label: 'Email', field: 'email'}">
+      [ngTemplateOutletContext]="{ label: 'Email', field: 'email' }"
+    >
     </ng-container>
   </div>
-  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0">
-  </div>
-  <div class="col-2 fge-table__col border-bottom-0 pt-0 border-top-0">
-  </div>
-  <div class="col-1 fge-table__col border-bottom-0 pt-0 border-top-0">
-  </div>
+  <div class="col fge-table__col border-bottom-0 pt-0 border-top-0"></div>
+  <div class="col-2 fge-table__col border-bottom-0 pt-0 border-top-0"></div>
+  <div class="col-1 fge-table__col border-bottom-0 pt-0 border-top-0"></div>
 </div>
 <div class="fge-table">
   <div class="row m-0 fge-table__header">
     <div class="col fge-table__col fge-clickable" (click)="sortBy('login')">
       Username
       <span *ngIf="sort.sortby === 'login'">
-        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+        <span
+          class="fas fa-caret-up"
+          *ngIf="sort.sortdirection === 'asc'"
+        ></span>
+        <span
+          class="fas fa-caret-down"
+          *ngIf="sort.sortdirection === 'desc'"
+        ></span>
       </span>
     </div>
     <div class="col fge-table__col fge-clickable" (click)="sortBy('firstname')">
       First Name
       <span *ngIf="sort.sortby === 'firstname'">
-        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+        <span
+          class="fas fa-caret-up"
+          *ngIf="sort.sortdirection === 'asc'"
+        ></span>
+        <span
+          class="fas fa-caret-down"
+          *ngIf="sort.sortdirection === 'desc'"
+        ></span>
       </span>
     </div>
     <div class="col fge-table__col fge-clickable" (click)="sortBy('lastname')">
       Last Name
       <span *ngIf="sort.sortby === 'lastname'">
-        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+        <span
+          class="fas fa-caret-up"
+          *ngIf="sort.sortdirection === 'asc'"
+        ></span>
+        <span
+          class="fas fa-caret-down"
+          *ngIf="sort.sortdirection === 'desc'"
+        ></span>
       </span>
     </div>
     <div class="col fge-table__col fge-clickable" (click)="sortBy('email')">
       Email
       <span *ngIf="sort.sortby === 'email'">
-        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+        <span
+          class="fas fa-caret-up"
+          *ngIf="sort.sortdirection === 'asc'"
+        ></span>
+        <span
+          class="fas fa-caret-down"
+          *ngIf="sort.sortdirection === 'desc'"
+        ></span>
       </span>
     </div>
-    <div class="col fge-table__col">
-      Application
-    </div>
-    <div class="col-2 fge-table__col fge-clickable" (click)="sortBy('lastlogindate')">
+    <div
+      class="col-2 fge-table__col fge-clickable"
+      (click)="sortBy('lastlogindate')"
+    >
       Last Login
       <span *ngIf="sort.sortby === 'lastlogindate'">
-        <i class="fas fa-caret-up" *ngIf="sort.sortdirection === 'asc'"></i>
-        <i class="fas fa-caret-down" *ngIf="sort.sortdirection === 'desc'"></i>
+        <span
+          class="fas fa-caret-up"
+          *ngIf="sort.sortdirection === 'asc'"
+        ></span>
+        <span
+          class="fas fa-caret-down"
+          *ngIf="sort.sortdirection === 'desc'"
+        ></span>
       </span>
     </div>
     <div class="col-1 fge-table__col fge-table--actions">
       Actions
     </div>
   </div>
-  <div class="row m-0" *ngIf="usersState?.items?.length <= 0 && !usersState?.loading">
+  <div
+    class="row m-0"
+    *ngIf="usersState?.items?.length <= 0 && !usersState?.loading"
+  >
     <div class="col fge-table__col text-center">
-      <h6><i class="fas fa-info-circle"></i> No users found</h6>
+      <h6><span class="fas fa-info-circle"></span> No users found</h6>
     </div>
   </div>
-  <div class="row fge-table__row m-1" *ngFor="let user of usersState?.items; trackBy: trackByUserId">
-    <div class="col fge-table__col" title="{{ user.login }}">{{ user.login }}</div>
-    <div class="col fge-table__col" title="{{ user.firstName }}">{{ user.firstName }}</div>
-    <div class="col fge-table__col" title="{{ user.lastName }}">{{ user.lastName }}</div>
-    <div class="col fge-table__col" title="{{ user.email }}">{{ user.email }}</div>
-    <div class="col fge-table__col--app-path" title="{{ user.applicationPath | fgeApplicationPath }}">
-      <span>
-        {{ user.applicationPath | fgeApplicationPath }}
-      </span>
+  <div
+    class="row fge-table__row m-1"
+    *ngFor="let user of usersState?.items; trackBy: trackByUserId"
+  >
+    <div class="col fge-table__col" title="{{ user.login }}">
+      {{ user.login }}
     </div>
-    <div class="col-2 fge-table__col" title="{{ user.lastLoginDate | date:'medium' }}">{{ user.lastLoginDate | date:'medium' }}</div>
+    <div class="col fge-table__col" title="{{ user.firstName }}">
+      {{ user.firstName }}
+    </div>
+    <div class="col fge-table__col" title="{{ user.lastName }}">
+      {{ user.lastName }}
+    </div>
+    <div class="col fge-table__col" title="{{ user.email }}">
+      {{ user.email }}
+    </div>
+
+    <div
+      class="col-2 fge-table__col"
+      title="{{ user.lastLoginDate | date: 'medium' }}"
+    >
+      {{ user.lastLoginDate | date: "medium" }}
+    </div>
     <div class="col-1 fge-table__col pr-0 fge-table--actions">
-      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="userFormModal.open(user)">
-        <i class="fas fa-edit"></i>
+      <a
+        class="btn btn-secondary bg-secondary btn-sm mr-2"
+        tabindex="0"
+        (click)="userFormModal.open(user)"
+      >
+        <span class="fas fa-edit"></span>
       </a>
-      <a class="btn btn-secondary bg-secondary btn-sm mr-2" tabindex="0" (click)="openModalConfirm(modalConfirmModal, user)">
-        <i class="fas fa-edit" [ngClass]="{'fa-user-alt': user.isActive, 'fa-user-slash': !user.isActive }"></i>
+      <a
+        class="btn btn-secondary bg-secondary btn-sm mr-2"
+        tabindex="0"
+        (click)="openModalConfirm(modalConfirmModal, user)"
+      >
+        <span
+          class="fas fa-edit"
+          [ngClass]="{
+            'fa-user-alt': user.isActive,
+            'fa-user-slash': !user.isActive
+          }"
+        ></span>
       </a>
     </div>
   </div>
@@ -141,22 +203,25 @@
   <div class="input-group input-group-sm mt-1">
     <div class="input-group-prepend fge-clickable" (click)="onPerformFilter()">
       <span class="input-group-text">
-        <i class="fas fa-search"></i>
+        <span class="fas fa-search"></span>
       </span>
     </div>
     <input
       [(ngModel)]="filters[field]"
       type="text"
       class="form-control"
-      placeholder="{{label}}"
+      placeholder="{{ label }}"
       (keyup.enter)="onPerformFilter()"
-      (keyup.esc)="onResetFilters()">
+      (keyup.esc)="onResetFilters()"
+    />
   </div>
 </ng-template>
 
 <fge-user-form-modal #userFormModal></fge-user-form-modal>
 
-<fge-modal-confirm [config]="config"
+<fge-modal-confirm
+  [config]="config"
   (onsubmit)="onSubmitConfirmModal()"
-  #modalConfirmModal>
+  #modalConfirmModal
+>
 </fge-modal-confirm>

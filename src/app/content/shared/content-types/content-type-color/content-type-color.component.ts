@@ -6,9 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ContentTypeColorComponent implements OnInit {
 
-  @Input()
-  value: string;
-
+  @Input() value: string;
+  @Input() renderer: string;
   constructor() { }
 
   ngOnInit() {

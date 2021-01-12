@@ -1,0 +1,64 @@
+.fge-version-history {
+  .modal-body .card-header {
+    padding: 0;
+  }
+  .modal-title{
+    span{
+      font-style: italic;
+    }
+  }
+  .modal-body>.modal-footer {
+    padding: 0;
+    margin-top: 1rem;
+
+    button {
+      width: 100px;
+    }
+  }
+
+  .version-info {
+    color: $black;
+    padding-left: 25px;
+  }
+
+  .card-body {
+
+    .content-value {
+      padding: 20px;
+    }
+
+    .modal-footer button {
+      visibility: hidden;
+      &.disabled{
+        pointer-events: none;
+      }
+    }
+
+    &:hover .modal-footer button {
+      visibility: visible;
+    }
+  }
+
+  .fge-spinner {
+    padding: 2rem 0 2rem 0;
+
+    div {
+      background-color: $primary;
+      opacity: 0.6;
+    }
+  }
+
+
+  .fge-content-type__image {
+    width: 70%;
+    height: initial;
+    border-radius: 2px;
+
+    img {
+      max-width: 70%;
+      max-height: initial;
+    }
+  }
+
+
+}

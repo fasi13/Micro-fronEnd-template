@@ -63,7 +63,7 @@ export class FgeHttpActionService {
 
   private getAction(data: FgeEntity, action: string): Link {
     if (data._links) {
-      return (data._links as Link[]).find((item) => item.rel === action);
+      return (data._links).find((item) => item.rel === action);
     }
     throw new Error('_links not found in current Object data');
   }

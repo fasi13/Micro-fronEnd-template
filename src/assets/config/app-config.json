@@ -1,0 +1,19 @@
+{
+  "apis": [
+    {
+      "name": "E2E.Content.Management.API",
+      "routePatern": "application\/|users\/",
+      "url": "https://localhost:44391"
+    },
+    {
+      "name": "E2E.Hierarchy.API",
+      "routePatern": "applications\/",
+      "url": "http://localhost:54042",
+      "AddLinks": {
+        "apiName": "E2E.Content.Management.API",
+        "endPoint": "application"
+
+      }
+    }
+  ]
+}

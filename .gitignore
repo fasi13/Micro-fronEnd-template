@@ -7,7 +7,7 @@
 
 # dependencies
 /node_modules
-
+/src/test-results*
 # IDEs and editors
 /.idea
 .project
@@ -38,3 +38,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/test-results*
+src/test-results.xml

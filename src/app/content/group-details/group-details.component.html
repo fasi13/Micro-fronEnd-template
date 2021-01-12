@@ -1,6 +1,6 @@
 <div class="fge-group--title row">
   <h4 class="my-2 col-10">
-    <i *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></i>
+    <span *ngIf="loading$ | async" class="fas fa-circle-notch fa-spin"></span>
     {{ currentGroup?.name }}
     <button
       *ngIf="!(loading$ | async)"
@@ -10,7 +10,7 @@
       (click)="toggleEditMode()"
     >
     Edit
-    <i class="fas fa-edit pl-1"></i>
+    <span class="fas fa-edit pl-1"></span>
     </button>
   </h4>
   <div class="col text-right align-self-center">
@@ -19,7 +19,7 @@
       class="btn btn-sm btn-secondary bg-secondary"
       (click)="openContentForm()">
       Add Content
-      <i class="fas fa-folder-plus fa-lg pl-1"></i>
+      <span class="fas fa-folder-plus fa-lg pl-1"></span>
     </button>
   </div>
 </div>
@@ -49,7 +49,7 @@
               tabindex="0"
               (click)="goToContentEdit(content?.id)"
               class="btn btn-secondary bg-secondary btn-sm mr-2">
-              <i class="far fa-edit"></i>
+              <span class="far fa-edit"></span>
             </a>
           </td>
         </tr>
@@ -57,7 +57,7 @@
     </table>
   </div>
   <div class="row fge-group--container-values mx-1 my-2" *ngIf="editableContents?.length > 0">
-    <div class="col-xs-12 col-sm-12 col-md-7">
+    <div class="col-xs-12 col-sm-12 col-md-8">
       <fge-content-inline-editor *ngFor="let content of editableContents"
         [contentData]="content?.contentData"
         [config]="content?.config">
@@ -75,6 +75,7 @@
         <th scope="col fge-table__col">Description</th>
         <th scope="col fge-table__col">Type</th>
         <th scope="col fge-table__col">Value</th>
+        <th scope="col fge-table__col">Version</th>
         <th scope="col fge-table__col">Status</th>
         <th scope="col fge-table__col">Publish Date</th>
       </tr>
@@ -92,6 +93,7 @@
           <fge-content-type-logo *ngSwitchCase="'Logo Display'" [value]="content?.value"></fge-content-type-logo>
           <fge-content-type-document *ngSwitchCase="'Document'" [value]="content?.value"></fge-content-type-document>
         </td>
+        <td>v{{content?.version}}</td>
         <td>{{ content?.status }}</td>
         <td>{{ content.publishDate | date:'medium' }}</td>
       </tr>

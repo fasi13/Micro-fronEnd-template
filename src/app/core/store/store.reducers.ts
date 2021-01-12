@@ -8,7 +8,8 @@ import * as ContentReducers from './content/content.reducers';
 import * as UserReducers from './user/user.reducers';
 import * as ResetPasswordReducers from './reset-password/reset-password.reducers';
 import * as ReportReducers from './report/report.reducers';
-import * as SettingsReducers from './settings/settings.reducers';
+
+import * as CultureReducers from './culture/culture.reducers';
 import { AuthorizationActionTypes } from './authorization/authorization.actions';
 import { StoreActionTypes } from './store.actions';
 
@@ -20,7 +21,8 @@ export interface State {
   user?: UserReducers.UserState;
   resetPassword?: ResetPasswordReducers.ResetPasswordState;
   report?: ReportReducers.ReportState;
-  settings?: SettingsReducers.SettingState;
+  
+  culture?: CultureReducers.CultureState;
 }
 
 export const FgeReducers: ActionReducerMap<State> = {
@@ -31,7 +33,8 @@ export const FgeReducers: ActionReducerMap<State> = {
   user: UserReducers.reducer,
   resetPassword: ResetPasswordReducers.reducer,
   report: ReportReducers.reducer,
-  settings: SettingsReducers.reducer
+  
+  culture: CultureReducers.reducer,
 };
 
 /**********************************************************
@@ -55,7 +58,8 @@ export function clearStoredData(
     if (action.type === StoreActionTypes.CLEAR_STORED_DATA) {
       state = Object.assign(state, {
         content: ContentReducers.initialState,
-        user: UserReducers.initialState
+        user: UserReducers.initialState,
+        culture: CultureReducers.initialState
       });
     }
     return reducer(state, action);
@@ -242,15 +246,19 @@ export const getAuditState = createSelector(
   ReportReducers.getAuditState
 );
 
+
+
 /**********************************************************
- * Setting Reducers
+ * Culture Reducers
  *********************************************************/
-export const getSettingState = (state: State) => state.settings;
-export const getSettingGroups = createSelector(
-  getSettingState,
-  SettingsReducers.getSettingGroups
+export const getCultureState = (state: State) => state.culture;
+export const getCurrentCulture = createSelector(
+   getCultureState,
+   CultureReducers.getCurrentCulture
 );
-export const getSettingGroup = createSelector(
-  getSettingState,
-  SettingsReducers.getSettingGroup
+
+export const getAvailableCultures = createSelector(
+   getCultureState,
+   CultureReducers.getAvailableCultures
 );
+

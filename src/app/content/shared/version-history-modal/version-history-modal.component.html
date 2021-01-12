@@ -1,0 +1,119 @@
+<div class="fge-version-history">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+        <span>"{{ contentData.name }}"</span> - Version History
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="handleCancel()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ngb-accordion #accordion activeIds="v{{ contentData.version }}">
+      <ngb-panel id="v{{ v.version }}" *ngFor="let v of versions">
+        <ng-template ngbPanelTitle>
+          <span
+            >
+            <span *ngIf="0 !==v.version">Version {{ v.version }}</span>
+            <span *ngIf="0 === v.version && isDefaultCultureCode" class="disabled">Inherited</span>
+            <span *ngIf="0 === v.version && !isDefaultCultureCode" class="disabled">Default en-US</span>
+            <span class="version-info" *ngIf="0 !== v.version">
+
+              {{ v.creationDate | date: "medium" }}
+              <span
+                *ngIf="contentData.version === v.version"
+                class="disabled"
+                >&nbsp;&nbsp;(Current version)</span
+              >
+
+            </span>
+          </span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div *ngIf="v.value !== null">
+            <div
+              [ngSwitch]="contentData.dataType?.name"
+              class="content-value"
+              *ngIf="v.value"
+            >
+              <fge-content-type-color
+                *ngSwitchCase="'Color Picker'"
+                [value]="v.value"
+                renderer="true"
+              ></fge-content-type-color>
+              <fge-content-type-text
+                *ngSwitchCase="'Text'"
+                [value]="v.value"
+                renderer="true"
+              ></fge-content-type-text>
+              <fge-content-type-html
+                *ngSwitchCase="'HTML'"
+                [value]="v.value"
+                renderer="true"
+              ></fge-content-type-html>
+              <fge-content-type-image
+                *ngSwitchCase="'Image'"
+                [value]="v.value"
+              ></fge-content-type-image>
+              <fge-content-type-logo
+                *ngSwitchCase="'Logo Display'"
+                [value]="v.value"
+              ></fge-content-type-logo>
+              <div
+                *ngSwitchCase="'Document'"
+              >
+              <div class="offset-3 col-9 fge-dynamic-field__preview" *ngIf="config?.src">
+                <a [href]="v.value" target="_blank">
+                  <img class="fge-custom-icon-width" src="./assets/img/pdf-icon.png" alt="Document Icon">
+                  <small class="pl-2">{{v.value.substring(v.value.lastIndexOf('/')+1)}}</small>
+                </a>
+              </div>
+
+
+            </div>
+            </div>
+            <div *ngIf="v.value === ''">
+              (Empty)
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-sm btn-primary"
+                [ngClass]="{
+                  disabled:  v.value == contentData.value && contentData.dataType.type !='File'
+                }"
+                (click)="copyVersion(v)"
+              >
+                {{
+                  v.value == contentData.value && contentData.dataType.type !='File'
+                    ? "Current Value"
+                    : "Copy this version"
+                }}
+              </button>
+
+            </div>
+          </div>
+
+          <div class="fge-spinner" *ngIf="v.value === null">
+            <div class="fge-bounce1"></div>
+            <div class="fge-bounce2"></div>
+            <div class="fge-bounce3"></div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    <div class="fge-spinner" *ngIf="!$ready">
+      <div class="fge-bounce1"></div>
+      <div class="fge-bounce2"></div>
+      <div class="fge-bounce3"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="handleCancel()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

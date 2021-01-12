@@ -3,23 +3,32 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpHandler,
-  HttpRequest
+  HttpRequest,
 } from '@angular/common/http';
 import _isEmpty from 'lodash/isEmpty';
 
 import { Observable } from 'rxjs';
-
-import { environment } from '../../../environments/environment';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Injectable()
 export class ProxyApiInterceptor implements HttpInterceptor {
+  constructor(private appConfigService: AppConfigService) {}
 
-  constructor() {}
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!_isEmpty(environment.apiUrl) && !request.url.startsWith('http')) {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (
+      request.url.indexOf('app-config.json') === -1 &&
+      !_isEmpty(this.appConfigService.config.apis) &&
+      !request.url.startsWith('http')
+    ) {
+      const api = this.appConfigService.getApiByRoute(request.url);
       request = request.clone({
-        url: `${environment.apiUrl}/${request.url}`
+        setHeaders: {
+          ApiName: api.name,
+        },
+        url: `${api.url}/${request.url}`,
       });
     }
     return next.handle(request);

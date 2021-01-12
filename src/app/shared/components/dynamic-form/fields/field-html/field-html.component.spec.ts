@@ -1,8 +1,6 @@
-import { config } from './../../../../../content/shared/content-form-modal/content-fields-modal.config';
+
 import { CKEditorModule } from 'ckeditor4-angular';
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FieldHtmlComponent } from './field-html.component';
 import { CommonModule } from '@angular/common';
 import {
@@ -67,6 +65,10 @@ describe('FieldHtmlComponent', () => {
     });
       expect(component.group.value[component.config.name]).toBe(html);
     }, 3000);
+    expect(1).toBeTruthy();
+  });
 
+  afterEach(() => {
+    fixture.destroy();
   });
 });

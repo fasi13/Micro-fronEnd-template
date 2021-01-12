@@ -19,7 +19,6 @@
         text-align: center;
         width: 100%;
         margin-left: 0px !important;
-        margin-left: 0px !important;
     }
 }
 
@@ -30,7 +29,6 @@
         color: $color-text-white;
         padding-top: 30px;
         @include media-breakpoint-down(sm) {
-            padding-top: 0px; 
             text-align: center !important;
             padding: 0 15px !important;
         }

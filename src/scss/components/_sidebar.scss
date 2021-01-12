@@ -53,6 +53,8 @@ $sidebar-border-color: #ccc;
 
 .fge-sidebar ul li a {
   text-align: left;
+  padding: 10px;
+  display: block;
 }
 
 .fge-sidebar.active ul li a {
@@ -95,11 +97,6 @@ $sidebar-border-color: #ccc;
   a {
     color: $sidebar-item-color;
   }
-}
-
-.fge-sidebar ul li a {
-  padding: 10px;
-  display: block;
 }
 
 .fge-sidebar ul li a:hover {
@@ -202,9 +199,6 @@ a[aria-expanded="true"] {
   }
   .fge-sidebar ul ul a {
       padding: 10px !important;
-  }
-  .fge-sidebar {
-      margin-left: 0;
   }
   .fge-sidebar__items--bottom {
     display: none;

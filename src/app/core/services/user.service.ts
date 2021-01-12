@@ -74,22 +74,7 @@ export class UserService {
     if (limit) {
       params = params.set('limit', `${limit}`);
     }
-    if (filters) {
-      Object.keys(filters).forEach(key => {
-        const value = filters[key];
-        if (!_isEmpty(value)) {
-          params = params.set(key, value);
-        }
-      });
-    }
-    if (sort) {
-      Object.keys(sort).forEach(key => {
-        const value = sort[key];
-        if (!_isEmpty(value)) {
-          params = params.set(key, value);
-        }
-      });
-    }
+    params = this.setParams(params, filters, sort);
     const url = `application/${applicationId}/users`;
     return this.httpClient.get<ApiResponse<DataPaginated<User>>>(url, { params });
   }
@@ -97,22 +82,7 @@ export class UserService {
   exportUserList(applicationId: string | number, filters?: {[key: string]: string},
     sort?: { sortby: string, sortdirection: string }): Observable<HttpResponse<any>> {
     let params = new HttpParams();
-    if (filters) {
-      Object.keys(filters).forEach(key => {
-        const value = filters[key];
-        if (!_isEmpty(value)) {
-          params = params.set(key, value);
-        }
-      });
-    }
-    if (sort) {
-      Object.keys(sort).forEach(key => {
-        const value = sort[key];
-        if (!_isEmpty(value)) {
-          params = params.set(key, value);
-        }
-      });
-    }
+    params = this.setParams(params, filters, sort);
     const url = `application/${applicationId}/users/export`;
     return this.httpClient.get<HttpResponse<any>>(url,
       { params, responseType: 'text' as 'json', observe: 'response' });
@@ -121,5 +91,25 @@ export class UserService {
   resetPassword(userId: number, resetPassword: UserResetPassword): Observable<ApiResponse<UserResetPassword>> {
     const url = `${this.baseUrl}/${userId}/password`;
     return this.httpClient.put<ApiResponse<UserResetPassword>>(url, resetPassword);
+  }
+
+  setParams(params: HttpParams, filters?: {[key: string]: string}, sort?: { sortby: string, sortdirection: string }) {
+    if (filters) {
+      Object.keys(filters).forEach(key => {
+        const value = filters[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
+    if (sort) {
+      Object.keys(sort).forEach(key => {
+        const value = sort[key];
+        if (!_isEmpty(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
+    return params;
   }
 }

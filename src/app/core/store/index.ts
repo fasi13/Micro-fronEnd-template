@@ -6,3 +6,4 @@ export * from './router';
 export * from './reset-password';
 export * from './store.reducers';
 export * from './report';
+export * from './culture';

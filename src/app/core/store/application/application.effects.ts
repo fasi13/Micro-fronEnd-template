@@ -41,7 +41,7 @@ import {
 import { ApplicationService } from '../../services/application.service';
 import { State, getAuthenticatedUser, getApplicationInfo } from '../store.reducers';
 import { FgeHttpActionService } from '../../services';
-import { FetchSettingGroups } from '../settings';
+
 
 @Injectable()
 export class ApplicationEffects {
@@ -92,7 +92,7 @@ export class ApplicationEffects {
 
   @Effect() public fetchApplicationDataSuccess$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_DATA_SUCCESS),
-    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups(), new FetchDataTypes(), new FetchSettingGroups()])
+    mergeMap(() => [new FetchApplicationPath(), new FetchContentGroups(), new FetchDataTypes()])
   );
 
   @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(
@@ -109,14 +109,17 @@ export class ApplicationEffects {
       )
     )
   );
-
+/* unit test exists but not covering this line, check  it('search should return a stream with applicationPath result'... */
+      /* istanbul ignore next */
   @Effect() public searchApplication$: Observable<Action> = this.actions
     .pipe(
       ofType(ApplicationActionTypes.SEARCH_APPLICATION),
       /**
        * @TODO Refactor this once API provices a search link in Application Data
        */
-      switchMap((action: ApplicationAction) => this.applicationService.search(action.payload)
+      withLatestFrom(this.store.select(getAuthenticatedUser)),
+      switchMap(([_action, user]: [ApplicationAction, User]) =>
+        this.applicationService.search(user.applicationId, _action.payload)
         .pipe(
           map((response: ApiResponse<DataPaginated<ApplicationPath>>) => {
             return new SearchApplicationSuccess(response);
