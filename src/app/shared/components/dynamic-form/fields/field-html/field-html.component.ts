@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-
+import {  NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ImageGalleryModalComponent } from '../../../image-gallery-modal/image-gallery-modal.component';
 import { FormField } from '../../models/form-field.abstract';
 
 @Component({
@@ -10,7 +11,14 @@ import { FormField } from '../../models/form-field.abstract';
 export class FieldHtmlComponent extends FormField implements OnInit {
   configCkEditor: any;
   private _editor: any;
-
+  private modalRef: NgbModalRef;
+  public images = [{name:'img1', url:''},
+                   {name:'img1', url:''},
+                   {name:'img1', url:''},
+                   {name:'img1', url:''}]
+  constructor(private modalService: NgbModal){
+    super();
+  }
   @HostListener('keyup') onkeyup() {
     if (this._editor.editor.mode === 'source') {
       const editorValue = this._editor.editor.getData();
@@ -51,9 +59,14 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     console.log('image Action executed' + editor);
   }
   imageevent(event) {
+   this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-content-form' });
+   this.modalRef.componentInstance.myData ='My Gallery';
+   this.modalRef.componentInstance.images = this.images;
+   //this.modalRef.close();
+    this.modalRef.result.then(()=> {
+      console.log("completed");
+    });
     console.log('image button Event caught' + event);
     this.imageaction(event.editor);
   }
-
-
 }

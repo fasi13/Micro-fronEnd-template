@@ -34,6 +34,7 @@ import {
   ApplicationGroupFormModalComponent
 } from './components/navigation-tree/application-group-form-modal/application-group-form-modal.component';
 import { ApplicationPathPipe } from './pipes/application-path.pipe';
+import { ImageGalleryModalComponent } from './components/image-gallery-modal/image-gallery-modal.component';
 
 @NgModule({
   imports: [
@@ -73,7 +74,9 @@ import { ApplicationPathPipe } from './pipes/application-path.pipe';
     ApplicationFormModalComponent,
     ApplicationGroupFormModalComponent,
 
-    ApplicationPathPipe
+    ApplicationPathPipe,
+
+    ImageGalleryModalComponent
   ],
   exports: [
     FormsModule,
@@ -99,7 +102,8 @@ import { ApplicationPathPipe } from './pipes/application-path.pipe';
     FieldColorComponent,
     FieldPasswordComponent,
     FieldToggleButtonComponent,
-    FieldHtmlComponent
+    FieldHtmlComponent,
+ImageGalleryModalComponent
   ]
 })
 export class SharedModule { }
