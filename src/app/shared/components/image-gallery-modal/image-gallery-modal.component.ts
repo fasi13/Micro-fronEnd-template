@@ -13,11 +13,10 @@ export class ImageGalleryModalComponent implements OnInit {
  conentGroups: any;
  currentConentGroup: any;
  selectedImage: any;
+ selectedConentGroup = [];
 
   constructor(private contentService: ContentService,
-public activeModal: NgbActiveModal) {
-
-   }
+  public activeModal: NgbActiveModal) {}
 
   ngOnInit() {
   }
@@ -31,15 +30,43 @@ public activeModal: NgbActiveModal) {
   }
 
   onImageSelection(image){
-      this.selectedImage = image;
-      image.active = !image.active;
+    this.selectedImage = image;
+    image.active = !image.active;
 
+    if(this.selectedConentGroup.length > 0){
+    let x = this.selectedConentGroup.find(x => x.id == this.currentConentGroup.id);
+    if(x != null )
+    {
+      x.value.push(image);
+    }
+    else{
+      let conentGroup = new ContentGroupModelGallery();
+      conentGroup.id = this.currentConentGroup.id;
+      conentGroup.name = this.currentConentGroup.name;
+      conentGroup.value = [];
+      conentGroup.value.push(image);
+      this.selectedConentGroup.push(conentGroup);
+    }
   }
-handleCancel(): void {
-    this.activeModal.close(this.selectedImage);
+  else{
+    let conentGroup = new ContentGroupModelGallery();
+      conentGroup.id = this.currentConentGroup.id;
+      conentGroup.name = this.currentConentGroup.name;
+      conentGroup.value = [];
+      conentGroup.value.push(image);
+      this.selectedConentGroup.push(conentGroup);
   }
+  }
+  handleCancel(isSave): void {
+    if(isSave)
+    this.activeModal.close(this.selectedConentGroup);
 
-handleSave(){
-
+    else this.activeModal.close();
+  }
 }
+
+export class ContentGroupModelGallery {
+  id: number;
+  name: string;
+  value: any;
 }
