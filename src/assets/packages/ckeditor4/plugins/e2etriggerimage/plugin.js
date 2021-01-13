@@ -45,7 +45,7 @@
     afterInit: function( editor ) {
 
 
-			var widgetReplaceRegex = /\[Content\(\s*group="(\w|\s)*"\s*name="(\w|\s)*"\s*\)\]/g;
+			var widgetReplaceRegex = /\[Content\(\s*group=["'](?<group>[\w\s]+?)["']\s*name=["'](?<name>[\w\s]+?)["']\s*\)\]/g;
 
 			editor.dataProcessor.dataFilter.addRules( {
 				text: function( text, node ) {
@@ -59,14 +59,14 @@
 						return;
           //replace the [[imageUrl]] with an <img> tag in editor mode
 					return text.replace( widgetReplaceRegex, function( match ) {
-
+debugger
+           matchObj =  widgetReplaceRegex.exec(match);
             //TODO: set imageUrl with result of ajax call to api that will return image url. jquery works here $.ajax(...)
             //another way to do ajax call is CKEDITOR.ajax.load(...)
-            var contentName = match.split('"')[3]; //TODO fix this get the group
-            var contentGroup = match.split('"')[1];
+
             var content =  $.ajax({
               type: "GET",
-              url: editor.config.getimageUrl.replace('{name}', contentName),
+              url: editor.config.getimageUrl.replace('{name}', matchObj.groups.name).replace('{group}', matchObj.groups.group),
               async: false,
               headers:{
                 'Authorization': 'Token ' + editor.config.apiToken,//'Basic dGVzdDp0ZXN0',//, TODO:fix token
@@ -88,8 +88,8 @@
             innerElement = new CKEDITOR.htmlParser.element( 'img', {
               'class': 'imagewidget',
               'src': url,
-              'data-group' :contentGroup,
-              'data-name' :contentName
+              'data-group' :matchObj.groups.group,
+              'data-name' :matchObj.groups.name
             } );
 
 

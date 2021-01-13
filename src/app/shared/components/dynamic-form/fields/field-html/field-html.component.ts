@@ -50,7 +50,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       allowedContent: true,
       embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
       extraPlugins: ['e2etriggerimage'],
-      getimageUrl: apiurl + '/application/' + this.applicationId + '/content?name={name}&exactMatch=true&replaceEmbeddedData=true&basic=true',
+      getimageUrl: apiurl + '/application/' + this.applicationId + '/content?name={name}&group={group}&exactMatch=true&replaceEmbeddedData=true&basic=true',
       apiToken: this.userService.getToken(),
       toolbar: [
         { name: 'styles', items: ['Format'] },
@@ -75,7 +75,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   imageaction(editor, componentInstance) {
     componentInstance.forEach(element => {
       element.value.forEach(item => {
-        editor.insertHtml(`[Content(group='${element.name}' name='${item.name}')]`);
+        editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
       });
     });
   }
