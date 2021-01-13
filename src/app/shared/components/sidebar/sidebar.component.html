@@ -32,6 +32,14 @@
           >
         </div>
       </div>
+      <li [ngClass]="{ active: isSectionActive('communication') }">
+        <a
+          (click)="goToCommunication()"
+          class="btn-sm fge-clickable"
+        >
+        <span class="fas fa-archive"></span><span class="fge-sidebar__item--title">Communication Management</span>
+        </a>
+      </li>
     </ul>
   </nav>
   <div class="fge-sidebar-content">
