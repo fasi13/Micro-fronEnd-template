@@ -20,7 +20,15 @@ export class ImageGalleryModalComponent implements OnInit {
     public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-  }
+    this.contentService.getContentGroups(this.applicationId).subscribe(a => {
+      this.contentService.getContentGroup(this.applicationId, a.data.items[0].id).subscribe(x => {
+        this.currentConentGroup = a.data.items[0];
+        this.selectedImage = null;
+        this.conentGroups = a.data.items;
+        this.images = x.data.content.filter(y => y.dataType.name === "Image");
+        });
+      })
+    }
 
   onContentClick(item) {
     this.contentService.getContentGroup(this.applicationId, item.id).subscribe(x => {

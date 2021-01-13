@@ -4,7 +4,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageGalleryModalComponent } from '../../../image-gallery-modal/image-gallery-modal.component';
 import { FormField } from '../../models/form-field.abstract';
-import { ContentService } from 'src/app/core/services/content.service';
 
 
 import { Application, getApplicationInfo, State } from '@forge/core';
@@ -20,7 +19,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   private _editor: any;
   private modalRef: NgbModalRef;
 
-  constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal, private contentService: ContentService) {
+  constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal) {
     super();
   }
 
@@ -83,23 +82,13 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   imageevent(event) {
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
-    this.contentService.getContentGroups(this.applicationId).subscribe(a => {
-      this.contentService.getContentGroup(this.applicationId, a.data.items[0].id).subscribe(x => {
-        this.modalRef.componentInstance.currentConentGroup = a.data.items[0];
-        this.modalRef.componentInstance.selectedImage = null;
-        this.modalRef.componentInstance.applicationId = this.applicationId;
-        this.modalRef.componentInstance.conentGroups = a.data.items;
-        this.modalRef.componentInstance.images = x.data.content.filter(y => y.dataType.name === "Image");
-
-
-        this.modalRef.result.then((activeModal: any) => {
+    this.modalRef.componentInstance.applicationId = this.applicationId;
+    this.modalRef.result.then((activeModal: any) => {
           if (activeModal) {
             this.imageaction(event.editor, activeModal);
           }
           this.modalRef.close();
         });
-      })
-    })
-  }
+      }
 
 }
