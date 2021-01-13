@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import {  NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageGalleryModalComponent } from '../../../image-gallery-modal/image-gallery-modal.component';
 import { FormField } from '../../models/form-field.abstract';
+import { ContentService } from 'src/app/core/services/content.service';
 
 @Component({
   selector: 'fge-field-html',
@@ -12,13 +13,11 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   configCkEditor: any;
   private _editor: any;
   private modalRef: NgbModalRef;
-  public images = [{name:'img1', url:''},
-                   {name:'img1', url:''},
-                   {name:'img1', url:''},
-                   {name:'img1', url:''}]
-  constructor(private modalService: NgbModal){
+  constructor(private modalService: NgbModal, private contentService: ContentService){
     super();
   }
+  //private _imageList: any;
+
   @HostListener('keyup') onkeyup() {
     if (this._editor.editor.mode === 'source') {
       const editorValue = this._editor.editor.getData();
@@ -54,19 +53,26 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     this._editor.editor.on('imageevent', event => this.imageevent(event));
   }
 
-  imageaction(editor) {
+  imageaction(editor, componentInstance) {
+    debugger;
     editor.insertHtml("[[https://res.cloudinary.com/sfp/image/upload/q_60/cste/f6e7c858-2e8a-4500-b850-a88236a2b4c7.png]]");
     console.log('image Action executed' + editor);
+    console.log('image Action executed' + componentInstance);
   }
   imageevent(event) {
-   this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-content-form' });
-   this.modalRef.componentInstance.myData ='My Gallery';
-   this.modalRef.componentInstance.images = this.images;
-   //this.modalRef.close();
-    this.modalRef.result.then(()=> {
-      console.log("completed");
-    });
-    console.log('image button Event caught' + event);
-    this.imageaction(event.editor);
+    this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-content-form' });
+    this.contentService.getContentGroups(1).subscribe( a => {
+      this.contentService.getContentGroup(1, a.data.items[0].id).subscribe( x => {
+      
+        this.modalRef.componentInstance.myData = event.name;
+        this.modalRef.componentInstance.currentConentGroup = a.data.items[0];
+        this.modalRef.componentInstance.selectedImage = null;
+        this.modalRef.componentInstance.conentGroups = a.data.items;
+        this.modalRef.componentInstance.images = x.data.content.filter(y => y.dataType.name === "Image");
+        this.imageaction(event.editor, this.modalRef.componentInstance);
+        //this.modalRef.close();
+      })
+    })
+    
   }
 }
