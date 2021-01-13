@@ -1,13 +1,22 @@
 <p>
   {{myData}}
 </p>
-<div *ngFor="let item of conentGroups;">
+
+<div class="image-container">
+<div class="content-panel">
+<div *ngFor="let item of conentGroups;" >
   <strong (click)="onContentClick(item)">{{item.name}}</strong>
 </div>
-
-<div *ngFor="let item of images;">
-<img [src]="item.value" (click)="onImageSelection(item)" name="{{item.name}}"/>
 </div>
+<div class="image-panel">
+<div *ngFor="let item of images;" (click)="onImageSelection(item)" [ngClass]="{'active': item.active}">
+<img class="img" [src]="item.value" name="{{item.name}}"/>
+</div>
+</div>
+</div>
+
+
+
  <div class="modal-footer">
   <button class="btn btn-secondary" (click)="handleSave()">
         Save

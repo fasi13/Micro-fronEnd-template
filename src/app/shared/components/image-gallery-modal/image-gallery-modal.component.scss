@@ -1,0 +1,33 @@
+.image-container{
+    padding: 10px 25px 10px 25px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    .content-panel{
+        width: 200px;
+        float: left;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid;
+        flex-wrap: wrap;
+        row-gap: 20px;
+        .content-active{
+          font-weight: bold;
+        }
+    }
+    .image-panel{
+    width: calc(100% - 200px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    column-gap: 20px;
+    padding-left: 10px;
+    .active{
+        border: 1px solid;
+      }
+    .img{
+        width: 150px;
+      }
+    }
+}

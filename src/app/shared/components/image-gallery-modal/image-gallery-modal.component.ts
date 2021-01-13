@@ -32,7 +32,8 @@ public activeModal: NgbActiveModal) {
 
   onImageSelection(image){
       this.selectedImage = image;
-      debugger;
+      image.active = !image.active;
+
   }
 handleCancel(): void {
     this.activeModal.close(this.selectedImage);

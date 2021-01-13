@@ -81,7 +81,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     console.log('image Action executed' + componentInstance);
   }
   imageevent(event) {
-    this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-content-form' });
+    this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
     this.contentService.getContentGroups(1).subscribe( a => {
       this.contentService.getContentGroup(1, a.data.items[0].id).subscribe( x => {
 
@@ -91,9 +91,9 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         this.modalRef.componentInstance.conentGroups = a.data.items;
         this.modalRef.componentInstance.images = x.data.content.filter(y => y.dataType.name === "Image");
         this.modalRef.componentInstance.selectedImage = this.modalRef.componentInstance.images[0];
-       debugger;
+
         this.modalRef.result.then((selectedImages: any) =>{
-debugger;
+
 console.log(selectedImages);
               this.imageaction(event.editor,selectedImages);
               this.modalRef.close();
