@@ -8,3 +8,11 @@
 <div *ngFor="let item of images;">
 <img [src]="item.value" (click)="onImageSelection(item)" name="{{item.name}}"/>
 </div>
+ <div class="modal-footer">
+  <button class="btn btn-secondary" (click)="handleSave()">
+        Save
+      </button>
+      <button class="btn btn-secondary" (click)="handleCancel()">
+        Close
+      </button>
+    </div>

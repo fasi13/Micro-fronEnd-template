@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContentService } from 'src/app/core/services/content.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class ImageGalleryModalComponent implements OnInit {
  currentConentGroup: any;
  selectedImage: any;
 
-  constructor(private contentService: ContentService) {
+  constructor(private contentService: ContentService,
+public activeModal: NgbActiveModal) {
 
    }
 
@@ -32,5 +34,11 @@ export class ImageGalleryModalComponent implements OnInit {
       this.selectedImage = image;
       debugger;
   }
+handleCancel(): void {
+    this.activeModal.close(this.selectedImage);
+  }
 
+handleSave(){
+
+}
 }

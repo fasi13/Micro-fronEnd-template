@@ -73,7 +73,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   }
 
   imageaction(editor, componentInstance) {
-    let inputContent = `[Content(group='${componentInstance.currentConentGroup.name}' name='${componentInstance.selectedImage.name}')]`;
+    let inputContent = `[Content(group='Anniversary' name='${componentInstance.name}')]`;
     debugger;
     //editor.insertHtml('[Content(group="Website Branding" name="TestImage")]');
     editor.insertHtml(inputContent);
@@ -84,17 +84,22 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-content-form' });
     this.contentService.getContentGroups(1).subscribe( a => {
       this.contentService.getContentGroup(1, a.data.items[0].id).subscribe( x => {
-      
+
         this.modalRef.componentInstance.myData = event.name;
         this.modalRef.componentInstance.currentConentGroup = a.data.items[0];
         //this.modalRef.componentInstance.selectedImage = null;
         this.modalRef.componentInstance.conentGroups = a.data.items;
         this.modalRef.componentInstance.images = x.data.content.filter(y => y.dataType.name === "Image");
         this.modalRef.componentInstance.selectedImage = this.modalRef.componentInstance.images[0];
-        this.imageaction(event.editor, this.modalRef.componentInstance);
-        //this.modalRef.close();
+       debugger;
+        this.modalRef.result.then((selectedImages: any) =>{
+debugger;
+console.log(selectedImages);
+              this.imageaction(event.editor,selectedImages);
+              this.modalRef.close();
+        });
       })
     })
-    
+
   }
 }
