@@ -63,7 +63,7 @@ describe('application effects ', () => {
     expect(effects.fetchApplicationDataSuccess$).toBeObservable(expected);
   });
 
-  it('search should return a stream with applicationPath result', () => {
+  it('search should return a stream with applicationPath result', (done) => {
     spyOn(service, 'search').and.callFake(() => {});
     const action = new SearchApplication();
     const completion = new SearchApplicationSuccess();
@@ -72,6 +72,7 @@ describe('application effects ', () => {
     const expected = cold('--b', { b: completion });
     expected.subscribe((data) => {
       expect(data.type).toBe(ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS);
+      done();
     });
   });
 

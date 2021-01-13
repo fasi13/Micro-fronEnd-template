@@ -92,7 +92,10 @@ describe('AuthLayoutComponent', () => {
         error: null,
       },
     },
-
+    culture: {
+      availableCultures: ['en-US'],
+      currentCulture: 'en-US'
+    },
     user: {
       users: {
         loading: false,
@@ -113,8 +116,6 @@ describe('AuthLayoutComponent', () => {
         },
       },
     },
-
-    culture: { availableCultures: ['en-US'], currentCulture: 'en-US' },
   };
 
   beforeEach(() => {
