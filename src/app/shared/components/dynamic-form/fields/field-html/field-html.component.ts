@@ -1,7 +1,7 @@
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserService } from './../../../../../core/services/user.service';
 import { Component, OnInit, HostListener } from '@angular/core';
-import {  NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageGalleryModalComponent } from '../../../image-gallery-modal/image-gallery-modal.component';
 import { FormField } from '../../models/form-field.abstract';
 import { ContentService } from 'src/app/core/services/content.service';
@@ -20,10 +20,10 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   private _editor: any;
   private modalRef: NgbModalRef;
 
-  constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal, private contentService: ContentService){
+  constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal, private contentService: ContentService) {
     super();
   }
-  //private _imageList: any;
+
   applicationId: string | number;
 
   @HostListener('keyup') onkeyup() {
@@ -47,25 +47,26 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     this.configCkEditor = {
 
       placeholder: this.config ? this.config.placeholder : '',
-      startupFocus : true,
-      allowedContent : true,
-      embed_provider : '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
-      extraPlugins : [ 'e2etriggerimage'],
-      getimageUrl:   apiurl + '/application/' + this.applicationId + '/content?name={name}&exactMatch=true&replaceEmbeddedData=true&basic=true',
+      startupFocus: true,
+      allowedContent: true,
+      embed_provider: '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}',
+      extraPlugins: ['e2etriggerimage'],
+      getimageUrl: apiurl + '/application/' + this.applicationId + '/content?name={name}&exactMatch=true&replaceEmbeddedData=true&basic=true',
       apiToken: this.userService.getToken(),
       toolbar: [
-        { name: 'styles', items: [ 'Format' ] },
-        { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
-        { name: 'styles', items: [ 'Font', 'TextColor', 'BGColor' ] },
-        { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-        { name: 'table', items: [ 'Table' ] },
-        { name: 'links', items: [ 'Link', 'Unlink', 'base64image', 'Embed' ] },
-        { name: 'tools', items: [ 'Maximize' ] },
-        { name: 'document', items: [ 'Source' ] },
-        { name: 'about', items: [ 'About', 'E2EA11yHelp', 'E2ETriggerImage' ] }
-      ]};
+        { name: 'styles', items: ['Format'] },
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'] },
+        { name: 'styles', items: ['Font', 'TextColor', 'BGColor'] },
+        { name: 'paragraph', items: ['BulletedList', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+        { name: 'table', items: ['Table'] },
+        { name: 'links', items: ['Link', 'Unlink', 'base64image', 'Embed'] },
+        { name: 'tools', items: ['Maximize'] },
+        { name: 'document', items: ['Source'] },
+        { name: 'about', items: ['About', 'E2EA11yHelp', 'E2ETriggerImage'] }
+      ]
+    };
   }
-  get editor() {return this._editor; }
+  get editor() { return this._editor; }
 
   editorReady(editor) {
     this._editor = editor;
@@ -74,30 +75,31 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   imageaction(editor, componentInstance) {
     componentInstance.forEach(element => {
-      element.value.forEach(item=> {
+      element.value.forEach(item => {
         editor.insertHtml(`[Content(group='${element.name}' name='${item.name}')]`);
-     });
-  });
+      });
+    });
   }
-  
+
   imageevent(event) {
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
-    this.contentService.getContentGroups(1).subscribe( a => {
-      this.contentService.getContentGroup(1, a.data.items[0].id).subscribe( x => {
-        this.modalRef.componentInstance.myData = event.name;
+    this.contentService.getContentGroups(this.applicationId).subscribe(a => {
+      this.contentService.getContentGroup(this.applicationId, a.data.items[0].id).subscribe(x => {
         this.modalRef.componentInstance.currentConentGroup = a.data.items[0];
         this.modalRef.componentInstance.selectedImage = null;
+        this.modalRef.componentInstance.applicationId = this.applicationId;
         this.modalRef.componentInstance.conentGroups = a.data.items;
         this.modalRef.componentInstance.images = x.data.content.filter(y => y.dataType.name === "Image");
 
-        
-        this.modalRef.result.then((activeModal: any) =>{
-        if(activeModal){
-        this.imageaction(event.editor, activeModal);
-        }
-        this.modalRef.close();
-        });
-    })
-  })}
 
+        this.modalRef.result.then((activeModal: any) => {
+          if (activeModal) {
+            this.imageaction(event.editor, activeModal);
+          }
+          this.modalRef.close();
+        });
+      })
+    })
   }
+
+}
