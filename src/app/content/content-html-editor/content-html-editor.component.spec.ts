@@ -79,7 +79,10 @@ describe('ContentHtmlEditorComponent', () => {
     loading: false,
     error: null
   }},
-
+  culture: {
+    availableCultures: ['en-US'],
+    currentCulture: 'en-US'
+  },
   user: { users: {
     loading: false,
     items: null,
