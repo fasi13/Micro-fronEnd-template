@@ -98,7 +98,7 @@ describe('CultureEffects', () => {
     });
   });
 
-  it('Reset should return a stream with string read success action Default', () => {
+  it('Reset should return a stream with string read success action Default', (done) => {
     const action = new ResetCultureAction();
     actions = hot('--a-', { a: action });
     const effect = effects.resetCulture$.subscribe(() => {
@@ -107,6 +107,7 @@ describe('CultureEffects', () => {
       });
       const expected = cold('--b', { b: completion });
       expect(effect).toBeObservable(expected);
+      done();
 
     });
   });
