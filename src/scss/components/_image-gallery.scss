@@ -129,7 +129,12 @@
     }
   }
 
-
+.modal-footer{
+  button.disable{
+    pointer-events: none;
+    background-color: lightgray !important;
+  }
+}
   .loading-container {
     width: calc(100% - 200px);
     justify-content: center;
