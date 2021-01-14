@@ -35,4 +35,21 @@ export class FgeRouterService implements OnDestroy {
         this.selectUnsubscription.next();
       });
   }
+
+  getCurrentRouteData(property) {
+    let state = this.ngRouter.routerState;
+    let parent =  this.ngRouter.routerState.root;
+    return this.getRouteData(state, parent, property);
+  }
+
+  getRouteData(state, parent, property) {
+    if(parent && parent.snapshot.data && parent.snapshot.data[property]) {
+      return parent.snapshot.data[property];
+    }
+    if(state && parent) {
+      return this.getRouteData(state, state.firstChild(parent), property);
+    }
+    return null;
+  }
+
 }

@@ -1,6 +1,4 @@
 import {
-  CultureAction,
-  CultureActionTypes,
   ReadAvailableCulturesSuccessAction,
   ReadCultureAction,
   SwitchCultureAction,
@@ -8,24 +6,26 @@ import {
   ReadCultureSuccessAction,
 } from './../../store/culture/culture.actions';
 import { AuthLayoutComponent } from './auth-layout.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Store, Action } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
 import { State } from 'src/app/core/store/store.reducers';
-import { CoreModule } from '../../core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReadAvailableCulturesAction } from '../../store/culture';
+import { PageNotFoundComponent } from 'src/app/error/page-not-found/page-not-found.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AuthLayoutComponent', () => {
   let fixture: ComponentFixture<AuthLayoutComponent>;
   let component: AuthLayoutComponent;
   let store: MockStore<State>;
+  let router: Router;
   const initialState: State = {
     authorization: { authenticated: null, loaded: false, loading: false },
     router: { state: null, navigationId: null },
@@ -118,24 +118,48 @@ describe('AuthLayoutComponent', () => {
     },
   };
 
+  const routes: Routes = [
+    {
+      path: '',
+      component: PageNotFoundComponent,
+      children: [
+        {
+          path: 'a',
+          component: PageNotFoundComponent,
+          children: [
+            {
+              path: 'b',
+              component: PageNotFoundComponent,
+              data: {hideLanguageSelector:true}
+            },
+            {
+              path: 'c',
+              component: PageNotFoundComponent
+            }
+          ]
+        }
+      ]
+    }
+  ];
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideMockStore({ initialState })],
-      declarations: [AuthLayoutComponent],
+      declarations: [AuthLayoutComponent, PageNotFoundComponent],
       imports: [
         NotifierModule,
         HttpClientModule,
-
         CommonModule,
         SharedModule,
         NgBootstrapModule,
-        RouterModule.forRoot([]),
+        RouterTestingModule.withRoutes(routes),
         FormsModule,
         ReactiveFormsModule,
       ],
     });
 
     store = TestBed.get(Store);
+    router = TestBed.get(Router);
     spyOn(store, 'dispatch').and.callThrough();
     fixture = TestBed.createComponent(AuthLayoutComponent);
     component = fixture.componentInstance;
@@ -145,6 +169,20 @@ describe('AuthLayoutComponent', () => {
   it('should be created', (done) => {
     expect(component).toBeTruthy();
     done();
+  });
+
+  it('language selector should be hidden', (done) => {
+    router.navigate(["/a/b"]).then(() => {
+      expect(component.hideLanguageSelector).toBe(true);
+      done();
+    });
+  });
+
+  it('language selector should be shown', (done) => {
+    router.navigate(["/a/c"]).then(() => {
+      expect(component.hideLanguageSelector).toBe(false);
+      done();
+    });
   });
 
   it('should dispatch an action to load data when created', (done) => {

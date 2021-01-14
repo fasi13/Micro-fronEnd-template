@@ -32,7 +32,14 @@ const routes: Routes = [
                 path: 'report',
                 loadChildren: './report/report.module#ReportModule'
               },
-              { path: 'user', loadChildren: './user/user.module#UserModule' },
+              {
+                path: 'user',
+                loadChildren: './user/user.module#UserModule'
+              },
+              {
+                path: 'communication',
+                loadChildren: './communication/communication.module#CommunicationModule'
+              },
               { path: 'promotions', component: ComingSoonComponent },
               { path: 'campaings', component: ComingSoonComponent },
               { path: 'reset-password', component: ResetPasswordComponent },
