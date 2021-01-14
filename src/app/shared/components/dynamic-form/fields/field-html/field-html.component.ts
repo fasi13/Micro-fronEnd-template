@@ -21,6 +21,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal) {
       /* istanbul ignore next */
+
     super();
   }
 
