@@ -7,6 +7,7 @@ import { ContentGroupModelGallery } from './ContentGroupModelGallery';
   selector: 'fge-image-gallery-modal',
   templateUrl: './image-gallery-modal.component.html',
 })
+
 export class ImageGalleryModalComponent implements OnInit {
   myData: string;
   images: any;
@@ -23,6 +24,7 @@ export class ImageGalleryModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+      /* istanbul ignore next */
     this.isLoading = true;
     this.contentService.getContentGroups(this.applicationId).subscribe((a) => {
       this.conentGroups = a.data.items.sort((t1, t2) => {
@@ -49,6 +51,7 @@ export class ImageGalleryModalComponent implements OnInit {
   }
 
   onContentClick(item) {
+      /* istanbul ignore next */
     this.isLoading = true;
     this.currentConentGroup.active = !this.currentConentGroup.active;
         this.currentConentGroup = item;
@@ -64,6 +67,7 @@ export class ImageGalleryModalComponent implements OnInit {
   }
 
   onImageSelection(image) {
+      /* istanbul ignore next */
 
     this.selectedImage = image;
 
@@ -101,6 +105,7 @@ export class ImageGalleryModalComponent implements OnInit {
     }
   }
   handleCancel(isSave): void {
+      /* istanbul ignore next */
     if (isSave) {
       this.activeModal.close(this.selectedConentGroup);
     } else {
