@@ -12,7 +12,7 @@
     <div *ngIf="!isLoading" class="image-panel-container">
       <div>
         <div class="modal-header">
-          <h4>Select an Image form contents</h4>
+          <h4>Select an Image from contents</h4>
         </div>
         <div class="image-panel">
           <div *ngFor="let item of images" (click)="onImageSelection(item)" [ngClass]="{ active: item.active }">
