@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommunicationAppComponent } from './communication-app.component';
 
-fdescribe('CommunicationAppComponent', () => {
+describe('CommunicationAppComponent', () => {
   let fixture: ComponentFixture<CommunicationAppComponent>;
   let component: CommunicationAppComponent;
 
