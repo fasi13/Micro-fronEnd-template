@@ -15,37 +15,48 @@ export class ImageGalleryModalComponent implements OnInit {
   selectedImage: any;
   selectedConentGroup = [];
   applicationId: string | number;
+  isEmpty: boolean;
 
   constructor(private contentService: ContentService,
     public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    this.isEmpty = true;
     this.contentService.getContentGroups(this.applicationId).subscribe(a => {
       this.contentService.getContentGroup(this.applicationId, a.data.items[0].id).subscribe(x => {
         this.currentConentGroup = a.data.items[0];
+        this.currentConentGroup.active = !this.currentConentGroup.active;
         this.selectedImage = null;
         this.conentGroups = a.data.items;
         this.images = x.data.content.filter(y => y.dataType.name === "Image");
+        this.isEmpty = false;
         });
       })
     }
 
   onContentClick(item) {
+    this.isEmpty = true;
     this.contentService.getContentGroup(this.applicationId, item.id).subscribe(x => {
+      this.currentConentGroup.active = !this.currentConentGroup.active;
       this.currentConentGroup = item;
+      this.currentConentGroup.active = !this.currentConentGroup.active;
       this.selectedImage = null;
       this.images = x.data.content.filter(y => y.dataType.name === "Image");
+      this.isEmpty = false;
     })
   }
 
   onImageSelection(image) {
+    this.isEmpty = true;
     this.selectedImage = image;
     image.active = !image.active;
 
     if (this.selectedConentGroup.length > 0) {
-      let x = this.selectedConentGroup.find(x => x.id == this.currentConentGroup.id);
-      if (x != null) {
-        x.value.push(image);
+      let conentGroupSelected = this.selectedConentGroup.find(x => x.id == this.currentConentGroup.id);
+      if (conentGroupSelected != null) {
+        let conentGroupImageSelected = conentGroupSelected.value.find(x => x.id == this.selectedImage.id);
+        if(!conentGroupImageSelected) conentGroupSelected.value.push(image);
+        else conentGroupSelected.value.pop(conentGroupImageSelected);
       }
       else {
         let conentGroup = new ContentGroupModelGallery();
@@ -64,11 +75,10 @@ export class ImageGalleryModalComponent implements OnInit {
       conentGroup.value.push(image);
       this.selectedConentGroup.push(conentGroup);
     }
+    this.isEmpty = false;
   }
   handleCancel(isSave): void {
-    if (isSave)
-      this.activeModal.close(this.selectedConentGroup);
-
+    if (isSave) this.activeModal.close(this.selectedConentGroup);
     else this.activeModal.close();
   }
 }

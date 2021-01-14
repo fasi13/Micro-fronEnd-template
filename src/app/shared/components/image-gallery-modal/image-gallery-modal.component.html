@@ -1,23 +1,31 @@
 <div class="image-container">
-<div class="content-panel">
-<div *ngFor="let item of conentGroups;" >
-  <strong (click)="onContentClick(item)">{{item.name}}</strong>
-</div>
-</div>
-<div class="image-panel">
-<div *ngFor="let item of images;" (click)="onImageSelection(item)" [ngClass]="{'active': item.active}">
-<img class="img" [src]="item.value" name="{{item.name}}"/>
-</div>
-</div>
-</div>
-
-
-
- <div class="modal-footer">
-  <button class="btn btn-secondary" (click)="handleCancel(true)">
-        Save
-      </button>
-      <button class="btn btn-secondary" (click)="handleCancel(false)">
-        Close
-      </button>
+  <div class="content-panel">
+    <div *ngFor="let item of conentGroups;" [ngClass]="{'active': item.active}">
+      <strong (click)="onContentClick(item)">{{item.name}}</strong>
     </div>
+  </div>
+  <div class="image-panel">
+    <div *ngFor="let item of images;" (click)="onImageSelection(item)" [ngClass]="{'active': item.active}">
+      <img class="img" [src]="item.value" name="{{item.name}}" />
+    </div>
+    <div *ngIf="images?.length == 0">
+      <h5>No Images available for the content group.</h5>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="fge-spinner" *ngIf="isEmpty">
+    <div class="fge-bounce1"></div>
+    <div class="fge-bounce2"></div>
+    <div class="fge-bounce3"></div>
+  </div>
+  <div class="fge-dynamic-field form-button">
+    <button class="fge-dynamic-form__button btn-primary bg-primary ml-auto"
+      (click)="handleCancel(true)">
+      Save
+    </button>
+    <button type="button" (click)="handleCancel(false)" class="fge-dynamic-form__button btn-secondary ml-2">
+      Cancel
+    </button>
+  </div>
+</div>

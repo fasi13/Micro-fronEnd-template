@@ -84,11 +84,10 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
     this.modalRef.componentInstance.applicationId = this.applicationId;
     this.modalRef.result.then((activeModal: any) => {
-          if (activeModal) {
-            this.imageaction(event.editor, activeModal);
-          }
-          this.modalRef.close();
-        });
+      if (activeModal!= undefined && activeModal.length > 0) {
+        this.imageaction(event.editor, activeModal);
       }
+    });
+  }
 
 }
