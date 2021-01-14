@@ -1,7 +1,7 @@
 <div class="fge-content-image-gallery">
   <div class="image-container">
     <div class="content-panel">
-      <h5 *ngIf="conentGroups && conentGroups.length">Content groups:</h5>
+      <h5 *ngIf="conentGroups && conentGroups.length">Content Group</h5>
       <div
         *ngFor="let item of conentGroups"
         [ngClass]="{ active: item.active, disableClick: isLoading }"
@@ -12,7 +12,7 @@
     <div *ngIf="!isLoading" class="image-panel-container">
       <div>
         <div class="modal-header">
-          <h4>Select an Image from contents</h4>
+          <h4>Select an Image from Content Management</h4>
         </div>
         <div class="image-panel">
           <div *ngFor="let item of images" (click)="onImageSelection(item)" [ngClass]="{ active: item.active }">
@@ -33,12 +33,14 @@
       <div class="modal-footer">
         <div class="fge-dynamic-field form-button">
           <button
+          [ngClass]="{disable:!selectedImage}"
             class="fge-dynamic-form__button btn-primary bg-secondary ml-auto"
             (click)="handleCancel(true)"
           >
             Insert
           </button>
           <button
+
             type="button"
             (click)="handleCancel(false)"
             class="fge-dynamic-form__button btn-secondary ml-2"

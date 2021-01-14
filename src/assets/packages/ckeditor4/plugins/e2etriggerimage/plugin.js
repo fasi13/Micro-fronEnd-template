@@ -35,7 +35,7 @@
       //define a button that can be added to the toolbar
       //'E2ETriggerImage' will be Button Name used when defining toolbar in config
       editor.ui.addButton( 'E2ETriggerImage', {
-        label: 'Image from Contents',
+        label: 'Image from Content Management',
         command: 'e2eTriggerImage',
         toolbar: 'tools'
       });
