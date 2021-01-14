@@ -27,7 +27,8 @@ export class ImageGalleryModalComponent implements OnInit {
       /* istanbul ignore next */
     this.isLoading = true;
     this.contentService.getContentGroups(this.applicationId).subscribe((a) => {
-      this.conentGroups = a.data.items.sort((t1, t2) => {
+      this.conentGroups = a.data.items;
+      this.conentGroups.sort((t1, t2) => {
         if (t1.name < t2.name) {
           return -1;
         }
