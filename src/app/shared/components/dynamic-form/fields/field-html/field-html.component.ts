@@ -58,10 +58,10 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         { name: 'styles', items: ['Font', 'TextColor', 'BGColor'] },
         { name: 'paragraph', items: ['BulletedList', 'NumberedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
         { name: 'table', items: ['Table'] },
-        { name: 'links', items: ['Link', 'Unlink', 'base64image', 'Embed'] },
+        { name: 'links', items: ['Link', 'Unlink', 'base64image', 'E2ETriggerImage', 'Embed'] },
         { name: 'tools', items: ['Maximize'] },
         { name: 'document', items: ['Source'] },
-        { name: 'about', items: ['About', 'E2EA11yHelp', 'E2ETriggerImage'] }
+        { name: 'about', items: ['About', 'E2EA11yHelp'] }
       ]
     };
   }
@@ -84,7 +84,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
     this.modalRef.componentInstance.applicationId = this.applicationId;
     this.modalRef.result.then((activeModal: any) => {
-      if (activeModal!= undefined && activeModal.length > 0) {
+      if (activeModal !== undefined && activeModal.length > 0) {
         this.imageaction(event.editor, activeModal);
       }
     });

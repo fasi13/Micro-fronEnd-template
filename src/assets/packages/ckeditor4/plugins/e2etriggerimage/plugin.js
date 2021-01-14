@@ -35,7 +35,7 @@
       //define a button that can be added to the toolbar
       //'E2ETriggerImage' will be Button Name used when defining toolbar in config
       editor.ui.addButton( 'E2ETriggerImage', {
-        label: 'Image',
+        label: 'Image from Contents',
         command: 'e2eTriggerImage',
         toolbar: 'tools'
       });
@@ -59,7 +59,7 @@
 						return;
           //replace the [[imageUrl]] with an <img> tag in editor mode
 					return text.replace( widgetReplaceRegex, function( match ) {
-debugger
+
            matchObj =  widgetReplaceRegex.exec(match);
             //TODO: set imageUrl with result of ajax call to api that will return image url. jquery works here $.ajax(...)
             //another way to do ajax call is CKEDITOR.ajax.load(...)
