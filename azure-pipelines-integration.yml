@@ -49,21 +49,21 @@ steps:
 #     testResultsFiles: '**/test-results.xml'
 
 # - task: PublishCodeCoverageResults@1
-#   inputs: 
+#   inputs:
 #     codeCoverageTool: Cobertura
 #     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
 #     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
 #     failIfCoverageEmpty: true
-    
-- task: SonarQubeAnalyze@4
-  displayName: 'SonarQube Analyze'
 
-- task: SonarQubePublish@4
-  displayName: 'SonarQube Publish'
-  inputs:
-    pollingTimeoutSec: '300'
-    
-- task: sonar-buildbreaker@8
-  displayName: 'SonarQube Build Breaker'
-  inputs:
-    SonarQube: 'SonarQube-Rideau-PD'
+# - task: SonarQubeAnalyze@4
+#   displayName: 'SonarQube Analyze'
+
+# - task: SonarQubePublish@4
+#   displayName: 'SonarQube Publish'
+#   inputs:
+#     pollingTimeoutSec: '300'
+
+# - task: sonar-buildbreaker@8
+#   displayName: 'SonarQube Build Breaker'
+#   inputs:
+#     SonarQube: 'SonarQube-Rideau-PD'
