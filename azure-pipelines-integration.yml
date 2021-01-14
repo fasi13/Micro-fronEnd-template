@@ -55,13 +55,13 @@ steps:
 #     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
 #     failIfCoverageEmpty: true
 
-- task: SonarQubeAnalyze@4
-  displayName: 'SonarQube Analyze'
+# - task: SonarQubeAnalyze@4
+#   displayName: 'SonarQube Analyze'
 
-- task: SonarQubePublish@4
-  displayName: 'SonarQube Publish'
-  inputs:
-    pollingTimeoutSec: '300'
+# - task: SonarQubePublish@4
+#   displayName: 'SonarQube Publish'
+#   inputs:
+#     pollingTimeoutSec: '300'
 
 # - task: sonar-buildbreaker@8
 #   displayName: 'SonarQube Build Breaker'
