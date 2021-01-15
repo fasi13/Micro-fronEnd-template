@@ -3,13 +3,14 @@ import { Store } from '@ngrx/store';
 import { getAuthenticatedUser, LogoutAction, ResetCultureAction, State } from '@forge/core-store';
 import { ApplicationService } from './application.service';
 import { User } from '../models';
+import { TimeoutComponent } from '../session/timeout.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TimeoutService {
   user: User;
-  onRequestReceived: Function = function () { };
+  timeoutComponent: TimeoutComponent;
 
   constructor(
     private store: Store<State>,
@@ -22,8 +23,8 @@ export class TimeoutService {
   }
 
   requestReceived() {
-    if (this.user) {
-      this.onRequestReceived(this.user.authenticationTokenLifespanMinutes);
+    if (this.user && this.timeoutComponent) {
+      this.timeoutComponent.resetSessionTimeout(this.user.authenticationTokenLifespanMinutes, this.timeoutComponent);
     }
   }
 

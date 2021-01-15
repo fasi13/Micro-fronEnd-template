@@ -1,16 +1,13 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FgeModalService } from '../services';
 import { TimeoutService } from '../services/timeout.service';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
-export const timeoutGlobals: any = {};
-
 @Component({
   selector: 'fge-session-timeout-modal',
   templateUrl: './timeout.component.html',
 })
 
-export class TimeoutComponent implements AfterViewInit {
+export class TimeoutComponent {
   @ViewChild('timeoutModalTemplate') modalContent: ElementRef;
   countDownIntervalHandle: any;
   timeoutHandle: any;
@@ -21,8 +18,7 @@ export class TimeoutComponent implements AfterViewInit {
     private modalService: FgeModalService,
     private timeoutService: TimeoutService
   ) {
-    this.timeoutService.onRequestReceived = this.resetSessionTimeout;
-    timeoutGlobals.this = this;
+    this.timeoutService.timeoutComponent = this;
   }
 
   initTimeoutDialog(timeoutAlertDelay: number) {
@@ -31,7 +27,7 @@ export class TimeoutComponent implements AfterViewInit {
     }
 
     clearInterval(this.countDownIntervalHandle);
-    this.dialogReference = this.modalService.open(timeoutGlobals.modalContent, { backdrop: 'static', keyboard: false });
+    this.dialogReference = this.modalService.open(this.modalContent, { backdrop: 'static', keyboard: false });
     this.secondsToLogout = timeoutAlertDelay;
     this.countDownIntervalHandle = setInterval(() => {
       this.secondsToLogout--;
@@ -41,17 +37,12 @@ export class TimeoutComponent implements AfterViewInit {
     }, 1000);
   }
 
-  resetSessionTimeout(timeoutMinutes: number) {
+  resetSessionTimeout(timeoutMinutes: number, thisComponent: TimeoutComponent) {
     const timeoutAlertDelaySeconds = 50;
     clearTimeout(this.timeoutHandle);
-
     this.timeoutHandle = setTimeout(() => {
-      timeoutGlobals.this.initTimeoutDialog(timeoutAlertDelaySeconds);
+      thisComponent.initTimeoutDialog(timeoutAlertDelaySeconds);
     }, (timeoutMinutes * 60 - timeoutAlertDelaySeconds) * 1000);
-  }
-
-  ngAfterViewInit() {
-    timeoutGlobals.modalContent = this.modalContent;
   }
 
   close() {
