@@ -60,10 +60,10 @@ export class ImageGalleryModalComponent implements OnInit {
     this.contentService
       .getContentGroup(this.applicationId, item.id)
       .subscribe((x) => {
-
         this.selectedImage = null;
         this.images = x.data.content.filter((y) => y.dataType.name === 'Image');
         this.isLoading = false;
+        return this.images;
       });
   }
 
@@ -84,9 +84,9 @@ export class ImageGalleryModalComponent implements OnInit {
           (x) => x.id === this.selectedImage.id
         );
         if (!conentGroupImageSelected) {
-          conentGroupSelected.value.push(image);
+          return conentGroupSelected.value.push(image);
         } else {
-          conentGroupSelected.value.pop(conentGroupImageSelected);
+          return conentGroupSelected.value.pop(conentGroupImageSelected);
         }
       } else {
         const conentGroup = new ContentGroupModelGallery();
@@ -94,7 +94,7 @@ export class ImageGalleryModalComponent implements OnInit {
         conentGroup.name = this.currentConentGroup.name;
         conentGroup.value = [];
         conentGroup.value.push(image);
-        this.selectedConentGroup.push(conentGroup);
+        return this.selectedConentGroup.push(conentGroup);
       }
     } else {
       const conentGroup = new ContentGroupModelGallery();
@@ -102,7 +102,7 @@ export class ImageGalleryModalComponent implements OnInit {
       conentGroup.name = this.currentConentGroup.name;
       conentGroup.value = [];
       conentGroup.value.push(image);
-      this.selectedConentGroup.push(conentGroup);
+      return this.selectedConentGroup.push(conentGroup);
     }
   }
   handleCancel(isSave): void {
