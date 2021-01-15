@@ -1,7 +1,7 @@
 
 import { SwitchCultureAction, ReadCultureAction, ReadAvailableCulturesAction, ResetCultureAction } from './../../store/culture/culture.actions';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs/operators';
 import {
@@ -39,12 +39,14 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<State>,
     private fgeRouter: FgeRouterService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.InitDispatcher();
     this.initSelectors();
+    this.hideLanguageSelector = this.fgeRouter.getCurrentRouteData("hideLanguageSelector") === true;
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         this.hideLanguageSelector = this.fgeRouter.getCurrentRouteData("hideLanguageSelector") === true;
