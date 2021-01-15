@@ -45,6 +45,7 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.InitDispatcher();
     this.initSelectors();
+    this.hideLanguageSelector = this.fgeRouter.getCurrentRouteData("hideLanguageSelector") === true;
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         this.hideLanguageSelector = this.fgeRouter.getCurrentRouteData("hideLanguageSelector") === true;
