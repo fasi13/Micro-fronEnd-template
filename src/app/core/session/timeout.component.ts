@@ -21,18 +21,20 @@ export class TimeoutComponent implements AfterViewInit {
     private modalService: FgeModalService,
     private timeoutService: TimeoutService
   ) {
-    console.log('TimeoutComponent cstor');
     this.timeoutService.onRequestReceived = this.resetSessionTimeout;
     timeoutGlobals.this = this;
   }
 
   initTimeoutDialog(timeoutAlertDelay: number) {
+    if (!this.timeoutService.user) {
+      return;
+    }
+
     clearInterval(this.countDownIntervalHandle);
-    console.log(timeoutGlobals.modalContent);
     this.dialogReference = this.modalService.open(timeoutGlobals.modalContent, { backdrop: 'static', keyboard: false });
     this.secondsToLogout = timeoutAlertDelay;
     this.countDownIntervalHandle = setInterval(() => {
-      this.secondsToLogout --;
+      this.secondsToLogout--;
       if (this.secondsToLogout < 0) {
         this.logout();
       }
@@ -40,12 +42,10 @@ export class TimeoutComponent implements AfterViewInit {
   }
 
   resetSessionTimeout(timeoutMinutes: number) {
-    const timeoutAlertDelaySeconds = 55;
-    console.log('SESSION TIMEOUT INITIALIZED !');
+    const timeoutAlertDelaySeconds = 50;
     clearTimeout(this.timeoutHandle);
 
     this.timeoutHandle = setTimeout(() => {
-      console.log('SESSION EXPIRES IN ' + timeoutAlertDelaySeconds + ' sec');
       timeoutGlobals.this.initTimeoutDialog(timeoutAlertDelaySeconds);
     }, (timeoutMinutes * 60 - timeoutAlertDelaySeconds) * 1000);
   }
