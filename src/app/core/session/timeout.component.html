@@ -1,0 +1,16 @@
+<ng-template #timeoutModalTemplate>
+  <div class="timeout-modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        <span>Session Timeout</span>
+      </h4>
+    </div>
+    <div class="modal-body">
+      <p class ="modal-body"><br />Your session is about to expire in <strong class="session-timeout-seconds"> {{secondsToLogout}} </strong> seconds<br /></p>
+      <div class="fge-dynamic-field form-button">
+        <button class="fge-dynamic-form__button btn-primary bg-secondary ml-auto" type="submit"  (click)="stay()"> Stay logged in </button>
+        <button class="fge-dynamic-form__button btn-secondary fge-dynamic-form__button--cancel ml-2" type="button" (click)="logout()"> Log out </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

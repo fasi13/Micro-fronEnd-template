@@ -12,4 +12,5 @@ export class User {
   password?: string;
   _links?: Link[];
   actions?: MappedLinks;
+  authenticationTokenLifespanMinutes?: number;
 }
