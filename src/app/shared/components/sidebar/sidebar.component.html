@@ -11,7 +11,7 @@
           aria-expanded="false"
           aria-controls="groupsCollapse">
           <span class="fas fa-archive" (click)="goToContentGroups($event)"></span>
-          <span class="fge-sidebar__item--title">Content Management</span>
+          <span class="fge-sidebar__item--title"> Content</span>
         </a>
         <a
           (click)="goToContentGroups($event)"
@@ -32,6 +32,14 @@
           >
         </div>
       </div>
+      <li [ngClass]="{ active: isSectionActive('communication') }">
+        <a
+          (click)="goToCommunication()"
+          class="btn-sm fge-clickable"
+        >
+        <span class="fas fa-bullhorn"></span><span class="fge-sidebar__item--title"> Communications</span>
+        </a>
+      </li>
     </ul>
   </nav>
   <div class="fge-sidebar-content">
