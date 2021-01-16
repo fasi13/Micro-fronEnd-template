@@ -38,7 +38,7 @@ export class TimeoutComponent implements OnDestroy {
   }
 
   resetSessionTimeout(timeoutMinutes: number, thisComponent: TimeoutComponent) {
-    const timeoutAlertDelaySeconds = 50;
+    const timeoutAlertDelaySeconds = 30;
     clearTimeout(this.timeoutHandle);
     this.timeoutHandle = setTimeout(() => {
       thisComponent.initTimeoutDialog(timeoutAlertDelaySeconds);
