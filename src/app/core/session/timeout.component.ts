@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FgeModalService } from '../services';
 import { TimeoutService } from '../services/timeout.service';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -7,7 +7,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './timeout.component.html',
 })
 
-export class TimeoutComponent {
+export class TimeoutComponent implements OnDestroy {
   @ViewChild('timeoutModalTemplate') modalContent: ElementRef;
   countDownIntervalHandle: any;
   timeoutHandle: any;
@@ -59,5 +59,8 @@ export class TimeoutComponent {
   logout() {
     this.close();
     this.timeoutService.logout();
+  }
+  ngOnDestroy() {
+    this.initTimeoutDialog = () => {};
   }
 }
