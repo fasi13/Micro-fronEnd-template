@@ -59,6 +59,7 @@ export class TimeoutComponent implements OnDestroy {
   logout() {
     this.close();
     this.timeoutService.logout();
+    this.modalService.dismissAll();
   }
   ngOnDestroy() {
     this.initTimeoutDialog = () => {};
