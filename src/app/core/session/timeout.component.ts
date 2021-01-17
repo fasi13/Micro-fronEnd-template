@@ -45,19 +45,19 @@ export class TimeoutComponent implements OnDestroy {
     }, (timeoutMinutes * 60 - timeoutAlertDelaySeconds) * 1000);
   }
 
-  close() {
+  private _close() {
     clearInterval(this.countDownIntervalHandle);
     clearTimeout(this.timeoutHandle);
     this.dialogReference.close();
   }
 
   stay() {
-    this.close();
+    this._close();
     this.timeoutService.extendSession();
   }
 
   logout() {
-    this.close();
+    this._close();
     this.timeoutService.logout();
     this.modalService.dismissAll();
   }

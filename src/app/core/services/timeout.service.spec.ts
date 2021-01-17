@@ -1,38 +1,44 @@
-import { ApplicationContent } from './../models/application/application-content.model';
-import { ApiResponse } from './../models/commons/api-response.model';
-import { ContentVersion } from './../models/content/content-version';
-import { ContentService } from './content.service';
+import { TimeoutService } from './timeout.service';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import {
-  HttpClientTestingModule,
-  HttpTestingController,
+  HttpClientTestingModule, HttpTestingController,
 } from '@angular/common/http/testing';
-import { DataPaginated } from '../models/commons/data-paginated.model';
+import { ApplicationService } from './application.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { State } from 'src/app/core/store/store.reducers';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 describe('TimeoutService', () => {
   let injector: TestBed;
-  let service: ContentService;
+  let timeoutService: TimeoutService;
+  let applicationService: ApplicationService;
+  let store: MockStore<State>;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    // TestBed.configureTestingModule({
-    //   imports: [HttpClientTestingModule],
-    //   providers: [ContentService],
-    // });
-    // injector = getTestBed();
-    // service = injector.get(ContentService);
-    // httpMock = injector.get(HttpTestingController);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [TimeoutService, ApplicationService, provideMockStore()],
+    });
+
+    injector = getTestBed();
+    httpMock = TestBed.get(HttpTestingController);
+    timeoutService = injector.get(TimeoutService);
+    applicationService = injector.get(ApplicationService);
+    store = TestBed.get(Store);
+    spyOn(store, 'dispatch').and.callThrough();
   });
 
   describe('extendSession', () => {
     it('should call get applicationInfo in ApplicationService', () => {
+      spyOn(applicationService, 'getApplicationInfo').and.returnValue(new Observable());
+      timeoutService.user = { applicationId: '1' };
 
-      expect(1).toBe(1);
+      timeoutService.extendSession();
+
+      expect(applicationService.getApplicationInfo).toHaveBeenCalled();
+      httpMock.verify();
     });
-  });
-
-
-  afterEach(() => {
-   // httpMock.verify();
   });
 });
