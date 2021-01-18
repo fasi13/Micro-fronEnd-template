@@ -3,7 +3,6 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule, HttpTestingController,
 } from '@angular/common/http/testing';
-import { ApplicationService } from './application.service';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { State } from 'src/app/core/store/store.reducers';
 import { Store } from '@ngrx/store';
@@ -11,11 +10,12 @@ import { Observable } from 'rxjs';
 import { TimeoutComponent } from '../session/timeout.component';
 import { User } from '../models';
 import { LogoutAction, ResetCultureAction } from '@forge/core-store';
+import { ContentService } from './content.service';
 
 describe('TimeoutService', () => {
   let injector: TestBed;
   let timeoutService: TimeoutService;
-  let applicationService: ApplicationService;
+  let contentService: ContentService;
   let store: MockStore<State>;
   let httpMock: HttpTestingController;
   let timeoutComponent: TimeoutComponent;
@@ -24,13 +24,13 @@ describe('TimeoutService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [TimeoutService, ApplicationService, provideMockStore()],
+      providers: [TimeoutService, ContentService, provideMockStore()],
     });
 
     injector = getTestBed();
     httpMock = TestBed.get(HttpTestingController);
     timeoutService = injector.get(TimeoutService);
-    applicationService = injector.get(ApplicationService);
+    contentService = injector.get(ContentService);
     store = TestBed.get(Store);
     spyOn(store, 'dispatch').and.callThrough();
 
@@ -41,12 +41,12 @@ describe('TimeoutService', () => {
 
   describe('extendSession', () => {
     it('should call get applicationInfo in ApplicationService', () => {
-      spyOn(applicationService, 'getApplicationInfo').and.returnValue(new Observable());
+      spyOn(contentService, 'getContentGroups').and.returnValue(new Observable());
       timeoutService.user = user;
 
       timeoutService.extendSession();
 
-      expect(applicationService.getApplicationInfo).toHaveBeenCalled();
+      expect(contentService.getContentGroups).toHaveBeenCalled();
       httpMock.verify();
     });
   });

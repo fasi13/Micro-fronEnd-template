@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getAuthenticatedUser, LogoutAction, ResetCultureAction, State } from '@forge/core-store';
-import { ApplicationService } from './application.service';
 import { User } from '../models';
 import { TimeoutComponent } from '../session/timeout.component';
+import { ContentService } from './content.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class TimeoutService {
 
   constructor(
     private store: Store<State>,
-    private applicationService: ApplicationService
+    private contentService: ContentService
   ) {
     this.store.select(getAuthenticatedUser)
       .subscribe((user: User) => {
@@ -29,7 +29,7 @@ export class TimeoutService {
   }
 
   extendSession() {
-    this.applicationService.getApplicationInfo(this.user.applicationId as number).subscribe(() => { });
+    this.contentService.getContentGroups(this.user.applicationId as number).subscribe(() => { });
   }
 
   logout() {
