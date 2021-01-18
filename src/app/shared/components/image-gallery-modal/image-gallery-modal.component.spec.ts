@@ -23,6 +23,8 @@ beforeEach(() => {
     component = fixture.componentInstance;;
     injector = getTestBed();
     contentServiceStub = injector.get(ContentService);
+    component.images = [{id: 1, name: 'test1'},{id: 2, name: 'test2'}];
+    component.currentConentGroup = [{id: 1, name: 'Website branding', value: null}];
     fixture.detectChanges();
   });
  it('should create', () => {
@@ -34,7 +36,9 @@ it('should call on save', () => {
 it('should call on close', () => {
     expect(component.handleCancel(false));
   });
- 
+  it('should call on save', () => {
+    expect(component.onContentClick(component.currentConentGroup[0]));
+  });
 it('should call on image selection push', () => {
     const image = { id: 1, name: 'test'};
     component.images = [{id: 1, name: 'test'},{id: 2, name: 'test'}];
@@ -44,34 +48,31 @@ it('should call on image selection push', () => {
  
 it('should call on image selection push second time', () => {
     const image = { id: 1, name: 'test'};
-    component.images = [{id: 1, name: 'test'},{id: 2, name: 'test'}];
-    component.currentConentGroup = [{id: 1, name: 'Website branding', value: null}];
     component.selectedConentGroup = [{id: 2, name: 'Website branding2', value: null}];
     expect(component.onImageSelection(image)).toBe(2);
   });
 
   it('should call on image selection push in same group', () => {
     const image = { id: 1, name: 'image1'};
-    component.images = [{id: 1, name: 'test'},{id: 2, name: 'test2'}];
-    component.currentConentGroup = [{id: 1, name: 'Website branding', value: null}];
+    component.selectedImage = image;
     component.selectedConentGroup = [{id: 1, name: 'Website branding', value: { id: 2, name: 'image2'}}];
     expect(component.onImageSelection(image)).toBe(2);
   });
 
   it('should call on image selection pop in same group', () => {
     const image = { id: 1, name: 'image1'};
-    component.images = [{id: 1, name: 'test'},{id: 2, name: 'test2'}];
-    component.currentConentGroup = [{id: 1, name: 'Website branding', value: null}];
+    component.selectedImage = image;
     component.selectedConentGroup = [{id: 1, name: 'Website branding', value: { id: 1, name: 'image1'}}];
     expect(component.onImageSelection(image)).toBe(2);
   });
 
   it('should call on content click', () => {
     const item = [{ id: 2, name: 'Demo'}];
+    component.currentConentGroup.active = false;
     component.currentConentGroup = {id: 1, name: 'Website branding'};
     component.applicationId = 1;
     const expected = [{id: 1, name: 'Website branding', value: { id: 1, name: 'image1'}}];
-    contentServiceStub.getContentGroup(1, 1, true).subscribe((result) => {
+    contentServiceStub.getContentGroup(1, 1).subscribe((result) => {
         expect(result.data.id).toEqual(1);
       });
   });
@@ -81,8 +82,11 @@ it('should call on image selection push second time', () => {
     component.currentConentGroup = {id: 1, name: 'Website branding'};
     component.applicationId = 1;
     const expected = [{id: 1, name: 'Website branding', value: { id: 1, name: 'image1'}}];
-    contentServiceStub.getContentGroups(1, true).subscribe((result) => {
+    contentServiceStub.getContentGroups(1).subscribe((result) => {
         expect(result.data.items[0].id).toEqual(1);
+        contentServiceStub.getContentGroup(1, result.data.items[0].id).subscribe((x) => {
+          expect(x.data.id).toEqual(1);
+        });
       });
   });
 });
