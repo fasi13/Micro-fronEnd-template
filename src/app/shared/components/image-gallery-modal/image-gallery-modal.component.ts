@@ -9,7 +9,6 @@ import { ContentGroupModelGallery } from './ContentGroupModelGallery';
 })
 
 export class ImageGalleryModalComponent implements OnInit {
-  myData: string;
   images: any;
   conentGroups: any;
   currentConentGroup: any;
@@ -60,10 +59,10 @@ export class ImageGalleryModalComponent implements OnInit {
     this.contentService
       .getContentGroup(this.applicationId, item.id)
       .subscribe((x) => {
+        this.isLoading = false;
         this.selectedImage = null;
         this.images = x.data.content.filter((y) => y.dataType.name === 'Image');
-        this.isLoading = false;
-        return this.images;
+        
       });
   }
 
