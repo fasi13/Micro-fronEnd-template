@@ -1,27 +1,30 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from "@angular/core/testing";
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed, getTestBed } from "@angular/core/testing";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ContentService } from "src/app/core/services/content.service";
 import { ImageGalleryModalComponent } from "./image-gallery-modal.component";
+
 describe('ImageGalleryModalComponent', ()=> {
   // define the variable
   let component: ImageGalleryModalComponent;
   let fixture: ComponentFixture<ImageGalleryModalComponent>;
-  let contentServiceStub: Partial<ContentService>;
+  let contentServiceStub: ContentService;
+  let injector: TestBed;
   
 beforeEach(() => {
     TestBed.configureTestingModule({
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       declarations: [ImageGalleryModalComponent],
-      providers: [ NgbActiveModal, { provide: ComponentFixtureAutoDetect, useValue: true }],
+      providers: [ NgbActiveModal, ContentService, { provide: ComponentFixtureAutoDetect, useValue: true }],
       imports: [HttpClientTestingModule]
  });
     fixture = TestBed.createComponent(ImageGalleryModalComponent);
     component = fixture.componentInstance;;
+    injector = getTestBed();
+    contentServiceStub = injector.get(ContentService);
     fixture.detectChanges();
   });
- 
  it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -68,7 +71,7 @@ it('should call on image selection push second time', () => {
     component.currentConentGroup = {id: 1, name: 'Website branding'};
     component.applicationId = 1;
     const expected = [{id: 1, name: 'Website branding', value: { id: 1, name: 'image1'}}];
-    contentServiceStub.getContentGroup(1, 1).subscribe((result) => {
+    contentServiceStub.getContentGroup(1, 1, true).subscribe((result) => {
         expect(result.data.id).toEqual(1);
       });
   });
@@ -78,7 +81,7 @@ it('should call on image selection push second time', () => {
     component.currentConentGroup = {id: 1, name: 'Website branding'};
     component.applicationId = 1;
     const expected = [{id: 1, name: 'Website branding', value: { id: 1, name: 'image1'}}];
-    contentServiceStub.getContentGroups(1).subscribe((result) => {
+    contentServiceStub.getContentGroups(1, true).subscribe((result) => {
         expect(result.data.items[0].id).toEqual(1);
       });
   });
