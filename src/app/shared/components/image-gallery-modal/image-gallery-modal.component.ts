@@ -25,27 +25,25 @@ export class ImageGalleryModalComponent implements OnInit {
   ngOnInit() {
       /* istanbul ignore next */
     this.isLoading = true;
+    this.onLoad();
+  }
+
+  onLoad(){
     this.contentService.getContentGroups(this.applicationId).subscribe((a) => {
       this.conentGroups = a.data.items;
       this.conentGroups.sort((t1, t2) => {
-        if (t1.name < t2.name) {
-          return -1;
-        }
-        if (t1.name > t2.name) {
-          return 1;
-        }
-        return 0;
+        return (t1.name < t2.name) ? -1 : (t1.name > t2.name) ? -1 : 0;
       });
       this.currentConentGroup = this.conentGroups[0];
       this.contentService
         .getContentGroup(this.applicationId, this.conentGroups[0].id)
         .subscribe((x) => {
+          this.isLoading = false;
           this.currentConentGroup.active = !this.currentConentGroup.active;
           this.selectedImage = null;
           this.images = x.data.content.filter(
             (y) => y.dataType.name === 'Image'
           );
-          this.isLoading = false;
         });
     });
   }
