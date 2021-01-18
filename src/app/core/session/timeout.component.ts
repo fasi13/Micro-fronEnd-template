@@ -10,6 +10,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class TimeoutComponent implements OnDestroy {
   @ViewChild('timeoutModalTemplate') modalContent: ElementRef;
   countDownIntervalHandle: any;
+  timeoutAlertDelaySeconds = 30;
   timeoutHandle: any;
   dialogReference: NgbModalRef;
   secondsToLogout: number;
@@ -21,13 +22,14 @@ export class TimeoutComponent implements OnDestroy {
     this.timeoutService.timeoutComponent = this;
   }
 
-  initTimeoutDialog(timeoutAlertDelay: number) {
+  private initTimeoutDialog(timeoutAlertDelay: number) {
     if (!this.timeoutService.user) {
       return;
     }
 
     clearInterval(this.countDownIntervalHandle);
     this.dialogReference = this.modalService.open(this.modalContent, { backdrop: 'static', keyboard: false });
+
     this.secondsToLogout = timeoutAlertDelay;
     this.countDownIntervalHandle = setInterval(() => {
       this.secondsToLogout--;
@@ -38,11 +40,10 @@ export class TimeoutComponent implements OnDestroy {
   }
 
   resetSessionTimeout(timeoutMinutes: number, thisComponent: TimeoutComponent) {
-    const timeoutAlertDelaySeconds = 30;
     clearTimeout(this.timeoutHandle);
     this.timeoutHandle = setTimeout(() => {
-      thisComponent.initTimeoutDialog(timeoutAlertDelaySeconds);
-    }, (timeoutMinutes * 60 - timeoutAlertDelaySeconds) * 1000);
+      thisComponent.initTimeoutDialog(this.timeoutAlertDelaySeconds);
+    }, (timeoutMinutes * 60 - this.timeoutAlertDelaySeconds) * 1000);
   }
 
   private _close() {
