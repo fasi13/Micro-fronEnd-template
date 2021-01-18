@@ -2,6 +2,7 @@ import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core
 import _ceil from 'lodash/ceil';
 
 import { Application } from '@forge/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fge-bread-crumb',
@@ -19,7 +20,7 @@ export class BreadCrumbComponent implements OnChanges {
   ellipsisPosition: number;
   fullPath: string;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnChanges() {
     if (this.pathData) {
@@ -48,6 +49,11 @@ export class BreadCrumbComponent implements OnChanges {
     } else {
       this.clickLastPath.emit(event);
     }
+  }
+
+  getApplicationLink(applicationId: number): string {
+    const currentRoute = this.router.url.split('/').slice(3).join('/');
+    return `/tenant/${applicationId}/${currentRoute}`;
   }
 
   private generatefullPath(pathName: string): void {
