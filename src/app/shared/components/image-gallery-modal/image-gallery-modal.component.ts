@@ -9,7 +9,6 @@ import { ContentGroupModelGallery } from './ContentGroupModelGallery';
 })
 
 export class ImageGalleryModalComponent implements OnInit {
-  myData: string;
   images: any;
   conentGroups: any;
   currentConentGroup: any;
@@ -26,27 +25,25 @@ export class ImageGalleryModalComponent implements OnInit {
   ngOnInit() {
       /* istanbul ignore next */
     this.isLoading = true;
+    this.onLoad();
+  }
+
+  onLoad(){
     this.contentService.getContentGroups(this.applicationId).subscribe((a) => {
       this.conentGroups = a.data.items;
       this.conentGroups.sort((t1, t2) => {
-        if (t1.name < t2.name) {
-          return -1;
-        }
-        if (t1.name > t2.name) {
-          return 1;
-        }
-        return 0;
+        return (t1.name < t2.name) ? -1 : (t1.name > t2.name) ? -1 : 0;
       });
       this.currentConentGroup = this.conentGroups[0];
       this.contentService
         .getContentGroup(this.applicationId, this.conentGroups[0].id)
         .subscribe((x) => {
+          this.isLoading = false;
           this.currentConentGroup.active = !this.currentConentGroup.active;
           this.selectedImage = null;
           this.images = x.data.content.filter(
             (y) => y.dataType.name === 'Image'
           );
-          this.isLoading = false;
         });
     });
   }
@@ -60,10 +57,10 @@ export class ImageGalleryModalComponent implements OnInit {
     this.contentService
       .getContentGroup(this.applicationId, item.id)
       .subscribe((x) => {
-
+        this.isLoading = false;
         this.selectedImage = null;
         this.images = x.data.content.filter((y) => y.dataType.name === 'Image');
-        this.isLoading = false;
+        
       });
   }
 
@@ -84,9 +81,9 @@ export class ImageGalleryModalComponent implements OnInit {
           (x) => x.id === this.selectedImage.id
         );
         if (!conentGroupImageSelected) {
-          conentGroupSelected.value.push(image);
+          return conentGroupSelected.value.push(image);
         } else {
-          conentGroupSelected.value.pop(conentGroupImageSelected);
+          return conentGroupSelected.value.pop(conentGroupImageSelected);
         }
       } else {
         const conentGroup = new ContentGroupModelGallery();
@@ -94,7 +91,7 @@ export class ImageGalleryModalComponent implements OnInit {
         conentGroup.name = this.currentConentGroup.name;
         conentGroup.value = [];
         conentGroup.value.push(image);
-        this.selectedConentGroup.push(conentGroup);
+        return this.selectedConentGroup.push(conentGroup);
       }
     } else {
       const conentGroup = new ContentGroupModelGallery();
@@ -102,7 +99,7 @@ export class ImageGalleryModalComponent implements OnInit {
       conentGroup.name = this.currentConentGroup.name;
       conentGroup.value = [];
       conentGroup.value.push(image);
-      this.selectedConentGroup.push(conentGroup);
+      return this.selectedConentGroup.push(conentGroup);
     }
   }
   handleCancel(isSave): void {
