@@ -99,11 +99,10 @@ describe('ImageGalleryModalComponent', () => {
     component.selectedImage = image;
     component.images = [{ id: 1, name: 'test1' }, { id: 2, name: 'test2' }];
     component.selectedConentGroup = [{ id: 1, name: 'Website branding', value: [{ id: 1, name: 'image1' }] }];
-    expect(component.onImageSelection(image)).length > 0;
+    expect(component.onImageSelection(image));
   });
 
   it('should call on content click', () => {
-    const item = [{ id: 2, name: 'Demo' }];
     component.currentConentGroup.active = false;
     component.currentConentGroup = { id: 1, name: 'Website branding' };
     component.applicationId = 1;
