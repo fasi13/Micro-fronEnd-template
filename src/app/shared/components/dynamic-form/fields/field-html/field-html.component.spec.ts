@@ -15,7 +15,6 @@ import { FieldConfig } from '../../models';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { ImageGalleryModalComponent } from '../../../image-gallery-modal/image-gallery-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class  MockNgbModalRef {
@@ -27,7 +26,6 @@ describe('FieldHtmlComponent', () => {
   let fixture: ComponentFixture<FieldHtmlComponent>;
   let modalService: NgbModal;
   let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
-  let config: FieldConfig;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FieldHtmlComponent],
@@ -70,14 +68,14 @@ describe('FieldHtmlComponent', () => {
 
   it('should update formValue when keyUp in source mode', () => {
     const compiled = fixture.debugElement.nativeElement;
-    const html = '<h1>Test</h1>';
+    const html1 = '<h1>Test</h1>';
     setTimeout(function() {
       component.editor.editor.mode = 'source';
-      component.editor.editor.setData(html);
+      component.editor.editor.setData(html1);
       compiled.dispatchEvent(new KeyboardEvent('keyup'), {
         'key': 'Enter'
     });
-      expect(component.group.value[component.config.name]).toBe(html);
+      expect(component.group.value[component.config.name]).toBe(html1);
     }, 3000);
     expect(1).toBeTruthy();
   });
@@ -89,9 +87,9 @@ describe('FieldHtmlComponent', () => {
 
 
  it('should call on imageaction', () => {
-    const html = '<h1>Test</h1>';
+    const html2 = '<h1>Test</h1>';
     component._editor = {editor : {mode : 'source', setData : function(html){}, getData: function(){
-      return html;
+      return html2;
     }, on :  function(){}} , insertHtml: function(){}};
     const xy = [{ id: 1, name: 'Website branding', value: [{ id: 2, name: 'image2' }] }];
     expect(component.imageaction(component._editor, xy));
@@ -105,9 +103,9 @@ describe('FieldHtmlComponent', () => {
   });
 
   it('should call on keyup', () => {
-    const html = '<h1>Test</h1>';
+    const html3 = '<h1>Test</h1>';
       component._editor = {editor : {mode : 'source', setData : function(html){}, getData: function(){
-      return html;
+      return html3;
     }, on :  function(){}} , insertHtml: function(){}};
     component.config.name = 'htmlValue';
     expect(component.onkeyup());
