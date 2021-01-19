@@ -71,6 +71,7 @@
               url: editor.config.getimageUrl.replace('{name}', matchObj.groups.name).replace('{group}', matchObj.groups.group),
               async: false,
               headers: {
+                'Accept-Language' : editor.config.language,
                 'Authorization': 'Token ' + editor.config.apiToken,//'Basic dGVzdDp0ZXN0',//, TODO:fix token
                 'Content-Type': 'application/json'
               }
