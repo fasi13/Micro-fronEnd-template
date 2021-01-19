@@ -1,3 +1,5 @@
+import { CultureService } from './../../../../../core/services/culture.service';
+import { getCurrentCulture } from './../../../../../core/store/store.reducers';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserService } from './../../../../../core/services/user.service';
 import { Component, OnInit, HostListener } from '@angular/core';
@@ -19,7 +21,10 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   private _editor: any;
   private modalRef: NgbModalRef;
 
-  constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal) {
+
+  constructor(private userService: UserService,
+    private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal,
+    private cultureService: CultureService) {
       /* istanbul ignore next */
 
     super();
@@ -37,14 +42,31 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   ngOnInit() {
   /* istanbul ignore next */
+    const apiurl = this.appconfig.config.apis.filter(c => c.name === 'E2E.Content.Management.API')[0].url;
     this.store.select(getApplicationInfo)
-      .subscribe((applicationInfo: Application) => {
-        if (applicationInfo) {
+      .subscribe(async (applicationInfo: Application) => {
           this.applicationId = applicationInfo.id;
+
+        if (applicationInfo) {
+
+          if (this.configCkEditor) {
+            this.configCkEditor.getimageUrl =
+            apiurl + '/application/' +
+            this.applicationId +
+            '/content?name={name}&group={group}&exactMatch=true&replaceEmbeddedData=true&basic=true';
+            this.configCkEditor.language = this.cultureService.getCurrentCulture();
+                       }
         }
       });
 
-    const apiurl = this.appconfig.config.apis.filter(c => c.name === 'E2E.Content.Management.API')[0].url;
+      this.store.select(getCurrentCulture).subscribe((currentCulture) => {
+
+       if (this.configCkEditor) {
+         this.configCkEditor.language = currentCulture;
+        }
+      });
+
+
     this.configCkEditor = {
 
       placeholder: this.config ? this.config.placeholder : '',
@@ -54,6 +76,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       extraPlugins: ['e2etriggerimage'],
       getimageUrl: apiurl + '/application/' + this.applicationId + '/content?name={name}&group={group}&exactMatch=true&replaceEmbeddedData=true&basic=true',
       apiToken: this.userService.getToken(),
+      language: this.cultureService.getCurrentCulture(),
       toolbar: [
         { name: 'styles', items: ['Format'] },
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'] },
