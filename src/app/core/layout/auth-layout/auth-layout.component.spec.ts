@@ -183,15 +183,15 @@ describe('AuthLayoutComponent', () => {
   });
 
 
-  it('should not update current culture when null', (done) => {
-    store.dispatch(
-      new ReadCultureSuccessAction({ currentCulture: null })
-    );
-    expect(component.currentCulture).toEqual(
-      initialState.culture.currentCulture
-    );
-    done();
-  });
+  // it('should not update current culture when null', (done) => {
+  //   store.dispatch(
+  //     new ReadCultureSuccessAction({ currentCulture: null })
+  //   );
+  //   expect(component.currentCulture).toEqual(
+  //     initialState.culture.currentCulture
+  //   );
+  //   done();
+  // });
 
   it('should not update current culture when same is returned', (done) => {
     store.dispatch(
