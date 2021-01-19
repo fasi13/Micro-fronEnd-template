@@ -77,11 +77,13 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   imageaction(editor, componentInstance) {
     /* istanbul ignore next */
-    componentInstance.forEach(element => {
-      element.value.forEach(item => {
-        editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
+    if (componentInstance instanceof Array) {
+      componentInstance.forEach(element => {
+        element.value.forEach(item => {
+          editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
+        });
       });
-    });
+    }
   }
 
   imageevent(event) {

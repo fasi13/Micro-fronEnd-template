@@ -98,6 +98,7 @@ describe('FieldHtmlComponent', () => {
   });
 
   it('should open modal', () => {
+    component._editor = {editor : {mode : 'source', on :  function(){}} , insertHtml: function(){}};
     spyOn(modalService, 'open').and.returnValue(mockModalRef);
     component.imageevent(component._editor);
     expect(modalService.open);
