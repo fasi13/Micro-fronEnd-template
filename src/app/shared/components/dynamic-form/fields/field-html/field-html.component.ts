@@ -16,8 +16,8 @@ import { Store } from '@ngrx/store';
 
 export class FieldHtmlComponent extends FormField implements OnInit {
   configCkEditor: any;
-  public _editor: any;
-  public modalRef: NgbModalRef;
+  _editor: any;
+  modalRef: NgbModalRef;
 
   constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal) {
     /* istanbul ignore next */

@@ -1,5 +1,5 @@
 import { CKEditorModule } from 'ckeditor4-angular';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
 import { FieldHtmlComponent } from './field-html.component';
 import { CommonModule } from '@angular/common';
 import {
@@ -16,6 +16,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
 
 export class  MockNgbModalRef {
   result: Promise<any> = new Promise((resolve, reject) => resolve('x'));
@@ -25,6 +26,8 @@ describe('FieldHtmlComponent', () => {
   let component: FieldHtmlComponent;
   let fixture: ComponentFixture<FieldHtmlComponent>;
   let modalService: NgbModal;
+  let appConfigService: AppConfigService;
+  let injector: TestBed;
   let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -48,6 +51,8 @@ describe('FieldHtmlComponent', () => {
     fixture = TestBed.createComponent(FieldHtmlComponent);
     component = fixture.componentInstance;
     component.config = new FieldConfig();
+    injector = getTestBed();
+    appConfigService = injector.get(AppConfigService);
     component.config.label = 'htmlValue';
     component.config.name = 'htmlValue';
     component.config.validation = {};
@@ -56,6 +61,25 @@ describe('FieldHtmlComponent', () => {
     });
     fixture.detectChanges();
     modalService = TestBed.get(NgbModal);
+  });
+
+  it('GetApi should return api', () => {
+    const dummyConfig: IAppConfig = {
+      apis: [
+        {
+          name: 'test.api',
+          routePatern: new RegExp('endPoint/|galileo/'),
+          url: 'url1',
+        },
+        {
+          name: 'testLinks.api',
+          routePatern: new RegExp('links/'),
+          url: 'http://linksApi.com',
+        },
+      ],
+    };
+
+    spyOnProperty(appConfigService, 'config', 'get').and.returnValue(dummyConfig);
   });
 
   it('should create', () => {
