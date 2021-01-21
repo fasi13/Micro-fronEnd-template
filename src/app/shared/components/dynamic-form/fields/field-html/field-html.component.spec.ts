@@ -133,7 +133,7 @@ describe('FieldHtmlComponent', () => {
       return html3;
     }, on :  function(){}} , insertHtml: function(){}};
     component.config.name = 'htmlValue';
-    expect(component.onkeyup());
+    expect(component.onkeyup()) ;
   });
 
   afterEach(() => {
