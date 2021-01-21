@@ -16,8 +16,8 @@ import { Store } from '@ngrx/store';
 
 export class FieldHtmlComponent extends FormField implements OnInit {
   configCkEditor: any;
-  _editor: any;
-  modalRef: NgbModalRef;
+  public _editor: any;
+  public modalRef: NgbModalRef;
 
   constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal) {
     /* istanbul ignore next */
@@ -44,7 +44,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
         }
       });
 
-    const apiurl = this.appconfig.config ? this.appconfig.config.apis.filter(c => c.name === 'E2E.Content.Management.API')[0].url : null;
+    const apiurl = this.appconfig.config.apis.filter(c => c.name === 'E2E.Content.Management.API')[0].url;
     this.configCkEditor = {
 
       placeholder: this.config ? this.config.placeholder : '',

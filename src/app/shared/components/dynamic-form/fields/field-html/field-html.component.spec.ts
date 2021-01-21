@@ -12,11 +12,13 @@ import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FieldConfig } from '../../models';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
+import { HttpRequest } from '@angular/common/http';
+import { of } from 'rxjs';
 
 export class  MockNgbModalRef {
   result: Promise<any> = new Promise((resolve, reject) => resolve('x'));
@@ -29,6 +31,8 @@ describe('FieldHtmlComponent', () => {
   let appConfigService: AppConfigService;
   let injector: TestBed;
   let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
+  let httpMock: HttpTestingController;
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FieldHtmlComponent],
@@ -43,7 +47,7 @@ describe('FieldHtmlComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([])
       ],
-      providers: [provideMockStore({})],
+      providers: [provideMockStore({}), AppConfigService],
     }).compileComponents();
   }));
 
@@ -55,21 +59,12 @@ describe('FieldHtmlComponent', () => {
     appConfigService = injector.get(AppConfigService);
     component.config.label = 'htmlValue';
     component.config.name = 'htmlValue';
-    component.config.validation = {};
-    component.group = new FormGroup({
-      [component.config.name]: new FormControl(),
-    });
-    fixture.detectChanges();
-    modalService = TestBed.get(NgbModal);
-  });
-
-  it('GetApi should return api', () => {
-    const dummyConfig: IAppConfig = {
-      apis: [
+    appConfigService._config = {
+        apis: [
         {
-          name: 'test.api',
+          name: 'E2E.Content.Management.API',
           routePatern: new RegExp('endPoint/|galileo/'),
-          url: 'url1',
+          url: 'E2E.Content.Management.API',
         },
         {
           name: 'testLinks.api',
@@ -78,8 +73,14 @@ describe('FieldHtmlComponent', () => {
         },
       ],
     };
-
-    spyOnProperty(appConfigService, 'config', 'get').and.returnValue(dummyConfig);
+    spyOn(appConfigService, 'config').and.callFake(() => of(appConfigService._config));
+    httpMock = injector.get(HttpTestingController);
+    component.config.validation = {};
+    component.group = new FormGroup({
+      [component.config.name]: new FormControl(),
+    });
+    fixture.detectChanges();
+    modalService = TestBed.get(NgbModal);
   });
 
   it('should create', () => {
