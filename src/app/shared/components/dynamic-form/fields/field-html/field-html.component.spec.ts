@@ -17,10 +17,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
-import { HttpRequest } from '@angular/common/http';
 import { of } from 'rxjs';
 
 export class  MockNgbModalRef {
+  componentInstance = {
+    applicationId: undefined
+};
   result: Promise<any> = new Promise((resolve, reject) => resolve('x'));
 }
 

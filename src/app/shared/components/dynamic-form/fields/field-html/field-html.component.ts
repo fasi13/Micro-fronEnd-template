@@ -77,22 +77,17 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   imageaction(editor, componentInstance) {
     /* istanbul ignore next */
-    if (componentInstance instanceof Array) {
-      componentInstance.forEach(element => {
+    componentInstance.forEach(element => {
         element.value.forEach(item => {
           editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
         });
       });
-    }
   }
 
   imageevent(event) {
     /* istanbul ignore next */
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
-    if(this.modalRef.componentInstance)
-    {
-      this.modalRef.componentInstance.applicationId = this.applicationId;
-    }
+    this.modalRef.componentInstance.applicationId = this.applicationId;
     this.modalRef.result.then((activeModal: any) => {
       if (activeModal !== undefined && activeModal.length > 0) {
         this.imageaction(event.editor, activeModal);
