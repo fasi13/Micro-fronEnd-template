@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules, UrlSegment } from '@angular/router';
 
 import {
   AuthLayoutComponent,
@@ -9,6 +9,15 @@ import {
 } from '@forge/core';
 import { ResetPasswordComponent } from '@forge/shared';
 import { ComingSoonComponent } from './shared/components/coming-soon/coming-soon.component';
+
+export function serviceMatcherFunction(url: UrlSegment[]) {
+  if (url.length >= 1) {
+    if(url[0].path == 'service'){
+      return {consumed: url};
+    }
+  }
+  return null;
+}
 
 const routes: Routes = [
   {
@@ -36,13 +45,13 @@ const routes: Routes = [
                 path: 'user',
                 loadChildren: './user/user.module#UserModule'
               },
-              {
-                path: 'communication',
-                loadChildren: './communication/communication.module#CommunicationModule'
-              },
               { path: 'promotions', component: ComingSoonComponent },
               { path: 'campaings', component: ComingSoonComponent },
               { path: 'reset-password', component: ResetPasswordComponent },
+              {
+                matcher: serviceMatcherFunction,
+                loadChildren: './service/service.module#ServiceModule'
+              },
               { path: '', pathMatch: 'full', redirectTo: 'content' }
             ]
           },
@@ -70,7 +79,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      useHash: true,
+      useHash: false,
       preloadingStrategy: PreloadAllModules,
       paramsInheritanceStrategy: 'always'
     })

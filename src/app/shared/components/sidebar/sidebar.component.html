@@ -32,12 +32,12 @@
           >
         </div>
       </div>
-      <li [ngClass]="{ active: isSectionActive('communication') }">
+      <li [ngClass]="{ active: isSectionActive(service.id) }" *ngFor="let service of services">
         <a
-          (click)="goToCommunication()"
+          (click)="goToService(service.id)"
           class="btn-sm fge-clickable"
         >
-        <span class="fas fa-bullhorn"></span><span class="fge-sidebar__item--title"> Communications</span>
+        <span class="fas fa-bullhorn"></span><span class="fge-sidebar__item--title"> {{service.name}}</span>
         </a>
       </li>
     </ul>

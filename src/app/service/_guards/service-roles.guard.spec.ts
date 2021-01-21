@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { CommunicationRolesGuard } from './communication-roles.guard';
+import { ServiceRolesGuard } from './service-roles.guard';
 
-describe('CommunicationRolesGuard', () => {
-  let guard: CommunicationRolesGuard;
+describe('ServiceRolesGuard', () => {
+  let guard: ServiceRolesGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,7 +11,7 @@ describe('CommunicationRolesGuard', () => {
       imports: [],
       schemas: []
     });
-    guard = new CommunicationRolesGuard();
+    guard = new ServiceRolesGuard();
   });
 
   it('should be created', (done) => {

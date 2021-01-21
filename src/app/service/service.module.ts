@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { NgBootstrapModule } from '../ng-bootstrap.module';
 import { SharedModule } from '../shared/shared.module';
-import { CommunicationRolesGuard } from './_guards/communication-roles.guard';
-import { CommunicationAppComponent } from './communication-app/communication-app.component';
-import { CommunicationAppScriptResolver } from './communication-app-script-resolver';
+import { ServiceRolesGuard } from './_guards/service-roles.guard';
+import { ServiceComponent } from './service.component';
+import { ServiceScriptResolver } from './service-script-resolver';
 
 const routes: Routes = [
  {
     path: '',
-    canActivate: [ CommunicationRolesGuard ],
-    component: CommunicationAppComponent,
+    canActivate: [ ServiceRolesGuard ],
+    component: ServiceComponent,
     data: { hideLanguageSelector: true },
-    resolve: { app: CommunicationAppScriptResolver }
+    resolve: { service: ServiceScriptResolver }
   }
 ];
 
@@ -25,8 +25,8 @@ const routes: Routes = [
     SharedModule
   ],
   declarations: [
-    CommunicationAppComponent
+    ServiceComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CommunicationModule {}
+export class ServiceModule {}

@@ -48,8 +48,15 @@ export interface IAppConfig {
       endPoint: string;
     };
   }[];
-  e2eCommunicationManagementAppPackageUrl: string;
+  services: IServiceConfig[];
 }
+
+export interface IServiceConfig {
+  url: string,
+  name: string,
+  id: string
+}
+
 
 export function initializeApp(appConfigService: AppConfigService) {
   return () => appConfigService.load();

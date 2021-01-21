@@ -53,7 +53,7 @@ describe(`ProxyApiInterceptor`, () => {
           url: 'http://sayhi.com',
         },
       ],
-      e2eCommunicationManagementAppPackageUrl: null
+      services: []
     };
 
     spyOnProperty(appConfigService, 'config', 'get').and.returnValue(

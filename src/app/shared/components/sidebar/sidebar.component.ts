@@ -11,6 +11,7 @@ import {
   FgeRouterService,
   ContentGroup
 } from '@forge/core';
+import { AppConfigService, IServiceConfig } from 'src/app/app-config.service';
 
 @Component({
   selector: 'fge-sidebar',
@@ -20,18 +21,21 @@ export class SidebarComponent implements OnInit {
   @Input() active = true;
   loading$: Observable<boolean> | boolean;
   contentGroups$: Observable<ContentGroup[]>;
+  services: IServiceConfig[];
 
   private activatedSection;
 
   constructor(
     private store: Store<State>,
     private fgeRouter: FgeRouterService,
-    private ngRouter: Router
+    private ngRouter: Router,
+    private appConfigService: AppConfigService
   ) {}
 
   ngOnInit() {
     this.initRouteHandler();
     this.initSelectors();
+    this.services = this.appConfigService.config.services;
   }
 
   onToggleSidebar() {
@@ -59,8 +63,8 @@ export class SidebarComponent implements OnInit {
     this.fgeRouter.navigate(`promotions`);
   }
 
-  goToCommunication(): void {
-    this.fgeRouter.navigate(`communication`);
+  goToService(id): void {
+    this.fgeRouter.navigate(`service/${id}`);
   }
 
   goToCampaings(): void {

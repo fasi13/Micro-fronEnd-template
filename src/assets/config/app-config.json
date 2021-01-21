@@ -16,5 +16,7 @@
       }
     }
   ],
-  "e2eCommunicationManagementAppPackageUrl": "https://qa-communication-management.cxsrecognize.com/package.js"
+  "services": [
+    { "id": "communication", "name": "Communications", "url": "https://qa-communication-management.cxsrecognize.com/package.js"}
+  ]
 }

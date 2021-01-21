@@ -39,7 +39,7 @@ describe('AppConfigService', () => {
           url: 'http://linksApi.com',
         },
       ],
-      e2eCommunicationManagementAppPackageUrl: null
+      services: []
     };
 
     service.load().then(() => {
@@ -82,7 +82,7 @@ describe('AppConfigService', () => {
           url: 'url1',
         },
       ],
-      e2eCommunicationManagementAppPackageUrl: null
+      services: []
     };
     initializeApp(service)().then(() => {
       expect(service.config).toBeTruthy();
@@ -116,7 +116,7 @@ describe('AppConfigService', () => {
           url: 'http://linksApi.com',
         },
       ],
-      e2eCommunicationManagementAppPackageUrl: null
+      services: []
     };
 
     spyOnProperty(service, 'config', 'get').and.returnValue(dummyConfig);

@@ -6,7 +6,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class CommunicationRolesGuard implements CanActivate {
+export class ServiceRolesGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.getFromStoreOrAPI()

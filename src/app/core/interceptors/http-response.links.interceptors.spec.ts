@@ -67,7 +67,7 @@ describe(`HttpResponseLinksInterceptor`, () => {
           },
         },
       ],
-      e2eCommunicationManagementAppPackageUrl: null
+      services: []
     };
 
     spyOnProperty(appConfigService, 'config', 'get').and.returnValue(
