@@ -40,3 +40,4 @@ testem.log
 Thumbs.db
 src/test-results*
 src/test-results.xml
+/debug.log

@@ -17,7 +17,7 @@
       (click)="toggleHierarchyNavigation($event)"
     ></span>
 
-    <div class="dropdown mr-4">
+    <div class="dropdown mr-4" *ngIf="!hideLanguageSelector">
       <div class="nav-item">
         <a
           class="btn"
@@ -102,3 +102,4 @@
   [currentApplicationId]="application?.id"
   (selected)="onAppSelected($event)"
 ></fge-navigation-tree>
+<fge-session-timeout-modal></fge-session-timeout-modal>

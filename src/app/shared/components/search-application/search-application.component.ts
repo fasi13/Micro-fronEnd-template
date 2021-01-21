@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { State, SearchApplication, ApplicationPath, isLoadingSearchApplication, getSearchApplicationList } from '@forge/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fge-search-application',
@@ -20,7 +21,8 @@ export class SearchApplicationComponent implements OnInit {
   private searchSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -66,7 +68,8 @@ export class SearchApplicationComponent implements OnInit {
   }
 
   getApplicationLink({ path }: ApplicationPath): string {
-    return `/tenant/${path[path.length - 1].id}`;
+    const currentRoute = this.router.url.split('/').slice(3).join('/');
+    return `/tenant/${path[path.length - 1].id}/${currentRoute}`;
   }
 
   getApplicationPath(application: ApplicationPath): string {

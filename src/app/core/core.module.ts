@@ -37,6 +37,7 @@ import { ApplicationLoaderComponent } from './layout/application-loader/applicat
 import { ReportEffects } from './store/report';
 
 import { CultureService } from './services/culture.service';
+import { TimeoutComponent } from './session/timeout.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,7 @@ import { CultureService } from './services/culture.service';
       UserEffects,
       ResetPasswordEffects,
       ReportEffects,
-      
+
       CultureEffects
     ]),
     StoreDevtoolsModule.instrument({
@@ -69,7 +70,8 @@ import { CultureService } from './services/culture.service';
   declarations: [
     AuthLayoutComponent,
     TenantLayoutComponent,
-    ApplicationLoaderComponent
+    ApplicationLoaderComponent,
+    TimeoutComponent
   ],
   exports: [ApplicationLoaderComponent],
   providers: [
@@ -80,8 +82,7 @@ import { CultureService } from './services/culture.service';
     FgeRouterService,
     FgeModalService,
     CultureService,
-    httpInterceptorProviders,
-
+    httpInterceptorProviders
   ]
 })
 export class CoreModule {}
