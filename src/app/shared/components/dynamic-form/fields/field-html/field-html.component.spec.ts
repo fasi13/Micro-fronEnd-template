@@ -94,12 +94,10 @@ describe('FieldHtmlComponent', () => {
   it('should update formValue when keyUp in source mode', () => {
     const compiled = fixture.debugElement.nativeElement;
     const html1 = '<h1>Test</h1>';
-    component._editor = {editor : {mode : 'source', setData : function(html){}, getData: function(){
-      return html1;
-    }, on :  function(){}} , insertHtml: function(){}};
     setTimeout(function() {
-      component.editor.editor.mode = 'source';
-      component.editor.editor.setData(html1);
+      component._editor = {editor : {mode : 'source', setData : function(html){}, getData: function(){
+        return html1;
+      }, on :  function(){}} , insertHtml: function(){}};
       compiled.dispatchEvent(new KeyboardEvent('keyup'), {
         'key': 'Enter'
     });}, 3000);
