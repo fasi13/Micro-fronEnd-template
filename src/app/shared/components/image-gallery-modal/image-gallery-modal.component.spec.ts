@@ -13,8 +13,6 @@ describe('ImageGalleryModalComponent', () => {
   let contentServiceStub: ContentService;
   let injector: TestBed;
   let contentGroups: any;
-  let contentGroups2: any;
-  let contentGroups3: any;
   let contentGroup: any;
 
   beforeEach(() => {
@@ -27,26 +25,6 @@ describe('ImageGalleryModalComponent', () => {
     contentGroups = {
       data: {
         id: 1, items: [{ id: 1, name: 'Website branding', version: 1 }, { id: 2, name: 'App', version: 1 }],
-        limit: 1,
-        offset: 1,
-        totalCount: 1,
-        _links: [],
-      },
-      success: true
-    };
-    contentGroups2 = {
-      data: {
-        id: 1, items: [{ id: 1, name: 'App', version: 1 }, { id: 2, name: 'Website branding', version: 1 }],
-        limit: 1,
-        offset: 1,
-        totalCount: 1,
-        _links: [],
-      },
-      success: true
-    };
-    contentGroups3 = {
-      data: {
-        id: 1, items: [{ id: 1, name: 'App', version: 1 }, { id: 2, name: 'App', version: 1 }],
         limit: 1,
         offset: 1,
         totalCount: 1,
@@ -80,23 +58,13 @@ describe('ImageGalleryModalComponent', () => {
     expect(component).toBeTruthy();
   });
   it('should call on save', () => {
+    component.selectedConentGroup = [{ id: 1, name: 'Website branding', value: [{ id: 2, name: 'image2' }] }];
     expect(component.handleCancel(true));
   });
   it('should call on close', () => {
     expect(component.handleCancel(false));
   });
   it('should call on load', () => {
-    component.conentGroups = contentGroups.data.items;
-    expect(component.onLoad());
-  });
-
-  it('should call on second time load', () => {
-    component.conentGroups = contentGroups2.data.items;
-    expect(component.onLoad());
-  });
-
-  it('should call on third time load', () => {
-    component.conentGroups = contentGroups3.data.items;
     expect(component.onLoad());
   });
 
