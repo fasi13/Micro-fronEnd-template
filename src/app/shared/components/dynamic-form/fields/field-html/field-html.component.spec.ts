@@ -12,7 +12,7 @@ import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
 import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FieldConfig } from '../../models';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule} from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -94,6 +94,9 @@ describe('FieldHtmlComponent', () => {
   it('should update formValue when keyUp in source mode', () => {
     const compiled = fixture.debugElement.nativeElement;
     const html1 = '<h1>Test</h1>';
+    component._editor = {editor : {mode : 'source', setData : function(html){}, getData: function(){
+      return html1;
+    }, on :  function(){}} , insertHtml: function(){}};
     setTimeout(function() {
       component.editor.editor.mode = 'source';
       component.editor.editor.setData(html1);
@@ -120,7 +123,9 @@ describe('FieldHtmlComponent', () => {
 
   it('should open modal', () => {
     component._editor = {editor : {mode : 'source', on :  function(){}} , insertHtml: function(){}};
+    const modalResult = [{ id: 1, name: 'Website branding', value: [{ id: 2, name: 'image2' }] }];
     spyOn(modalService, 'open').and.returnValue(mockModalRef);
+    mockModalRef.result = new Promise((resolve, reject) => resolve(modalResult));
     component.imageevent(component._editor);
     expect(modalService.open);
   });

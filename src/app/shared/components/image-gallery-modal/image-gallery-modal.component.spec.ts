@@ -13,6 +13,8 @@ describe('ImageGalleryModalComponent', () => {
   let contentServiceStub: ContentService;
   let injector: TestBed;
   let contentGroups: any;
+  let contentGroups2: any;
+  let contentGroups3: any;
   let contentGroup: any;
 
   beforeEach(() => {
@@ -25,6 +27,26 @@ describe('ImageGalleryModalComponent', () => {
     contentGroups = {
       data: {
         id: 1, items: [{ id: 1, name: 'Website branding', version: 1 }, { id: 2, name: 'App', version: 1 }],
+        limit: 1,
+        offset: 1,
+        totalCount: 1,
+        _links: [],
+      },
+      success: true
+    };
+    contentGroups2 = {
+      data: {
+        id: 1, items: [{ id: 1, name: 'App', version: 1 }, { id: 2, name: 'Website branding', version: 1 }],
+        limit: 1,
+        offset: 1,
+        totalCount: 1,
+        _links: [],
+      },
+      success: true
+    };
+    contentGroups3 = {
+      data: {
+        id: 1, items: [{ id: 1, name: 'App', version: 1 }, { id: 2, name: 'App', version: 1 }],
         limit: 1,
         offset: 1,
         totalCount: 1,
@@ -64,8 +86,20 @@ describe('ImageGalleryModalComponent', () => {
     expect(component.handleCancel(false));
   });
   it('should call on load', () => {
+    component.conentGroups = contentGroups.data.items;
     expect(component.onLoad());
   });
+
+  it('should call on second time load', () => {
+    component.conentGroups = contentGroups2.data.items;
+    expect(component.onLoad());
+  });
+
+  it('should call on third time load', () => {
+    component.conentGroups = contentGroups3.data.items;
+    expect(component.onLoad());
+  });
+
   it('should call on save', () => {
     expect(component.onContentClick(component.currentConentGroup));
   });
@@ -79,7 +113,7 @@ describe('ImageGalleryModalComponent', () => {
 
   it('should call on image selection push second time', () => {
     const image = { id: 1, name: 'test' };
-    component.images = [{ id: 1, name: 'test1' }, { id: 2, name: 'test2' }];
+    component.images = [{ id: 1, name: 'test' }, { id: 2, name: 'test2' }];
     component.currentConentGroup = { id: 1, name: 'Website branding', value: null };
     component.selectedConentGroup = [{ id: 2, name: 'Website branding2', value: null }];
     expect(component.onImageSelection(image)).toBe(2);

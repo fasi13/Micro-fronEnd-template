@@ -77,7 +77,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
 
   imageaction(editor, componentInstance) {
     /* istanbul ignore next */
-    if (componentInstance instanceof Array) {
+    if (componentInstance instanceof Array && editor.insertHtml !== undefined) {
       componentInstance.forEach(element => {
         element.value.forEach(item => {
           editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
