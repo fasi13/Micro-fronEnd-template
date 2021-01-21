@@ -16,7 +16,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
+import { AppConfigService } from 'src/app/app-config.service';
 import { of } from 'rxjs';
 
 export class  MockNgbModalRef {
@@ -33,7 +33,6 @@ describe('FieldHtmlComponent', () => {
   let appConfigService: AppConfigService;
   let injector: TestBed;
   let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
-  let httpMock: HttpTestingController;
   
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -76,7 +75,6 @@ describe('FieldHtmlComponent', () => {
       ],
     };
     spyOn(appConfigService, 'config').and.callFake(() => of(appConfigService._config));
-    httpMock = injector.get(HttpTestingController);
     component.config.validation = {};
     component.group = new FormGroup({
       [component.config.name]: new FormControl(),
