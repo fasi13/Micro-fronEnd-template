@@ -73,6 +73,7 @@ describe('FieldHtmlComponent', () => {
           url: 'http://linksApi.com',
         },
       ],
+      e2eCommunicationManagementAppPackageUrl: ''
     };
     spyOn(appConfigService, 'config').and.callFake(() => of(appConfigService._config));
     component.config.validation = {};
@@ -99,7 +100,7 @@ describe('FieldHtmlComponent', () => {
         return html1;
       }, on :  function(){}} , insertHtml: function(){}};
       compiled.dispatchEvent(new KeyboardEvent('keyup'), {
-        'key': 'Enter'
+        'key': 'Enter' 
     });}, 3000);
     expect(1).toBeTruthy();
   });

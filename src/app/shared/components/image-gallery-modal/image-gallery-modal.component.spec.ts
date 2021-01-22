@@ -24,7 +24,7 @@ describe('ImageGalleryModalComponent', () => {
     });
     contentGroups = {
       data: {
-        id: 1, items: [{ id: 1, name: 'Website branding', version: 1 }, { id: 2, name: 'App', version: 1 }],
+        id: 1, items: [{ id: 1, name: 'Website branding', version: 1, content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }] }, { id: 2, name: 'App', version: 1 , content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }] }],
         limit: 1,
         offset: 1,
         totalCount: 1,
@@ -65,6 +65,7 @@ describe('ImageGalleryModalComponent', () => {
     expect(component.handleCancel(false));
   });
   it('should call on load', () => {
+    component.conentGroups = contentGroups;
     expect(component.onLoad());
   });
 
