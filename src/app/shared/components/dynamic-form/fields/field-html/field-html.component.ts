@@ -1,3 +1,5 @@
+import { CultureService } from './../../../../../core/services/culture.service';
+import { getCurrentCulture } from './../../../../../core/store/store.reducers';
 import { AppConfigService } from 'src/app/app-config.service';
 import { UserService } from './../../../../../core/services/user.service';
 import { Component, OnInit, HostListener } from '@angular/core';
@@ -19,8 +21,11 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   public _editor: any;
   public modalRef: NgbModalRef;
 
-  constructor(private userService: UserService, private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal) {
-    /* istanbul ignore next */
+
+  constructor(private userService: UserService,
+    private appconfig: AppConfigService, private store: Store<State>, private modalService: NgbModal,
+    private cultureService: CultureService) {
+      /* istanbul ignore next */
 
     super();
   }
@@ -36,15 +41,32 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   }
 
   ngOnInit() {
-    /* istanbul ignore next */
+  /* istanbul ignore next */
+    const apiurl = this.appconfig.config.apis.filter(c => c.name === 'E2E.Content.Management.API')[0].url;
     this.store.select(getApplicationInfo)
-      .subscribe((applicationInfo: Application) => {
-        if (applicationInfo) {
+      .subscribe(async (applicationInfo: Application) => {
           this.applicationId = applicationInfo.id;
+
+        if (applicationInfo) {
+
+          if (this.configCkEditor) {
+            this.configCkEditor.getimageUrl =
+            apiurl + '/application/' +
+            this.applicationId +
+            '/content?name={name}&group={group}&exactMatch=true&replaceEmbeddedData=true&basic=true';
+            this.configCkEditor.language = this.cultureService.getCurrentCulture();
+                       }
         }
       });
 
-    const apiurl = this.appconfig.config.apis.filter(c => c.name === 'E2E.Content.Management.API')[0].url;
+      this.store.select(getCurrentCulture).subscribe((currentCulture) => {
+
+       if (this.configCkEditor) {
+         this.configCkEditor.language = currentCulture;
+        }
+      });
+
+
     this.configCkEditor = {
 
       placeholder: this.config ? this.config.placeholder : '',
@@ -54,6 +76,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       extraPlugins: ['e2etriggerimage'],
       getimageUrl: apiurl + '/application/' + this.applicationId + '/content?name={name}&group={group}&exactMatch=true&replaceEmbeddedData=true&basic=true',
       apiToken: this.userService.getToken(),
+      language: this.cultureService.getCurrentCulture(),
       toolbar: [
         { name: 'styles', items: ['Format'] },
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'] },
@@ -70,24 +93,22 @@ export class FieldHtmlComponent extends FormField implements OnInit {
   get editor() { return this._editor; }
 
   editorReady(editor) {
-    /* istanbul ignore next */
+      /* istanbul ignore next */
     this._editor = editor;
     this._editor.editor.on('imageevent', event => this.imageevent(event));
   }
 
   imageaction(editor, componentInstance) {
-    /* istanbul ignore next */
-    if (componentInstance instanceof Array && editor.insertHtml !== undefined) {
-      componentInstance.forEach(element => {
-        element.value.forEach(item => {
-          editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
-        });
+      /* istanbul ignore next */
+    componentInstance.forEach(element => {
+      element.value.forEach(item => {
+        editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
       });
-    }
+    });
   }
 
   imageevent(event) {
-    /* istanbul ignore next */
+      /* istanbul ignore next */
     this.modalRef = this.modalService.open(ImageGalleryModalComponent, { windowClass: 'modal-html-image-form' });
     this.modalRef.componentInstance.applicationId = this.applicationId;
     this.modalRef.result.then((activeModal: any) => {
