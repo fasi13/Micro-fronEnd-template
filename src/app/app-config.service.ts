@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
-  private _config: IAppConfig;
+  public _config: IAppConfig;
   constructor(private http: HttpClient) {}
   load() {
     const cacheBuster = +new Date();

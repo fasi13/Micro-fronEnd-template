@@ -24,7 +24,7 @@ describe('ImageGalleryModalComponent', () => {
     });
     contentGroups = {
       data: {
-        id: 1, items: [{ id: 1, name: 'Website branding', version: 1 }, { id: 2, name: 'App', version: 1 }],
+        id: 1, items: [{ id: 1, name: 'Website branding', version: 1, content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }] }, { id: 2, name: 'App', version: 1 , content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }] }],
         limit: 1,
         offset: 1,
         totalCount: 1,
@@ -58,14 +58,17 @@ describe('ImageGalleryModalComponent', () => {
     expect(component).toBeTruthy();
   });
   it('should call on save', () => {
+    component.selectedConentGroup = [{ id: 1, name: 'Website branding', value: [{ id: 2, name: 'image2' }] }];
     expect(component.handleCancel(true));
   });
   it('should call on close', () => {
     expect(component.handleCancel(false));
   });
   it('should call on load', () => {
+    component.conentGroups = contentGroups;
     expect(component.onLoad());
   });
+
   it('should call on save', () => {
     expect(component.onContentClick(component.currentConentGroup));
   });
@@ -79,7 +82,7 @@ describe('ImageGalleryModalComponent', () => {
 
   it('should call on image selection push second time', () => {
     const image = { id: 1, name: 'test' };
-    component.images = [{ id: 1, name: 'test1' }, { id: 2, name: 'test2' }];
+    component.images = [{ id: 1, name: 'test' }, { id: 2, name: 'test2' }];
     component.currentConentGroup = { id: 1, name: 'Website branding', value: null };
     component.selectedConentGroup = [{ id: 2, name: 'Website branding2', value: null }];
     expect(component.onImageSelection(image)).toBe(2);
@@ -99,11 +102,10 @@ describe('ImageGalleryModalComponent', () => {
     component.selectedImage = image;
     component.images = [{ id: 1, name: 'test1' }, { id: 2, name: 'test2' }];
     component.selectedConentGroup = [{ id: 1, name: 'Website branding', value: [{ id: 1, name: 'image1' }] }];
-    expect(component.onImageSelection(image)).length > 0;
+    expect(component.onImageSelection(image));
   });
 
   it('should call on content click', () => {
-    const item = [{ id: 2, name: 'Demo' }];
     component.currentConentGroup.active = false;
     component.currentConentGroup = { id: 1, name: 'Website branding' };
     component.applicationId = 1;
