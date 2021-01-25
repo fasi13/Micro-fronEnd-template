@@ -31,6 +31,97 @@ describe(`TimeoutInterceptor`, () => {
   let httpMock: HttpTestingController;
   let timeoutService: TimeoutService;
   let store: MockStore<State>;
+  const initialState: State = {
+    authorization: { authenticated: null, loaded: false, loading: false },
+    router: { state: null, navigationId: null },
+    application: {
+      current: {
+        info: null,
+        branding: null,
+        loading: false,
+      },
+      search: {
+        data: null,
+        loading: false,
+      },
+      types: {
+        data: null,
+        loading: false,
+      },
+      path: {
+        data: null,
+        loading: false,
+      },
+      preview: {
+        branding: null,
+        loading: false,
+      },
+    },
+    content: {
+      groups: {
+        loading: false,
+        items: null,
+      },
+      group: {
+        loading: false,
+        data: null,
+      },
+      content: {
+        loading: false,
+        data: null,
+      },
+      record: {
+        loading: false,
+        error: null,
+      },
+      action: {
+        loading: false,
+        error: null,
+      },
+      contentGroup: {
+        loading: false,
+        error: null,
+      },
+    },
+    report: {
+      audit: {
+        loading: false,
+        items: null,
+        filters: null,
+        sort: null,
+      },
+    },
+    resetPassword: {
+      resetPassword: {
+        loading: false,
+        error: null,
+      },
+    },
+    culture: {
+      availableCultures: ['en-US'],
+      currentCulture: 'en-US'
+    },
+    user: {
+      users: {
+        loading: false,
+        items: null,
+        error: null,
+      },
+      user: {
+        loading: false,
+        data: null,
+        error: null,
+      },
+      roles: {
+        loading: false,
+        items: null,
+        error: null,
+        selected: {
+          loading: true,
+        },
+      },
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,7 +134,7 @@ describe(`TimeoutInterceptor`, () => {
           useClass: TimeoutInterceptor,
           multi: true,
         },
-        provideMockStore()
+        provideMockStore({initialState})
       ],
     });
 
@@ -65,7 +156,7 @@ describe(`TimeoutInterceptor`, () => {
           url: 'http://hyrc.test.com',
         }
       ],
-      e2eCommunicationManagementAppPackageUrl: ''
+      services: []
     };
 
     spyOnProperty(appConfigService, 'config', 'get').and.returnValue(
@@ -75,17 +166,17 @@ describe(`TimeoutInterceptor`, () => {
     spyOn(store, 'dispatch').and.callThrough();
   });
 
-  // it('should not call requestReceived', () => {
-  //   service.load('http://hyrc.test.com/hello/papa');
-  //   httpMock.expectOne('http://hyrc.test.com/hello/papa');
-  //   expect(timeoutService.requestReceived).toHaveBeenCalledTimes(0);
-  // });
+  it('should not call requestReceived', () => {
+    service.load('http://hyrc.test.com/hello/papa');
+    httpMock.expectOne('http://hyrc.test.com/hello/papa');
+    expect(timeoutService.requestReceived).toHaveBeenCalledTimes(0);
+  });
 
-  // it('should call requestReceived', () => {
-  //   service.load('http://cms.test.com/application/groups');
-  //   httpMock.expectOne('http://cms.test.com/application/groups');
-  //   expect(timeoutService.requestReceived).toHaveBeenCalled();
-  // });
+  it('should call requestReceived', () => {
+    service.load('http://cms.test.com/application/groups');
+    httpMock.expectOne('http://cms.test.com/application/groups');
+    expect(timeoutService.requestReceived).toHaveBeenCalled();
+  });
 
   afterEach(() => {
     httpMock.verify();

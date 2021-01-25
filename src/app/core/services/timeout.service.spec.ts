@@ -39,55 +39,55 @@ describe('TimeoutService', () => {
     spyOn(timeoutComponent, 'resetSessionTimeout').and.callThrough();
   });
 
-  // describe('extendSession', () => {
-  //   it('should call get applicationInfo in ApplicationService', () => {
-  //     spyOn(contentService, 'getContentGroups').and.returnValue(new Observable());
-  //     timeoutService.user = user;
+  describe('extendSession', () => {
+    it('should call get applicationInfo in ApplicationService', () => {
+      spyOn(contentService, 'getContentGroups').and.returnValue(new Observable());
+      timeoutService.user = user;
 
-  //     timeoutService.extendSession();
+      timeoutService.extendSession();
 
-  //     expect(contentService.getContentGroups).toHaveBeenCalled();
-  //     httpMock.verify();
-  //   });
-  // });
-
-   describe('requestReceived', () => {
-  //   it('should call resetSessionTimeout in TimeoutOmponent if user and component available', () => {
-  //     timeoutService.user = user;
-  //     timeoutService.timeoutComponent = timeoutComponent;
-
-  //     timeoutService.requestReceived();
-
-  //     expect(timeoutComponent.resetSessionTimeout).toHaveBeenCalled();
-  //   });
-
-    // it('should not call resetSessionTimeout in TimeoutOmponent if user not available', () => {
-    //   timeoutService.timeoutComponent = timeoutComponent;
-    //   timeoutService.user = undefined;
-
-    //   timeoutService.requestReceived();
-
-    //   expect(timeoutComponent.resetSessionTimeout).toHaveBeenCalledTimes(0);
-    // });
-
-    // it('should not call resetSessionTimeout in TimeoutOmponent if component not available', () => {
-    //   timeoutService.user = user;
-    //   timeoutService.timeoutComponent = undefined;
-
-    //   timeoutService.requestReceived();
-
-    //   expect(timeoutComponent.resetSessionTimeout).toHaveBeenCalledTimes(0);
-    // });
+      expect(contentService.getContentGroups).toHaveBeenCalled();
+      httpMock.verify();
+    });
   });
 
-  // describe('logout', () => {
-  //   it('should dispatch actions to store to logout the user', () => {
-  //     timeoutService.logout();
+   describe('requestReceived', () => {
+    it('should call resetSessionTimeout in TimeoutOmponent if user and component available', () => {
+      timeoutService.user = user;
+      timeoutService.timeoutComponent = timeoutComponent;
 
-  //     expect(store.dispatch).toHaveBeenCalledWith(new ResetCultureAction());
-  //     expect(store.dispatch).toHaveBeenCalledWith(new LogoutAction(new Event('click').type));
-  //   });
-  // });
+      timeoutService.requestReceived();
+
+      expect(timeoutComponent.resetSessionTimeout).toHaveBeenCalled();
+    });
+
+    it('should not call resetSessionTimeout in TimeoutOmponent if user not available', () => {
+      timeoutService.timeoutComponent = timeoutComponent;
+      timeoutService.user = undefined;
+
+      timeoutService.requestReceived();
+
+      expect(timeoutComponent.resetSessionTimeout).toHaveBeenCalledTimes(0);
+    });
+
+    it('should not call resetSessionTimeout in TimeoutOmponent if component not available', () => {
+      timeoutService.user = user;
+      timeoutService.timeoutComponent = undefined;
+
+      timeoutService.requestReceived();
+
+      expect(timeoutComponent.resetSessionTimeout).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('logout', () => {
+    it('should dispatch actions to store to logout the user', () => {
+      timeoutService.logout();
+
+      expect(store.dispatch).toHaveBeenCalledWith(new ResetCultureAction());
+      expect(store.dispatch).toHaveBeenCalledWith(new LogoutAction(new Event('click').type));
+    });
+  });
 
   afterEach(() => {
   });
