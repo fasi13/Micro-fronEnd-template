@@ -73,7 +73,7 @@ describe('FieldHtmlComponent', () => {
           url: 'http://linksApi.com',
         },
       ],
-      e2eCommunicationManagementAppPackageUrl: ''
+      services: []
     };
     spyOn(appConfigService, 'config').and.callFake(() => of(appConfigService._config));
     component.config.validation = {};

@@ -63,18 +63,18 @@ describe('application effects ', () => {
     expect(effects.fetchApplicationDataSuccess$).toBeObservable(expected);
   });
 
-  // it('search should return a stream with applicationPath result', (done) => {
-  //   spyOn(service, 'search').and.callFake(() => {});
-  //   const action = new SearchApplication();
-  //   const completion = new SearchApplicationSuccess();
+  it('search should return a stream with applicationPath result', (done) => {
+    spyOn(service, 'search').and.callFake(() => {});
+    const action = new SearchApplication();
+    const completion = new SearchApplicationSuccess();
 
-  //   actions = hot('--a-', { a: action });
-  //   const expected = cold('--b', { b: completion });
-  //   expected.subscribe((data) => {
-  //     expect(data.type).toBe(ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS);
-  //     done();
-  //   });
-  // });
+    actions = hot('--a-', { a: action });
+    const expected = cold('--b', { b: completion });
+    expected.subscribe((data) => {
+      expect(data.type).toBe(ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS);
+      done();
+    });
+  });
 
   afterEach(function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
