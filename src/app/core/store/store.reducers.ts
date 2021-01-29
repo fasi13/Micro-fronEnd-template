@@ -36,7 +36,7 @@ export const FgeReducers: ActionReducerMap<State> = {
 };
 
 export const TestInitialState: State = {
-  authorization: {authenticated: null,
+  authorization: {authenticated: null, user: {applicationId: 1},
     loaded: false,
     loading: false},
   router: {state: null, navigationId: null},
@@ -95,7 +95,10 @@ export const TestInitialState: State = {
     loading: false,
     error: null
   }},
-
+  culture: {
+    availableCultures: ['en-US'],
+    currentCulture: 'en-US'
+  },
   user: { users: {
     loading: false,
     items: null,

@@ -1,4 +1,4 @@
-import { State } from './../store.reducers';
+import { State, TestInitialState } from './../store.reducers';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ApplicationService } from './../../services/application.service';
 import {
@@ -28,95 +28,10 @@ describe('application effects ', () => {
   let originalTimeout: number;
   let service: ApplicationService;
 
-  const  initialState: State = {
-    authorization: {authenticated: null,
-      loaded: false,
-      loading: false,
-      user: {applicationId: 1}},
-    router: {state: null, navigationId: null},
-    application: { current: {
-      info: null,
-      branding: null,
-      loading: false,
-    },
-    search: {
-      data: null,
-      loading: false
-    },
-    types: {
-      data: null,
-      loading: false
-    },
-    path: {
-      data: null,
-      loading: false
-    },
-    preview: {
-      branding: null,
-      loading: false
-    }},
-    content: { groups: {
-      loading: false,
-      items: null
-    },
-    group: {
-      loading: false,
-      data: null
-    },
-    content: {
-      loading: false,
-      data: null
-    },
-    record: {
-      loading: false,
-      error: null
-    },
-    action: {
-      loading: false,
-      error: null
-    },
-    contentGroup: {
-      loading: false,
-      error: null
-    }},
-    report: {audit: {
-      loading: false,
-      items: null,
-      filters: null,
-      sort: null
-    }},
-    resetPassword: { resetPassword: {
-      loading: false,
-      error: null
-    }},
-    culture: {
-      availableCultures: ['en-US'],
-      currentCulture: 'en-US'
-    },
-    user: { users: {
-      loading: false,
-      items: null,
-      error: null
-    },
-    user: {
-      loading: false,
-      data: {applicationId: 1},
-      error: null
-    },
-    roles: {
-      loading: false,
-      items: null,
-      error: null,
-      selected: {
-        loading: true
-      }
-    }},
-
-    };
-
+  const  initialState: State = TestInitialState;
   beforeEach(() => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 500000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
 
     TestBed.configureTestingModule({
       imports: [
