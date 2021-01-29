@@ -19,10 +19,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FetchApplicationDataSuccess, FetchApplicationPath } from '.';
-import { ApiResponse, DataPaginated, ApplicationPath } from '../../models';
 import { FetchContentGroups } from '../content/content.actions';
 
-fdescribe('application effects ', () => {
+describe('application effects ', () => {
   let effects: ApplicationEffects;
   let actions: Observable<any>;
   let store: MockStore<State>;
