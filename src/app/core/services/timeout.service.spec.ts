@@ -4,7 +4,7 @@ import {
   HttpClientTestingModule, HttpTestingController,
 } from '@angular/common/http/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { State } from 'src/app/core/store/store.reducers';
+import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { TimeoutComponent } from '../session/timeout.component';
@@ -20,92 +20,7 @@ describe('TimeoutService', () => {
   let httpMock: HttpTestingController;
   let timeoutComponent: TimeoutComponent;
   const user: User = { authenticationTokenLifespanMinutes: 1, applicationId: '1' };
-
-  const  initialState: State = {
-    authorization: {authenticated: null,
-      loaded: false,
-      loading: false,
-      user: {applicationId: 1}},
-    router: {state: null, navigationId: null},
-    application: { current: {
-      info: null,
-      branding: null,
-      loading: false,
-    },
-    search: {
-      data: null,
-      loading: false
-    },
-    types: {
-      data: null,
-      loading: false
-    },
-    path: {
-      data: null,
-      loading: false
-    },
-    preview: {
-      branding: null,
-      loading: false
-    }},
-    content: { groups: {
-      loading: false,
-      items: null
-    },
-    group: {
-      loading: false,
-      data: null
-    },
-    content: {
-      loading: false,
-      data: null
-    },
-    record: {
-      loading: false,
-      error: null
-    },
-    action: {
-      loading: false,
-      error: null
-    },
-    contentGroup: {
-      loading: false,
-      error: null
-    }},
-    report: {audit: {
-      loading: false,
-      items: null,
-      filters: null,
-      sort: null
-    }},
-    resetPassword: { resetPassword: {
-      loading: false,
-      error: null
-    }},
-    culture: {
-      availableCultures: ['en-US'],
-      currentCulture: 'en-US'
-    },
-    user: { users: {
-      loading: false,
-      items: null,
-      error: null
-    },
-    user: {
-      loading: false,
-      data: {applicationId: 1},
-      error: null
-    },
-    roles: {
-      loading: false,
-      items: null,
-      error: null,
-      selected: {
-        loading: true
-      }
-    }},
-
-    };
+  const initialState: State = TestInitialState;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
