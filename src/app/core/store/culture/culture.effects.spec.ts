@@ -45,6 +45,10 @@ describe('CultureEffects', () => {
       // console.log('Set currentCulture ' + currentCulture);
       return currentCulture;
     });
+    spyOn(service, 'resetCurrentCultureToDefault').and.callFake(() => {
+      currentCulture = 'en-US';
+      return currentCulture;
+    });
 
     spyOn(service, 'getCurrentCulture').and.callFake(() => {
       // console.log('Get currentCulture ' + currentCulture);
@@ -56,7 +60,7 @@ describe('CultureEffects', () => {
       return availables;
     });
 
-    spyOn(service, 'resetCurrentCultureToDefault').and.callThrough();
+
 
     effects = TestBed.get(CultureEffects);
   });
@@ -85,33 +89,25 @@ describe('CultureEffects', () => {
     expect(effects.readCulture$).toBeObservable(expected);
   });
 
-  it('switch should return a stream with string read success action with new culture', (done) => {
+  it('switch should return a stream with string read success action with new culture', () => {
     const action = new SwitchCultureAction({ cultureCode: 'fr-CA' });
+    const completion = new ReadCultureSuccessAction({ cultureCode: 'fr-CA' });
+
     actions = hot('--a-', { a: action });
-    const effect = effects.switchCulture$.subscribe(() => {
-      const completion = new ReadCultureSuccessAction({
-        cultureCode: currentCulture,
-      });
-      const expected = cold('--b', { b: completion });
-      expect(effect).toBeObservable(expected);
-      done();
-    });
+    const expected = cold('--b', { b: completion });
+    expect(effects.switchCulture$).toBeObservable(expected);
+    expect(currentCulture).toBe('fr-CA');
   });
 
-  it('Reset should return a stream with string read success action Default', (done) => {
+  it('Reset should return a stream with string read success action Default', () => {
     const action = new ResetCultureAction();
-    actions = hot('--a-', { a: action });
-    const effect = effects.resetCulture$.subscribe(() => {
-      const completion = new ReadCultureSuccessAction({
-        cultureCode: currentCulture,
-      });
+      const completion = new ReadCultureSuccessAction({cultureCode: 'en-US'});
+      actions = hot('--a-', { a: action });
       const expected = cold('--b', { b: completion });
-      expect(effect).toBeObservable(expected);
-      done();
+      expect(effects.resetCulture$).toBeObservable(expected);
+      expect(currentCulture).toBe('en-US');
 
-    });
   });
-
 
   afterEach(function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
