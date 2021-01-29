@@ -4,7 +4,6 @@ import { ApplicationService } from './../../services/application.service';
 import {
   SearchApplication,
   SearchApplicationSuccess,
-  ApplicationActionTypes,
   FetchDataTypes,
 } from './application.actions';
 import { ApplicationEffects } from './application.effects';
