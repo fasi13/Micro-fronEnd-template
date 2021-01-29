@@ -4,7 +4,7 @@
       <h5 *ngIf="conentGroups && conentGroups.length">Content Group</h5>
       <div
         *ngFor="let item of conentGroups"
-        [ngClass]="{ active: item.active, disableClick: isLoading }"
+        [ngClass]="{ active: item.id === currentConentGroup.id, disableClick: isLoading }"
       >
         <span (click)="onContentClick(item)">{{ item.name }}</span>
       </div>

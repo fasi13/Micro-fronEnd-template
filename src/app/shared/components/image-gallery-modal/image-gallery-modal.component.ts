@@ -1,72 +1,60 @@
+import { FetchContentGroup } from './../../../core/store/content/content.actions';
+import { getGroup } from './../../../core/store/store.reducers';
+import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ContentService } from 'src/app/core/services/content.service';
 import { ContentGroupModelGallery } from './ContentGroupModelGallery';
+import { ContentGroup, getGroups, State } from '@forge/core';
 
 @Component({
   selector: 'fge-image-gallery-modal',
   templateUrl: './image-gallery-modal.component.html',
 })
-
 export class ImageGalleryModalComponent implements OnInit {
   images: any;
-  conentGroups: any;
-  currentConentGroup: any;
+  conentGroups: ContentGroup[];
+  currentConentGroup: ContentGroup;
   selectedImage: any;
   selectedConentGroup = [];
   applicationId: string | number;
   isLoading: boolean;
 
   constructor(
-    private contentService: ContentService,
-    public activeModal: NgbActiveModal
+
+    public activeModal: NgbActiveModal,
+    private store: Store<State>
   ) {}
 
   ngOnInit() {
-      /* istanbul ignore next */
+
     this.isLoading = true;
     this.onLoad();
   }
 
-  onLoad(){
-    this.contentService.getContentGroups(this.applicationId).subscribe((a) => {
-      this.conentGroups = a.data.items;
-      this.conentGroups.sort((t1, t2) => {
-        return (t1.name < t2.name) ? -1 : (t1.name > t2.name) ? -1 : 0;
+  onLoad() {
+
+    this.store.select(getGroups).subscribe((groups) => {
+      this.conentGroups = groups;
+      this.conentGroups.sort((t1: ContentGroup, t2: ContentGroup) => {
+        return t1.name < t2.name ? -1 : t1.name > t2.name ? -1 : 0;
       });
-      this.currentConentGroup = this.conentGroups[0];
-      this.contentService
-        .getContentGroup(this.applicationId, this.conentGroups[0].id)
-        .subscribe((x) => {
-          this.isLoading = false;
-          this.currentConentGroup.active = !this.currentConentGroup.active;
-          this.selectedImage = null;
-          this.images = x.data.content.filter(
-            (y) => y.dataType.name === 'Image'
-          );
-        });
+    });
+
+    this.store.select(getGroup).subscribe((group) => {
+      this.isLoading = false;
+      this.currentConentGroup = group;
+      this.selectedImage = null;
+      this.images = group.content.filter((y) => y.dataType.name === 'Image');
     });
   }
 
-  onContentClick(item) {
-      /* istanbul ignore next */
+  onContentClick(item: ContentGroup) {
     this.isLoading = true;
-    this.currentConentGroup.active = !this.currentConentGroup.active;
-        this.currentConentGroup = item;
-        this.currentConentGroup.active = !this.currentConentGroup.active;
-    this.contentService
-      .getContentGroup(this.applicationId, item.id)
-      .subscribe((x) => {
-        this.isLoading = false;
-        this.selectedImage = null;
-        this.images = x.data.content.filter((y) => y.dataType.name === 'Image');
-        
-      });
+    this.currentConentGroup = item;
+    this.store.dispatch(new FetchContentGroup(item.id));
   }
 
   onImageSelection(image) {
-      /* istanbul ignore next */
-
     this.selectedImage = image;
 
     this.images.forEach((img) => {
@@ -87,7 +75,7 @@ export class ImageGalleryModalComponent implements OnInit {
         }
       } else {
         const conentGroup = new ContentGroupModelGallery();
-        conentGroup.id = this.currentConentGroup.id;
+        conentGroup.id = +this.currentConentGroup.id;
         conentGroup.name = this.currentConentGroup.name;
         conentGroup.value = [];
         conentGroup.value.push(image);
@@ -95,7 +83,7 @@ export class ImageGalleryModalComponent implements OnInit {
       }
     } else {
       const conentGroup = new ContentGroupModelGallery();
-      conentGroup.id = this.currentConentGroup.id;
+      conentGroup.id = +this.currentConentGroup.id;
       conentGroup.name = this.currentConentGroup.name;
       conentGroup.value = [];
       conentGroup.value.push(image);
@@ -103,7 +91,6 @@ export class ImageGalleryModalComponent implements OnInit {
     }
   }
   handleCancel(isSave): void {
-      /* istanbul ignore next */
     if (isSave) {
       this.activeModal.close(this.selectedConentGroup);
     } else {

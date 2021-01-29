@@ -41,7 +41,8 @@ const routes: Routes = [
   },
   {
     path: 'group/:groupId/content/:contentId/edit',
-    component: ContentHtmlEditorComponent
+    component: ContentHtmlEditorComponent,
+    canActivate: [ GroupDetailsGuard ],
   },
   {
     path: 'notFound',

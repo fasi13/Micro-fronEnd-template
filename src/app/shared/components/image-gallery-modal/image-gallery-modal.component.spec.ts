@@ -1,10 +1,10 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed, getTestBed } from "@angular/core/testing";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { of } from "rxjs";
-import { ContentService } from "src/app/core/services/content.service";
-import { ImageGalleryModalComponent } from "./image-gallery-modal.component";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed, getTestBed } from '@angular/core/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
+import { ContentService } from 'src/app/core/services/content.service';
+import { ImageGalleryModalComponent } from './image-gallery-modal.component';
 
 describe('ImageGalleryModalComponent', () => {
   // define the variable
@@ -24,7 +24,7 @@ describe('ImageGalleryModalComponent', () => {
     });
     contentGroups = {
       data: {
-        id: 1, items: [{ id: 1, name: 'Website branding', version: 1, content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }] }, { id: 2, name: 'App', version: 1 , content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }] }],
+        id: 1, items: [{ id: 1, name: 'Website branding', version: 1, content: [{ id: 2, name: 'image2', dataTypes: { name: 'Image' } }] }, { id: 2, name: 'App', version: 1 , content: [{ id: 2, name: 'image2', dataTypes: { name: 'Image' } }] }],
         limit: 1,
         offset: 1,
         totalCount: 1,
@@ -34,7 +34,7 @@ describe('ImageGalleryModalComponent', () => {
     };
     contentGroup = {
       data: {
-        id: 1, name: 'Website branding', content: [{ id: 2, name: 'image2', dataTypes: { name: "Image" } }],
+        id: 1, name: 'Website branding', content: [{ id: 2, name: 'image2', dataTypes: { name: 'Image' } }],
         limit: 1,
         offset: 1,
         totalCount: 1,
