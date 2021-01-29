@@ -1,3 +1,5 @@
+import { State } from './../store.reducers';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ApplicationService } from './../../services/application.service';
 import {
   SearchApplication,
@@ -21,16 +23,102 @@ import { FetchApplicationDataSuccess, FetchApplicationPath } from '.';
 import { ApiResponse, DataPaginated, ApplicationPath } from '../../models';
 import { FetchContentGroups } from '../content/content.actions';
 
-describe('application effects ', () => {
+fdescribe('application effects ', () => {
   let effects: ApplicationEffects;
   let actions: Observable<any>;
-  let store: Store<any>;
+  let store: MockStore<State>;
   let originalTimeout: number;
   let service: ApplicationService;
 
+  const  initialState: State = {
+    authorization: {authenticated: null,
+      loaded: false,
+      loading: false,
+      user: {applicationId: 1}},
+    router: {state: null, navigationId: null},
+    application: { current: {
+      info: null,
+      branding: null,
+      loading: false,
+    },
+    search: {
+      data: null,
+      loading: false
+    },
+    types: {
+      data: null,
+      loading: false
+    },
+    path: {
+      data: null,
+      loading: false
+    },
+    preview: {
+      branding: null,
+      loading: false
+    }},
+    content: { groups: {
+      loading: false,
+      items: null
+    },
+    group: {
+      loading: false,
+      data: null
+    },
+    content: {
+      loading: false,
+      data: null
+    },
+    record: {
+      loading: false,
+      error: null
+    },
+    action: {
+      loading: false,
+      error: null
+    },
+    contentGroup: {
+      loading: false,
+      error: null
+    }},
+    report: {audit: {
+      loading: false,
+      items: null,
+      filters: null,
+      sort: null
+    }},
+    resetPassword: { resetPassword: {
+      loading: false,
+      error: null
+    }},
+    culture: {
+      availableCultures: ['en-US'],
+      currentCulture: 'en-US'
+    },
+    user: { users: {
+      loading: false,
+      items: null,
+      error: null
+    },
+    user: {
+      loading: false,
+      data: {applicationId: 1},
+      error: null
+    },
+    roles: {
+      loading: false,
+      items: null,
+      error: null,
+      selected: {
+        loading: true
+      }
+    }},
+
+    };
+
   beforeEach(() => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 500000;
 
     TestBed.configureTestingModule({
       imports: [
@@ -40,7 +128,7 @@ describe('application effects ', () => {
       ],
       providers: [
         ApplicationEffects,
-
+        provideMockStore({ initialState }),
         RouterModule,
         provideMockActions(() => actions),
       ],
@@ -63,17 +151,15 @@ describe('application effects ', () => {
     expect(effects.fetchApplicationDataSuccess$).toBeObservable(expected);
   });
 
-  it('search should return a stream with applicationPath result', (done) => {
-    spyOn(service, 'search').and.callFake(() => {});
+  it('[1][ok]search should return a stream with applicationPath result', () => {
+    spyOn(service, 'search').and.returnValue(of({applicationId: 1}));
+
     const action = new SearchApplication();
-    const completion = new SearchApplicationSuccess();
+    const completion = new SearchApplicationSuccess({applicationId: 1});
 
     actions = hot('--a-', { a: action });
     const expected = cold('--b', { b: completion });
-    expected.subscribe((data) => {
-      expect(data.type).toBe(ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS);
-      done();
-    });
+    expect(effects.searchApplication$).toBeObservable(expected);
   });
 
   afterEach(function () {
