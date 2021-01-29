@@ -34,7 +34,7 @@ export class ImageGalleryModalComponent implements OnInit {
   onLoad() {
 
     this.store.select(getGroups).subscribe((groups) => {
-      this.conentGroups = groups;
+      this.conentGroups = [...groups];
       this.conentGroups.sort((t1: ContentGroup, t2: ContentGroup) => {
         return t1.name < t2.name ? -1 : t1.name > t2.name ? -1 : 0;
       });
