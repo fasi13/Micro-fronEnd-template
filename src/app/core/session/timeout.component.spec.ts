@@ -10,7 +10,7 @@ import {
   HttpClientTestingModule,
 } from '@angular/common/http/testing';
 
-describe('TimeoutComponent', () => {
+fdescribe('TimeoutComponent', () => {
   let timeoutService: TimeoutService;
   let timeoutComponent: TimeoutComponent;
   let modalService: FgeModalService;
@@ -35,39 +35,33 @@ describe('TimeoutComponent', () => {
     spyOn(store, 'dispatch').and.callThrough();
   });
 
-  describe('resetSessionTimeout', () => {
-    it('should open timeout dialog', () => {
-      timeoutComponent.resetSessionTimeout(1, timeoutComponent);
+  it('should open timeout dialog', () => {
+    timeoutComponent.resetSessionTimeout(1, timeoutComponent);
 
-      setTimeout(() => {
-        expect(timeoutComponent.dialogReference).toBeDefined();
-      }, 35000);
-    });
+    setTimeout(() => {
+      expect(timeoutComponent.dialogReference).toBeDefined();
+    }, 35000);
   });
 
-  describe('stay', () => {
-    it('should call extendSession on timeoutService', () => {
-      spyOn(timeoutService, 'extendSession').and.callThrough();
+  it('should call extendSession on timeoutService', () => {
+    spyOn(timeoutService, 'extendSession').and.callThrough();
 
-      timeoutComponent.resetSessionTimeout(1, timeoutComponent);
+    timeoutComponent.resetSessionTimeout(1, timeoutComponent);
 
-      setTimeout(() => {
-        timeoutComponent.stay();
-        expect(timeoutService.extendSession).toHaveBeenCalled();
-      });
-    });
+    setTimeout(() => {
+      timeoutComponent.stay();
+      expect(timeoutService.extendSession).toHaveBeenCalled();
+    }, 35000);
   });
 
-   describe('logout', () => {
-    it('should call logout on timeoutService', () => {
-      spyOn(timeoutService, 'logout').and.callThrough();
+  it('should call logout on timeoutService', () => {
+    spyOn(timeoutService, 'logout').and.callThrough();
 
-      timeoutComponent.resetSessionTimeout(1, timeoutComponent);
+    timeoutComponent.resetSessionTimeout(1, timeoutComponent);
 
-      setTimeout(() => {
-        timeoutComponent.logout();
-        expect(timeoutService.logout).toHaveBeenCalled();
-      });
-    });
+    setTimeout(() => {
+      timeoutComponent.logout();
+      expect(timeoutService.logout).toHaveBeenCalled();
+    }, 35000);
   });
 });
