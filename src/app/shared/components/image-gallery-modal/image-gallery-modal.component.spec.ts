@@ -79,7 +79,6 @@ expect(component.onLoad()).toBe(true);
 });
 
 it('should call Load twice', ()=>{
-    const expected = [{id: 2, name: 'Website branding1', content: [], _links:[]}, {id: 1, name: 'Website branding', content: [], _links:[]}];
     spyOn(store, 'select').and.callFake(() => of(contentGroups1));
     expect(component.onLoad()).toBe(true);
     });
