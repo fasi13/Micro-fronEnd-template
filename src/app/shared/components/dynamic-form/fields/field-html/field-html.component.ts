@@ -37,6 +37,7 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       const editorValue = this._editor.editor.getData();
       const controlName = this.config.name;
       this.group.controls[controlName].setValue(editorValue);
+      return this._editor.editor.mode;
     }
   }
 
@@ -96,15 +97,19 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       /* istanbul ignore next */
     this._editor = editor;
     this._editor.editor.on('imageevent', event => this.imageevent(event));
+    return true;
   }
 
   imageaction(editor, componentInstance) {
       /* istanbul ignore next */
     componentInstance.forEach(element => {
       element.value.forEach(item => {
+        if(editor.insertHtml) {
         editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
+        }
       });
     });
+    return true;
   }
 
   imageevent(event) {

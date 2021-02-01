@@ -5,7 +5,7 @@ import { NgbAccordionModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContentModule } from '../../content.module';
 import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { State } from 'src/app/core/store/store.reducers';
+import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 import { ContentService } from '@forge/core';
 import { of } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
@@ -15,94 +15,7 @@ describe('VersionHistoryModalComponent', () => {
   let fixture: ComponentFixture<VersionHistoryModalComponent>;
   let store: MockStore<State>;
   let contentService: ContentService;
-  const  initialState: State = {
-  authorization: {authenticated: null,
-    loaded: false,
-    loading: false},
-  router: {state: null, navigationId: null},
-  application: { current: {
-    info: {  id: 1,
-      name: '1',
-      value: '1',
-      _links: []
-    },
-    branding: null,
-    loading: false,
-  },
-  search: {
-    data: null,
-    loading: false
-  },
-  types: {
-    data: null,
-    loading: false
-  },
-  path: {
-    data: null,
-    loading: false
-  },
-  preview: {
-    branding: null,
-    loading: false
-  }},
-  content: { groups: {
-    loading: false,
-    items: null
-  },
-  group: {
-    loading: false,
-    data: null
-  },
-  content: {
-    loading: false,
-    data: null
-  },
-  record: {
-    loading: false,
-    error: null
-  },
-  action: {
-    loading: false,
-    error: null
-  },
-  contentGroup: {
-    loading: false,
-    error: null
-  }},
-  report: {audit: {
-    loading: false,
-    items: null,
-    filters: null,
-    sort: null
-  }},
-  resetPassword: { resetPassword: {
-    loading: false,
-    error: null
-  }},
-  culture: {
-    availableCultures: ['en-US'],
-    currentCulture: 'en-US'
-  },
-  user: { users: {
-    loading: false,
-    items: null,
-    error: null
-  },
-  user: {
-    loading: false,
-    data: null,
-    error: null
-  },
-  roles: {
-    loading: false,
-    items: null,
-    error: null,
-    selected: {
-      loading: true
-    }
-  }},
-
-  };
+  const  initialState: State = TestInitialState;
   let history: any;
   beforeEach(async(() => {
     TestBed.configureTestingModule({

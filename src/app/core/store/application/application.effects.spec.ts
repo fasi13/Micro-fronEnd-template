@@ -1,8 +1,9 @@
+import { State, TestInitialState } from './../store.reducers';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ApplicationService } from './../../services/application.service';
 import {
   SearchApplication,
   SearchApplicationSuccess,
-  ApplicationActionTypes,
   FetchDataTypes,
 } from './application.actions';
 import { ApplicationEffects } from './application.effects';
@@ -18,16 +19,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FetchApplicationDataSuccess, FetchApplicationPath } from '.';
-import { ApiResponse, DataPaginated, ApplicationPath } from '../../models';
 import { FetchContentGroups } from '../content/content.actions';
 
 describe('application effects ', () => {
   let effects: ApplicationEffects;
   let actions: Observable<any>;
-  let store: Store<any>;
+  let store: MockStore<State>;
   let originalTimeout: number;
   let service: ApplicationService;
 
+  const  initialState: State = TestInitialState;
   beforeEach(() => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
@@ -40,7 +41,7 @@ describe('application effects ', () => {
       ],
       providers: [
         ApplicationEffects,
-
+        provideMockStore({ initialState }),
         RouterModule,
         provideMockActions(() => actions),
       ],
@@ -63,17 +64,15 @@ describe('application effects ', () => {
     expect(effects.fetchApplicationDataSuccess$).toBeObservable(expected);
   });
 
-  it('search should return a stream with applicationPath result', (done) => {
-    spyOn(service, 'search').and.callFake(() => {});
+  it('[1][ok]search should return a stream with applicationPath result', () => {
+    spyOn(service, 'search').and.returnValue(of({applicationId: 1}));
+
     const action = new SearchApplication();
-    const completion = new SearchApplicationSuccess();
+    const completion = new SearchApplicationSuccess({applicationId: 1});
 
     actions = hot('--a-', { a: action });
     const expected = cold('--b', { b: completion });
-    expected.subscribe((data) => {
-      expect(data.type).toBe(ApplicationActionTypes.SEARCH_APPLICATION_SUCCESS);
-      done();
-    });
+    expect(effects.searchApplication$).toBeObservable(expected);
   });
 
   afterEach(function () {

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TimeoutComponent } from '../session/timeout.component';
 import { User } from '../models';
 import { FgeModalService } from '../services';
-import { State } from 'src/app/core/store/store.reducers';
+import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
@@ -16,12 +16,12 @@ describe('TimeoutComponent', () => {
   let modalService: FgeModalService;
   let store: MockStore<State>;
   const user: User = { authenticationTokenLifespanMinutes: 1, applicationId: '1' };
-
+  const initialState: State = TestInitialState;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [TimeoutComponent],
-      providers: [TimeoutService, TimeoutComponent, FgeModalService, provideMockStore()],
+      providers: [TimeoutService, TimeoutComponent, FgeModalService, provideMockStore( {initialState} )],
     });
 
     timeoutService = TestBed.get(TimeoutService);
@@ -35,39 +35,33 @@ describe('TimeoutComponent', () => {
     spyOn(store, 'dispatch').and.callThrough();
   });
 
-  describe('resetSessionTimeout', () => {
-    it('should open timeout dialog', () => {
-      timeoutComponent.resetSessionTimeout(1, timeoutComponent);
+  it('should open timeout dialog', () => {
+    timeoutComponent.resetSessionTimeout(1, timeoutComponent);
 
-      setTimeout(() => {
-        expect(timeoutComponent.dialogReference).toBeDefined();
-      });
-    });
+    setTimeout(() => {
+      expect(timeoutComponent.dialogReference).toBeDefined();
+    }, 35000);
   });
 
-  describe('stay', () => {
-    it('should call extendSession on timeoutService', () => {
-      spyOn(timeoutService, 'extendSession').and.callThrough();
+  it('should call extendSession on timeoutService', () => {
+    spyOn(timeoutService, 'extendSession').and.callThrough();
 
-      timeoutComponent.resetSessionTimeout(1, timeoutComponent);
+    timeoutComponent.resetSessionTimeout(1, timeoutComponent);
 
-      setTimeout(() => {
-        timeoutComponent.stay();
-        expect(timeoutService.extendSession).toHaveBeenCalled();
-      });
-    });
+    setTimeout(() => {
+      timeoutComponent.stay();
+      expect(timeoutService.extendSession).toHaveBeenCalled();
+    }, 35000);
   });
 
-   describe('logout', () => {
-    it('should call logout on timeoutService', () => {
-      spyOn(timeoutService, 'logout').and.callThrough();
+  it('should call logout on timeoutService', () => {
+    spyOn(timeoutService, 'logout').and.callThrough();
 
-      timeoutComponent.resetSessionTimeout(1, timeoutComponent);
+    timeoutComponent.resetSessionTimeout(1, timeoutComponent);
 
-      setTimeout(() => {
-        timeoutComponent.logout();
-        expect(timeoutService.logout).toHaveBeenCalled();
-      });
-    });
+    setTimeout(() => {
+      timeoutComponent.logout();
+      expect(timeoutService.logout).toHaveBeenCalled();
+    }, 35000);
   });
 });

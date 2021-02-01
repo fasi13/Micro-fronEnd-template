@@ -11,7 +11,7 @@ import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
-import { State } from 'src/app/core/store/store.reducers';
+import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 
 
 
@@ -19,91 +19,7 @@ describe('ContentHtmlEditorComponent', () => {
   let fixture: ComponentFixture<ContentHtmlEditorComponent>;
   let component: ContentHtmlEditorComponent;
   let store: MockStore<State>;
-  const  initialState: State = {
-  authorization: {authenticated: null,
-    loaded: false,
-    loading: false},
-  router: {state: null, navigationId: null},
-  application: { current: {
-    info: null,
-    branding: null,
-    loading: false,
-  },
-  search: {
-    data: null,
-    loading: false
-  },
-  types: {
-    data: null,
-    loading: false
-  },
-  path: {
-    data: null,
-    loading: false
-  },
-  preview: {
-    branding: null,
-    loading: false
-  }},
-  content: { groups: {
-    loading: false,
-    items: null
-  },
-  group: {
-    loading: false,
-    data: null
-  },
-  content: {
-    loading: false,
-    data: null
-  },
-  record: {
-    loading: false,
-    error: null
-  },
-  action: {
-    loading: false,
-    error: null
-  },
-  contentGroup: {
-    loading: false,
-    error: null
-  }},
-  report: {audit: {
-    loading: false,
-    items: null,
-    filters: null,
-    sort: null
-  }},
-  resetPassword: { resetPassword: {
-    loading: false,
-    error: null
-  }},
-  culture: {
-    availableCultures: ['en-US'],
-    currentCulture: 'en-US'
-  },
-  user: { users: {
-    loading: false,
-    items: null,
-    error: null
-  },
-  user: {
-    loading: false,
-    data: null,
-    error: null
-  },
-  roles: {
-    loading: false,
-    items: null,
-    error: null,
-    selected: {
-      loading: true
-    }
-  }},
-
-  };
-
+  const  initialState: State = TestInitialState;
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ provideMockStore({ initialState })],

@@ -4,7 +4,7 @@ import {
   HttpClientTestingModule, HttpTestingController,
 } from '@angular/common/http/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { State } from 'src/app/core/store/store.reducers';
+import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { TimeoutComponent } from '../session/timeout.component';
@@ -20,11 +20,12 @@ describe('TimeoutService', () => {
   let httpMock: HttpTestingController;
   let timeoutComponent: TimeoutComponent;
   const user: User = { authenticationTokenLifespanMinutes: 1, applicationId: '1' };
+  const initialState: State = TestInitialState;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [TimeoutService, ContentService, provideMockStore()],
+      providers: [TimeoutService, ContentService, provideMockStore({ initialState })],
     });
 
     injector = getTestBed();
@@ -53,6 +54,7 @@ describe('TimeoutService', () => {
 
    describe('requestReceived', () => {
     it('should call resetSessionTimeout in TimeoutOmponent if user and component available', () => {
+      console.log('should call resetSessionTimeout in TimeoutOmponent if user and component available');
       timeoutService.user = user;
       timeoutService.timeoutComponent = timeoutComponent;
 

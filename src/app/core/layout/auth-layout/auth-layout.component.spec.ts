@@ -15,7 +15,7 @@ import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
-import { State } from 'src/app/core/store/store.reducers';
+import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReadAvailableCulturesAction } from '../../store/culture';
 import { PageNotFoundComponent } from 'src/app/error/page-not-found/page-not-found.component';
@@ -28,97 +28,7 @@ describe('AuthLayoutComponent', () => {
   let component: AuthLayoutComponent;
   let store: MockStore<State>;
   let router: Router;
-  const initialState: State = {
-    authorization: { authenticated: null, loaded: false, loading: false },
-    router: { state: null, navigationId: null },
-    application: {
-      current: {
-        info: null,
-        branding: null,
-        loading: false,
-      },
-      search: {
-        data: null,
-        loading: false,
-      },
-      types: {
-        data: null,
-        loading: false,
-      },
-      path: {
-        data: null,
-        loading: false,
-      },
-      preview: {
-        branding: null,
-        loading: false,
-      },
-    },
-    content: {
-      groups: {
-        loading: false,
-        items: null,
-      },
-      group: {
-        loading: false,
-        data: null,
-      },
-      content: {
-        loading: false,
-        data: null,
-      },
-      record: {
-        loading: false,
-        error: null,
-      },
-      action: {
-        loading: false,
-        error: null,
-      },
-      contentGroup: {
-        loading: false,
-        error: null,
-      },
-    },
-    report: {
-      audit: {
-        loading: false,
-        items: null,
-        filters: null,
-        sort: null,
-      },
-    },
-    resetPassword: {
-      resetPassword: {
-        loading: false,
-        error: null,
-      },
-    },
-    culture: {
-      availableCultures: ['en-US'],
-      currentCulture: 'en-US'
-    },
-    user: {
-      users: {
-        loading: false,
-        items: null,
-        error: null,
-      },
-      user: {
-        loading: false,
-        data: null,
-        error: null,
-      },
-      roles: {
-        loading: false,
-        items: null,
-        error: null,
-        selected: {
-          loading: true,
-        },
-      },
-    },
-  };
+  const initialState: State = TestInitialState;
 
   const routes: Routes = [
     {
@@ -132,7 +42,7 @@ describe('AuthLayoutComponent', () => {
             {
               path: 'b',
               component: PageNotFoundComponent,
-              data: {hideLanguageSelector:true}
+              data: {hideLanguageSelector: true}
             },
             {
               path: 'c',
@@ -162,8 +72,8 @@ describe('AuthLayoutComponent', () => {
 
     store = TestBed.get(Store);
     router = TestBed.get(Router);
-    let appConfig = TestBed.get(AppConfigService);
-    spyOnProperty(appConfig, 'config', 'get').and.returnValue({})
+    const appConfig = TestBed.get(AppConfigService);
+    spyOnProperty(appConfig, 'config', 'get').and.returnValue({});
     spyOn(store, 'dispatch').and.callThrough();
     fixture = TestBed.createComponent(AuthLayoutComponent);
     component = fixture.componentInstance;
@@ -176,14 +86,14 @@ describe('AuthLayoutComponent', () => {
   });
 
   it('language selector should be hidden', (done) => {
-    router.navigate(["/a/b"]).then(() => {
+    router.navigate(['/a/b']).then(() => {
       expect(component.hideLanguageSelector).toBe(true);
       done();
     });
   });
 
   it('language selector should be shown', (done) => {
-    router.navigate(["/a/c"]).then(() => {
+    router.navigate(['/a/c']).then(() => {
       expect(component.hideLanguageSelector).toBe(false);
       done();
     });
