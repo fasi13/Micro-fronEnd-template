@@ -107,7 +107,7 @@ describe('FieldHtmlComponent', () => {
 
   it('should call on editorReady', () => {
       component._editor = {editor:{on: function(){}}};
-      expect(component.editorReady(component.editor));
+      expect(component.editorReady(component.editor)).toBe(true);
   });
 
 
@@ -116,8 +116,8 @@ describe('FieldHtmlComponent', () => {
     component._editor = {editor : {mode : 'source', setData : function(html){}, getData: function(){
       return html2;
     }, on :  function(){}} , insertHtml: function(){}};
-    const xy = [{ id: 1, name: 'Website branding', value: [{ id: 2, name: 'image2' }] }];
-    expect(component.imageaction(component._editor, xy));
+    const cGroup = [{ id: 1, name: 'Website branding', value: [{ id: 2, name: 'image2' }] }];
+    expect(component.imageaction(component._editor, cGroup)).toBe(true);
   });
 
   it('should open modal', () => {
@@ -126,7 +126,7 @@ describe('FieldHtmlComponent', () => {
     spyOn(modalService, 'open').and.returnValue(mockModalRef);
     mockModalRef.result = new Promise((resolve, reject) => resolve(modalResult));
     component.imageevent(component._editor);
-    expect(modalService.open);
+    expect(modalService.open).toHaveBeenCalled();
   });
 
   it('should call on keyup', () => {
@@ -135,7 +135,7 @@ describe('FieldHtmlComponent', () => {
       return html3;
     }, on :  function(){}} , insertHtml: function(){}};
     component.config.name = 'htmlValue';
-    expect(component.onkeyup()) ;
+    expect(component.onkeyup()).toEqual('source') ;
   });
 
   afterEach(() => {
