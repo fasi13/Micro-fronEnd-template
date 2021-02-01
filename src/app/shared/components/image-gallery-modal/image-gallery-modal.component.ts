@@ -12,10 +12,10 @@ import { ContentGroup, getGroups, State } from '@forge/core';
 })
 export class ImageGalleryModalComponent implements OnInit {
   images: any;
-  conentGroups: ContentGroup[];
-  currentConentGroup: ContentGroup;
+  contentGroups: ContentGroup[];
+  currentContentGroup: ContentGroup;
   selectedImage: any;
-  selectedConentGroup = [];
+  selectedContentGroup = [];
   applicationId: string | number;
   isLoading: boolean;
 
@@ -34,24 +34,26 @@ export class ImageGalleryModalComponent implements OnInit {
   onLoad() {
 
     this.store.select(getGroups).subscribe((groups) => {
-      this.conentGroups = [...groups];
-      this.conentGroups.sort((t1: ContentGroup, t2: ContentGroup) => {
+      this.contentGroups = [...groups];
+      this.contentGroups.sort((t1: ContentGroup, t2: ContentGroup) => {
         return t1.name < t2.name ? -1 : t1.name > t2.name ? -1 : 0;
       });
     });
 
     this.store.select(getGroup).subscribe((group) => {
       this.isLoading = false;
-      this.currentConentGroup = group;
+      this.currentContentGroup = group;
       this.selectedImage = null;
-      this.images = group.content.filter((y) => y.dataType.name === 'Image');
+      if(group && group.content) this.images = group.content.filter((y) => y.dataType.name === 'Image');
     });
+    return this.contentGroups;
   }
 
   onContentClick(item: ContentGroup) {
     this.isLoading = true;
-    this.currentConentGroup = item;
+    this.currentContentGroup = item;
     this.store.dispatch(new FetchContentGroup(item.id));
+    return this.isLoading;
   }
 
   onImageSelection(image) {
@@ -60,9 +62,9 @@ export class ImageGalleryModalComponent implements OnInit {
     this.images.forEach((img) => {
       img.active = img === image ? !image.active : false;
     });
-    if (this.selectedConentGroup.length > 0) {
-      const conentGroupSelected = this.selectedConentGroup.find(
-        (x) => x.id === this.currentConentGroup.id
+    if (this.selectedContentGroup.length > 0) {
+      const conentGroupSelected = this.selectedContentGroup.find(
+        (x) => x.id === this.currentContentGroup.id
       );
       if (conentGroupSelected != null) {
         const conentGroupImageSelected = conentGroupSelected.value.find(
@@ -71,28 +73,29 @@ export class ImageGalleryModalComponent implements OnInit {
         if (!conentGroupImageSelected) {
           return conentGroupSelected.value.push(image);
         } else {
+          if (conentGroupSelected.value)
           return conentGroupSelected.value.pop(conentGroupImageSelected);
         }
       } else {
         const conentGroup = new ContentGroupModelGallery();
-        conentGroup.id = +this.currentConentGroup.id;
-        conentGroup.name = this.currentConentGroup.name;
+        conentGroup.id = +this.currentContentGroup.id;
+        conentGroup.name = this.currentContentGroup.name;
         conentGroup.value = [];
         conentGroup.value.push(image);
-        return this.selectedConentGroup.push(conentGroup);
+        return this.selectedContentGroup.push(conentGroup);
       }
     } else {
       const conentGroup = new ContentGroupModelGallery();
-      conentGroup.id = +this.currentConentGroup.id;
-      conentGroup.name = this.currentConentGroup.name;
+      conentGroup.id = +this.currentContentGroup.id;
+      conentGroup.name = this.currentContentGroup.name;
       conentGroup.value = [];
       conentGroup.value.push(image);
-      return this.selectedConentGroup.push(conentGroup);
+      return this.selectedContentGroup.push(conentGroup);
     }
   }
   handleCancel(isSave): void {
     if (isSave) {
-      this.activeModal.close(this.selectedConentGroup);
+      this.activeModal.close(this.selectedContentGroup);
     } else {
       this.activeModal.close();
     }
