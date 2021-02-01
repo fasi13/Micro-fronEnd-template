@@ -73,8 +73,9 @@ export class ImageGalleryModalComponent implements OnInit {
         if (!conentGroupImageSelected) {
           return conentGroupSelected.value.push(image);
         } else {
-          if (conentGroupSelected.value)
+          if(conentGroupSelected.value) {
           return conentGroupSelected.value.pop(conentGroupImageSelected);
+          }
         }
       } else {
         const conentGroup = new ContentGroupModelGallery();
