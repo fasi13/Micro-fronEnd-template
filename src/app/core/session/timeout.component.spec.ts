@@ -10,7 +10,7 @@ import {
   HttpClientTestingModule,
 } from '@angular/common/http/testing';
 
-fdescribe('TimeoutComponent', () => {
+describe('TimeoutComponent', () => {
   let timeoutService: TimeoutService;
   let timeoutComponent: TimeoutComponent;
   let modalService: FgeModalService;
