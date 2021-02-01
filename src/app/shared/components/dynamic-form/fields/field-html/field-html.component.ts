@@ -102,7 +102,9 @@ export class FieldHtmlComponent extends FormField implements OnInit {
       /* istanbul ignore next */
     componentInstance.forEach(element => {
       element.value.forEach(item => {
+        if(editor.insertHtml) {
         editor.insertHtml(`[Content(group="${element.name}" name="${item.name}")]`);
+        }
       });
     });
   }
