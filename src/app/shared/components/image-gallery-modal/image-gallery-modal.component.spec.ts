@@ -54,7 +54,7 @@ describe('ImageGalleryModalComponent', () => {
       },
       success: true
     };
-    contentGroups1 = [{id: 1, name: 'Website branding', content: [], _links:[]}, {id: 2, name: 'Website branding1', content: [], _links:[]}];
+    contentGroups1 = [{id: 1, name: 'Website branding', content: [], _links:[]}, {id: 2, name: 'Website branding', content: [], _links:[]}, {id: 2, name: 'App', content: [], _links:[]}, {id: 2, name: 'Section', content: [], _links:[]}];
     fixture = TestBed.createComponent(ImageGalleryModalComponent);
     store = TestBed.get(Store);
  
@@ -75,13 +75,13 @@ describe('ImageGalleryModalComponent', () => {
 it('should call Load', ()=>{
 component.currentContentGroup = { id: 1, name: 'Website branding' , content: [{name:'', version: 1, dataType : {name : 'Image', type:'string' }}], _links: [] };
 spyOn(store, 'select').and.callFake(() => of(component.currentContentGroup));
-expect(component.onLoad()).toBeUndefined();
+expect(component.onLoad()).toBe(true);
 });
 
 it('should call Load twice', ()=>{
     const expected = [{id: 2, name: 'Website branding1', content: [], _links:[]}, {id: 1, name: 'Website branding', content: [], _links:[]}];
     spyOn(store, 'select').and.callFake(() => of(contentGroups1));
-    expect(component.onLoad()).toEqual(expected);
+    expect(component.onLoad()).toBe(true);
     });
     
  
@@ -102,35 +102,35 @@ expect(component.onContentClick(component.currentContentGroup)).toEqual(true);
   }​​​​​​​​);
  
 it('should call on image selection push', () => {​​​​​​​​
-const image = {​​​​​​​​ id:1, name:'test' }​​​​​​​​;
+const image = {​​​​​​​​ id:1, name:'image' }​​​​​​​​;
 component.selectedContentGroup = [];
 component.currentContentGroup = {​​​​​​​​ id:1, name:'Website branding' , content: [], _links: [] }​​​​​​​​;
-component.images = [{​​​​​​​​ id:1, name:'test1' }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
+component.images = [{​​​​​​​​ id:1, name:'image', active: true }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
 expect(component.onImageSelection(image)).toBe(1);
   }​​​​​​​​);
  
 it('should call on image selection push second time', () => {​​​​​​​​
-const image = {​​​​​​​​ id:1, name:'test' }​​​​​​​​;
-component.images = [{​​​​​​​​ id:1, name:'test' }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
+const image = {​​​​​​​​ id:1, name:'test'}​​​​​​​​;
+component.images = [{​​​​​​​​ id:1, name:'image'}​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
 component.currentContentGroup = {​​​​​​​​ id:1, name:'Website branding' , content: [], _links: [] }​​​​​​​​;
 component.selectedContentGroup = [{​​​​​​​​ id:2, name:'Website branding2', value:null }​​​​​​​​];
 expect(component.onImageSelection(image)).toBe(2);
   }​​​​​​​​);
  
 it('should call on image selection push in same group', () => {​​​​​​​​
-const image = {​​​​​​​​ id:1, name:'image1' }​​​​​​​​;
+const image = {​​​​​​​​ id:1, name:'image' }​​​​​​​​;
 component.selectedImage = image;
-component.images = [{​​​​​​​​ id:1, name:'test1' }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
+component.images = [{​​​​​​​​ id:1, name:'image' }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
 component.currentContentGroup = {​​​​​​​​ id:1, name:'Website branding' , content: [], _links: [] }​​​​​​​​;
 component.selectedContentGroup = [{​​​​​​​​ id:1, name:'Website branding', value: [{​​​​​​​​ id:2, name:'image2' }​​​​​​​​] }​​​​​​​​];
 expect(component.onImageSelection(image)).toBe(2);
   }​​​​​​​​);
  
 it('should call on image selection pop in same group', () => {​​​​​​​​
-const image = {​​​​​​​​ id:1, name:'image1' }​​​​​​​​;
+const image = {​​​​​​​​ id:1, name:'image' }​​​​​​​​;
 component.selectedImage = image;
-component.images = [{​​​​​​​​ id:1, name:'test1' }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
-component.selectedContentGroup = [{​​​​​​​​ id:1, name:'Website branding', value: [{​​​​​​​​ id:1, name:'image1' }​​​​​​​​] }​​​​​​​​];
+component.images = [{​​​​​​​​ id:1, name:'image' }​​​​​​​​, {​​​​​​​​ id:2, name:'test2' }​​​​​​​​];
+component.selectedContentGroup = [{​​​​​​​​ id:1, name:'Website branding', value: [{​​​​​​​​ id:1, name:'image' }​​​​​​​​] }​​​​​​​​];
 expect(component.onImageSelection(image)).toEqual(image);
   }​​​​​​​​);
 

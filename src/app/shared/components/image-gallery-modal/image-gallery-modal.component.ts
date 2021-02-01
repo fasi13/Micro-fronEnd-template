@@ -46,7 +46,7 @@ export class ImageGalleryModalComponent implements OnInit {
       this.selectedImage = null;
       if(group && group.content) this.images = group.content.filter((y) => y.dataType.name === 'Image');
     });
-    return this.contentGroups;
+    return true;
   }
 
   onContentClick(item: ContentGroup) {
@@ -60,7 +60,7 @@ export class ImageGalleryModalComponent implements OnInit {
     this.selectedImage = image;
 
     this.images.forEach((img) => {
-      img.active = img === image ? !image.active : false;
+      img.active = (img.id === image.id) ? !img.active : false;
     });
     if (this.selectedContentGroup.length > 0) {
       const conentGroupSelected = this.selectedContentGroup.find(
@@ -73,9 +73,7 @@ export class ImageGalleryModalComponent implements OnInit {
         if (!conentGroupImageSelected) {
           return conentGroupSelected.value.push(image);
         } else {
-          if(conentGroupSelected.value) {
           return conentGroupSelected.value.pop(conentGroupImageSelected);
-          }
         }
       } else {
         const conentGroup = new ContentGroupModelGallery();
