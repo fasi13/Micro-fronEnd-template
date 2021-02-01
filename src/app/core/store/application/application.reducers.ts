@@ -290,7 +290,7 @@ export const isLoadingDataTypes = (state: ApplicationState) => state.types.loadi
  * @param {State} state
  * @returns {DataType[]}
  */
-export const getDataTypes = (state: ApplicationState) => state.types.data;
+export const getDataTypes = (state: ApplicationState) => state.types.data.filter(x => x.name != "Email");
 
 /**
  * Returns the current application path.

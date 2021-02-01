@@ -32,6 +32,7 @@
       <thead class="fge-table__header">
         <tr>
           <th scope="col fge-table__col">Name</th>
+          <th scope="col fge-table__col">Type</th>
           <th scope="col fge-table__col">Description</th>
           <th scope="col fge-table__col">Status</th>
           <th scope="col fge-table__col">Publish Date</th>
@@ -41,11 +42,12 @@
       <tbody>
         <tr *ngFor="let content of contentsAsList">
           <td>{{ content?.name }}</td>
+          <td>{{ content?.dataType?.name }}</td>
           <td>{{ content?.description }}</td>
           <td>{{ content?.status }}</td>
           <td>{{ content?.publishDate | date:'medium' }}</td>
           <td>
-            <a
+            <a *ngIf="content?.dataType?.name != 'Email'"
               tabindex="0"
               (click)="goToContentEdit(content?.id)"
               class="btn btn-secondary bg-secondary btn-sm mr-2">
