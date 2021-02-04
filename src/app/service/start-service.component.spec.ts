@@ -6,7 +6,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { serviceMatcherFunction, ServiceModule } from './service.module';
 import { StartServiceComponent } from './start-service.component';
 
-fdescribe('StartServiceComponent', () => {
+describe('StartServiceComponent', () => {
   let fixture: ComponentFixture<StartServiceComponent>;
   let component: StartServiceComponent;
   let router: Router;
