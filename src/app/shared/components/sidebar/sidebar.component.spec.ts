@@ -44,7 +44,7 @@ describe('SidebarComponent', () => {
     let calledRoute = null;
     spyOn(fgeRouter, 'navigate').and.callFake((route) => calledRoute = route);
     component.goToService('communication');
-    expect(calledRoute).toBe('service/start/communication');
+    expect(calledRoute).toBe('service/start/communication/');
   });
 
   afterEach(() => {
