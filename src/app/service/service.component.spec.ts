@@ -3,7 +3,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { AppConfigService, IAppConfig } from '../app-config.service';
+import { State, TestInitialState } from '../core/store/store.reducers';
 import { ServiceComponent } from './service.component';
 
 describe('ServiceComponent', () => {
@@ -11,10 +13,11 @@ describe('ServiceComponent', () => {
   let component: ServiceComponent;
   let appConfigService: AppConfigService;
   let dummyConfig: IAppConfig;
+  const initialState: State = TestInitialState;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [],
+      providers: [provideMockStore({ initialState })],
       declarations: [ServiceComponent],
       imports: [RouterTestingModule.withRoutes([]), HttpClientTestingModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -64,7 +64,7 @@ export class SidebarComponent implements OnInit {
   }
 
   goToService(id): void {
-    this.fgeRouter.navigate(`service/${id}`);
+    this.fgeRouter.navigate(`service/start/${id}/`);
   }
 
   goToCampaings(): void {
