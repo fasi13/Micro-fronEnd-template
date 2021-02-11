@@ -1,10 +1,10 @@
 <div class="fge-content-image-gallery">
   <div class="image-container">
     <div class="content-panel">
-      <h5 *ngIf="conentGroups && conentGroups.length">Content Group</h5>
+      <h5 *ngIf="contentGroups && contentGroups.length">Content Group</h5>
       <div
-        *ngFor="let item of conentGroups"
-        [ngClass]="{ active: item.id === currentConentGroup.id, disableClick: isLoading }"
+        *ngFor="let item of contentGroups"
+        [ngClass]="{ active: item.id === currentContentGroup.id, disableClick: isLoading }"
       >
         <span (click)="onContentClick(item)">{{ item.name }}</span>
       </div>
