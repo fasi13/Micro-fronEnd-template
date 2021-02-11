@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,7 @@ export class ServiceRolesGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.getFromStoreOrAPI()
       .pipe(
-        switchMap(() => of(true)),
-        catchError(() => of(false))
+        switchMap(() => of(true))
       );
   }
 
