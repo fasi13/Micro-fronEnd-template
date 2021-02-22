@@ -1,6 +1,6 @@
 import { ContentVersion } from './../../../core/models/content/content-version';
 import { VersionHistoryModalComponent } from './../version-history-modal/version-history-modal.component';
-import { Component, OnInit, OnDestroy, Input, ViewChild, EventEmitter, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, EventEmitter, NgZone, Pipe, PipeTransform } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -37,8 +37,6 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   @ViewChild('confirmModal') confirmModal: ModalConfirmComponent;
   @ViewChild('copyConfirmModal') copyConfirmModal: ModalConfirmComponent;
 
-
-  linkActions: Link[];
   configConfirmModal: ModalConfirmConfig;
   e2eContentEditorConfig: ContentEditorConfiguration;
   save = new EventEmitter<ContentEditorSaveActionEvent>();
@@ -68,7 +66,6 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
         this.groupId = params['groupId'];
         this.e2eContentEditorConfig = this.contentEditorConfigurationService.get(this.applicationId)
       });
-    this.filterActionTypes();
   }
 
  onSave(event: {detail:ContentEditorOnSaveEvent}) {
@@ -161,11 +158,6 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
       });
   }
 
-  private filterActionTypes() {
-    const relsToShow = ['updateContentDescription', 'inheritContentValue', 'clearContentValue'];
-    this.linkActions = this.contentData._links.filter((link: Link) => _includes(relsToShow, link.rel));
-  }
-
   private openContentEditorModal(dataType: string, fieldToEdit: string, link: Link): void {
     this.modalRef = this.modalService.open(ContentEditorModalComponent);
     this.modalRef.componentInstance.content = this.contentData;
@@ -187,4 +179,18 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     }
   }
 
+}
+
+@Pipe({
+  name: 'showLink',
+  pure: false
+})
+export class ShowLinkPipe implements PipeTransform {
+  relsToShow = ['updateContentDescription', 'inheritContentValue', 'clearContentValue'];
+  transform(items: Link[]): Link[] {
+      if (!items) {
+          return items;
+      }
+      return items.filter((link: Link) => _includes(this.relsToShow, link.rel));
+  }
 }

@@ -20,14 +20,14 @@
   </div>
 
   <div class="col-2 pt-1">
-    <button type="button" *ngIf="linkActions?.length > 0"
+    <button type="button" *ngIf="(contentData._links | showLink).length > 0"
       class="btn btn-link" placement="right"
       [autoClose]="true" [ngbPopover]="popContent">
       <span class="fas fa-comment-dots fa-lg text-secondary"></span>
     </button>
   </div>
   <ng-template #popContent>
-    <div *ngFor="let link of linkActions; last as isLast">
+    <div *ngFor="let link of contentData._links | showLink; last as isLast">
       <button class="btn-sm dropdown-item fge-clickable" type="button"
         (click)="handleActions(link)">
         {{link.rel === 'updateContentDescription' ? contentData.description : link.name}}

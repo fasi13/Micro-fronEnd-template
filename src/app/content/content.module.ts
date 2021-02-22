@@ -17,7 +17,7 @@ import { GroupFormModalComponent } from './shared/group-form-modal/group-form-mo
 import { ContentFormModalComponent } from './shared/content-form-modal/content-form-modal.component';
 import { ContentEditorModalComponent } from './shared/content-editor-modal/content-editor-modal.component';
 import { SharedModule } from '../shared/shared.module';
-import { ContentInlineEditorComponent } from './shared/content-inline-editor/content-inline-editor.component';
+import { ContentInlineEditorComponent, ShowLinkPipe } from './shared/content-inline-editor/content-inline-editor.component';
 import { ContentHtmlEditorComponent } from './content-html-editor/content-html-editor.component';
 import { GroupNotFoundComponent } from './content-error-pages/group-not-found/group-not-found.component';
 import { GroupsListingGuard } from './_guards/groups-listing.guard';
@@ -74,7 +74,8 @@ const routes: Routes = [
     ContentHtmlEditorComponent,
     ContentInlineEditorComponent,
     GroupNotFoundComponent,
-    VersionHistoryModalComponent
+    VersionHistoryModalComponent,
+    ShowLinkPipe
   ],
   entryComponents: [
     ContentFormModalComponent,
