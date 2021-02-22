@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { GroupsListingComponent } from './groups-listing/groups-listing.component';
@@ -80,6 +80,7 @@ const routes: Routes = [
     ContentFormModalComponent,
     ContentEditorModalComponent,
     VersionHistoryModalComponent
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class ContentModule { }

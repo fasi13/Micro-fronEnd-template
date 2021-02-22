@@ -82,6 +82,30 @@ export const dataTypes: ContentDataType = {
       },
     }
   },
+  'Number':   {
+    type: 'number',
+    label: 'Value',
+    name: 'numberValue',
+    options: [],
+    placeholder: 'Enter value',
+    value: '',
+    validation: {
+      required: {
+        errorMsg: 'Number Value is required',
+        validator: Validators.required
+      },
+    }
+  },
+  'Checkbox':   {
+    type: 'checkbox',
+    label: 'Value',
+    name: 'checkboxValue',
+    options: [],
+    placeholder: '',
+    value: '',
+    validation: {
+    }
+  },
   'HTML': {
     type: 'html',
     label: 'Value',

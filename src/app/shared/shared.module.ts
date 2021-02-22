@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
@@ -18,7 +18,6 @@ import { FieldSelectComponent } from './components/dynamic-form/fields/field-sel
 import { FieldImageComponent } from './components/dynamic-form/fields/field-image/field-image.component';
 import { FieldDocumentComponent } from './components/dynamic-form/fields/field-document/field-document.component';
 import { FieldColorComponent } from './components/dynamic-form/fields/field-color/field-color.component';
-import { FieldHtmlComponent } from './components/dynamic-form/fields/field-html/field-html.component';
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { NavigationTreeComponent } from './components/navigation-tree/navigation-tree.component';
 import { HighlightSearchDirective } from './components/search-application/highlight-search.directive';
@@ -34,7 +33,7 @@ import {
   ApplicationGroupFormModalComponent
 } from './components/navigation-tree/application-group-form-modal/application-group-form-modal.component';
 import { ApplicationPathPipe } from './pipes/application-path.pipe';
-import { ImageGalleryModalComponent } from './components/image-gallery-modal/image-gallery-modal.component';
+import { FieldContentEditorComponent } from './components/dynamic-form/fields/field-content-editor/field-content-editor.component';
 
 @NgModule({
   imports: [
@@ -59,11 +58,11 @@ import { ImageGalleryModalComponent } from './components/image-gallery-modal/ima
     DynamicInlineFormComponent,
     FieldButtonComponent,
     FieldTextComponent,
+    FieldContentEditorComponent,
     FieldSelectComponent,
     FieldImageComponent,
     FieldDocumentComponent,
     FieldColorComponent,
-    FieldHtmlComponent,
     BreadCrumbComponent,
     NavigationTreeComponent,
     FieldPasswordComponent,
@@ -73,10 +72,7 @@ import { ImageGalleryModalComponent } from './components/image-gallery-modal/ima
     ComingSoonComponent,
     ApplicationFormModalComponent,
     ApplicationGroupFormModalComponent,
-
     ApplicationPathPipe,
-
-    ImageGalleryModalComponent
   ],
   exports: [
     FormsModule,
@@ -96,14 +92,14 @@ import { ImageGalleryModalComponent } from './components/image-gallery-modal/ima
   entryComponents: [
     FieldButtonComponent,
     FieldTextComponent,
+    FieldContentEditorComponent,
     FieldSelectComponent,
     FieldImageComponent,
     FieldDocumentComponent,
     FieldColorComponent,
     FieldPasswordComponent,
-    FieldToggleButtonComponent,
-    FieldHtmlComponent,
-ImageGalleryModalComponent
-  ]
+    FieldToggleButtonComponent
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedModule { }

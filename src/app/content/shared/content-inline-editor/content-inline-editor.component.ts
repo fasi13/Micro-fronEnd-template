@@ -1,6 +1,6 @@
 import { ContentVersion } from './../../../core/models/content/content-version';
 import { VersionHistoryModalComponent } from './../version-history-modal/version-history-modal.component';
-import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, EventEmitter, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,24 +9,22 @@ import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
 import _find from 'lodash/find';
 import _includes from 'lodash/includes';
-
-import { Observable, Subscription, Subject } from 'rxjs';
-import { takeUntil, takeWhile } from 'rxjs/operators';
-
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import {
   State,
   LinkContentAction,
   getContentActionState,
   ApplicationContent,
-  getDataTypes,
-  DataType,
   Link,
   FgeModalService
 } from '@forge/core';
-import { FieldConfig, ModalConfirmComponent, DynamicInlineFormComponent } from '@forge/shared';
+import { FieldConfig, ModalConfirmComponent } from '@forge/shared';
 import { dataTypes } from '../content-form-modal/content-data-types.config';
 import { ContentEditorModalComponent } from '../content-editor-modal/content-editor-modal.component';
 import { ModalConfirmConfig } from '../../../shared/components/modal-confirm/modal-confirm.model';
+import { ContentEditorConfigurationService } from 'src/app/core/services/content-editor-configuration.service';
+import { ContentEditorConfiguration, ContentEditorOnSaveEvent, ContentEditorSaveActionEvent, ContentEditorSetValueActionEvent } from '@e2e/content-management-components'
 
 @Component({
   selector: 'fge-content-inline-editor',
@@ -36,19 +34,20 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
   @Input() contentData: ApplicationContent;
   @Input() config: FieldConfig;
-  @ViewChild(DynamicInlineFormComponent) form: DynamicInlineFormComponent;
   @ViewChild('confirmModal') confirmModal: ModalConfirmComponent;
   @ViewChild('copyConfirmModal') copyConfirmModal: ModalConfirmComponent;
 
 
   linkActions: Link[];
   configConfirmModal: ModalConfirmConfig;
+  e2eContentEditorConfig: ContentEditorConfiguration;
+  save = new EventEmitter<ContentEditorSaveActionEvent>();
+  setValue = new EventEmitter<ContentEditorSetValueActionEvent>();
 
   private routeParamsSubscription: Subscription;
   private applicationId: string;
   private groupId: string;
   private unsubscribeEdition = new Subject();
-  private isAliveComponent = true;
   private modalRef: NgbModalRef;
   private currentLink: Link;
 
@@ -57,7 +56,9 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private notifierService: NotifierService,
     private modalService: NgbModal,
-    private fgeModalService: FgeModalService
+    private fgeModalService: FgeModalService,
+    private contentEditorConfigurationService: ContentEditorConfigurationService,
+    private zone: NgZone,
   ) { }
 
   ngOnInit() {
@@ -65,22 +66,22 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.applicationId = params['tenantId'];
         this.groupId = params['groupId'];
+        this.e2eContentEditorConfig = this.contentEditorConfigurationService.get(this.applicationId)
       });
-    if (this.config.type === 'image' || this.config.type === 'document') {
-      this.config.src = this.contentData.value;
-      const fieldSource = this.config.src.split('/');
-      this.config.filename = fieldSource[fieldSource.length - 1];
-    } else {
-      this.config.value = this.contentData.value;
-    }
-    if (this.config.type === 'select') {
-      this.handleDataTypes(this.store.select(getDataTypes));
-    }
     this.filterActionTypes();
   }
 
+ onSave(event: {detail:ContentEditorOnSaveEvent}) {
+    var component = this;
+    event.detail.promise.then(function(success) {
+      if (!success) return;
+      component.zone.run(() => {
+        component.notifierService.notify('success', `The content "${component.contentData.name}" has been updated successfully`);
+      });
+    });
+  }
+
   ngOnDestroy() {
-    this.isAliveComponent = false;
     this.routeParamsSubscription.unsubscribe();
     this.unsubscribeEdition.complete();
   }
@@ -92,15 +93,6 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
       this.currentLink = link;
       this.openModalConfirm();
     }
-  }
-
-  handleSubmit({ value: formData, success, error}): void {
-
-    let value = formData[this.config.name];
-    if (this.config.type === 'image' || this.config.type === 'document') {
-      value = this.form.form.controls[this.config.name]['fileValue']['formattedValue'];
-    }
-   this.updateContentValue(value, success, error);
   }
 
   onSubmitConfirmModal() {
@@ -120,73 +112,27 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
   openVersionHistory(): void {
     this.modalRef = this.modalService.open(VersionHistoryModalComponent, { windowClass: 'modal-content-form' });
     this.modalRef.componentInstance.contentData = this.contentData;
-
-    this.modalRef.componentInstance.form = this.form.form;
     this.modalRef.componentInstance.config = this.config;
     this.fgeModalService.registerModal(this.modalRef);
     this.modalRef.result.then((contentVersion: ContentVersion) => {
     if (!contentVersion) {return; }
-
-    if (this.form.form.value[this.config.name] && this.form.form.value[this.config.name] !== this.contentData.value) {
-        this.configConfirmModal = {
-          title: 'Copy confirmation',
-          message: 'Are you sure you want to copy the content? Your unsaved changes will be overridden.',
-          submitLabel: 'Accept',
-          cancelLabel: 'Cancel',
-        };
-        this.copyConfirmModal.onsubmit.subscribe(() => {
-      this.updateFormValue(contentVersion.value);
-        this.copyConfirmModal.close();
-        });
-        this.copyConfirmModal.open();
-    } else {
-      this.updateFormValue(contentVersion.value);
-    }
-
-    });
-  }
-
-  private updateFormValue(value: string) {
-    if (this.contentData.dataType.type === 'File') {
-//
       this.configConfirmModal = {
         title: 'Copy confirmation',
-        message: 'This will create a new version with the selected value from the history. No file will be uploaded.',
+        message: 'Are you sure you want to copy the content? Your unsaved changes will be overridden.',
         submitLabel: 'Accept',
         cancelLabel: 'Cancel',
       };
       this.copyConfirmModal.onsubmit.subscribe(() => {
-        this.updateContentValue(value, () => {}, () => {});
-      this.copyConfirmModal.close();
+        this.updateFormValue(contentVersion.value);
+        this.copyConfirmModal.close();
       });
       this.copyConfirmModal.open();
-
-    } else {
-      this.form.form.patchValue({[this.form.config.name]: value});
-    }
-  }
-private updateContentValue(value: string , success: any, error: any) {
-  const link: Link = _find(this.contentData._links, ['rel', 'updateContentValue']);
-  if (link) {
-    this.dispatchContentAction(link, { value });
-    this.store.select(getContentActionState)
-      .pipe(takeUntil(this.unsubscribeEdition))
-      .subscribe((editState) => {
-        const { error: errorData, loading } = editState;
-        if (errorData) {
-          const errors = Object.values(errorData.error.fields);
-          this.notifierService.notify('error', `There was an error updating the content "${this.config.label}"`);
-          this.unsubscribeEdition.next();
-          error(errors);
-        } else if (!loading) {
-          this.notifierService.notify('success', `The content "${this.config.label}" has been updated successfully`);
-          this.unsubscribeEdition.next();
-          success();
-        }
-      });
+    });
   }
 
-}
+  private updateFormValue(value: string) {
+      this.setValue.emit({value:value});
+  }
   private dispatchContentAction(link: Link, payload: any) {
 
     const contentPayload = payload;
@@ -213,16 +159,6 @@ private updateContentValue(value: string , success: any, error: any) {
           this.unsubscribeEdition.next();
         }
       });
-  }
-
-  private handleDataTypes(dataTypes$: Observable<DataType[]>) {
-    dataTypes$.pipe(takeWhile(() => this.isAliveComponent))
-    .subscribe((types: DataType[]) => {
-      if (types) {
-        const appDataType = types.find((dataType: DataType) => dataType.name === 'Logo Display');
-        this.config.options = appDataType.values;
-      }
-    });
   }
 
   private filterActionTypes() {

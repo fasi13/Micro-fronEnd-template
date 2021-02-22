@@ -41,9 +41,9 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
   loading$: Observable<boolean> | boolean;
   currentContent: ApplicationContent;
   configConfirmModal: ModalConfirmConfig;
+  applicationId: string;
 
   private routeParamsSubscription: Subscription;
-  private applicationId: string;
   private groupId: string;
   private isAliveComponent = true;
   private unsubscribeEditor = new Subject();
@@ -125,11 +125,25 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
         takeWhile(() => this.isAliveComponent)
       )
       .subscribe((content: ApplicationContent) => {
-        if (content) {
-          this.config = _assign(_clone(dataTypes['HTML']), { label: false, value: content.value, focus: true });
-          this.currentContent = content;
-        }
+        this.setupContentConfig(content);
       });
+  }
+
+  setupContentConfig(content: ApplicationContent) {
+    if (content) {
+      let originalDataType = _assign(_clone(dataTypes['HTML']), { label: false, value: content.value, focus: true });
+      const dataType = {
+        label: 'Value',
+        type: 'contentEditor',
+        validation: {},
+        value: '',
+        name: 'textValue',
+        original: originalDataType,
+        applicationId: this.applicationId,
+      };
+      this.config = dataType;
+      this.currentContent = content;
+    }
   }
 
   handleCancel(): void {

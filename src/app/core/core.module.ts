@@ -38,6 +38,7 @@ import { ReportEffects } from './store/report';
 
 import { CultureService } from './services/culture.service';
 import { TimeoutComponent } from './session/timeout.component';
+import { ContentEditorConfigurationService } from './services/content-editor-configuration.service';
 
 @NgModule({
   imports: [
@@ -82,6 +83,7 @@ import { TimeoutComponent } from './session/timeout.component';
     FgeRouterService,
     FgeModalService,
     CultureService,
+    ContentEditorConfigurationService,
     httpInterceptorProviders
   ]
 })

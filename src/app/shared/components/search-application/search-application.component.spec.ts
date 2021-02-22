@@ -12,10 +12,8 @@ import { FocusInputDirective } from '../../directives/focus-input.directive';
 import { ApplicationPathPipe } from '../../pipes/application-path.pipe';
 import { ComingSoonComponent } from '../coming-soon/coming-soon.component';
 import { DynamicFieldDirective } from '../dynamic-form/directives';
-import { FieldHtmlComponent } from '../dynamic-form/fields/field-html/field-html.component';
 import { FieldPasswordComponent } from '../dynamic-form/fields/field-password/field-password.component';
 import { FieldToggleButtonComponent } from '../dynamic-form/fields/field-toggle-button/field-toggle-button.component';
-import { ImageGalleryModalComponent } from '../image-gallery-modal/image-gallery-modal.component';
 import { ApplicationFormModalComponent } from '../navigation-tree/application-form-modal/application-form-modal.component';
 import { ApplicationGroupFormModalComponent } from '../navigation-tree/application-group-form-modal/application-group-form-modal.component';
 import { HighlightSearchDirective } from './highlight-search.directive';
@@ -140,7 +138,6 @@ describe('SearchApplicationComponent', () => {
         FieldImageComponent,
         FieldDocumentComponent,
         FieldColorComponent,
-        FieldHtmlComponent,
         BreadCrumbComponent,
         NavigationTreeComponent,
         FieldPasswordComponent,
@@ -151,7 +148,6 @@ describe('SearchApplicationComponent', () => {
         ApplicationFormModalComponent,
         ApplicationGroupFormModalComponent,
         ApplicationPathPipe,
-        ImageGalleryModalComponent
       ],
       imports: [
         RouterTestingModule.withRoutes([]),

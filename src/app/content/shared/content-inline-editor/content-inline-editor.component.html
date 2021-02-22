@@ -1,13 +1,18 @@
 <div class="row fge-content-inline-editor">
   <div class="col-9">
-    <fge-dynamic-inline-form
-      [config]="config"
-      #form="fgeDynamicInlineForm"
-      (onsubmit)="handleSubmit($event)">
-    </fge-dynamic-inline-form>
+    <div class="row">
+      <label class="col-3 col-form-label" title="{{contentData.name}}">{{contentData.name}}</label>
+      <e2e-content-editor
+        class="col-9"
+        [content]="contentData"
+        [config]="e2eContentEditorConfig"
+        [save]="save"
+        [setValue]="setValue"
+        (onSave)="onSave($event)">
+      </e2e-content-editor>
+    </div>
   </div>
-  <div class="col-1 content-version"
-  [ngClass]="{'edited':form.value[config.name] && form.value[config.name] !== contentData.value }">
+  <div class="col-1 content-version">
   <button type="button" class="btn btn-link" (click)="openVersionHistory()">
     <span *ngIf="contentData.version == 0">Inherited</span>
     <span *ngIf="contentData.version != 0">v{{contentData.version}}</span>

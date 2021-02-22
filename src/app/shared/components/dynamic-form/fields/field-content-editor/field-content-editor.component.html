@@ -1,0 +1,17 @@
+<div
+  class="form-group row fge-dynamic-field form-input"
+  [formGroup]="group">
+  <label class="col-3 col-form-label fge-dynamic-form__label" title="{{config.label}}" *ngIf="showLabel">{{ config.label }}</label>
+  <div class="col-9" [ngClass]="{'col-9': showLabel, 'col-12': !showLabel}">
+    <e2e-content-editor #contentEditor
+      [content]="content"
+      [config]="e2eContentEditorConfig"
+      (onValueChange)="onValueChange($event)">
+    <input
+      type="text"
+      style="display: none;"
+      [formControlName]="config?.name"
+      required>
+  </e2e-content-editor>
+  </div>
+</div>

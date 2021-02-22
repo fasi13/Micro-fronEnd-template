@@ -61,11 +61,20 @@ describe('ContentHtmlEditorComponent', () => {
         ContentActionTypes.FETCH_CONTENT,
         ContentActionTypes.FETCH_CONTENT_COMPLETED,
       ].includes(a.type)).toBeTruthy());
-    });
+  });
 
-    afterEach(() => {
-      fixture.destroy();
-    });
+  it('setupContentConfig: should set config with original data', () => {
+    component.applicationId = '2';
+    component.setupContentConfig({value:'test1', name:'test1', version: 1, })
+    expect((component.config as any).applicationId).toBe(component.applicationId);
+    expect((component.config as any).original.value).toBe('test1');
+    expect((component.config as any).original.type).toBe('html');
+    expect(component.config.type).toBe('contentEditor');
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+  });
 
 });
 

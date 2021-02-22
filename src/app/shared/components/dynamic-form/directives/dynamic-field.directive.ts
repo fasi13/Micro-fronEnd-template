@@ -15,24 +15,24 @@ import { Field } from '../models/field.interface';
 import { FormField } from '../models/form-field.abstract';
 import { FieldButtonComponent } from '../fields/field-button/field-button.component';
 import { FieldTextComponent } from '../fields/field-text/field-text.component';
+import { FieldContentEditorComponent } from '../fields/field-content-editor/field-content-editor.component';
 import { FieldSelectComponent } from '../fields/field-select/field-select.component';
 import { FieldImageComponent } from '../fields/field-image/field-image.component';
 import { FieldDocumentComponent } from '../fields/field-document/field-document.component';
 import { FieldColorComponent } from '../fields/field-color/field-color.component';
 import { FieldPasswordComponent } from '../fields/field-password/field-password.component';
 import { FieldToggleButtonComponent } from '../fields/field-toggle-button/field-toggle-button.component';
-import { FieldHtmlComponent } from '../fields/field-html/field-html.component';
 
 const components: {[type: string]: Type<FormField>} = {
   button: FieldButtonComponent,
   text: FieldTextComponent,
+  contentEditor: FieldContentEditorComponent,
   select: FieldSelectComponent,
   image: FieldImageComponent,
   document: FieldDocumentComponent,
   color: FieldColorComponent,
   password: FieldPasswordComponent,
-  toggleButton: FieldToggleButtonComponent,
-  html: FieldHtmlComponent
+  toggleButton: FieldToggleButtonComponent
 };
 
 @Directive({

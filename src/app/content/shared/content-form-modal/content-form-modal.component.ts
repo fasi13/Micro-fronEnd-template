@@ -33,8 +33,8 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
   mode: 'CREATE' | 'EDIT' = 'CREATE';
   applicationInfo: Application;
   config: FieldConfig[];
+  currentType: string;
 
-  private currentType: string;
   private applicationDataTypes: DataType[];
   private dataTypes: ContentDataType;
   private unsubscribeForm = new Subject();
@@ -67,9 +67,6 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
       colorValue, logoValue, htmlValue } = formData;
     const { id: applicationId } = this.applicationInfo;
     let value = textValue || colorValue || logoValue || htmlValue;
-    if (typeStr === 'Document' || typeStr === 'Image') {
-      value = this.form.form.controls[this.config[this.config.length - 1].name]['fileValue']['formattedValue'];
-    }
     const contentPayload = {
       name,
       description,
@@ -124,15 +121,29 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
     .subscribe((applicationInfo: Application) => this.applicationInfo = applicationInfo);
   }
 
-  private switchDataType(type: string): void {
+  switchDataType(type: string): void {
+    if (type == '') return;
     if (this.currentType !== type) {
-      const dataType = _assign(this.dataTypes[type], { value: '' });
+      const originalDataType = _assign(_clone(this.dataTypes[type]), { value: '' });
+      if (originalDataType.type == 'html')  {
+        // we don't want to see html editor on the popup, so we convert it to text and already put a 2 spaces value to make it valid
+        originalDataType.type = 'text';
+        originalDataType.value = '  ';
+      }
+      const dataType = {
+        label: 'Value',
+        type: 'contentEditor',
+        validation: {},
+        value: '',
+        name: 'textValue',
+        original: originalDataType,
+        applicationId: this.applicationInfo.id
+      };
       if (this.currentType) {
         this.config[this.config.length - 1] = dataType;
       } else {
         this.config.splice(this.config.length, 0, dataType);
       }
-      this.populateOptionsFor(type, 'Logo Display');
       this.config = _clone(this.config);
       this.currentType = type;
       this.validateForm();
@@ -143,15 +154,5 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
     setTimeout(() => {
       this.form.validateAllFormFields();
     }, 0);
-  }
-
-  private populateOptionsFor(currentType: string, typeName: string): void {
-    if (currentType === typeName) {
-      const displayInputIndex = this.config.findIndex((fieldConfig: FieldConfig) => fieldConfig.label === typeName);
-      if (displayInputIndex >= 0) {
-        const appDataType = this.applicationDataTypes.find((dataType: DataType) => dataType.name === typeName);
-        this.config[displayInputIndex].options = appDataType.values;
-      }
-    }
   }
 }
