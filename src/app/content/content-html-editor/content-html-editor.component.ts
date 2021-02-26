@@ -75,36 +75,7 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
     this.routeParamsSubscription.unsubscribe();
     this.unsubscribeEditor.complete();
   }
-  openVersionHistory(): void {
 
-    this.modalRef = this.modalService.open(VersionHistoryModalComponent, { windowClass: 'modal-html-content-form' });
-    this.modalRef.componentInstance.contentData = this.currentContent;
-    this.modalRef.componentInstance.form = this.form.form;
-    this.modalRef.componentInstance.config = this.config;
-    this.fgeModalService.registerModal(this.modalRef);
-    this.modalRef.result.then((contentVersion: ContentVersion) => {
-    if (!contentVersion) {return; }
-
-    if (this.form.form.value[this.config.name] !== this.currentContent.value) {
-
-        this.configConfirmModal = {
-          title: 'Copy confirmation',
-          message: 'Are you sure you want to copy the content? Your latest changes will be overridden.',
-          submitLabel: 'Accept',
-          cancelLabel: 'Cancel',
-        };
-        this.copyConfirmModal.onsubmit.subscribe(() => {
-
-        this.form.form.patchValue({[this.config.name]: contentVersion.value});
-        this.copyConfirmModal.close();
-        });
-        this.copyConfirmModal.open();
-    } else {
-
-      this.form.form.patchValue({[this.config.name]: contentVersion.value});
-    }
-    });
-  }
   private initDispatcher({ tenantId: applicationId, groupId, contentId }: any): void {
     this.store.dispatch(new FetchContent({ applicationId, contentId }));
     this.loading$ = this.store.select(isLoadingContent);

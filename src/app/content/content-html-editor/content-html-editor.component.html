@@ -7,9 +7,6 @@
         [ngClass]="{'edited': form.value[config.name] !== currentContent.value}"
         >
 
-          <button type="button" class="btn btn-link" (click)="openVersionHistory()" *ngIf="currentContent">
-            <span>Version: {{ currentContent.version }}</span>
-          </button>
         </span>
       </span>
       </h4>

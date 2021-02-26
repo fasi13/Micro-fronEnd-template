@@ -12,12 +12,7 @@
       </e2e-content-editor>
     </div>
   </div>
-  <div class="col-1 content-version">
-  <button type="button" class="btn btn-link" (click)="openVersionHistory()">
-    <span *ngIf="contentData.version == 0">Inherited</span>
-    <span *ngIf="contentData.version != 0">v{{contentData.version}}</span>
-  </button>
-  </div>
+
 
   <div class="col-2 pt-1">
     <button type="button" *ngIf="(contentData._links | showLink).length > 0"
