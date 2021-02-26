@@ -19,13 +19,13 @@ import {
   FgeRouterService,
   ApplicationContent,
   Link,
-  FgeModalService
+
 } from '@forge/core';
 import { DynamicFormComponent, FieldConfig, ModalConfirmComponent } from '@forge/shared';
 import { dataTypes } from '../shared/content-form-modal/content-data-types.config';
-import { VersionHistoryModalComponent } from '../shared/version-history-modal/version-history-modal.component';
-import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ContentVersion } from 'src/app/core/models/content/content-version';
+
+
+
 import { ModalConfirmConfig } from 'src/app/shared/components/modal-confirm/modal-confirm.model';
 
 @Component({
@@ -47,15 +47,14 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
   private groupId: string;
   private isAliveComponent = true;
   private unsubscribeEditor = new Subject();
-  private modalRef: NgbModalRef;
+
 
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
     private fgeRouter: FgeRouterService,
     private notifierService: NotifierService,
-    private modalService: NgbModal,
-    private fgeModalService: FgeModalService
+
   ) { }
 
   ngOnInit() {
@@ -102,7 +101,7 @@ export class ContentHtmlEditorComponent implements OnInit, AfterViewInit, OnDest
 
   setupContentConfig(content: ApplicationContent) {
     if (content) {
-      let originalDataType = _assign(_clone(dataTypes['HTML']), { label: false, value: content.value, focus: true });
+      const originalDataType = _assign(_clone(dataTypes['HTML']), { label: false, value: content.value, focus: true });
       const dataType = {
         label: 'Value',
         type: 'contentEditor',
