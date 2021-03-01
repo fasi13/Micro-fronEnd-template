@@ -3,7 +3,10 @@
     width: 200px;
     word-wrap: break-word;
     white-space: normal;
-    text-align: justify;
+
+  }
+  .dropdown-item::first-letter{
+    text-transform: capitalize;
   }
   .content-version{
     padding: 5px 0 0 0;
