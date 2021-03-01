@@ -145,7 +145,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
     if (this.currentLink && this.config ) {
       this.configConfirmModal = {
         title: 'Action confirmation',
-        message: `Are you sure you want to ${this.currentLink.name.toLowerCase()} the content "${this.config.label}"?`,
+        message: `Are you sure you want to ${this.currentLink.name.toLowerCase()} for the content "${this.config.label}"?`,
         submitLabel: 'Accept',
         cancelLabel: 'Cancel'
       };
