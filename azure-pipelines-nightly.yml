@@ -1,7 +1,7 @@
 name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)
 
 # CI builds nightly
-trigger: 
+trigger:
 - none
 
 schedules:
@@ -33,7 +33,7 @@ steps:
     cliSources: '.'
     extraProperties: |
         sonar.sources=src
-        sonar.exclusions=**/node_modules/**,src/assets/**
+        sonar.exclusions=**/node_modules/**,src/assets/**,src/app/shared/components/dynamic-form/fields/field-content-editor/field-content-editor.component.ts,src/app/shared/components/dynamic-form/dynamic-form.component.ts
         sonar.tests=src
         sonar.test.inclusions=**/*.spec.ts;**/*.spec.js
         sonar.typescript.lcov.reportPaths=coverage/lcov.info
@@ -62,12 +62,12 @@ steps:
     testResultsFiles: '**/test-results.xml'
 
 - task: PublishCodeCoverageResults@1
-  inputs: 
+  inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
     failIfCoverageEmpty: true
-    
+
 - task: SonarQubeAnalyze@4
   displayName: 'SonarQube Analyze'
 
@@ -75,12 +75,12 @@ steps:
   displayName: 'SonarQube Publish'
   inputs:
     pollingTimeoutSec: '300'
-    
+
 - task: sonar-buildbreaker@8
   displayName: 'SonarQube Build Breaker'
   inputs:
     SonarQube: 'SonarQube-Rideau-PD'
-    
+
 - task: Npm@1
   displayName: 'Build Project'
   inputs:

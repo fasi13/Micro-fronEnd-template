@@ -6,7 +6,7 @@
     <e2e-content-editor #contentEditor
       [content]="content"
       [config]="e2eContentEditorConfig"
-      (onValueChange)="onValueChange($event)">
+      (onGetValue)="onGetValue($event)">
     <input
       type="text"
       style="display: none;"

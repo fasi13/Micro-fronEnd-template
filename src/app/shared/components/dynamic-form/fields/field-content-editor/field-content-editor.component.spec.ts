@@ -34,6 +34,7 @@ describe('FieldContentEditorComponent', () => {
 
     fixture = TestBed.createComponent(FieldContentEditorComponent);
     component = fixture.componentInstance;
+    component.resolveGetValue = () => {};
     component.group = new FormGroup([] as any);
     component.group.addControl('name', new FormControl('value'));
     component.config = { name: 'name', type: 'text', applicationId: 1, original: {name: 'name', type: 'text'} } as any
@@ -60,12 +61,12 @@ describe('FieldContentEditorComponent', () => {
     component.group.get('name').setValue('cool');
     expect(component.contentEditor.nativeElement.setValue).toBe(undefined);
   });
-  it('onValueChange set value if valid', () => {
-    component.onValueChange({detail:{valid:true, value:'cool2'}});
+  it('onGetValue set value if valid', () => {
+    component.onGetValue({detail:{valid:true, value:'cool2'}});
     expect(component.group.get('name').value).toBe('cool2');
   });
-  it('onValueChange don,t set value if invalid', () => {
-    component.onValueChange({detail:{valid:false, value:'cool2'}});
+  it('onGetValue don,t set value if invalid', () => {
+    component.onGetValue({detail:{valid:false, value:'cool2'}});
     expect(component.group.get('name').value).toBe('');
   });
 });
