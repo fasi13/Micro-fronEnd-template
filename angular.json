@@ -99,6 +99,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "codeCoverageExclude": [
+              "src/app/shared/components/dynamic-form/fields/field-content-editor/field-content-editor.component.ts",
+              "src/app/shared/components/dynamic-form/dynamic-form.component.ts"],
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",

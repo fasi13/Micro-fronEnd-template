@@ -48,6 +48,9 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   get currentForm() {
     return this.form;
   }
+  get lastConfig() : any {
+    return this.config[this.config.length - 1];
+  }
 
   config: FieldConfig[] = [];
 
@@ -102,6 +105,17 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   handleSubmit(event: Event) {
     event.preventDefault();
     event.stopPropagation();
+    if (!this.lastConfig.validate) {
+      this.handleSubmitInternal();
+    }
+    else {
+      this.lastConfig.validate().then(valid => {
+        if (valid) this.handleSubmitInternal();
+      });
+    }
+  }
+
+  handleSubmitInternal() {
     if (this.form.valid) {
       this.resetAsyncFlags();
       this.onsubmit.emit({
