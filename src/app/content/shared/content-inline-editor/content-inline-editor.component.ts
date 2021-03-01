@@ -1,5 +1,4 @@
-import { ContentVersion } from './../../../core/models/content/content-version';
-import { VersionHistoryModalComponent } from './../version-history-modal/version-history-modal.component';
+
 import { Component, OnInit, OnDestroy, Input, ViewChild, EventEmitter, NgZone, Pipe, PipeTransform } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +23,7 @@ import { dataTypes } from '../content-form-modal/content-data-types.config';
 import { ContentEditorModalComponent } from '../content-editor-modal/content-editor-modal.component';
 import { ModalConfirmConfig } from '../../../shared/components/modal-confirm/modal-confirm.model';
 import { ContentEditorConfigurationService } from 'src/app/core/services/content-editor-configuration.service';
-import { ContentEditorConfiguration, ContentEditorOnSaveEvent, ContentEditorSaveActionEvent, ContentEditorSetValueActionEvent } from '@e2e/content-management-components'
+import { ContentEditorConfiguration, ContentEditorOnSaveEvent, ContentEditorSaveActionEvent, ContentEditorSetValueActionEvent } from '@e2e/content-management-components';
 
 @Component({
   selector: 'fge-content-inline-editor',
@@ -64,14 +63,14 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.applicationId = params['tenantId'];
         this.groupId = params['groupId'];
-        this.e2eContentEditorConfig = this.contentEditorConfigurationService.get(this.applicationId)
+        this.e2eContentEditorConfig = this.contentEditorConfigurationService.get(this.applicationId);
       });
   }
 
- onSave(event: {detail:ContentEditorOnSaveEvent}) {
-    var component = this;
+ onSave(event: {detail: ContentEditorOnSaveEvent}) {
+    const component = this;
     event.detail.promise.then(function(success) {
-      if (!success) return;
+      if (!success) { return; }
       component.zone.run(() => {
         component.notifierService.notify('success', `The content "${component.contentData.name}" has been updated successfully`);
       });
@@ -104,31 +103,6 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
         break;
     }
     this.confirmModal.close();
-  }
-
-  openVersionHistory(): void {
-    this.modalRef = this.modalService.open(VersionHistoryModalComponent, { windowClass: 'modal-content-form' });
-    this.modalRef.componentInstance.contentData = this.contentData;
-    this.modalRef.componentInstance.config = this.config;
-    this.fgeModalService.registerModal(this.modalRef);
-    this.modalRef.result.then((contentVersion: ContentVersion) => {
-    if (!contentVersion) {return; }
-      this.configConfirmModal = {
-        title: 'Copy confirmation',
-        message: 'Are you sure you want to copy the content? Your unsaved changes will be overridden.',
-        submitLabel: 'Accept',
-        cancelLabel: 'Cancel',
-      };
-      this.copyConfirmModal.onsubmit.subscribe(() => {
-        this.updateFormValue(contentVersion.value);
-        this.copyConfirmModal.close();
-      });
-      this.copyConfirmModal.open();
-    });
-  }
-
-  private updateFormValue(value: string) {
-      this.setValue.emit({value:value});
   }
   private dispatchContentAction(link: Link, payload: any) {
 
@@ -181,6 +155,7 @@ export class ContentInlineEditorComponent implements OnInit, OnDestroy {
 
 }
 
+// tslint:disable-next-line:max-classes-per-file
 @Pipe({
   name: 'showLink',
   pure: false

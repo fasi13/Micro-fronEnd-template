@@ -16,6 +16,7 @@
 }
 
 
-.cke_contents {
-  height: calc(100vh - 250px) !important;
+.cke_reset :not(.cke_maximized) .cke_contents {
+  height: calc(100vh - 280px) !important;
+
 }
