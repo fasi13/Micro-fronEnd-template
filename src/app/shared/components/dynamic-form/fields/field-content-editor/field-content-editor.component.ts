@@ -30,7 +30,7 @@ export class FieldContentEditorComponent extends FormField implements OnInit, On
     };
     let type = originalConfig.type;
     if (type === 'color') { type = 'color picker'; }
-    debugger;
+
     this.content =  this.content || { dataType: { name: type, type: type }, name: '', version: 0, value: originalConfig.value };
     this.e2eContentEditorConfig = this.contentEditorConfigurationService.get((this.config as any).applicationId);
     this.e2eContentEditorConfig.disableSave = true;
