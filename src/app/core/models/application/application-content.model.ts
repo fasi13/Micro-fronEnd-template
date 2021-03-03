@@ -11,4 +11,5 @@ export class ApplicationContent {
   value?: string;
   _links?: Link[];
   version: number;
+  inherited?: boolean;
 }
