@@ -1,3 +1,4 @@
+import { ApplicationContent } from '@forge/core';
 import {
   Component,
   EventEmitter,
@@ -19,6 +20,7 @@ import { FieldConfig } from './models/field-config.model';
   templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
+  @Input() contentData: ApplicationContent;
   @Input()
   set fieldsConfig(newConfig) {
     this.config = _compact(newConfig);
@@ -48,7 +50,7 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   get currentForm() {
     return this.form;
   }
-  get lastConfig() : any {
+  get lastConfig(): any {
     return this.config[this.config.length - 1];
   }
 
@@ -107,10 +109,9 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
     event.stopPropagation();
     if (!this.lastConfig.validate) {
       this.handleSubmitInternal();
-    }
-    else {
+    } else {
       this.lastConfig.validate().then(valid => {
-        if (valid) this.handleSubmitInternal();
+        if (valid) { this.handleSubmitInternal(); }
       });
     }
   }
