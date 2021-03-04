@@ -19,7 +19,7 @@ describe('FieldContentEditorComponent', () => {
   });
 
   beforeEach(() => {
-    let appConfigService = TestBed.get(AppConfigService);
+    const appConfigService = TestBed.get(AppConfigService);
     const appConfig: IAppConfig = {
       apis: [
         {
@@ -37,7 +37,7 @@ describe('FieldContentEditorComponent', () => {
     component.resolveGetValue = () => {};
     component.group = new FormGroup([] as any);
     component.group.addControl('name', new FormControl('value'));
-    component.config = { name: 'name', type: 'text', applicationId: 1, original: {name: 'name', type: 'text'} } as any
+    component.config = { name: 'name', type: 'text', applicationId: 1, original: {name: 'name', type: 'text'} } as any;
     fixture.detectChanges();
   });
 
@@ -45,7 +45,8 @@ describe('FieldContentEditorComponent', () => {
     expect(component).toBeTruthy();
   });
   it('color type should be changed to color picker', () => {
-    (component.config as any).original.type = 'color'
+    (component.config as any).original.type = 'color';
+    component.content = null;
     component.ngOnInit();
     expect(component.content.dataType.name).toBe('color picker');
   });
@@ -62,11 +63,11 @@ describe('FieldContentEditorComponent', () => {
     expect(component.contentEditor.nativeElement.setValue).toBe(undefined);
   });
   it('onGetValue set value if valid', () => {
-    component.onGetValue({detail:{valid:true, value:'cool2'}});
+    component.onGetValue({detail: {valid: true, value: 'cool2'}});
     expect(component.group.get('name').value).toBe('cool2');
   });
   it('onGetValue don,t set value if invalid', () => {
-    component.onGetValue({detail:{valid:false, value:'cool2'}});
+    component.onGetValue({detail: {valid: false, value: 'cool2'}});
     expect(component.group.get('name').value).toBe('');
   });
 });

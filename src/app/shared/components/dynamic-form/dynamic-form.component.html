@@ -6,7 +6,9 @@
     *ngFor="let field of config;"
     fgeDynamicField
     [config]="field"
-    [group]="currentForm">
+    [group]="currentForm"
+    [content]="contentData">
+
   </ng-container>
   <div class="form-group" *ngIf="errors">
     <div class="fge-dynamic-form--error" *ngFor="let error of errors">

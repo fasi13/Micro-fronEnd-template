@@ -1,3 +1,4 @@
+import { ApplicationContent } from '@forge/core';
 import {
   ComponentFactoryResolver,
   ComponentRef,
@@ -42,6 +43,7 @@ export class DynamicFieldDirective implements Field, OnChanges, OnInit {
 
   @Input() config: FieldConfig;
   @Input() group: FormGroup;
+  @Input() content: ApplicationContent;
 
   component: ComponentRef<FormField>;
 
@@ -54,6 +56,7 @@ export class DynamicFieldDirective implements Field, OnChanges, OnInit {
     if (this.component) {
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
+      this.component.instance.content = this.content;
     }
   }
 
@@ -62,8 +65,10 @@ export class DynamicFieldDirective implements Field, OnChanges, OnInit {
     if (componentType) {
       const component = this.resolver.resolveComponentFactory<FormField>(componentType);
       this.component = this.container.createComponent(component);
+      debugger;
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
+      this.component.instance.content = this.content;
     }
   }
 }
