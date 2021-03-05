@@ -16,5 +16,8 @@
   }
   .col-form-label {
     line-height: 2.5;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
