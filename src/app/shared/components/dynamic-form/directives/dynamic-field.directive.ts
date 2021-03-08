@@ -65,7 +65,6 @@ export class DynamicFieldDirective implements Field, OnChanges, OnInit {
     if (componentType) {
       const component = this.resolver.resolveComponentFactory<FormField>(componentType);
       this.component = this.container.createComponent(component);
-      debugger;
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
       this.component.instance.content = this.content;
