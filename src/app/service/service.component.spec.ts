@@ -25,10 +25,10 @@ describe('ServiceComponent', () => {
     fixture = TestBed.createComponent(ServiceComponent);
     component = fixture.componentInstance;
     appConfigService = TestBed.get(AppConfigService);
-    let router = TestBed.get(Router);
+    const router = TestBed.get(Router);
     dummyConfig = {
       apis: [],
-      services: [{id:'communication', name: 'Communications', url: '/assets/tests/package1.js'}]
+      services: [{id: 'communication', name: 'Communications', url: '/assets/tests/package1.js'}]
     };
     spyOnProperty(appConfigService, 'config', 'get').and.returnValue(dummyConfig);
     spyOnProperty(router, 'url').and.returnValue('/tenant/1/service/communication');
