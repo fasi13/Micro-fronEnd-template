@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^7.0.0",
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/router": "^7.0.0",
-    "@e2e/content-management-components": "^1.0.26",
+    "@e2e/content-management-components": "^1.0.27",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^6.1.0",
