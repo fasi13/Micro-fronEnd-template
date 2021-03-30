@@ -1,5 +1,4 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -49,9 +48,13 @@ describe('FieldContentEditorComponent', () => {
     component.ngOnInit();
     expect(component.content.dataType.name).toBe('color picker');
   });
-  it('valueChanges should emit if nativeElement has setValue defined', (done) => {
+  it('valueChanges should emit if nativeElement has setValue defined', () => {
+    let settedValue;
+    component.contentEditor.nativeElement.value = (value) => {
+      settedValue = value;
+    }
     component.group.get('name').setValue('cool');
-    expect(component.contentEditor.nativeElement.value().value).toBe('cool');
+    expect(settedValue).toBe('cool');
   });
   it('valueChanges should not emit if nativeElement has not setValue defined', () => {
     component.group.get('name').setValue('cool');
