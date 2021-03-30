@@ -76,6 +76,7 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
         .forEach(name => {
           if (name) {
             const config = this.config.find(control => control.name === name);
+            config.triggerSave = () => this.doHandleSubmit();
             this.form.addControl(name, this.createControl(config));
           }
         });
@@ -107,12 +108,15 @@ export class DynamicFormComponent implements OnChanges, OnInit, AfterViewInit {
   handleSubmit(event: Event) {
     event.preventDefault();
     event.stopPropagation();
+    this.doHandleSubmit();
+  }
+
+  doHandleSubmit() {
     if (!this.lastConfig.validate) {
       this.handleSubmitInternal();
     } else {
-      this.lastConfig.validate().then(valid => {
-        if (valid) { this.handleSubmitInternal(); }
-      });
+      let valid = this.lastConfig.validate()
+      if (valid) { this.handleSubmitInternal(); }
     }
   }
 

@@ -14,7 +14,6 @@ export class FieldContentEditorComponent extends FormField implements OnInit, On
   content: ApplicationContent;
   showLabel: boolean;
   valueChangeSubscription: Subscription;
-  resolveGetValue;
   @ViewChild('contentEditor') contentEditor: ElementRef;
   constructor(
     private contentEditorConfigurationService: ContentEditorConfigurationService,
@@ -23,10 +22,13 @@ export class FieldContentEditorComponent extends FormField implements OnInit, On
     const config = this.config as any;
     const originalConfig = (this.config as any).original;
     config.validate = () => {
-      return new Promise<boolean>((resolve) => {
-        this.resolveGetValue = resolve;
-        this.contentEditor.nativeElement.getValue.emit();
-      });
+      let detail: ContentEditorOnGetValueEvent = this.contentEditor.nativeElement.value();
+      if (detail.valid) {
+        this.group.get(this.config.name).setValue(detail.value, { emitEvent: false });
+      } else {
+        this.group.get(this.config.name).setValue('', { emitEvent: false });
+      }
+      return detail.valid;
     };
     let type = originalConfig.type;
     if (type === 'color') { type = 'color picker'; }
@@ -36,18 +38,13 @@ export class FieldContentEditorComponent extends FormField implements OnInit, On
     this.e2eContentEditorConfig.disableSave = true;
     this.showLabel = type.toLowerCase() !== 'html';
     this.valueChangeSubscription = this.group.get(this.config.name).valueChanges.subscribe(() => {
-      if (this.contentEditor.nativeElement.setValue) {
-        this.contentEditor.nativeElement.setValue.emit({value: this.group.get(this.config.name).value});
+      if (this.contentEditor.nativeElement.value) {
+        this.contentEditor.nativeElement.value(this.group.get(this.config.name).value);
       }
     });
   }
-  onGetValue(event: {detail: ContentEditorOnGetValueEvent}) {
-    if (event.detail.valid) {
-      this.group.get(this.config.name).setValue(event.detail.value, { emitEvent: false });
-    } else {
-      this.group.get(this.config.name).setValue('', { emitEvent: false });
-    }
-    this.resolveGetValue(event.detail.valid);
+  onSave() {
+    this.config.triggerSave();
   }
   ngOnDestroy(): void {
     this.valueChangeSubscription.unsubscribe();
