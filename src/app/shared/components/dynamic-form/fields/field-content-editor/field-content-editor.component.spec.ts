@@ -1,5 +1,4 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -34,7 +33,6 @@ describe('FieldContentEditorComponent', () => {
 
     fixture = TestBed.createComponent(FieldContentEditorComponent);
     component = fixture.componentInstance;
-    component.resolveGetValue = () => {};
     component.group = new FormGroup([] as any);
     component.group.addControl('name', new FormControl('value'));
     component.config = { name: 'name', type: 'text', applicationId: 1, original: {name: 'name', type: 'text'} } as any;
@@ -50,24 +48,16 @@ describe('FieldContentEditorComponent', () => {
     component.ngOnInit();
     expect(component.content.dataType.name).toBe('color picker');
   });
-  it('valueChanges should emit if nativeElement has setValue defined', (done) => {
-    component.contentEditor.nativeElement.setValue = new EventEmitter();
-    component.contentEditor.nativeElement.setValue.subscribe((event) => {
-      expect(event.value).toBe('cool');
-      done();
-    });
+  it('valueChanges should emit if nativeElement has setValue defined', () => {
+    let settedValue;
+    component.contentEditor.nativeElement.value = (value) => {
+      settedValue = value;
+    }
     component.group.get('name').setValue('cool');
+    expect(settedValue).toBe('cool');
   });
   it('valueChanges should not emit if nativeElement has not setValue defined', () => {
     component.group.get('name').setValue('cool');
     expect(component.contentEditor.nativeElement.setValue).toBe(undefined);
-  });
-  it('onGetValue set value if valid', () => {
-    component.onGetValue({detail: {valid: true, value: 'cool2'}});
-    expect(component.group.get('name').value).toBe('cool2');
-  });
-  it('onGetValue don,t set value if invalid', () => {
-    component.onGetValue({detail: {valid: false, value: 'cool2'}});
-    expect(component.group.get('name').value).toBe('');
   });
 });

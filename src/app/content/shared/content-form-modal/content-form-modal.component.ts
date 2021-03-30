@@ -137,9 +137,11 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
         value: '',
         name: 'textValue',
         original: originalDataType,
-        applicationId: this.applicationInfo.id
+        applicationId: this.applicationInfo.id,
+        triggerSave: null
       };
       if (this.currentType) {
+        dataType.triggerSave = this.config[this.config.length - 1].triggerSave;
         this.config[this.config.length - 1] = dataType;
       } else {
         this.config.splice(this.config.length, 0, dataType);
