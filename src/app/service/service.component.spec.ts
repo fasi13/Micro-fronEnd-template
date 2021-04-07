@@ -7,6 +7,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { AppConfigService, IAppConfig } from '../app-config.service';
 import { State, TestInitialState } from '../core/store/store.reducers';
 import { ServiceComponent } from './service.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 describe('ServiceComponent', () => {
   let fixture: ComponentFixture<ServiceComponent>;
@@ -19,7 +20,7 @@ describe('ServiceComponent', () => {
     TestBed.configureTestingModule({
       providers: [provideMockStore({ initialState })],
       declarations: [ServiceComponent],
-      imports: [RouterTestingModule.withRoutes([]), HttpClientTestingModule],
+      imports: [RouterTestingModule.withRoutes([]), HttpClientTestingModule, BrowserModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
     fixture = TestBed.createComponent(ServiceComponent);
@@ -39,6 +40,12 @@ describe('ServiceComponent', () => {
     component.ngOnInit();
     expect(component).toBeTruthy();
     done();
+  });
+
+  it('canDeactivate', () => {
+    spyOn(document, 'getElementById').and.returnValue({canDeactivate: () => {return true;}});
+    expect(component.canDeactivate()).toBe(true);
+
   });
 
   afterEach(() => {
