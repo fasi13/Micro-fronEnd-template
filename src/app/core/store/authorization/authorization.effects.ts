@@ -4,27 +4,22 @@ import { HttpResponse } from '@angular/common/http';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 
-import { Observable, of, timer } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import {
   AuthorizationActionTypes,
   AuthenticationErrorAction,
   AuthenticationSuccessAction,
-  LogoutAction,
   LogoutSuccessAction,
   LogoutErrorAction,
 } from './authorization.actions';
 import { UserService } from '../../services';
 import { User } from '../../models';
 import { State, isAuthenticated } from '../store.reducers';
-import { FgeModalService } from '../../services/_fge-modal.service';
 
 @Injectable()
 export class AuthorizationEffects {
-
-  readonly INACTIVITY_TIME = 15 * 60 * 1000;
-
   @Effect() authenticate$: Observable<Action> = this.actions
     .pipe(
       ofType(AuthorizationActionTypes.AUTHENTICATE),
@@ -55,19 +50,9 @@ export class AuthorizationEffects {
     )
   );
 
-  @Effect() inactivityTimeout$ = this.actions
-    .pipe(
-      switchMap(() => timer(this.INACTIVITY_TIME)),
-      map(() => {
-        this.fgeModalService.dismissAll();
-        return new LogoutAction('Inactivity');
-      })
-    );
-
   constructor(
     private actions: Actions,
     private store: Store<State>,
-    private userService: UserService,
-    private fgeModalService: FgeModalService
+    private userService: UserService
   ) { }
 }
