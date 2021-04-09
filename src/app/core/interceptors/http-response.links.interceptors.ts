@@ -9,7 +9,6 @@ import {
   HttpResponse,
   HttpClient,
 } from '@angular/common/http';
-import _isEmpty from 'lodash/isEmpty';
 
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';

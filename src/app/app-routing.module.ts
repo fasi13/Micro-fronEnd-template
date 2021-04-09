@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule, NoPreloading } from '@angular/router';
 
 import {
   AuthLayoutComponent,
@@ -71,7 +71,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: false,
-      preloadingStrategy: PreloadAllModules,
+      preloadingStrategy: NoPreloading,
       paramsInheritanceStrategy: 'always'
     })
   ],

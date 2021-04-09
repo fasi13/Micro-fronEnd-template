@@ -1,6 +1,5 @@
-import { CultureAction, ReadCultureSuccessAction, ReadAvailableCulturesSuccessAction } from './culture.actions';
+import { ReadCultureSuccessAction, ReadAvailableCulturesSuccessAction } from './culture.actions';
 import { CultureState, reducer } from './culture.reducers';
-import { initialState } from './../application/application.reducers';
 describe('CultureReducers', () => {
 
   it('should return initial state', () => {
