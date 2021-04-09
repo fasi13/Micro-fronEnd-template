@@ -6,7 +6,6 @@ import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
 import _assign from 'lodash/assign';
 import _clone from 'lodash/clone';
-import _find from 'lodash/find';
 import _includes from 'lodash/includes';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

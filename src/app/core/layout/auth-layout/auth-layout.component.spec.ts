@@ -6,7 +6,7 @@ import {
   ReadCultureSuccessAction,
 } from './../../store/culture/culture.actions';
 import { AuthLayoutComponent } from './auth-layout.component';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Store } from '@ngrx/store';

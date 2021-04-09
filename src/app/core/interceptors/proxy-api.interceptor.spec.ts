@@ -5,12 +5,10 @@ import {
 } from '@angular/common/http/testing';
 import {
   HTTP_INTERCEPTORS,
-  HttpRequest,
   HttpClient,
 } from '@angular/common/http';
 import { ProxyApiInterceptor } from './proxy-api.interceptor';
 import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
-import { ContentService } from '../services';
 import { Injectable } from '@angular/core';
 
 @Injectable({

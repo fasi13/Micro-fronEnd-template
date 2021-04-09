@@ -7,7 +7,6 @@ import {
   HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-import _isEmpty from 'lodash/isEmpty';
 
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';

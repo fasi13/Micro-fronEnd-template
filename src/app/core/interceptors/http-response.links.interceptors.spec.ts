@@ -8,8 +8,6 @@ import {
 import {
   HTTP_INTERCEPTORS,
   HttpClient,
-  HttpResponse,
-  HttpEvent,
 } from '@angular/common/http';
 
 import { AppConfigService, IAppConfig } from 'src/app/app-config.service';
