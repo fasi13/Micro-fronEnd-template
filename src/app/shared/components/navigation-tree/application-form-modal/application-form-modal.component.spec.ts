@@ -54,7 +54,7 @@ describe('ApplicationFormModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('handleSubmit: on error, should call error', fakeAsync(() => {
+  it('handleSubmit: on error, should call error', fakeAsync(() => {
     let observer = {value: '', success: () => {}, error: () => {}};
     spyOn(observer, 'error').and.callThrough();
     spyOn(httpActionService, 'performAction').and.returnValue(throwError({error: {fields: { value: ''}}}));
