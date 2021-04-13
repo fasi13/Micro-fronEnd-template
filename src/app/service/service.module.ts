@@ -7,6 +7,8 @@ import { ServiceRolesGuard } from './_guards/service-roles.guard';
 import { ServiceComponent } from './service.component';
 import { ServiceScriptResolver } from './service-script-resolver';
 import { StartServiceComponent } from './start-service.component';
+import { GroupsListingGuard } from '../content/_guards/groups-listing.guard';
+import { PendingChangesGuard } from './_guards/pending-changes.guard';
 
 export function serviceMatcherFunction(url: UrlSegment[]) {
   return {consumed: url};
@@ -19,7 +21,8 @@ const routes: Routes = [
   },
  {
     matcher: serviceMatcherFunction,
-    canActivate: [ ServiceRolesGuard ],
+    canActivate: [ ServiceRolesGuard, GroupsListingGuard ],
+    canDeactivate: [PendingChangesGuard],
     component: ServiceComponent,
     data: { hideLanguageSelector: true },
     resolve: { service: ServiceScriptResolver }

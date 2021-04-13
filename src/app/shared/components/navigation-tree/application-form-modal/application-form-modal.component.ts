@@ -53,7 +53,7 @@ export class ApplicationFormModalComponent implements OnInit {
         this.modalService.dismissAll();
         this.initFormConfig();
       },
-      (err) => error(err.error.fields.value));
+      (err) => error(err.error.fields ? err.error.fields.value : err.error.errors));
   }
 
   handleCancel(event: Event): void {
