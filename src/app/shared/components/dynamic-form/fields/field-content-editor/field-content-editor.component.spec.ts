@@ -57,6 +57,7 @@ describe('FieldContentEditorComponent', () => {
     expect(settedValue).toBe('cool');
   });
   it('valueChanges should not emit if nativeElement has not setValue defined', () => {
+    component.contentEditor.nativeElement.setValue = undefined;
     component.group.get('name').setValue('cool');
     expect(component.contentEditor.nativeElement.setValue).toBe(undefined);
   });
