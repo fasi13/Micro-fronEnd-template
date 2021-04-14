@@ -47,7 +47,8 @@ steps:
 - task: Npm@1
   displayName: 'Install Npm Dependencies'
   inputs:
-    command: install
+    command: custom
+    customCommand: run init
 
 - task: Npm@1
   displayName: 'Run Tests'
