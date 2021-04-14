@@ -2,7 +2,6 @@
   "name": "forge-website",
   "version": "0.0.1",
   "scripts": {
-    "init": "npm install & npm update @e2e/content-management-components",
     "ng": "ng",
     "start": "ng serve",
     "start:prod": "ng serve --configuration=production",
