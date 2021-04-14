@@ -63,6 +63,15 @@ describe('ApplicationFormModalComponent', () => {
     expect(observer.error).toHaveBeenCalledTimes(1);
   }));
 
+  it('handleSubmit: on error, no fields, should call error', fakeAsync(() => {
+    let observer = {value: '', success: () => {}, error: () => {}};
+    spyOn(observer, 'error').and.callThrough();
+    spyOn(httpActionService, 'performAction').and.returnValue(throwError({error: {errors: ''}}));
+    component.handleSubmit(observer);
+    flushMicrotasks();
+    expect(observer.error).toHaveBeenCalledTimes(1);
+  }));
+
   afterEach(() => {
     fixture.destroy();
   });
