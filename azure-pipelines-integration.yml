@@ -39,7 +39,8 @@ steps:
 - task: Npm@1
   displayName: 'Update Npm Dependencies'
   inputs:
-    command: update
+    command: custom
+    customCommand: 'update'
 
 - task: Npm@1
   displayName: 'Run Tests'
