@@ -83,12 +83,8 @@ export class ContentEffects {
     switchMap((action: any) => this.contentService.addContentToGroup(action.payload.applicationId,
       action.payload.groupId, action.payload.contentPayload)
         .pipe(
-          mergeMap(() => [
-            new TransactionContentRecordCompleted(),
-            /**
-             * @TODO Refactor to send only the group id
-             */
-            new FetchContentGroup(action.payload.groupId)
+          mergeMap((response) => [
+            new TransactionContentRecordCompleted(response)
           ]),
           catchError(error => of(new TransactionContentRecordError(error)))
         )
