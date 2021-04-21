@@ -123,11 +123,25 @@ export function reducer(state: ContentState = initialState, action: ContentActio
       });
 
     case ContentActionTypes.CONTENT_RECORD_TRANSACTION_COMPLETED:
+      state.group.data.content.unshift(action.payload.data);
+      const clonedData = {...state.group.data};
+      const compare = (a, b) => {
+        var val = a.dataType.name.localeCompare(b.dataType.name)
+        if (val == 0){
+          return a.name.localeCompare(b.name);
+        }
+        return val;
+      }
+      clonedData.content.sort(compare);
       return _assign({}, state, {
         record: {
           loading: false,
           error: null
         },
+        group: {
+          loading: false,
+          data: clonedData
+        }
       });
 
     case ContentActionTypes.CONTENT_RECORD_TRANSACTION_ERROR:
