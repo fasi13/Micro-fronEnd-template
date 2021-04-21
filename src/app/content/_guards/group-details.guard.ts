@@ -50,10 +50,9 @@ export class GroupDetailsGuard implements CanActivate {
         }),
         filter((contentGroups: ContentGroup[]) => !!contentGroups),
         withLatestFrom(this.store.select(getGroup)),
-        tap(([_groups, group]: [ContentGroup[], ContentGroup]) => {
-          if (!group || group.id !== +contentGroupId) {
-            this.store.dispatch(new FetchContentGroup(contentGroupId));
-          }
+        tap(([_groups]: [ContentGroup[], ContentGroup]) => {
+          // Need to always get the group from API to show new contents created from Mass communication activities
+          this.store.dispatch(new FetchContentGroup(contentGroupId));
         }),
         take(1)
       );
