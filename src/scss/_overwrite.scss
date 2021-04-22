@@ -19,6 +19,11 @@ ngb-pagination {
   }
 }
 
+.modal.show {
+  z-index: 999999 !important;
+}
+
+
 //Modal Forms
 .modal-header {
   border-bottom: none !important;
