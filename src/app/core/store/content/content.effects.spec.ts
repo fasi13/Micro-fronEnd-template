@@ -49,7 +49,7 @@ describe('content effects ', () => {
     service = TestBed.get(ContentService);
   });
 
-  fit('TransactionContentRecord should call TransactionContentRecordCompleted', () => {
+  it('TransactionContentRecord should call TransactionContentRecordCompleted', () => {
     spyOn(service, 'addContentToGroup').and.returnValue(of({}));
     let payload = {};
     const action = new TransactionContentRecord(payload);
