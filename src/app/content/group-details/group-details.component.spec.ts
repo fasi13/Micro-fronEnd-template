@@ -120,7 +120,7 @@ describe('GroupDetailsComponent', () => {
 
   ];
   testCases.forEach((testCase) => {
-    fit(`when new ${testCase.displayAsList ? 'list' : 'no list'} content is ${testCase.ex} should add to list in position ${testCase.expectPosition}` , (done) => {
+    it(`when new ${testCase.displayAsList ? 'list' : 'no list'} content is ${testCase.ex} should add to list in position ${testCase.expectPosition}` , (done) => {
       const content = {
         displayAsList: testCase.displayAsList,
         dataType: { name: testCase.dataTypeName, type: '' },
