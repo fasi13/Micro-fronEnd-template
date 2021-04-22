@@ -99,6 +99,9 @@ describe('GroupDetailsComponent', () => {
     component.listContents = [
       { dataType: { name: 'Document', type: '' }, name: 'name5', version: 0 },
     ];
+    component.editableContents = [
+      { contentData: { dataType: { name: 'Document', type: '' }, name: 'name5', version: 0 } }
+    ];
     spyOn(fgeModalService, 'registerModal').and.callFake(() => {});
   });
 
@@ -132,10 +135,14 @@ describe('GroupDetailsComponent', () => {
       spyOn(modalService, 'open').and.returnValue(mockModalRef);
 
       component.openContentForm().then(() => {
-        expect(component.listContents.length).toBe(2);
-
-        const position = component.listContents.indexOf(content);
-        expect(position).toBe(testCase.expectPosition);
+        if (testCase.displayAsList) {
+          expect(component.listContents.length).toBe(2);
+          const position = component.listContents.indexOf(content);
+          expect(position).toBe(testCase.expectPosition);
+        }
+        else {
+          expect(component.editableContents.length).toBe(2);
+        }
         done();
       });
     });
