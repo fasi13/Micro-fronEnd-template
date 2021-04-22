@@ -93,11 +93,10 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   getFieldConfig(content) {
     const fieldConfig: FieldConfig = {... availableDataTypes[content.dataType.name]};
     fieldConfig.label = content.name;
-    const item = {
+    return {
       config: fieldConfig,
       contentData: content
     };
-    return item;
   }
 
   toggleEditMode() {
