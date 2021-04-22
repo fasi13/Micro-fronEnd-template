@@ -34,18 +34,12 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean> | boolean;
   editMode: boolean;
   editableContents: any[];
+  listContents: any[];
   applicationId: number;
   adaContent: string;
 
   private isAliveComponent = true;
   private modalRef: NgbModalRef;
-
-  get contentsAsList() {
-    if (this.currentGroup) {
-      return this.currentGroup.content.filter((content: ApplicationContent) => content.displayAsList);
-    }
-    return [];
-  }
 
   constructor(
     private store: Store<State>,
@@ -66,7 +60,45 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   openContentForm(): void {
     this.modalRef = this.modalService.open(ContentFormModalComponent, { windowClass: 'modal-content-form' });
     this.modalRef.componentInstance.groupId = this.currentGroup.id;
+    this.modalRef.componentInstance.group = this.currentGroup;
     this.fgeModalService.registerModal(this.modalRef);
+    this.modalRef.result.then((content: ApplicationContent) => {
+      if (content) {
+        if (content.displayAsList) {
+          let compare= (a, b) => {
+            var val = a.dataType.name.localeCompare(b.dataType.name)
+            if (val == 0){
+              return a.name.localeCompare(b.name);
+            }
+            return val;
+          }
+          this.listContents.unshift(content);
+          this.listContents.sort(compare);
+        }
+        else {
+          let compare= (a, b) => {
+            var val = a.contentData.dataType.name.localeCompare(b.contentData.dataType.name)
+            if (val == 0){
+              return a.contentData.name.localeCompare(b.contentData.name);
+            }
+            return val;
+          }
+          let item = this.getFieldConfig(content);
+          this.editableContents.unshift(item);
+          this.editableContents.sort(compare);
+        }
+      }
+    })
+  }
+
+  getFieldConfig(content) {
+    let fieldConfig: FieldConfig = {... availableDataTypes[content.dataType.name]};
+    fieldConfig.label = content.name;
+    let item = {
+      config: fieldConfig,
+      contentData: content
+    };
+    return item;
   }
 
   toggleEditMode() {
@@ -86,22 +118,19 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       .subscribe((group: ContentGroup) => {
         this.currentGroup = group;
         if (group) {
-          this.initEditableFields();
+          this.initLists();
           this.initAdaDispatcher();
         }
       });
   }
 
-  private initEditableFields(): void {
+  private initLists(): void {
     this.editableContents = this.currentGroup.content
       .filter((content: ApplicationContent) => !content.displayAsList)
       .map((content: ApplicationContent) => {
-        const fieldConfig: FieldConfig = _assign(_clone(availableDataTypes[content.dataType.name]), { label: content.name });
-        return {
-          config: fieldConfig,
-          contentData: content
-        };
+        return this.getFieldConfig(content);
       });
+    this.listContents = this.currentGroup.content.filter((content: ApplicationContent) => content.displayAsList);
   }
 
   private initAdaDispatcher(): void {
