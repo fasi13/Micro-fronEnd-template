@@ -102,7 +102,7 @@ describe('GroupDetailsComponent', () => {
     spyOn(fgeModalService, 'registerModal').and.callFake(() => {});
   });
 
-  fit('should be created', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
