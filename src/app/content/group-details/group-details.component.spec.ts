@@ -32,7 +32,7 @@ import {
   ContentTypeDocumentComponent,
 } from '../shared/content-types';
 import { GroupFormModalComponent } from '../shared/group-form-modal/group-form-modal.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 export class MockNgbModalRef {
   constructor(private content: ApplicationContent) {}
@@ -152,6 +152,16 @@ describe('GroupDetailsComponent', () => {
 
   it(`when new open modal no content` , (done) => {
     const mockModalRef = new MockNgbModalRef( null);
+    spyOn(modalService, 'open').and.returnValue(mockModalRef);
+    component.openContentForm().then(() => {
+      expect(component).toBeTruthy();
+      done();
+    });
+  });
+
+  it(`when new open modal close outside main buttons` , (done) => {
+    const mockModalRef = new MockNgbModalRef( null);
+    mockModalRef.result = throwError(null).toPromise();
     spyOn(modalService, 'open').and.returnValue(mockModalRef);
     component.openContentForm().then(() => {
       expect(component).toBeTruthy();
