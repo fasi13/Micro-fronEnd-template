@@ -150,7 +150,16 @@ describe('GroupDetailsComponent', () => {
     });
   });
 
-  fit('init selector, no content group', fakeAsync(() => {
+  it(`when new open modal no content` , (done) => {
+    const mockModalRef = new MockNgbModalRef( null);
+    spyOn(modalService, 'open').and.returnValue(mockModalRef);
+    component.openContentForm().then(() => {
+      expect(component).toBeTruthy();
+      done();
+    });
+  });
+
+  it('init selector, no content group', fakeAsync(() => {
     component.ready = false;
     let group = null;
     spyOn(store, 'select').and.returnValue(of(group));
@@ -161,7 +170,7 @@ describe('GroupDetailsComponent', () => {
     expect(component.ready).toBe(false);
   }));
 
-  fit('init selector, with content group', fakeAsync(() => {
+  it('init selector, with content group', fakeAsync(() => {
     component.ready = false;
     let group = {
         _links:[],
