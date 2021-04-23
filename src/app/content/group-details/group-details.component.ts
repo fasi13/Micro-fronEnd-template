@@ -88,7 +88,9 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
             this.editableContents.sort(compare);
           }
         }
-      }).catch(() => {});
+      }).catch(() => {
+        // prevent having concole error when closing the popup by click the X or outside the window
+      });
   }
 
   getFieldConfig(content) {
