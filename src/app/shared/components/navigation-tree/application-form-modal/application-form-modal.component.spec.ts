@@ -1,5 +1,4 @@
 
-import { RouterModule } from '@angular/router';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { TestBed, ComponentFixture, fakeAsync, flushMicrotasks } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
@@ -15,8 +14,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApplicationFormModalComponent } from './application-form-modal.component';
 import { FgeHttpActionService } from '@forge/core';
 import { throwError } from 'rxjs';
-
-
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ApplicationFormModalComponent', () => {
   let fixture: ComponentFixture<ApplicationFormModalComponent>;
@@ -35,7 +33,7 @@ describe('ApplicationFormModalComponent', () => {
         CommonModule,
         SharedModule,
         NgBootstrapModule,
-        RouterModule.forRoot([]),
+        RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
       ],

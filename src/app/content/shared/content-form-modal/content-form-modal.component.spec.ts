@@ -13,6 +13,8 @@ import { ContentFormModalComponent } from './content-form-modal.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ContentService } from '@forge/core';
+import { of, throwError } from 'rxjs';
 
 
 
@@ -85,6 +87,42 @@ describe('ContentFormModalComponent', () => {
     expect(config.type).toBe('contentEditor');
     expect((config as any).original.type).toBe('color');
     expect((config as any).applicationId).toBe(1);
+  });
+
+  it('handleSubmit: success', (done) => {
+    component.applicationInfo = {id:1, name:'1', value:'', _links: null};
+    component.applicationDataTypes = [];
+    component.activeModal = { close: () => {} } as any;
+    let contentService = TestBed.get(ContentService);
+    spyOn(contentService, 'addContentToGroup').and.returnValue(of({}));
+    let handler = {
+      value: {},
+      success: () => {},
+      error: () => {}
+    }
+    spyOn(handler, 'success');
+    component.handleSubmit(handler as any).then(() => {
+      expect(handler.success).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it('handleSubmit: error', (done) => {
+    component.applicationInfo = {id:1, name:'1', value:'', _links: null};
+    component.applicationDataTypes = [];
+    component.activeModal = { close: () => {} } as any;
+    let contentService = TestBed.get(ContentService);
+    spyOn(contentService, 'addContentToGroup').and.returnValue(throwError({error: {fields: {}}}));
+    let handler = {
+      value: {},
+      success: () => {},
+      error: () => {}
+    }
+    spyOn(handler, 'error');
+    component.handleSubmit(handler as any).then(() => {
+      expect(handler.error).toHaveBeenCalledTimes(1);
+      done();
+    });
   });
 
   afterEach(() => {

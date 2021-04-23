@@ -5,7 +5,7 @@ import _clone from 'lodash/clone';
 import _assign from 'lodash/assign';
 
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, takeWhile } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 
 import {
   State,
@@ -13,8 +13,8 @@ import {
   Application,
   getDataTypes,
   DataType,
-  TransactionContentRecord,
-  getContentRecordState
+  ContentGroup,
+  ContentService
 } from '@forge/core';
 import { DynamicFormComponent, FieldConfig } from '@forge/shared';
 import { config as fieldConfiguration } from './content-fields-modal.config';
@@ -29,13 +29,14 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('modalTemplate') modalContent: ElementRef;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
   @Input() groupId: string;
+  @Input() group: ContentGroup;
 
   mode: 'CREATE' | 'EDIT' = 'CREATE';
   applicationInfo: Application;
   config: FieldConfig[];
   currentType: string;
+  applicationDataTypes: DataType[];
 
-  private applicationDataTypes: DataType[];
   private dataTypes: ContentDataType;
   private unsubscribeForm = new Subject();
   private isAliveComponent = true;
@@ -43,6 +44,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
   constructor(
     public activeModal: NgbActiveModal,
     private store: Store<State>,
+    private contentService: ContentService
   ) { }
 
   ngOnInit() {
@@ -62,7 +64,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
     this.unsubscribeForm.complete();
   }
 
-  handleSubmit({ value: formData, success, error}): void {
+  handleSubmit({ value: formData, success, error}) {
     const { name, description, type: typeStr, textValue,
       colorValue, logoValue, htmlValue } = formData;
     const { id: applicationId } = this.applicationInfo;
@@ -73,25 +75,15 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
       dataType: this.getDataTypeFor(typeStr),
       value
     };
-    this.store.dispatch(new TransactionContentRecord({
-      applicationId,
-      groupId: this.groupId,
-      contentPayload,
-    }));
-    this.store.select(getContentRecordState)
-      .pipe(takeUntil(this.unsubscribeForm))
-      .subscribe((recordState) => {
-        const { error: errorData, loading } = recordState;
-        if (errorData) {
-          const errors = Object.values(errorData.error.fields);
-          this.unsubscribeForm.next();
-          error(errors);
-        } else if (!loading) {
-          this.unsubscribeForm.next();
-          success();
-          this.activeModal.close();
-        }
-      });
+    return this.contentService.addContentToGroup(applicationId, this.groupId, contentPayload as any).toPromise().then(response => {
+      this.unsubscribeForm.next();
+      success();
+      this.activeModal.close(response.data);
+    }).catch(response => {
+      const errors = Object.values(response.error.fields);
+      this.unsubscribeForm.next();
+      error(errors);
+    });
   }
 
   handleCancel(): void {
