@@ -63,32 +63,32 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     this.modalRef.componentInstance.groupId = this.currentGroup.id;
     this.modalRef.componentInstance.group = this.currentGroup;
     this.fgeModalService.registerModal(this.modalRef);
-   return this.modalRef.result.then((content: ApplicationContent) => {
-      if (content) {
-        if (content.displayAsList) {
-          const compare = (a, b) => {
-            const val = a.dataType.name.localeCompare(b.dataType.name);
-            if (val === 0) {
-              return a.name.localeCompare(b.name);
-            }
-            return val;
-          };
-          this.listContents.unshift(content);
-          this.listContents.sort(compare);
-        } else {
-          const compare = (a, b) => {
-            const val = a.contentData.dataType.name.localeCompare(b.contentData.dataType.name);
-            if (val === 0) {
-              return a.contentData.name.localeCompare(b.contentData.name);
-            }
-            return val;
-          };
-          const item = this.getFieldConfig(content);
-          this.editableContents.unshift(item);
-          this.editableContents.sort(compare);
+    return this.modalRef.result.then((content: ApplicationContent) => {
+        if (content) {
+          if (content.displayAsList) {
+            const compare = (a, b) => {
+              const val = a.dataType.name.localeCompare(b.dataType.name);
+              if (val === 0) {
+                return a.name.localeCompare(b.name);
+              }
+              return val;
+            };
+            this.listContents.unshift(content);
+            this.listContents.sort(compare);
+          } else {
+            const compare = (a, b) => {
+              const val = a.contentData.dataType.name.localeCompare(b.contentData.dataType.name);
+              if (val === 0) {
+                return a.contentData.name.localeCompare(b.contentData.name);
+              }
+              return val;
+            };
+            const item = this.getFieldConfig(content);
+            this.editableContents.unshift(item);
+            this.editableContents.sort(compare);
+          }
         }
-      }
-    });
+      }).catch(() => {});
   }
 
   getFieldConfig(content) {
