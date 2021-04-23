@@ -1,11 +1,10 @@
 import { ApplicationContent } from './../../core/models/application/application-content.model';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CoreModule } from '../../core/core.module';
-import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { GroupDetailsComponent } from './group-details.component';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { NgBootstrapModule } from 'src/app/ng-bootstrap.module';
@@ -14,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotifierModule } from 'angular-notifier';
 import { State, TestInitialState } from 'src/app/core/store/store.reducers';
 import { FgeModalService } from '@forge/core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GroupNotFoundComponent } from '../content-error-pages/group-not-found/group-not-found.component';
 import { ContentHtmlEditorComponent } from '../content-html-editor/content-html-editor.component';
@@ -22,7 +21,6 @@ import { GroupsListingComponent } from '../groups-listing/groups-listing.compone
 import { ContentEditorModalComponent } from '../shared/content-editor-modal/content-editor-modal.component';
 import { ContentFormModalComponent } from '../shared/content-form-modal/content-form-modal.component';
 import {
-  ContentInlineEditorComponent,
   ShowLinkPipe,
 } from '../shared/content-inline-editor/content-inline-editor.component';
 import {
@@ -46,6 +44,10 @@ export class MockNgbModalRef {
     resolve(this.content)
   );
 }
+
+@Component({ template: '' })
+export class ContentInlineEditorComponent {}
+
 
 describe('GroupDetailsComponent', () => {
   let fixture: ComponentFixture<GroupDetailsComponent>;
@@ -147,6 +149,36 @@ describe('GroupDetailsComponent', () => {
       });
     });
   });
+
+  fit('init selector, no content group', fakeAsync(() => {
+    component.ready = false;
+    let group = null;
+    spyOn(store, 'select').and.returnValue(of(group));
+    component.initSelectors();
+    flushMicrotasks();
+    tick(200);
+    fixture.detectChanges();
+    expect(component.ready).toBe(false);
+  }));
+
+  fit('init selector, with content group', fakeAsync(() => {
+    component.ready = false;
+    let group = {
+        _links:[],
+        content: [
+          {displayAsList: true,  name: 'name6', dataType: { name: 'text' } },
+          {displayAsList: false, name: 'name5', dataType: { name: 'text' } },
+        ],
+        id: 1,
+        name: ''
+    };
+    spyOn(store, 'select').and.returnValue(of(group));
+    component.initSelectors();
+    flushMicrotasks();
+    tick(200);
+    fixture.detectChanges();
+    expect(component.ready).toBe(true);
+  }));
 
   afterEach(() => {
     fixture.destroy();

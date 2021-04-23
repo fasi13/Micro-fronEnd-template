@@ -37,6 +37,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
   listContents: any[];
   applicationId: number;
   adaContent: string;
+  ready: boolean = false;
 
   private isAliveComponent = true;
   private modalRef: NgbModalRef;
@@ -107,7 +108,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     this.fgeRouter.navigate(`content/group/${this.currentGroup.id}/content/${contentId}/edit`);
   }
 
-  private initSelectors(): void {
+  initSelectors(): void {
     this.loading$ = this.store.select(isLoadingGroup);
     this.store.select(getGroup)
       .pipe(
@@ -118,6 +119,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
         if (group) {
           this.initLists();
           this.initAdaDispatcher();
+          this.ready = true;
         }
       });
   }
