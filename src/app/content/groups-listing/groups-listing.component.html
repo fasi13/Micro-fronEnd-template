@@ -28,7 +28,7 @@
 <div *ngIf="displayMode === 'grid'; then gridView; else listView"></div>
 
 <ng-template #listView>
-  <table class="table fge-table">
+  <table aria-label="Content Groups" class="table fge-table">
     <thead class="fge-table__header">
       <tr>
         <th scope="col fge-table__col">Name</th>
