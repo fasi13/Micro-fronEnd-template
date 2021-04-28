@@ -1,3 +1,4 @@
+name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)
 trigger:
 - develop
 
@@ -5,7 +6,12 @@ pool:
   name: Rideau
 
 variables:
+  MajorVersion: 1
+  MinorVersion: 1
+  PatchVersion: 0
+  RevisionVersion: $[counter('revision-counter', 0)]
   project: 'E2E.Content.Management.UI'
+
 
 steps:
 - task: NodeTool@0

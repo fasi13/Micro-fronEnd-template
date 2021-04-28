@@ -16,7 +16,7 @@ pool:
 
 variables:
   MajorVersion: 1
-  MinorVersion: 0
+  MinorVersion: 1
   PatchVersion: 0
   RevisionVersion: $[counter('revision-counter', 0)]
   project: 'E2E.Content.Management.UI'
