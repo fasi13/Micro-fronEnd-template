@@ -117,7 +117,7 @@ export class ContentFormModalComponent implements OnInit, AfterViewInit, OnDestr
     if (type == '') return;
     if (this.currentType !== type) {
       const originalDataType = _assign(_clone(this.dataTypes[type]), { value: '' });
-      if (originalDataType.type == 'html')  {
+      if (originalDataType.type == 'html' || originalDataType.type == 'stylesheet')  {
         // we don't want to see html editor on the popup, so we convert it to text and already put a 2 spaces value to make it valid
         originalDataType.type = 'text';
         originalDataType.value = '  ';

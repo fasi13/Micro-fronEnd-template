@@ -117,5 +117,17 @@ export const dataTypes: ContentDataType = {
         validator: Validators.required
       }
     }
+  },
+  'Stylesheet': {
+    type: 'stylesheet',
+    label: 'Value',
+    name: 'stylesheetValue',
+    placeholder: 'Enter value',
+    validation: {
+      required: {
+        errorMsg: 'Value is required',
+        validator: Validators.required
+      }
+    }
   }
 };
