@@ -44,7 +44,7 @@
             "assets": [
               "src/favicon.png",
               "src/assets",
-              "src/health/live",
+              "src/health/live/index.html",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@e2e/content-management-components/",
