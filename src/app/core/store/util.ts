@@ -30,6 +30,7 @@ export function loadFromLocalStorage() {
   if (user) {
     user = { ...user, actions: mapLinks(user._links) };
   }
+  /* istanbul ignore next */
   return {
     router: null,
     authorization: {

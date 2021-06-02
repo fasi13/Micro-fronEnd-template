@@ -47,6 +47,7 @@ export class DynamicInlineFormComponent implements OnChanges, OnInit, AfterViewI
 
   ngOnChanges() {
     if (this.form) {
+      /* istanbul ignore next */
       this.form.addControl(this.config.name, this.createControl(this.config));
     }
   }
