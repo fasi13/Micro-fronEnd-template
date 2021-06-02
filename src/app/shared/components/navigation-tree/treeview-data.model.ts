@@ -7,7 +7,7 @@ export class TreeviewData implements FgeEntity {
   collapsed?: boolean;
   executedFetch?: boolean;
   /**
-   * @TODO replace with the proper field
+   *  replace with the proper field
    */
   isGroup?: boolean;
   childrenData?: TreeviewData[];

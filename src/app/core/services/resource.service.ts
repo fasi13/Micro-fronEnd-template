@@ -6,10 +6,10 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class ResourceService {
 
-  constructor() { }
+  
 
   /**
-  * @TODO Refactor this once that get the name (fileName) that it in the answer
+  *  Refactor this once that get the name (fileName) that it in the answer
   * in the header part in the Content-Disposition. For now will be send as a parameter
   * to filename with the name of the file. When the file name is from eader the parameter
   * filename will be removed.

@@ -29,7 +29,9 @@ export class TimeoutService {
   }
 
   extendSession() {
-    this.contentService.getContentGroups(this.user.applicationId as number).subscribe(() => { });
+    this.contentService.getContentGroups(this.user.applicationId as number).subscribe(() => {
+      // keep this empty
+    });
   }
 
   logout() {

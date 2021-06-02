@@ -63,6 +63,8 @@ export class TimeoutComponent implements OnDestroy {
     this.modalService.dismissAll();
   }
   ngOnDestroy() {
-    this.initTimeoutDialog = () => {};
+    this.initTimeoutDialog = () => {
+      //keep this empty
+    };
   }
 }

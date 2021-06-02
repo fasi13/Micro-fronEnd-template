@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'fge-coming-soon',
   templateUrl: './coming-soon.component.html',
 })
-export class ComingSoonComponent implements OnInit {
+export class ComingSoonComponent   {
 
-  constructor() { }
 
-  ngOnInit() {
-  }
 
 }

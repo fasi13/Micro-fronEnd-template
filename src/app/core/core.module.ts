@@ -44,7 +44,7 @@ import { ContentEditorConfigurationService } from './services/content-editor-con
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule.forRoot(),
+    NgbModule,
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(FgeReducers, {

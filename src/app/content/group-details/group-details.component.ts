@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import _find from 'lodash/find';
-import _assign from 'lodash/assign';
-import _clone from 'lodash/clone';
+
 
 import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -142,7 +141,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       const contentId = + splittedUrl[splittedUrl.length - 1];
       const applicationId = + splittedUrl[splittedUrl.length - 3];
       /**
-       * @TODO Refactor this implementation to perform the action from effects
+       *  Refactor this implementation to perform the action from effects
        *  instead of getting the link here, should follow the current effects implementation
        *  using the fgeActionService
        */

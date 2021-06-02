@@ -82,8 +82,9 @@ export class UsersListingComponent implements OnInit, OnDestroy {
   }
 
   getApplicationName(user: any): string {
-    const name = user.applicationPath.path[user.applicationPath.path.length - 1 ].name;
-    return name;
+    /* istanbul ignore next */
+    return user.applicationPath.path[user.applicationPath.path.length - 1 ].name;
+    
   }
 
   onPageChange(index: number): void {

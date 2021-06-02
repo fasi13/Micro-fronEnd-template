@@ -47,7 +47,7 @@ import { FgeHttpActionService } from '../../services';
 export class ApplicationEffects {
 
   /**
-   * @TODO This is just a quick fix to update the website branding, but keep in mind that this is not the best way since
+   *  This is just a quick fix to update the website branding, but keep in mind that this is not the best way since
    *  it performs an aditional request per each update transaction, so this needs to be refactored to store the content and
    *  replace that one when its updated, instead of having an specific field for website branding. It means store all the contents
    *  in redux using a map[key: value] and then replace when someone is updated, instead of having a multiple copies across the app.
@@ -98,7 +98,7 @@ export class ApplicationEffects {
   @Effect() public fethApplicationPreview$: Observable<Action> = this.actions.pipe(
     ofType(ApplicationActionTypes.FETCH_APPLICATION_PREVIEW),
     /**
-     * @TODO Refactor hierarchy navigation component in order to store selected node and use the
+     *  Refactor hierarchy navigation component in order to store selected node and use the
      *  provided _links to perform the action to get the application info.
      */
     switchMap((action: ApplicationAction) => this.applicationService.getApplicationInfo(action.payload)
@@ -115,7 +115,7 @@ export class ApplicationEffects {
     .pipe(
       ofType(ApplicationActionTypes.SEARCH_APPLICATION),
       /**
-       * @TODO Refactor this once API provices a search link in Application Data
+       *  Refactor this once API provices a search link in Application Data
        */
       withLatestFrom(this.store.select(getAuthenticatedUser)),
       switchMap(([_action, user]: [ApplicationAction, User]) =>
@@ -173,7 +173,7 @@ export class ApplicationEffects {
     return forkJoin(
       of(applicationResponse),
       /**
-       * @TODO Currently API doesn't provides us a way to get the application branding, nor links
+       *  Currently API doesn't provides us a way to get the application branding, nor links
        *  to get each content that belong to the branding stuff. So once API prices either a one or more
        *  links to get that, refactor to use the fgeActionService instead of application service
        */
