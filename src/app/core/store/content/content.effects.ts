@@ -99,7 +99,7 @@ export class ContentEffects {
           mergeMap(() => [
             new LinkContentActionCompleted(),
             /**
-             * @TODO Refactor to send only the group id
+             *  Refactor to send only the group id
              */
             new FetchContentGroup(action.payload.groupId),
             new UpdateApplicationData(action.payload.applicationId)
@@ -139,7 +139,7 @@ export class ContentEffects {
 
   private handleContentGroupRequest(payload, method): any {
     /**
-     * @TODO Remove this useless logic, since the request should be performed
+     *  Remove this useless logic, since the request should be performed
      *  using the links from group data
      */
     if (method === 'POST') {

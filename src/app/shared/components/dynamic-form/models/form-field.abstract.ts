@@ -19,8 +19,8 @@ export abstract class FormField implements Field {
 
   hasErrorFor(errorName: string): boolean {
     const errors = this.group.controls[this.config.name].errors;
-    const errorFlag = !!(errors && errors[errorName]);
-    return errorFlag;
+    return !!(errors && errors[errorName]);
+
   }
 
 }

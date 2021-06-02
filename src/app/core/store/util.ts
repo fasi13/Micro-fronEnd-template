@@ -31,7 +31,7 @@ export function loadFromLocalStorage() {
   if (user) {
     user = { ...user, actions: mapLinks(user._links) };
   }
-  const currentState: State = {
+  return {
     router: null,
     authorization: {
       authenticated: !!token && !!user,
@@ -40,5 +40,5 @@ export function loadFromLocalStorage() {
       user
     }
   };
-  return currentState;
+ 
 }

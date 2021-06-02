@@ -1,9 +1,9 @@
 /* tslint:disable:max-classes-per-file */
 import { Action } from '@ngrx/store';
 import { ActionType } from '../util';
-import { ListingParams, FgeStoreAction } from '../../models';
+import { ListingParams, FgeStoreAction, UserRoleLink } from '../../models';
 import { UserRole } from '../../models/user/user-role.model';
-import { UserRoleLink } from '../../models';
+
 
 export const UserTypes = {
   USER_TRANSACTION: ActionType('USER_TRANSACTION'),

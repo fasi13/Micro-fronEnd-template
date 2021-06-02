@@ -27,9 +27,8 @@ import { UserService } from '../../services/user.service';
 import { User, ApiResponse, DataPaginated, Application, ApplicationLink, UserRoleLink } from '../../models';
 import { State, getApplicationInfo } from '../store.reducers';
 import { HttpResponse } from '@angular/common/http';
-import { ResourceService } from '../../services';
+import { ResourceService, FgeHttpActionService } from '../../services';
 import { EmptyAction } from '../store.actions';
-import { FgeHttpActionService } from '../../services';
 import { UserRole } from '../../models/user/user-role.model';
 
 enum UserMethods { POST = 'createNewUser', PUT = 'updateUser' }
@@ -87,7 +86,7 @@ export class UserEffects {
         map((response: HttpResponse<Blob>) => {
           const fileName = response.headers.get('X-FileName');
           /**
-          * @TODO Refactor this implementation since the link to export url should be provided
+          *  Refactor this implementation since the link to export url should be provided
           * in links array and shouldn't use custom services anymore
           */
           this.resourceService.downloadHttpResource(response, fileName);

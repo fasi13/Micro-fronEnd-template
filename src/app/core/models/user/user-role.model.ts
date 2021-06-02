@@ -8,6 +8,6 @@ export class UserRole extends FgeEntity {
   _links?: Link[];
 
   /* Extra fields used when selected */
-  permissions?: any[]; // @TODO Add proper model
+  permissions?: any[]; // Add proper model
   users?: User[];
 }

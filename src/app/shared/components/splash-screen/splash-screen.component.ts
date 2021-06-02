@@ -4,14 +4,11 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'fge-splash-screen',
   templateUrl: './splash-screen.component.html'
 })
-export class SplashScreenComponent implements OnInit {
+export class SplashScreenComponent   {
 
   @Input()
   enabled: boolean = true;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+ 
 
 }

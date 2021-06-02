@@ -14,5 +14,5 @@ export class ClearStoredData implements Action {
 
 export class EmptyAction implements Action {
   public type: string = StoreActionTypes.NONE;
-  constructor() {}
+  
 }

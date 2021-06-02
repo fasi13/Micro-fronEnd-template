@@ -4,11 +4,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'fge-application-not-found',
   templateUrl: './application-not-found.component.html',
 })
-export class ApplicationNotFoundComponent implements OnInit {
+export class ApplicationNotFoundComponent  {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  
 
 }

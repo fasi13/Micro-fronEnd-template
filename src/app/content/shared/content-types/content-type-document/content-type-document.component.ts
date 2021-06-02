@@ -1,17 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component,  Input } from '@angular/core';
 
 @Component({
   selector: 'fge-content-type-document',
   templateUrl: './content-type-document.component.html',
 })
-export class ContentTypeDocumentComponent implements OnInit {
+export class ContentTypeDocumentComponent   {
 
   @Input()
   value: string;
 
-  constructor() { }
 
-  ngOnInit() {
-  }
 
 }
