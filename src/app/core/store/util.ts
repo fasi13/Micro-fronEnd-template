@@ -2,7 +2,6 @@ import _mapValues from 'lodash/mapValues';
 import _keyBy from 'lodash/keyBy';
 import _lowerCase from 'lodash/lowerCase';
 
-import { State } from './store.reducers';
 import { User, UserToken, Link, MappedLinks } from '../models';
 
 const typeCache: { [label: string]: boolean } = {};
