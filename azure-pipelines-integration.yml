@@ -9,7 +9,7 @@ variables:
   MinorVersion: 2
   PatchVersion: 0
   RevisionVersion: $[counter('revision-counter', 0)]
-  project: 'E2E.Content.Management.UI'
+  project: 'E2E.Admin.UI'
 
 steps:
 - task: SonarQubePrepare@4
