@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+      "ms-vscode.vscode-typescript-tslint-plugin",
+      "esbenp.prettier-vscode",
+      "firsttris.vscode-jest-runner",
+      "streetsidesoftware.code-spell-checker",
+      "yatki.vscode-surround",
+      "coenraads.bracket-pair-colorizer-2",
+      "michelemelluso.gitignore",
+      "dbaeumer.vscode-eslint",
+      "aaron-bond.better-comments",
+      "sonarsource.sonarlint-vscode",
+      "pkief.material-icon-theme",
+      "dsznajder.es7-react-js-snippets",
+      "editorconfig.editorconfig"
+    ]
+}
