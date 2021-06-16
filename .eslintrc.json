@@ -5,10 +5,10 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "plugin:sonarjs/recommended",
     "airbnb",
     "prettier",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:sonarjs/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -18,22 +18,29 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "sonarjs"],
+  "plugins": [
+    "react",
+    "prettier",
+    "@typescript-eslint",
+    "sonarjs"
+  ],
   "rules": {
-    "react/jsx-filename-extension": [
-      "warn",
-      { "extensions": [".tsx", ".js", ".ts", ".jsx"] }
-    ],
+  "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
     "import/extensions": [
       "error",
       "ignorePackages",
       {
+        "js": "never",
+        "jsx": "never",
         "ts": "never",
         "tsx": "never"
       }
     ],
+    // we had to turn of the base rule first as it can report incorrect errors
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"]
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ]
   },
   "settings": {
     "import/resolver": {
