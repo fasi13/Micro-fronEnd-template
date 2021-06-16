@@ -49,6 +49,7 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
+    "prepare": "husky install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:dev": "env-cmd -e development npm run-script build",
@@ -67,11 +68,6 @@
       "yarn format",
       "yarn lint:fix"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "\"[Husky] pre-commit\" && lint-staged && pretty-quick --staged"
-    }
   },
   "eslintConfig": {
     "extends": [
