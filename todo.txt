@@ -1,0 +1,23 @@
+1. should we do npm update dependencies command
+  lets do it
+
+2. do we need JUnit for publish test results
+
+3. Configurding jest for CI:
+    https://blog.johnnyreilly.com/2020/12/30/azure-pipelines-meet-jest/
+    https://engineering.99x.io/react-unit-testing-connecting-test-results-to-azure-pipeline-ci-cd-819a2a183904
+
+    we need to run jest in a non watch mode.
+
+    we need to install a reporter =>  jest-junit as dev-dependency
+
+3. identify codecoverage tool
+    https://thenikhilk.com/2020/09/18/publish-code-coverage-azure-pipelines-react/
+
+    https://medium.com/@dzeyelid/check-code-coverage-with-jest-on-azure-devops-548b80d29d3
+
+4. convert release version to 2.0.0
+
+5. sonarQube
+
+
