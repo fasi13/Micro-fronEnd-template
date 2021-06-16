@@ -70,7 +70,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && pretty-quick --staged"
+      "pre-commit": "\"[Husky] pre-commit\" && lint-staged && pretty-quick --staged"
     }
   },
   "eslintConfig": {
