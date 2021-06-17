@@ -61,7 +61,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'echo $(System.DefaultWorkingDirectory)'
+    script: 'ls'
 
 - task: PublishCodeCoverageResults@1
   inputs:
