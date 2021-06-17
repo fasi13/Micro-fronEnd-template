@@ -59,6 +59,10 @@ steps:
   inputs:
     testResultsFiles: 'test-results.xml'
 
+- task: CmdLine@2
+  inputs:
+    script: 'echo $(System.DefaultWorkingDirectory)'
+
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: Cobertura
