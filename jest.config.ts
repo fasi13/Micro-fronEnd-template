@@ -7,4 +7,7 @@ export default async (): Promise<Config.InitialOptions> => ({
 	testResultsProcessor: 'jest-junit',
 	coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
 	reporters: ['default', 'jest-junit'],
+	moduleNameMapper: {
+		'\\.(css|less|scss|sass|svg)$': '<rootDir>/config/CSSStub.js',
+	},
 });
