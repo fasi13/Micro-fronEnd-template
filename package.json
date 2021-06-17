@@ -59,7 +59,7 @@
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint:fix": "eslint ./ --fix",
     "format": "prettier --write \"**/*.{ts,js,jsx,tsx}\"",
-    "test:ci": "jest --watchAll=false --coverage --reporters=default reporters=jest-junit",
+    "test:ci": "jest --watchAll=false --coverage --reporters=default --reporters=jest-junit --coverageReporters=cobertura",
     "cypress:open": "cypress open",
     "eject": "react-scripts eject"
   },
