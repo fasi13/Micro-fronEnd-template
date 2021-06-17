@@ -58,10 +58,17 @@ steps:
   condition: succeededOrFailed()
   inputs:
     testResultsFiles: 'test-results.xml'
+- task: CmdLine@2
+  inputs:
+    script: 'dir $(System.DefaultWorkingDirectory)'
 
 - task: CmdLine@2
   inputs:
     script: 'dir'
+
+- task: CmdLine@2
+  inputs:
+    script: 'dir coverage'
 
 - task: PublishCodeCoverageResults@1
   inputs:
