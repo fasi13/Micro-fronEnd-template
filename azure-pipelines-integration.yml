@@ -61,13 +61,13 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'ls'
+    script: 'dir'
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml"'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+    # reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
     failIfCoverageEmpty: true
 
 - task: SonarQubeAnalyze@4
