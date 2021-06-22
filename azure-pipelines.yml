@@ -46,11 +46,11 @@ steps:
   displayName: 'Build Project'
   inputs:
     command: custom
-    customCommand: run build:prod
+    customCommand: run build
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'dist\forge-website'
+    rootFolderOrFile: 'build'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(project).zip'
