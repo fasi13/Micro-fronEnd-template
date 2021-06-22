@@ -23,9 +23,9 @@ steps:
     cliSources: '.'
     extraProperties: |
         sonar.sources=src
-        sonar.exclusions=**/node_modules/**,src/assets/**,src/index.tsx,src/*.test.tsx,src/*.css,src/setupTests.ts,src/reportWebVitals.ts
+        sonar.exclusions=**/node_modules/**,src/assets/**,src/index.tsx,src/*.test.tsx,src/setupTests.ts,src/reportWebVitals.ts
         sonar.tests=src
-        sonar.test.inclusions=**/*.test.ts;**/*.test.;**/*.test.tsx
+        sonar.test.inclusions=**/*.test.ts;**/*.test.js;**/*.test.tsx
         sonar.typescript.lcov.reportPaths=coverage/lcov.info
         sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
         sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
@@ -58,17 +58,6 @@ steps:
   condition: succeededOrFailed()
   inputs:
     testResultsFiles: '**/test-results.xml'
-- task: CmdLine@2
-  inputs:
-    script: 'dir $(System.DefaultWorkingDirectory)'
-
-- task: CmdLine@2
-  inputs:
-    script: 'dir'
-
-- task: CmdLine@2
-  inputs:
-    script: 'dir coverage'
 
 - task: PublishCodeCoverageResults@1
   inputs:
