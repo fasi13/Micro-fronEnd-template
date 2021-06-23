@@ -7,7 +7,7 @@ pool:
 
 variables:
   MajorVersion: 1
-  MinorVersion: 2
+  MinorVersion: 3
   PatchVersion: 0
   RevisionVersion: $[counter('revision-counter', 0)]
   project: 'E2E.Admin.UI'
@@ -16,7 +16,7 @@ variables:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.x'
   displayName: 'Check/Install Node.js'
 
 - task: Npm@1
@@ -34,21 +34,28 @@ steps:
   displayName: 'Run Tests'
   inputs:
     command: custom
-    customCommand: 'run test'
+    customCommand: 'run test:ci'
+
+- task: PublishTestResults@2
+  displayName: "supply npm test test results to pipeline"
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: '**/test-results.xml'
 
 - task: Npm@1
   displayName: 'Build Project'
   inputs:
     command: custom
-    customCommand: run build:prod
+    customCommand: run build
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'dist\forge-website'
+    rootFolderOrFile: 'build'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(project).zip'
     replaceExistingArchive: true
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
