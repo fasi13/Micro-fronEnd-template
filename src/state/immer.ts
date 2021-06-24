@@ -1,16 +1,6 @@
 import produce from 'immer';
 import create, { State, StateCreator, UseStore } from 'zustand';
 
-// const immer =  config => (set,get,api) => config(fn => set(produce(fn)),get,api);
-// const immer =
-// 	<T extends State>(
-// 		config: StateCreator<T, (fn: (draft: Draft<T>) => void) => void>,
-// 	): StateCreator<T> =>
-// 	(set, get, api) =>
-// 		config(fn => set(produce(fn) as (state: T) => T), get, api);
-
-// setAutoFreeze(false);
-
 const immer =
 	<T extends State>(config: StateCreator<T>): StateCreator<T> =>
 	(set, get, api) =>
