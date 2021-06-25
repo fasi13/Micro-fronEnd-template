@@ -8,13 +8,11 @@ describe('App', () => {
 		render(<App />);
 	});
 
-	test('loads and displays App', () => {
+	test.only('loads and displays App', () => {
 		const { getByTestId, getByText, queryByTestId } = render(<App />);
-		const logo = getByTestId('logo', { exact: true });
 		const p = getByTestId('message');
 
 		getByText('get started', { exact: false });
-		expect(logo).toBeInTheDocument();
 		expect(p).toBeInTheDocument();
 		expect(queryByTestId('learn-link')).toBeInTheDocument();
 	});
