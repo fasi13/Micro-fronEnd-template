@@ -8,7 +8,7 @@ describe('App', () => {
 		render(<App />);
 	});
 
-	test.only('loads and displays App', () => {
+	test('loads and displays App', () => {
 		const { getByTestId, getByText, queryByTestId } = render(<App />);
 		const p = getByTestId('message');
 
