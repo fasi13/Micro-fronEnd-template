@@ -33,7 +33,7 @@ function App() {
 				<p className="text-3xl text-white">{activeNodeId}</p>
 				<div>{JSON.stringify(hierarchyData)}</div>
 				{loading ? (
-					<span>loading....</span>
+					<span className="text-black text-5xl">loading....</span>
 				) : (
 					<button
 						type="button"
