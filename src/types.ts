@@ -66,6 +66,11 @@ export interface ApplicationResponse {
 	dateModified: string;
 }
 
+export interface ApplicationPath {
+	path: Application[];
+	_links: Link[];
+}
+
 // export interface ApplicationGroupResponse {
 // 	_links: Link[];
 // 	id: number;

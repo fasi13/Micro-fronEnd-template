@@ -1,7 +1,9 @@
 import {
 	ApiResponse,
 	Application,
+	ApplicationPath,
 	ApplicationResponse,
+	DataPaginated,
 	Link,
 	TreeView,
 } from '../types';
@@ -24,23 +26,44 @@ const getCreateApplicationLink = (links: Link[]): Link | undefined =>
 
 const loadChildren = (links: Link[]): Link[] | undefined =>
 	links.filter(l => l.rel === 'applications' || l.rel === 'applicationGroups');
-
+const getAction = (data: TreeView, action: string): any => {
+	if (data._links) {
+		return data._links.find(item => item.rel === action);
+	}
+	return null;
+};
 interface HierarchyState {
 	rootApplication: Application | null;
 	loading: boolean;
 	activeNodeId: number;
 	hierarchyData: TreeView[];
+	searchData: ApiResponse<DataPaginated<ApplicationPath>>[];
+	newChange: string;
+	searchedKeyWord: string;
+	setSearchedData: (item: ApiResponse<DataPaginated<ApplicationPath>>) => void;
+	setNewChange: (value: string) => void;
 	setLoading: (val: boolean) => void;
 	loadApplication: () => void;
 	loadGroup: () => void;
 	updateApplication: (node: TreeView) => void;
 	createItem: (name: string, group: TreeView, isGroup: boolean) => void;
-	searchTreeView: (name: string) => void;
 	initializeHierarchyState: () => void;
 	updateHierarchyStore: (
 		newNode: ApplicationResponse,
 		isGroup: boolean,
 	) => void;
+	createApplicationGroup: (
+		data: any,
+		actionName: string,
+		options?: {
+			name?: any;
+			params?: {
+				[param: string]: string | string[];
+			};
+		},
+	) => void;
+	getApplicationGroups: () => void;
+	searchApplication: (keyword: string) => void;
 }
 
 const HierarchyStore = (set: any, get: any): HierarchyState => ({
@@ -48,6 +71,20 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	loading: false,
 	activeNodeId: 0,
 	hierarchyData: [],
+	searchData: [],
+	newChange: '',
+	searchedKeyWord: '',
+	setSearchedData: (item: ApiResponse<DataPaginated<ApplicationPath>>) =>
+		set((state: HierarchyState) => {
+			state.searchData.push({
+				success: item.success,
+				data: item.data,
+			});
+		}),
+	setNewChange: (value: string) =>
+		set((state: HierarchyState) => {
+			state.newChange = value;
+		}),
 	setLoading: (val: boolean) =>
 		set((state: HierarchyState) => {
 			state.loading = val;
@@ -59,6 +96,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		if (res) {
 			const applicationData = res?.data?.data;
 			return set((state: HierarchyState) => {
+				console.log(applicationData);
 				state.loading = false;
 				state.updateHierarchyStore(applicationData, false);
 			});
@@ -66,6 +104,17 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		return set((state: HierarchyState) => {
 			state.loading = false;
 		});
+	},
+	searchApplication: async (keyword: string) => {
+		await axios
+			.get<ApiResponse<DataPaginated<ApplicationPath>>>(
+				`applications/${get().activeNodeId}/paths/?keyword=${keyword}`,
+			)
+			.then(resp => {
+				set((state: HierarchyState) => {
+					state.setSearchedData(resp.data);
+				});
+			});
 	},
 	loadGroup: () => {
 		console.log('wee');
@@ -75,10 +124,6 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	},
 	createItem: async (name: string, group: TreeView, isGroup: boolean) => {
 		console.log('wee', name, group, isGroup);
-	},
-	searchTreeView: (name: string) => {
-		// what is the search URL ?
-		console.log(name);
 	},
 	initializeHierarchyState: () =>
 		set((state: HierarchyState) => {
@@ -106,22 +151,48 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			});
 		}
 	},
+	createApplicationGroup: (
+		data: any,
+		actionName: string,
+		options?: {
+			name?: any;
+			params?: {
+				[param: string]: string | string[];
+			};
+		},
+	): void => {
+		if (data) {
+			const link: Link = getAction(data, actionName);
 
-	// updateHierarchyStoreWithSelfDetail: (nodeDetail: ApplicationResponse) => {
-
-	// }
-
-	// updateHierarchyStoreWithApplicationGroups: (
-	// 	newNode: DataPaginated<ApplicationGroupResponse>,
-	// ) => {},
-
-	// updateHierarchyStoreWithApplications: (
-	// 	newNode: DataPaginate<ApplicationResponse>,
-	// ) => {},
+			if (link) {
+				const { method, href } = link;
+				console.log('options', options);
+				axios({
+					method: method.method,
+					url: href,
+					data: options,
+				}).then(resp => resp.data);
+			}
+		}
+	},
+	getApplicationGroups: async () => {
+		const response = await axios.get<ApiResponse<DataPaginated<any>>>(
+			`applications/${get().activeNodeId}/applicationGroups`,
+		);
+		if (response) {
+			const applicationGroupData = response?.data?.data;
+			return set((state: HierarchyState) => {
+				state.loading = false;
+				state.hierarchyData = applicationGroupData.items;
+			});
+		}
+		return set((state: HierarchyState) => {
+			state.loading = false;
+		});
+	},
 });
 
 /* eslint-disable import/prefer-default-export */
 export const useHierarchyStore = createStore<HierarchyState>(HierarchyStore);
 
 export {};
-
