@@ -1,5 +1,7 @@
+import { Button, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useHierarchyStore } from '../../state';
+import { SearchApplication } from '../../common/components';
+import { useHierarchyStore, useSearchStore } from '../../state';
 import { TreeView } from '../../types';
 import './App.css';
 
@@ -16,8 +18,11 @@ const App = () => {
 		getApplicationGroups,
 		setNewChange,
 		createApplicationGroup,
-		searchApplication,
+		getHierarchyChildeData,
+		childrenData,
 	} = useHierarchyStore();
+
+	const { setSearchLoading, searchApplication, searchData } = useSearchStore();
 
 	useEffect(() => {
 		initializeHierarchyState();
@@ -28,6 +33,7 @@ const App = () => {
 	useEffect(() => {
 		const handler = setTimeout(() => {
 			if (inputValue) {
+				setSearchLoading(true);
 				searchApplication(inputValue);
 			}
 		}, 1000);
@@ -46,6 +52,11 @@ const App = () => {
 	const searchElement = (keyword: string) =>
 		keyword.length < 3 ? null : setInputValue(keyword);
 
+	const toggleCollapse = (item: TreeView) => {
+		setLoading(true);
+		getHierarchyChildeData(item);
+	};
+
 	if (loading) {
 		return <p>Loading...</p>;
 	}
@@ -56,15 +67,20 @@ const App = () => {
 				<header className="App-header">
 					<p data-testid="message">get started</p>
 					<div>
-						<input
-							placeholder="Search application..."
-							type="text"
+						<TextField
+							id="standard-search"
+							label="Search application..."
+							type="search"
 							onChange={e => searchElement(e.target.value)}
 						/>
-						<br />
-						<br />
+						{searchData.length ? (
+							<SearchApplication />
+						) : (
+							<p>No results found! </p>
+						)}
 						<br />
 					</div>
+
 					<a
 						data-testid="learn-link"
 						className="App-link"
@@ -74,25 +90,33 @@ const App = () => {
 						Learn React
 					</a>
 					<p className="text-3xl text-white">{activeNodeId}</p>
-
-					<button
-						type="button"
-						aria-controls="alt"
-						tabIndex={0}
-						onKeyDown={e => {
-							e.stopPropagation();
-						}}
-						onClick={() => loadApplication()}>
-						Inc
-					</button>
 					<div>
 						{hierarchyData.map(item => (
 							<div style={{ flex: 'row' }}>
 								{' '}
-								<div>
+								<div
+									onKeyDown={e => {
+										e.stopPropagation();
+									}}
+									onClick={() => toggleCollapse(item)}
+									role="link"
+									tabIndex={0}>
 									{' '}
 									<p>{item.name}</p>
 								</div>
+								{childrenData
+									? childrenData.map(i => (
+											<div
+												onKeyDown={e => {
+													e.stopPropagation();
+												}}
+												onClick={() => toggleCollapse(i)}
+												role="link"
+												tabIndex={0}>
+												<p>{i.name}</p>
+											</div>
+									  ))
+									: null}
 								<div>
 									<input
 										type="text"
@@ -105,7 +129,9 @@ const App = () => {
 									<br />
 								</div>
 								<div>
-									<button
+									<Button
+										variant="contained"
+										color="primary"
 										type="button"
 										aria-controls="alt"
 										tabIndex={0}
@@ -116,7 +142,49 @@ const App = () => {
 											addApplicationGroup(item, 'createApplicationGroup')
 										}>
 										create Group
-									</button>
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'createApplication')
+										}>
+										create application
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'updateApplication')
+										}>
+										Edit application
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'updateApplicationGroup')
+										}>
+										update application Group
+									</Button>
 								</div>
 							</div>
 						))}
