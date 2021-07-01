@@ -10,4 +10,11 @@ export default async (): Promise<Config.InitialOptions> => ({
 	moduleNameMapper: {
 		'\\.(css|less|scss|sass|svg)$': '<rootDir>/config/CSSStub.js',
 	},
+
+  preset: 'ts-jest',
+  transform: {
+    '^.+\\.(ts|tsx)?$': 'babel-jest',
+  },
+
+
 });

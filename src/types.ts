@@ -66,6 +66,10 @@ export interface ApplicationResponse {
 	dateModified: string;
 }
 
+export interface ICustomProp {
+	e: string;
+}
+
 // export interface ApplicationGroupResponse {
 // 	_links: Link[];
 // 	id: number;
