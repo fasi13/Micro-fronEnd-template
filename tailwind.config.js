@@ -4,16 +4,16 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				"skyblue": '#3F98E3',
-				"faded-skyblue": "#81B1DB"
+				skyblue: '#3F98E3',
+				'faded-skyblue': '#81B1DB',
 			},
 			height: {
-				"10.5": "42px",
-				".5": "2px"
+				'10.5': '42px',
+				'.5': '2px',
 			},
 			width: {
-				".5": "2px"
-			}
+				'.5': '2px',
+			},
 		},
 	},
 	variants: {
