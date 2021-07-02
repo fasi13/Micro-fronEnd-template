@@ -77,6 +77,10 @@ export interface ItreeData {
 	children: ItreeData[];
 	edit: boolean;
 }
+export interface ApplicationPath {
+	path: Application[];
+	_links: Link[];
+}
 
 // export interface ApplicationGroupResponse {
 // 	_links: Link[];

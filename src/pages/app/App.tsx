@@ -1,124 +1,198 @@
-import React, { useState } from 'react';
+import { Button, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { SearchApplication } from '../../common/components';
+import { useHierarchyStore, useSearchStore } from '../../state';
+import { TreeView } from '../../types';
 import './App.css';
 
-interface ItreeData {
-	name: string,
-	key: number,
-	children: ItreeData[],
-}
+const App = () => {
+	const [inputValue, setInputValue] = useState<string>('');
+	const {
+		activeNodeId,
+		loading,
+		newChange,
+		initializeHierarchyState,
+		hierarchyData,
+		loadApplication,
+		setLoading,
+		getApplicationGroups,
+		setNewChange,
+		createApplicationGroup,
+		getHierarchyChildeData,
+		childrenData,
+	} = useHierarchyStore();
 
+	const { setSearchLoading, searchApplication, searchData } = useSearchStore();
 
-function App() {
-	// const {
-	// 	activeNodeId,
-	// 	loading,
-	// 	initializeHierarchyState,
-	// 	hierarchyData,
-	// 	loadApplication,
-	// 	setLoading,
-	// } = useHierarchyStore();
-const [data] = useState<ItreeData[]>([
-	{
-		name: 'a',
-		key: -1,
-		children: [
-			{ name: 'a.a.1', key: 1, children: [] },
-			{ name: 'a.a.2', key: 2, children: [] },
-		],
-	},
-	{
-		name: 'b',
-		key: -2,
-		children: [
-			{ name: 'b.b.1', key: 3, children: [] },
-			{ name: 'b.b.2', key: 4, children: [] },
-		],
-	},
-	{
-		name: 'c',
-		key: -3,
-		children: [
-			{ name: 'b.b.1', key: 5, children: [] },
-			{ name: 'b.b.2', key: 6, children: [] },
-		],
-	},
-	{
-		name: 'd',
-		key: -4,
-		children: [
-			{ name: 'b.b.1', key: 7, children: [] },
-			{ name: 'b.b.2', key: 8, children: [] },
-		],
-	},
-]);
+	useEffect(() => {
+		initializeHierarchyState();
+		setLoading(true);
+		loadApplication();
+		getApplicationGroups();
+	}, []);
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			if (inputValue) {
+				setSearchLoading(true);
+				searchApplication(inputValue);
+			}
+		}, 1000);
+		return () => {
+			clearTimeout(handler);
+		};
+	}, [inputValue]);
 
+	const setNewGroup = (value: string) => {
+		setNewChange(value);
+	};
+	const addApplicationGroup = (item: TreeView, action: string) => {
+		createApplicationGroup(item, action, { name: newChange });
+	};
 
+	const searchElement = (keyword: string) =>
+		keyword.length < 3 ? null : setInputValue(keyword);
 
-	// useEffect(() => {
-	// 	initializeHierarchyState();
-	// 	setLoading(true);
-	// 	loadApplication();
-	// }, []);
+	const toggleCollapse = (item: TreeView) => {
+		setLoading(true);
+		getHierarchyChildeData(item);
+	};
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
 
 	return (
-		<div className="App">
-			{/* <header className="App-header">
-				<p data-testid="message">get started</p>
-				<a
-					data-testid="learn-link"
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer">
-					Learn React
-				</a>
-				<p className="text-3xl text-white">{activeNodeId}</p>
-				<div>{JSON.stringify(hierarchyData)}</div>
-				{loading ? (
-					<span className="text-5xl text-black">loading....</span>
-				) : (
-					<button
-						type="button"
-						aria-controls="alt"
-						tabIndex={0}
-						onKeyDown={e => {
-							e.stopPropagation();
-						}}
-						onClick={() => loadApplication()}>
-						Inc
-					</button>
-				)}
-			</header> */}
+		<>
+			<div className="App">
+				<header className="App-header">
+					<p data-testid="message">get started</p>
+					<div>
+						<TextField
+							id="standard-search"
+							label="Search application..."
+							type="search"
+							onChange={e => searchElement(e.target.value)}
+						/>
+						{searchData.length ? (
+							<SearchApplication />
+						) : (
+							<p>No results found! </p>
+						)}
+						<br />
+					</div>
 
-			<div className="absolute w-full h-full text-white bg-blue-700">
-				<ul className="top-0 left-0 right-0 z-10 w-1/4 h-full pl-5 ml-3 overflow-hidden">
-					{data.map(item => (
-						<li
-							key={item.key}
-							className="relative flex flex-col list-none m-t-3 m-b-3 tree">
-							<div className="flex flex-row items-center justify-start space-x-2">
-								<div className="w-4 h-4 text-gray-400 bg-gray-100 rounded-sm">
-									<span>-</span>
+					<a
+						data-testid="learn-link"
+						className="App-link"
+						href="https://reactjs.org"
+						target="_blank"
+						rel="noopener noreferrer">
+						Learn React
+					</a>
+					<p className="text-3xl text-white">{activeNodeId}</p>
+					<div>
+						{hierarchyData.map(item => (
+							<div style={{ flex: 'row' }}>
+								{' '}
+								<div
+									onKeyDown={e => {
+										e.stopPropagation();
+									}}
+									onClick={() => toggleCollapse(item)}
+									role="link"
+									tabIndex={0}>
+									{' '}
+									<p>{item.name}</p>
 								</div>
-								<div className="w-16 h-8 border-indigo-200">
-									<div>{item.name}</div>
+								{childrenData
+									? childrenData.map(i => (
+											<div
+												onKeyDown={e => {
+													e.stopPropagation();
+												}}
+												onClick={() => toggleCollapse(i)}
+												role="link"
+												tabIndex={0}>
+												<p>{i.name}</p>
+											</div>
+									  ))
+									: null}
+								<div>
+									<input
+										type="text"
+										id="fname"
+										name="fname"
+										onChange={e => setNewGroup(e.target.value)}
+									/>
+									<br />
+									<br />
+									<br />
+								</div>
+								<div>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'createApplicationGroup')
+										}>
+										create Group
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'createApplication')
+										}>
+										create application
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'updateApplication')
+										}>
+										Edit application
+									</Button>
+									<Button
+										variant="contained"
+										color="primary"
+										type="button"
+										aria-controls="alt"
+										tabIndex={0}
+										onKeyDown={e => {
+											e.stopPropagation();
+										}}
+										onClick={() =>
+											addApplicationGroup(item, 'updateApplicationGroup')
+										}>
+										update application Group
+									</Button>
 								</div>
 							</div>
-							<ul className="pl-5 ml-2">
-								{item.children.map(c => (
-									<li
-										key={item.key}
-										className="relative flex flex-col pl-5 mt-3 mb-3 list-none tree">
-										<div>{c.name}</div>
-									</li>
-								))}
-							</ul>
-						</li>
-					))}
-				</ul>
+						))}
+					</div>
+				</header>
 			</div>
-		</div>
+		</>
 	);
-}
+};
 
 export default App;
