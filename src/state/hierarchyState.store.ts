@@ -102,6 +102,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 					createGroupLink: getCreateGroupLink(newNode._links),
 					createApplicationLink: getCreateApplicationLink(newNode._links),
 					loadChildrenLink: loadChildren(newNode._links),
+					edit: false,
 				});
 			});
 		}

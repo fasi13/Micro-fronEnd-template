@@ -53,6 +53,7 @@ export interface TreeView {
 	loadChildrenLink?: Link[];
 	path?: Application; // ??
 	_links?: Link[];
+	edit: boolean;
 }
 
 export interface ApplicationResponse {
@@ -64,6 +65,17 @@ export interface ApplicationResponse {
 	parentApplicationId: number | null;
 	applicationGroupId: number | null;
 	dateModified: string;
+}
+
+export interface Wee {
+	name: string;
+}
+
+export interface ItreeData {
+	name: string;
+	key: number;
+	children: ItreeData[];
+	edit: boolean;
 }
 
 // export interface ApplicationGroupResponse {

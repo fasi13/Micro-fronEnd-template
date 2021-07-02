@@ -1,0 +1,39 @@
+
+.tree li::before {
+  content: "";
+  position: absolute;
+  top:-7px;
+  left:-30px;
+  border-left: 1px dashed #fff;
+  border-bottom:1px dashed #fff;
+  width:30px;
+  height:30px;
+}
+
+.tree li::after {
+  position:absolute;
+  content:"";
+  top:10px;
+  left:-30px;
+  border-left: 1px dashed #fff;
+  /* border-top:1px solid #fff; */
+  width:32px;
+  height:100%;
+}
+
+.tree li:last-child::after  {
+  display:none;
+}
+
+ul.tree>li:first-child::before {
+  display:none;
+}
+
+.expand::before {
+  display: block;
+  content: '+'
+}
+
+ul .myul::before{
+  display:none
+}
