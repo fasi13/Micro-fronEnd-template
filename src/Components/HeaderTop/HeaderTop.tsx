@@ -85,14 +85,40 @@ const useStyles = makeStyles(theme => ({
 export default function HeaderTop() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
-	const ccc = isTearedStore(state => state.setOpen);
+	const ddd = isTearedStore(state => state.setOpen);
 	const eee = isTearedStore(state => state.setTearSidebar);
+	const fff = isTearedStore(state => state.setLastSidebarOpen);
 
-	// const tearSidebar = isTearedStore(state => state.tearSidebar);
+	const open = isTearedStore(state => state.open);
+	const tearSidebar = isTearedStore(state => state.tearSidebar);
+	const lastSidebarOpen = open;
 
-	const handleTear = () => {
-		eee();
-		ccc();
+	const setOpen = (opn: boolean) => {
+		ddd(opn);
+	};
+
+	const setTearSidebar = (t: boolean) => {
+		eee(t);
+	};
+	const setLastSidebarOpen = (last: boolean) => {
+		fff(last);
+	};
+
+	const handleTear = (event: any) => {
+		if (
+			(event.type === 'keydown' &&
+				(event.keyCode === 13 || event.keyCode === 32)) ||
+			event.type === 'click'
+		)
+			if (!tearSidebar) {
+				setLastSidebarOpen(open);
+				setTearSidebar(true);
+				setOpen(false);
+			} else {
+				setOpen(lastSidebarOpen);
+				setTearSidebar(false);
+				setOpen(true);
+			}
 	};
 
 	const handleClick = (event: any) => {

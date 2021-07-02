@@ -80,13 +80,15 @@ export default function Home() {
 	const ddd = isTearedStore(state => state.setOpen);
 	const eee = isTearedStore(state => state.setTearSidebar);
 
-	const setOpen = () => {
-		ddd();
+	const setOpen = (opn: boolean) => {
+		ddd(opn);
 	};
-	const setTearSidebar = () => {
-		setOpen();
-		eee();
+
+	const setTearSidebar = (tear: boolean) => {
+		setOpen(false);
+		eee(tear);
 	};
+
 	const classes = useStyles();
 	const style = {
 		display: 'flex',
@@ -114,22 +116,16 @@ export default function Home() {
 				(event.keyCode === 13 || event.keyCode === 32)) ||
 			event.type === 'click'
 		)
-			ddd();
+			ddd(!open);
 	};
-	const handleTear = (event: any) => {
+	const handleUntear = (event: any) => {
 		if (
 			(event.type === 'keydown' &&
 				(event.keyCode === 13 || event.keyCode === 32)) ||
 			event.type === 'click'
 		)
-			if (!tearSidebar) {
-				// setLastSidebarOpen(open);
-				setTearSidebar();
-				setOpen();
-			} else {
-				setOpen();
-				setTearSidebar();
-			}
+			setTearSidebar(false);
+
 		// if (!tearSidebar) {
 		// 	setLastSidebarOpen(open);
 		// 	setTearSidebar(true);
@@ -237,7 +233,7 @@ export default function Home() {
 							}}>
 							<Sidebar />
 							<div
-								onKeyDown={() => handleTear}
+								onKeyDown={() => handleUntear}
 								role="button"
 								tabIndex={0}
 								aria-label="close-tear"
@@ -252,7 +248,7 @@ export default function Home() {
 									boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
 								}}
 								id="icon"
-								onClick={handleTear}>
+								onClick={handleUntear}>
 								x
 							</div>
 						</Rnd>

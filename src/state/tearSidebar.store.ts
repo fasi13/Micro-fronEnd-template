@@ -4,18 +4,18 @@ interface myState {
 	open: boolean;
 	tearSidebar: boolean;
 	lastSidebarOpen : boolean;
-	setOpen: () => void;
-	setTearSidebar: () => void;
-	setLastSidebarOpen:()=>void;
+	setOpen: (opn: boolean) => void;
+	setTearSidebar: (ter: boolean) => void;
+	setLastSidebarOpen:(opn: boolean)=>void;
 }
 
 const isTearedStore = create<myState>((set) => ({
 	open: true,
 	tearSidebar: false,
 	lastSidebarOpen: true,
-  setOpen: () => set(state => ({ open: !state.open  })),
-  setTearSidebar: () => set(state => ({ tearSidebar: !state.tearSidebar  })),
-  setLastSidebarOpen: () => set(state => ({ lastSidebarOpen: !state.lastSidebarOpen  })),
+  setOpen: (opn: boolean) => set( ({ open: opn  })),
+  setTearSidebar: (ter: boolean) => set(({ tearSidebar: ter  })),
+  setLastSidebarOpen: (opn: boolean) => set({ lastSidebarOpen: opn }),
 }))
 /* eslint-disable import/prefer-default-export */
 export default isTearedStore;
