@@ -49,7 +49,10 @@
       ,
       "no-param-reassign": "off",
       "import/prefer-default-export": "off",
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "react/prop-types": "off", // Since we do not use prop-types
+      "react/require-default-props": "off" // Since we do not use prop-type
+
   },
   "settings": {
     "import/resolver": {
