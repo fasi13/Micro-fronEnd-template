@@ -16,7 +16,9 @@ import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import React from 'react';
+import { Route } from 'react-router';
 import isTearedStore from '../../state/tearSidebar.store';
+import Breadcrumb from '../Breadcrumb/Breadcrumb';
 
 const drawerWidth = 340;
 const useStyles = makeStyles(theme => ({
@@ -333,7 +335,18 @@ export default function HeaderTop() {
 								/>
 							</svg>
 						</div>
-						<span className="pl-2">E2e Group</span>
+						<span className="pl-2">
+              {/* E2e Group */}
+              <Route>
+                {({ location }) => {
+                  const pathnames = location.pathname.split('/').filter((x) => x);
+                  console.log(pathnames)
+                  return (
+                    <Breadcrumb pathnames={pathnames} />
+                  );
+                }}
+              </Route>
+            </span>
 					</div>
 				</div>
 			</AppBar>
