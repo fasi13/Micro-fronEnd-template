@@ -1,2 +1,2 @@
-export * from './hierarchyTree';
+export * from './hierarchyTree/hierarchyTree';
 export * from './search-application';

@@ -4,7 +4,7 @@ import {
 	ApplicationResponse,
 	DataPaginated,
 	Link,
-	TreeView,
+	TreeView
 } from '../types';
 import { HierarchyClient as axios } from '../util/axios';
 import createStore from '../util/immer';
@@ -25,26 +25,35 @@ const getCreateApplicationLink = (links: Link[]): Link | undefined =>
 
 const loadChildren = (links: Link[]): Link[] | undefined =>
 	links.filter(l => l.rel === 'applications' || l.rel === 'applicationGroups');
+
 const getAction = (data: TreeView, action: string): any => {
 	if (data._links) {
 		return data._links.find(item => item.rel === action);
 	}
 	return null;
 };
+
+const updateNodeWithChildren = (node: TreeView, children: TreeView[]) : TreeView[] =>  {
+	if (node && node?.childrenData) {
+		return [...node?.childrenData, ...children];
+	}
+		return [...children];
+}
+
 interface HierarchyState {
 	rootApplication: Application | null;
 	loading: boolean;
 
 	activeNodeId: number;
 	hierarchyData: TreeView[];
-	childrenData: TreeView[];
+	// childrenData: TreeView[];
 
 	newChange: string;
 
 	setNewChange: (value: string) => void;
 	setLoading: (val: boolean) => void;
 
-	loadApplication: () => void;
+	loadApplication: (applicationId: string) => void;
 	loadGroup: () => void;
 	updateApplication: (node: TreeView) => void;
 	createItem: (name: string, group: TreeView, isGroup: boolean) => void;
@@ -63,18 +72,16 @@ interface HierarchyState {
 			};
 		},
 	) => void;
-	getApplicationGroups: () => void;
-	getHierarchyChildeData: (item: TreeView) => void;
+	getUserApplication: () => void;
+	getHierarchyChildData: (item: TreeView,nodeId: number, nodePath: number[]) => void;
 }
 
 const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	rootApplication: null,
 	loading: false,
-
 	activeNodeId: 0,
 	hierarchyData: [],
-	childrenData: [],
-
+	// childrenData: [],
 	newChange: '',
 
 	setNewChange: (value: string) =>
@@ -86,23 +93,38 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			state.loading = val;
 		}),
 
-	loadApplication: async () => {
-		const res = await axios.get<ApiResponse<ApplicationResponse>>(
-			`applications/${get().activeNodeId}`,
+	loadApplication: async (applicationId: string) => {
+		const res = await axios.get<ApiResponse<TreeView>>(
+			`applications/${applicationId}`,
 		);
+
 		if (res) {
-			const applicationData = res?.data?.data;
-			return set((state: HierarchyState) => {
-				console.log(applicationData);
-				state.loading = false;
-				state.updateHierarchyStore(applicationData, false);
-			});
+			const applicationData = res.data.data;
+
+			const childrenLink = loadChildren(applicationData?._links || []);
+			const childrenGroupLink: Link | undefined = childrenLink?.find(
+				c => c.rel === 'applicationGroups',
+			);
+
+			if (childrenGroupLink) {
+				const resGroup = await axios.get<ApiResponse<DataPaginated<TreeView>>>(
+					childrenGroupLink?.href,
+				);
+
+				if (resGroup) {
+					set((state: HierarchyState) => {
+						state.loading = false;
+						state.hierarchyData = [
+							{ ...applicationData, childrenData: resGroup?.data?.data.items },
+						];
+					});
+				}
+			}
 		}
 		return set((state: HierarchyState) => {
 			state.loading = false;
 		});
 	},
-
 	loadGroup: () => {
 		console.log('wee');
 	},
@@ -163,47 +185,80 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			}
 		}
 	},
-	getApplicationGroups: async () => {
-		const response = await axios.get<ApiResponse<DataPaginated<any>>>(
-			`applications/${get().activeNodeId}/applicationGroups`,
-		);
-		if (response) {
-			return set((state: HierarchyState) => {
-				state.loading = false;
-				state.hierarchyData = response?.data?.data.items;
-			});
-		}
-		return set((state: HierarchyState) => {
-			state.loading = false;
-		});
+
+	getUserApplication: async () => {
+		get().setLoading(true);
+		// const response = await axios.get<ApiResponse<string>>(`applications`);
+		// if (response && response.status === 200){
+		// 	 await get().loadApplication(response.data);
+		// }
+		await get().loadApplication(1);
 	},
-	getHierarchyChildeData: async (data: TreeView) => {
+
+
+	// eslint-disable-next-line sonarjs/cognitive-complexity
+	getHierarchyChildData: async (data: TreeView, nodeId:   number, nodePath: number[] ) => {
+		console.log('---- getHierarchyChildData');
+
 		if (data._links) {
-			const link = data._links.find(
-				item => item.rel === 'applications' || item.rel === 'applicationGroups',
-			);
-			if (link) {
-				const { method, href } = link;
-				axios({
-					method: method.method,
-					url: href,
-				}).then(resp => {
-					set((state: HierarchyState) => {
-						state.loading = false;
-						state.childrenData = resp?.data?.data.items;
-						console.log('childrenData', resp?.data?.data.items);
+			const links = loadChildren(data._links);
+			if(links)
+			{
+				const resp = await Promise.all(
+					links.map(async link => {
+						const { method, href } = link;
+						return axios({
+							method: method.method,
+							url: href,
+						});
+					}),
+				);
+				if (resp)
+				{
+					resp.forEach((res)=>{
+						if(res.status === 200){
+								set((state: HierarchyState) => {
+									// we need to flatten it here other wise can not access it.
+									// consider something like this [1,0,0,1]. to indicate the full path of the  node.
+
+
+								const {hierarchyData} = state;
+								let i = 1;
+								let parentNode: TreeView = hierarchyData[0];
+								while(i <= nodePath.length-1 ){
+									if(parentNode.childrenData){
+										// eslint-disable-next-line no-loop-func
+										const p = parentNode?.childrenData.find(pn => pn.id === nodePath[i]);
+										if(p)
+											parentNode = p;
+									 }
+									i +=1;
+								}
+
+								if(parentNode){
+								const childrenData = updateNodeWithChildren(
+									parentNode,
+									res?.data?.data.items,
+								);
+								parentNode.childrenData = [...childrenData];
+								}
+							});
+						}
+						else
+							console.log("Report Error here")
 					});
-				});
+				}
+
 			}
 		}
-
-		return set((state: HierarchyState) => {
+		set((state: HierarchyState) => {
 			state.loading = false;
 		});
-	},
+	}
 });
 
 /* eslint-disable import/prefer-default-export */
 export const useHierarchyStore = createStore<HierarchyState>(HierarchyStore);
 
-export {};
+
+

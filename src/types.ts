@@ -36,7 +36,7 @@ export interface Application {
 	_links: Link[];
 }
 export interface TreeView {
-	id: string | number;
+	id: number;
 	key?: string;
 	name: string;
 	value?: string;

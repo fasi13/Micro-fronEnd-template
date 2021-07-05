@@ -34,6 +34,11 @@ ul.tree>li:first-child::before {
   content: '+'
 }
 
+.collapse::before {
+  display: block;
+  content: '-'
+}
+
 ul .myul::before{
   display:none
 }
