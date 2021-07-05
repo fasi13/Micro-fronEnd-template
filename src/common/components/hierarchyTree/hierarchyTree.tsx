@@ -6,12 +6,11 @@ import {
 	CloseIcon,
 	FolderIcon,
 	PencilIcon,
-	SpinnerIcon,
+	SpinnerIcon
 } from '../../icons';
 import './hierarchy.css';
 
 interface NodeActions {
-	onEdit: () => void;
 	onSelect: () => void;
 	onToggle: (
 		item: TreeView,
@@ -19,8 +18,36 @@ interface NodeActions {
 		nodePath: number[],
 		cb: () => void,
 	) => void;
-	onAddApplication?: () => void;
-	onAddGroup?: () => void;
+	onAddApplication: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: number[],
+		name: string,
+		value: string,
+		cb: (err: any) => void,
+	) => void;
+	onAddGroup: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: number[],
+		name: string,
+		cb: (err: any) => void,
+	) => void;
+	onEditApplication: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: number[],
+		name: string,
+		value:string,
+		cb: (err: any) => void,
+	) => void;
+		onEditGroup: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: number[],
+		name: string,
+		cb: (err:any) => void,
+	) => void;
 	onLoadMore?: () => void;
 }
 
@@ -44,9 +71,52 @@ interface NodePropType extends NodeActions {
 	nodeId: number;
 	nodePath: number[];
 }
+
 function nodeHasChildren(nodeData: TreeView) {
 	return nodeData.childrenData && nodeData.childrenData.length > 0;
 }
+
+interface NodeEditorPropType {
+	onClose: () => void;
+	onSubmit: (value:string) => void;
+	defaultValue: string;
+	data?: string;
+}
+
+const HandleErrorMessage = 'Handle Error';
+
+
+const NodeEditor: React.FC<NodeEditorPropType> = (props) => {
+	  const {onClose, onSubmit,defaultValue,data, children} = props;
+		const [value,setValue] = useState(data || '');
+
+			return (
+				<div className="h-10.5 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform">
+					<div className="relative h-full shadow-sm">
+						<input
+							type="text"
+							name="edit_node"
+							id="edit_application"
+							className="block w-full h-full pl-2 text-gray-900 placeholder-gray-500 bg-gray-300 border-transparent pr-14 flex-2 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent"
+							placeholder={defaultValue}
+							aria-invalid="false"
+							aria-describedby="email-error"
+							value={value}
+							onChange={e => setValue(e.target.value)}
+							onKeyDown={e => {
+								if (e.key === 'Enter') onSubmit(value);
+							}}
+						/>
+						<button
+							type="button"
+							className="absolute inset-y-0 right-0 flex items-center justify-center w-12 font-light border border-transparent focus:ring-0 focus:outline-none bg-faded-skyblue"
+							onClick={() => onClose()}>
+							<CloseIcon className="" width={14} height={14} />
+						</button>
+					</div>
+				</div>
+			);
+		}
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
@@ -57,7 +127,8 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 		expandedByDefault,
 		children,
 		onToggle,
-		onEdit,
+		onEditApplication,
+		onEditGroup,
 		onSelect,
 		onAddApplication,
 		onAddGroup,
@@ -67,6 +138,13 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 	const [toggleChildren, setToggleChildren] = useState<boolean>(false);
 	const [isFetched, setFetched] = useState<boolean>(false);
 	const [isLoadingChildren, setIsLoadingChildren] = useState<boolean>(false);
+	const [newApplication, setNewApplication] = useState<string>();
+	const [toggleNewApplicationOrGroupCtrl,setToggleNewApplicationOrGroupCtrl] = useState<"Application"|"Group"|"">("");
+	const [newApplicationGroup, setNewApplicationGroup] = useState<string>();
+	const [applicationGroupName, setApplicationGroupName] = useState<string>();
+  const [applicationName,setApplicationName] = useState<string>();
+
+
 
 	useEffect(() => {
 		// eslint-disable-next-line no-debugger
@@ -77,7 +155,6 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 		) {
 			setIsLoadingChildren(true);
 			onToggle(data, nodeId, nodePath, () => {
-				console.log('---- inCallback');
 
 				setIsLoadingChildren(false);
 				setFetched(true);
@@ -88,32 +165,119 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 	}, [toggleChildren]);
 
 	useEffect(() => {
+		if (newApplication) {
+			setIsLoadingChildren(true);
+			onAddApplication(
+				data,
+				nodeId,
+				nodePath,
+				newApplication || '',
+				'',
+				(err) => {
+					if(err)
+						console.log(HandleErrorMessage);
+					else
+					{
+						setToggleNewApplicationOrGroupCtrl("");
+						setIsLoadingChildren(true);
+						// eslint-disable-next-line sonarjs/no-identical-functions
+						onToggle(data, nodeId, nodePath, () => {
+							console.log('---- inCallback');
+							setIsLoadingChildren(false);
+							setFetched(true);
+							setToggleChildren(true);
+						});
+					}
+
+					setIsLoadingChildren(false);
+				},
+			);
+		}
+	}, [newApplication]);
+
+	useEffect(() => {
+		if (newApplicationGroup) {
+
+			setIsLoadingChildren(true);
+			onAddGroup(data, nodeId, nodePath, newApplicationGroup || '', (err) => {
+				if(err)
+						console.log(HandleErrorMessage);
+				else
+				{
+							setIsLoadingChildren(false);
+							setToggleNewApplicationOrGroupCtrl('');
+							setIsLoadingChildren(true);
+							// eslint-disable-next-line sonarjs/no-identical-functions
+							onToggle(data, nodeId, nodePath, () => {
+								console.log('---- inCallback');
+								setIsLoadingChildren(false);
+								setFetched(true);
+								setToggleChildren(true);
+							});
+				}
+
+			});
+		}
+	}, [newApplicationGroup]);
+
+	useEffect(()=>{
+		if(applicationGroupName){
+			// eslint-disable-next-line no-debugger
+			debugger;
+			onEditGroup(data,nodeId,nodePath,applicationGroupName, (err)=>{
+				if(err){
+					console.log(HandleErrorMessage);
+				}
+				else{
+					setEditForNode(false);
+				}
+			})
+		}
+	},[applicationGroupName]);
+
+		useEffect(() => {
+			console.log("Application name set ..............",applicationName);
+			if (applicationName) {
+				onEditGroup(data, nodeId, nodePath, applicationName, err => {
+					if (err) {
+						console.log('Handle Error');
+					} else {
+						setEditForNode(false);
+					}
+				});
+			}
+		}, [applicationName]);
+
+	useEffect(() => {
 		if (expandedByDefault) setToggleChildren(true);
 	}, []);
+
+	const canAddGroup = (node: TreeView): boolean => {
+		if (node._links?.find(l => l.rel === 'createApplicationGroup')) return true;
+		return false;
+	};
+
+	const canAddApplication = (node: TreeView): boolean => {
+		if (node._links?.find(l => l.rel === 'createApplication')) return true;
+		return false;
+	};
+
 
 	return (
 		<>
 			<div className="h-10.5 w-ful">
 				{editNode ? (
-					<div className="h-10.5 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform">
-						<div className="relative h-full shadow-sm">
-							<input
-								type="text"
-								name="edit_node"
-								id="edit_application"
-								className="block w-full h-full pl-2 text-gray-900 placeholder-gray-500 bg-gray-300 border-transparent pr-14 flex-2 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent"
-								placeholder="New Item"
-								aria-invalid="false"
-								aria-describedby="email-error"
-							/>
-							<button
-								type="button"
-								className="absolute inset-y-0 right-0 flex items-center justify-center w-12 font-light border border-transparent focus:ring-0 focus:outline-none bg-faded-skyblue"
-								onClick={() => setEditForNode(false)}>
-								<CloseIcon className="" width={14} height={14} />
-							</button>
-						</div>
-					</div>
+					<NodeEditor
+						onClose={() => setEditForNode(false)}
+						onSubmit={ value =>
+							canAddApplication(data)
+								? setApplicationGroupName(value)
+								: setApplicationName(value)
+
+					}
+						defaultValue=''
+						data={data.name}
+					/>
 				) : (
 					<div className="h-10.5 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue">
 						<>
@@ -142,19 +306,35 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 								</button>
 							)}
 						</>
-						<div className="w-full flex items-center h-10.5 border-indigo-200">
-							{data.name} {`isLoading: ${isLoadingChildren}`}{' '}
-							{`toggleChildren: ${toggleChildren}`}{' '}
-							{`expandedByDefault: ${expandedByDefault}`}{' '}
-							{`isFetched: ${isFetched}`}
-						</div>
+						<button
+							type="button"
+							className="w-full flex items-center h-10.5 border-indigo-200"
+							onClick={() => setToggleChildren(!toggleChildren)}>
+							{data.name}
+						</button>
 						<div className="flex space-x-3">
-							<div className="opacity-0 cursor-pointer group-hover:opacity-100">
+							<button
+								type="button"
+								onClick={() => {
+									if (!toggleChildren) setToggleChildren(!toggleChildren);
+									setToggleNewApplicationOrGroupCtrl('Application');
+								}}
+								className={`opacity-0 cursor-pointer group-hover:opacity-100 ${
+									canAddApplication(data) ? '' : 'hidden'
+								}`}>
 								<AddIcon className="" width={18} height={18} />
-							</div>
-							<div className="opacity-0 cursor-pointer group-hover:opacity-100">
+							</button>
+							<button
+								type="button"
+								onClick={() => {
+									if (!toggleChildren) setToggleChildren(!toggleChildren);
+									setToggleNewApplicationOrGroupCtrl('Group');
+								}}
+								className={`opacity-0 cursor-pointer group-hover:opacity-100 ${
+									canAddGroup(data) ? '' : 'hidden'
+								}`}>
 								<FolderIcon className="" width={18} height={18} />
-							</div>
+							</button>
 							<button
 								type="button"
 								onClick={() => {
@@ -167,8 +347,29 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 					</div>
 				)}
 			</div>
-			{/* {toggleChildren || expandedByDefault ? <>{children}</> : <></>} */}
 			<div className={`${toggleChildren || expandedByDefault ? '' : 'hidden'}`}>
+				{toggleNewApplicationOrGroupCtrl !== '' ? (
+					<ul className="w-full pl-5 ml-2 B">
+						<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
+							<NodeEditor
+								onClose={() => setToggleNewApplicationOrGroupCtrl('')}
+								onSubmit={value =>
+									toggleNewApplicationOrGroupCtrl === 'Application'
+										? setNewApplication(value)
+										: setNewApplicationGroup(value)
+								}
+								defaultValue={
+									toggleNewApplicationOrGroupCtrl === 'Application'
+										? 'Add New Application'
+										: 'Add New Application Group'
+								}
+							/>
+						</li>
+					</ul>
+				) : (
+					<></>
+				)}
+
 				{children}
 			</div>
 		</>
@@ -177,7 +378,6 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 
 //  we can not have hooks inside RenderNodesrecursively bc we will get Rendered more hooks than during the previous render
 // so have all ur hooks in treeNode.
-
 const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 	props,
 ): JSX.Element => {
@@ -191,7 +391,8 @@ const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 		expandNodesAtLevel,
 		children,
 		onSelect,
-		onEdit,
+		onEditApplication,
+		onEditGroup,
 		onToggle,
 		onAddApplication,
 		onAddGroup,
@@ -212,7 +413,8 @@ const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 							? nodeDepth <= expandNodesAtLevel
 							: false
 					}
-					onEdit={onEdit}
+					onEditApplication={onEditApplication}
+					onEditGroup={onEditGroup}
 					onSelect={onSelect}
 					onToggle={onToggle}
 					onAddApplication={onAddApplication}
@@ -237,7 +439,8 @@ const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 												nodeDepth: nodeDepth + 1,
 												nodePath: [...nodePath, c.id],
 												expandNodesAtLevel: props.expandNodesAtLevel,
-												onEdit: props.onEdit,
+												onEditApplication: props.onEditApplication,
+												onEditGroup: props.onEditGroup,
 												onSelect: props.onSelect,
 												onToggle: props.onToggle,
 												onAddApplication: props.onAddApplication,
@@ -264,7 +467,8 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 		data,
 		expandNodesAtLevel,
 		children,
-		onEdit,
+		onEditApplication,
+		onEditGroup,
 		onSelect,
 		onToggle,
 		onAddApplication,
@@ -284,7 +488,8 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 						nodeId={item.id}
 						nodePath={[-1]}
 						expandNodesAtLevel={expandNodesAtLevel}
-						onEdit={onEdit}
+						onEditApplication={onEditApplication}
+						onEditGroup={onEditGroup}
 						onSelect={onSelect}
 						onToggle={onToggle}
 						onAddApplication={onAddApplication}
@@ -296,3 +501,6 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 		</div>
 	);
 };
+
+
+

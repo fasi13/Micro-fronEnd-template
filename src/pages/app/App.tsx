@@ -7,13 +7,16 @@ import './App.css';
 const App = () => {
 	// const [inputValue, setInputValue] = useState<string>('');
 	const {
-
 		loading,
 		initializeHierarchyState,
 		hierarchyData,
 		setLoading,
 		getHierarchyChildData,
 		getUserApplication,
+		createApplicationGroup,
+		createApplication,
+		editApplication,
+		editApplicationGroup,
 	} = useHierarchyStore();
 
 	// const { setSearchLoading, searchApplication, searchData } = useSearchStore();
@@ -58,23 +61,66 @@ const App = () => {
 
 	return (
 		<>
-				<div className="">
-					<HierarchyTree
-						onSelect={() => {
-							console.log('hi');
-						}}
-						onToggle={async (item:TreeView,nodeId: number,nodePath: number[],cb: () => void)=>{
-							console.log("---- onToggle");
-						  await getHierarchyChildData(item,nodeId,nodePath);
-							cb();
-						}}
-						onEdit={() => {
-							console.log('hi');
-						}}
-						data={hierarchyData}
-						expandNodesAtLevel = {0}
-					/>
-				</div>
+			<div className="">
+				<HierarchyTree
+					onSelect={() => {
+						console.log('hi');
+					}}
+					onToggle={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						cb: () => void,
+					) => {
+						await getHierarchyChildData(item, nodeId, nodePath);
+						cb();
+					}}
+					onAddGroup={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						cb: (err: any) => void,
+					) => {
+						await createApplicationGroup(item, nodeId, nodePath, name);
+						cb(null);
+					}}
+					onAddApplication={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						value: string,
+						cb: (err: any) => void,
+					) => {
+						await createApplication(item, nodeId, nodePath, name, value);
+						cb(null);
+					}}
+					onEditApplication={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						value: string,
+						cb: (err: any) => void,
+					) => {
+						await editApplication(item, nodeId, nodePath, name, value);
+						cb(null);
+					}}
+					onEditGroup={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						cb: (err: any) => void,
+					) => {
+						await editApplicationGroup(item, nodeId, nodePath, name);
+						cb(null);
+					}}
+					data={hierarchyData}
+					expandNodesAtLevel={0}
+				/>
+			</div>
 			{/* <div className="flex flex-row">{JSON.stringify(hierarchyData, null ,2)}</div> */}
 		</>
 	);

@@ -80,7 +80,7 @@
       "activityBarBadge.foreground": "#e7e7e7"
     },
     "workbench.sideBar.location": "left",
-    "workbench.statusBar.visible": false,
+    "workbench.statusBar.visible": true,
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.folders.associations": {
       "features": "public",
