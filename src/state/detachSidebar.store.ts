@@ -2,20 +2,20 @@ import create from 'zustand';
 
 interface myState {
 	open: boolean;
-	tearSidebar: boolean;
+	detachSidebar: boolean;
 	lastSidebarOpen : boolean;
 	setOpen: (opn: boolean) => void;
-	setTearSidebar: (ter: boolean) => void;
+	setDetachSidebar: (detach: boolean) => void;
 	setLastSidebarOpen:(opn: boolean)=>void;
 }
 
-const isTearedStore = create<myState>((set) => ({
+const detachStore = create<myState>((set) => ({
 	open: true,
-	tearSidebar: false,
+	detachSidebar: false,
 	lastSidebarOpen: true,
   setOpen: (opn: boolean) => set( ({ open: opn  })),
-  setTearSidebar: (ter: boolean) => set(({ tearSidebar: ter  })),
+  setDetachSidebar: (detach: boolean) => set(({ detachSidebar: detach  })),
   setLastSidebarOpen: (opn: boolean) => set({ lastSidebarOpen: opn }),
 }))
 /* eslint-disable import/prefer-default-export */
-export default isTearedStore;
+export default detachStore;

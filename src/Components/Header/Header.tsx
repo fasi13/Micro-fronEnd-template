@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable dot-notation */
+/* eslint-disable react/destructuring-assignment */
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,9 +19,8 @@ import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import React from 'react';
-import { Route } from 'react-router';
-import isTearedStore from '../../state/tearSidebar.store';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
+import './header.scss';
 
 const drawerWidth = 340;
 const useStyles = makeStyles(theme => ({
@@ -84,44 +86,25 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function HeaderTop() {
+export const UserMenu = (props: any) => {
+	const name = props?.nameOfUser === '' ? '?' : props.nameOfUser;
+	const i = name
+		.split(' ')
+		.map((c: any) => c.charAt(0).toUpperCase())
+		.join('')
+		.concat(name.charAt(1).toUpperCase())
+		.substring(0, 2);
+	return (
+		<Avatar
+			data-testid="user-avatar"
+			className={`${props.isOpened ? 'active' : ''}`}>
+			{i}
+		</Avatar>
+	);
+};
+
+export default function Header() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
-
-	const ddd = isTearedStore(state => state.setOpen);
-	const eee = isTearedStore(state => state.setTearSidebar);
-	const fff = isTearedStore(state => state.setLastSidebarOpen);
-
-	const open = isTearedStore(state => state.open);
-	const tearSidebar = isTearedStore(state => state.tearSidebar);
-	const lastSidebarOpen = open;
-
-	const setOpen = (opn: boolean) => {
-		ddd(opn);
-	};
-
-	const setTearSidebar = (t: boolean) => {
-		eee(t);
-	};
-	const setLastSidebarOpen = (last: boolean) => {
-		fff(last);
-	};
-
-	const handleTear = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
-			event.type === 'click'
-		)
-			if (!tearSidebar) {
-				setLastSidebarOpen(open);
-				setTearSidebar(true);
-				setOpen(false);
-			} else {
-				setOpen(lastSidebarOpen);
-				setTearSidebar(false);
-				setOpen(true);
-			}
-	};
 
 	const handleClick = (event: any) => {
 		if (
@@ -175,6 +158,7 @@ export default function HeaderTop() {
 			</MenuItem>
 		</>
 	);
+
 	const ManageCommunicationMenuItems = () => (
 		<>
 			<MenuItem className="gap-x-2">
@@ -236,6 +220,7 @@ export default function HeaderTop() {
 			</MenuItem>
 		</>
 	);
+
 	return (
 		<div className={classes.root}>
 			{/* <CssBaseline /> */}
@@ -246,7 +231,9 @@ export default function HeaderTop() {
 						justifyContent: 'space-between',
 					}}
 					className="flex justify-center pr-20 pl-14 py-3 items-center	">
-					<div className="text-2xl">E2e Group</div>
+					<div className="text-2xl">
+						<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
+					</div>
 					<div style={{ display: 'flex', alignItems: 'center' }}>
 						<div>
 							<div
@@ -263,7 +250,10 @@ export default function HeaderTop() {
 										color: '#8C9DAC',
 									}}
 								/>
-								<span className="pl-2 text-base" style={{ color: '#BDC6CD' }}>
+								<span
+									data-testid="menu-title"
+									className="pl-2 text-base"
+									style={{ color: '#BDC6CD' }}>
 									Manage Communication
 								</span>
 								<ExpandMoreIcon
@@ -283,6 +273,7 @@ export default function HeaderTop() {
 								transformOrigin={{ vertical: 'top', horizontal: 'center' }}
 								getContentAnchorEl={null}
 								open={Boolean(anchorEl)}
+								disableScrollLock
 								onClose={handleClose}>
 								<ManageCommunicationMenuItems />
 							</Menu>
@@ -296,7 +287,7 @@ export default function HeaderTop() {
 								aria-haspopup="true"
 								color="primary"
 								onClick={handleClick2}>
-								<Avatar className={`${anchorEl2 ? 'active' : ''}`}>WW</Avatar>
+								<UserMenu nameOfUser="Eyob Samuel" isOpened={anchorEl2} />
 							</div>
 							<Menu
 								id="customized-menu2"
@@ -305,50 +296,14 @@ export default function HeaderTop() {
 								transformOrigin={{ vertical: 'top', horizontal: 'center' }}
 								getContentAnchorEl={null}
 								open={Boolean(anchorEl2)}
+								disableScrollLock
 								onClose={handleClose2}>
 								<AccountAvatar />
 							</Menu>
 						</div>
 					</div>
 				</div>
-				<div className="py-4 pl-14 text-xl" style={{ background: '#31506A' }}>
-					<div className="flex flex-wrap">
-						<div
-							onKeyDown={handleClick}
-							role="button"
-							tabIndex={0}
-							aria-controls="customized-menu"
-							aria-haspopup="true"
-							color="primary"
-							onClick={handleTear}>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								focusable="false"
-								width="1.4em"
-								height="1.4em"
-								preserveAspectRatio="xMidYMid meet"
-								fill="white"
-								viewBox="0 0 24 24">
-								<path
-									d="M8.11 1.75C9.3 1.25 10.62 1 12 1c6.08 0 11 4.92 11 11s-4.92 11-11 11S1 18.08 1 12c0-1.38.25-2.7.72-3.92a4.5 4.5 0 0 0 1.73 1.1C3.16 10.07 3 11 3 12a9 9 0 0 0 9 9a9 9 0 0 0 9-9a9 9 0 0 0-9-9c-1 0-1.93.16-2.82.45c-.22-.62-.57-1.21-1.07-1.7M4.93 2.93a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5z"
-									fill="white"
-								/>
-							</svg>
-						</div>
-						<span className="pl-2">
-              {/* E2e Group */}
-              <Route>
-                {({ location }) => {
-                  const pathnames = location.pathname.split('/').filter((x) => x);
-                  console.log(pathnames)
-                  return (
-                    <Breadcrumb pathnames={pathnames} />
-                  );
-                }}
-              </Route>
-            </span>
-					</div>
-				</div>
+				<Breadcrumb />
 			</AppBar>
 		</div>
 	);
