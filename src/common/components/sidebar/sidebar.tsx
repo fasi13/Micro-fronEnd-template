@@ -126,10 +126,12 @@ export const Sidebar = () => {
 			default={{
 				x: 500,
 				y: 0,
-				width: 320,
+				width: 840,
 				height: 600,
 			}}>
-			<SidebarContent />
+			<div className="w-full h-full m-4 mr-1 overflow-y-auto">
+				<SidebarContent />
+			</div>
 			<div
 				onKeyDown={() => handleAttach}
 				role="button"
