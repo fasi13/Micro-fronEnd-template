@@ -11,10 +11,8 @@ export default async (): Promise<Config.InitialOptions> => ({
 		'\\.(css|less|scss|sass|svg)$': '<rootDir>/config/CSSStub.js',
 	},
 
-  preset: 'ts-jest',
-  transform: {
-    '^.+\\.(ts|tsx)?$': 'babel-jest',
-  },
-
-
+	preset: 'ts-jest',
+	transform: {
+		'^.+\\.(ts|tsx)?$': 'babel-jest',
+	},
 });

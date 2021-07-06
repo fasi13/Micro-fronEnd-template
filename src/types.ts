@@ -36,7 +36,7 @@ export interface Application {
 	_links: Link[];
 }
 export interface TreeView {
-	id: string | number;
+	id: number;
 	key?: string;
 	name: string;
 	value?: string;
@@ -53,6 +53,7 @@ export interface TreeView {
 	loadChildrenLink?: Link[];
 	path?: Application; // ??
 	_links?: Link[];
+	edit: boolean;
 }
 
 export interface ApplicationResponse {
@@ -66,8 +67,15 @@ export interface ApplicationResponse {
 	dateModified: string;
 }
 
-export interface ICustomProp {
-	e: string;
+export interface ItreeData {
+	name: string;
+	key: number;
+	children: ItreeData[];
+	edit: boolean;
+}
+export interface ApplicationPath {
+	path: Application[];
+	_links: Link[];
 }
 
 // export interface ApplicationGroupResponse {

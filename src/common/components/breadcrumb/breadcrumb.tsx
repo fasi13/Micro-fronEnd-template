@@ -1,8 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Route } from 'react-router';
-import detachStore from '../../state/detachSidebar.store';
-import Breadcrumbui from './Breadcrumb-ui';
+import { detachStore } from '../../../state';
+import Breadcrumbui from './breadcrumb-ui';
 import './breadcrumb.scss';
 
 export const OrbitSVG = (props: any) => (
@@ -23,7 +24,7 @@ export const OrbitSVG = (props: any) => (
 	</svg>
 );
 
-export default function Breadcrumb() {
+export const Breadcrumb = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 	const dSSetDetach = detachStore(state => state.setDetachSidebar);
 	const dSSetLastSideBarState = detachStore(state => state.setLastSidebarOpen);
@@ -60,7 +61,7 @@ export default function Breadcrumb() {
 	};
 
 	return (
-		<div className="py-4 pl-14 text-xl" style={{ background: '#31506A' }}>
+		<div className="py-4 text-xl pl-14" style={{ background: '#31506A' }}>
 			<div className="flex flex-wrap">
 				<div
 					onKeyDown={handleDetach}
@@ -75,16 +76,16 @@ export default function Breadcrumb() {
 				<span className="pl-2">
           {/* E2e Group */}
           <Route>
-                {({ location }) => {
-                  const pathnames = location.pathname.split('/').filter((x) => x);
-                  console.log(pathnames)
-                  return (
-                    <Breadcrumbui pathnames={pathnames} />
-                  );
-                }}
-              </Route>
+            {({ location }) => {
+              const pathnames = location.pathname.split('/').filter((x) => x);
+              console.log(pathnames)
+              return (
+                <Breadcrumbui pathnames={pathnames} />
+              );
+            }}
+          </Route>
         </span>
 			</div>
 		</div>
 	);
-}
+};

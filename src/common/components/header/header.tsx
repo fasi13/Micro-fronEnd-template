@@ -19,7 +19,7 @@ import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import React from 'react';
-import Breadcrumb from '../Breadcrumb/Breadcrumb';
+import { Breadcrumb } from '../breadcrumb/breadcrumb';
 import './header.scss';
 
 const drawerWidth = 340;
@@ -103,7 +103,7 @@ export const UserMenu = (props: any) => {
 	);
 };
 
-export default function Header() {
+export const Header = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
 	const handleClick = (event: any) => {
@@ -230,7 +230,7 @@ export default function Header() {
 						display: 'flex',
 						justifyContent: 'space-between',
 					}}
-					className="flex justify-center pr-20 pl-14 py-3 items-center	">
+					className="flex items-center justify-center py-3 pr-20 pl-14 ">
 					<div className="text-2xl">
 						<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
 					</div>
@@ -307,4 +307,4 @@ export default function Header() {
 			</AppBar>
 		</div>
 	);
-}
+};

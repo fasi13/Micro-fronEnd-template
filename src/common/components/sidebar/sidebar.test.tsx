@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import { create } from 'react-test-renderer';
 import React from 'react';
-import Sidebar from './Sidebar';
+import { create } from 'react-test-renderer';
+import Sidebar from './sidebar';
 
 it('renders', () => {
 	const tree = create(<Sidebar />).toJSON;
