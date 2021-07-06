@@ -42,3 +42,11 @@ ul.tree>li:first-child::before {
 ul .myul::before{
   display:none
 }
+
+.node-actions {
+  opacity: 0;
+}
+
+.node-container:hover > .node-actions {
+  opacity: 100;
+}

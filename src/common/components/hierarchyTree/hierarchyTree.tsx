@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { TreeView } from '../../../types';
 import {
 	AddIcon,
-	CloseIcon,
-	FolderIcon,
-	PencilIcon,
+	CloseIcon, FolderIcon, PencilIcon,
 	SpinnerIcon
 } from '../../icons';
 import './hierarchy.css';
@@ -73,7 +71,7 @@ interface NodePropType extends NodeActions {
 }
 
 function nodeHasChildren(nodeData: TreeView) {
-	return nodeData.childrenData && nodeData.childrenData.length > 0;
+	return nodeData.childrenData;
 }
 
 interface NodeEditorPropType {
@@ -147,7 +145,6 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 
 
 	useEffect(() => {
-		// eslint-disable-next-line no-debugger
 		if (
 			toggleChildren &&
 			!isFetched &&
@@ -155,13 +152,11 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 		) {
 			setIsLoadingChildren(true);
 			onToggle(data, nodeId, nodePath, () => {
-
 				setIsLoadingChildren(false);
 				setFetched(true);
 				setToggleChildren(true);
 			});
-		} else console.log('toggle loaded data', isFetched, toggleChildren);
-		// onToggleCb(data,()=>setIsLoading(false));
+		}
 	}, [toggleChildren]);
 
 	useEffect(() => {
@@ -235,8 +230,7 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 		}
 	},[applicationGroupName]);
 
-		useEffect(() => {
-			console.log("Application name set ..............",applicationName);
+	useEffect(() => {
 			if (applicationName) {
 				onEditGroup(data, nodeId, nodePath, applicationName, err => {
 					if (err) {
@@ -246,7 +240,7 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 					}
 				});
 			}
-		}, [applicationName]);
+	}, [applicationName]);
 
 	useEffect(() => {
 		if (expandedByDefault) setToggleChildren(true);
@@ -265,21 +259,20 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 
 	return (
 		<>
-			<div className="h-10.5 w-ful">
+			<div className="h-10.5 w-full">
 				{editNode ? (
 					<NodeEditor
 						onClose={() => setEditForNode(false)}
-						onSubmit={ value =>
+						onSubmit={value =>
 							canAddApplication(data)
 								? setApplicationGroupName(value)
 								: setApplicationName(value)
-
-					}
-						defaultValue=''
+						}
+						defaultValue=""
 						data={data.name}
 					/>
 				) : (
-					<div className="h-10.5 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue">
+					<div className="h-10.5 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
 						<>
 							{isLoadingChildren ? (
 								<button
@@ -310,44 +303,48 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 							type="button"
 							className="w-full flex items-center h-10.5 border-indigo-200"
 							onClick={() => setToggleChildren(!toggleChildren)}>
-							{data.name}
+							{data.name} toggleChildren: {`${toggleChildren}`} isLoadingChildren: {`${isLoadingChildren}`}
 						</button>
-						<div className="flex space-x-3">
+						<div className="flex space-x-3 node-actions">
 							<button
 								type="button"
+								title="Add Application"
 								onClick={() => {
 									if (!toggleChildren) setToggleChildren(!toggleChildren);
 									setToggleNewApplicationOrGroupCtrl('Application');
 								}}
-								className={`opacity-0 cursor-pointer group-hover:opacity-100 ${
+								className={`cursor-pointer ${
 									canAddApplication(data) ? '' : 'hidden'
 								}`}>
 								<AddIcon className="" width={18} height={18} />
 							</button>
 							<button
 								type="button"
+								title="Add Application Group"
 								onClick={() => {
 									if (!toggleChildren) setToggleChildren(!toggleChildren);
 									setToggleNewApplicationOrGroupCtrl('Group');
 								}}
-								className={`opacity-0 cursor-pointer group-hover:opacity-100 ${
+								className={`cursor-pointer ${
 									canAddGroup(data) ? '' : 'hidden'
 								}`}>
 								<FolderIcon className="" width={18} height={18} />
 							</button>
 							<button
 								type="button"
+								title="Edit Node"
 								onClick={() => {
 									setEditForNode(!editNode);
 								}}
-								className="opacity-0 cursor-pointer group-hover:opacity-100">
+								className="cursor-pointer">
 								<PencilIcon className="" width={18} height={18} />
 							</button>
 						</div>
 					</div>
 				)}
 			</div>
-			<div className={`${toggleChildren || expandedByDefault ? '' : 'hidden'}`}>
+
+			<div className={`${toggleChildren  ? '' : 'hidden'}`}>
 				{toggleNewApplicationOrGroupCtrl !== '' ? (
 					<ul className="w-full pl-5 ml-2 B">
 						<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
@@ -381,7 +378,6 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 	props,
 ): JSX.Element => {
-	// const [editNode, setEditForNode] = useState<boolean>(false);
 	const {
 		data,
 		index,
@@ -398,11 +394,9 @@ const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 		onAddGroup,
 		onLoadMore,
 	} = props;
-	// function checkToExpandNode(i: number, toExpandNodeIndex: number[]): boolean {
-	// 	return toExpandNodeIndex.indexOf(i) === i;
-	// }
+
 	return (
-		<li className="relative flex flex-col items-start justify-center h-auto mr-8 list-none tree">
+		<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
 			<div className="w-full h-full">
 				<TreeNode
 					nodeId={nodeId}
@@ -478,7 +472,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 
 	return (
 		<div className="w-full h-full text-white bg-gray-600">
-			<ul className="inset-y-0 left-0 z-10 w-full h-full pl-5 ml-3 overflow-hidden">
+			<ul className="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible">
 				{data.map((item, index) => (
 					<RenderNodesRecursively
 						key={`__node__${item.name}__}`}

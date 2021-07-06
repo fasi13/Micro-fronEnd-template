@@ -61,7 +61,7 @@ const App = () => {
 
 	return (
 		<>
-			<div className="">
+			<div className="w-10/12 overflow-visible bg-gray-600">
 				<HierarchyTree
 					onSelect={() => {
 						console.log('hi');
@@ -118,7 +118,7 @@ const App = () => {
 						cb(null);
 					}}
 					data={hierarchyData}
-					expandNodesAtLevel={0}
+					expandNodesAtLevel={1}
 				/>
 			</div>
 			{/* <div className="flex flex-row">{JSON.stringify(hierarchyData, null ,2)}</div> */}
