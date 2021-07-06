@@ -93,8 +93,10 @@ steps:
     command: custom
     customCommand: run build
 
-- task: PublishPipelineArtifact@0
+- task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: '$(project)@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
     targetPath: 'build'
+    publishLocation: 'Container'
