@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import Header, { UserMenu } from './Header';
+import { Header, UserMenu } from './header';
 
 const userAvatarStr = 'user-avatar';
 test('Logo must have src = "/E2E_GROUP_LOGO_ORANGE.png" and alt = "E2E Logo"', () => {
