@@ -47,9 +47,9 @@
         "when": "$(basename)"
       }
     },
-  
+
     "files.defaultLanguage": "typescript",
-  
+
     "git.enabled": true,
     "git.autofetch": true,
     "gitlens.advanced.messages": {
@@ -103,4 +103,3 @@
     "npm-scripts.showStartNotification": false,
     "peacock.color": "#990330"
   }
-  

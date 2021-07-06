@@ -1,0 +1,39 @@
+.MuiPaper-root .MuiAppBar-root{
+  box-shadow: none !important;
+}
+.MuiMenu-paper {
+   transform: translateY(0)  !important;
+   transition: all 0.2s ease  !important;
+   background: #B9C7D3 !important;
+   color: #355673 !important;
+   padding: 7px;
+
+}
+.MuiAvatar-root.active{
+  background-color: #3F98E3 !important;
+  color:white !important;
+}
+.MuiButtonBase-root{
+  padding: 0 15px 0 15px !important;
+}
+
+.MuiAvatar-root{
+padding: 24px !important;
+}
+
+.MuiAvatar-colorDefault{
+   background-color: #A9BAC8 !important;
+   color: #355673 !important;
+
+}
+#icon {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  position: absolute;
+  right: -25px;
+  top: 20px;
+}
+
+
+
