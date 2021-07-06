@@ -1,3 +1,4 @@
+import { List, ListItemText } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +7,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import clsx from 'clsx';
 import React from 'react';
+import { ListItemLink } from '../../../Components/Breadcrumb/Breadcrumb-ui';
 import Header from '../../../Components/Header/Header';
 import Sidebar from '../../../Components/Sidebar/Sidebar';
 import detachStore from '../../../state/detachSidebar.store';
@@ -147,6 +149,14 @@ export default function Home() {
 				<div className={classes.drawerHeader} />
 				<div className="p-12">
 					<>
+            <List>
+              <ListItemLink to="/check/check1" key="home">
+                <ListItemText primary="home" />
+              </ListItemLink>
+              <ListItemLink to="/trash" key="profile">
+                <ListItemText primary="profile" />
+              </ListItemLink>
+            </List>
 						<Typography paragraph>
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 							eiusmod tempor incididunt ut labore et dolore magna aliqua.
