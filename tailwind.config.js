@@ -6,6 +6,7 @@ module.exports = {
 			colors: {
 				skyblue: '#3F98E3',
 				'faded-skyblue': '#81B1DB',
+				'grayblue': '#31506a',
 			},
 			height: {
 				'10.5': '42px',

@@ -4,7 +4,7 @@ import {
 	ApplicationResponse,
 	DataPaginated,
 	Link,
-	TreeView
+	TreeView,
 } from '../types';
 import { HierarchyClient as axios } from '../util/axios';
 import createStore from '../util/immer';
@@ -160,7 +160,6 @@ function updateNodeValues(
 	}
 }
 
-
 const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	rootApplication: null,
 	loading: false,
@@ -267,10 +266,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		name: string,
 	) => {
 		if (data) {
-			const link: Link | undefined = getSelfUpdateLink(
-				data._links || [],
-				true
-			);
+			const link: Link | undefined = getSelfUpdateLink(data._links || [], true);
 
 			if (link) {
 				const { method, href } = link;
@@ -282,7 +278,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				if (resp && resp.status === 200) {
 					set((state: HierarchyState) => {
 						const { hierarchyData } = state;
-						updateNodeValues(hierarchyData, nodePath, name,           '');
+						updateNodeValues(hierarchyData, nodePath, name, '');
 					});
 				}
 			}
@@ -389,5 +385,3 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 
 /* eslint-disable import/prefer-default-export */
 export const useHierarchyStore = createStore<HierarchyState>(HierarchyStore);
-
-

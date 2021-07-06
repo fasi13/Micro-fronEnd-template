@@ -67,8 +67,6 @@ export interface ApplicationResponse {
 	dateModified: string;
 }
 
-
-
 export interface ItreeData {
 	name: string;
 	key: number;
@@ -79,7 +77,6 @@ export interface ApplicationPath {
 	path: Application[];
 	_links: Link[];
 }
-
 
 // export interface ApplicationGroupResponse {
 // 	_links: Link[];

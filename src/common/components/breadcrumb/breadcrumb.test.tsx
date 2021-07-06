@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { OrbitSVG } from './Breadcrumb';
+import { OrbitSVG } from './breadcrumb';
 
 test('OrbitSVG contains correct className when true is passed to detachSidebar prop', () => {
 	const { getByTestId } = render(<OrbitSVG detachSidebar />);
