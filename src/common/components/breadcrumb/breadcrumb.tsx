@@ -74,17 +74,15 @@ export const Breadcrumb = () => {
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
 				<span className="pl-2">
-          {/* E2e Group */}
-          <Route>
-            {({ location }) => {
-              const pathnames = location.pathname.split('/').filter((x) => x);
-              console.log(pathnames)
-              return (
-                <Breadcrumbui pathnames={pathnames} />
-              );
-            }}
-          </Route>
-        </span>
+					{/* E2e Group */}
+					<Route>
+						{({ location }) => {
+							const pathnames = location.pathname.split('/').filter(x => x);
+							console.log(pathnames);
+							return <Breadcrumbui pathnames={pathnames} />;
+						}}
+					</Route>
+				</span>
 			</div>
 		</div>
 	);

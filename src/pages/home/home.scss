@@ -1,5 +1,6 @@
 .MuiPaper-root .MuiAppBar-root{
   box-shadow: none !important;
+      top: 130px !important;
 }
 .MuiMenu-paper {
    transform: translateY(0)  !important;
@@ -7,6 +8,22 @@
    background: #B9C7D3 !important;
    color: #355673 !important;
    padding: 7px;
+
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        display: none;
+      }
+    }
+    &::-webkit-scrollbar-thumb {
+      display: none;
+    }
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
 
 }
 .MuiAvatar-root.active{

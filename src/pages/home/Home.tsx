@@ -45,7 +45,10 @@ const useStyles = makeStyles(theme => ({
 		background: '#31506A',
 		border: 'none',
 		width: drawerWidth,
-		paddingTop: 130,
+		paddingTop: 135,
+		overflow: 'hidden',
+		paddingRight: '8px',
+		paddingBottom: '8px',
 	},
 	drawerHeader: {
 		display: 'flex',

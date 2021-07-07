@@ -8,11 +8,11 @@ import reportWebVitals from './reportWebVitals';
 import './styles/tailwind.generated.css';
 
 ReactDOM.render(
-  <MemoryRouter initialEntries={['/']} initialIndex={0}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </MemoryRouter>,
+	<MemoryRouter initialEntries={['/']} initialIndex={0}>
+		<React.StrictMode>
+			<App />
+		</React.StrictMode>
+	</MemoryRouter>,
 	document.getElementById('root'),
 );
 

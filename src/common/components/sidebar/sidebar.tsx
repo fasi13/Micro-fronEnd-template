@@ -1,39 +1,42 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { CircularProgress, createStyles, List, makeStyles, TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import { Autocomplete } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { HierarchyTree, SearchApplication } from '..';
 import { detachStore, useHierarchyStore, useSearchStore } from '../../../state';
 import { ApplicationPath, TreeView } from '../../../types';
+import './sidebar.scss';
 
 
 const useStyles = makeStyles(() =>
   createStyles({
     rootList: {
-      // zIndex: theme.zIndex.tooltip,
       margin: -16,
       background: "white",
-      width: 320,
+      width: 445,
       "& :hover": {
         background: "#d3d3d3"
       }
     },
-    searchContainer: {
-      //  zIndex: theme.zIndex.tooltip,
-    },
-    // searchList: {
-    //   display: "flex",
-    //   justifyContent: "center",
-    //   zIndex: theme.zIndex.tooltip,
-    // }
+    searchInput: {
+      '& .MuiSvgIcon-root': {
+        fontSize: '2rem',
+        color: 'grey'
+      },
+      '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input': {
+        fontSize: '1.2rem',
+      },
+      '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]': {
+        borderRadius: '0'
+      }
+    }
   }),
 );
 
-
 const SidebarContent = () => {
-
-  const classes = useStyles();
+    const classes = useStyles();
 
   // searchLoading,
 	const { setSearchLoading, searchApplication, searchData } = useSearchStore();
@@ -43,6 +46,8 @@ const SidebarContent = () => {
   const [open, setOpen] = React.useState(false);
   const searchLoading = open && searchData.length === 0;
 
+
+	const widthStyle = { width: '96%', height: 'inherit' };
 	const {
 		initializeHierarchyState,
 		hierarchyData,
@@ -77,123 +82,134 @@ const SidebarContent = () => {
   const getApplicationName = ({ path }: ApplicationPath): string  =>
 		path[path.length - 1].name;
 
+  const getApplicationId = ({ path }: ApplicationPath): string =>
+		path[path.length - 1].id.toString();
+
   const searchElement = (keyword: string) =>
   keyword.length < 3 ? null : setInputValue(keyword);
 
 	return (
-		<>
-			<div className="w-full overflow-visible bg-grayblue">
-        <>
-          <div className="flex justify-center">
-             <Autocomplete
-              open={open}
-              onOpen={() => {
-                setOpen(true);
-              }}
-              onClose={() => {
-                setOpen(false);
-              }}
-              //  className={classes.searchContainer}
-              freeSolo
-              id="combo-box-demo"
-              style={{ width: 320, backgroundColor: "#fff", zIndex: 999999, }}
-              // getOptionSelected={(option, value) => option.name === value.name}
-              options={searchData}
-              getOptionLabel = {(x) =>  getApplicationName(x)}
-              autoComplete
-              fullWidth
-              loading={searchLoading}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  onChange={e => searchElement(e.target.value.toString())}
-                  label="Search application..."
-                  variant="outlined"
-                  fullWidth
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {searchLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              )}
-             renderOption={() =>
-                searchData.length !== 0 ?
-                  <div>
-                    <List className={classes.rootList}>
-                      {searchData.map((item: ApplicationPath) => (
-                          <SearchApplication item={item} />
-                      ))}
-                    </List>
-                  </div> : <p>No results found! </p>
-              }
-            />
-          </div>
-          <HierarchyTree
-            onSelect={() => {
-              console.log('hi');
+    <>
+    <div className="flex justify-center">
+      <Autocomplete
+        open={open}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        // freeSolo background: "#d1d5db",
+        id="combo-box-demo"
+        style={{ width: 445, backgroundColor: "#d1d5db", zIndex: 999999,  }}
+        className={classes.searchInput}
+        // getOptionSelected={(option, value) => option.name === value.name}
+        options={searchData}
+        getOptionLabel = {(x) =>  getApplicationName(x)}
+        autoComplete
+        fullWidth
+        loading={searchLoading}
+        noOptionsText='No results found!'
+        renderInput={params => (
+          <TextField
+            {...params}
+            onChange={e => searchElement(e.target.value.toString())}
+            placeholder="Search"
+            variant="outlined"
+            fullWidth
+            InputProps={{
+              ...params.InputProps,
+              startAdornment: (
+                  <>
+                    <SearchIcon />
+                  </>
+              ),
+              endAdornment: (
+                <>
+                  {searchLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                  {/* {params.InputProps.endAdornment} */}
+                </>
+              ),
             }}
-            onToggle={async (
-              item: TreeView,
-              nodeId: number,
-              nodePath: number[],
-              cb: () => void,
-            ) => {
-              await getHierarchyChildData(item, nodeId, nodePath);
-              cb();
-            }}
-            onAddGroup={async (
-              item: TreeView,
-              nodeId: number,
-              nodePath: number[],
-              name: string,
-              cb: (err: any) => void,
-            ) => {
-              await createApplicationGroup(item, nodeId, nodePath, name);
-              cb(null);
-            }}
-            onAddApplication={async (
-              item: TreeView,
-              nodeId: number,
-              nodePath: number[],
-              name: string,
-              value: string,
-              cb: (err: any) => void,
-            ) => {
-              await createApplication(item, nodeId, nodePath, name, value);
-              cb(null);
-            }}
-            onEditApplication={async (
-              item: TreeView,
-              nodeId: number,
-              nodePath: number[],
-              name: string,
-              value: string,
-              cb: (err: any) => void,
-            ) => {
-              await editApplication(item, nodeId, nodePath, name, value);
-              cb(null);
-            }}
-            onEditGroup={async (
-              item: TreeView,
-              nodeId: number,
-              nodePath: number[],
-              name: string,
-              cb: (err: any) => void,
-            ) => {
-              await editApplicationGroup(item, nodeId, nodePath, name);
-              cb(null);
-            }}
-            data={hierarchyData}
-            expandNodesAtLevel={0}
           />
-        </>
+        )}
+        renderOption={() =>
+          searchData.length !== 0 ?
+              <List className={classes.rootList}>
+                {searchData.map((item: ApplicationPath) => (
+                    <SearchApplication item={item} key={getApplicationId(item)} />
+                ))}
+              </List>
+              : <p>No results found! </p>
+        }
+      />
+    </div>
+    <br /><br />
+		<div
+			className="overflow-y-auto bg-grayblue journal-scroll"
+			style={{ height: 'inherit' }}>
+			<div className="bg-grayblue" style={widthStyle}>
+				<HierarchyTree
+					onSelect={() => {
+						console.log('hi');
+					}}
+					onToggle={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						cb: () => void,
+					) => {
+						await getHierarchyChildData(item, nodeId, nodePath);
+						cb();
+					}}
+					onAddGroup={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						cb: (err: any) => void,
+					) => {
+						await createApplicationGroup(item, nodeId, nodePath, name);
+						cb(null);
+					}}
+					onAddApplication={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						value: string,
+						cb: (err: any) => void,
+					) => {
+						await createApplication(item, nodeId, nodePath, name, value);
+						cb(null);
+					}}
+					onEditApplication={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						value: string,
+						cb: (err: any) => void,
+					) => {
+						await editApplication(item, nodeId, nodePath, name, value);
+						cb(null);
+					}}
+					onEditGroup={async (
+						item: TreeView,
+						nodeId: number,
+						nodePath: number[],
+						name: string,
+						cb: (err: any) => void,
+					) => {
+						await editApplicationGroup(item, nodeId, nodePath, name);
+						cb(null);
+					}}
+					data={hierarchyData}
+					expandNodesAtLevel={0}
+				/>
 			</div>
-		</>
+		</div>
+    </>
 	);
 };
 
@@ -203,12 +219,13 @@ export const Sidebar = () => {
 		alignItems: 'start',
 		justifyContent: 'center',
 		background: '#31506A',
-		// zIndex: 99999,
+		// zIndex: 9999,
 		zIndex: 1300,
 		top: '35px !important',
 		left: '35px !important',
 		boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
 	};
+
 	const dSOpen = detachStore(state => state.setOpen);
 	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
 	const dSSidebarState = detachStore(state => state.detachSidebar);
@@ -238,7 +255,9 @@ export const Sidebar = () => {
 				width: 840,
 				height: 600,
 			}}>
-			<div className="w-full h-full m-4 mr-1 overflow-y-auto">
+			<div
+				className="w-full h-full m-4 mr-1 overflow-y-auto journal-scroll pr-2"
+				style={{ width: 'inherit', height: '98%' }}>
 				<SidebarContent />
 			</div>
 			<div
