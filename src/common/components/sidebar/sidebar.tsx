@@ -3,8 +3,10 @@ import { Rnd } from 'react-rnd';
 import { HierarchyTree } from '..';
 import { detachStore, useHierarchyStore } from '../../../state';
 import { TreeView } from '../../../types';
+import './sidebar.scss';
 
 const SidebarContent = () => {
+	const widthStyle = { width: '96%', height: 'inherit' };
 	const {
 		initializeHierarchyState,
 		hierarchyData,
@@ -24,8 +26,10 @@ const SidebarContent = () => {
 	}, []);
 
 	return (
-		<>
-			<div className="w-full overflow-visible bg-grayblue">
+		<div
+			className="overflow-y-auto bg-grayblue journal-scroll"
+			style={{ height: 'inherit' }}>
+			<div className="bg-grayblue" style={widthStyle}>
 				<HierarchyTree
 					onSelect={() => {
 						console.log('hi');
@@ -85,7 +89,7 @@ const SidebarContent = () => {
 					expandNodesAtLevel={0}
 				/>
 			</div>
-		</>
+		</div>
 	);
 };
 
@@ -95,11 +99,12 @@ export const Sidebar = () => {
 		alignItems: 'start',
 		justifyContent: 'center',
 		background: '#31506A',
-		zIndex: 99999,
+		zIndex: 9999,
 		top: '35px !important',
 		left: '35px !important',
 		boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
 	};
+
 	const dSOpen = detachStore(state => state.setOpen);
 	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
 	const dSSidebarState = detachStore(state => state.detachSidebar);
@@ -129,7 +134,9 @@ export const Sidebar = () => {
 				width: 840,
 				height: 600,
 			}}>
-			<div className="w-full h-full m-4 mr-1 overflow-y-auto">
+			<div
+				className="w-full h-full m-4 mr-1 overflow-y-auto journal-scroll pr-2"
+				style={{ width: 'inherit', height: '98%' }}>
 				<SidebarContent />
 			</div>
 			<div
