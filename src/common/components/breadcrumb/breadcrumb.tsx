@@ -1,6 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import { Route } from 'react-router';
 import { detachStore } from '../../../state';
+import Breadcrumbui from './breadcrumb-ui';
 import './breadcrumb.scss';
 
 export const OrbitSVG = (props: any) => (
@@ -70,7 +73,18 @@ export const Breadcrumb = () => {
 					onClick={handleDetach}>
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
-				<span className="pl-2">E2e Group</span>
+				<span className="pl-2">
+          {/* E2e Group */}
+          <Route>
+            {({ location }) => {
+              const pathnames = location.pathname.split('/').filter((x) => x);
+              console.log(pathnames)
+              return (
+                <Breadcrumbui pathnames={pathnames} />
+              );
+            }}
+          </Route>
+        </span>
 			</div>
 		</div>
 	);

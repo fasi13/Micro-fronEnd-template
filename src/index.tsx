@@ -1,14 +1,18 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter } from 'react-router';
 import './index.css';
 import App from './pages/app/App';
 import reportWebVitals from './reportWebVitals';
 import './styles/tailwind.generated.css';
 
 ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+  <MemoryRouter initialEntries={['/']} initialIndex={0}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </MemoryRouter>,
 	document.getElementById('root'),
 );
 
