@@ -463,7 +463,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 	} = props;
 
 	return (
-		<div className="w-full h-full text-white bg-grayblue">
+		<div className="w-auto h-auto text-white bg-grayblue ">
 			<ul className="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible">
 				{data.map((item, index) => (
 					<RenderNodesRecursively

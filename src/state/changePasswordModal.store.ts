@@ -7,5 +7,6 @@ interface myState {
 
 export const changePasswordModalStore = create<myState>(set => ({
 	showChangePasswordModal: false,
-	setShowChangePasswordModal: (opn: boolean) => set({ showChangePasswordModal: opn }),
+	setShowChangePasswordModal: (opn: boolean) =>
+		set({ showChangePasswordModal: opn }),
 }));
