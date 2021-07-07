@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-	CircularProgress,
-	createStyles,
-	List,
-	makeStyles,
-	TextField,
+  CircularProgress,
+  createStyles,
+  List,
+  makeStyles,
+  TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { Autocomplete } from '@material-ui/lab';
@@ -45,12 +45,12 @@ const SidebarContent = () => {
 	const classes = useStyles();
 
 	// searchLoading,
-	const { setSearchLoading, searchApplication, searchData } = useSearchStore();
+	const { setSearchLoading, searchApplication, searchData,searchLoading } = useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
 
 	const [open, setOpen] = React.useState(false);
-	const searchLoading = open && searchData.length === 0;
+	// const searchLoading = open && searchData.length === 0;
 
 	const widthStyle = { width: '96%', height: 'inherit' };
 	const {
