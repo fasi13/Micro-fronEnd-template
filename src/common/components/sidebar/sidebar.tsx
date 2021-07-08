@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  CircularProgress,
-  createStyles,
-  List,
-  makeStyles,
-  TextField
+	CircularProgress,
+	createStyles,
+	List,
+	makeStyles,
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { Autocomplete } from '@material-ui/lab';
@@ -45,7 +45,8 @@ const SidebarContent = () => {
 	const classes = useStyles();
 
 	// searchLoading,
-	const { setSearchLoading, searchApplication, searchData,searchLoading } = useSearchStore();
+	const { setSearchLoading, searchApplication, searchData, searchLoading } =
+		useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
 
@@ -153,10 +154,9 @@ const SidebarContent = () => {
 				/>
 			</div>
 			<br />
-			<br />
 			<div
 				className="overflow-y-auto bg-grayblue journal-scroll"
-				style={{ height: 'inherit' }}>
+				style={{ height: '85%' }}>
 				<div className="bg-grayblue" style={widthStyle}>
 					<HierarchyTree
 						onSelect={() => {
@@ -265,7 +265,7 @@ export const Sidebar = () => {
 				height: 600,
 			}}>
 			<div
-				className="w-full h-full m-4 mr-1 overflow-y-auto journal-scroll pr-2"
+				className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2"
 				style={{ width: 'inherit', height: '98%' }}>
 				<SidebarContent />
 			</div>
