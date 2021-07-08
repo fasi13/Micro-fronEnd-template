@@ -7,7 +7,7 @@ import {
 	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { Autocomplete } from '@material-ui/lab';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { HierarchyTree, SearchApplication } from '..';
@@ -92,7 +92,7 @@ const SidebarContent = () => {
 
 	const searchElement = (keyword: string) =>
 		keyword.length < 3 ? null : setInputValue(keyword);
-
+	const dSSidebarState = detachStore(state => state.detachSidebar);
 	return (
 		<>
 			<div className="flex justify-center">
@@ -156,7 +156,7 @@ const SidebarContent = () => {
 			<br />
 			<div
 				className="overflow-y-auto bg-grayblue journal-scroll"
-				style={{ height: '85%' }}>
+				style={dSSidebarState ? { height: '83%' } : { height: 'inherit' }}>
 				<div className="bg-grayblue" style={widthStyle}>
 					<HierarchyTree
 						onSelect={() => {
@@ -223,6 +223,9 @@ const SidebarContent = () => {
 };
 
 export const Sidebar = () => {
+	const dSOpen = detachStore(state => state.setOpen);
+	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
+	const dSSidebarState = detachStore(state => state.detachSidebar);
 	const style = {
 		display: 'flex',
 		alignItems: 'start',
@@ -234,10 +237,6 @@ export const Sidebar = () => {
 		left: '35px !important',
 		boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
 	};
-
-	const dSOpen = detachStore(state => state.setOpen);
-	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
-	const dSSidebarState = detachStore(state => state.detachSidebar);
 
 	const setOpen = (opn: boolean) => {
 		dSOpen(opn);
