@@ -257,7 +257,17 @@ export const Sidebar = () => {
 
 	return dSSidebarState ? (
 		<Rnd
+			className="testClass"
+			enableResizing={{
+				bottomLeft: true,
+				bottomRight: true,
+				topLeft: true,
+				topRight: true,
+			}}
 			style={style}
+			// position={{ x: 0, y: 0 }}
+			dragHandleClassName="testClass"
+			// bounds=".App"
 			default={{
 				x: 500,
 				y: 0,
@@ -265,7 +275,7 @@ export const Sidebar = () => {
 				height: 600,
 			}}>
 			<div
-				className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2"
+				className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
 				style={{ width: 'inherit', height: '98%' }}>
 				<SidebarContent />
 			</div>
