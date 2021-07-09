@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath, TreeView } from '../../../types';
 import {
-  AddIcon,
-  CloseIcon,
-  FolderIcon,
-  PencilIcon,
-  SpinnerIcon
+	AddIcon,
+	CloseIcon,
+	FolderIcon,
+	PencilIcon,
+	SpinnerIcon,
 } from '../../icons';
 import './hierarchy.css';
 
@@ -301,7 +301,12 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 							)}
 						</>
 						<button
-              id={data.name.split(' ').join('_').toLowerCase().toString().concat("____", data.id.toString())}
+							id={data.name
+								.split(' ')
+								.join('_')
+								.toLowerCase()
+								.toString()
+								.concat('____', data.id.toString())}
 							type="button"
 							className="w-full flex items-center h-10.5 border-indigo-200"
 							onClick={() => updateBreadcrumbStore()}>

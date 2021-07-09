@@ -33,17 +33,25 @@ function Breadcrumbview() {
 	const handleClick = (index: number) => {
 		const pathNameUpdate: NodePath[] = [];
 
-    const getId = breadCrumbData[index].pathName.split(' ').join('_').toLowerCase().toString()
-    .concat("____", breadCrumbData[index].pathId !== -1 ? breadCrumbData[index].pathId.toString() : "1");
+		const getId = breadCrumbData[index].pathName
+			.split(' ')
+			.join('_')
+			.toLowerCase()
+			.toString()
+			.concat(
+				'____',
+				breadCrumbData[index].pathId !== -1
+					? breadCrumbData[index].pathId.toString()
+					: '1',
+			);
 
-    const el = document.getElementById(getId);
+		const el = document.getElementById(getId);
 
 		for (let i = 0; i <= index; i++) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
 		setBreadcrumb(pathNameUpdate);
-    el?.scrollIntoView(true);
-
+		el?.scrollIntoView(true);
 	};
 
 	return (
