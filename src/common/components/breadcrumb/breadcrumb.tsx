@@ -3,7 +3,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { detachStore } from '../../../state';
-import Breadcrumbui from './breadcrumb-ui';
+import Breadcrumbui from './Breadcrumb-ui';
 import './breadcrumb.scss';
 
 export const OrbitSVG = (props: any) => (
@@ -74,17 +74,15 @@ export const Breadcrumb = () => {
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
 				<span className="pl-2">
-          {/* E2e Group */}
-          <Route>
-            {({ location }) => {
-              const pathnames = location.pathname.split('/').filter((x) => x);
-              console.log(pathnames)
-              return (
-                <Breadcrumbui pathnames={pathnames} />
-              );
-            }}
-          </Route>
-        </span>
+					{/* E2e Group */}
+					<Route>
+						{({ location }) => {
+							const pathnames = location.pathname.split('/').filter(x => x);
+							console.log(pathnames);
+							return <Breadcrumbui pathnames={pathnames} />;
+						}}
+					</Route>
+				</span>
 			</div>
 		</div>
 	);
