@@ -34,6 +34,7 @@ export const SearchApplication = (props: SearchApplicationProps) => {
 
 	const getApplicationPath = (application: ApplicationPath): string => {
 		const appPath = application.path;
+
 		let strPath = '';
 		appPath.slice(0, appPath.length - 1).forEach((element, index, array) => {
 			if (element) {

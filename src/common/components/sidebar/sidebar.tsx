@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { HierarchyTree, SearchApplication } from '..';
 import { detachStore, useHierarchyStore, useSearchStore } from '../../../state';
-import { ApplicationPath, TreeView } from '../../../types';
+import { ApplicationPath, NodePath, TreeView } from '../../../types';
 import './sidebar.scss';
 
 const useStyles = makeStyles(() =>
@@ -104,11 +104,9 @@ const SidebarContent = () => {
 					onClose={() => {
 						setOpen(false);
 					}}
-					// freeSolo background: "#d1d5db",
 					id="combo-box-demo"
 					style={{ width: 445, backgroundColor: '#d1d5db', zIndex: 999999 }}
 					className={classes.searchInput}
-					// getOptionSelected={(option, value) => option.name === value.name}
 					options={searchData}
 					getOptionLabel={x => getApplicationName(x)}
 					autoComplete
@@ -134,7 +132,6 @@ const SidebarContent = () => {
 										{searchLoading ? (
 											<CircularProgress color="inherit" size={20} />
 										) : null}
-										{/* {params.InputProps.endAdornment} */}
 									</>
 								),
 							}}
@@ -165,7 +162,7 @@ const SidebarContent = () => {
 						onToggle={async (
 							item: TreeView,
 							nodeId: number,
-							nodePath: number[],
+							nodePath: NodePath[],
 							cb: () => void,
 						) => {
 							await getHierarchyChildData(item, nodeId, nodePath);
@@ -174,7 +171,7 @@ const SidebarContent = () => {
 						onAddGroup={async (
 							item: TreeView,
 							nodeId: number,
-							nodePath: number[],
+							nodePath: NodePath[],
 							name: string,
 							cb: (err: any) => void,
 						) => {
@@ -184,7 +181,7 @@ const SidebarContent = () => {
 						onAddApplication={async (
 							item: TreeView,
 							nodeId: number,
-							nodePath: number[],
+							nodePath: NodePath[],
 							name: string,
 							value: string,
 							cb: (err: any) => void,
@@ -195,7 +192,7 @@ const SidebarContent = () => {
 						onEditApplication={async (
 							item: TreeView,
 							nodeId: number,
-							nodePath: number[],
+							nodePath: NodePath[],
 							name: string,
 							value: string,
 							cb: (err: any) => void,
@@ -206,7 +203,7 @@ const SidebarContent = () => {
 						onEditGroup={async (
 							item: TreeView,
 							nodeId: number,
-							nodePath: number[],
+							nodePath: NodePath[],
 							name: string,
 							cb: (err: any) => void,
 						) => {

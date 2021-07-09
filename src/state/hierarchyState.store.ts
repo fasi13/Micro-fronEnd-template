@@ -4,6 +4,7 @@ import {
 	ApplicationResponse,
 	DataPaginated,
 	Link,
+	NodePath,
 	TreeView,
 } from '../types';
 import { HierarchyClient as axios } from '../util/axios';
@@ -78,26 +79,26 @@ interface HierarchyState {
 	createApplicationGroup: (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 	) => void;
 	editApplicationGroup: (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 	) => void;
 	createApplication: (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		value: string,
 	) => void;
 	editApplication: (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		value: string,
 	) => void;
@@ -105,13 +106,13 @@ interface HierarchyState {
 	getHierarchyChildData: (
 		item: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 	) => void;
 }
 
 function updateNodeWithNewChildData(
 	hierarchyData: TreeView[],
-	nodePath: number[],
+	nodePath: NodePath[],
 	items: any[],
 ) {
 	let i = 1;
@@ -121,7 +122,7 @@ function updateNodeWithNewChildData(
 			// eslint-disable-next-line no-loop-func
 			const p = parentNode?.childrenData.find(
 				// eslint-disable-next-line no-loop-func
-				pn => pn.id === nodePath[i],
+				pn => pn.id === nodePath[i].pathId,
 			);
 			if (p) parentNode = p;
 		}
@@ -136,7 +137,7 @@ function updateNodeWithNewChildData(
 
 function updateNodeValues(
 	hierarchyData: TreeView[],
-	nodePath: number[],
+	nodePath: NodePath[],
 	name: string,
 	value: string,
 ) {
@@ -147,7 +148,7 @@ function updateNodeValues(
 			// eslint-disable-next-line no-loop-func
 			const p = parentNode?.childrenData.find(
 				// eslint-disable-next-line no-loop-func
-				pn => pn.id === nodePath[i],
+				pn => pn.id === nodePath[i].pathId,
 			);
 			if (p) parentNode = p;
 		}
@@ -240,7 +241,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	createApplicationGroup: async (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 	) => {
 		if (data) {
@@ -262,7 +263,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	editApplicationGroup: async (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 	) => {
 		if (data) {
@@ -287,7 +288,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	createApplication: async (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		value: string,
 	) => {
@@ -310,7 +311,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	editApplication: async (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		value: string,
 	) => {
@@ -348,7 +349,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	getHierarchyChildData: async (
 		data: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		// eslint-disable-next-line sonarjs/cognitive-complexity
 	) => {
 		if (data._links) {
