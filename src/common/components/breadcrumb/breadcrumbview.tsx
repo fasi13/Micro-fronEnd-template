@@ -5,6 +5,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import React from 'react';
 import { useBreadcrumbStore } from '../../../state';
+import { NodePath } from '../../../types';
 
 const useStyles = makeStyles(() =>
 	createStyles({
@@ -30,12 +31,19 @@ function Breadcrumbview() {
 	const { breadCrumbData, setBreadcrumb } = useBreadcrumbStore();
 
 	const handleClick = (index: number) => {
-		const pathNameUpdate: string[] = [];
+		const pathNameUpdate: NodePath[] = [];
+
+    const getId = breadCrumbData[index].pathName.split(' ').join('_').toLowerCase().toString()
+    .concat("____", breadCrumbData[index].pathId !== -1 ? breadCrumbData[index].pathId.toString() : "1");
+
+    const el = document.getElementById(getId);
 
 		for (let i = 0; i <= index; i++) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
 		setBreadcrumb(pathNameUpdate);
+    el?.scrollIntoView(true);
+
 	};
 
 	return (
@@ -47,11 +55,11 @@ function Breadcrumbview() {
 						className={index !== 0 ? classes.link : classes.first}
 						onClick={() => handleClick(index)}>
 						{' '}
-						{bread}{' '}
+						{bread.pathName}{' '}
 					</Link>
 				) : (
 					<Typography className={index !== 0 ? classes.last : classes.first}>
-						{bread}
+						{bread.pathName}
 					</Typography>
 				),
 			)}

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath, TreeView } from '../../../types';
 import {
-	AddIcon,
-	CloseIcon,
-	FolderIcon,
-	PencilIcon,
-	SpinnerIcon,
+  AddIcon,
+  CloseIcon,
+  FolderIcon,
+  PencilIcon,
+  SpinnerIcon
 } from '../../icons';
 import './hierarchy.css';
 
@@ -255,7 +255,7 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 
 	const updateBreadcrumbStore = () => {
 		setToggleChildren(!toggleChildren);
-		setBreadcrumb(nodePath.map(p => p.pathName));
+		setBreadcrumb(nodePath);
 	};
 
 	return (
@@ -301,9 +301,9 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 							)}
 						</>
 						<button
+              id={data.name.split(' ').join('_').toLowerCase().toString().concat("____", data.id.toString())}
 							type="button"
 							className="w-full flex items-center h-10.5 border-indigo-200"
-							// onClick={() => setToggleChildren(!toggleChildren)}>
 							onClick={() => updateBreadcrumbStore()}>
 							{data.name}
 						</button>
@@ -348,7 +348,7 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 
 			<div className={`${toggleChildren ? '' : 'hidden'}`}>
 				{toggleNewApplicationOrGroupCtrl !== '' ? (
-					<ul className="w-full pl-5 ml-2 B">
+					<ul id="mainContainerList" className="w-full pl-5 ml-2 B">
 						<li className="relative flex flex-col items-start justify-center w-full h-auto list-none tree">
 							<NodeEditor
 								onClose={() => setToggleNewApplicationOrGroupCtrl('')}
