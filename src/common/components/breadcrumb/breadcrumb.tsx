@@ -1,10 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { Route } from 'react-router';
 import { detachStore } from '../../../state';
-import Breadcrumbui from './breadcrumb-ui';
 import './breadcrumb.scss';
+import Breadcrumbview from './breadcrumbview';
 
 export const OrbitSVG = (props: any) => (
 	<svg
@@ -75,13 +74,7 @@ export const Breadcrumb = () => {
 				</div>
 				<span className="pl-2">
 					{/* E2e Group */}
-					<Route>
-						{({ location }) => {
-							const pathnames = location.pathname.split('/').filter(x => x);
-							console.log(pathnames);
-							return <Breadcrumbui pathnames={pathnames} />;
-						}}
-					</Route>
+					<Breadcrumbview />
 				</span>
 			</div>
 		</div>
