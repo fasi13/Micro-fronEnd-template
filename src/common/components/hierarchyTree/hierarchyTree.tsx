@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { TreeView } from '../../../types';
+import { useBreadcrumbStore } from '../../../state';
+import { NodePath, TreeView } from '../../../types';
 import {
 	AddIcon,
 	CloseIcon,
@@ -15,13 +16,13 @@ interface NodeActions {
 	onToggle: (
 		item: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		cb: () => void,
 	) => void;
 	onAddApplication: (
 		item: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		value: string,
 		cb: (err: any) => void,
@@ -29,14 +30,14 @@ interface NodeActions {
 	onAddGroup: (
 		item: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		cb: (err: any) => void,
 	) => void;
 	onEditApplication: (
 		item: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		value: string,
 		cb: (err: any) => void,
@@ -44,7 +45,7 @@ interface NodeActions {
 	onEditGroup: (
 		item: TreeView,
 		nodeId: number,
-		nodePath: number[],
+		nodePath: NodePath[],
 		name: string,
 		cb: (err: any) => void,
 	) => void;
@@ -61,7 +62,7 @@ interface ApplicationPropType extends NodeActions {
 	index: number;
 	nodeDepth: number;
 	nodeId: number;
-	nodePath: number[];
+	nodePath: NodePath[];
 	expandNodesAtLevel?: number;
 }
 
@@ -69,7 +70,7 @@ interface NodePropType extends NodeActions {
 	data: TreeView;
 	expandedByDefault: boolean;
 	nodeId: number;
-	nodePath: number[];
+	nodePath: NodePath[];
 }
 
 function nodeHasChildren(nodeData: TreeView) {
@@ -133,6 +134,9 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 		onAddGroup,
 		onLoadMore,
 	} = props;
+
+	const { setBreadcrumb, breadCrumbData } = useBreadcrumbStore();
+
 	const [editNode, setEditForNode] = useState<boolean>(false);
 	const [toggleChildren, setToggleChildren] = useState<boolean>(false);
 	const [isFetched, setFetched] = useState<boolean>(false);
@@ -249,6 +253,11 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 		return false;
 	};
 
+	const updateBreadcrumbStore = () => {
+		setToggleChildren(!toggleChildren);
+		setBreadcrumb(nodePath);
+	};
+
 	return (
 		<>
 			<div className="h-10.5 w-full">
@@ -292,9 +301,15 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 							)}
 						</>
 						<button
+							id={data.name
+								.split(' ')
+								.join('_')
+								.toLowerCase()
+								.toString()
+								.concat('____', data.id.toString())}
 							type="button"
 							className="w-full flex items-center h-10.5 border-indigo-200"
-							onClick={() => setToggleChildren(!toggleChildren)}>
+							onClick={() => updateBreadcrumbStore()}>
 							{data.name}
 						</button>
 						<div className="flex space-x-3 node-actions">
@@ -338,7 +353,7 @@ const TreeNode: React.FC<NodePropType> = (props): JSX.Element => {
 
 			<div className={`${toggleChildren ? '' : 'hidden'}`}>
 				{toggleNewApplicationOrGroupCtrl !== '' ? (
-					<ul className="w-full pl-5 ml-2 B">
+					<ul id="mainContainerList" className="w-full pl-5 ml-2 B">
 						<li className="relative flex flex-col items-start justify-center w-full h-auto list-none tree">
 							<NodeEditor
 								onClose={() => setToggleNewApplicationOrGroupCtrl('')}
@@ -423,7 +438,10 @@ const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 												nodeId: c.id,
 												index: ci,
 												nodeDepth: nodeDepth + 1,
-												nodePath: [...nodePath, c.id],
+												nodePath: [
+													...nodePath,
+													{ pathId: c.id, pathName: c.name },
+												],
 												expandNodesAtLevel: props.expandNodesAtLevel,
 												onEditApplication: props.onEditApplication,
 												onEditGroup: props.onEditGroup,
@@ -463,7 +481,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 	} = props;
 
 	return (
-		<div className="w-full h-full text-white bg-grayblue">
+		<div className="w-auto h-auto text-white bg-grayblue ">
 			<ul className="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible">
 				{data.map((item, index) => (
 					<RenderNodesRecursively
@@ -472,7 +490,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 						index={index}
 						nodeDepth={0}
 						nodeId={item.id}
-						nodePath={[-1]}
+						nodePath={[{ pathId: -1, pathName: 'E2E Group' }]}
 						expandNodesAtLevel={expandNodesAtLevel}
 						onEditApplication={onEditApplication}
 						onEditGroup={onEditGroup}

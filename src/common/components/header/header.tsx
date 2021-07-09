@@ -19,7 +19,9 @@ import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import React from 'react';
+import { changePasswordModalStore } from '../../../state';
 import { Breadcrumb } from '../breadcrumb/breadcrumb';
+import ChangePasswordModal from '../changePasswordModal/changePasswordModal';
 import './header.scss';
 
 const drawerWidth = 340;
@@ -146,9 +148,20 @@ export const Header = () => {
 			setAnchorEl2(null);
 	};
 
+	const showChangePassword = changePasswordModalStore(
+		state => state.showChangePasswordModal,
+	);
+	const setShowChangePassword = changePasswordModalStore(
+		state => state.setShowChangePasswordModal,
+	);
+
+	const handleChangePassword = () => {
+		setAnchorEl2(null);
+		setShowChangePassword(true);
+	};
 	const AccountAvatar = () => (
 		<>
-			<MenuItem>
+			<MenuItem onClick={handleChangePassword}>
 				<ListItemText
 					primary={<span className="text-sm">CHANGE PASSWORD</span>}
 				/>
@@ -305,6 +318,7 @@ export const Header = () => {
 				</div>
 				<Breadcrumb />
 			</AppBar>
+			{showChangePassword ? <ChangePasswordModal /> : null}
 		</div>
 	);
 };

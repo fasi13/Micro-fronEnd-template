@@ -78,6 +78,11 @@ export interface ApplicationPath {
 	_links: Link[];
 }
 
+export interface NodePath {
+	pathName: string;
+	pathId: number;
+}
+
 // export interface ApplicationGroupResponse {
 // 	_links: Link[];
 // 	id: number;
