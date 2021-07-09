@@ -7,7 +7,7 @@ import {
 	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { Autocomplete } from '@material-ui/lab';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { HierarchyTree, SearchApplication } from '..';
@@ -92,7 +92,7 @@ const SidebarContent = () => {
 
 	const searchElement = (keyword: string) =>
 		keyword.length < 3 ? null : setInputValue(keyword);
-
+	const dSSidebarState = detachStore(state => state.detachSidebar);
 	return (
 		<>
 			<div className="flex justify-center">
@@ -151,10 +151,9 @@ const SidebarContent = () => {
 				/>
 			</div>
 			<br />
-			<br />
 			<div
 				className="overflow-y-auto bg-grayblue journal-scroll"
-				style={{ height: 'inherit' }}>
+				style={dSSidebarState ? { height: '83%' } : { height: 'inherit' }}>
 				<div className="bg-grayblue" style={widthStyle}>
 					<HierarchyTree
 						onSelect={() => {
@@ -221,6 +220,9 @@ const SidebarContent = () => {
 };
 
 export const Sidebar = () => {
+	const dSOpen = detachStore(state => state.setOpen);
+	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
+	const dSSidebarState = detachStore(state => state.detachSidebar);
 	const style = {
 		display: 'flex',
 		alignItems: 'start',
@@ -232,10 +234,6 @@ export const Sidebar = () => {
 		left: '35px !important',
 		boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
 	};
-
-	const dSOpen = detachStore(state => state.setOpen);
-	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
-	const dSSidebarState = detachStore(state => state.detachSidebar);
 
 	const setOpen = (opn: boolean) => {
 		dSOpen(opn);
@@ -255,7 +253,17 @@ export const Sidebar = () => {
 
 	return dSSidebarState ? (
 		<Rnd
+			className="testClass"
+			enableResizing={{
+				bottomLeft: true,
+				bottomRight: true,
+				topLeft: true,
+				topRight: true,
+			}}
 			style={style}
+			// position={{ x: 0, y: 0 }}
+			dragHandleClassName="testClass"
+			// bounds=".App"
 			default={{
 				x: 500,
 				y: 0,
@@ -263,7 +271,7 @@ export const Sidebar = () => {
 				height: 600,
 			}}>
 			<div
-				className="w-full h-full m-4 mr-1 overflow-y-auto journal-scroll pr-2"
+				className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
 				style={{ width: 'inherit', height: '98%' }}>
 				<SidebarContent />
 			</div>
