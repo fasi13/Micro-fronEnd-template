@@ -13,6 +13,7 @@ const drawerWidth = 500;
 const useStyles = makeStyles(theme => ({
 	root: {
 		display: 'flex',
+		minWidth: 'min-h-full',
 	},
 	appBar: {
 		zIndex: theme.zIndex.drawer + 1,
@@ -45,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 		background: '#31506A',
 		border: 'none',
 		width: drawerWidth,
-		paddingTop: 135,
+		paddingTop: 145,
 		overflow: 'hidden',
 		paddingRight: '8px',
 		paddingBottom: '8px',
@@ -73,14 +74,14 @@ const useStyles = makeStyles(theme => ({
 		marginLeft: 0,
 	},
 }));
-
+const padStyle = { paddingTop: '143px' };
 export const Home = () => {
-	const ddd = detachStore(state => state.setOpen);
+	const dSOpen = detachStore(state => state.setOpen);
 
 	const classes = useStyles();
 
 	const open = detachStore(state => state.open);
-	const tearSidebar = detachStore(state => state.detachSidebar);
+	const detachSidebar = detachStore(state => state.detachSidebar);
 
 	const handleDrawerOpen = (event: any) => {
 		if (
@@ -88,11 +89,11 @@ export const Home = () => {
 				(event.keyCode === 13 || event.keyCode === 32)) ||
 			event.type === 'click'
 		)
-			ddd(!open);
+			dSOpen(!open);
 	};
 
 	return (
-		<div className={classes.root}>
+		<div className={`${classes.root} min-h-screen root`}>
 			<CssBaseline />
 			<Header />
 			<Drawer
@@ -109,11 +110,15 @@ export const Home = () => {
 				className={clsx(classes.content, {
 					[classes.contentShift]: open,
 				})}>
-				<div style={{ height: '20px', paddingTop: '130px' }}>
+				<div
+					className="h-5"
+					style={padStyle}
+					// style={{ height: '20px', paddingTop: '130px' }}
+				>
 					<div
 						className="fixed w-full py-3 "
 						style={{ background: '#8999A6', height: '65px' }}>
-						{!tearSidebar ? (
+						{!detachSidebar ? (
 							<div
 								onKeyDown={() => handleDrawerOpen}
 								style={{
@@ -146,7 +151,7 @@ export const Home = () => {
 					</div>
 				</div>
 				<div className={classes.drawerHeader} />
-				<div className="p-12">{tearSidebar ? <Sidebar /> : null}</div>
+				<div className="p-12">{detachSidebar ? <Sidebar /> : null}</div>
 			</div>
 		</div>
 	);
