@@ -8,6 +8,7 @@ import Breadcrumbview from './breadcrumbview';
 export const OrbitSVG = (props: any) => (
 	<svg
 		data-testid="detach-icon"
+		style={{ width: '50px', height: '100%' }}
 		className={`${props.detachSidebar ? 'sidebarDetached' : ''}`}
 		xmlns="http://www.w3.org/2000/svg"
 		focusable="false"
@@ -60,8 +61,8 @@ export const Breadcrumb = () => {
 	};
 
 	return (
-		<div className="py-4 text-xl pl-14" style={{ background: '#31506A' }}>
-			<div className="flex flex-wrap">
+		<div className="py-1 text-xl pl-14" style={{ background: '#31506A' }}>
+			<div className="p-px flex flex-wrap">
 				<div
 					onKeyDown={handleDetach}
 					role="button"
@@ -72,7 +73,7 @@ export const Breadcrumb = () => {
 					onClick={handleDetach}>
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
-				<span className="pl-2">
+				<span className="pl-2 self-center">
 					{/* E2e Group */}
 					<Breadcrumbview />
 				</span>

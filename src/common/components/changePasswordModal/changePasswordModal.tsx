@@ -44,8 +44,8 @@ function ChangePasswordModal() {
 		if ('confirm_password' in fieldValues)
 			temp.confirm_password =
 				fieldValues.confirm_password === fieldValues.new_password
-					? 'yes'
-					: 'noo';
+					? ''
+					: "Password and confirm password don't match";
 
 		setErrors({
 			...temp,

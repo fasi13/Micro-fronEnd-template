@@ -95,7 +95,7 @@ const SidebarContent = () => {
 	const dSSidebarState = detachStore(state => state.detachSidebar);
 	return (
 		<>
-			<div className="flex justify-center">
+			<div className="rnd-move flex justify-center">
 				<Autocomplete
 					data-testid="searchautocomplete"
 					open={open}
@@ -253,46 +253,48 @@ export const Sidebar = () => {
 	};
 
 	return dSSidebarState ? (
-		<Rnd
-			className="testClass"
-			enableResizing={{
-				bottomLeft: true,
-				bottomRight: true,
-				topLeft: true,
-				topRight: true,
-			}}
-			style={style}
-			// position={{ x: 0, y: 0 }}
-			dragHandleClassName="testClass"
-			// bounds=".App"
-			default={{
-				x: 500,
-				y: 0,
-				width: 840,
-				height: 600,
-			}}>
-			<div
-				className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
-				style={{ width: 'inherit', height: '98%' }}>
-				<SidebarContent />
-			</div>
-			<div
-				onKeyDown={() => handleAttach}
-				role="button"
-				tabIndex={0}
-				aria-label="close-tear"
-				style={{
-					fontSize: 20,
-					background: '#31506A',
-					borderRadius: '0px 8px 8px 0px',
-					color: 'white',
-					boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
-				}}
-				id="icon"
-				onClick={handleAttach}>
-				x
-			</div>
-		</Rnd>
+		<div className="flex items-center justify-center">
+			<Rnd
+				className="rndcustomize relative"
+				// enableResizing={{
+				// 	bottomLeft: true,
+				// 	bottomRight: true,
+				// 	topLeft: true,
+				// 	topRight: true,
+				// }}
+				style={style}
+				// position={{ x: 0, y: 0 }}
+				dragHandleClassName="rnd-move"
+				bounds=".root"
+				default={{
+					x: 300,
+					y: 0,
+					width: 840,
+					height: 600,
+				}}>
+				<div
+					className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
+					style={{ width: 'inherit', height: '98%' }}>
+					<SidebarContent />
+				</div>
+				<div
+					onKeyDown={() => handleAttach}
+					role="button"
+					tabIndex={0}
+					aria-label="close-tear"
+					style={{
+						fontSize: 20,
+						background: '#31506A',
+						borderRadius: '0px 8px 8px 0px',
+						color: 'white',
+						boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
+					}}
+					id="icon"
+					onClick={handleAttach}>
+					x
+				</div>
+			</Rnd>
+		</div>
 	) : (
 		<SidebarContent />
 	);

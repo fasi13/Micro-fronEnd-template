@@ -7,19 +7,20 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import AccountTreeOutlinedIcon from '@material-ui/icons/AccountTreeOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
-import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
-import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
-import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
-import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import React from 'react';
 import { changePasswordModalStore } from '../../../state';
+import {
+	ClientMgtIcon,
+	CommunicationIcon,
+	ContentMgtIcon,
+	InvoiceIcon, PermissionIcon, PriceIcon,
+	ProgramsIcon,
+	RolesIcon,
+	SettingsIcon,
+	UserMgtIcon
+} from '../../icons';
 import { Breadcrumb } from '../breadcrumb/breadcrumb';
 import ChangePasswordModal from '../changePasswordModal/changePasswordModal';
 import './header.scss';
@@ -163,72 +164,94 @@ export const Header = () => {
 		<>
 			<MenuItem onClick={handleChangePassword}>
 				<ListItemText
-					primary={<span className="text-sm">CHANGE PASSWORD</span>}
+					primary={<span className="text-sm font-bold">CHANGE PASSWORD</span>}
 				/>
 			</MenuItem>
 			<MenuItem>
-				<ListItemText primary={<span className="text-sm">LOGOUT</span>} />
+				<ListItemText
+					primary={<span className="text-sm font-bold">LOGOUT</span>}
+				/>
 			</MenuItem>
 		</>
 	);
 
 	const ManageCommunicationMenuItems = () => (
 		<>
-			<MenuItem className="gap-x-2">
-				<PeopleAltOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2 text-5xl" style={{ margin: '5px' }}>
+				<ClientMgtIcon className="" width={40} height={40} />
 				<ListItemText
-					primary={<span className="text-sm">CLIENT MANAGEMENT</span>}
+					primary={<span className="text-sm font-bold">CLIENT MANAGEMENT</span>}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<InsertDriveFileOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<ContentMgtIcon className="" width={40} height={40} />
 				<ListItemText
-					primary={<span className="text-sm">CONTENT MANAGEMENT</span>}
+					primary={
+						<span className="text-sm font-bold">CONTENT MANAGEMENT</span>
+					}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<ForumOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<CommunicationIcon className="" width={40} height={40} />
+
 				<ListItemText
-					primary={<span className="text-sm">MANAGE COMMUNICATION</span>}
+					primary={
+						<span className="text-sm font-bold">MANAGE COMMUNICATION</span>
+					}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<ListAltOutlinedIcon fontSize="small" />
-				<ListItemText primary={<span className="text-sm">PROGRAMS</span>} />
-			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<LocalOfferOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<ProgramsIcon className="" width={40} height={40} />
+
 				<ListItemText
-					primary={<span className="text-sm">PRICE SETTINGS</span>}
+					primary={<span className="text-sm font-bold">PROGRAMS</span>}
 				/>
 			</MenuItem>
 
-			<MenuItem className="gap-x-2">
-				<AccountTreeOutlinedIcon fontSize="small" />
-				<ListItemText primary={<span className="text-sm">ROLES</span>} />
-			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<ReceiptOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<PriceIcon className="" width={40} height={40} />
+
 				<ListItemText
-					primary={<span className="text-sm">INVOICE MANAGEMENT</span>}
+					primary={<span className="text-sm font-bold">PRICE SETTINGS</span>}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<AccountCircleOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<RolesIcon className="" width={40} height={40} />
+
 				<ListItemText
-					primary={<span className="text-sm">USER MANAGEMENT</span>}
+					primary={<span className="text-sm font-bold">ROLES</span>}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<SettingsOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<InvoiceIcon className="" width={40} height={40} />
+
 				<ListItemText
-					primary={<span className="text-sm">SETTINGS MANAGEMENT</span>}
+					primary={
+						<span className="text-sm font-bold">INVOICE MANAGEMENT</span>
+					}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2">
-				<VerifiedUserOutlinedIcon fontSize="small" />
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<UserMgtIcon className="" width={40} height={40} />
+
 				<ListItemText
-					primary={<span className="text-sm">USER PERMISSION</span>}
+					primary={<span className="text-sm font-bold">USER MANAGEMENT</span>}
+				/>
+			</MenuItem>
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<SettingsIcon className="" width={40} height={40} />
+
+				<ListItemText
+					primary={
+						<span className="text-sm font-bold">SETTINGS MANAGEMENT</span>
+					}
+				/>
+			</MenuItem>
+			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+				<PermissionIcon className="" width={40} height={40} />
+
+				<ListItemText
+					primary={<span className="text-sm font-bold">USER PERMISSION</span>}
 				/>
 			</MenuItem>
 		</>
@@ -236,18 +259,12 @@ export const Header = () => {
 
 	return (
 		<div className={classes.root}>
-			{/* <CssBaseline /> */}
 			<AppBar position="fixed" className={classes.appBar}>
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'space-between',
-					}}
-					className="flex items-center justify-center py-3 pr-20 pl-14 ">
+				<div className="flex justify-between  items-center  py-4 pr-20 pl-14 ">
 					<div className="text-2xl">
 						<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
 					</div>
-					<div style={{ display: 'flex', alignItems: 'center' }}>
+					<div className="flex items-center">
 						<div>
 							<div
 								onKeyDown={handleClick}
@@ -271,12 +288,12 @@ export const Header = () => {
 								</span>
 								<ExpandMoreIcon
 									fontSize="large"
+									className={`transition-transform transform  duration-200 ease-in-out ${
+										anchorEl ? 'rotate-180' : 'rotate-0'
+									}`}
 									style={{
 										color: '#B1C4D1',
-										transform: anchorEl ? 'rotate(180deg)' : 'rotate(0deg)',
-										transitionDuration: '200ms',
 										transitionProperty: 'transform',
-										transitionTimingFunction: 'ease-in-out',
 									}}
 								/>
 							</div>
@@ -291,7 +308,7 @@ export const Header = () => {
 								<ManageCommunicationMenuItems />
 							</Menu>
 						</div>
-						<div style={{ paddingLeft: '20px' }}>
+						<div className="pl-5">
 							<div
 								onKeyDown={handleClick2}
 								role="button"
