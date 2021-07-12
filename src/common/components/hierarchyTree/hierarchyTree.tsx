@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath, TreeView } from '../../../types';
 import {
-  AddIcon,
-  CloseIcon,
-  FolderIcon,
-  PencilIcon,
-  SpinnerIcon
+	AddIcon,
+	CloseIcon,
+	FolderIcon,
+	PencilIcon,
+	SpinnerIcon,
 } from '../../icons';
 import './hierarchy.css';
 
