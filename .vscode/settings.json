@@ -101,5 +101,6 @@
     "cSpell.words": ["antd", "jsonb", "ngxs", "semibold", "verzuz"],
     "explorer.compactFolders": false,
     "npm-scripts.showStartNotification": false,
-    "peacock.color": "#990330"
+    "peacock.color": "#990330",
+    "testing.automaticallyOpenPeekViewDuringAutoRun": true
   }

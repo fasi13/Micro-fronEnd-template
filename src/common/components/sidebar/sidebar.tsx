@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-	CircularProgress,
-	createStyles,
-	List,
-	makeStyles,
-	TextField,
+  CircularProgress,
+  createStyles,
+  List,
+  makeStyles,
+  TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -97,6 +97,7 @@ const SidebarContent = () => {
 		<>
 			<div className="flex justify-center">
 				<Autocomplete
+          data-testid="searchautocomplete"
 					open={open}
 					onOpen={() => {
 						setOpen(true);
