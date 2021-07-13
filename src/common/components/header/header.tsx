@@ -15,11 +15,13 @@ import {
 	ClientMgtIcon,
 	CommunicationIcon,
 	ContentMgtIcon,
-	InvoiceIcon, PermissionIcon, PriceIcon,
+	InvoiceIcon,
+	PermissionIcon,
+	PriceIcon,
 	ProgramsIcon,
 	RolesIcon,
 	SettingsIcon,
-	UserMgtIcon
+	UserMgtIcon,
 } from '../../icons';
 import { Breadcrumb } from '../breadcrumb/breadcrumb';
 import ChangePasswordModal from '../changePasswordModal/changePasswordModal';
@@ -164,11 +166,13 @@ export const Header = () => {
 		<>
 			<MenuItem onClick={handleChangePassword}>
 				<ListItemText
+					data-testid="change-password"
 					primary={<span className="text-sm font-bold">CHANGE PASSWORD</span>}
 				/>
 			</MenuItem>
 			<MenuItem>
 				<ListItemText
+					data-testid="logout"
 					primary={<span className="text-sm font-bold">LOGOUT</span>}
 				/>
 			</MenuItem>
@@ -180,14 +184,20 @@ export const Header = () => {
 			<MenuItem className="gap-x-2 text-5xl" style={{ margin: '5px' }}>
 				<ClientMgtIcon className="" width={40} height={40} />
 				<ListItemText
-					primary={<span className="text-sm font-bold">CLIENT MANAGEMENT</span>}
+					primary={
+						<span data-testid="clntmgt" className="text-sm font-bold">
+							CLIENT MANAGEMENT
+						</span>
+					}
 				/>
 			</MenuItem>
 			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
 				<ContentMgtIcon className="" width={40} height={40} />
 				<ListItemText
 					primary={
-						<span className="text-sm font-bold">CONTENT MANAGEMENT</span>
+						<span data-testid="cntntmgt" className="text-sm font-bold">
+							CONTENT MANAGEMENT
+						</span>
 					}
 				/>
 			</MenuItem>
@@ -196,11 +206,18 @@ export const Header = () => {
 
 				<ListItemText
 					primary={
-						<span className="text-sm font-bold">MANAGE COMMUNICATION</span>
+						<span
+							data-testid="manage-communication"
+							className="text-sm font-bold">
+							MANAGE COMMUNICATION
+						</span>
 					}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="programs"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<ProgramsIcon className="" width={40} height={40} />
 
 				<ListItemText
@@ -208,21 +225,30 @@ export const Header = () => {
 				/>
 			</MenuItem>
 
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="price-settings"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<PriceIcon className="" width={40} height={40} />
 
 				<ListItemText
 					primary={<span className="text-sm font-bold">PRICE SETTINGS</span>}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="roles"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<RolesIcon className="" width={40} height={40} />
 
 				<ListItemText
 					primary={<span className="text-sm font-bold">ROLES</span>}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="invoice-mgt"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<InvoiceIcon className="" width={40} height={40} />
 
 				<ListItemText
@@ -231,14 +257,20 @@ export const Header = () => {
 					}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="user-mgt"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<UserMgtIcon className="" width={40} height={40} />
 
 				<ListItemText
 					primary={<span className="text-sm font-bold">USER MANAGEMENT</span>}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="settings-mgt"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<SettingsIcon className="" width={40} height={40} />
 
 				<ListItemText
@@ -247,7 +279,10 @@ export const Header = () => {
 					}
 				/>
 			</MenuItem>
-			<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+			<MenuItem
+				data-testid="user-permission"
+				className="gap-x-2"
+				style={{ margin: '5px' }}>
 				<PermissionIcon className="" width={40} height={40} />
 
 				<ListItemText
@@ -267,6 +302,7 @@ export const Header = () => {
 					<div className="flex items-center">
 						<div>
 							<div
+								data-testid="menu-title"
 								onKeyDown={handleClick}
 								role="button"
 								tabIndex={0}
@@ -280,10 +316,7 @@ export const Header = () => {
 										color: '#8C9DAC',
 									}}
 								/>
-								<span
-									data-testid="menu-title"
-									className="pl-2 text-base"
-									style={{ color: '#BDC6CD' }}>
+								<span className="pl-2 text-base" style={{ color: '#BDC6CD' }}>
 									Manage Communication
 								</span>
 								<ExpandMoreIcon
@@ -310,6 +343,7 @@ export const Header = () => {
 						</div>
 						<div className="pl-5">
 							<div
+								data-testid="menu-avatar"
 								onKeyDown={handleClick2}
 								role="button"
 								tabIndex={0}
