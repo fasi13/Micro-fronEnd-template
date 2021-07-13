@@ -40,10 +40,19 @@ const useStyles = makeStyles(() =>
 		},
 	}),
 );
-
+const style = {
+	display: 'flex',
+	alignItems: 'start',
+	justifyContent: 'center',
+	background: '#31506A',
+	// zIndex: 9999,
+	zIndex: 1300,
+	top: '35px !important',
+	left: '35px !important',
+	boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
+};
 const SidebarContent = () => {
 	const classes = useStyles();
-
 	// searchLoading,
 	const { setSearchLoading, searchApplication, searchData, searchLoading } =
 		useSearchStore();
@@ -223,17 +232,6 @@ export const Sidebar = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
 	const dSSidebarState = detachStore(state => state.detachSidebar);
-	const style = {
-		display: 'flex',
-		alignItems: 'start',
-		justifyContent: 'center',
-		background: '#31506A',
-		// zIndex: 9999,
-		zIndex: 1300,
-		top: '35px !important',
-		left: '35px !important',
-		boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
-	};
 
 	const setOpen = (opn: boolean) => {
 		dSOpen(opn);

@@ -10,6 +10,16 @@ import { detachStore } from '../../state';
 import './home.scss';
 
 const drawerWidth = 500;
+
+const toggleStyle = {
+	paddingLeft: '3px',
+	fontSize: 25,
+	background: '#31506A',
+	borderRadius: '0px 8px 8px 0px',
+	width: '29px',
+	height: '40px',
+	color: 'white',
+};
 const useStyles = makeStyles(theme => ({
 	root: {
 		display: 'flex',
@@ -91,6 +101,25 @@ export const Home = () => {
 		)
 			dSOpen(!open);
 	};
+	const ToggleSidebar = () => (
+		<div
+			className="fixed w-full py-3 "
+			style={{ background: '#8999A6', height: '65px' }}>
+			{!detachSidebar ? (
+				<div
+					onKeyDown={() => handleDrawerOpen}
+					style={toggleStyle}
+					role="button"
+					tabIndex={0}
+					color="inherit"
+					aria-label="open drawer"
+					onClick={handleDrawerOpen}
+					className={clsx(classes.menuButton, open && classes.menuButton)}>
+					{open ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
+				</div>
+			) : null}
+		</div>
+	);
 
 	return (
 		<div className={`${classes.root} min-h-screen root`}>
@@ -115,40 +144,7 @@ export const Home = () => {
 					style={padStyle}
 					// style={{ height: '20px', paddingTop: '130px' }}
 				>
-					<div
-						className="fixed w-full py-3 "
-						style={{ background: '#8999A6', height: '65px' }}>
-						{!detachSidebar ? (
-							<div
-								onKeyDown={() => handleDrawerOpen}
-								style={{
-									paddingLeft: '3px',
-									fontSize: 25,
-									background: '#31506A',
-									borderRadius: '0px 8px 8px 0px',
-									width: '29px',
-									height: '40px',
-									color: 'white',
-								}}
-								role="button"
-								tabIndex={0}
-								color="inherit"
-								aria-label="open drawer"
-								onClick={handleDrawerOpen}
-								className={clsx(
-									classes.menuButton,
-									open && classes.menuButton,
-								)}>
-								{open ? (
-									<div>
-										<ArrowBackIosIcon />
-									</div>
-								) : (
-									<ArrowForwardIosIcon />
-								)}
-							</div>
-						) : null}
-					</div>
+					<ToggleSidebar />
 				</div>
 				<div className={classes.drawerHeader} />
 				<div className="p-12">{detachSidebar ? <Sidebar /> : null}</div>
