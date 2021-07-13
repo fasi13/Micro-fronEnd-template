@@ -25,7 +25,7 @@ const useStyles = makeStyles(() =>
 	}),
 );
 
-function Breadcrumbview() {
+function Breadcrumb() {
 	const classes = useStyles();
 
 	const { breadCrumbData, setBreadcrumb } = useBreadcrumbStore();
@@ -82,4 +82,4 @@ function Breadcrumbview() {
 	);
 }
 
-export default Breadcrumbview;
+export default Breadcrumb;

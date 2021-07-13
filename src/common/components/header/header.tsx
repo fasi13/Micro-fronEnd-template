@@ -23,7 +23,7 @@ import {
 	SettingsIcon,
 	UserMgtIcon,
 } from '../../icons';
-import { Breadcrumb } from '../breadcrumb/breadcrumb';
+import { Breadcrumb } from '../headerSecond/headerSecond';
 import ChangePasswordModal from '../changePasswordModal/changePasswordModal';
 import './header.scss';
 

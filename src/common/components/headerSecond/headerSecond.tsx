@@ -2,8 +2,8 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { detachStore } from '../../../state';
-import './breadcrumb.scss';
-import Breadcrumbview from './breadcrumbview';
+import Breadcrumbview from './breadcrumb';
+import './headerSecond.scss';
 
 export const OrbitSVG = (props: any) => (
 	<svg

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath } from '../../../types';
-import Breadcrumbview from './breadcrumbview';
+import Breadcrumb from './breadcrumb';
 
 const pathData: NodePath[] = [
 	{ pathId: -1, pathName: 'E2E Group' },
@@ -14,7 +14,7 @@ const pathData: NodePath[] = [
 ];
 
 test('Breadcumb renders with correct text', () => {
-	const component = render(<Breadcrumbview />);
+	const component = render(<Breadcrumb />);
 	const breadcrumbEl = component.getByTestId('breadcrumbtest');
 	expect(breadcrumbEl.textContent).toBe('E2E Group');
 });
@@ -27,7 +27,7 @@ test('Breadcumb renders with with correct text New Application Group ', () => {
 	// console.log("=============4545===============")
 	useBreadcrumbStore.setState({ breadCrumbData: pathData });
 
-	const component = render(<Breadcrumbview />);
+	const component = render(<Breadcrumb />);
 	const breadcrumbEl = component.getByTestId('breadcrumbtest');
 	expect(breadcrumbEl.textContent).toContain('New Application Group');
 });
@@ -35,7 +35,7 @@ test('Breadcumb renders with with correct text New Application Group ', () => {
 test('Breadcumb renders with / separator', () => {
 	useBreadcrumbStore.setState({ breadCrumbData: pathData });
 
-	const component = render(<Breadcrumbview />);
+	const component = render(<Breadcrumb />);
 	const breadcrumbEl = component.getByTestId('breadcrumbtest');
 	expect(breadcrumbEl.textContent).toContain('/');
 });
@@ -43,7 +43,7 @@ test('Breadcumb renders with / separator', () => {
 test('Breadcumb renders E2E Group with disabled paragraph', () => {
 	// useBreadcrumbStore.setState({ breadCrumbData: pathData})
 
-	const component = render(<Breadcrumbview />);
+	const component = render(<Breadcrumb />);
 	const breadcrumbEl = component.getByTestId('disabledBreadLink');
 	expect(breadcrumbEl.closest('p'));
 });
@@ -51,7 +51,7 @@ test('Breadcumb renders E2E Group with disabled paragraph', () => {
 test('Breadcumb renders last link with disabled paragraph', () => {
 	useBreadcrumbStore.setState({ breadCrumbData: pathData });
 
-	const component = render(<Breadcrumbview />);
+	const component = render(<Breadcrumb />);
 	const breadcrumbEl = component.getByTestId('disabledBreadLink');
 	expect(breadcrumbEl.closest('p'));
 });
