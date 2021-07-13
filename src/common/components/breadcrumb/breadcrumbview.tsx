@@ -55,10 +55,14 @@ function Breadcrumbview() {
 	};
 
 	return (
-		<Breadcrumbs aria-label="breadcrumb" className={classes.link}>
+		<Breadcrumbs
+			aria-label="breadcrumb"
+			className={classes.link}
+			data-testid="breadcrumbtest">
 			{breadCrumbData.map((bread, index: number) =>
 				breadCrumbData.length - 1 !== index ? (
 					<Link
+						key={bread.pathId.toString()}
 						component="button"
 						className={index !== 0 ? classes.link : classes.first}
 						onClick={() => handleClick(index)}>
@@ -66,7 +70,10 @@ function Breadcrumbview() {
 						{bread.pathName}{' '}
 					</Link>
 				) : (
-					<Typography className={index !== 0 ? classes.last : classes.first}>
+					<Typography
+						data-testid="disabledBreadLink"
+						key={bread.pathId.toString()}
+						className={index !== 0 ? classes.last : classes.first}>
 						{bread.pathName}
 					</Typography>
 				),

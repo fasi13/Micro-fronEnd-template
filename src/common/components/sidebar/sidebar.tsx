@@ -106,6 +106,7 @@ const SidebarContent = () => {
 		<>
 			<div className="rnd-move flex justify-center">
 				<Autocomplete
+					data-testid="searchautocomplete"
 					open={open}
 					onOpen={() => {
 						setOpen(true);
