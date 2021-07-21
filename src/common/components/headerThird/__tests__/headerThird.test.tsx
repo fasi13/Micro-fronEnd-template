@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { detachStore } from '../../../state';
-import { HeaderThird } from './headerThird';
+import { detachStore } from '../../../../state';
+import { HeaderThird } from '../headerThird';
 
 const dSSidebarState = detachStore.getState();
 test('renders home component', () => {

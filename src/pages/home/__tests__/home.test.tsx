@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { detachStore } from '../../state';
-import { Home } from './home';
+import { detachStore } from '../../../state';
+import { Home } from '../home';
 
 const dSSidebarState = detachStore.getState();
 

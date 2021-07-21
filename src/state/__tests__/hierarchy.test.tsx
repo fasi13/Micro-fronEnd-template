@@ -1,4 +1,4 @@
-import { useSearchStore } from './searchState.store';
+import { useSearchStore } from '../searchState.store';
 
 const { setSearchLoading } = useSearchStore();
 describe('adds 1 + 2 to equal 3', () => {

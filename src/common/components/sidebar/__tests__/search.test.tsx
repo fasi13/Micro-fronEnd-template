@@ -6,8 +6,8 @@ import {
 	render,
 } from '@testing-library/react';
 import React from 'react';
-import { useSearchStore } from '../../../state';
-import { Sidebar } from './sidebar';
+import { useSearchStore } from '../../../../state';
+import { Sidebar } from '../sidebar';
 
 // test("Search ui renders with correctly", () => {
 //   const component = render(<Sidebar />)

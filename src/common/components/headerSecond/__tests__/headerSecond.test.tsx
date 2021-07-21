@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { Home } from '../../../pages/home/home';
-import { detachStore } from '../../../state';
-import { Breadcrumb } from './headerSecond';
+import { Home } from '../../../../pages/home/home';
+import { detachStore } from '../../../../state';
+import { Breadcrumb } from '../headerSecond';
 
 const detachIconStr = 'detach-icon';
 const dSSidebarState = detachStore.getState();

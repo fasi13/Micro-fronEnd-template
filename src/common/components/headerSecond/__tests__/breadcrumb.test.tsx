@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { useBreadcrumbStore } from '../../../state';
-import { NodePath } from '../../../types';
-import Breadcrumb from './breadcrumb';
+import { useBreadcrumbStore } from '../../../../state';
+import { NodePath } from '../../../../types';
+import Breadcrumb from '../breadcrumb';
 
 const pathData: NodePath[] = [
 	{ pathId: -1, pathName: 'E2E Group' },
