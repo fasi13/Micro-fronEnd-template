@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
+import { Home } from '../../../pages/home/home';
 import { detachStore } from '../../../state';
-import { Home } from './../../../pages/home/home';
 import { Breadcrumb } from './headerSecond';
 
 const detachIconStr = 'detach-icon';
