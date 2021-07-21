@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { create } from 'react-test-renderer';
+
+import { render } from '@testing-library/react';
 import { Sidebar } from './sidebar';
 
-test('renders', () => {
-	const tree = create(<Sidebar />).toJSON;
-	expect(tree).toMatchSnapshot();
+test('renders sidebar component', () => {
+	render(<Sidebar />);
 });

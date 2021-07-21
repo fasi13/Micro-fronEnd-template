@@ -9,7 +9,6 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
-import { Rnd } from 'react-rnd';
 import { HierarchyTree, SearchApplication } from '..';
 import { detachStore, useHierarchyStore, useSearchStore } from '../../../state';
 import { ApplicationPath, NodePath, TreeView } from '../../../types';
@@ -40,17 +39,7 @@ const useStyles = makeStyles(() =>
 		},
 	}),
 );
-const style = {
-	display: 'flex',
-	alignItems: 'start',
-	justifyContent: 'center',
-	background: '#31506A',
-	// zIndex: 9999,
-	zIndex: 1300,
-	top: '35px !important',
-	left: '35px !important',
-	boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
-};
+
 const SidebarContent = () => {
 	const classes = useStyles();
 	// searchLoading,
@@ -229,71 +218,4 @@ const SidebarContent = () => {
 	);
 };
 
-export const Sidebar = () => {
-	const dSOpen = detachStore(state => state.setOpen);
-	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
-	const dSSidebarState = detachStore(state => state.detachSidebar);
-
-	const setOpen = (opn: boolean) => {
-		dSOpen(opn);
-	};
-	const setTearSidebar = (detach: boolean) => {
-		setOpen(false);
-		dSSetDetachSidebar(detach);
-	};
-	const handleAttach = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
-			event.type === 'click'
-		)
-			setTearSidebar(false);
-	};
-
-	return dSSidebarState ? (
-		<div className="flex items-center justify-center">
-			<Rnd
-				className="rndcustomize relative"
-				// enableResizing={{
-				// 	bottomLeft: true,
-				// 	bottomRight: true,
-				// 	topLeft: true,
-				// 	topRight: true,
-				// }}
-				style={style}
-				// position={{ x: 0, y: 0 }}
-				dragHandleClassName="rnd-move"
-				bounds=".root"
-				default={{
-					x: 300,
-					y: 0,
-					width: 840,
-					height: 600,
-				}}>
-				<div
-					className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
-					style={{ width: 'inherit', height: '98%' }}>
-					<SidebarContent />
-				</div>
-				<div
-					onKeyDown={() => handleAttach}
-					role="button"
-					tabIndex={0}
-					aria-label="close-tear"
-					style={{
-						fontSize: 20,
-						background: '#31506A',
-						borderRadius: '0px 8px 8px 0px',
-						color: 'white',
-						boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px',
-					}}
-					id="icon"
-					onClick={handleAttach}>
-					x
-				</div>
-			</Rnd>
-		</div>
-	) : (
-		<SidebarContent />
-	);
-};
+export const Sidebar = () => <SidebarContent />;

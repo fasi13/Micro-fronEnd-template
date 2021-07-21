@@ -21,7 +21,7 @@ const errorHandler = (error: any) => {
 	return Promise.reject(error);
 };
 
-console.log('??', process.env.REACT_APP_HIERARCHY_API);
+// console.log('??', process.env.REACT_APP_HIERARCHY_API);
 
 const HierarchyClient = axios.create({
 	baseURL: process.env.REACT_APP_CONTENT_API,

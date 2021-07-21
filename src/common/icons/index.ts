@@ -16,4 +16,3 @@ export * from './settingsIcon';
 export * from './spinner';
 export * from './treeCloseIcon';
 export * from './userMgtIcon';
-

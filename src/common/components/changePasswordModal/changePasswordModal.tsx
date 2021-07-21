@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import {
 	Button,
 	Dialog,
@@ -33,19 +32,17 @@ function ChangePasswordModal() {
 	const requiredString = 'This field is required.';
 	const validate: any = (fieldValues = values) => {
 		const temp: any = { ...errors };
-		if ('old_password' in fieldValues)
-			temp.old_password = fieldValues.old_password ? '' : requiredString;
-		if ('new_password' in fieldValues)
-			temp.new_password = fieldValues.new_password ? '' : requiredString;
-		if ('confirm_password' in fieldValues)
-			temp.confirm_password = fieldValues.confirm_password
-				? ''
-				: requiredString;
-		if ('confirm_password' in fieldValues)
-			temp.confirm_password =
-				fieldValues.confirm_password === fieldValues.new_password
-					? ''
-					: "Password and confirm password don't match";
+		if ('old_password' in fieldValues && !fieldValues.old_password)
+			temp.old_password = requiredString;
+		if ('new_password' in fieldValues && !fieldValues.new_password)
+			temp.new_password = requiredString;
+		if ('confirm_password' in fieldValues && !fieldValues.confirm_password)
+			temp.confirm_password = requiredString;
+		if (
+			'confirm_password' in fieldValues &&
+			fieldValues.confirm_password === fieldValues.new_password
+		)
+			temp.confirm_password = "Password and confirm password don't match";
 
 		setErrors({
 			...temp,
@@ -61,8 +58,6 @@ function ChangePasswordModal() {
 	};
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		console.log(errors);
-		console.log(values);
 		Object.values(errors).every(x => x === '');
 		validate();
 	};
@@ -94,7 +89,6 @@ function ChangePasswordModal() {
 							helperText={errors.old_password ? errors.old_password : ''}
 						/>
 						<TextField
-							autoFocus
 							margin="dense"
 							id="new_password"
 							name="new_password"
@@ -106,7 +100,6 @@ function ChangePasswordModal() {
 							helperText={errors.new_password ? errors.new_password : ''}
 						/>
 						<TextField
-							autoFocus
 							margin="dense"
 							id="confirm_password"
 							name="confirm_password"

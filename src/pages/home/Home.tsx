@@ -1,53 +1,15 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import clsx from 'clsx';
 import React from 'react';
-import { Header, Sidebar } from '../../common/components';
+import { Rnd } from 'react-rnd';
+import { Header, HeaderThird, Sidebar } from '../../common/components';
 import { detachStore } from '../../state';
 import './home.scss';
 
 const drawerWidth = 500;
 
-const toggleStyle = {
-	paddingLeft: '3px',
-	fontSize: 25,
-	background: '#31506A',
-	borderRadius: '0px 8px 8px 0px',
-	width: '29px',
-	height: '40px',
-	color: 'white',
-};
 const useStyles = makeStyles(theme => ({
-	root: {
-		display: 'flex',
-		minWidth: 'min-h-full',
-	},
-	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
-		transition: theme.transitions.create(['margin', 'width'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		boxShadow: 'none',
-		background: '#233F57',
-	},
-	appBarShift: {
-		width: `calc(100% - ${drawerWidth}px)`,
-		marginLeft: drawerWidth,
-		transition: theme.transitions.create(['margin', 'width'], {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
-	},
-	hide: {
-		display: 'none',
-	},
 	drawer: {
 		width: drawerWidth,
 		flexShrink: 0,
@@ -84,48 +46,58 @@ const useStyles = makeStyles(theme => ({
 		marginLeft: 0,
 	},
 }));
-const padStyle = { paddingTop: '143px' };
+
+// let centerX;
+// let centerY;
+
+// if (document.documentElement && document.documentElement.clientHeight) {
+const centerX = document.documentElement.clientWidth;
+const centerY = document.documentElement.clientHeight;
+// } else if (window.innerHeight) {
+// 	centerX = window.innerWidth;
+// 	centerY = window.innerHeight;
+// } else {
+// 	centerX = document.body.clientWidth;
+// 	centerY = document.body.clientHeight;
+// }
+const detachedSidebarWidth = 500;
+const detachedSidebarHeight = 700;
+const offsetLeft = (centerX - detachedSidebarWidth) / 2;
+const offsetTop = (centerY - detachedSidebarHeight) / 2;
+
 export const Home = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 
 	const classes = useStyles();
 
 	const open = detachStore(state => state.open);
-	const detachSidebar = detachStore(state => state.detachSidebar);
 
-	const handleDrawerOpen = (event: any) => {
+	const dSSetDetachSidebar = detachStore(state => state.setDetachSidebar);
+	const dSSidebarState = detachStore(state => state.detachSidebar);
+
+	const setOpen = (opn: boolean) => {
+		dSOpen(opn);
+	};
+	const setDetachSidebar = (detach: boolean) => {
+		setOpen(false);
+		dSSetDetachSidebar(detach);
+	};
+
+	const handleAttach = (event: any) => {
 		if (
 			(event.type === 'keydown' &&
 				(event.keyCode === 13 || event.keyCode === 32)) ||
 			event.type === 'click'
 		)
-			dSOpen(!open);
+			setDetachSidebar(false);
 	};
-	const ToggleSidebar = () => (
-		<div
-			className="fixed w-full py-3 "
-			style={{ background: '#8999A6', height: '65px' }}>
-			{!detachSidebar ? (
-				<div
-					onKeyDown={() => handleDrawerOpen}
-					style={toggleStyle}
-					role="button"
-					tabIndex={0}
-					color="inherit"
-					aria-label="open drawer"
-					onClick={handleDrawerOpen}
-					className={clsx(classes.menuButton, open && classes.menuButton)}>
-					{open ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
-				</div>
-			) : null}
-		</div>
-	);
 
 	return (
-		<div className={`${classes.root} min-h-screen root`}>
-			<CssBaseline />
+		<div className="flex min-h-screen root">
+			{/* <CssBaseline /> */}
 			<Header />
 			<Drawer
+				data-testid="drawer"
 				className={classes.drawer}
 				variant="persistent"
 				anchor="left"
@@ -135,19 +107,43 @@ export const Home = () => {
 				}}>
 				<Sidebar />
 			</Drawer>
+			{dSSidebarState ? (
+				<Rnd
+					data-testid="rnd"
+					className="rndcustomize relative"
+					bounds=".root"
+					default={{
+						x: offsetLeft,
+						y: offsetTop,
+						width: detachedSidebarWidth,
+						height: detachedSidebarHeight,
+					}}>
+					<div
+						className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
+						style={{ width: 'inherit', height: '98%' }}>
+						<Sidebar />
+					</div>
+					<div
+						data-testid="close-detached-sidebar"
+						className="closeDetachedSidebar"
+						onKeyDown={() => handleAttach}
+						role="button"
+						tabIndex={0}
+						aria-label="close-detach"
+						onClick={handleAttach}>
+						x
+					</div>
+				</Rnd>
+			) : null}
 			<div
 				className={clsx(classes.content, {
 					[classes.contentShift]: open,
 				})}>
-				<div
-					className="h-5"
-					style={padStyle}
-					// style={{ height: '20px', paddingTop: '130px' }}
-				>
-					<ToggleSidebar />
+				<div className="header3 h-5">
+					<HeaderThird />
 				</div>
 				<div className={classes.drawerHeader} />
-				<div className="p-12">{detachSidebar ? <Sidebar /> : null}</div>
+				Body Content here
 			</div>
 		</div>
 	);

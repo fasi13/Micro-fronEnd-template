@@ -1,5 +1,58 @@
+.MuiPaper-root .MuiAppBar-root{
+  box-shadow: none !important;
+      top: 130px !important;
+}
+.MuiAppBar-colorPrimary {
+    color: #fff;
+    z-index: 1201 !important;
+    box-shadow: none !important;
+		background-color: #233F57 !important;
+}
+.MuiMenu-paper {
+   transform: translateY(0)  !important;
+   transition: all 0.2s ease  !important;
+   background: #B9C7D3 !important;
+   color: #355673 !important;
+   padding: 7px;
+    &::-webkit-scrollbar {
+      width: 8px !important;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        display: none;
+      }
+    }
+    &::-webkit-scrollbar-thumb {
+      display: none;
+    }
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
+
+}
+.MuiAvatar-root.active{
+  background-color: #3F98E3 !important;
+  color:white !important;
+}
+.MuiButtonBase-root{
+  padding: 0 15px 0 15px !important;
+}
+
+.MuiAvatar-root{
+padding: 24px !important;
+}
+
+.MuiAvatar-colorDefault{
+   background-color: #A9BAC8 !important;
+   color: #355673 !important;
+
+}
+
 .sidebarDetached{
   filter: invert(91%) sepia(127%) saturate(12305%) hue-rotate(
 226deg
 ) brightness(194%) contrast(153%);
+}
+.header-root{
+  display: flex !important;
 }

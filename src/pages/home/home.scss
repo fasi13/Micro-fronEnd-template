@@ -1,64 +1,38 @@
-.MuiPaper-root .MuiAppBar-root{
-  box-shadow: none !important;
-      top: 130px !important;
-}
-.MuiMenu-paper {
-   transform: translateY(0)  !important;
-   transition: all 0.2s ease  !important;
-   background: #B9C7D3 !important;
-   color: #355673 !important;
-   padding: 7px;
+.sidebar-arrows{
+	padding-left: 3px;
+	font-size: 25px;
+	background: #31506A;
+	border-radius: 0px 8px 8px 0px;
+	width: 29px;
+	height: 42px;
+	color: white;
+};
 
-
-    &::-webkit-scrollbar {
-      width: 8px !important;
-    }
-    &:hover {
-      &::-webkit-scrollbar-thumb {
-        display: none;
-      }
-    }
-    &::-webkit-scrollbar-thumb {
-      display: none;
-    }
-    &::-webkit-scrollbar-track {
-      display: none;
-    }
-
-}
-.MuiAvatar-root.active{
-  background-color: #3F98E3 !important;
-  color:white !important;
-}
-.MuiButtonBase-root{
-  padding: 0 15px 0 15px !important;
+.rndcustomize{
+	display: flex !important;
+	align-items: start;
+	justify-content: center;
+	background: #31506A;
+	z-index: 1300;
+	top: 35px !important;
+	left: 35px !important;
+	box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
-.MuiAvatar-root{
-padding: 24px !important;
+.header3{
+   padding-top: 143px
 }
 
-.MuiAvatar-colorDefault{
-   background-color: #A9BAC8 !important;
-   color: #355673 !important;
-
-}
-#icon {
-  background-color: green;
+.closeDetachedSidebar{
+  font-size: 20px;
+  background: #31506A;
+  border-radius: 0px 8px 8px 0px;
   color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   padding: 10px;
   position: absolute;
   right: -25px;
   top: 20px;
 }
 
-.toggle{
-  padding-left: '3px';
-						font-size: 25;
-						background: '#31506A';
-						border-radius: '0px 8px 8px 0px';
-						width: '29px';
-						height: '40px';
-						color: 'white';
-          }
 
