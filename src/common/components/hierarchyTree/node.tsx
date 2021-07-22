@@ -14,7 +14,7 @@ interface NodePropType {
 const NodeLoadingIndicator = () => (
 	<button
 		type="button"
-		className="flex flex-col items-center justify-center w-6 h-6 text-center bg-gray-600 rounded-sm cursor-pointer bg-gray-">
+		className="flex flex-col items-center justify-center w-6 h-6 text-left text-center rounded-sm cursor-pointer bg-gray-">
 		<SpinnerIcon className="" width={20} height={20} />
 	</button>
 );
@@ -46,7 +46,7 @@ export const Node: React.FC<NodePropType> = props => {
 	};
 
 	return (
-		<div className="h-10.5 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
+		<div className="h-10.5 my-1 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
 			<>
 				{isLoadingChildren ? (
 					<NodeLoadingIndicator />
@@ -63,7 +63,7 @@ export const Node: React.FC<NodePropType> = props => {
 			</>
 			<button
 				type="button"
-				className="w-full flex items-center h-10.5 border-indigo-200"
+				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
 				onClick={() => toggleNode(!toggleChildren)}>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}

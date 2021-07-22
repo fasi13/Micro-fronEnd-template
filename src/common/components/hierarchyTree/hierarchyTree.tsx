@@ -301,7 +301,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			<div className="w-full h-full text-white bg-gray-600">
+			<div className="w-full h-full text-white">
 				<ul className="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible">
 					{data.map((item, index) => (
 						<RenderNodesRecursively
@@ -310,7 +310,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 							index={index}
 							nodeDepth={0}
 							nodeId={item.id}
-							nodePath={[{pathId:-1,pathName:item.name}]}
+							nodePath={[{ pathId: -1, pathName: item.name }]}
 							expandNodesAtLevel={expandNodesAtLevel}
 							onEditApplication={onEditApplication}
 							onEditGroup={onEditGroup}
@@ -319,8 +319,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 							onAddApplication={onAddApplication}
 							onAddGroup={onAddGroup}
 						/>
-					)
-					)}
+					))}
 				</ul>
 			</div>
 		</ErrorBoundary>

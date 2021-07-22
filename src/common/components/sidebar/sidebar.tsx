@@ -4,14 +4,15 @@ import {
 	createStyles,
 	List,
 	makeStyles,
-	TextField,
+	TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDebounce } from 'use-hooks';
 import { HierarchyTree, SearchApplication } from '..';
 import { detachStore, useHierarchyStore, useSearchStore } from '../../../state';
-import { ApplicationPath, NodePath, TreeView } from '../../../types';
+import { ApplicationPath, ErrorResponse, NodePath, TreeView } from '../../../types';
 import './sidebar.scss';
 
 const useStyles = makeStyles(() =>
@@ -47,6 +48,7 @@ const SidebarContent = () => {
 		useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
+	const debounceSearchTerm = useDebounce(inputValue,500);
 
 	const [open, setOpen] = React.useState(false);
 	// const searchLoading = open && searchData.length === 0;
@@ -70,17 +72,37 @@ const SidebarContent = () => {
 		getUserApplication();
 	}, []);
 
+	// CodeReview: bad implementation. please clean your useEffect and if possible use a Hook to create debounce.
+	// useEffect(() => {
+	// 	const handler = setTimeout(() => {
+	// 		if (inputValue) {
+	// 			setSearchLoading(true);
+	// 			searchApplication(inputValue);
+	// 		}
+	// 	}, 1000);
+	// 	return () => {
+	// 		clearTimeout(handler);
+	// 	};
+	// }, [inputValue]);
+
+	let searchSet = new Set<ApplicationPath>(searchData.map((d) => d));
+
+
 	useEffect(() => {
-		const handler = setTimeout(() => {
-			if (inputValue) {
-				setSearchLoading(true);
-				searchApplication(inputValue);
-			}
-		}, 1000);
-		return () => {
-			clearTimeout(handler);
-		};
-	}, [inputValue]);
+		 searchSet = new Set<ApplicationPath>(searchData.map(d => d));
+	} ,[searchData])
+
+
+	useEffect(() => {
+		if(debounceSearchTerm) {
+					setSearchLoading(true);
+					searchApplication(inputValue);
+		}
+		else
+		{
+				setSearchLoading(false);
+		}
+	},[debounceSearchTerm])
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].name;
@@ -91,9 +113,83 @@ const SidebarContent = () => {
 	const searchElement = (keyword: string) =>
 		keyword.length < 3 ? null : setInputValue(keyword);
 	const dSSidebarState = detachStore(state => state.detachSidebar);
+
+	const onToggleFn = useCallback(
+		async (
+			item: TreeView,
+			nodeId: number,
+			nodePath: NodePath[],
+			cb: (err: ErrorResponse | null) => void,
+		) => {
+			getHierarchyChildData(item, nodeId, nodePath, cb);
+		},
+		[],
+	);
+
+	const onAddGroupFn = useCallback(
+		async (
+			item: TreeView,
+			nodeId: number,
+			nodePath: NodePath[],
+			name: string,
+			cb: (err: ErrorResponse | null) => void,
+		) => {
+			createApplicationGroup(item, nodeId, nodePath, name, cb);
+		},
+		[],
+	);
+
+	const onAddApplicationFn = useCallback(
+		async (
+			item: TreeView,
+			nodeId: number,
+			nodePath: NodePath[],
+			name: string,
+			value: string,
+			cb: (err: ErrorResponse | null) => void,
+		) => {
+			createApplication(item, nodeId, nodePath, name, value, cb);
+		},
+		[],
+	);
+
+	const onEditApplicationFn = useCallback(
+		async (
+			item: TreeView,
+			nodeId: number,
+			nodePath: NodePath[],
+			name: string,
+			value: string,
+			cb: (err: ErrorResponse | null) => void,
+		) => {
+			editApplication(item, nodeId, nodePath, name, value, cb);
+		},
+		[],
+	);
+
+	const onEditGroupFn = useCallback(
+		async (
+			item: TreeView,
+			nodeId: number,
+			nodePath: NodePath[],
+			name: string,
+			cb: (err: ErrorResponse | null) => void,
+		) => {
+			editApplicationGroup(item, nodeId, nodePath, name, cb);
+		},
+		[],
+	);
+
+	const onSelectFn = useCallback(() => {
+		console.log('on select');
+	}, []);
+
 	return (
 		<>
 			<div className="flex justify-center rnd-move">
+				{/* CodeReview: Please Refactor Autocomplete to another component */}
+				{/* <div className="text-white">{JSON.stringify(searchData.length)}</div> */}
+
 				<Autocomplete
 					data-testid="searchautocomplete"
 					open={open}
@@ -106,7 +202,7 @@ const SidebarContent = () => {
 					id="combo-box-demo"
 					style={{ width: 445, backgroundColor: '#d1d5db', zIndex: 999999 }}
 					className={classes.searchInput}
-					options={searchData}
+					options={Array.from(searchSet)}
 					getOptionLabel={x => getApplicationName(x)}
 					autoComplete
 					fullWidth
@@ -137,9 +233,9 @@ const SidebarContent = () => {
 						/>
 					)}
 					renderOption={() =>
-						searchData.length !== 0 ? (
+						Array.from(searchSet).length !== 0 ? (
 							<List className={classes.rootList}>
-								{searchData.map((item: ApplicationPath) => (
+								{Array.from(searchSet).map((item: ApplicationPath) => (
 									<SearchApplication item={item} key={getApplicationId(item)} />
 								))}
 							</List>
@@ -150,65 +246,18 @@ const SidebarContent = () => {
 				/>
 			</div>
 			<br />
+			{/* CodeReview:  Providing style like that will make it re render on every change please look into useMemo or useCallback */}
 			<div
 				className="overflow-y-auto bg-grayblue journal-scroll"
 				style={dSSidebarState ? { height: '83%' } : { height: 'inherit' }}>
-				<div className="bg-grayblue" style={widthStyle}>
+				<div className="" style={widthStyle}>
 					<HierarchyTree
-						onSelect={() => {
-							console.log('hi');
-						}}
-						onToggle={async (
-							item: TreeView,
-							nodeId: number,
-							nodePath: NodePath[],
-							cb: () => void,
-						) => {
-							await getHierarchyChildData(item, nodeId, nodePath);
-							cb();
-						}}
-						onAddGroup={async (
-							item: TreeView,
-							nodeId: number,
-							nodePath: NodePath[],
-							name: string,
-							cb: (err: any) => void,
-						) => {
-							await createApplicationGroup(item, nodeId, nodePath, name);
-							cb(null);
-						}}
-						onAddApplication={async (
-							item: TreeView,
-							nodeId: number,
-							nodePath: NodePath[],
-							name: string,
-							value: string,
-							cb: (err: any) => void,
-						) => {
-							await createApplication(item, nodeId, nodePath, name, value);
-							cb(null);
-						}}
-						onEditApplication={async (
-							item: TreeView,
-							nodeId: number,
-							nodePath: NodePath[],
-							name: string,
-							value: string,
-							cb: (err: any) => void,
-						) => {
-							await editApplication(item, nodeId, nodePath, name, value);
-							cb(null);
-						}}
-						onEditGroup={async (
-							item: TreeView,
-							nodeId: number,
-							nodePath: NodePath[],
-							name: string,
-							cb: (err: any) => void,
-						) => {
-							await editApplicationGroup(item, nodeId, nodePath, name);
-							cb(null);
-						}}
+						onSelect={onSelectFn}
+						onToggle={onToggleFn}
+						onAddGroup={onAddGroupFn}
+						onAddApplication={onAddApplicationFn}
+						onEditApplication={onEditApplicationFn}
+						onEditGroup={onEditGroupFn}
 						data={hierarchyData}
 						expandNodesAtLevel={0}
 					/>
