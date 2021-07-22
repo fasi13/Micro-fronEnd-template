@@ -28,7 +28,7 @@ const useStyles = makeStyles(() =>
 function Breadcrumb() {
 	const classes = useStyles();
 
-	const { breadCrumbData, setBreadcrumb } = useBreadcrumbStore();
+	const { breadCrumbData, setBreadCrumb } = useBreadcrumbStore();
 
 	const handleClick = (index: number) => {
 		const pathNameUpdate: NodePath[] = [];
@@ -50,7 +50,7 @@ function Breadcrumb() {
 		for (let i = 0; i <= index; i++) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
-		setBreadcrumb(pathNameUpdate);
+		setBreadCrumb(pathNameUpdate);
 		el?.scrollIntoView(true);
 	};
 
