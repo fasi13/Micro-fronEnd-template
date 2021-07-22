@@ -1,10 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-	CircularProgress,
-	createStyles,
-	List,
-	makeStyles,
-	TextField
+  CircularProgress,
+  createStyles, List, makeStyles,
+  TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -232,12 +230,10 @@ const SidebarContent = () => {
 							}}
 						/>
 					)}
-					renderOption={() =>
+					renderOption={(item) =>
 						Array.from(searchSet).length !== 0 ? (
 							<List className={classes.rootList}>
-								{Array.from(searchSet).map((item: ApplicationPath) => (
-									<SearchApplication item={item} key={getApplicationId(item)} />
-								))}
+								<SearchApplication item={item} key={getApplicationId(item)} />
 							</List>
 						) : (
 							<p>No results found! </p>
