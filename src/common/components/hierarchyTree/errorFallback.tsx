@@ -1,13 +1,15 @@
-// export const ErrorFallback <>: ({ error, resetErrorBoundary }) => {
-// 	return (
-// 		<div role="alert">
-// 			<p>Something went wrong with our hierarchy tree:</p>
-// 			<pre>{error.message}</pre>
-// 			<button onClick={resetErrorBoundary}>Try again</button>
-// 		</div>
-// 	);
-// }
+import React from 'react';
+import { FallbackProps } from 'react-error-boundary';
 
-// export
-
-export {};
+export const ErrorFallback = ({
+	error,
+	resetErrorBoundary,
+}: FallbackProps): JSX.Element => (
+	<div role="alert">
+		<p>Something went wrong with loading your Application Hierarchy Tree:</p>
+		<pre>{error.message}</pre>
+		<button type="button" onClick={resetErrorBoundary}>
+			Try again
+		</button>
+	</div>
+);

@@ -53,7 +53,6 @@ export interface TreeView {
 	loadChildrenLink?: Link[];
 	path?: Application; // ??
 	_links?: Link[];
-	edit: boolean;
 }
 
 export interface ApplicationResponse {
@@ -83,18 +82,50 @@ export interface NodePath {
 	pathId: number;
 }
 
-// export interface ApplicationGroupResponse {
-// 	_links: Link[];
-// 	id: number;
-// 	key: string;
-// 	name: string;
-// 	value: string;
-// 	parentApplicationId: number | null;
-// 	applicationGroupId: number | null;
-// 	dateModified: string;
-// }
+export interface ErrorResponse {
+	title: string;
+	status: number;
+	errorCode: number;
+	errors: string[];
+}
 
-// export interface IApplication {}
-// export interface Group {}
 
-// export interface Node {}
+export interface NodeActions {
+	onSelect: () => void;
+	onToggle: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: NodePath[],
+		cb: (err: ErrorResponse | null) => void,
+	) => void;
+	onAddApplication: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+		cb: (err: ErrorResponse | null) => void,
+	) => void;
+	onAddGroup: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: NodePath[],
+		name: string,
+		cb: (err: ErrorResponse | null) => void,
+	) => void;
+	onEditApplication: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+		cb: (err: any) => void,
+	) => void;
+	onEditGroup: (
+		item: TreeView,
+		nodeId: number,
+		nodePath: NodePath[],
+		name: string,
+		cb: (err: ErrorResponse | null) => void,
+	) => void;
+}

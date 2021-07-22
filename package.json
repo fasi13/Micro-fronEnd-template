@@ -23,6 +23,7 @@
     "react-spring": "^9.2.3",
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^27.0.3",
+    "use-hooks": "^2.0.0-rc.5",
     "web-vitals": "^1.1.2",
     "zustand": "^3.5.4"
   },

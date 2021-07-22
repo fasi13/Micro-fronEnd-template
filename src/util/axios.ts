@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ErrorResponse } from '../types';
 
 const requestHandler = (request: AxiosRequestConfig) =>
 	// Token will be dynamic so we can use any app-specific way to always
@@ -14,14 +15,10 @@ const responseHandler = (response: AxiosResponse) => {
 	return response;
 };
 
-const errorHandler = (error: any) => {
-	// Any status codes that falls outside the range of 2xx cause this function to trigger
-	// Do something with response error
-	console.log('ERROR NOTIFY USER HERE?');
-	return Promise.reject(error);
-};
+const requestErrorHandler = (error: any) => Promise.reject(error);
 
-// console.log('??', process.env.REACT_APP_HIERARCHY_API);
+const responseErrorHandler = (error: AxiosResponse<ErrorResponse>) =>
+	Promise.reject(error?.data);
 
 const HierarchyClient = axios.create({
 	baseURL: process.env.REACT_APP_CONTENT_API,
@@ -35,22 +32,22 @@ const ContentClient = axios.create({
 
 HierarchyClient.interceptors.request.use(
 	request => requestHandler(request),
-	error => errorHandler(error),
+	error => requestErrorHandler(error),
 );
 
 HierarchyClient.interceptors.response.use(
 	response => responseHandler(response),
-	error => errorHandler(error),
+	error => responseErrorHandler(error?.response),
 );
 
 ContentClient.interceptors.request.use(
 	request => requestHandler(request),
-	error => errorHandler(error),
+	error => requestErrorHandler(error),
 );
 
 ContentClient.interceptors.response.use(
 	response => responseHandler(response),
-	error => errorHandler(error),
+	error => responseErrorHandler(error?.response),
 );
 
 export { HierarchyClient, ContentClient };

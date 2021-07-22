@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-		"jsx": "react",
-		"jsx": "react",
     "lib": [
       "dom",
       "dom.iterable",

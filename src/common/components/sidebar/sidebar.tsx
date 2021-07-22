@@ -93,7 +93,7 @@ const SidebarContent = () => {
 	const dSSidebarState = detachStore(state => state.detachSidebar);
 	return (
 		<>
-			<div className="rnd-move flex justify-center">
+			<div className="flex justify-center rnd-move">
 				<Autocomplete
 					data-testid="searchautocomplete"
 					open={open}
