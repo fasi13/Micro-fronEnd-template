@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
-	createStyles,
-	ListItem,
-	ListItemText,
-	makeStyles,
-	Typography,
+  createStyles, ListItem,
+  ListItemText,
+  makeStyles,
+  Typography
 } from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
@@ -52,7 +51,7 @@ export const SearchApplication = (props: SearchApplicationProps) => {
 	return (
 		<Router>
 			<Link to={getApplicationLink(item)}>
-				<ListItem className={classes.root}>
+				<ListItem className={classes.root} divider>
 					<ListItemText
 						primary={getApplicationName(item)}
 						secondary={

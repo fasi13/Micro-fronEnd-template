@@ -65,10 +65,7 @@ function Breadcrumb() {
 						key={bread.pathId.toString()}
 						component="button"
 						className={index !== 0 ? classes.link : classes.first}
-						onClick={() => handleClick(index)}>
-						{' '}
-						{bread.pathName}{' '}
-					</Link>
+						onClick={() => handleClick(index)}>{bread.pathName}</Link>
 				) : (
 					<Typography
 						data-testid="disabledBreadLink"
