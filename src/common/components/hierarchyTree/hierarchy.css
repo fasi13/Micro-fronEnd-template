@@ -2,7 +2,7 @@
 .tree li::before {
   content: "";
   position: absolute;
-  top:-7px;
+  top:-4px;
   left:-30px;
   border-left: 1px dashed #fff;
   border-bottom:1px dashed #fff;

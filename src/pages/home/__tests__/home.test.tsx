@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
+import user from '@testing-library/user-event';
 import React from 'react';
 import { detachStore } from '../../../state';
 import { Home } from '../home';
@@ -30,6 +31,7 @@ test('detached sidebar should be closed when close icon is pressed on keyDown', 
 	dSSidebarState.setDetachSidebar(true);
 	const { getByTestId } = render(<Home />);
 	const Rnd = getByTestId('rnd');
+	user.type(Rnd, '{enter}');
 	const closeDetachedSidebar = getByTestId('close-detached-sidebar');
 	fireEvent.keyDown(closeDetachedSidebar, { key: 'Enter', code: 13 });
 	expect(Rnd).toBeInTheDocument();
