@@ -15,7 +15,8 @@ type ActionType =
 	| { type: 'SAVE_RESET' }
 	| { type: 'LOAD_CHILDREN'; val: boolean }
 	| { type: 'SET_ERROR'; val: ErrorResponse | string }
-	| { type: 'CLEAR_ERROR' };
+	| { type: 'CLEAR_ERROR' }
+	| { type: 'FORCE_TOGGLE_CHILDREN_APPLICATIONS' };
 
 interface TNodeDetail {
 	hasChildren: boolean;
@@ -54,26 +55,26 @@ const extractApplicationNameAndValue = (text: string): string[] => {
 const reducer = (prevState: TNodeDetail, action: ActionType): TNodeDetail => {
 	switch (action.type) {
 		case 'TOGGLE_CHILDREN': {
-			// if (
-			// 	action.val === true &&
-			// 	prevState.isFetched !== true &&
-			// 	!prevState.hasChildren
-			// )
-			// 	return {
-			// 		...prevState,
-			// 		toggle: action.val,
-			// 		loadingChildren: true,
-			// 		toggleNewEditor: '',
-			// 	};
+			if (
+				action.val === true &&
+				prevState.isFetched !== true &&
+				!prevState.hasChildren
+			)
+				return {
+					...prevState,
+					toggle: action.val,
+					loadingChildren: true,
+					toggleNewEditor: '',
+				};
 
-			// return { ...prevState, toggle: action.val, toggleNewEditor: '' };
+			return { ...prevState, toggle: action.val, toggleNewEditor: '' };
 
-			return {
-				...prevState,
-				toggle: action.val,
-				toggleNewEditor: '',
-				loadingChildren: action.val,
-			};
+			// return {
+			// 	...prevState,
+			// 	toggle: action.val,
+			// 	toggleNewEditor: '',
+			// 	loadingChildren: action.val,
+			// };
 		}
 		case 'TOGGLE_CHILDREN_SUCCESS': {
 			return { ...prevState, loadingChildren: false, isFetched: true };
@@ -176,9 +177,13 @@ export const useTreeNode = (nodeDetail: TNodeDetail): TResponse => {
 	}, [nodeState.loadingChildren]);
 
 	const savingCb = useCallback((err: ErrorResponse | null) => {
+		// eslint-disable-next-line no-debugger
+		debugger;
 		if (err) {
 			dispatch({ type: 'SAVING_ERROR', val: err });
 		} else if (nodeState.edit === false) {
+			console.log('???', nodeState);
+			// refetch
 			dispatch({ type: 'SAVING_SUCCESS' });
 			loadNodeChildren();
 		}
