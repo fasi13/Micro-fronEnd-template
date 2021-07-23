@@ -62,6 +62,12 @@ export const Node: React.FC<NodePropType> = props => {
 				)}
 			</>
 			<button
+				id={data.name
+					.split(' ')
+					.join('_')
+					.toLowerCase()
+					.toString()
+					.concat('____', data.id.toString())}
 				type="button"
 				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
 				onClick={() => toggleNode(!toggleChildren)}>
