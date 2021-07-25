@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useReducer } from 'react';
-import { useBreadcrumbStore } from '../../../state';
-import { ErrorResponse, NodeActions, NodePath, TreeView } from '../../../types';
+import { useBreadcrumbStore } from '../../../../state';
+import {
+	ErrorResponse,
+	NodeActions,
+	NodePath,
+	TreeView,
+} from '../../../../types';
+import { NodeRef } from '../node';
 
 type TEditor = '' | 'Application' | 'Group';
 type ActionType =
@@ -18,10 +24,13 @@ type ActionType =
 	| { type: 'CLEAR_ERROR' }
 	| { type: 'FORCE_TOGGLE_CHILDREN_APPLICATIONS' };
 
-interface TNodeDetail {
+interface TNodeDetail extends NodeActions {
+	data: TreeView;
+	nodeId: number;
+	nodePath: NodePath[];
 	hasChildren: boolean;
 	edit: boolean;
-	toggle: boolean;
+	toggle: boolean; // what is the point of this toggle ? how will this sink with the components state.
 	saving: boolean;
 	toggleNewEditor: TEditor;
 	newValue: string | null;
@@ -29,17 +38,11 @@ interface TNodeDetail {
 	loadingChildren: boolean;
 	isFetched: boolean;
 	nodeType: 'Application' | 'Group';
-}
-
-interface TNodeDetail extends NodeActions {
-	data: TreeView;
-	nodeId: number;
-	nodePath: NodePath[];
+	nodeRef: React.MutableRefObject<NodeRef | null>;
 }
 
 export interface TResponse {
 	nodeState: TNodeDetail;
-	toggleNode: (val: boolean) => void;
 	toggleNewEditor: (val: TEditor) => void;
 	editNode: (val: boolean) => void;
 	save: (value: string) => void;
@@ -139,9 +142,27 @@ const reducer = (prevState: TNodeDetail, action: ActionType): TNodeDetail => {
 export const useTreeNode = (nodeDetail: TNodeDetail): TResponse => {
 	const [nodeState, dispatch] = useReducer(reducer, nodeDetail);
 	const { setBreadCrumb } = useBreadcrumbStore();
+	const { nodeRef } = nodeDetail;
 
 	const toggleNewEditor = useCallback((val: TEditor) => {
 		dispatch({ type: 'TOGGLE_NEW_EDITOR', val });
+	}, []);
+
+	const toggleNodeRef = () => {
+		if (nodeRef.current) {
+			// eslint-disable-next-line @typescript-eslint/no-use-before-define
+			nodeRef.current.toggleChild(nodeState.toggle, toggleNode);
+		}
+	};
+	const savingCb = useCallback((err: ErrorResponse | null) => {
+		if (err) {
+			dispatch({ type: 'SAVING_ERROR', val: err });
+		} else if (nodeState.edit === false) {
+			// refetch
+			dispatch({ type: 'SAVING_SUCCESS' });
+			toggleNodeRef();
+			// loadNodeChildren();
+		}
 	}, []);
 
 	const editNode = useCallback((val: boolean) => {
@@ -175,19 +196,6 @@ export const useTreeNode = (nodeDetail: TNodeDetail): TResponse => {
 			}
 		});
 	}, [nodeState.loadingChildren]);
-
-	const savingCb = useCallback((err: ErrorResponse | null) => {
-		// eslint-disable-next-line no-debugger
-		debugger;
-		if (err) {
-			dispatch({ type: 'SAVING_ERROR', val: err });
-		} else if (nodeState.edit === false) {
-			console.log('???', nodeState);
-			// refetch
-			dispatch({ type: 'SAVING_SUCCESS' });
-			loadNodeChildren();
-		}
-	}, []);
 
 	const editApplication = useCallback(
 		(name: string, value: string) => {
@@ -276,7 +284,6 @@ export const useTreeNode = (nodeDetail: TNodeDetail): TResponse => {
 
 	return {
 		nodeState,
-		toggleNode,
 		toggleNewEditor,
 		editNode,
 		save,

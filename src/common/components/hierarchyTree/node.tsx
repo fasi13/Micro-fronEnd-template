@@ -1,34 +1,44 @@
-import React from 'react';
+import React, { useImperativeHandle, useState } from 'react';
 import { TreeView } from '../../../types';
 import { AddIcon, FolderIcon, PencilIcon, SpinnerIcon } from '../../icons';
 
 interface NodePropType {
 	data: TreeView;
 	editNode: (val: boolean) => void;
-	toggleChildren: boolean;
-	toggleNode: (val: boolean) => void;
+	// toggleChildren: boolean;
+	// toggleNode: (val: boolean) => void;
 	toggleNewEditor: (val: '' | 'Application' | 'Group') => void;
 	isLoadingChildren: boolean;
 }
 
+type ToggleDispatch = (val: boolean) => void;
+
+export type NodeRef = {
+	toggleChild: (val: boolean, cb: ToggleDispatch) => void;
+};
+
 const NodeLoadingIndicator = () => (
 	<button
 		type="button"
-		className="flex flex-col items-center justify-center w-6 h-6 text-left text-center rounded-sm cursor-pointer bg-gray-">
+		className="flex flex-col items-center justify-center w-6 h-6 text-left rounded-sm cursor-pointer bg-gray-">
 		<SpinnerIcon className="" width={20} height={20} />
 	</button>
 );
 
-export const Node: React.FC<NodePropType> = props => {
-	const {
-		data,
-		editNode,
-		toggleChildren,
-		toggleNode,
-		toggleNewEditor,
-		isLoadingChildren,
-	} = props;
+export const Node = React.forwardRef<NodeRef, NodePropType>((props, ref) => {
+	const { data, editNode, toggleNewEditor, isLoadingChildren } = props;
+	const [toggleChildren, setToggleNode] = useState(false);
 
+	useImperativeHandle<NodeRef, NodeRef>(
+		ref,
+		() => ({
+			toggleChild: (val, cb) => {
+				setToggleNode(val);
+				cb(val);
+			},
+		}),
+		[toggleChildren],
+	);
 
 	const expandOrCollapse = (): string => {
 		if (!toggleChildren) return 'expand';
@@ -56,7 +66,7 @@ export const Node: React.FC<NodePropType> = props => {
 						className={`flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
 								${expandOrCollapse()}
 								`}
-						onClick={() => toggleNode(!toggleChildren)}>
+						onClick={() => setToggleNode(!toggleChildren)}>
 						<></>
 					</button>
 				)}
@@ -70,7 +80,7 @@ export const Node: React.FC<NodePropType> = props => {
 					.concat('____', data.id.toString())}
 				type="button"
 				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
-				onClick={() => toggleNode(!toggleChildren)}>
+				onClick={() => setToggleNode(!toggleChildren)}>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
 			</button>
@@ -107,4 +117,4 @@ export const Node: React.FC<NodePropType> = props => {
 			</div>
 		</div>
 	);
-};
+});
