@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import React from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath } from '../../../types';
+import { getButtonId } from './breadCrumbUtil';
 
 const useStyles = makeStyles(() =>
 	createStyles({
@@ -38,12 +39,8 @@ function Breadcrumb() {
 			.join('_')
 			.toLowerCase()
 			.toString()
-			.concat(
-				'____',
-				breadCrumbData[index].pathId !== -1
-					? breadCrumbData[index].pathId.toString()
-					: '1',
-			);
+			.concat('____', getButtonId(breadCrumbData[index].pathId),
+		);
 
 		const el = document.getElementById(getId);
 
@@ -62,6 +59,7 @@ function Breadcrumb() {
 			{breadCrumbData.map((bread, index: number) =>
 				breadCrumbData.length - 1 !== index ? (
 					<Link
+            data-testid="breadLink"
 						key={bread.pathId.toString()}
 						component="button"
 						className={index !== 0 ? classes.link : classes.first}
