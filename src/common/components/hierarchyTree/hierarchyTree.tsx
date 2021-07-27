@@ -9,8 +9,6 @@ import { Node } from './node';
 import { NodeEditor } from './nodeEditor';
 import { TResponse, useTreeNode } from './useTreeNode';
 
-
-
 interface HierarchyPropType extends NodeActions {
 	data: TreeView[];
 	expandNodesAtLevel?: number;
@@ -33,11 +31,11 @@ interface TreeNodePropType extends NodeActions {
 	renderProps: () => React.ReactNode;
 }
 
-interface TreeNodeChildrenPropType extends NodeActions  {
+interface TreeNodeChildrenPropType extends NodeActions {
 	childrenData: TreeView[] | undefined;
 	nodeDepth: number;
 	nodePath: NodePath[];
-	expandNodesAtLevel : number | undefined;
+	expandNodesAtLevel: number | undefined;
 }
 
 interface NodeEditorPropType {
@@ -52,15 +50,13 @@ const canAddApplication = (node: TreeView): boolean => {
 };
 
 const showHideNewEditor = (isToggled: boolean, editorMode: string) => {
-	if(isToggled){
-		if(editorMode !== '')
-			return 'mb-10';
+	if (isToggled) {
+		if (editorMode !== '') return 'mb-10';
 		return '';
 	}
 
-	return 'hidden'
-
-}
+	return 'hidden';
+};
 
 const nodeValue = (node: TreeView) => {
 	if (canAddApplication(node)) return node.name;
@@ -83,7 +79,15 @@ const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 	} = props;
 	useWhyDidYouUpdate('TreeNode', { ...props });
 
-	const {nodeState,toggleNode,toggleNewEditor,editNode,save,setError,clearError}:TResponse = useTreeNode({
+	const {
+		nodeState,
+		toggleNode,
+		toggleNewEditor,
+		editNode,
+		save,
+		setError,
+		clearError,
+	}: TResponse = useTreeNode({
 		data,
 		nodeId,
 		nodePath,
@@ -96,13 +100,13 @@ const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 		error: null,
 		loadingChildren: false,
 		isFetched: false,
-		nodeType: !canAddApplication(data) ? 'Application'  : 'Group',
+		nodeType: !canAddApplication(data) ? 'Application' : 'Group',
 		onSelect,
 		onAddApplication,
 		onAddGroup,
 		onEditApplication,
 		onEditGroup,
-		onToggle
+		onToggle,
 	});
 
 	return (
@@ -143,7 +147,11 @@ const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 			</div>
 
 			{/* toggle view of tree node with its children */}
-			<div className={showHideNewEditor(nodeState.toggle,nodeState.toggleNewEditor)}>
+			<div
+				className={showHideNewEditor(
+					nodeState.toggle,
+					nodeState.toggleNewEditor,
+				)}>
 				{nodeState.toggleNewEditor !== '' ? (
 					<ul className="w-full pl-5 ml-2" key={`editor_${nodeId}`}>
 						<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
@@ -168,42 +176,53 @@ const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 	);
 };
 
-const TreeNodeChildren: React.FunctionComponent<TreeNodeChildrenPropType> = (props): JSX.Element => {
-	const {childrenData,nodeDepth,nodePath,expandNodesAtLevel,onAddApplication,onAddGroup,onEditApplication,onEditGroup,onSelect,onToggle} = props;
-	return (
-	!childrenData || childrenData?.length === 0 ? (
-							<></>
-						):
-						(
-							<ul className="w-full pl-5 ml-2 B">
-								{childrenData.map((c, ci) => (
-									<li
-										key={`__li__${c.name}__`}
-										className={`__li__${c.name}__ relative flex flex-col items-start justify-center h-auto list-none tree`}>
-										<ul className="w-full">
-											{
-											// eslint-disable-next-line @typescript-eslint/no-use-before-define
-											RenderNodesRecursively({
-												data: c,
-												nodeId: c.id,
-												index: ci,
-												nodeDepth: nodeDepth + 1,
-												nodePath: [...nodePath, {pathId: c.id, pathName: c.name}],
-												expandNodesAtLevel,
-												onEditApplication,
-												onEditGroup,
-												onSelect,
-												onToggle,
-												onAddApplication,
-												onAddGroup,
-											})}
-										</ul>
-									</li>
-								))}
-							</ul>
-						)
- );
-}
+const TreeNodeChildren: React.FunctionComponent<TreeNodeChildrenPropType> = (
+	props,
+): JSX.Element => {
+	const {
+		childrenData,
+		nodeDepth,
+		nodePath,
+		expandNodesAtLevel,
+		onAddApplication,
+		onAddGroup,
+		onEditApplication,
+		onEditGroup,
+		onSelect,
+		onToggle,
+	} = props;
+	return !childrenData || childrenData?.length === 0 ? (
+		<></>
+	) : (
+		<ul className="w-full pl-5 ml-2 B">
+			{childrenData.map((c, ci) => (
+				<li
+					key={`__li__${c.name}__`}
+					className={`__li__${c.name}__ relative flex flex-col items-start justify-center h-auto list-none tree`}>
+					<ul className="w-full">
+						{
+							// eslint-disable-next-line @typescript-eslint/no-use-before-define
+							RenderNodesRecursively({
+								data: c,
+								nodeId: c.id,
+								index: ci,
+								nodeDepth: nodeDepth + 1,
+								nodePath: [...nodePath, { pathId: c.id, pathName: c.name }],
+								expandNodesAtLevel,
+								onEditApplication,
+								onEditGroup,
+								onSelect,
+								onToggle,
+								onAddApplication,
+								onAddGroup,
+							})
+						}
+					</ul>
+				</li>
+			))}
+		</ul>
+	);
+};
 
 const TreeNodeIsSame = (
 	prevProps: Readonly<React.PropsWithChildren<TreeNodePropType>>,
@@ -213,9 +232,7 @@ const TreeNodeIsSame = (
 	prevProps.data.value === nextProps.data.value &&
 	prevProps.data?.childrenData === nextProps.data?.childrenData;
 
-
-const TreeNodeMemo = React.memo(TreeNode,TreeNodeIsSame);
-
+const TreeNodeMemo = React.memo(TreeNode, TreeNodeIsSame);
 
 //  we can not have hooks inside RenderNodesrecursively bc we will get Rendered more hooks than during the previous render
 // so have all ur hooks in treeNode.
@@ -281,8 +298,6 @@ const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 	);
 };
 
-
-
 export const HierarchyTree: React.FC<HierarchyPropType> = (
 	props,
 ): JSX.Element => {
@@ -297,7 +312,7 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 		onAddGroup,
 	} = props;
 
-	useWhyDidYouUpdate("hierarchyTree",{...props});
+	useWhyDidYouUpdate('hierarchyTree', { ...props });
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>

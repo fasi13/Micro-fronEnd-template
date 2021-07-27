@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
-  createStyles, ListItem,
-  ListItemText,
-  makeStyles,
-  Typography
+	createStyles,
+	ListItem,
+	ListItemText,
+	makeStyles,
+	Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';

@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  CircularProgress,
-  createStyles, List, makeStyles,
-  TextField
+	CircularProgress,
+	createStyles,
+	List,
+	makeStyles,
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -10,7 +12,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-hooks';
 import { HierarchyTree, SearchApplication } from '..';
 import { detachStore, useHierarchyStore, useSearchStore } from '../../../state';
-import { ApplicationPath, ErrorResponse, NodePath, TreeView } from '../../../types';
+import {
+	ApplicationPath,
+	ErrorResponse,
+	NodePath,
+	TreeView,
+} from '../../../types';
 import './sidebar.scss';
 
 const useStyles = makeStyles(() =>
@@ -46,7 +53,7 @@ const SidebarContent = () => {
 		useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
-	const debounceSearchTerm = useDebounce(inputValue,500);
+	const debounceSearchTerm = useDebounce(inputValue, 500);
 
 	const [open, setOpen] = React.useState(false);
 	// const searchLoading = open && searchData.length === 0;
@@ -83,24 +90,20 @@ const SidebarContent = () => {
 	// 	};
 	// }, [inputValue]);
 
-	let searchSet = new Set<ApplicationPath>(searchData.map((d) => d));
-
-
-	useEffect(() => {
-		 searchSet = new Set<ApplicationPath>(searchData.map(d => d));
-	} ,[searchData])
-
+	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
 
 	useEffect(() => {
-		if(debounceSearchTerm) {
-					setSearchLoading(true);
-					searchApplication(inputValue);
+		searchSet = new Set<ApplicationPath>(searchData.map(d => d));
+	}, [searchData]);
+
+	useEffect(() => {
+		if (debounceSearchTerm) {
+			setSearchLoading(true);
+			searchApplication(inputValue);
+		} else {
+			setSearchLoading(false);
 		}
-		else
-		{
-				setSearchLoading(false);
-		}
-	},[debounceSearchTerm])
+	}, [debounceSearchTerm]);
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].name;
@@ -230,7 +233,7 @@ const SidebarContent = () => {
 							}}
 						/>
 					)}
-					renderOption={(item) =>
+					renderOption={item =>
 						Array.from(searchSet).length !== 0 ? (
 							<List className={classes.rootList}>
 								<SearchApplication item={item} key={getApplicationId(item)} />

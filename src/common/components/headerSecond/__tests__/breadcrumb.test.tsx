@@ -15,68 +15,63 @@ const pathData: NodePath[] = [
 	{ pathId: 30, pathName: 'Application 5' },
 ];
 
-
 describe('Breadcrumb', () => {
+	test('Breadcrumb renders with correct text', () => {
+		const component = render(<Breadcrumb />);
+		const breadcrumbEl = component.getByTestId('breadcrumbtest');
+		expect(breadcrumbEl.textContent).toBe('E2E Group');
+	});
 
-  test('Breadcrumb renders with correct text', () => {
-    const component = render(<Breadcrumb />);
-    const breadcrumbEl = component.getByTestId('breadcrumbtest');
-    expect(breadcrumbEl.textContent).toBe('E2E Group');
-  });
+	test('Breadcumb renders with with correct text New Application Group ', () => {
+		useBreadcrumbStore.setState({ breadCrumbData: pathData });
 
-  test('Breadcumb renders with with correct text New Application Group ', () => {
+		const component = render(<Breadcrumb />);
+		const breadcrumbEl = component.getByTestId('breadcrumbtest');
+		expect(breadcrumbEl.textContent).toContain('New Application Group');
+	});
 
-    useBreadcrumbStore.setState({ breadCrumbData: pathData });
+	test('Breadcumb renders with / separator', () => {
+		useBreadcrumbStore.setState({ breadCrumbData: pathData });
 
-    const component = render(<Breadcrumb />);
-    const breadcrumbEl = component.getByTestId('breadcrumbtest');
-    expect(breadcrumbEl.textContent).toContain('New Application Group');
-  });
+		const component = render(<Breadcrumb />);
+		const breadcrumbEl = component.getByTestId('breadcrumbtest');
+		expect(breadcrumbEl.textContent).toContain('/');
+	});
 
-  test('Breadcumb renders with / separator', () => {
-    useBreadcrumbStore.setState({ breadCrumbData: pathData });
+	test('Breadcumb renders E2E Group with disabled paragraph', () => {
+		// useBreadcrumbStore.setState({ breadCrumbData: pathData})
 
-    const component = render(<Breadcrumb />);
-    const breadcrumbEl = component.getByTestId('breadcrumbtest');
-    expect(breadcrumbEl.textContent).toContain('/');
-  });
+		const component = render(<Breadcrumb />);
+		const breadcrumbEl = component.getByTestId('disabledBreadLink');
+		expect(breadcrumbEl.closest('p'));
+	});
 
-  test('Breadcumb renders E2E Group with disabled paragraph', () => {
-    // useBreadcrumbStore.setState({ breadCrumbData: pathData})
+	test('Breadcumb renders last link with disabled paragraph', () => {
+		useBreadcrumbStore.setState({ breadCrumbData: pathData });
 
-    const component = render(<Breadcrumb />);
-    const breadcrumbEl = component.getByTestId('disabledBreadLink');
-    expect(breadcrumbEl.closest('p'));
-  });
+		const component = render(<Breadcrumb />);
+		const breadcrumbEl = component.getByTestId('disabledBreadLink');
+		expect(breadcrumbEl.closest('p'));
+	});
 
-  test('Breadcumb renders last link with disabled paragraph', () => {
-    useBreadcrumbStore.setState({ breadCrumbData: pathData });
+	test('Breadcrumb convert and get Id', () => {
+		const pathData2: NodePath[] = [
+			{ pathId: -1, pathName: 'E2E Group' },
+			{ pathId: 15, pathName: breadData },
+		];
 
-    const component = render(<Breadcrumb />);
-    const breadcrumbEl = component.getByTestId('disabledBreadLink');
-    expect(breadcrumbEl.closest('p'));
-  });
+		useBreadcrumbStore.setState({ breadCrumbData: pathData2 });
 
-  test('Breadcrumb convert and get Id', () => {
+		const { getByTestId } = render(<Breadcrumb />);
 
-    const pathData2: NodePath[] = [
-      { pathId: -1, pathName: 'E2E Group' },
-      { pathId: 15, pathName: breadData },
-    ];
+		expect(getByTestId('breadcrumbtest')).toBeInTheDocument();
 
-    useBreadcrumbStore.setState({ breadCrumbData: pathData2 });
+		expect(getByTestId('breadLink')).toBeInTheDocument();
 
-    const {getByTestId} = render(<Breadcrumb />);
+		expect(getButtonId(-1)).toBe('1');
+		expect(getButtonId(15)).toBe('15');
 
-    expect(getByTestId('breadcrumbtest')).toBeInTheDocument();
-
-    expect(getByTestId('breadLink')).toBeInTheDocument();
-
-    expect(getButtonId(-1)).toBe('1');
-    expect(getButtonId(15)).toBe('15');
-
-    fireEvent.click(getByTestId('breadLink'))
-    expect(useBreadcrumbStore.getState().breadCrumbData.length).toBe(1);
-  });
-
+		fireEvent.click(getByTestId('breadLink'));
+		expect(useBreadcrumbStore.getState().breadCrumbData.length).toBe(1);
+	});
 });

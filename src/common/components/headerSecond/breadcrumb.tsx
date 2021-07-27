@@ -39,8 +39,7 @@ function Breadcrumb() {
 			.join('_')
 			.toLowerCase()
 			.toString()
-			.concat('____', getButtonId(breadCrumbData[index].pathId),
-		);
+			.concat('____', getButtonId(breadCrumbData[index].pathId));
 
 		const el = document.getElementById(getId);
 
@@ -59,11 +58,13 @@ function Breadcrumb() {
 			{breadCrumbData.map((bread, index: number) =>
 				breadCrumbData.length - 1 !== index ? (
 					<Link
-            data-testid="breadLink"
+						data-testid="breadLink"
 						key={bread.pathId.toString()}
 						component="button"
 						className={index !== 0 ? classes.link : classes.first}
-						onClick={() => handleClick(index)}>{bread.pathName}</Link>
+						onClick={() => handleClick(index)}>
+						{bread.pathName}
+					</Link>
 				) : (
 					<Typography
 						data-testid="disabledBreadLink"

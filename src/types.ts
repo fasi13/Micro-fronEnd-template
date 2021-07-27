@@ -89,7 +89,6 @@ export interface ErrorResponse {
 	errors: string[];
 }
 
-
 export interface NodeActions {
 	onSelect: () => void;
 	onToggle: (
