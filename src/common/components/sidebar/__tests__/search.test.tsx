@@ -1,41 +1,111 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import '@testing-library/jest-dom/extend-expect';
-import {
-	fireEvent,
-	getByRole as globalGetByRole,
-	getByText as globalGetByText,
-	render,
-} from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { useSearchStore } from '../../../../state';
+import { useSearchStore } from '../../../../state/searchState.store';
+import { ApplicationPath } from '../../../../types';
 import { Sidebar } from '../sidebar';
 
-// test("Search ui renders with correctly", () => {
-//   const component = render(<Sidebar />)
-//   const searchEl = component.getByTestId("searchautocomplete")
-//   expect(searchEl.textContent).toBe("E2E Group")
-// })
+const mockSearchData: ApplicationPath[] = [
+	{
+		path: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
+				name: 'E2E Group',
+				value: 'wqq',
+				applicationGroupId: null,
+				applicationGroupName: null,
+				_links: null,
+			},
+		],
+		_links: null,
+	},
+	{
+		path: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
+				name: 'E2E Group',
+				value: 'wqq',
+				applicationGroupId: null,
+				applicationGroupName: null,
+				_links: null,
+			},
+			{
+				id: 157,
+				key: '3e5571a4-1519-4cc5-a72c-abf0cf05cdbb',
+				name: 'Application 43',
+				value: 'Application 43',
+				applicationGroupId: null,
+				applicationGroupName: null,
+				_links: null,
+			},
+			{
+				id: 164,
+				key: 'c52374c4-5e25-4315-8a70-75450007ae94',
+				name: 'Child Child Group',
+				value: 'Child',
+				applicationGroupId: null,
+				applicationGroupName: null,
+				_links: null,
+			},
+		],
+		_links: null,
+	},
+	{
+		path: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
+				name: 'E2E Group',
+				value: 'wqq',
+				applicationGroupId: null,
+				applicationGroupName: null,
+				_links: null,
+			},
+			{
+				id: 610,
+				key: '7e221927-2b5b-474b-ad34-ea9cfce444d7',
+				name: 'DemoGroup-',
+				value: 'G66',
+				applicationGroupId: null,
+				applicationGroupName: null,
+				_links: null,
+			},
+		],
+		_links: null,
+	},
+];
 
-test('that autocomplete works', async () => {
-	const { searchData } = useSearchStore.getState();
+describe('Autocomplete Search', () => {
+	test('Render autocomplete search', async () => {
+		const { getByTestId, getByRole } = render(<Sidebar />);
 
-	const { getByTestId, getByRole, queryByRole } = render(<Sidebar />, {});
+		const inputSearchField = getByTestId('searchfield');
+		const inputField = getByRole('textbox');
+		expect(getByTestId('searchautocomplete')).toBeInTheDocument();
+		expect(inputSearchField).toBeInTheDocument();
+		expect(inputField).toBeInTheDocument();
+		expect(inputField).toHaveAttribute('type', 'text');
+	});
 
-	const AutoCompleteSearch = getByTestId('searchautocomplete');
-	const Input = globalGetByRole(AutoCompleteSearch, 'textbox');
+	test('It should allow search keyword to be inputted', async () => {
+		const { getByRole, queryByRole } = render(<Sidebar />);
 
-	expect(queryByRole('listbox')).toBeNull();
+		expect(queryByRole('listbox')).toBeNull();
+		const inputField = getByRole('textbox');
 
-	fireEvent.mouseDown(Input);
-	const ListBox = getByRole('listbox');
-	expect(ListBox).toBeDefined();
-	const menuItem1 = globalGetByText(ListBox, searchData[0].path[0].name);
-	fireEvent.click(menuItem1);
-	expect(queryByRole('listbox')).toBeNull();
+		userEvent.type(inputField, 'group');
 
-	fireEvent.mouseDown(Input);
-	const ListBoxAfter = getByRole('listbox');
-	expect(ListBoxAfter).toBeDefined();
-	const menuItem2 = globalGetByText(ListBoxAfter, searchData[1].path[1].name);
-	fireEvent.click(menuItem2);
-	expect(queryByRole('listbox')).toBeNull();
+		expect(inputField).toHaveValue('group');
+		// debug()
+
+		useSearchStore.setState({ searchData: mockSearchData });
+
+		const ListBox = getByRole('listbox');
+		expect(ListBox).toBeDefined();
+		// await waitFor(() => expect(getByRole('listbox')).toBeDefined())
+	});
 });

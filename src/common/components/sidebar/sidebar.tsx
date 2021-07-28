@@ -56,6 +56,10 @@ const SidebarContent = () => {
 	const debounceSearchTerm = useDebounce(inputValue, 500);
 
 	const [open, setOpen] = React.useState(false);
+
+	const updateAutocompletePopper = () => {
+		setOpen(!open);
+	};
 	// const searchLoading = open && searchData.length === 0;
 
 	const widthStyle = { width: '96%', height: 'inherit' };
@@ -194,12 +198,8 @@ const SidebarContent = () => {
 				<Autocomplete
 					data-testid="searchautocomplete"
 					open={open}
-					onOpen={() => {
-						setOpen(true);
-					}}
-					onClose={() => {
-						setOpen(false);
-					}}
+					onOpen={updateAutocompletePopper}
+					onClose={updateAutocompletePopper}
 					id="combo-box-demo"
 					style={{ width: 445, backgroundColor: '#d1d5db', zIndex: 999999 }}
 					className={classes.searchInput}
@@ -212,6 +212,7 @@ const SidebarContent = () => {
 					renderInput={params => (
 						<TextField
 							{...params}
+							data-testid="searchfield"
 							onChange={e => searchElement(e.target.value.toString())}
 							placeholder="Search"
 							variant="outlined"
@@ -226,7 +227,11 @@ const SidebarContent = () => {
 								endAdornment: (
 									<>
 										{searchLoading ? (
-											<CircularProgress color="inherit" size={20} />
+											<CircularProgress
+												color="inherit"
+												size={20}
+												data-testid="searchfield-progress"
+											/>
 										) : null}
 									</>
 								),
