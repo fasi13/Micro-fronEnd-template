@@ -57,7 +57,12 @@ interface HierarchyState {
 		nodePath: NodePath[],
 		name: string,
 	) => void;
-	createApplication: (data: TreeView, name: string, value: string) => void;
+	createApplication: (
+		data: TreeView,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+	) => void;
 	editApplication: (
 		data: TreeView,
 		nodePath: NodePath[],
@@ -155,18 +160,6 @@ const updateChildrenHandler = (data: TreeView, children: TreeView[]) => {
 	data.toggleNewEditor = '';
 	data.saving = false;
 };
-
-// const savingCb = (err: ErrorResponse | null, data: TreeView) => {
-// 	if (err) {
-// 		data.saving = false;
-// 		data.error = err.errors?.[0];
-// 	} else {
-// 		data.saving = false;
-// 		data.toggleNewEditor = '';
-// 		data.loadingChildren = false;
-// 		data.error = null;
-// 	}
-// };
 
 function nodeUpdateState(
 	set: any,
@@ -285,6 +278,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		set((state: HierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
 			node.toggleNewEditor = val;
+			node.collapsed = false;
 			node.error = null;
 		});
 	},
@@ -326,7 +320,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				});
 
 				if (remoteError) {
-					nodeErrorHandler(remoteError, data);
+					nodeUpdateState(set, nodePath, remoteError, []);
 				} else if (resp && resp.status === 201) {
 					const { err, children }: THierarchyChildDataResp =
 						await getHierarchyChildData(data);
@@ -357,7 +351,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				});
 
 				if (remoteError) {
-					nodeErrorHandler(remoteError, data);
+					nodeUpdateState(set, nodePath, remoteError, []);
 				} else if (resp && resp.status === 200) {
 					set((state: HierarchyState) => {
 						const node = getNodeToUpdate(state.hierarchyData, nodePath);
@@ -367,9 +361,15 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			}
 		}
 	},
-	createApplication: async (data: TreeView, name: string, value: string) => {
+	createApplication: async (
+		data: TreeView,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+	) => {
 		if (data) {
-			data.saving = true;
+			let remoteError: ErrorResponse | null = null;
+			get().setSaving(nodePath, true);
 			const link: Link | undefined = getCreateApplicationLink(
 				data?._links || [],
 			);
@@ -381,12 +381,15 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 					url: href,
 					data: { name, value },
 				}).catch((reason: ErrorResponse) => {
-					console.log('--', reason);
-					// savingCb(reason, data);
+					remoteError = reason;
 				});
-				if (resp && resp.status === 201) {
-					// await getHierarchyChildData(data, savingCb);
-					console.log('fix');
+				if (remoteError) {
+					nodeUpdateState(set, nodePath, remoteError, []);
+				} else if (resp && resp.status === 201) {
+					const { err, children }: THierarchyChildDataResp =
+						await getHierarchyChildData(data);
+
+					nodeUpdateState(set, nodePath, err, children);
 				}
 			}
 		}
@@ -397,9 +400,9 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		name: string,
 		value: string,
 	) => {
-		// let err: ErrorResponse | null = null;
-
 		if (data) {
+			let remoteError: ErrorResponse | null = null;
+			get().setSaving(nodePath, true);
 			const link: Link | undefined = getSelfUpdateLink(
 				data._links || [],
 				false,
@@ -412,10 +415,12 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 					url: href,
 					data: { name, value },
 				}).catch(reason => {
-					// err = reason as unknown as ErrorResponse;
-					console.log('---', reason);
+					remoteError = reason as unknown as ErrorResponse;
 				});
-				if (resp && resp.status === 200) {
+
+				if (remoteError) {
+					nodeUpdateState(set, nodePath, remoteError, []);
+				} else if (resp && resp.status === 200) {
 					set((state: HierarchyState) => {
 						const node = getNodeToUpdate(state.hierarchyData, nodePath);
 						updateNodeValues(node, name, value);
@@ -423,7 +428,6 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				}
 			}
 		}
-		// savingCb(err, data);
 	},
 	getUserApplication: async () => {
 		get().setLoading(true);

@@ -116,8 +116,13 @@ const SidebarContent = () => {
 	);
 
 	const onAddApplicationFn = useCallback(
-		async (item: TreeView, name: string, value: string) => {
-			createApplication(item, name, value);
+		async (
+			item: TreeView,
+			nodePath: NodePath[],
+			name: string,
+			value: string,
+		) => {
+			createApplication(item, nodePath, name, value);
 		},
 		[],
 	);

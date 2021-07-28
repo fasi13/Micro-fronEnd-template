@@ -107,7 +107,12 @@ export interface NodeActions {
 		nodePath: NodePath[],
 		val: string | ErrorResponse | null,
 	) => void;
-	onAddApplication: (item: TreeView, name: string, value: string) => void;
+	onAddApplication: (
+		item: TreeView,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+	) => void;
 	onEditApplication: (
 		item: TreeView,
 		nodePath: NodePath[],

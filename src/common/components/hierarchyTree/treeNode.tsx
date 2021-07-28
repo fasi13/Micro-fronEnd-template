@@ -35,7 +35,13 @@ export interface TreeNodePropType extends NodeActions {
 
 const extractApplicationNameAndValue = (text: string): string[] => {
 	const newLocal = /^[^)(]+|\([^)(]*\)$/g;
-	return text.match(new RegExp(newLocal))?.map(x => x.toString()) || ['', ''];
+	const result: string[] = text
+		.match(new RegExp(newLocal))
+		?.map(x => x.toString()) || ['', ''];
+	if (result.length === 2)
+		result[1] = result[1] ? result[1].replace(/[)(]+/g, '') : result[1];
+
+	return result;
 };
 
 const saveApplicationOrGroup = (
@@ -48,18 +54,23 @@ const saveApplicationOrGroup = (
 		name: string,
 		value: string,
 	) => void,
-	onAddApplication: (item: TreeView, name: string, value: string) => void,
+	onAddApplication: (
+		item: TreeView,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+	) => void,
 	onEditGroup: (item: TreeView, nodePath: NodePath[], name: string) => void,
 	onAddGroup: (item: TreeView, nodePath: NodePath[], name: string) => void,
 ) => {
 	if (dataToSave.edit && canAddApplication(dataToSave)) {
 		onEditGroup(dataToSave, path, newValue);
 	} else if (dataToSave.edit && !canAddApplication(dataToSave)) {
-		console.log('continue here');
-		// onEditApplication(dataToSave, path, name, value); //??
+		const [name, value] = extractApplicationNameAndValue(newValue);
+		onEditApplication(dataToSave, path, name, value);
 	} else if (dataToSave.toggleNewEditor === 'Application') {
 		const [name, value] = extractApplicationNameAndValue(newValue);
-		onAddApplication(dataToSave, name, value);
+		onAddApplication(dataToSave, path, name, value);
 	} else if (dataToSave.toggleNewEditor === 'Group') {
 		onAddGroup(dataToSave, path, newValue);
 	}
