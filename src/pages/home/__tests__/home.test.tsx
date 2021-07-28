@@ -6,7 +6,7 @@ import { detachStore } from '../../../state';
 import { Home } from '../home';
 
 const dSSidebarState = detachStore.getState();
-
+const closeDetachedSidebarStr = 'close-detached-sidebar';
 test('renders home component', () => {
 	render(<Home />);
 });
@@ -22,17 +22,43 @@ test('detached sidebar should be closed when close icon is clicked', () => {
 	dSSidebarState.setDetachSidebar(true);
 	const { getByTestId } = render(<Home />);
 	const Rnd = getByTestId('rnd');
-	const closeDetachedSidebar = getByTestId('close-detached-sidebar');
+	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
 	fireEvent.click(closeDetachedSidebar);
 	expect(Rnd).not.toBeInTheDocument();
 });
 
-test('detached sidebar should be closed when close icon is pressed on keyDown', () => {
+test('detached sidebar should be closed when close icon is clicked', () => {
 	dSSidebarState.setDetachSidebar(true);
 	const { getByTestId } = render(<Home />);
 	const Rnd = getByTestId('rnd');
-	user.type(Rnd, '{enter}');
-	const closeDetachedSidebar = getByTestId('close-detached-sidebar');
-	fireEvent.keyDown(closeDetachedSidebar, { key: 'Enter', code: 13 });
-	expect(Rnd).toBeInTheDocument();
+	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
+	user.click(closeDetachedSidebar);
+	expect(Rnd).not.toBeInTheDocument();
+});
+
+test('detached sidebar should be closed when close icon is pressed on keyDown with enter', () => {
+	dSSidebarState.setDetachSidebar(true);
+	const { getByTestId } = render(<Home />);
+	const Rnd = getByTestId('rnd');
+	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
+	user.type(closeDetachedSidebar, '{enter}');
+	expect(Rnd).not.toBeInTheDocument();
+});
+
+test('detached sidebar should be closed when close icon is pressed on keyDown with space', () => {
+	dSSidebarState.setDetachSidebar(true);
+	const { getByTestId } = render(<Home />);
+	const Rnd = getByTestId('rnd');
+	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
+	user.type(closeDetachedSidebar, '{space}');
+	expect(Rnd).not.toBeInTheDocument();
+});
+
+test('detached sidebar should be closed when close icon is pressed on keyDown with other characters', () => {
+	dSSidebarState.setDetachSidebar(true);
+	const { getByTestId } = render(<Home />);
+	const Rnd = getByTestId('rnd');
+	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
+	user.type(closeDetachedSidebar, '{tab}');
+	expect(Rnd).not.toBeInTheDocument();
 });
