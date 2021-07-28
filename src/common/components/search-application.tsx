@@ -52,7 +52,7 @@ export const SearchApplication = (props: SearchApplicationProps) => {
 	return (
 		<Router>
 			<Link to={getApplicationLink(item)}>
-				<ListItem className={classes.root}>
+				<ListItem className={classes.root} divider>
 					<ListItemText
 						primary={getApplicationName(item)}
 						secondary={

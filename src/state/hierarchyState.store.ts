@@ -5,7 +5,7 @@ import {
 	Link,
 	NodePath,
 	TEditor,
-	TreeView,
+	TreeView
 } from '../types';
 import { HierarchyClient as axios } from '../util/axios';
 import createStore from '../util/immer';

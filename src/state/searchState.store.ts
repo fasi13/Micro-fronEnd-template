@@ -36,6 +36,4 @@ const SearchStore = (set: any, get: any): SearchState => ({
 	},
 });
 
-
-
 export const useSearchStore = createStore<SearchState>(SearchStore);
