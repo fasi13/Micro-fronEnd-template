@@ -125,18 +125,21 @@ function ChangePasswordModal() {
 					</DialogContent>
 					<div className="p-3">
 						<DialogActions>
-							<button
-								type="button"
-								data-testid="cancel-btn"
-								onClick={handleClose}>
-								Cancel
-							</button>
-							<button
-								disabled={validateAllFields()}
-								data-testid="submit-btn"
-								type="submit">
-								Submit
-							</button>
+							<div className="space-x-5">
+								<button
+									type="button"
+									data-testid="cancel-btn"
+									onClick={handleClose}>
+									Cancel
+								</button>
+								<button
+									className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded"
+									disabled={validateAllFields()}
+									data-testid="submit-btn"
+									type="submit">
+									Submit
+								</button>
+							</div>
 						</DialogActions>
 					</div>
 				</form>
