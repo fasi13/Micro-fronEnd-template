@@ -1,12 +1,11 @@
 import {
-	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
-	TextField,
 } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import { changePasswordModalStore } from '../../../state';
 
@@ -18,113 +17,130 @@ function ChangePasswordModal() {
 	const handleClose = () => {
 		setOpen(false);
 	};
-	const initialFValues = {
-		old_password: '',
-		new_password: '',
-		confirm_password: '',
-		formSubmitted: false,
-		success: false,
+
+	const [oldPassword, setOldPassword] = React.useState('');
+	const [newPassword, setNewPassword] = React.useState('');
+	const [confirmPassword, setConfirmPassword] = React.useState('');
+
+	const [oldPasswordErrorMsg, setOldPasswordErrorMsg] = React.useState('');
+	const [newPasswordErrorMsg, setNewPasswordErrorMsg] = React.useState('');
+	const [confirmPasswordErrorMsg, setConfirmPasswordErrorMsg] =
+		React.useState('');
+
+	const validateAllFields = () =>
+		oldPasswordErrorMsg !== '' ||
+		newPasswordErrorMsg !== '' ||
+		confirmPasswordErrorMsg !== '';
+
+	const handleSubmit2 = (evt: any) => {
+		evt.preventDefault();
+		if (!validateAllFields())
+			console.log(
+				`Submitting ${oldPassword} ${newPassword} ${confirmPassword}`,
+			);
 	};
 
-	const [values, setValues] = React.useState(initialFValues);
-	const [errors, setErrors] = React.useState({} as any);
+	const handleOldPassword = (e: any) => {
+		setOldPassword(e.target.value);
+		if (e.target.value === '') setOldPasswordErrorMsg('required1');
+		else setOldPasswordErrorMsg('');
+	};
+	const handleNewPassword = (e: any) => {
+		setNewPassword(e.target.value);
+		if (e.target.value === '') setNewPasswordErrorMsg('required2');
+		else setNewPasswordErrorMsg('');
+		// if (e.target.value !== confirmPassword) {
+		// 	setConfirmPasswordErrorMsg('pdm');
+		// } else {
+		// 	setConfirmPasswordErrorMsg('');
+		// }
+	};
+	const handleConfirmPassword = (e: any) => {
+		setConfirmPassword(e.target.value);
+		if (e.target.value === '') setConfirmPasswordErrorMsg('required3');
+		else if (e.target.value !== newPassword) {
+			setConfirmPasswordErrorMsg('pdm');
+		} else {
+			setConfirmPasswordErrorMsg('');
+		}
+	};
 
-	const requiredString = 'This field is required.';
-	const validate: any = (fieldValues = values) => {
-		const temp: any = { ...errors };
-		if ('old_password' in fieldValues && !fieldValues.old_password)
-			temp.old_password = requiredString;
-		if ('new_password' in fieldValues && !fieldValues.new_password)
-			temp.new_password = requiredString;
-		if ('confirm_password' in fieldValues && !fieldValues.confirm_password)
-			temp.confirm_password = requiredString;
-		if (
-			'confirm_password' in fieldValues &&
-			fieldValues.confirm_password === fieldValues.new_password
-		)
-			temp.confirm_password = "Password and confirm password don't match";
-
-		setErrors({
-			...temp,
-		});
-	};
-	const handleInputChange = (e: any) => {
-		const { name, value } = e.target;
-		setValues({
-			...values,
-			[name]: value,
-		});
-		validate({ [name]: value });
-	};
-	const handleSubmit = (e: any) => {
-		e.preventDefault();
-		Object.values(errors).every(x => x === '');
-		validate();
-	};
 	return (
 		<>
-			<div>
-				<Dialog
-					open={open}
-					onClose={handleClose}
-					aria-labelledby="form-dialog-title"
-					maxWidth="sm"
-					fullWidth>
+			<Dialog
+				id="password-modal"
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="form-dialog-title"
+				maxWidth="sm"
+				fullWidth>
+				<form onSubmit={handleSubmit2}>
 					<DialogTitle id="form-dialog-title">Change your password</DialogTitle>
 					<DialogContent className="p-8">
 						<DialogContentText>
 							Please add old password and new password to change your current
 							password.
 						</DialogContentText>
-						<TextField
-							autoFocus
-							margin="dense"
-							id="old_password"
-							name="old_password"
-							label="Old password"
-							type="password"
-							fullWidth
-							onChange={handleInputChange}
-							error={!!errors.old_password}
-							helperText={errors.old_password ? errors.old_password : ''}
-						/>
-						<TextField
-							margin="dense"
-							id="new_password"
-							name="new_password"
-							label="New Password"
-							type="password"
-							fullWidth
-							onChange={handleInputChange}
-							error={!!errors.new_password}
-							helperText={errors.new_password ? errors.new_password : ''}
-						/>
-						<TextField
-							margin="dense"
-							id="confirm_password"
-							name="confirm_password"
-							label="Confirm Password"
-							type="password"
-							fullWidth
-							onChange={handleInputChange}
-							error={!!errors.confirm_password}
-							helperText={
-								errors.confirm_password ? errors.confirm_password : ''
-							}
-						/>
+						<div data-testid="modal-container">
+							<TextField
+								inputProps={{ 'data-testid': 'old-password' }}
+								margin="dense"
+								id="oldPassword"
+								name="oldPassword"
+								label="Old Password"
+								type="password"
+								fullWidth
+								onChange={handleOldPassword}
+								error={oldPasswordErrorMsg !== ''}
+							/>
+							<span data-testid="old-error-msg">{oldPasswordErrorMsg}</span>
+							<TextField
+								inputProps={{ 'data-testid': 'new-password' }}
+								margin="dense"
+								id="newPassword"
+								name="newPassword"
+								label="New Password"
+								type="password"
+								fullWidth
+								onChange={handleNewPassword}
+								error={newPasswordErrorMsg !== ''}
+							/>
+							<span data-testid="new-error-msg">{newPasswordErrorMsg}</span>
+							<br />
+							<TextField
+								inputProps={{ 'data-testid': 'confirm-password' }}
+								margin="dense"
+								id="confirmPassword"
+								name="confirmPassword"
+								label="Confirm Password"
+								type="password"
+								fullWidth
+								onChange={handleConfirmPassword}
+								error={newPasswordErrorMsg !== ''}
+							/>
+							<span data-testid="confirm-error-msg">
+								{confirmPasswordErrorMsg}
+							</span>
+						</div>
 					</DialogContent>
 					<div className="p-3">
 						<DialogActions>
-							<Button onClick={handleClose} color="primary">
+							<button
+								type="button"
+								data-testid="cancel-btn"
+								onClick={handleClose}>
 								Cancel
-							</Button>
-							<Button onClick={handleSubmit} color="primary">
+							</button>
+							<button
+								disabled={validateAllFields()}
+								data-testid="submit-btn"
+								type="submit">
 								Submit
-							</Button>
+							</button>
 						</DialogActions>
 					</div>
-				</Dialog>
-			</div>
+				</form>
+			</Dialog>
 		</>
 	);
 }
