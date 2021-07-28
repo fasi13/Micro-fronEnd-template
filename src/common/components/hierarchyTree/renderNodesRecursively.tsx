@@ -22,12 +22,15 @@ export const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 		nodePath,
 		expandNodesAtLevel,
 		children,
-		onSelect,
 		onEditApplication,
 		onEditGroup,
-		onToggle,
+		onToggleCollapse,
 		onAddApplication,
 		onAddGroup,
+		onSetNodeErr,
+		onSetSaving,
+		onToggleEdit,
+		onToggleNewEditor,
 	} = props;
 
 	return (
@@ -40,30 +43,31 @@ export const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 					nodeId={nodeId}
 					nodePath={nodePath}
 					data={data}
-					expandedByDefault={
-						expandNodesAtLevel !== undefined
-							? nodeDepth <= expandNodesAtLevel
-							: false
-					}
 					onEditApplication={onEditApplication}
 					onEditGroup={onEditGroup}
-					onSelect={onSelect}
-					onToggle={onToggle}
+					onToggleCollapse={onToggleCollapse}
 					onAddApplication={onAddApplication}
 					onAddGroup={onAddGroup}
-					renderProps={(collapseChildren: boolean) => (
+					onSetNodeErr={onSetNodeErr}
+					onSetSaving={onSetSaving}
+					onToggleEdit={onToggleEdit}
+					onToggleNewEditor={onToggleNewEditor}
+					renderProps={() => (
 						<TreeNodeChildren
 							key={`treenode_${nodeId}`}
 							childrenData={data?.childrenData}
 							nodePath={nodePath}
 							nodeDepth={nodeDepth}
-							expandNodesAtLevel={collapseChildren ? -1 : expandNodesAtLevel}
+							expandNodesAtLevel={expandNodesAtLevel}
 							onAddApplication={onAddApplication}
 							onAddGroup={onAddGroup}
 							onEditApplication={onEditApplication}
 							onEditGroup={onEditGroup}
-							onToggle={onToggle}
-							onSelect={onSelect}
+							onToggleCollapse={onToggleCollapse}
+							onSetNodeErr={onSetNodeErr}
+							onSetSaving={onSetSaving}
+							onToggleEdit={onToggleEdit}
+							onToggleNewEditor={onToggleNewEditor}
 						/>
 					)}
 				/>

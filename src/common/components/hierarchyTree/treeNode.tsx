@@ -1,168 +1,7 @@
-// import React from 'react';
-// import { useWhyDidYouUpdate } from 'use-hooks';
-// import { NodeActions, NodePath, TreeView } from '../../../types';
-// import { TResponse, useTreeNode } from './hooks/useTreeNode';
-// import { Node } from './node';
-// import { NodeEditor } from './nodeEditor';
-
-// const canAddApplication = (node: TreeView): boolean => {
-// 	if (node._links?.find(l => l.rel === 'createApplication')) return true;
-// 	return false;
-// };
-
-// const showHideNewEditor = (isToggled: boolean, editorMode: string) => {
-// 	if (isToggled) {
-// 		if (editorMode !== '') return 'mb-10';
-// 		return '';
-// 	}
-
-// 	return 'hidden';
-// };
-
-// const nodeValue = (node: TreeView) => {
-// 	if (canAddApplication(node)) return node.name;
-// 	return `${node.name} (${node.value?.toString().trimLeft()})`;
-// };
-
-// export interface TreeNodePropType extends NodeActions {
-// 	data: TreeView;
-// 	expandedByDefault: boolean;
-// 	nodeId: number;
-// 	nodePath: NodePath[];
-// 	renderProps: (collapseChildren: boolean) => React.ReactNode;
-// }
-
-// export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
-// 	const {
-// 		nodeId,
-// 		nodePath,
-// 		data,
-// 		expandedByDefault,
-// 		onToggle,
-// 		onEditApplication,
-// 		onEditGroup,
-// 		onSelect,
-// 		onAddApplication,
-// 		onAddGroup,
-// 		renderProps,
-// 	} = props;
-// 	useWhyDidYouUpdate('TreeNode', { ...props });
-
-// 	const {
-// 		nodeState,
-// 		toggleNewEditor,
-// 		toggleNode,
-// 		editNode,
-// 		save,
-// 		setError,
-// 		clearError,
-// 	}: TResponse = useTreeNode({
-// 		data,
-// 		nodeId,
-// 		nodePath,
-// 		hasChildren: false,
-// 		edit: false,
-// 		toggle: expandedByDefault,
-// 		collapseChildrenNodes: false,
-// 		saving: false,
-// 		toggleNewEditor: '',
-// 		newValue: null,
-// 		error: null,
-// 		loadingChildren: false,
-// 		isFetched: false,
-// 		nodeType: !canAddApplication(data) ? 'Application' : 'Group',
-// 		onSelect,
-// 		onAddApplication,
-// 		onAddGroup,
-// 		onEditApplication,
-// 		onEditGroup,
-// 		onToggle,
-// 	});
-
-// 	return (
-// 		<>
-// 			{/* a tree node in edit mode and normal node */}
-
-// 			<div
-// 				className={
-// 					nodeState.error && nodeState.edit
-// 						? `h-10.5 w-full mb-10`
-// 						: `h-10.5 w-full`
-// 				}>
-// 				{nodeState.edit ? (
-// 					<NodeEditor
-// 						key={`node_editor_${nodeId}`}
-// 						onClose={() => {
-// 							editNode(false);
-// 						}}
-// 						onSubmit={value => save(value)}
-// 						error={nodeState.error}
-// 						isSaving={nodeState.saving}
-// 						isApplication={!canAddApplication(data)}
-// 						data={nodeValue(nodeState.data)}
-// 						setError={setError}
-// 						clearError={clearError}
-// 					/>
-// 				) : (
-// 					<Node
-// 						key={`node_${nodeId}`}
-// 						data={nodeState.data}
-// 						editNode={editNode}
-// 						toggleChildrenState={
-// 							nodeState.collapseChildrenNodes ? false : nodeState.toggle
-// 						}
-// 						toggleNode={toggleNode}
-// 						toggleNewEditor={toggleNewEditor}
-// 						isLoadingChildren={nodeState.loadingChildren}
-// 					/>
-// 				)}
-// 			</div>
-
-// 			{/* toggle view of tree node with its children */}
-// 			<div
-// 				className={showHideNewEditor(
-// 					nodeState.toggle,
-// 					nodeState.toggleNewEditor,
-// 				)}>
-// 				{nodeState.toggleNewEditor !== '' ? (
-// 					<ul className="w-full pl-5 ml-2" key={`editor_${nodeId}`}>
-// 						<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
-// 							<NodeEditor
-// 								key={`new_node_${nodeId}`}
-// 								onClose={() => toggleNewEditor('')}
-// 								onSubmit={value => save(value)}
-// 								error={nodeState.error}
-// 								isSaving={nodeState.saving}
-// 								isApplication={nodeState.toggleNewEditor === 'Application'}
-// 								setError={setError}
-// 								clearError={clearError}
-// 							/>
-// 						</li>
-// 					</ul>
-// 				) : (
-// 					<></>
-// 				)}
-// 				{renderProps(nodeState.collapseChildrenNodes)}
-// 			</div>
-// 		</>
-// 	);
-// };
-
-// const TreeNodeIsSame = (
-// 	prevProps: Readonly<React.PropsWithChildren<TreeNodePropType>>,
-// 	nextProps: Readonly<React.PropsWithChildren<TreeNodePropType>>,
-// ) =>
-// 	prevProps.data.name === nextProps.data.name &&
-// 	prevProps.data.value === nextProps.data.value &&
-// 	prevProps.data?.childrenData === nextProps.data?.childrenData;
-
-// export const TreeNodeMemo = React.memo(TreeNode, TreeNodeIsSame);
-
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useWhyDidYouUpdate } from 'use-hooks';
-import { NodeActions, NodePath, TreeView } from '../../../types';
-import { TResponse, useTreeNode } from './hooks/useTreeNode';
-import { Node, NodeRef } from './node';
+import { NodeActions, NodePath, TEditor, TreeView } from '../../../types';
+import { Node } from './node';
 import { NodeEditor } from './nodeEditor';
 
 const canAddApplication = (node: TreeView): boolean => {
@@ -170,8 +9,11 @@ const canAddApplication = (node: TreeView): boolean => {
 	return false;
 };
 
-const showHideNewEditor = (isToggled: boolean, editorMode: string) => {
-	if (isToggled) {
+const showHideNewEditorAndTreeChildren = (
+	isCollapsed: boolean,
+	editorMode: string,
+) => {
+	if (!isCollapsed) {
 		if (editorMode !== '') return 'mb-10';
 		return '';
 	}
@@ -186,76 +28,71 @@ const nodeValue = (node: TreeView) => {
 
 export interface TreeNodePropType extends NodeActions {
 	data: TreeView;
-	expandedByDefault: boolean;
 	nodeId: number;
 	nodePath: NodePath[];
-	renderProps: (collapseChildren: boolean) => React.ReactNode;
+	renderProps: () => React.ReactNode;
 }
+
+const extractApplicationNameAndValue = (text: string): string[] => {
+	const newLocal = /^[^)(]+|\([^)(]*\)$/g;
+	return text.match(new RegExp(newLocal))?.map(x => x.toString()) || ['', ''];
+};
+
+const saveApplicationOrGroup = (
+	dataToSave: TreeView,
+	newValue: string,
+	path: NodePath[],
+	onEditApplication: (
+		item: TreeView,
+		nodePath: NodePath[],
+		name: string,
+		value: string,
+	) => void,
+	onAddApplication: (item: TreeView, name: string, value: string) => void,
+	onEditGroup: (item: TreeView, nodePath: NodePath[], name: string) => void,
+	onAddGroup: (item: TreeView, nodePath: NodePath[], name: string) => void,
+) => {
+	if (dataToSave.edit && canAddApplication(dataToSave)) {
+		onEditGroup(dataToSave, path, newValue);
+	} else if (dataToSave.edit && !canAddApplication(dataToSave)) {
+		console.log('continue here');
+		// onEditApplication(dataToSave, path, name, value); //??
+	} else if (dataToSave.toggleNewEditor === 'Application') {
+		const [name, value] = extractApplicationNameAndValue(newValue);
+		onAddApplication(dataToSave, name, value);
+	} else if (dataToSave.toggleNewEditor === 'Group') {
+		onAddGroup(dataToSave, path, newValue);
+	}
+};
 
 export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 	const {
 		nodeId,
 		nodePath,
 		data,
-		expandedByDefault,
-		onToggle,
+		onToggleCollapse,
 		onEditApplication,
 		onEditGroup,
-		onSelect,
 		onAddApplication,
 		onAddGroup,
+		onSetNodeErr,
+		onToggleEdit,
+		onToggleNewEditor,
 		renderProps,
 	} = props;
 
 	useWhyDidYouUpdate('TreeNode', { ...props });
 
-	const nodeRef: React.MutableRefObject<NodeRef | null> = useRef<NodeRef>(null);
-
-	const {
-		nodeState,
-		toggleNewEditor,
-		toggleNode,
-		editNode,
-		save,
-		setError,
-		clearError,
-	}: TResponse = useTreeNode({
-		data,
-		nodeId,
-		nodePath,
-		hasChildren: false,
-		edit: false,
-		toggle: expandedByDefault,
-		saving: false,
-		toggleNewEditor: '',
-		newValue: null,
-		error: null,
-		loadingChildren: false,
-		isFetched: false,
-		nodeType: !canAddApplication(data) ? 'Application' : 'Group',
-		nodeRef,
-		onSelect,
-		onAddApplication,
-		onAddGroup,
-		onEditApplication,
-		onEditGroup,
-		onToggle,
-	});
-
-	function toggleNodeRef() {
-		if (nodeRef.current) {
-			nodeRef.current.toggleChild(expandedByDefault, () => {
-				console.log('default toggle');
-			});
-		}
-	}
-
-	useEffect(() => {
-		// console.log(toggleNode);
-		if (expandedByDefault) {
-			toggleNodeRef();
-		}
-	}, []);
+	const submitHandler = (value: string) =>
+		saveApplicationOrGroup(
+			data,
+			value,
+			nodePath,
+			onEditApplication,
+			onAddApplication,
+			onEditGroup,
+			onAddGroup,
+		);
 
 	return (
 		<>
@@ -263,70 +100,59 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 
 			<div
 				className={
-					nodeState.error && nodeState.edit
-						? `h-10.5 w-full mb-10`
-						: `h-10.5 w-full`
+					data.error && data.edit ? `h-10.5 w-full mb-10` : `h-10.5 w-full`
 				}>
-				{nodeState.edit ? (
+				{data.edit ? (
 					<NodeEditor
 						key={`node_editor_${nodeId}`}
 						onClose={() => {
-							editNode(false);
+							onToggleEdit(nodePath, false);
 						}}
-						onSubmit={value => save(value)}
-						error={nodeState.error}
-						isSaving={nodeState.saving}
+						onSubmit={submitHandler}
+						error={data.error}
+						isSaving={data.saving}
 						isApplication={!canAddApplication(data)}
-						data={nodeValue(nodeState.data)}
-						setError={setError}
-						clearError={clearError}
+						data={nodeValue(data)}
+						setError={err => onSetNodeErr(nodePath, err)}
+						clearError={() => onSetNodeErr(nodePath, null)}
 					/>
 				) : (
 					<Node
 						key={`node_${nodeId}`}
-						data={nodeState.data}
-						editNode={editNode}
-						dispatchGlobalToggleNode={toggleNode}
-						toggleNewEditor={toggleNewEditor}
-						isLoadingChildren={nodeState.loadingChildren}
-						ref={nodeRef || undefined}
-					/> // <Node
-					// 	key={`node_${nodeId}`}
-					// 	data={nodeState.data}
-					// 	editNode={editNode}
-					// 	dispatchGlobalToggleNode={toggleNode}
-					// 	toggleNewEditor={toggleNewEditor}
-					// 	isLoadingChildren={nodeState.loadingChildren}
-					// 	ref={nodeRef || undefined}
-					// />
+						data={data}
+						editNode={() => onToggleEdit(nodePath, true)}
+						toggleChildren={() => onToggleCollapse(nodePath, !data.collapsed)}
+						toggleNewEditor={(val: TEditor) => onToggleNewEditor(nodePath, val)}
+						isLoadingChildren={data.loadingChildren}
+					/>
 				)}
 			</div>
 
 			{/* toggle view of tree node with its children */}
 			<div
-				className={showHideNewEditor(
-					nodeState.toggle,
-					nodeState.toggleNewEditor,
+				className={showHideNewEditorAndTreeChildren(
+					data.collapsed,
+					data.toggleNewEditor,
 				)}>
-				{nodeState.toggleNewEditor !== '' ? (
+				{data.toggleNewEditor !== '' ? (
 					<ul className="w-full pl-5 ml-2" key={`editor_${nodeId}`}>
 						<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
 							<NodeEditor
 								key={`new_node_${nodeId}`}
-								onClose={() => toggleNewEditor('')}
-								onSubmit={value => save(value)}
-								error={nodeState.error}
-								isSaving={nodeState.saving}
-								isApplication={nodeState.toggleNewEditor === 'Application'}
-								setError={setError}
-								clearError={clearError}
+								onClose={() => onToggleNewEditor(nodePath, '')}
+								onSubmit={submitHandler}
+								error={data.error}
+								isSaving={data.saving}
+								isApplication={data.toggleNewEditor === 'Application'}
+								setError={err => onSetNodeErr(nodePath, err)}
+								clearError={() => onSetNodeErr(nodePath, null)}
 							/>
 						</li>
 					</ul>
 				) : (
 					<></>
 				)}
-				{renderProps(false)}
+				{renderProps()}
 			</div>
 		</>
 	);

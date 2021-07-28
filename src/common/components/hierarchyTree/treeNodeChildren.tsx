@@ -20,13 +20,17 @@ export const TreeNodeChildren: React.FunctionComponent<TreeNodeChildrenPropType>
 			onAddGroup,
 			onEditApplication,
 			onEditGroup,
-			onSelect,
-			onToggle,
+			onToggleCollapse,
+			onSetNodeErr,
+			onSetSaving,
+			onToggleEdit,
+			onToggleNewEditor,
 		} = props;
 		return !childrenData || childrenData?.length === 0 ? (
 			<></>
 		) : (
 			<ul className="w-full pl-5 ml-2 B">
+				{}
 				{childrenData.map(c => (
 					<li
 						key={`__li__${c.name}__`}
@@ -40,10 +44,13 @@ export const TreeNodeChildren: React.FunctionComponent<TreeNodeChildrenPropType>
 								expandNodesAtLevel,
 								onEditApplication,
 								onEditGroup,
-								onSelect,
-								onToggle,
+								onToggleCollapse,
 								onAddApplication,
+								onSetNodeErr,
+								onSetSaving,
+								onToggleEdit,
 								onAddGroup,
+								onToggleNewEditor,
 							})}
 						</ul>
 					</li>

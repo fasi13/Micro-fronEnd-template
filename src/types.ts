@@ -35,23 +35,32 @@ export interface Application {
 	value: string;
 	_links: Link[];
 }
+
+export type TEditor = '' | 'Application' | 'Group';
+
 export interface TreeView {
 	id: number;
 	key?: string;
 	name: string;
 	value?: string;
-	collapsed?: boolean;
+	collapsed: boolean;
+	edit: boolean;
+	saving: boolean;
+	error: string | null;
 	executedFetch?: boolean;
 	isGroup?: boolean;
 	childrenData?: TreeView[];
+	toggleNewEditor: TEditor;
+	nodeDepth: number;
+	nodePath: NodePath[];
 	parentId?: string | number;
-	loading?: boolean;
+	loadingChildren: boolean;
 	selfLink?: Link;
 	selfUpdateLink?: Link;
 	createGroupLink?: Link;
 	createApplicationLink?: Link;
 	loadChildrenLink?: Link[];
-	path?: Application; // ??
+	path?: Application;
 	_links?: Link[];
 }
 
@@ -89,43 +98,22 @@ export interface ErrorResponse {
 	errors: string[];
 }
 
-
 export interface NodeActions {
-	onSelect: () => void;
-	onToggle: (
-		item: TreeView,
-		nodeId: number,
+	onToggleCollapse: (nodePath: NodePath[], val: boolean) => void;
+	onToggleEdit: (nodePath: NodePath[], val: boolean) => void;
+	onToggleNewEditor: (nodePath: NodePath[], val: TEditor) => void;
+	onSetSaving: (nodePath: NodePath[], val: boolean) => void;
+	onSetNodeErr: (
 		nodePath: NodePath[],
-		cb: (err: ErrorResponse | null) => void,
+		val: string | ErrorResponse | null,
 	) => void;
-	onAddApplication: (
-		item: TreeView,
-		nodeId: number,
-		nodePath: NodePath[],
-		name: string,
-		value: string,
-		cb: (err: ErrorResponse | null) => void,
-	) => void;
-	onAddGroup: (
-		item: TreeView,
-		nodeId: number,
-		nodePath: NodePath[],
-		name: string,
-		cb: (err: ErrorResponse | null) => void,
-	) => void;
+	onAddApplication: (item: TreeView, name: string, value: string) => void;
 	onEditApplication: (
 		item: TreeView,
-		nodeId: number,
 		nodePath: NodePath[],
 		name: string,
 		value: string,
-		cb: (err: any) => void,
 	) => void;
-	onEditGroup: (
-		item: TreeView,
-		nodeId: number,
-		nodePath: NodePath[],
-		name: string,
-		cb: (err: ErrorResponse | null) => void,
-	) => void;
+	onAddGroup: (item: TreeView, nodePath: NodePath[], name: string) => void;
+	onEditGroup: (item: TreeView, nodePath: NodePath[], name: string) => void;
 }

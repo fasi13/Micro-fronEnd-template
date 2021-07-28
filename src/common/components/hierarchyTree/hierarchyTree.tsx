@@ -20,8 +20,11 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 		expandNodesAtLevel,
 		onEditApplication,
 		onEditGroup,
-		onSelect,
-		onToggle,
+		onToggleCollapse,
+		onToggleEdit,
+		onToggleNewEditor,
+		onSetSaving,
+		onSetNodeErr,
 		onAddApplication,
 		onAddGroup,
 	} = props;
@@ -42,10 +45,13 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 							expandNodesAtLevel={expandNodesAtLevel}
 							onEditApplication={onEditApplication}
 							onEditGroup={onEditGroup}
-							onSelect={onSelect}
-							onToggle={onToggle}
+							onToggleCollapse={onToggleCollapse}
 							onAddApplication={onAddApplication}
 							onAddGroup={onAddGroup}
+							onSetNodeErr={onSetNodeErr}
+							onSetSaving={onSetSaving}
+							onToggleEdit={onToggleEdit}
+							onToggleNewEditor={onToggleNewEditor}
 						/>
 					))}
 				</ul>
