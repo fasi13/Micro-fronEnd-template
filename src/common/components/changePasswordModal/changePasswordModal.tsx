@@ -34,10 +34,8 @@ function ChangePasswordModal() {
 
 	const handleSubmit2 = (evt: any) => {
 		evt.preventDefault();
-		if (!validateAllFields())
-			console.log(
-				`Submitting ${oldPassword} ${newPassword} ${confirmPassword}`,
-			);
+		// if (!validateAllFields())
+		console.log(`Submitting ${oldPassword} ${newPassword} ${confirmPassword}`);
 	};
 
 	const handleOldPassword = (e: any) => {
