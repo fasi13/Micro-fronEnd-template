@@ -29,7 +29,6 @@ export const Node: React.FC<NodePropType> = props => {
 		isLoadingChildren,
 	} = props;
 
-
 	const expandOrCollapse = (): string => {
 		if (!toggleChildren) return 'expand';
 		return 'collapse';

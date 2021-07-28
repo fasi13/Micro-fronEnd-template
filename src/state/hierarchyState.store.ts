@@ -1,9 +1,10 @@
 import {
 	ApiResponse,
-	ApplicationResponse, ErrorResponse,
+	ApplicationResponse,
+	ErrorResponse,
 	Link,
 	NodePath,
-	TreeView
+	TreeView,
 } from '../types';
 import { HierarchyClient as axios } from '../util/axios';
 import createStore from '../util/immer';
@@ -92,7 +93,9 @@ const updateNodeWithNewChildData = (
 
 	for (let i = 1; i < nodePath.length; i += 1) {
 		if (parentNode.childrenData) {
-			const p = parentNode?.childrenData.find(pn => pn.id === nodePath[i].pathId);
+			const p = parentNode?.childrenData.find(
+				pn => pn.id === nodePath[i].pathId,
+			);
 			if (p) parentNode = p;
 		}
 	}
@@ -101,7 +104,7 @@ const updateNodeWithNewChildData = (
 		const childrenData = updateNodeWithChildren(parentNode, items);
 		parentNode.childrenData = [...childrenData];
 	}
-}
+};
 
 const updateNodeValues = (
 	hierarchyData: TreeView[],
@@ -109,22 +112,21 @@ const updateNodeValues = (
 	name: string,
 	value: string,
 ) => {
-
 	let parentNode: TreeView = hierarchyData[0];
-	for (let i = 1; i < nodePath.length; i+=1) {
-			if (parentNode.childrenData) {
-				const p = parentNode?.childrenData.find(
-					pn => pn.id === nodePath[i].pathId,
-				);
-				if (p) parentNode = p;
-			}
+	for (let i = 1; i < nodePath.length; i += 1) {
+		if (parentNode.childrenData) {
+			const p = parentNode?.childrenData.find(
+				pn => pn.id === nodePath[i].pathId,
+			);
+			if (p) parentNode = p;
+		}
 	}
 
 	if (parentNode) {
 		parentNode.name = name;
 		parentNode.value = value;
 	}
-}
+};
 
 const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	loading: false,
@@ -149,12 +151,10 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		if (res) {
 			const applicationData = res.data.data;
 
-					set((state: HierarchyState) => {
-						state.loading = false;
-						state.hierarchyData = [
-							{ ...applicationData},
-						];
-					});
+			set((state: HierarchyState) => {
+				state.loading = false;
+				state.hierarchyData = [{ ...applicationData }];
+			});
 		}
 		return set((state: HierarchyState) => {
 			state.loading = false;
@@ -207,7 +207,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 					err = reason;
 				});
 				if (resp && resp.status === 201)
-					await get().getHierarchyChildData(data, nodeId, nodePath,cb);
+					await get().getHierarchyChildData(data, nodeId, nodePath, cb);
 			}
 		}
 		cb(err);
