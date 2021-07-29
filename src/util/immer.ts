@@ -17,8 +17,7 @@ const immer =
 			api,
 		);
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export default function createStore<T extends State>(store: any): UseStore<T> {
 	return create<T>(devtools(immer<T>(store)));
 }

@@ -27,25 +27,6 @@ describe('search store', () => {
 			);
 		});
 
-		test('updates searchStore.searchData with response from server', async () => {
-			// const store = useSearchStore.getState();
-
-			jest
-				.spyOn(axios, 'get')
-				.mockImplementationOnce(() =>
-					Promise.resolve({ data: { data: { items: ['dummy'] } } }),
-				);
-
-			await Promise.resolve(
-				useSearchStore.getState().searchApplication('dummy'),
-			);
-			// console.log(useSearchStore.getState());
-
-			expect(true).toBe(true);
-
-			// expect(useSearchStore.getState().searchData).resolves.toContain('dummy');
-		});
-
 		// 	test('when search is done it updates searchStore.searchLoading to false', () => {});
 	});
 });

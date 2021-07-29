@@ -36,7 +36,7 @@ interface HierarchyState {
 	setLoading: (val: boolean) => void;
 	setError: (err: string) => void; // ??
 	loadApplication: (applicationId: string) => void;
-	initializeHierarchyState: (defaultExpandLevel: number) => void;
+	initializeHierarchyState: (defaultExpandLevel?: number) => void;
 	toggleCollapse: (nodePath: NodePath[], val: boolean) => void;
 	toggleEdit: (nodePath: NodePath[], val: boolean) => void;
 	toggleNewEditor: (nodePath: NodePath[], val: TEditor) => void;
@@ -199,16 +199,16 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		set((state: HierarchyState) => {
 			state.error = err;
 		}),
-	initializeHierarchyState: () =>
+	initializeHierarchyState: (defaultExpandLevel?: number) =>
 		set((state: HierarchyState) => {
 			state.activeNodeId = 1;
-			state.defaultExpandLevel = 0;
+			state.defaultExpandLevel = defaultExpandLevel || 0;
 		}),
 	loadApplication: async (applicationId: string) => {
 		const res = await axios
 			.get<ApiResponse<TreeView>>(`applications/${applicationId}`)
 			.catch((reason: ErrorResponse) => {
-				get().setError(reason);
+				get().setError(reason.errors[0]);
 			});
 
 		if (res) {
