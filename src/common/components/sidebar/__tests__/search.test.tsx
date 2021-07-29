@@ -15,67 +15,28 @@ const mockSearchData: ApplicationPath[] = [
 				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
 				name: 'E2E Group',
 				value: 'wqq',
-				applicationGroupId: null,
-				applicationGroupName: null,
-				_links: null,
+				_links: [
+					{
+						rel: 'self',
+						method: {
+							method: 'GET',
+						},
+						href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/2',
+						name: 'Application 12ED test',
+					},
+				],
 			},
 		],
-		_links: null,
-	},
-	{
-		path: [
+		_links: [
 			{
-				id: 1,
-				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
-				name: 'E2E Group',
-				value: 'wqq',
-				applicationGroupId: null,
-				applicationGroupName: null,
-				_links: null,
-			},
-			{
-				id: 157,
-				key: '3e5571a4-1519-4cc5-a72c-abf0cf05cdbb',
-				name: 'Application 43',
-				value: 'Application 43',
-				applicationGroupId: null,
-				applicationGroupName: null,
-				_links: null,
-			},
-			{
-				id: 164,
-				key: 'c52374c4-5e25-4315-8a70-75450007ae94',
-				name: 'Child Child Group',
-				value: 'Child',
-				applicationGroupId: null,
-				applicationGroupName: null,
-				_links: null,
+				rel: 'self',
+				method: {
+					method: 'GET',
+				},
+				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/2',
+				name: 'Application 12ED test',
 			},
 		],
-		_links: null,
-	},
-	{
-		path: [
-			{
-				id: 1,
-				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
-				name: 'E2E Group',
-				value: 'wqq',
-				applicationGroupId: null,
-				applicationGroupName: null,
-				_links: null,
-			},
-			{
-				id: 610,
-				key: '7e221927-2b5b-474b-ad34-ea9cfce444d7',
-				name: 'DemoGroup-',
-				value: 'G66',
-				applicationGroupId: null,
-				applicationGroupName: null,
-				_links: null,
-			},
-		],
-		_links: null,
 	},
 ];
 
