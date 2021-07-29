@@ -34,31 +34,33 @@ test('detach-icon should contains correct className when detachSidebar (global s
 });
 
 test('detach-icon should contains correct className when detach-handler div is key pressed with "Enter" key', async () => {
-	const { getByTestId, debug } = render(<HeaderSecond />);
+	const { getByTestId } = render(<HeaderSecond />);
 	const detachHandler = getByTestId(detachHandlerStr);
-	fireEvent.focus(detachHandler);
 	fireEvent.keyDown(detachHandler, { key: 'Enter' });
 	const detachIcon = getByTestId(detachIconStr);
-	debug();
 	expect(detachIcon.className).toContain('sidebarDetached');
 });
 
 test('detach-icon should contains correct className when detach-handler div is key pressed with "Space" key', async () => {
-	const { getByTestId, debug } = render(<HeaderSecond />);
+	const { getByTestId } = render(<HeaderSecond />);
 	const detachHandler = getByTestId(detachHandlerStr);
-	fireEvent.focus(detachHandler);
 	fireEvent.keyDown(detachHandler, { key: ' ' });
 	const detachIcon = getByTestId(detachIconStr);
-	debug();
 	expect(detachIcon.className).toContain('sidebarDetached');
 });
 
 test('detach-icon should contains correct className when detach-handler div is key pressed with other keys rather than "Space" and "Enter"', async () => {
-	const { getByTestId, debug } = render(<HeaderSecond />);
+	const { getByTestId } = render(<HeaderSecond />);
 	const detachHandler = getByTestId(detachHandlerStr);
-	fireEvent.focus(detachHandler);
 	fireEvent.keyDown(detachHandler, { key: 'Tab' });
 	const detachIcon = getByTestId(detachIconStr);
-	debug();
 	expect(detachIcon.className).not.toContain('sidebarDetached');
+});
+
+test('Clicking on detach-icon after detached sidebar should close the sidebar modal ', async () => {
+	dSSidebarState.setDetachSidebar(true);
+	const { getByTestId } = render(<HeaderSecond />);
+	const detachHandler = getByTestId(detachHandlerStr);
+	fireEvent.click(detachHandler);
+	expect(dSSidebarState.detachSidebar).not.toBeTruthy();
 });

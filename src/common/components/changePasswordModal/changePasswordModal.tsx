@@ -8,9 +8,12 @@ import {
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import { changePasswordModalStore } from '../../../state';
+import './changePasswordModal.scss';
 
 function ChangePasswordModal() {
 	const open = changePasswordModalStore(state => state.showChangePasswordModal);
+	const requiredStr = 'This field is required.';
+	const passwordDidNotMatchStr = 'Password did not match.';
 	const setOpen = changePasswordModalStore(
 		state => state.setShowChangePasswordModal,
 	);
@@ -40,24 +43,24 @@ function ChangePasswordModal() {
 
 	const handleOldPassword = (e: any) => {
 		setOldPassword(e.target.value);
-		if (e.target.value === '') setOldPasswordErrorMsg('required1');
+		if (e.target.value === '') setOldPasswordErrorMsg(requiredStr);
 		else setOldPasswordErrorMsg('');
 	};
 	const handleNewPassword = (e: any) => {
 		setNewPassword(e.target.value);
-		if (e.target.value === '') setNewPasswordErrorMsg('required2');
+		if (e.target.value === '') setNewPasswordErrorMsg(requiredStr);
 		else setNewPasswordErrorMsg('');
-		// if (e.target.value !== confirmPassword) {
-		// 	setConfirmPasswordErrorMsg('pdm');
-		// } else {
-		// 	setConfirmPasswordErrorMsg('');
-		// }
+		if (e.target.value !== confirmPassword) {
+			setConfirmPasswordErrorMsg(confirmPasswordErrorMsg);
+		} else {
+			setConfirmPasswordErrorMsg('');
+		}
 	};
 	const handleConfirmPassword = (e: any) => {
 		setConfirmPassword(e.target.value);
-		if (e.target.value === '') setConfirmPasswordErrorMsg('required3');
+		if (e.target.value === '') setConfirmPasswordErrorMsg(requiredStr);
 		else if (e.target.value !== newPassword) {
-			setConfirmPasswordErrorMsg('pdm');
+			setConfirmPasswordErrorMsg(passwordDidNotMatchStr);
 		} else {
 			setConfirmPasswordErrorMsg('');
 		}
@@ -91,7 +94,9 @@ function ChangePasswordModal() {
 								onChange={handleOldPassword}
 								error={oldPasswordErrorMsg !== ''}
 							/>
-							<span data-testid="old-error-msg">{oldPasswordErrorMsg}</span>
+							<span className="error-msg" data-testid="old-error-msg">
+								{oldPasswordErrorMsg}
+							</span>
 							<TextField
 								inputProps={{ 'data-testid': 'new-password' }}
 								margin="dense"
@@ -103,7 +108,9 @@ function ChangePasswordModal() {
 								onChange={handleNewPassword}
 								error={newPasswordErrorMsg !== ''}
 							/>
-							<span data-testid="new-error-msg">{newPasswordErrorMsg}</span>
+							<span className="error-msg" data-testid="new-error-msg">
+								{newPasswordErrorMsg}
+							</span>
 							<br />
 							<TextField
 								inputProps={{ 'data-testid': 'confirm-password' }}
@@ -116,7 +123,7 @@ function ChangePasswordModal() {
 								onChange={handleConfirmPassword}
 								error={newPasswordErrorMsg !== ''}
 							/>
-							<span data-testid="confirm-error-msg">
+							<span className="error-msg" data-testid="confirm-error-msg">
 								{confirmPasswordErrorMsg}
 							</span>
 						</div>

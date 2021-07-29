@@ -47,11 +47,7 @@ export const HeaderSecond = () => {
 		dSSetLastSideBarState(last);
 	};
 	const handleDetach = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.key === 'Enter' || event.key === ' ')) ||
-			event.type === 'click'
-		)
+		if (event.key === 'Enter' || event.type === 'click')
 			if (!detachSidebar) {
 				setLastSidebarOpen(open);
 				setDetachSidebar(true);

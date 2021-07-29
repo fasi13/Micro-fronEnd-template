@@ -45,12 +45,7 @@ export const Header = () => {
 	const [anchorMenu, setAnchorMenu] = React.useState(null);
 
 	const handleMenuOpen = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.key === 'Enter' || event.key === ' ')) ||
-			event.type === 'click'
-		)
-			setAnchorMenu(event.currentTarget);
+		if (event.type === 'click') setAnchorMenu(event.currentTarget);
 	};
 
 	const handleMenuClose = () => {
@@ -61,12 +56,7 @@ export const Header = () => {
 		React.useState<null | HTMLElement>(null);
 
 	const handleAvatarOpen = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.key === 'Enter' || event.key === ' ')) ||
-			event.type === 'click'
-		)
-			setAnchorAvatarMenu(event.currentTarget);
+		if (event.type === 'click') setAnchorAvatarMenu(event.currentTarget);
 	};
 
 	const handleAvatarClose = () => {
@@ -183,7 +173,6 @@ export const Header = () => {
 									</MenuItem>
 									<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
 										<CommunicationIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span
@@ -199,20 +188,17 @@ export const Header = () => {
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<ProgramsIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span className="text-sm font-bold">PROGRAMS</span>
 											}
 										/>
 									</MenuItem>
-
 									<MenuItem
 										data-testid="price-settings"
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<PriceIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span className="text-sm font-bold">
@@ -226,7 +212,6 @@ export const Header = () => {
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<RolesIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={<span className="text-sm font-bold">ROLES</span>}
 										/>
@@ -236,7 +221,6 @@ export const Header = () => {
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<InvoiceIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span className="text-sm font-bold">
@@ -250,7 +234,6 @@ export const Header = () => {
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<UserMgtIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span className="text-sm font-bold">
@@ -264,7 +247,6 @@ export const Header = () => {
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<SettingsIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span className="text-sm font-bold">
@@ -278,7 +260,6 @@ export const Header = () => {
 										className="gap-x-2"
 										style={{ margin: '5px' }}>
 										<PermissionIcon className="" width={40} height={40} />
-
 										<ListItemText
 											primary={
 												<span className="text-sm font-bold">
