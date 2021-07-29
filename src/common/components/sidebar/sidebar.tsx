@@ -4,7 +4,7 @@ import {
 	createStyles,
 	List,
 	makeStyles,
-	TextField,
+	TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -16,7 +16,8 @@ import {
 	ApplicationPath,
 	ErrorResponse,
 	NodePath,
-	TreeView,
+	TEditor,
+	TreeView
 } from '../../../types';
 import './sidebar.scss';
 
@@ -67,32 +68,23 @@ const SidebarContent = () => {
 		initializeHierarchyState,
 		hierarchyData,
 		setLoading,
-		getHierarchyChildData,
 		getUserApplication,
 		createApplicationGroup,
 		createApplication,
 		editApplication,
 		editApplicationGroup,
+		toggleCollapse,
+		toggleEdit,
+		toggleNewEditor,
+		setSaving,
+		setNodeError,
 	} = useHierarchyStore();
 
 	useEffect(() => {
-		initializeHierarchyState();
+		initializeHierarchyState(0);
 		setLoading(true);
 		getUserApplication();
 	}, []);
-
-	// CodeReview: bad implementation. please clean your useEffect and if possible use a Hook to create debounce.
-	// useEffect(() => {
-	// 	const handler = setTimeout(() => {
-	// 		if (inputValue) {
-	// 			setSearchLoading(true);
-	// 			searchApplication(inputValue);
-	// 		}
-	// 	}, 1000);
-	// 	return () => {
-	// 		clearTimeout(handler);
-	// 	};
-	// }, [inputValue]);
 
 	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
 
@@ -117,29 +109,12 @@ const SidebarContent = () => {
 
 	const searchElement = (keyword: string) =>
 		keyword.length < 3 ? null : setInputValue(keyword);
+
 	const dSSidebarState = detachStore(state => state.detachSidebar);
 
-	const onToggleFn = useCallback(
-		async (
-			item: TreeView,
-			nodeId: number,
-			nodePath: NodePath[],
-			cb: (err: ErrorResponse | null) => void,
-		) => {
-			getHierarchyChildData(item, nodeId, nodePath, cb);
-		},
-		[],
-	);
-
 	const onAddGroupFn = useCallback(
-		async (
-			item: TreeView,
-			nodeId: number,
-			nodePath: NodePath[],
-			name: string,
-			cb: (err: ErrorResponse | null) => void,
-		) => {
-			createApplicationGroup(item, nodeId, nodePath, name, cb);
+		async (item: TreeView, nodePath: NodePath[], name: string) => {
+			createApplicationGroup(item, nodePath, name);
 		},
 		[],
 	);
@@ -147,13 +122,11 @@ const SidebarContent = () => {
 	const onAddApplicationFn = useCallback(
 		async (
 			item: TreeView,
-			nodeId: number,
 			nodePath: NodePath[],
 			name: string,
 			value: string,
-			cb: (err: ErrorResponse | null) => void,
 		) => {
-			createApplication(item, nodeId, nodePath, name, value, cb);
+			createApplication(item, nodePath, name, value);
 		},
 		[],
 	);
@@ -161,33 +134,50 @@ const SidebarContent = () => {
 	const onEditApplicationFn = useCallback(
 		async (
 			item: TreeView,
-			nodeId: number,
 			nodePath: NodePath[],
 			name: string,
 			value: string,
-			cb: (err: ErrorResponse | null) => void,
 		) => {
-			editApplication(item, nodeId, nodePath, name, value, cb);
+			editApplication(item, nodePath, name, value);
 		},
 		[],
 	);
 
 	const onEditGroupFn = useCallback(
-		async (
-			item: TreeView,
-			nodeId: number,
-			nodePath: NodePath[],
-			name: string,
-			cb: (err: ErrorResponse | null) => void,
-		) => {
-			editApplicationGroup(item, nodeId, nodePath, name, cb);
+		async (item: TreeView, nodePath: NodePath[], name: string) => {
+			editApplicationGroup(item, nodePath, name);
 		},
 		[],
 	);
 
-	const onSelectFn = useCallback(() => {
-		console.log('on select');
+	const toggleCollapseNodeFn = useCallback(
+		(nodePath: NodePath[], val: boolean) => {
+			toggleCollapse(nodePath, val);
+		},
+		[],
+	);
+
+	const toggleEditNodeFn = useCallback((nodePath: NodePath[], val: boolean) => {
+		toggleEdit(nodePath, val);
 	}, []);
+
+	const toggleNewEditorFn = useCallback(
+		(nodePath: NodePath[], val: TEditor) => {
+			toggleNewEditor(nodePath, val);
+		},
+		[],
+	);
+
+	const setSavingFn = useCallback((nodePath: NodePath[], val: boolean) => {
+		setSaving(nodePath, val);
+	}, []);
+
+	const setNodeErrorFn = useCallback(
+		(nodePath: NodePath[], val: string | ErrorResponse | null) => {
+			setNodeError(nodePath, val);
+		},
+		[],
+	);
 
 	return (
 		<>
@@ -256,12 +246,15 @@ const SidebarContent = () => {
 				style={dSSidebarState ? { height: '83%' } : { height: 'inherit' }}>
 				<div className="" style={widthStyle}>
 					<HierarchyTree
-						onSelect={onSelectFn}
-						onToggle={onToggleFn}
+						onToggleCollapse={toggleCollapseNodeFn}
 						onAddGroup={onAddGroupFn}
 						onAddApplication={onAddApplicationFn}
 						onEditApplication={onEditApplicationFn}
 						onEditGroup={onEditGroupFn}
+						onSetSaving={setSavingFn}
+						onToggleEdit={toggleEditNodeFn}
+						onToggleNewEditor={toggleNewEditorFn}
+						onSetNodeErr={setNodeErrorFn}
 						data={hierarchyData}
 						expandNodesAtLevel={0}
 					/>
