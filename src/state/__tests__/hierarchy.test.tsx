@@ -1,5 +1,6 @@
 import { TreeView } from '../../types';
 import { HierarchyClient as axios } from '../../util/axios';
+import * as helper from '../helpers/hierarchy.store.helper';
 import { useHierarchyStore } from '../hierarchyState.store';
 
 describe('hieararchy store', () => {
@@ -124,6 +125,8 @@ describe('hieararchy store', () => {
 	describe('loadApplication', () => {
 		beforeEach(() => {
 			useHierarchyStore.getState().setLoading(true);
+		});
+		afterEach(() => {
 			jest.resetAllMocks();
 		});
 		it('loads an application by its Id from API', async () => {
@@ -143,11 +146,13 @@ describe('hieararchy store', () => {
 						},
 					},
 				});
+			const getChildrenLinkSpy = jest.spyOn(helper, 'getChildrenLink');
 
 			await useHierarchyStore.getState().loadApplication('1');
 
 			expect(axios.get).toHaveBeenCalledWith('applications/1');
 			expect(axios.get).toHaveBeenCalledWith('dummy/children_applicationGroup');
+			expect(getChildrenLinkSpy).toHaveBeenCalled();
 
 			expect(useHierarchyStore.getState().loading).toBe(false);
 			expect(useHierarchyStore.getState().hierarchyData).toMatchObject([
@@ -177,5 +182,32 @@ describe('hieararchy store', () => {
 
 			expect(useHierarchyStore.getState().error).toBe('dummy error text');
 		});
+	});
+
+	describe('toggleCollapse', () => {
+		beforeEach(() => {
+			useHierarchyStore.setState({
+				...useHierarchyStore.getState(),
+				hierarchyData: dummyTreeView,
+				loading: true,
+			});
+		});
+		afterEach(() => {
+			jest.resetAllMocks();
+		});
+		it('if collapsed it will toggle it to expand', () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+
+			useHierarchyStore.getState().toggleEdit(dummyTreeView[0].nodePath, true);
+
+			expect(nodeToUpdatespy).toHaveBeenCalledWith(
+				useHierarchyStore.getState().hierarchyData,
+				dummyTreeView[0].nodePath,
+			);
+		});
+
+		// it('if expanded it will toggle it to collapsed', () => {
+
+		// })
 	});
 });
