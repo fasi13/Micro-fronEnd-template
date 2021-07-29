@@ -13,8 +13,8 @@ export const SpinnerIcon: React.FunctionComponent<PropTypes> = (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			className={`${className} animate-spin`}
-			width={width || 512}
-			height={height || 512}
+			width={width}
+			height={height}
 			viewBox="0 0 512 512">
 			<linearGradient
 				id="a"

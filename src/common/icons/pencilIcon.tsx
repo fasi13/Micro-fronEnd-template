@@ -14,8 +14,8 @@ export const PencilIcon: React.FunctionComponent<PropTypes> = (
 	return (
 		<svg
 			className={`${className}`}
-			width={width || 470}
-			height={height || 470}
+			width={width}
+			height={height}
 			fill="none"
 			viewBox="0 0 470 470"
 			stroke="#ffff"
@@ -27,5 +27,3 @@ export const PencilIcon: React.FunctionComponent<PropTypes> = (
 		</svg>
 	);
 };
-
-export const EyobComp = (name: string) => <div>{name}</div>;

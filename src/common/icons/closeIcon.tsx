@@ -14,8 +14,8 @@ export const CloseIcon: React.FunctionComponent<PropTypes> = (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			className={`${className}`}
-			width={width || 329}
-			height={height || 329}
+			width={width}
+			height={height}
 			viewBox="0 0 329 329"
 			fill="none">
 			<g clipPath="url(#clip0)">

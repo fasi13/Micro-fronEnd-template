@@ -17,7 +17,6 @@ const immer =
 			api,
 		);
 
-
 export default function createStore<T extends State>(store: any): UseStore<T> {
 	return create<T>(devtools(immer<T>(store)));
 }

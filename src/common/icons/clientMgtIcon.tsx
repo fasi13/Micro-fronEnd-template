@@ -16,8 +16,8 @@ export const ClientMgtIcon: React.FunctionComponent<PropTypes> = (
 		<SvgIcon
 			xmlns="http://www.w3.org/2000/svg"
 			className={`${className}`}
-			width={width || 512}
-			height={height || 512}
+			width={width}
+			height={height}
 			fill="#6D899E"
 			x="0px"
 			y="0px"

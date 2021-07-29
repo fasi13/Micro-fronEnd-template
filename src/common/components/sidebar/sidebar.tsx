@@ -4,7 +4,7 @@ import {
 	createStyles,
 	List,
 	makeStyles,
-	TextField
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -17,7 +17,7 @@ import {
 	ErrorResponse,
 	NodePath,
 	TEditor,
-	TreeView
+	TreeView,
 } from '../../../types';
 import './sidebar.scss';
 
