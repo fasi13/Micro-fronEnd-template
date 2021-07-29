@@ -27,7 +27,7 @@ export const OrbitSVG = (props: any) => {
 	);
 };
 
-export const Breadcrumb = () => {
+export const HeaderSecond = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 	const dSSetDetach = detachStore(state => state.setDetachSidebar);
 	const dSSetLastSideBarState = detachStore(state => state.setLastSidebarOpen);
@@ -49,7 +49,7 @@ export const Breadcrumb = () => {
 	const handleDetach = (event: any) => {
 		if (
 			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
+				(event.key === 'Enter' || event.key === ' ')) ||
 			event.type === 'click'
 		)
 			if (!detachSidebar) {

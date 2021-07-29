@@ -21,7 +21,7 @@ import {
 	UserMgtIcon,
 } from '../../icons';
 import ChangePasswordModal from '../changePasswordModal/changePasswordModal';
-import { Breadcrumb } from '../headerSecond/headerSecond';
+import { HeaderSecond } from '../headerSecond/headerSecond';
 import './header.scss';
 
 export const UserMenu = (props: any) => {
@@ -47,19 +47,14 @@ export const Header = () => {
 	const handleMenuOpen = (event: any) => {
 		if (
 			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
+				(event.key === 'Enter' || event.key === ' ')) ||
 			event.type === 'click'
 		)
 			setAnchorMenu(event.currentTarget);
 	};
 
-	const handleMenuClose = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
-			event.type === 'click'
-		)
-			setAnchorMenu(null);
+	const handleMenuClose = () => {
+		setAnchorMenu(null);
 	};
 
 	const [anchorAvatarMenu, setAnchorAvatarMenu] =
@@ -68,19 +63,14 @@ export const Header = () => {
 	const handleAvatarOpen = (event: any) => {
 		if (
 			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
+				(event.key === 'Enter' || event.key === ' ')) ||
 			event.type === 'click'
 		)
 			setAnchorAvatarMenu(event.currentTarget);
 	};
 
-	const handleAvatarClose = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
-			event.type === 'click'
-		)
-			setAnchorAvatarMenu(null);
+	const handleAvatarClose = () => {
+		setAnchorAvatarMenu(null);
 	};
 
 	const showChangePassword = changePasswordModalStore(
@@ -330,7 +320,7 @@ export const Header = () => {
 						</div>
 					</div>
 				</div>
-				<Breadcrumb />
+				<HeaderSecond />
 			</AppBar>
 			{showChangePassword ? (
 				<div data-testid="change-password-modal">

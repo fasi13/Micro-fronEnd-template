@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { detachStore } from '../../../../state';
 import { HeaderThird } from '../headerThird';
@@ -34,6 +35,21 @@ test('drawer must toggle when drawer open/close icon is pressed on keyDown using
 	dSSidebarState.setOpen(false);
 	const { getByTestId } = render(<HeaderThird />);
 	const drawerOpen = getByTestId('drawer-open');
-	fireEvent.keyPress(drawerOpen, { key: 'Enter', code: 13 });
+	fireEvent.keyDown(drawerOpen, { key: 'Enter', code: 13 });
+	expect(dSSidebarState.open).toBeTruthy();
+});
+
+test('drawer must toggle when drawer open/close icon is pressed on keyDown using "space" key', () => {
+	dSSidebarState.setOpen(false);
+	const { getByTestId } = render(<HeaderThird />);
+	const drawerOpen = getByTestId('drawer-open');
+	fireEvent.keyDown(drawerOpen, { key: 'Enter', code: 32 });
+	expect(dSSidebarState.open).toBeTruthy();
+});
+test('drawer must not toggle when drawer open/close icon is pressed on keyDown using other keys', () => {
+	dSSidebarState.setOpen(false);
+	const { getByTestId } = render(<HeaderThird />);
+	const drawerOpen = getByTestId('drawer-open');
+	userEvent.type(drawerOpen, '{backspace}');
 	expect(dSSidebarState.open).toBeTruthy();
 });
