@@ -12,6 +12,7 @@ interface NodePropType {
 
 const NodeLoadingIndicator = () => (
 	<button
+		data-testid="loading-indicator"
 		type="button"
 		className="flex flex-col items-center justify-center w-6 h-6 text-left rounded-sm cursor-pointer bg-gray-">
 		<SpinnerIcon className="" width={20} height={20} />
@@ -44,6 +45,7 @@ export const Node: React.FC<NodePropType> = props => {
 					<NodeLoadingIndicator />
 				) : (
 					<button
+						data-testid="node-container"
 						type="button"
 						className={`flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
 								${expandOrCollapse()}
@@ -54,6 +56,7 @@ export const Node: React.FC<NodePropType> = props => {
 				)}
 			</>
 			<button
+				data-testid="node-labels"
 				id={data.name
 					.split(' ')
 					.join('_')
@@ -69,6 +72,7 @@ export const Node: React.FC<NodePropType> = props => {
 			</button>
 			<div className="flex space-x-3 node-actions">
 				<button
+					data-testid="node-add-app"
 					type="button"
 					title="Add Application"
 					onClick={() => {
@@ -80,6 +84,7 @@ export const Node: React.FC<NodePropType> = props => {
 					<AddIcon className="" width={18} height={18} />
 				</button>
 				<button
+					data-testid="node-add-app-group"
 					type="button"
 					title="Add Application Group"
 					onClick={() => {
@@ -89,6 +94,7 @@ export const Node: React.FC<NodePropType> = props => {
 					<FolderIcon className="" width={18} height={18} />
 				</button>
 				<button
+					data-testid="node-edit"
 					type="button"
 					title="Edit Node"
 					onClick={() => {
