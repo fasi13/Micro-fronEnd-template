@@ -1,79 +1,137 @@
-import { TreeView } from '../../types';
+import { ErrorResponse, TreeView } from '../../types';
 import { HierarchyClient as axios } from '../../util/axios';
 import * as helper from '../helpers/hierarchy.store.helper';
 import { useHierarchyStore } from '../hierarchyState.store';
 
 describe('hieararchy store', () => {
+	const selfupdateUrl = 'dummy/selfupdate';
+	const createGroupUrl = 'dummy/createGroup';
+	const createAppUrl = 'dummy/createApp';
+	const childrenAppUrl = 'dummy/children_application';
+	const childrenAppGroupUrl = 'dummy/children_applicationGroup';
+	const dummyErrorMsg = 'dummy error';
+
 	const dummyTreeView: TreeView[] = [];
+	dummyTreeView.push({
+		id: 1,
+		name: 'dummy',
+		collapsed: false,
+		edit: false,
+		error: null,
+		saving: false,
+		loadingChildren: false,
+		toggleNewEditor: '',
+		nodeDepth: 0,
+		nodePath: [{ pathId: 1, pathName: 'dummy' }],
+		_links: [
+			{
+				href: selfupdateUrl,
+				method: { method: 'GET' },
+				name: 'updateSelf',
+				rel: 'updateApplicationGroup',
+			},
+			{
+				href: selfupdateUrl,
+				method: { method: 'GET' },
+				name: 'updateSelf',
+				rel: 'updateApplication',
+			},
+			{
+				href: createGroupUrl,
+				method: { method: 'POST' },
+				name: 'createGroup',
+				rel: 'createApplicationGroup',
+			},
+			{
+				href: createAppUrl,
+				method: { method: 'POST' },
+				name: 'createApp',
+				rel: 'createApplication',
+			},
+			{
+				href: childrenAppUrl,
+				method: { method: 'GET' },
+				name: 'getChildren',
+				rel: 'applications',
+			},
+			{
+				href: childrenAppGroupUrl,
+				method: { method: 'GET' },
+				name: 'getChildren',
+				rel: 'applicationGroups',
+			},
+		],
+		childrenData: [
+			{
+				id: 2,
+				name: 'dummy-child',
+				collapsed: false,
+				edit: false,
+				error: null,
+				saving: false,
+				loadingChildren: false,
+				toggleNewEditor: '',
+				nodeDepth: 0,
+				nodePath: [{ pathId: 2, pathName: 'dummy-child' }],
+				_links: [
+					{
+						href: selfupdateUrl,
+						method: { method: 'GET' },
+						name: 'updateSelf',
+						rel: 'updateApplicationGroup',
+					},
+					{
+						href: selfupdateUrl,
+						method: { method: 'GET' },
+						name: 'updateSelf',
+						rel: 'updateApplication',
+					},
+					{
+						href: createGroupUrl,
+						method: { method: 'POST' },
+						name: 'createGroup',
+						rel: 'createApplicationGroup',
+					},
+					{
+						href: createAppUrl,
+						method: { method: 'POST' },
+						name: 'createApp',
+						rel: 'createApplication',
+					},
+					{
+						href: childrenAppUrl,
+						method: { method: 'GET' },
+						name: 'getChildren',
+						rel: 'applications',
+					},
+					{
+						href: childrenAppGroupUrl,
+						method: { method: 'GET' },
+						name: 'getChildren',
+						rel: 'applicationGroups',
+					},
+				],
+			},
+		],
+	});
 
 	beforeEach(() => {
-		dummyTreeView.length = 0;
-		dummyTreeView.push({
-			id: 0,
-			name: 'dummy',
-			collapsed: false,
-			edit: false,
+		useHierarchyStore.setState({
+			...useHierarchyStore.getState(),
+			hierarchyData: dummyTreeView,
 			error: null,
-			saving: false,
-			loadingChildren: false,
-			toggleNewEditor: '',
-			nodeDepth: 0,
-			nodePath: [{ pathId: -1, pathName: 'dummy' }],
-			_links: [
-				{
-					href: 'dummy/selfupdate',
-					method: { method: 'GET' },
-					name: 'updateSelf',
-					rel: 'updateApplicationGroup',
-				},
-				{
-					href: 'dummy/selfupdate',
-					method: { method: 'GET' },
-					name: 'updateSelf',
-					rel: 'updateApplication',
-				},
-				{
-					href: 'dummy/createGroup',
-					method: { method: 'POST' },
-					name: 'createGroup',
-					rel: 'createApplicationGroup',
-				},
-				{
-					href: 'dummy/createApp',
-					method: { method: 'POST' },
-					name: 'createApp',
-					rel: 'createApplication',
-				},
-				{
-					href: 'dummy/children_application',
-					method: { method: 'GET' },
-					name: 'getChildren',
-					rel: 'applications',
-				},
-				{
-					href: 'dummy/children_applicationGroup',
-					method: { method: 'GET' },
-					name: 'getChildren',
-					rel: 'applicationGroups',
-				},
-			],
 		});
 	});
 	test('hierarchy store is defined', () => {
 		expect(useHierarchyStore.getState()).toMatchSnapshot();
 	});
 
-	test('set Loading true sets loading state to true', () => {
+	test('setLoading true sets loading state to true', () => {
 		useHierarchyStore.getState().setLoading(true);
 		expect(useHierarchyStore.getState().loading).toBe(true);
 	});
 
 	test('set LoadingChildren sets a specific node loadingChildren state to true when passed true val', () => {
-		useHierarchyStore.setState({
-			...useHierarchyStore.getState(),
-			hierarchyData: dummyTreeView,
-		});
-
 		useHierarchyStore
 			.getState()
 			.setLoadingChildren([{ pathId: -1, pathName: 'dummy' }], true);
@@ -84,14 +142,9 @@ describe('hieararchy store', () => {
 	});
 
 	test('set Error sets error value in store', () => {
-		useHierarchyStore.setState({
-			...useHierarchyStore.getState(),
-			error: null,
-		});
+		useHierarchyStore.getState().setError(dummyErrorMsg);
 
-		useHierarchyStore.getState().setError('dummy error');
-
-		expect(useHierarchyStore.getState().error).toBe('dummy error');
+		expect(useHierarchyStore.getState().error).toBe(dummyErrorMsg);
 	});
 
 	describe('initializeHierarhcyState', () => {
@@ -173,41 +226,143 @@ describe('hieararchy store', () => {
 				title: 'dummyerror',
 				status: 500,
 				errorCode: 0,
-				errors: ['dummy error text'],
+				errors: [dummyErrorMsg],
 			});
 
 			await useHierarchyStore.getState().loadApplication('1');
 
 			expect(axios.get).toHaveBeenCalledWith('applications/1');
 
-			expect(useHierarchyStore.getState().error).toBe('dummy error text');
+			expect(useHierarchyStore.getState().error).toBe(dummyErrorMsg);
 		});
 	});
 
 	describe('toggleCollapse', () => {
-		beforeEach(() => {
+		it('if passed true it will collapse the node', async () => {
 			useHierarchyStore.setState({
 				...useHierarchyStore.getState(),
 				hierarchyData: dummyTreeView,
-				loading: true,
 			});
-		});
-		afterEach(() => {
-			jest.resetAllMocks();
-		});
-		it('if collapsed it will toggle it to expand', () => {
 			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			await useHierarchyStore
+				.getState()
+				.toggleCollapse(dummyTreeView[0].nodePath, true);
 
-			useHierarchyStore.getState().toggleEdit(dummyTreeView[0].nodePath, true);
-
-			expect(nodeToUpdatespy).toHaveBeenCalledWith(
-				useHierarchyStore.getState().hierarchyData,
-				dummyTreeView[0].nodePath,
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				true,
 			);
 		});
 
-		// it('if expanded it will toggle it to collapsed', () => {
+		it('if passed false it will expand node', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const getHierarchyChildDataSpy = jest
+				.spyOn(helper, 'getHierarchyChildData')
+				.mockResolvedValueOnce({ err: null, children: dummyTreeView });
 
-		// })
+			await useHierarchyStore
+				.getState()
+				.toggleCollapse(dummyTreeView[0].nodePath, false);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(getHierarchyChildDataSpy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				false,
+			);
+		});
+	});
+
+	describe('toggleEdit', () => {
+		it('on toggleEdit it changes edit state and clears any error', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.toggleEdit(dummyTreeView[0].nodePath, true);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].edit).toBe(true);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
+		});
+	});
+
+	describe('toggleNewEditor', () => {
+		it('on toggleNewEditor it sets NewEditor Mode Application or Group', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.toggleNewEditor(dummyTreeView[0].nodePath, 'Application');
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].toggleNewEditor,
+			).toBe('Application');
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				false,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
+		});
+	});
+	describe('setSaving', () => {
+		it('on setSaving a nodes saving is toggled to passed val', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.setSaving(dummyTreeView[0].nodePath, true);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(true);
+		});
+	});
+
+	describe('setNodeError', () => {
+		it('setNodeError accepts string as error', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.setNodeError(dummyTreeView[0].nodePath, dummyErrorMsg);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toMatch(
+				dummyErrorMsg,
+			);
+		});
+
+		it('setNodeError accepts null as value', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.setNodeError(dummyTreeView[0].nodePath, null);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
+		});
+
+		it('setNodeError accepts ErrorResponse as value', async () => {
+			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const dummyError: ErrorResponse = {
+				errorCode: 0,
+				title: 'dummy',
+				status: 500,
+				errors: ['dummy'],
+			};
+
+			await useHierarchyStore
+				.getState()
+				.setNodeError(dummyTreeView[0].nodePath, dummyError);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toMatch(
+				'dummy',
+			);
+		});
+	});
+
+	describe('createApplicationGroup', () => {
+		it('');
 	});
 });

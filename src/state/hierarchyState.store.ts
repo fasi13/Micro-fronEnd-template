@@ -93,13 +93,12 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		});
 	},
 	toggleCollapse: async (nodePath: NodePath[], val: boolean) => {
-		const data = getNodeToUpdate(get().hierarchyData, nodePath);
-
 		if (!val) {
+			const data = getNodeToUpdate(get().hierarchyData, nodePath);
+
 			get().setLoadingChildren(nodePath, true);
 			const { err, children }: THierarchyChildDataResp =
 				await getHierarchyChildData(data);
-
 			nodeUpdateState(set, nodePath, err, children);
 		} else {
 			set((state: HierarchyState) => {
@@ -134,7 +133,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		let err: string | null;
 		if (val === null) err = null;
 		else if (typeof val === 'string') err = val;
-		else err = val.errors[0]?.[0];
+		else err = val.errors?.[0];
 
 		set((state: HierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
