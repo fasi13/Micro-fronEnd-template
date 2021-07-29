@@ -50,8 +50,7 @@ const useStyles = makeStyles(() =>
 const SidebarContent = () => {
 	const classes = useStyles();
 	// searchLoading,
-	const { setSearchLoading, searchApplication, searchData, searchLoading } =
-		useSearchStore();
+	const { searchApplication, searchData, searchLoading } = useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
 	const debounceSearchTerm = useDebounce(inputValue, 500);
@@ -93,12 +92,7 @@ const SidebarContent = () => {
 	}, [searchData]);
 
 	useEffect(() => {
-		if (debounceSearchTerm) {
-			setSearchLoading(true);
-			searchApplication(inputValue);
-		} else {
-			setSearchLoading(false);
-		}
+		searchApplication(inputValue);
 	}, [debounceSearchTerm]);
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>
