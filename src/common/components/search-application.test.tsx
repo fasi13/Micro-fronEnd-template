@@ -6,8 +6,8 @@ import {
 	SearchApplicationProps,
 } from './search-application';
 
+const crateApplicationGroup = 'Create Application Group';
 const pathName = 'Application 12ED test';
-const pathValue = 'Value application 12ED Path';
 const pathLink2 =
 	'https://qa-hierarchy-api.cxsrecognize.com/applications/2/applicationGroups';
 const actionName = 'Application Groups';
@@ -16,10 +16,10 @@ const data: SearchApplicationProps = {
 	item: {
 		path: [
 			{
-				id: 2,
-				key: 'e9cc14a8-0f2a-4b1f-863b-60de05df800c',
-				name: pathName,
-				value: pathValue,
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
+				name: 'E2E Group',
+				value: 'wqq',
 				_links: [
 					{
 						rel: 'self',
@@ -51,7 +51,55 @@ const data: SearchApplicationProps = {
 							method: 'POST',
 						},
 						href: pathLink2,
-						name: 'Create Application Group',
+						name: crateApplicationGroup,
+					},
+					{
+						rel: 'path',
+						method: {
+							method: 'GET',
+						},
+						href: pathLink2,
+						name: 'Path',
+					},
+				],
+			},
+			{
+				id: 2,
+				key: 'e9cc14a8-0f2a-4b1f-863b-60de05df800c',
+				name: 'Application 12ED test',
+				value: 'Value application 12ED',
+				_links: [
+					{
+						rel: 'self',
+						method: {
+							method: 'GET',
+						},
+						href: pathLink2,
+						name: pathName,
+					},
+					{
+						rel: 'updateApplication',
+						method: {
+							method: 'PUT',
+						},
+						href: 'link',
+						name: pathName,
+					},
+					{
+						rel: 'applicationGroups',
+						method: {
+							method: 'GET',
+						},
+						href: pathLink2,
+						name: actionName,
+					},
+					{
+						rel: 'createApplicationGroup',
+						method: {
+							method: 'POST',
+						},
+						href: pathLink2,
+						name: crateApplicationGroup,
 					},
 					{
 						rel: 'path',
@@ -95,7 +143,7 @@ const data: SearchApplicationProps = {
 					method: 'POST',
 				},
 				href: pathLink2,
-				name: 'Create Application Group',
+				name: crateApplicationGroup,
 			},
 			{
 				rel: 'path',
@@ -110,6 +158,7 @@ const data: SearchApplicationProps = {
 };
 
 test('search application testing ', () => {
-	const { queryByText } = render(<SearchApplication item={data.item} />);
-	expect(queryByText(pathValue)).toBeInTheDocument();
+	const { queryByText, debug } = render(<SearchApplication item={data.item} />);
+	debug();
+	expect(queryByText(/wqq/i)).toBeInTheDocument();
 });
