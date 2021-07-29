@@ -7,6 +7,7 @@ import { HeaderSecond } from '../headerSecond';
 
 const detachIconStr = 'detach-icon';
 const dSSidebarState = detachStore.getState();
+const detachHandlerStr = 'detach-handler';
 test('renders home component', () => {
 	render(<HeaderSecond />);
 });
@@ -34,7 +35,7 @@ test('detach-icon should contains correct className when detachSidebar (global s
 
 test('detach-icon should contains correct className when detach-handler div is key pressed with "Enter" key', async () => {
 	const { getByTestId, debug } = render(<HeaderSecond />);
-	const detachHandler = getByTestId('detach-handler');
+	const detachHandler = getByTestId(detachHandlerStr);
 	fireEvent.focus(detachHandler);
 	fireEvent.keyDown(detachHandler, { key: 'Enter' });
 	const detachIcon = getByTestId(detachIconStr);
@@ -44,7 +45,7 @@ test('detach-icon should contains correct className when detach-handler div is k
 
 test('detach-icon should contains correct className when detach-handler div is key pressed with "Space" key', async () => {
 	const { getByTestId, debug } = render(<HeaderSecond />);
-	const detachHandler = getByTestId('detach-handler');
+	const detachHandler = getByTestId(detachHandlerStr);
 	fireEvent.focus(detachHandler);
 	fireEvent.keyDown(detachHandler, { key: ' ' });
 	const detachIcon = getByTestId(detachIconStr);
@@ -54,7 +55,7 @@ test('detach-icon should contains correct className when detach-handler div is k
 
 test('detach-icon should contains correct className when detach-handler div is key pressed with other keys rather than "Space" and "Enter"', async () => {
 	const { getByTestId, debug } = render(<HeaderSecond />);
-	const detachHandler = getByTestId('detach-handler');
+	const detachHandler = getByTestId(detachHandlerStr);
 	fireEvent.focus(detachHandler);
 	fireEvent.keyDown(detachHandler, { key: 'Tab' });
 	const detachIcon = getByTestId(detachIconStr);
