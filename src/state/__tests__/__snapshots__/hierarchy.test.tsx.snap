@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hieararchy store hierarchy store is defined 1`] = `
+Object {
+  "activeNodeId": 0,
+  "createApplication": [Function],
+  "createApplicationGroup": [Function],
+  "defaultExpandLevel": 0,
+  "editApplication": [Function],
+  "editApplicationGroup": [Function],
+  "error": "",
+  "getUserApplication": [Function],
+  "hierarchyData": Array [],
+  "initializeHierarchyState": [Function],
+  "loadApplication": [Function],
+  "loading": false,
+  "setError": [Function],
+  "setLoading": [Function],
+  "setLoadingChildren": [Function],
+  "setNodeError": [Function],
+  "setSaving": [Function],
+  "toggleCollapse": [Function],
+  "toggleEdit": [Function],
+  "toggleNewEditor": [Function],
+}
+`;

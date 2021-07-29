@@ -4,9 +4,8 @@ import { AddIcon, FolderIcon, PencilIcon, SpinnerIcon } from '../../icons';
 
 interface NodePropType {
 	data: TreeView;
-	editNode: (val: boolean) => void;
-	toggleChildren: boolean;
-	toggleNode: (val: boolean) => void;
+	editNode: () => void;
+	toggleChildren: () => void;
 	toggleNewEditor: (val: '' | 'Application' | 'Group') => void;
 	isLoadingChildren: boolean;
 }
@@ -14,23 +13,17 @@ interface NodePropType {
 const NodeLoadingIndicator = () => (
 	<button
 		type="button"
-		className="flex flex-col items-center justify-center w-6 h-6 text-left text-center rounded-sm cursor-pointer bg-gray-">
+		className="flex flex-col items-center justify-center w-6 h-6 text-left rounded-sm cursor-pointer bg-gray-">
 		<SpinnerIcon className="" width={20} height={20} />
 	</button>
 );
 
 export const Node: React.FC<NodePropType> = props => {
-	const {
-		data,
-		editNode,
-		toggleChildren,
-		toggleNode,
-		toggleNewEditor,
-		isLoadingChildren,
-	} = props;
+	const { data, editNode, toggleNewEditor, isLoadingChildren, toggleChildren } =
+		props;
 
 	const expandOrCollapse = (): string => {
-		if (!toggleChildren) return 'expand';
+		if (data.collapsed) return 'expand';
 		return 'collapse';
 	};
 
@@ -55,7 +48,7 @@ export const Node: React.FC<NodePropType> = props => {
 						className={`flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
 								${expandOrCollapse()}
 								`}
-						onClick={() => toggleNode(!toggleChildren)}>
+						onClick={() => toggleChildren()}>
 						<></>
 					</button>
 				)}
@@ -69,9 +62,10 @@ export const Node: React.FC<NodePropType> = props => {
 					.concat('____', data.id.toString())}
 				type="button"
 				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
-				onClick={() => toggleNode(!toggleChildren)}>
+				onClick={() => toggleChildren()}>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
+				?? {`${data.collapsed}`}
 			</button>
 			<div className="flex space-x-3 node-actions">
 				<button
@@ -98,7 +92,7 @@ export const Node: React.FC<NodePropType> = props => {
 					type="button"
 					title="Edit Node"
 					onClick={() => {
-						editNode(true);
+						editNode();
 					}}
 					className="cursor-pointer">
 					<PencilIcon className="" width={18} height={18} />

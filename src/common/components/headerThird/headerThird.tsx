@@ -8,14 +8,19 @@ export const HeaderThird = () => {
 	const open = detachStore(state => state.open);
 	const detachSidebar = detachStore(state => state.detachSidebar);
 
-	const handleDrawerOpen = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
-			event.type === 'click'
-		)
-			dSOpen(!open);
+	const handleDrawerOpen = () => {
+		dSOpen(!open);
 	};
+	const ArrowToggle = () =>
+		open ? (
+			<div data-testid="arrow-back">
+				<ArrowBackIosIcon />
+			</div>
+		) : (
+			<div data-testid="arrow-forward">
+				<ArrowForwardIosIcon />
+			</div>
+		);
 
 	return (
 		<div
@@ -24,22 +29,14 @@ export const HeaderThird = () => {
 			{!detachSidebar ? (
 				<div
 					data-testid="drawer-open"
-					onKeyDown={() => handleDrawerOpen}
+					onKeyDown={() => null}
 					role="button"
 					tabIndex={0}
 					color="inherit"
 					aria-label="open drawer"
 					onClick={handleDrawerOpen}
 					className="sidebar-arrows">
-					{open ? (
-						<div data-testid="arrow-back">
-							<ArrowBackIosIcon />
-						</div>
-					) : (
-						<div data-testid="arrow-forward">
-							<ArrowForwardIosIcon />
-						</div>
-					)}
+					{ArrowToggle()}
 				</div>
 			) : null}
 		</div>
