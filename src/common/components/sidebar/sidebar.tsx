@@ -4,7 +4,7 @@ import {
 	createStyles,
 	List,
 	makeStyles,
-	TextField
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -17,7 +17,7 @@ import {
 	ErrorResponse,
 	NodePath,
 	TEditor,
-	TreeView
+	TreeView,
 } from '../../../types';
 import './sidebar.scss';
 
@@ -50,8 +50,7 @@ const useStyles = makeStyles(() =>
 const SidebarContent = () => {
 	const classes = useStyles();
 	// searchLoading,
-	const { setSearchLoading, searchApplication, searchData, searchLoading } =
-		useSearchStore();
+	const { searchApplication, searchData, searchLoading } = useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
 	const debounceSearchTerm = useDebounce(inputValue, 500);
@@ -93,12 +92,7 @@ const SidebarContent = () => {
 	}, [searchData]);
 
 	useEffect(() => {
-		if (debounceSearchTerm) {
-			setSearchLoading(true);
-			searchApplication(inputValue);
-		} else {
-			setSearchLoading(false);
-		}
+		searchApplication(inputValue);
 	}, [debounceSearchTerm]);
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>

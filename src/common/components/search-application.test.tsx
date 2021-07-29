@@ -161,4 +161,5 @@ test('search application testing ', () => {
 	const { queryByText, debug } = render(<SearchApplication item={data.item} />);
 	debug();
 	expect(queryByText(/wqq/i)).toBeInTheDocument();
+	expect(queryByText(/Value application 12ED/i)).toBeInTheDocument();
 });

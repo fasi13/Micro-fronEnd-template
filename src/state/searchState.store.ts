@@ -21,18 +21,22 @@ const SearchStore = (set: any, get: any): SearchState => ({
 			state.searchLoading = val;
 		}),
 	searchApplication: async (keyword: string) => {
-		await axios
-			.get<ApiResponse<DataPaginated<ApplicationPath>>>(
-				`applications/${get().activeNodeId}/paths/?keyword=${keyword}`,
-			)
-			.then(resp => {
-				set((state: SearchState) => {
-					console.log('search Response Data:', resp.data?.data?.items);
-
-					state.searchData = resp.data?.data?.items;
-					state.searchLoading = false;
-				});
+		if (keyword !== '') {
+			console.log(keyword, 'keyword');
+			set((state: SearchState) => {
+				state.searchLoading = true;
 			});
+			await axios
+				.get<ApiResponse<DataPaginated<ApplicationPath>>>(
+					`applications/${get().activeNodeId}/paths/?keyword=${keyword}`,
+				)
+				.then(resp => {
+					set((state: SearchState) => {
+						state.searchData = resp.data?.data?.items;
+						state.searchLoading = false;
+					});
+				});
+		}
 	},
 });
 
