@@ -9,16 +9,21 @@ export const getApplicationValue = ({ path }: ApplicationPath): string =>
 export const getApplicationLink = ({ path }: ApplicationPath): string =>
 	`tenant/${path[path.length - 1].id}/service/content`;
 
+export const getSeparator = (index: number, array: any): string =>
+	index === array.length - 1 ? '' : '>';
+
+export const getElementId = (element: any): string =>
+	+element.value > -1 ? `(${element.value})` : '';
+
 export const getApplicationPath = (application: ApplicationPath): string => {
 	const appPath = application.path;
 
 	let strPath = '';
-	appPath.slice(0, appPath.length - 1).forEach((element, index, array) => {
-		if (element) {
-			const separator = index === array.length - 1 ? '' : '>';
-			const elementId = +element.value > -1 ? `(${element.value})` : '';
-			strPath += `${element.value}${elementId}${separator}`;
-		}
-	});
+	if (appPath.length > 1) {
+		appPath.slice(0, appPath.length - 1).forEach((element, index, array) => {
+			const elementId = getElementId(element);
+			strPath += `${element.value}${elementId}${getSeparator(index, array)}`;
+		});
+	}
 	return strPath;
 };

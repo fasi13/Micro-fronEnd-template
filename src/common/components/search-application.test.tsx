@@ -5,7 +5,7 @@ import {
 	SearchApplication,
 	SearchApplicationProps,
 } from './search-application';
-import { getApplicationPath } from './utils';
+import { getApplicationPath, getElementId, getSeparator } from './utils';
 
 const crateApplicationGroup = 'Create Application Group';
 const pathName = 'Application 12ED test';
@@ -20,7 +20,7 @@ const data: SearchApplicationProps = {
 				id: 1,
 				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
 				name: 'E2E Group',
-				value: 'wqq',
+				value: 'Group App Name',
 				_links: [
 					{
 						rel: 'self',
@@ -119,7 +119,7 @@ const data: SearchApplicationProps = {
 				method: {
 					method: 'GET',
 				},
-				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/2',
+				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/3',
 				name: pathName,
 			},
 			{
@@ -127,7 +127,103 @@ const data: SearchApplicationProps = {
 				method: {
 					method: 'PUT',
 				},
-				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/2',
+				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/4',
+				name: pathName,
+			},
+			{
+				rel: 'applicationGroups',
+				method: {
+					method: 'GET',
+				},
+				href: pathLink2,
+				name: actionName,
+			},
+			{
+				rel: 'createApplicationGroup',
+				method: {
+					method: 'POST',
+				},
+				href: pathLink2,
+				name: crateApplicationGroup,
+			},
+			{
+				rel: 'path',
+				method: {
+					method: 'GET',
+				},
+				href: pathLink2,
+				name: 'Path',
+			},
+		],
+	},
+};
+const singlePath: SearchApplicationProps = {
+	item: {
+		path: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f192',
+				name: 'E2E Group',
+				value: 'Group-App-Name',
+				_links: [
+					{
+						rel: 'self',
+						method: {
+							method: 'GET',
+						},
+						href: pathLink2,
+						name: pathName,
+					},
+					{
+						rel: 'updateApplication',
+						method: {
+							method: 'PUT',
+						},
+						href: 'link',
+						name: pathName,
+					},
+					{
+						rel: 'applicationGroups',
+						method: {
+							method: 'GET',
+						},
+						href: pathLink2,
+						name: actionName,
+					},
+					{
+						rel: 'createApplicationGroup',
+						method: {
+							method: 'POST',
+						},
+						href: pathLink2,
+						name: crateApplicationGroup,
+					},
+					{
+						rel: 'path',
+						method: {
+							method: 'GET',
+						},
+						href: pathLink2,
+						name: 'Path',
+					},
+				],
+			},
+		],
+		_links: [
+			{
+				rel: 'self',
+				method: {
+					method: 'GET',
+				},
+				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/5',
+				name: pathName,
+			},
+			{
+				rel: 'updateApplication',
+				method: {
+					method: 'PUT',
+				},
+				href: 'https://qa-hierarchy-api.cxsrecognize.com/applications/6',
 				name: pathName,
 			},
 			{
@@ -159,13 +255,88 @@ const data: SearchApplicationProps = {
 };
 
 test('search application testing ', () => {
-	const { queryByText, debug } = render(<SearchApplication item={data.item} />);
-	debug();
-	expect(queryByText(/wqq/i)).toBeInTheDocument();
-	expect(queryByText(/Value application 12ED/i)).toBeInTheDocument();
+	const { queryByText } = render(<SearchApplication item={data.item} />);
+	expect(queryByText(/Group App Name/i)).toBeInTheDocument();
+});
+test('should get Group App Name ', () => {
+	expect(getApplicationPath(data.item)).toBe('Group App Name');
+});
+test('should not get Group App Name ', () => {
+	expect(getApplicationPath(singlePath.item)).not.toBe('Group-App-Name');
+});
+test('should not return >', () => {
+	const mockArray = {
+		mockPath: [
+			{
+				id: 1,
+			},
+		],
+	};
+
+	const result = getSeparator(0, mockArray.mockPath);
+	expect(result).not.toBe('>');
+});
+test('should return >', () => {
+	const mockMultipleArray = {
+		mockPath: [
+			{
+				id: 1,
+			},
+			{
+				id: 2,
+			},
+		],
+	};
+
+	const result = getSeparator(0, mockMultipleArray.mockPath);
+	expect(result).toBe('>');
 });
 
-test('get application path', () => {
-	const result = getApplicationPath(data.item);
-	expect(result).toBe('wqq');
+test('should return element id ', () => {
+	const mockMultipleArray = {
+		mockPath: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f192e',
+				name: 'E2E Group',
+				value: 'GroupAppName',
+				applicationGroupId: null,
+			},
+		],
+	};
+	const test2 = +mockMultipleArray.mockPath[0].value > 1;
+	console.log(test2);
+	const result = getElementId(mockMultipleArray.mockPath[0]);
+	expect(result).not.toBe('GroupAppName');
+});
+test('should return null ', () => {
+	const mockMultipleArray = {
+		mockPath: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19f',
+				name: 'E2E Group',
+				value: '',
+				applicationGroupId: null,
+			},
+		],
+	};
+	const result = getElementId(mockMultipleArray.mockPath[0]);
+	expect(result).toBe('()');
+});
+test('should return null', () => {
+	const mockMultipleArray = {
+		mockPath: [
+			{
+				id: 2,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19d',
+				name: 'E2E Group',
+				value: '',
+				applicationGroupId: null,
+			},
+		],
+	};
+
+	const result = getElementId(mockMultipleArray.mockPath[0]);
+	expect(result).not.toBe('GroupAppName');
 });
