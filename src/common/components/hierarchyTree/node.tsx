@@ -1,9 +1,11 @@
 import React from 'react';
-import { TreeView } from '../../../types';
+import { useBreadcrumbStore } from '../../../state';
+import { NodePath, TreeView } from '../../../types';
 import { AddIcon, FolderIcon, PencilIcon, SpinnerIcon } from '../../icons';
 
 interface NodePropType {
 	data: TreeView;
+  nodePath: NodePath[];
 	editNode: () => void;
 	toggleChildren: () => void;
 	toggleNewEditor: (val: '' | 'Application' | 'Group') => void;
@@ -19,8 +21,10 @@ const NodeLoadingIndicator = () => (
 );
 
 export const Node: React.FC<NodePropType> = props => {
-	const { data, editNode, toggleNewEditor, isLoadingChildren, toggleChildren } =
+	const { data, nodePath, editNode, toggleNewEditor, isLoadingChildren, toggleChildren } =
 		props;
+
+  const { setBreadCrumb } = useBreadcrumbStore();
 
 	const expandOrCollapse = (): string => {
 		if (data.collapsed) return 'expand';
@@ -62,7 +66,11 @@ export const Node: React.FC<NodePropType> = props => {
 					.concat('____', data.id.toString())}
 				type="button"
 				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
-				onClick={() => toggleChildren()}>
+				onClick={() => {
+          setBreadCrumb(nodePath);
+          toggleChildren()
+          }
+        }>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
 				?? {`${data.collapsed}`}
