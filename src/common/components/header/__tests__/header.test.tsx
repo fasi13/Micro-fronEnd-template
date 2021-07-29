@@ -79,10 +79,45 @@ test('click on Manage communication menu should display popups', () => {
 	expect(userPermission).toBeInTheDocument();
 });
 
+test('key pressing with "Enter" on Manage communication menu should display popups', () => {
+	const { getByTestId } = render(<Header />);
+	const menuTitleElt = getByTestId(menuTitleStr);
+
+	fireEvent.keyDown(menuTitleElt, { key: 'Enter' });
+	const clntmgt = getByTestId('clntmgt');
+	expect(clntmgt).toBeInTheDocument();
+	const cntntmgt = getByTestId('cntntmgt');
+	expect(cntntmgt).toBeInTheDocument();
+	const manageCommunication = getByTestId('manage-communication');
+	expect(manageCommunication).toBeInTheDocument();
+	const programs = getByTestId('programs');
+	expect(programs).toBeInTheDocument();
+	const priceSettings = getByTestId('price-settings');
+	expect(priceSettings).toBeInTheDocument();
+	const roles = getByTestId('roles');
+	expect(roles).toBeInTheDocument();
+	const invoiceMgt = getByTestId('invoice-mgt');
+	expect(invoiceMgt).toBeInTheDocument();
+	const settingsMgt = getByTestId('settings-mgt');
+	expect(settingsMgt).toBeInTheDocument();
+	const userPermission = getByTestId('user-permission');
+	expect(userPermission).toBeInTheDocument();
+});
+
 test('click on Account avatar menu should display popups', () => {
 	const { getByTestId } = render(<Header />);
 	const menuTitleElt = getByTestId(userAvatarStr);
 	fireEvent.click(menuTitleElt);
+	const changePassword = getByTestId('change-password');
+	expect(changePassword).toBeInTheDocument();
+	const logout = getByTestId('logout');
+	expect(logout).toBeInTheDocument();
+});
+
+test('key pressing with "Enter" on Account avatar menu should display popups', () => {
+	const { getByTestId } = render(<Header />);
+	const menuTitleElt = getByTestId(userAvatarStr);
+	fireEvent.keyDown(menuTitleElt, { key: 'Enter' });
 	const changePassword = getByTestId('change-password');
 	expect(changePassword).toBeInTheDocument();
 	const logout = getByTestId('logout');
@@ -125,12 +160,20 @@ test('Clicking in menu should contain correct className', () => {
 	expect(expandMenuIcon.className).toContain('rotate-180');
 });
 
-// test('Clicking on menu after it is opened should close the menu', () => {
-// 	const { getByTestId, getByRole } = render(<Header />);
+test('Clicking on another screen place after the "Manage Communication menu" should close it', () => {
+	const { getByTestId, getByRole, queryByRole } = render(<Header />);
+	fireEvent.click(getByTestId(menuTitleStr));
+	fireEvent.click(
+		getByRole('presentation').firstChild ?? getByRole('presentation'),
+	);
+	expect(queryByRole('presentation')).toBeNull();
+});
 
-// 	fireEvent.click(getByTestId(menuTitleStr));
-
-// 	// Get the backdrop, then get the firstChild because this is where the event listener is attached
-// 	fireEvent.click(sgetByText('Name').parentElement);
-// 	expect(queryByRole('presentation')).toBeNull();
-// });
+test('Clicking on another screen place after the opening "User Avatar menu" should close it', () => {
+	const { getByTestId, getByRole, queryByRole } = render(<Header />);
+	fireEvent.click(getByTestId(menuAvatarStr));
+	fireEvent.click(
+		getByRole('presentation').firstChild ?? getByRole('presentation'),
+	);
+	expect(queryByRole('presentation')).toBeNull();
+});
