@@ -131,6 +131,7 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 					<Node
 						key={`node_${nodeId}`}
 						data={data}
+            nodePath={nodePath}
 						editNode={() => onToggleEdit(nodePath, true)}
 						toggleChildren={() => onToggleCollapse(nodePath, !data.collapsed)}
 						toggleNewEditor={(val: TEditor) => onToggleNewEditor(nodePath, val)}
