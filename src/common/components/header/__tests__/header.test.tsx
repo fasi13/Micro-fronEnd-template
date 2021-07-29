@@ -124,3 +124,13 @@ test('Clicking in menu should contain correct className', () => {
 	const expandMenuIcon = getByTestId('expand-menu-icon');
 	expect(expandMenuIcon.className).toContain('rotate-180');
 });
+
+// test('Clicking on menu after it is opened should close the menu', () => {
+// 	const { getByTestId, getByRole } = render(<Header />);
+
+// 	fireEvent.click(getByTestId(menuTitleStr));
+
+// 	// Get the backdrop, then get the firstChild because this is where the event listener is attached
+// 	fireEvent.click(sgetByText('Name').parentElement);
+// 	expect(queryByRole('presentation')).toBeNull();
+// });

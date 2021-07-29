@@ -3,12 +3,13 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Home } from '../../../../pages/home/home';
 import { detachStore } from '../../../../state';
-import { Breadcrumb } from '../headerSecond';
+import { HeaderSecond } from '../headerSecond';
 
 const detachIconStr = 'detach-icon';
 const dSSidebarState = detachStore.getState();
+const detachHandlerStr = 'detach-handler';
 test('renders home component', () => {
-	render(<Breadcrumb />);
+	render(<HeaderSecond />);
 });
 
 test(' detached sidebar should be displayed when detachSidebar global state is assigned to true', () => {
@@ -20,30 +21,44 @@ test(' detached sidebar should be displayed when detachSidebar global state is a
 
 test('detach-icon should contains correct className when detachSidebar (global state) is assigned to be true', () => {
 	dSSidebarState.setDetachSidebar(true);
-	const { getByTestId } = render(<Breadcrumb />);
+	const { getByTestId } = render(<HeaderSecond />);
 	const detachIcon = getByTestId(detachIconStr);
 	expect(detachIcon.className).toContain('sidebarDetached');
 });
 
 test('detach-icon should contains correct className when detachSidebar (global state) is assigned to be false', () => {
 	dSSidebarState.setDetachSidebar(false);
-	const { getByTestId } = render(<Breadcrumb />);
+	const { getByTestId } = render(<HeaderSecond />);
 	const detachIcon = getByTestId(detachIconStr);
 	expect(detachIcon.className).not.toContain('sidebarDetached');
 });
 
-test('detach-icon should contains correct className when detach-handler div is clicked', () => {
-	const { getByTestId } = render(<Breadcrumb />);
-	const detachHandler = getByTestId('detach-handler');
-	fireEvent.click(detachHandler);
+test('detach-icon should contains correct className when detach-handler div is key pressed with "Enter" key', async () => {
+	const { getByTestId, debug } = render(<HeaderSecond />);
+	const detachHandler = getByTestId(detachHandlerStr);
+	fireEvent.focus(detachHandler);
+	fireEvent.keyDown(detachHandler, { key: 'Enter' });
 	const detachIcon = getByTestId(detachIconStr);
+	debug();
 	expect(detachIcon.className).toContain('sidebarDetached');
 });
 
-test('detach-icon should contains correct className when detach-handler div is on key-down event', () => {
-	const { getByTestId } = render(<Breadcrumb />);
-	const detachHandler = getByTestId('detach-handler');
-	fireEvent.keyDown(detachHandler);
+test('detach-icon should contains correct className when detach-handler div is key pressed with "Space" key', async () => {
+	const { getByTestId, debug } = render(<HeaderSecond />);
+	const detachHandler = getByTestId(detachHandlerStr);
+	fireEvent.focus(detachHandler);
+	fireEvent.keyDown(detachHandler, { key: ' ' });
 	const detachIcon = getByTestId(detachIconStr);
+	debug();
 	expect(detachIcon.className).toContain('sidebarDetached');
+});
+
+test('detach-icon should contains correct className when detach-handler div is key pressed with other keys rather than "Space" and "Enter"', async () => {
+	const { getByTestId, debug } = render(<HeaderSecond />);
+	const detachHandler = getByTestId(detachHandlerStr);
+	fireEvent.focus(detachHandler);
+	fireEvent.keyDown(detachHandler, { key: 'Tab' });
+	const detachIcon = getByTestId(detachIconStr);
+	debug();
+	expect(detachIcon.className).not.toContain('sidebarDetached');
 });
