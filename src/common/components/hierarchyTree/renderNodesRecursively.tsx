@@ -1,6 +1,6 @@
 import React from 'react';
 import { NodeActions, NodePath, TreeView } from '../../../types';
-import { TreeNodeMemo } from './treeNode';
+import { TreeNode } from './treeNode';
 import { TreeNodeChildren } from './treeNodeChildren';
 
 interface ApplicationPropType extends NodeActions {
@@ -38,7 +38,7 @@ export const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 			key={nodeId}
 			className="relative flex flex-col items-start justify-center h-auto list-none tree">
 			<div className="w-full h-full">
-				<TreeNodeMemo
+				<TreeNode
 					key={`treenode_${nodeId}_${nodePath.length}`}
 					nodeId={nodeId}
 					nodePath={nodePath}
