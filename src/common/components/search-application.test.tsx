@@ -5,6 +5,7 @@ import {
 	SearchApplication,
 	SearchApplicationProps,
 } from './search-application';
+import { getApplicationPath } from './utils';
 
 const crateApplicationGroup = 'Create Application Group';
 const pathName = 'Application 12ED test';
@@ -162,4 +163,9 @@ test('search application testing ', () => {
 	debug();
 	expect(queryByText(/wqq/i)).toBeInTheDocument();
 	expect(queryByText(/Value application 12ED/i)).toBeInTheDocument();
+});
+
+test('get application path', () => {
+	const result = getApplicationPath(data.item);
+	expect(result).toBe('wqq');
 });
