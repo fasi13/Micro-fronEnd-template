@@ -22,6 +22,13 @@ import {
 	updateNodeValues,
 } from './helpers/hierarchy.store.helper';
 
+const unknownError = {
+	errorCode: 0,
+	errors: ['some error occurred'],
+	status: 0,
+	title: 'unknown error',
+};
+
 const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	loading: false,
 	error: '',
@@ -51,7 +58,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		const res = await axios
 			.get<ApiResponse<TreeView>>(`applications/${applicationId}`)
 			.catch((reason: ErrorResponse) => {
-				get().setError(reason.errors[0]);
+				get().setError(reason?.errors?.[0]);
 			});
 
 		if (res) {
@@ -147,18 +154,17 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 	) => {
 		if (data) {
 			let remoteError: ErrorResponse | null = null;
-			get().setSaving(nodePath, true);
 			const link: Link | undefined = getCreateGroupLink(data?._links || []);
 
 			if (link) {
-				const { method, href } = link;
-				const resp = await axios({
-					method: method.method,
-					url: href,
-					data: { name },
-				}).catch((reason: ErrorResponse) => {
-					remoteError = reason;
-				});
+				const { href } = link;
+				get().setSaving(nodePath, true);
+
+				const resp = await axios
+					.post(href, { name })
+					.catch((reason: ErrorResponse) => {
+						remoteError = reason;
+					});
 
 				if (remoteError) {
 					nodeUpdateState(set, nodePath, remoteError, []);
@@ -167,6 +173,8 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 						await getHierarchyChildData(data);
 
 					nodeUpdateState(set, nodePath, err, children);
+				} else {
+					nodeUpdateState(set, nodePath, unknownError, []);
 				}
 			}
 		}
@@ -176,29 +184,25 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		nodePath: NodePath[],
 		name: string,
 	) => {
-		if (data) {
-			let remoteError: ErrorResponse | null = null;
+		let remoteError: ErrorResponse | null = null;
+		const link: Link | undefined = getSelfUpdateLink(data._links || [], true);
+
+		if (link) {
 			get().setSaving(nodePath, true);
-			const link: Link | undefined = getSelfUpdateLink(data._links || [], true);
+			const { href } = link;
+			const resp = await axios.put(href, { name }).catch(reason => {
+				remoteError = reason as unknown as ErrorResponse;
+			});
 
-			if (link) {
-				const { method, href } = link;
-				const resp = await axios({
-					method: method.method,
-					url: href,
-					data: { name },
-				}).catch(reason => {
-					remoteError = reason as unknown as ErrorResponse;
+			if (remoteError) {
+				nodeUpdateState(set, nodePath, remoteError, []);
+			} else if (resp && resp.status === 200) {
+				set((state: HierarchyState) => {
+					const node = getNodeToUpdate(state.hierarchyData, nodePath);
+					updateNodeValues(node, name, '');
 				});
-
-				if (remoteError) {
-					nodeUpdateState(set, nodePath, remoteError, []);
-				} else if (resp && resp.status === 200) {
-					set((state: HierarchyState) => {
-						const node = getNodeToUpdate(state.hierarchyData, nodePath);
-						updateNodeValues(node, name, '');
-					});
-				}
+			} else {
+				nodeUpdateState(set, nodePath, unknownError, []);
 			}
 		}
 	},
@@ -208,30 +212,27 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		name: string,
 		value: string,
 	) => {
-		if (data) {
-			let remoteError: ErrorResponse | null = null;
-			get().setSaving(nodePath, true);
-			const link: Link | undefined = getCreateApplicationLink(
-				data?._links || [],
-			);
+		let remoteError: ErrorResponse | null = null;
+		const link: Link | undefined = getCreateApplicationLink(data?._links || []);
 
-			if (link) {
-				const { method, href } = link;
-				const resp = await axios({
-					method: method.method,
-					url: href,
-					data: { name, value },
-				}).catch((reason: ErrorResponse) => {
+		if (link) {
+			const { href } = link;
+			get().setSaving(nodePath, true);
+
+			const resp = await axios
+				.post(href, { name, value })
+				.catch((reason: ErrorResponse) => {
 					remoteError = reason;
 				});
-				if (remoteError) {
-					nodeUpdateState(set, nodePath, remoteError, []);
-				} else if (resp && resp.status === 201) {
-					const { err, children }: THierarchyChildDataResp =
-						await getHierarchyChildData(data);
+			if (remoteError) {
+				nodeUpdateState(set, nodePath, remoteError, []);
+			} else if (resp && resp.status === 201) {
+				const { err, children }: THierarchyChildDataResp =
+					await getHierarchyChildData(data);
 
-					nodeUpdateState(set, nodePath, err, children);
-				}
+				nodeUpdateState(set, nodePath, err, children);
+			} else {
+				nodeUpdateState(set, nodePath, unknownError, []);
 			}
 		}
 	},
@@ -241,32 +242,26 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		name: string,
 		value: string,
 	) => {
-		if (data) {
-			let remoteError: ErrorResponse | null = null;
+		let remoteError: ErrorResponse | null = null;
+		const link: Link | undefined = getSelfUpdateLink(data._links || [], false);
+
+		if (link) {
+			const { href } = link;
 			get().setSaving(nodePath, true);
-			const link: Link | undefined = getSelfUpdateLink(
-				data._links || [],
-				false,
-			);
 
-			if (link) {
-				const { method, href } = link;
-				const resp = await axios({
-					method: method.method,
-					url: href,
-					data: { name, value },
-				}).catch(reason => {
-					remoteError = reason as unknown as ErrorResponse;
+			const resp = await axios.put(href, { name, value }).catch(reason => {
+				remoteError = reason as unknown as ErrorResponse;
+			});
+
+			if (remoteError) {
+				nodeUpdateState(set, nodePath, remoteError, []);
+			} else if (resp && resp.status === 200) {
+				set((state: HierarchyState) => {
+					const node = getNodeToUpdate(state.hierarchyData, nodePath);
+					updateNodeValues(node, name, value);
 				});
-
-				if (remoteError) {
-					nodeUpdateState(set, nodePath, remoteError, []);
-				} else if (resp && resp.status === 200) {
-					set((state: HierarchyState) => {
-						const node = getNodeToUpdate(state.hierarchyData, nodePath);
-						updateNodeValues(node, name, value);
-					});
-				}
+			} else {
+				nodeUpdateState(set, nodePath, unknownError, []);
 			}
 		}
 	},
