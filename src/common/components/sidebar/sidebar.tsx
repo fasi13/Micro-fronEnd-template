@@ -8,18 +8,13 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDebounce } from 'use-hooks';
 import { HierarchyTree, SearchApplication } from '..';
 import { detachStore, useHierarchyStore, useSearchStore } from '../../../state';
-import {
-	ApplicationPath,
-	ErrorResponse,
-	NodePath,
-	TEditor,
-	TreeView,
-} from '../../../types';
+import { ApplicationPath } from '../../../types';
 import './sidebar.scss';
+import { useHierarchyHelper } from './utils';
 
 const useStyles = makeStyles(() =>
 	createStyles({
@@ -48,10 +43,20 @@ const useStyles = makeStyles(() =>
 );
 
 const SidebarContent = () => {
+	const {
+		setNodeErrorFn,
+		setSavingFn,
+		toggleNewEditorFn,
+		toggleEditNodeFn,
+		toggleCollapseNodeFn,
+		onEditGroupFn,
+		onEditApplicationFn,
+		onAddApplicationFn,
+		onAddGroupFn,
+	} = useHierarchyHelper();
 	const classes = useStyles();
 	// searchLoading,
-	const { setSearchLoading, searchApplication, searchData, searchLoading } =
-		useSearchStore();
+	const { searchApplication, searchData, searchLoading } = useSearchStore();
 
 	const [inputValue, setInputValue] = useState<string>('');
 	const debounceSearchTerm = useDebounce(inputValue, 500);
@@ -69,15 +74,6 @@ const SidebarContent = () => {
 		hierarchyData,
 		setLoading,
 		getUserApplication,
-		createApplicationGroup,
-		createApplication,
-		editApplication,
-		editApplicationGroup,
-		toggleCollapse,
-		toggleEdit,
-		toggleNewEditor,
-		setSaving,
-		setNodeError,
 	} = useHierarchyStore();
 
 	useEffect(() => {
@@ -93,12 +89,7 @@ const SidebarContent = () => {
 	}, [searchData]);
 
 	useEffect(() => {
-		if (debounceSearchTerm) {
-			setSearchLoading(true);
-			searchApplication(inputValue);
-		} else {
-			setSearchLoading(false);
-		}
+		searchApplication(inputValue);
 	}, [debounceSearchTerm]);
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>
@@ -111,73 +102,6 @@ const SidebarContent = () => {
 		keyword.length < 3 ? null : setInputValue(keyword);
 
 	const dSSidebarState = detachStore(state => state.detachSidebar);
-
-	const onAddGroupFn = useCallback(
-		async (item: TreeView, nodePath: NodePath[], name: string) => {
-			createApplicationGroup(item, nodePath, name);
-		},
-		[],
-	);
-
-	const onAddApplicationFn = useCallback(
-		async (
-			item: TreeView,
-			nodePath: NodePath[],
-			name: string,
-			value: string,
-		) => {
-			createApplication(item, nodePath, name, value);
-		},
-		[],
-	);
-
-	const onEditApplicationFn = useCallback(
-		async (
-			item: TreeView,
-			nodePath: NodePath[],
-			name: string,
-			value: string,
-		) => {
-			editApplication(item, nodePath, name, value);
-		},
-		[],
-	);
-
-	const onEditGroupFn = useCallback(
-		async (item: TreeView, nodePath: NodePath[], name: string) => {
-			editApplicationGroup(item, nodePath, name);
-		},
-		[],
-	);
-
-	const toggleCollapseNodeFn = useCallback(
-		(nodePath: NodePath[], val: boolean) => {
-			toggleCollapse(nodePath, val);
-		},
-		[],
-	);
-
-	const toggleEditNodeFn = useCallback((nodePath: NodePath[], val: boolean) => {
-		toggleEdit(nodePath, val);
-	}, []);
-
-	const toggleNewEditorFn = useCallback(
-		(nodePath: NodePath[], val: TEditor) => {
-			toggleNewEditor(nodePath, val);
-		},
-		[],
-	);
-
-	const setSavingFn = useCallback((nodePath: NodePath[], val: boolean) => {
-		setSaving(nodePath, val);
-	}, []);
-
-	const setNodeErrorFn = useCallback(
-		(nodePath: NodePath[], val: string | ErrorResponse | null) => {
-			setNodeError(nodePath, val);
-		},
-		[],
-	);
 
 	return (
 		<>
