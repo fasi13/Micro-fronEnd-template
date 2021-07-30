@@ -27,30 +27,21 @@ test('detached sidebar should be closed when close icon is clicked', () => {
 	expect(Rnd).not.toBeInTheDocument();
 });
 
+test('detached sidebar should be closed when close icon is on key press event with "Enter" key', () => {
+	dSSidebarState.setDetachSidebar(true);
+	const { getByTestId } = render(<Home />);
+	const Rnd = getByTestId('rnd');
+	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
+	fireEvent.keyDown(closeDetachedSidebar, { key: 'Enter' });
+	expect(Rnd).not.toBeInTheDocument();
+});
+
 test('detached sidebar should be closed when close icon is clicked', () => {
 	dSSidebarState.setDetachSidebar(true);
 	const { getByTestId } = render(<Home />);
 	const Rnd = getByTestId('rnd');
 	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
 	user.click(closeDetachedSidebar);
-	expect(Rnd).not.toBeInTheDocument();
-});
-
-test('detached sidebar should be closed when close icon is pressed on keyDown with enter', () => {
-	dSSidebarState.setDetachSidebar(true);
-	const { getByTestId } = render(<Home />);
-	const Rnd = getByTestId('rnd');
-	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
-	user.type(closeDetachedSidebar, '{enter}');
-	expect(Rnd).not.toBeInTheDocument();
-});
-
-test('detached sidebar should be closed when close icon is pressed on keyDown with space', () => {
-	dSSidebarState.setDetachSidebar(true);
-	const { getByTestId } = render(<Home />);
-	const Rnd = getByTestId('rnd');
-	const closeDetachedSidebar = getByTestId(closeDetachedSidebarStr);
-	user.type(closeDetachedSidebar, '{space}');
 	expect(Rnd).not.toBeInTheDocument();
 });
 

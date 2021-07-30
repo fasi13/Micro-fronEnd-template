@@ -15,8 +15,8 @@ export const AddIcon: React.FunctionComponent<PropTypes> = (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			className={`${className}`}
-			width={width || 512}
-			height={height || 512}
+			width={width}
+			height={height}
 			viewBox="0 0 512 512">
 			<circle cx="256" cy="256" r="256" fill="#fff" fillOpacity="0.75" />
 			<path

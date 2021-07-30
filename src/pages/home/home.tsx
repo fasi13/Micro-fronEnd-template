@@ -84,11 +84,7 @@ export const Home = () => {
 	};
 
 	const handleAttach = (event: any) => {
-		if (
-			(event.type === 'keydown' &&
-				(event.keyCode === 13 || event.keyCode === 32)) ||
-			event.type === 'click'
-		)
+		if (event.key === 'Enter' || event.type === 'click')
 			setDetachSidebar(false);
 	};
 
@@ -126,7 +122,7 @@ export const Home = () => {
 					<div
 						data-testid="close-detached-sidebar"
 						className="closeDetachedSidebar"
-						onKeyDown={() => handleAttach}
+						onKeyDown={handleAttach}
 						role="button"
 						tabIndex={0}
 						aria-label="close-detach"

@@ -1,9 +1,11 @@
 import React from 'react';
-import { TreeView } from '../../../types';
+import { useBreadcrumbStore } from '../../../state';
+import { NodePath, TreeView } from '../../../types';
 import { AddIcon, FolderIcon, PencilIcon, SpinnerIcon } from '../../icons';
 
 interface NodePropType {
 	data: TreeView;
+  nodePath: NodePath[];
 	editNode: () => void;
 	toggleChildren: () => void;
 	toggleNewEditor: (val: '' | 'Application' | 'Group') => void;
@@ -12,6 +14,7 @@ interface NodePropType {
 
 const NodeLoadingIndicator = () => (
 	<button
+		data-testid="loading-indicator"
 		type="button"
 		className="flex flex-col items-center justify-center w-6 h-6 text-left rounded-sm cursor-pointer bg-gray-">
 		<SpinnerIcon className="" width={20} height={20} />
@@ -19,8 +22,10 @@ const NodeLoadingIndicator = () => (
 );
 
 export const Node: React.FC<NodePropType> = props => {
-	const { data, editNode, toggleNewEditor, isLoadingChildren, toggleChildren } =
+	const { data, nodePath, editNode, toggleNewEditor, isLoadingChildren, toggleChildren } =
 		props;
+
+  const { setBreadCrumb } = useBreadcrumbStore();
 
 	const expandOrCollapse = (): string => {
 		if (data.collapsed) return 'expand';
@@ -44,6 +49,7 @@ export const Node: React.FC<NodePropType> = props => {
 					<NodeLoadingIndicator />
 				) : (
 					<button
+						data-testid="node-container"
 						type="button"
 						className={`flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
 								${expandOrCollapse()}
@@ -54,6 +60,7 @@ export const Node: React.FC<NodePropType> = props => {
 				)}
 			</>
 			<button
+				data-testid="node-labels"
 				id={data.name
 					.split(' ')
 					.join('_')
@@ -62,13 +69,18 @@ export const Node: React.FC<NodePropType> = props => {
 					.concat('____', data.id.toString())}
 				type="button"
 				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
-				onClick={() => toggleChildren()}>
+				onClick={() => {
+          setBreadCrumb(nodePath);
+          toggleChildren()
+          }
+        }>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
 				?? {`${data.collapsed}`}
 			</button>
 			<div className="flex space-x-3 node-actions">
 				<button
+					data-testid="node-add-app"
 					type="button"
 					title="Add Application"
 					onClick={() => {
@@ -80,6 +92,7 @@ export const Node: React.FC<NodePropType> = props => {
 					<AddIcon className="" width={18} height={18} />
 				</button>
 				<button
+					data-testid="node-add-app-group"
 					type="button"
 					title="Add Application Group"
 					onClick={() => {
@@ -89,6 +102,7 @@ export const Node: React.FC<NodePropType> = props => {
 					<FolderIcon className="" width={18} height={18} />
 				</button>
 				<button
+					data-testid="node-edit"
 					type="button"
 					title="Edit Node"
 					onClick={() => {

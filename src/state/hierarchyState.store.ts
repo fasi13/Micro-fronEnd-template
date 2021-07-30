@@ -5,7 +5,7 @@ import {
 	Link,
 	NodePath,
 	TEditor,
-	TreeView
+	TreeView,
 } from '../types';
 import { HierarchyClient as axios } from '../util/axios';
 import createStore from '../util/immer';
@@ -273,6 +273,3 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 
 /* eslint-disable import/prefer-default-export */
 export const useHierarchyStore = createStore<HierarchyState>(HierarchyStore);
-
-
-
