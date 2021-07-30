@@ -9,5 +9,3 @@ test('renders sidebar component', () => {
 		debug();
 	});
 });
-
-
