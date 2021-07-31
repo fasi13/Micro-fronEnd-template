@@ -7,7 +7,6 @@ import './sidebar.scss';
 import { useHierarchyHelper } from './utils';
 
 const SidebarContent = () => {
-	// const searchLoading = open && searchData.length === 0;
 	const {
 		setNodeErrorFn,
 		setSavingFn,
