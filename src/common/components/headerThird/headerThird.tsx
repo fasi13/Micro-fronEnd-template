@@ -8,8 +8,8 @@ export const HeaderThird = () => {
 	const open = detachStore(state => state.open);
 	const detachSidebar = detachStore(state => state.detachSidebar);
 
-	const handleDrawerOpen = () => {
-		dSOpen(!open);
+	const handleDrawerOpen = (event: any) => {
+		if (event.key === 'Enter' || event.type === 'click') dSOpen(!open);
 	};
 	const ArrowToggle = () =>
 		open ? (
@@ -29,7 +29,7 @@ export const HeaderThird = () => {
 			{!detachSidebar ? (
 				<div
 					data-testid="drawer-open"
-					onKeyDown={() => null}
+					onKeyDown={handleDrawerOpen}
 					role="button"
 					tabIndex={0}
 					color="inherit"
