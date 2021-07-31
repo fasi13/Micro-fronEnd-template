@@ -47,16 +47,10 @@ function SearchBar() {
 
 	const [open, setOpen] = React.useState(false);
 	// searchLoading,
-	const { searchData, searchLoading, setSearchLoading, searchApplication } =
-		useSearchStore();
+	const { searchData, searchLoading, searchApplication } = useSearchStore();
 
 	useEffect(() => {
-		if (debounceSearchTerm) {
-			setSearchLoading(true);
-			searchApplication(inputValue);
-		} else {
-			setSearchLoading(false);
-		}
+		searchApplication(inputValue);
 	}, [debounceSearchTerm]);
 
 	const updateAutocompletePopper = () => {
