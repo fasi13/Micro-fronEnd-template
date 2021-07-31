@@ -5,7 +5,7 @@ import { AddIcon, FolderIcon, PencilIcon, SpinnerIcon } from '../../icons';
 
 interface NodePropType {
 	data: TreeView;
-  nodePath: NodePath[];
+	nodePath: NodePath[];
 	editNode: () => void;
 	toggleChildren: () => void;
 	toggleNewEditor: (val: '' | 'Application' | 'Group') => void;
@@ -22,10 +22,16 @@ const NodeLoadingIndicator = () => (
 );
 
 export const Node: React.FC<NodePropType> = props => {
-	const { data, nodePath, editNode, toggleNewEditor, isLoadingChildren, toggleChildren } =
-		props;
+	const {
+		data,
+		nodePath,
+		editNode,
+		toggleNewEditor,
+		isLoadingChildren,
+		toggleChildren,
+	} = props;
 
-  const { setBreadCrumb } = useBreadcrumbStore();
+	const { setBreadCrumb } = useBreadcrumbStore();
 
 	const expandOrCollapse = (): string => {
 		if (data.collapsed) return 'expand';
@@ -70,10 +76,9 @@ export const Node: React.FC<NodePropType> = props => {
 				type="button"
 				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
 				onClick={() => {
-          setBreadCrumb(nodePath);
-          toggleChildren()
-          }
-        }>
+					setBreadCrumb(nodePath);
+					toggleChildren();
+				}}>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
 				?? {`${data.collapsed}`}

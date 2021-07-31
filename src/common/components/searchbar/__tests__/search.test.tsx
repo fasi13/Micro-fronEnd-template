@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { useSearchStore } from '../../../../state/searchState.store';
 import { ApplicationPath } from '../../../../types';
-import { Sidebar } from '../sidebar';
+import Searchbar from '../Searchbar';
 
 const mockSearchData: ApplicationPath[] = [
 	{
@@ -42,7 +42,7 @@ const mockSearchData: ApplicationPath[] = [
 
 describe('Autocomplete Search', () => {
 	test('Render autocomplete search', async () => {
-		const { getByTestId, getByRole } = render(<Sidebar />);
+		const { getByTestId, getByRole } = render(<Searchbar />);
 
 		const inputSearchField = getByTestId('searchfield');
 		const inputField = getByRole('textbox');
@@ -53,7 +53,7 @@ describe('Autocomplete Search', () => {
 	});
 
 	test('It should allow search keyword to be inputted', async () => {
-		const { getByRole, queryByRole } = render(<Sidebar />);
+		const { getByRole, queryByRole } = render(<Searchbar />);
 
 		expect(queryByRole('listbox')).toBeNull();
 		const inputField = getByRole('textbox');
