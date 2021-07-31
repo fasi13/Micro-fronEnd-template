@@ -43,15 +43,21 @@ function SearchBar() {
 	const classes = useStyles();
 
 	const [inputValue, setInputValue] = useState<string>('');
+	const [inputKeyword, setInputKeyword] = useState<string>('');
 	const debounceSearchTerm = useDebounce(inputValue, 500);
 
 	const [open, setOpen] = React.useState(false);
-	// searchLoading,
 	const { searchData, searchLoading, searchApplication } = useSearchStore();
 
 	useEffect(() => {
 		searchApplication(inputValue);
 	}, [debounceSearchTerm]);
+
+	React.useEffect(() => {
+		if (!open) {
+			useSearchStore.setState({ searchData: [] });
+		}
+	}, [open]);
 
 	const updateAutocompletePopper = () => {
 		setOpen(!open);
@@ -69,8 +75,10 @@ function SearchBar() {
 	const getApplicationId = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].id.toString();
 
-	const searchElement = (keyword: string) =>
-		keyword.length < 3 ? null : setInputValue(keyword);
+	const searchElement = (keyword: string) => {
+		setInputKeyword(keyword);
+		return keyword.length < 3 ? null : setInputValue(keyword);
+	};
 
 	return (
 		<Autocomplete
@@ -85,14 +93,20 @@ function SearchBar() {
 			getOptionLabel={x => getApplicationName(x)}
 			autoComplete
 			fullWidth
+			includeInputInList
+			filterSelectedOptions
 			loading={searchLoading}
-			noOptionsText="No results found!"
+			noOptionsText={
+				inputKeyword.length < 3
+					? 'Requires at least 3 characters'
+					: 'No results found!'
+			}
 			renderInput={params => (
 				<TextField
 					// eslint-disable-next-line react/jsx-props-no-spreading
 					{...params}
-					data-testid="searchfield"
 					onChange={e => searchElement(e.target.value.toString())}
+					data-testid="searchfield"
 					placeholder="Search"
 					variant="outlined"
 					fullWidth
@@ -117,15 +131,11 @@ function SearchBar() {
 					}}
 				/>
 			)}
-			renderOption={item =>
-				Array.from(searchSet).length !== 0 ? (
-					<List className={classes.rootList}>
-						<SearchApplication item={item} key={getApplicationId(item)} />
-					</List>
-				) : (
-					<p>No results found! </p>
-				)
-			}
+			renderOption={item => (
+				<List className={classes.rootList} data-testid="searchresult-list">
+					<SearchApplication item={item} key={getApplicationId(item)} />
+				</List>
+			)}
 		/>
 	);
 }
