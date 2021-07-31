@@ -21,7 +21,6 @@ const SearchStore = (set: any, get: any): SearchState => ({
 			state.searchLoading = val;
 		}),
 	searchApplication: async (keyword: string) => {
-		if (keyword !== '') {
 			console.log(keyword, 'keyword');
 			set((state: SearchState) => {
 				state.searchLoading = true;
@@ -36,7 +35,6 @@ const SearchStore = (set: any, get: any): SearchState => ({
 						state.searchLoading = false;
 					});
 				});
-		}
 	},
 });
 

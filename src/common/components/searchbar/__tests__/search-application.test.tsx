@@ -4,8 +4,8 @@ import React from 'react';
 import {
 	SearchApplication,
 	SearchApplicationProps,
-} from './search-application';
-import { getApplicationPath, getElementId, getSeparator } from './utils';
+} from '../search-application';
+import { getApplicationPath, getElementId, getSeparator } from '../utils';
 
 const crateApplicationGroup = 'Create Application Group';
 const pathName = 'Application 12ED test';

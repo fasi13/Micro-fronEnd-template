@@ -1,4 +1,4 @@
-import { ApplicationPath } from '../../types';
+import { ApplicationPath } from '../../../types';
 
 export const getApplicationName = ({ path }: ApplicationPath): string =>
 	path[path.length - 1].name;
