@@ -45,7 +45,7 @@ export const Header = () => {
 	const [anchorMenu, setAnchorMenu] = React.useState(null);
 
 	const handleMenuOpen = (event: any) => {
-		if (event.type === 'click') setAnchorMenu(event.currentTarget);
+		setAnchorMenu(event.currentTarget);
 	};
 
 	const handleMenuClose = () => {
@@ -56,7 +56,7 @@ export const Header = () => {
 		React.useState<null | HTMLElement>(null);
 
 	const handleAvatarOpen = (event: any) => {
-		if (event.type === 'click') setAnchorAvatarMenu(event.currentTarget);
+		setAnchorAvatarMenu(event.currentTarget);
 	};
 
 	const handleAvatarClose = () => {
@@ -74,24 +74,6 @@ export const Header = () => {
 		setAnchorAvatarMenu(null);
 		setShowChangePassword(true);
 	};
-	const AccountAvatar = () => (
-		<>
-			<MenuItem
-				data-testid="change-password-menu"
-				onClick={handleChangePassword}>
-				<ListItemText
-					data-testid="change-password"
-					primary={<span className="text-sm font-bold">CHANGE PASSWORD</span>}
-				/>
-			</MenuItem>
-			<MenuItem>
-				<ListItemText
-					data-testid="logout"
-					primary={<span className="text-sm font-bold">LOGOUT</span>}
-				/>
-			</MenuItem>
-		</>
-	);
 
 	return (
 		<div className="header-root">
@@ -144,131 +126,121 @@ export const Header = () => {
 								open={Boolean(anchorMenu)}
 								disableScrollLock
 								onClose={handleMenuClose}>
-								<>
-									<MenuItem
-										className="gap-x-2 text-5xl"
-										style={{ margin: '5px' }}>
-										<ClientMgtIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span
-													data-testid="clntmgt"
-													className="text-sm font-bold">
-													CLIENT MANAGEMENT
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
-										<ContentMgtIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span
-													data-testid="cntntmgt"
-													className="text-sm font-bold">
-													CONTENT MANAGEMENT
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
-										<CommunicationIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span
-													data-testid="manage-communication"
-													className="text-sm font-bold">
-													MANAGE COMMUNICATION
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="programs"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<ProgramsIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span className="text-sm font-bold">PROGRAMS</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="price-settings"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<PriceIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span className="text-sm font-bold">
-													PRICE SETTINGS
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="roles"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<RolesIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={<span className="text-sm font-bold">ROLES</span>}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="invoice-mgt"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<InvoiceIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span className="text-sm font-bold">
-													INVOICE MANAGEMENT
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="user-mgt"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<UserMgtIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span className="text-sm font-bold">
-													USER MANAGEMENT
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="settings-mgt"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<SettingsIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span className="text-sm font-bold">
-													SETTINGS MANAGEMENT
-												</span>
-											}
-										/>
-									</MenuItem>
-									<MenuItem
-										data-testid="user-permission"
-										className="gap-x-2"
-										style={{ margin: '5px' }}>
-										<PermissionIcon className="" width={40} height={40} />
-										<ListItemText
-											primary={
-												<span className="text-sm font-bold">
-													USER PERMISSION
-												</span>
-											}
-										/>
-									</MenuItem>
-								</>
+								<MenuItem
+									className="gap-x-2 text-5xl"
+									style={{ margin: '5px' }}>
+									<ClientMgtIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span data-testid="clntmgt" className="text-sm font-bold">
+												CLIENT MANAGEMENT
+											</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+									<ContentMgtIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span
+												data-testid="cntntmgt"
+												className="text-sm font-bold">
+												CONTENT MANAGEMENT
+											</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+									<CommunicationIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span
+												data-testid="manage-communication"
+												className="text-sm font-bold">
+												MANAGE COMMUNICATION
+											</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="programs"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<ProgramsIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span className="text-sm font-bold">PROGRAMS</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="price-settings"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<PriceIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span className="text-sm font-bold">PRICE SETTINGS</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="roles"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<RolesIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={<span className="text-sm font-bold">ROLES</span>}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="invoice-mgt"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<InvoiceIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span className="text-sm font-bold">
+												INVOICE MANAGEMENT
+											</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="user-mgt"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<UserMgtIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span className="text-sm font-bold">USER MANAGEMENT</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="settings-mgt"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<SettingsIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span className="text-sm font-bold">
+												SETTINGS MANAGEMENT
+											</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem
+									data-testid="user-permission"
+									className="gap-x-2"
+									style={{ margin: '5px' }}>
+									<PermissionIcon className="" width={40} height={40} />
+									<ListItemText
+										primary={
+											<span className="text-sm font-bold">USER PERMISSION</span>
+										}
+									/>
+								</MenuItem>
 							</Menu>
 						</div>
 						<div className="pl-5">
@@ -290,13 +262,28 @@ export const Header = () => {
 								data-testid="avatar-menu"
 								id="customized-menu2"
 								anchorEl={anchorAvatarMenu}
-								anchorOrigin={{ vertical: 55, horizontal: 'left' }}
+								anchorOrigin={{ vertical: 65, horizontal: 'left' }}
 								transformOrigin={{ vertical: 'top', horizontal: 'center' }}
 								getContentAnchorEl={null}
 								open={Boolean(anchorAvatarMenu)}
 								disableScrollLock
 								onClose={handleAvatarClose}>
-								<AccountAvatar />
+								<MenuItem
+									data-testid="change-password-menu"
+									onClick={handleChangePassword}>
+									<ListItemText
+										data-testid="change-password"
+										primary={
+											<span className="text-sm font-bold">CHANGE PASSWORD</span>
+										}
+									/>
+								</MenuItem>
+								<MenuItem>
+									<ListItemText
+										data-testid="logout"
+										primary={<span className="text-sm font-bold">LOGOUT</span>}
+									/>
+								</MenuItem>
 							</Menu>
 						</div>
 					</div>

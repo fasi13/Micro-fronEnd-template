@@ -83,9 +83,8 @@ export const Home = () => {
 		dSSetDetachSidebar(detach);
 	};
 
-	const handleAttach = (event: any) => {
-		if (event.key === 'Enter' || event.type === 'click')
-			setDetachSidebar(false);
+	const handleAttach = () => {
+		setDetachSidebar(false);
 	};
 
 	return (
@@ -114,15 +113,13 @@ export const Home = () => {
 						width: detachedSidebarWidth,
 						height: detachedSidebarHeight,
 					}}>
-					<div
-						className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto"
-						style={{ width: 'inherit', height: '98%' }}>
+					<div className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto">
 						<Sidebar />
 					</div>
 					<div
 						data-testid="close-detached-sidebar"
 						className="closeDetachedSidebar"
-						onKeyDown={handleAttach}
+						onKeyDown={() => handleAttach}
 						role="button"
 						tabIndex={0}
 						aria-label="close-detach"

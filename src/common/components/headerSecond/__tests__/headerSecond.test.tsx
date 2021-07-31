@@ -41,14 +41,6 @@ test('detach-icon should contains correct className when detach-handler div is k
 	expect(detachIcon.className).toContain('sidebarDetached');
 });
 
-test('detach-icon should contains correct className when detach-handler div is key pressed with "Space" key', async () => {
-	const { getByTestId } = render(<HeaderSecond />);
-	const detachHandler = getByTestId(detachHandlerStr);
-	fireEvent.keyDown(detachHandler, { key: ' ' });
-	const detachIcon = getByTestId(detachIconStr);
-	expect(detachIcon.className).toContain('sidebarDetached');
-});
-
 test('detach-icon should contains correct className when detach-handler div is key pressed with other keys rather than "Space" and "Enter"', async () => {
 	const { getByTestId } = render(<HeaderSecond />);
 	const detachHandler = getByTestId(detachHandlerStr);
