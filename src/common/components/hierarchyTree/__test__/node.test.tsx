@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { useHierarchyStore } from '../../../../state/hierarchyState.store';
+import { useHierarchyStore } from '../../../../state/hierarchyStore/hierarchyState.store';
 import { TreeView } from '../../../../types';
 import { Node } from '../node';
 

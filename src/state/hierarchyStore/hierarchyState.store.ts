@@ -6,21 +6,22 @@ import {
 	NodePath,
 	TEditor,
 	TreeView,
-} from '../types';
-import { HierarchyClient as axios } from '../util/axios';
-import createStore from '../util/immer';
+} from '../../types';
+import { HierarchyClient as axios } from '../../util/axios';
+import createStore from '../../util/immer';
 import {
 	getChildrenLink,
 	getCreateApplicationLink,
 	getCreateGroupLink,
+	getSelfUpdateLink,
+} from './helpers/hierarchy.link.helper';
+import { nodeUpdateState } from './helpers/hierarchy.store.helper';
+import {
 	getHierarchyChildData,
 	getNodeToUpdate,
-	getSelfUpdateLink,
-	HierarchyState,
-	nodeUpdateState,
-	THierarchyChildDataResp,
 	updateNodeValues,
-} from './helpers/hierarchy.store.helper';
+} from './helpers/util.help';
+import { THierarchyChildDataResp, THierarchyState } from './type';
 
 const unknownError = {
 	errorCode: 0,
@@ -29,32 +30,34 @@ const unknownError = {
 	title: 'unknown error',
 };
 
-const HierarchyStore = (set: any, get: any): HierarchyState => ({
+const HierarchyStore = (set: any, get: any): THierarchyState => ({
 	loading: false,
 	error: '',
 	defaultExpandLevel: 0,
 	activeNodeId: 0,
 	hierarchyData: [],
 	setLoading: (val: boolean) =>
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			state.loading = val;
 		}),
 	setLoadingChildren: (nodePath, val: boolean) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
 			node.loadingChildren = val;
 		});
 	},
 	setError: (err: string) =>
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			state.error = err;
 		}),
 	initializeHierarchyState: (defaultExpandLevel?: number) =>
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			state.activeNodeId = 1;
 			state.defaultExpandLevel = defaultExpandLevel || 0;
 		}),
-	loadApplication: async (applicationId: string) => {
+	loadApplication: async () => {
+		const applicationId: string = get().activeNodeId;
+		get().setLoading(true);
 		const res = await axios
 			.get<ApiResponse<TreeView>>(`applications/${applicationId}`)
 			.catch((reason: ErrorResponse) => {
@@ -72,9 +75,10 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				const resGroup = await axios.get<ApiResponse<DataPaginated<TreeView>>>(
 					childrenGroupLink?.href,
 				);
+				axios.get();
 
 				if (resGroup) {
-					set((state: HierarchyState) => {
+					set((state: THierarchyState) => {
 						state.loading = false;
 						state.hierarchyData = [
 							{
@@ -95,7 +99,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				}
 			}
 		}
-		return set((state: HierarchyState) => {
+		return set((state: THierarchyState) => {
 			state.loading = false;
 		});
 	},
@@ -108,14 +112,14 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				await getHierarchyChildData(data);
 			nodeUpdateState(set, nodePath, err, children);
 		} else {
-			set((state: HierarchyState) => {
+			set((state: THierarchyState) => {
 				const node = getNodeToUpdate(state.hierarchyData, nodePath);
 				node.collapsed = val;
 			});
 		}
 	},
 	toggleEdit: (nodePath: NodePath[], val: boolean) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
 
 			node.edit = val;
@@ -123,7 +127,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		});
 	},
 	toggleNewEditor: (nodePath: NodePath[], val: TEditor) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
 			node.toggleNewEditor = val;
 			node.collapsed = false;
@@ -131,7 +135,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		});
 	},
 	setSaving: (nodePath: NodePath[], val: boolean) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
 			node.saving = val;
 		});
@@ -142,7 +146,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		else if (typeof val === 'string') err = val;
 		else err = val.errors?.[0];
 
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
 			node.error = err;
 		});
@@ -197,7 +201,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
 			} else if (resp && resp.status === 200) {
-				set((state: HierarchyState) => {
+				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
 					updateNodeValues(node, name, '');
 				});
@@ -256,7 +260,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
 			} else if (resp && resp.status === 200) {
-				set((state: HierarchyState) => {
+				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
 					updateNodeValues(node, name, value);
 				});
@@ -265,11 +269,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			}
 		}
 	},
-	getUserApplication: async () => {
-		get().setLoading(true);
-		await get().loadApplication(get().activeNodeId);
-	},
 });
 
 /* eslint-disable import/prefer-default-export */
-export const useHierarchyStore = createStore<HierarchyState>(HierarchyStore);
+export const useHierarchyStore = createStore<THierarchyState>(HierarchyStore);

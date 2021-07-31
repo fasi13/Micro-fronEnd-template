@@ -18,6 +18,7 @@ export interface Link {
 export interface ApiResponse<T> {
 	data: T;
 	success: boolean;
+	status: number;
 }
 
 export interface DataPaginated<T> {

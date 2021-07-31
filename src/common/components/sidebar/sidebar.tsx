@@ -68,7 +68,7 @@ const SidebarContent = () => {
 		initializeHierarchyState,
 		hierarchyData,
 		setLoading,
-		getUserApplication,
+		loadApplication,
 		createApplicationGroup,
 		createApplication,
 		editApplication,
@@ -83,7 +83,7 @@ const SidebarContent = () => {
 	useEffect(() => {
 		initializeHierarchyState(0);
 		setLoading(true);
-		getUserApplication();
+		loadApplication();
 	}, []);
 
 	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));

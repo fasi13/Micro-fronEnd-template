@@ -1,6 +1,8 @@
-import { ErrorResponse, TreeView } from '../../types';
-import { HierarchyClient as axios } from '../../util/axios';
-import * as helper from '../helpers/hierarchy.store.helper';
+import { ErrorResponse, TreeView } from '../../../types';
+import { HierarchyClient as axios } from '../../../util/axios';
+import * as linkHelper from '../helpers/hierarchy.link.helper';
+import * as storeHelper from '../helpers/hierarchy.store.helper';
+import * as utilStateHelper from '../helpers/util.help';
 import { useHierarchyStore } from '../hierarchyState.store';
 
 describe('hieararchy store', () => {
@@ -130,16 +132,16 @@ describe('hieararchy store', () => {
 			error: null,
 		});
 	});
-	test('hierarchy store is defined', () => {
+	it('hierarchy store is defined', () => {
 		expect(useHierarchyStore.getState()).toMatchSnapshot();
 	});
 
-	test('setLoading true sets loading state to true', () => {
+	it('setLoading true sets loading state to true', () => {
 		useHierarchyStore.getState().setLoading(true);
 		expect(useHierarchyStore.getState().loading).toBe(true);
 	});
 
-	test('set LoadingChildren sets a specific node loadingChildren state to true when passed true val', () => {
+	it('set LoadingChildren sets a specific node loadingChildren state to true when passed true val', () => {
 		useHierarchyStore
 			.getState()
 			.setLoadingChildren([{ pathId: -1, pathName: 'dummy' }], true);
@@ -149,14 +151,14 @@ describe('hieararchy store', () => {
 		);
 	});
 
-	test('set Error sets error value in store', () => {
+	it('set Error sets error value in store', () => {
 		useHierarchyStore.getState().setError(dummyErrorMsg);
 
 		expect(useHierarchyStore.getState().error).toBe(dummyErrorMsg);
 	});
 
 	describe('initializeHierarhcyState', () => {
-		test('initializeHierarhcyState call sets activeNodeId and defaultExpandLevel', () => {
+		it('initializeHierarhcyState call sets activeNodeId and defaultExpandLevel', () => {
 			useHierarchyStore.setState({
 				...useHierarchyStore.getState(),
 				activeNodeId: -1,
@@ -169,7 +171,7 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().defaultExpandLevel).toBe(0);
 		});
 
-		test('initializeHierarhcyState call with param 1 sets defaultExpandLevel to 1', () => {
+		it('initializeHierarhcyState call with param 1 sets defaultExpandLevel to 1', () => {
 			useHierarchyStore.setState({
 				...useHierarchyStore.getState(),
 				activeNodeId: -1,
@@ -184,6 +186,13 @@ describe('hieararchy store', () => {
 	});
 
 	describe('loadApplication', () => {
+		beforeEach(() => {
+			useHierarchyStore.setState({
+				...useHierarchyStore.getState(),
+				activeNodeId: 1,
+			});
+		});
+
 		it('loads an application by its Id from API', async () => {
 			jest
 				.spyOn(axios, 'get')
@@ -201,9 +210,9 @@ describe('hieararchy store', () => {
 						},
 					},
 				});
-			const getChildrenLinkSpy = jest.spyOn(helper, 'getChildrenLink');
+			const getChildrenLinkSpy = jest.spyOn(linkHelper, 'getChildrenLink');
 
-			await useHierarchyStore.getState().loadApplication('1');
+			await useHierarchyStore.getState().loadApplication();
 
 			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
 			expect(axios.get).toHaveBeenCalledWith('dummy/children_applicationGroup');
@@ -226,7 +235,7 @@ describe('hieararchy store', () => {
 		it('catches error for invalid application and sets error state', async () => {
 			jest.spyOn(axios, 'get').mockRejectedValueOnce(dummyErrorPayload);
 
-			await useHierarchyStore.getState().loadApplication('1');
+			await useHierarchyStore.getState().loadApplication();
 
 			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
 
@@ -241,9 +250,9 @@ describe('hieararchy store', () => {
 				},
 			});
 
-			const getChildrenLinkSpy = jest.spyOn(helper, 'getChildrenLink');
+			const getChildrenLinkSpy = jest.spyOn(linkHelper, 'getChildrenLink');
 
-			await useHierarchyStore.getState().loadApplication('1');
+			await useHierarchyStore.getState().loadApplication();
 
 			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
 			expect(getChildrenLinkSpy).toHaveBeenCalled();
@@ -258,7 +267,7 @@ describe('hieararchy store', () => {
 				...useHierarchyStore.getState(),
 				hierarchyData: dummyTreeView,
 			});
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 			await useHierarchyStore
 				.getState()
 				.toggleCollapse(dummyTreeView[0].nodePath, true);
@@ -270,9 +279,9 @@ describe('hieararchy store', () => {
 		});
 
 		it('if passed false it will expand node', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 			const getHierarchyChildDataSpy = jest
-				.spyOn(helper, 'getHierarchyChildData')
+				.spyOn(utilStateHelper, 'getHierarchyChildData')
 				.mockResolvedValueOnce({ err: null, children: dummyTreeView });
 
 			await useHierarchyStore
@@ -289,7 +298,7 @@ describe('hieararchy store', () => {
 
 	describe('toggleEdit', () => {
 		it('on toggleEdit it changes edit state and clears any error', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
 				.getState()
@@ -303,7 +312,7 @@ describe('hieararchy store', () => {
 
 	describe('toggleNewEditor', () => {
 		it('on toggleNewEditor it sets NewEditor Mode Application or Group', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
 				.getState()
@@ -321,7 +330,7 @@ describe('hieararchy store', () => {
 	});
 	describe('setSaving', () => {
 		it('on setSaving a nodes saving is toggled to passed val', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
 				.getState()
@@ -334,7 +343,7 @@ describe('hieararchy store', () => {
 
 	describe('setNodeError', () => {
 		it('setNodeError accepts string as error', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
 				.getState()
@@ -347,7 +356,7 @@ describe('hieararchy store', () => {
 		});
 
 		it('setNodeError accepts null as value', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
 				.getState()
@@ -358,7 +367,7 @@ describe('hieararchy store', () => {
 		});
 
 		it('setNodeError accepts ErrorResponse as value', async () => {
-			const nodeToUpdatespy = jest.spyOn(helper, 'getNodeToUpdate');
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 			const dummyError: ErrorResponse = {
 				errorCode: 0,
 				title: 'dummy',
@@ -383,9 +392,9 @@ describe('hieararchy store', () => {
 				data: { data: dummyTreeView[0], success: true },
 				status: 201,
 			});
-			const getCreateGroupLink = jest.spyOn(helper, 'getCreateGroupLink');
+			const getCreateGroupLink = jest.spyOn(linkHelper, 'getCreateGroupLink');
 			const getHierarchyChildData = jest
-				.spyOn(helper, 'getHierarchyChildData')
+				.spyOn(utilStateHelper, 'getHierarchyChildData')
 				.mockImplementationOnce((data: TreeView) =>
 					Promise.resolve({ err: null, children: [data] }),
 				);
@@ -411,8 +420,8 @@ describe('hieararchy store', () => {
 
 		it('handles create application group remote error', async () => {
 			jest.spyOn(axios, 'post').mockRejectedValueOnce(dummyErrorPayload);
-			const getCreateGroupLink = jest.spyOn(helper, 'getCreateGroupLink');
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const getCreateGroupLink = jest.spyOn(linkHelper, 'getCreateGroupLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -442,8 +451,8 @@ describe('hieararchy store', () => {
 				data: { data: dummyTreeView[0], error: null, success: true },
 				status: 300,
 			});
-			const getCreateGroupLink = jest.spyOn(helper, 'getCreateGroupLink');
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const getCreateGroupLink = jest.spyOn(linkHelper, 'getCreateGroupLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -467,7 +476,9 @@ describe('hieararchy store', () => {
 		});
 
 		it('ignores applicationGroups that do not have createGroupLink link', async () => {
-			const getCreateGroupLink = jest.spyOn(helper, 'getCreateGroupLink');
+			const getCreateGroupLink = jest
+				.spyOn(linkHelper, 'getCreateGroupLink')
+				.mockImplementationOnce(() => undefined);
 
 			await useHierarchyStore
 				.getState()
@@ -487,9 +498,9 @@ describe('hieararchy store', () => {
 				data: { data: dummyTreeView[0], error: null, success: true },
 				status: 200,
 			});
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
-			const getNodeToUpdate = jest.spyOn(helper, 'getNodeToUpdate');
-			const updateNodeValues = jest.spyOn(helper, 'updateNodeValues');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const getNodeToUpdate = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const updateNodeValues = jest.spyOn(utilStateHelper, 'updateNodeValues');
 
 			await useHierarchyStore
 				.getState()
@@ -518,8 +529,8 @@ describe('hieararchy store', () => {
 
 		it('handles editapplicationgroup remote error', async () => {
 			jest.spyOn(axios, 'put').mockRejectedValue(dummyErrorPayload);
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -547,8 +558,8 @@ describe('hieararchy store', () => {
 				data: { data: dummyTreeView[0], error: null, success: true },
 				status: 300,
 			});
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -572,7 +583,7 @@ describe('hieararchy store', () => {
 		});
 
 		it('ignores applicationGroups that do not have selfupdate link', async () => {
-			const getChildrenLinkSpy = jest.spyOn(helper, 'getSelfUpdateLink');
+			const getChildrenLinkSpy = jest.spyOn(linkHelper, 'getSelfUpdateLink');
 
 			await useHierarchyStore
 				.getState()
@@ -593,11 +604,11 @@ describe('hieararchy store', () => {
 				status: 201,
 			});
 			const getCreateApplicationLink = jest.spyOn(
-				helper,
+				linkHelper,
 				'getCreateApplicationLink',
 			);
 			const getHierarchyChildData = jest
-				.spyOn(helper, 'getHierarchyChildData')
+				.spyOn(utilStateHelper, 'getHierarchyChildData')
 				.mockImplementationOnce((data: TreeView) =>
 					Promise.resolve({ err: null, children: [data] }),
 				);
@@ -626,10 +637,10 @@ describe('hieararchy store', () => {
 		it('handles createApplication remote error', async () => {
 			jest.spyOn(axios, 'post').mockRejectedValue(dummyErrorPayload);
 			const getCreateApplicationLink = jest.spyOn(
-				helper,
+				linkHelper,
 				'getCreateApplicationLink',
 			);
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -659,10 +670,10 @@ describe('hieararchy store', () => {
 				status: 300,
 			});
 			const getCreateApplicationLink = jest.spyOn(
-				helper,
+				linkHelper,
 				'getCreateApplicationLink',
 			);
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -688,7 +699,7 @@ describe('hieararchy store', () => {
 
 		it('ignores application that do not have createApplication link', async () => {
 			const getCreateApplicationLinkSpy = jest.spyOn(
-				helper,
+				linkHelper,
 				'getCreateApplicationLink',
 			);
 
@@ -711,9 +722,9 @@ describe('hieararchy store', () => {
 				data: { data: dummyTreeView[0], error: null, success: true },
 				status: 200,
 			});
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
-			const getNodeToUpdate = jest.spyOn(helper, 'getNodeToUpdate');
-			const updateNodeValues = jest.spyOn(helper, 'updateNodeValues');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const getNodeToUpdate = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const updateNodeValues = jest.spyOn(utilStateHelper, 'updateNodeValues');
 
 			await useHierarchyStore
 				.getState()
@@ -746,8 +757,8 @@ describe('hieararchy store', () => {
 
 		it('handles editapplication remote error', async () => {
 			jest.spyOn(axios, 'put').mockRejectedValue(dummyErrorPayload);
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -776,8 +787,8 @@ describe('hieararchy store', () => {
 				data: { data: dummyTreeView[0], error: null, success: true },
 				status: 300,
 			});
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
-			const nodeUpdateState = jest.spyOn(helper, 'nodeUpdateState');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
 
 			await useHierarchyStore
 				.getState()
@@ -802,7 +813,7 @@ describe('hieararchy store', () => {
 		});
 
 		it('ignores application that do not have editApplication link', async () => {
-			const getSelfUpdateLink = jest.spyOn(helper, 'getSelfUpdateLink');
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
 
 			await useHierarchyStore
 				.getState()
@@ -814,21 +825,6 @@ describe('hieararchy store', () => {
 				);
 
 			expect(getSelfUpdateLink).toHaveBeenCalled();
-		});
-	});
-
-	describe('getUserApplication', () => {
-		it('gets current users activeApp/NodeId', async () => {
-			jest
-				.spyOn(useHierarchyStore.getState(), 'loadApplication')
-				.mockResolvedValueOnce(null);
-
-			await useHierarchyStore.getState().getUserApplication();
-
-			expect(useHierarchyStore.getState().loading).toBe(true);
-			expect(useHierarchyStore.getState().loadApplication).toHaveBeenCalledWith(
-				useHierarchyStore.getState().activeNodeId,
-			);
 		});
 	});
 });
