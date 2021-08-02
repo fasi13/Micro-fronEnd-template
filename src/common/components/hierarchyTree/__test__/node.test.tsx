@@ -5,13 +5,20 @@ import { useHierarchyStore } from '../../../../state/hierarchyStore/hierarchySta
 import { TreeView } from '../../../../types';
 import { Node } from '../node';
 
+const selfUpdateStr = 'dummy/selfupdate';
+const createGroupStr = 'dummy/createGroup';
+const createAppStr = 'dummy/createApp';
+const nodeLabelsStr = 'node-labels';
+const nodeAddAppGroupStr = 'node-add-app-group';
+
 describe('hieararchy store', () => {
 	let dummyTreeView: TreeView;
+	let dummyTreeView2: TreeView;
 
 	beforeEach(() => {
 		dummyTreeView = {
 			id: 0,
-			name: 'dummy',
+			name: 'dummy (12)',
 			collapsed: false,
 			edit: false,
 			error: null,
@@ -22,28 +29,98 @@ describe('hieararchy store', () => {
 			nodePath: [{ pathId: -1, pathName: 'dummy' }],
 			_links: [
 				{
-					href: 'dummy/selfupdate',
+					href: selfUpdateStr,
 					method: { method: 'GET' },
 					name: 'updateSelf',
 					rel: 'updateApplicationGroup',
 				},
 				{
-					href: 'dummy/selfupdate',
+					href: selfUpdateStr,
 					method: { method: 'GET' },
 					name: 'updateSelf',
 					rel: 'updateApplication',
 				},
+
 				{
-					href: 'dummy/createGroup',
+					href: createGroupStr,
 					method: { method: 'POST' },
 					name: 'createGroup',
 					rel: 'createApplicationGroup',
 				},
 				{
-					href: 'dummy/createApp',
+					href: createGroupStr,
+					method: { method: 'POST' },
+					name: 'createGroup',
+					rel: '',
+				},
+				{
+					href: createAppStr,
+					method: { method: 'POST' },
+					name: 'createApp',
+					rel: '',
+				},
+				{
+					href: 'dummy/children_application',
+					method: { method: 'GET' },
+					name: 'getChildren',
+					rel: 'applications',
+				},
+				{
+					href: 'dummy/children_applicationGroup',
+					method: { method: 'GET' },
+					name: 'getChildren',
+					rel: 'applicationGroups',
+				},
+			],
+		};
+		dummyTreeView2 = {
+			id: 0,
+			name: 'dummy',
+			collapsed: true,
+			edit: false,
+			error: null,
+			saving: false,
+			loadingChildren: false,
+			toggleNewEditor: '',
+			nodeDepth: 0,
+			nodePath: [{ pathId: -1, pathName: 'dummy' }],
+			_links: [
+				{
+					href: selfUpdateStr,
+					method: { method: 'GET' },
+					name: 'updateSelf',
+					rel: 'updateApplicationGroup',
+				},
+				{
+					href: selfUpdateStr,
+					method: { method: 'GET' },
+					name: 'updateSelf',
+					rel: 'updateApplication',
+				},
+
+				{
+					href: createGroupStr,
+					method: { method: 'POST' },
+					name: 'createGroup',
+					rel: '',
+				},
+				{
+					href: createAppStr,
 					method: { method: 'POST' },
 					name: 'createApp',
 					rel: 'createApplication',
+				},
+				{
+					href: createGroupStr,
+					method: { method: 'POST' },
+					name: 'createGroup',
+					rel: '',
+				},
+				{
+					href: createAppStr,
+					method: { method: 'POST' },
+					name: 'createApp',
+					rel: '',
 				},
 				{
 					href: 'dummy/children_application',
@@ -71,6 +148,7 @@ describe('hieararchy store', () => {
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={() => onToggleNewEditor}
 				toggleNewEditor={() => toggleNewEditor}
@@ -90,6 +168,7 @@ describe('hieararchy store', () => {
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={() => onToggleNewEditor}
 				toggleNewEditor={() => toggleNewEditor}
@@ -109,6 +188,7 @@ describe('hieararchy store', () => {
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={() => onToggleNewEditor}
 				toggleNewEditor={() => toggleNewEditor}
@@ -129,6 +209,7 @@ describe('hieararchy store', () => {
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={onToggleNewEditor}
 				toggleNewEditor={toggleNewEditor2}
@@ -139,25 +220,75 @@ describe('hieararchy store', () => {
 		expect(toggleNewEditor2).toHaveBeenCalled();
 	});
 
-	test('clicking on node-add-app-group should call toggleChildren', () => {
+	test('clicking on node-add-app-group should call toggleChildren if data is provided by value', () => {
 		useHierarchyStore.getState().setLoading(false);
 		const onToggleNewEditor = jest.fn();
-		const toggleNewEditor2 = jest.fn();
 		const toggleChildren = jest.fn();
+		const toggleNewEditor = jest.fn();
 
 		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={onToggleNewEditor}
-				toggleNewEditor={toggleNewEditor2}
+				toggleNewEditor={toggleNewEditor}
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		fireEvent.click(getByTestId('node-add-app-group'));
-		expect(toggleNewEditor2).toHaveBeenCalled();
+		expect(getByTestId(nodeLabelsStr)).toHaveTextContent(/(12)/i);
+		fireEvent.click(getByTestId(nodeAddAppGroupStr));
+		expect(toggleNewEditor).toHaveBeenCalled();
+		expect(toggleNewEditor).toHaveBeenCalled();
 	});
+
+	test('clicking on node-add-app-group should call toggleChildren if data is provided without value', () => {
+		useHierarchyStore.getState().setLoading(false);
+		const onToggleNewEditor = jest.fn();
+		const toggleChildren = jest.fn();
+		const toggleNewEditor = jest.fn();
+		const { getByTestId, debug } = render(
+			<Node
+				key={`node_${dummyTreeView2.id}`}
+				data={dummyTreeView2}
+				nodePath={dummyTreeView2.nodePath}
+				isLoadingChildren={useHierarchyStore.getState().loading}
+				editNode={onToggleNewEditor}
+				toggleNewEditor={toggleNewEditor}
+				toggleChildren={toggleChildren}
+			/>,
+		);
+		debug();
+		expect(getByTestId(nodeLabelsStr)).not.toHaveTextContent('(12)');
+		fireEvent.click(getByTestId(nodeAddAppGroupStr));
+		expect(toggleNewEditor).toHaveBeenCalled();
+		expect(toggleNewEditor).toHaveBeenCalled();
+	});
+	test('clicking on node-add-app-group should call toggleChildren ', () => {
+		useHierarchyStore.getState().setLoading(false);
+		const onToggleNewEditor = jest.fn();
+		const toggleChildren = jest.fn();
+		const toggleNewEditor = jest.fn();
+		// (val: TEditor) => useHierarchyStore.getState().toggleNewEditor(dummyTreeView.nodePath, val);
+
+		const { getByTestId, debug } = render(
+			<Node
+				key={`node_${dummyTreeView2.id}`}
+				data={dummyTreeView2}
+				nodePath={dummyTreeView2.nodePath}
+				isLoadingChildren={useHierarchyStore.getState().loading}
+				editNode={onToggleNewEditor}
+				toggleNewEditor={toggleNewEditor}
+				toggleChildren={toggleChildren}
+			/>,
+		);
+		debug();
+
+		fireEvent.click(getByTestId(nodeAddAppGroupStr));
+		expect(toggleNewEditor).toHaveBeenCalled();
+	});
+
 	test('clicking on node-labels should call toggleNewEditor', () => {
 		useHierarchyStore.getState().setLoading(false);
 		const onToggleNewEditor = jest.fn();
@@ -168,6 +299,7 @@ describe('hieararchy store', () => {
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={() => onToggleNewEditor}
 				toggleNewEditor={toggleNewEditor2('Application')}
@@ -188,6 +320,7 @@ describe('hieararchy store', () => {
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
+				nodePath={dummyTreeView.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={onToggleNewEditor2}
 				toggleNewEditor={toggleNewEditor2('Application')}

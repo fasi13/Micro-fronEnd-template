@@ -10,7 +10,7 @@ import React from 'react';
 import { changePasswordModalStore } from '../../../state';
 import './changePasswordModal.scss';
 
-function ChangePasswordModal() {
+const ChangePasswordModal: React.FunctionComponent = () => {
 	const open = changePasswordModalStore(state => state.showChangePasswordModal);
 	const requiredStr = 'This field is required.';
 	const passwordDidNotMatchStr = 'Password did not match.';
@@ -38,7 +38,7 @@ function ChangePasswordModal() {
 	const handleSubmit2 = (evt: any) => {
 		evt.preventDefault();
 		// if (!validateAllFields())
-		console.log(`Submitting ${oldPassword} ${newPassword} ${confirmPassword}`);
+		alert(`Submitting ${oldPassword} ${newPassword} ${confirmPassword}`);
 	};
 
 	const handleOldPassword = (e: any) => {
@@ -151,5 +151,5 @@ function ChangePasswordModal() {
 			</Dialog>
 		</>
 	);
-}
+};
 export default ChangePasswordModal;

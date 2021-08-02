@@ -1,9 +1,9 @@
 import {
-  CircularProgress,
-  createStyles,
-  List,
-  makeStyles,
-  TextField
+	CircularProgress,
+	createStyles,
+	List,
+	makeStyles,
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -28,12 +28,24 @@ const useStyles = makeStyles(() =>
 				fontSize: '2rem',
 				color: 'grey',
 			},
+			'& .MuiOutlinedInput-notchedOutline': {
+				borderColor: '#C2CBD3',
+			},
+			'&:hover .MuiOutlinedInput-notchedOutline': {
+				borderColor: '#C2CBD3',
+			},
+			'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+				borderColor: '#C2CBD3',
+			},
 			'& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input':
 				{
 					fontSize: '1.2rem',
+					padding: '0 4px',
 				},
 			'& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]': {
-				borderRadius: '0',
+				borderRadius: '5px',
+				background: '#C2CBD3',
+				height: '50px',
 			},
 		},
 	}),
@@ -51,13 +63,13 @@ function SearchBar() {
 
 	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
 
-  const searchElement = (keyword: string) => {
+	const searchElement = (keyword: string) => {
 		setInputKeyword(keyword);
 
 		return keyword.length < 3 ? null : setInputValue(keyword);
 	};
 
-  const updateAutocompletePopper = () => {
+	const updateAutocompletePopper = () => {
 		setOpen(!open);
 	};
 
@@ -72,14 +84,14 @@ function SearchBar() {
 	useEffect(() => {
 		if (!open) {
 			useSearchStore.setState({ searchData: [] });
-      searchSet.clear();
+			searchSet.clear();
 		}
 	}, [open]);
 
 	useEffect(() => {
 		if (inputKeyword.length < 3) {
 			useSearchStore.setState({ searchData: [] });
-      searchSet.clear();
+			searchSet.clear();
 		}
 	}, [inputKeyword]);
 
@@ -89,7 +101,6 @@ function SearchBar() {
 	const getApplicationId = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].id.toString();
 
-
 	return (
 		<Autocomplete
 			data-testid="searchautocomplete"
@@ -97,7 +108,7 @@ function SearchBar() {
 			onOpen={updateAutocompletePopper}
 			onClose={updateAutocompletePopper}
 			id="combo-box-demo"
-			style={{ width: 445, backgroundColor: '#d1d5db', zIndex: 999999 }}
+			style={{ width: 445, zIndex: 999999 }}
 			className={classes.searchInput}
 			options={Array.from(searchSet)}
 			getOptionLabel={x => getApplicationName(x)}
@@ -117,14 +128,13 @@ function SearchBar() {
 					{...params}
 					onChange={e => searchElement(e.target.value.toString())}
 					data-testid="searchfield"
-					placeholder="Search"
 					variant="outlined"
 					fullWidth
 					InputProps={{
 						...params.InputProps,
 						startAdornment: (
 							<>
-								<SearchIcon />
+								<SearchIcon style={{ fill: '#819AAE' }} />
 							</>
 						),
 						endAdornment: (

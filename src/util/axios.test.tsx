@@ -39,12 +39,7 @@ describe('axios', () => {
 	});
 	describe('axiosSuccessRequestInterceptor', () => {
 		it('should get ta success request', async () => {
-			// (dummyResponseData as unknown as jest.Mock).mockReturnValueOnce(
-			// 	'Page not found',
-			// );
-
 			const newConfig = await axiosSuccessRequestInterceptor(dummyResponseData);
-
 			expect(newConfig.headers).toBe('');
 			expect(newConfig.data.message).toBe('Page not found');
 		});
