@@ -27,7 +27,7 @@ export const OrbitSVG = (props: any) => {
 	);
 };
 
-export const HeaderSecond = () => {
+export const HeaderSecond: React.FunctionComponent = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 	const dSSetDetach = detachStore(state => state.setDetachSidebar);
 	const dSSetLastSideBarState = detachStore(state => state.setLastSidebarOpen);
@@ -60,7 +60,7 @@ export const HeaderSecond = () => {
 	};
 
 	return (
-		<div className="py-1 text-xl pl-14" style={{ background: '#31506A' }}>
+		<div className="px-6 py-2 text-xl" style={{ background: '#31506A' }}>
 			<div className="p-px flex flex-wrap">
 				<div
 					data-testid="detach-handler"

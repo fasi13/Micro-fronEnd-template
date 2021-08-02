@@ -11,11 +11,14 @@ const newPasswordStr = 'new-password';
 const oldPasswordStr = 'old-password';
 const confirmPasswordStr = 'confirm-password';
 const confirmErrorMsg = 'confirm-error-msg';
-
+const passwordDidNotMatchStr = 'Password did not match.';
 test('Old password text field should accept inputs', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const input = getByTestId(oldPasswordStr) as HTMLInputElement;
 	fireEvent.change(input, { target: { value: 'test' } });
@@ -25,7 +28,9 @@ test('Old password text field should accept inputs', () => {
 test('New password text field should accept inputs', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const input = getByTestId(newPasswordStr) as HTMLInputElement;
 	fireEvent.change(input, { target: { value: 'test' } });
@@ -35,7 +40,9 @@ test('New password text field should accept inputs', () => {
 test('Confirm password text field should accept inputs', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const input = getByTestId(confirmPasswordStr) as HTMLInputElement;
 	fireEvent.change(input, { target: { value: 'test' } });
@@ -45,7 +52,9 @@ test('Confirm password text field should accept inputs', () => {
 test('Cancel button should change the global changePasswordModal open state to false', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const cancelBtn = getByTestId('cancel-btn') as HTMLInputElement;
 	fireEvent.click(cancelBtn);
@@ -55,7 +64,9 @@ test('Cancel button should change the global changePasswordModal open state to f
 test('Submit button should not change the global changePasswordModal open state to false', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const submitBtn = getByTestId('submit-btn') as HTMLInputElement;
 	fireEvent.click(submitBtn);
@@ -65,33 +76,39 @@ test('Submit button should not change the global changePasswordModal open state 
 test('password did not match error message should be displayed when new password and confirm password are not the same', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const input2 = getByTestId(newPasswordStr) as HTMLInputElement;
 	fireEvent.change(input2, { target: { value: 'test' } });
 	const input3 = getByTestId(confirmPasswordStr) as HTMLInputElement;
 	fireEvent.change(input3, { target: { value: 'test2' } });
 	const checkContent = getByTestId(confirmErrorMsg);
-	expect(checkContent).toHaveTextContent('pdm');
+	expect(checkContent).toHaveTextContent(passwordDidNotMatchStr);
 });
 
 test('password did not match error message should not be displayed when new password and confirm password are the same', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 	const input2 = getByTestId(newPasswordStr) as HTMLInputElement;
 	fireEvent.change(input2, { target: { value: 'test' } });
 	const input3 = getByTestId(confirmPasswordStr) as HTMLInputElement;
 	fireEvent.change(input3, { target: { value: 'test' } });
 	const checkContent = getByTestId(confirmErrorMsg);
-	expect(checkContent).not.toHaveTextContent('pdm');
+	expect(checkContent).not.toHaveTextContent(passwordDidNotMatchStr);
 });
 
 test('required error message should  be displayed when input fields are touched and then empty', () => {
 	changePasswordModalState.setShowChangePasswordModal(true);
 	render(<ChangePasswordModal />);
-	const { getByTestId } = within(document.getElementById(passwordModalStr));
+	const { getByTestId } = within(
+		document.getElementById(passwordModalStr) ?? document.body,
+	);
 	within(document.body).getByTestId(modalContainerStr);
 
 	const input1 = getByTestId(oldPasswordStr) as HTMLInputElement;

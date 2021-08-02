@@ -28,12 +28,24 @@ const useStyles = makeStyles(() =>
 				fontSize: '2rem',
 				color: 'grey',
 			},
+			'& .MuiOutlinedInput-notchedOutline': {
+				borderColor: '#C2CBD3',
+			},
+			'&:hover .MuiOutlinedInput-notchedOutline': {
+				borderColor: '#C2CBD3',
+			},
+			'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+				borderColor: '#C2CBD3',
+			},
 			'& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input':
 				{
 					fontSize: '1.2rem',
+					padding: '0 4px',
 				},
 			'& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]': {
-				borderRadius: '0',
+				borderRadius: '5px',
+				background: '#C2CBD3',
+				height: '50px',
 			},
 		},
 	}),
@@ -79,7 +91,7 @@ function SearchBar() {
 			onOpen={updateAutocompletePopper}
 			onClose={updateAutocompletePopper}
 			id="combo-box-demo"
-			style={{ width: 445, backgroundColor: '#d1d5db', zIndex: 999999 }}
+			style={{ width: 445, zIndex: 999999 }}
 			className={classes.searchInput}
 			options={Array.from(searchSet)}
 			getOptionLabel={x => getApplicationName(x)}
@@ -93,14 +105,13 @@ function SearchBar() {
 					{...params}
 					data-testid="searchfield"
 					onChange={e => searchElement(e.target.value.toString())}
-					placeholder="Search"
 					variant="outlined"
 					fullWidth
 					InputProps={{
 						...params.InputProps,
 						startAdornment: (
 							<>
-								<SearchIcon />
+								<SearchIcon style={{ fill: '#819AAE' }} />
 							</>
 						),
 						endAdornment: (

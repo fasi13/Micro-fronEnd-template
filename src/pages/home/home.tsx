@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 		background: '#31506A',
 		border: 'none',
 		width: drawerWidth,
-		paddingTop: 145,
+		paddingTop: 165,
 		overflow: 'hidden',
 		paddingRight: '8px',
 		paddingBottom: '8px',
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 	drawerHeader: {
 		display: 'flex',
 		alignItems: 'center',
-		padding: theme.spacing(0, 1),
+		padding: theme.spacing(5, 5),
 		...theme.mixins.toolbar,
 		justifyContent: 'flex-end',
 	},
@@ -47,25 +47,15 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-// let centerX;
-// let centerY;
-
-// if (document.documentElement && document.documentElement.clientHeight) {
 const centerX = document.documentElement.clientWidth;
 const centerY = document.documentElement.clientHeight;
-// } else if (window.innerHeight) {
-// 	centerX = window.innerWidth;
-// 	centerY = window.innerHeight;
-// } else {
-// 	centerX = document.body.clientWidth;
-// 	centerY = document.body.clientHeight;
-// }
+
 const detachedSidebarWidth = 500;
 const detachedSidebarHeight = 700;
 const offsetLeft = (centerX - detachedSidebarWidth) / 2;
 const offsetTop = (centerY - detachedSidebarHeight) / 2;
 
-export const Home = () => {
+export const Home: React.FunctionComponent = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 
 	const classes = useStyles();
@@ -132,7 +122,7 @@ export const Home = () => {
 				className={clsx(classes.content, {
 					[classes.contentShift]: open,
 				})}>
-				<div className="header3 h-5">
+				<div className="header3 h-6">
 					<HeaderThird />
 				</div>
 				<div className={classes.drawerHeader} />
