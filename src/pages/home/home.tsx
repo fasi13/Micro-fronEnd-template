@@ -5,7 +5,7 @@ import React from 'react';
 import { Rnd } from 'react-rnd';
 import { Header, HeaderThird, Sidebar } from '../../common/components';
 import { detachStore } from '../../state';
-import { InitAxiosInterceptors } from '../../util/interceptor';
+// import { InitAxiosInterceptors } from '../../util/interceptor';
 import './home.scss';
 
 const drawerWidth = 500;
@@ -91,7 +91,7 @@ export const Home = () => {
 	return (
 		<div className="flex min-h-screen root">
 			{/* <CssBaseline /> */}
-			<InitAxiosInterceptors />
+			{/* <InitAxiosInterceptors /> */}
 			<Header />
 			<Drawer
 				data-testid="drawer"

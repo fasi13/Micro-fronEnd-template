@@ -1,14 +1,10 @@
-import { render } from '@testing-library/react';
-import { AxiosResponse } from 'axios';
-import React from 'react';
-import { ErrorResponse } from '../types';
+import { AxiosError, AxiosResponse } from 'axios';
 import {
-	HierarchyClient as interceptor,
-	requestErrorHandler,
-	responseErrorHandler,
-	responseHandler,
+	axiosErrorRequestInterceptor,
+	axiosErrorResponseInterceptor,
+	axiosSuccessRequestInterceptor,
+	axiosSuccessResponseInterceptor,
 } from './axios';
-import { InitAxiosInterceptors } from './interceptor';
 
 const dummyResponseData: AxiosResponse = {
 	config: { method: 'post' },
@@ -18,49 +14,55 @@ const dummyResponseData: AxiosResponse = {
 	data: { message: 'Page not found' },
 };
 
-const dummyErrorResponse: AxiosResponse<ErrorResponse> = {
+const dummyErrorResponse: AxiosError = {
 	config: { method: 'post' },
-	headers: '',
-	statusText: 'NotFound',
-	status: 404,
-	data: {
-		title: 'error',
-		status: 500,
-		errorCode: 435,
-		errors: ['Dummy Error'],
-	},
+	isAxiosError: true,
+	name: 'axios error',
+	message: 'return error',
+	toJSON: async () => null,
 };
 
-describe('axios interceptors', () => {
-	test('requestErrorHandler return', async () => {
-		let rejectRequest = '';
-		await requestErrorHandler('page Not Found').catch(resp => {
-			rejectRequest = resp;
+describe('axios', () => {
+	describe('axiosSuccessResponseInterceptor', () => {
+		it('should return the response', () => {
+			const axiosResponse = {
+				headers: {
+					'x-access-token': 'access token',
+					'x-refresh-token': 'refresh token',
+				},
+			};
+
+			const response = axiosSuccessResponseInterceptor(axiosResponse as any);
+
+			expect(response).toBe(response);
 		});
-		expect(rejectRequest).toBe('page Not Found');
 	});
+	describe('axiosSuccessRequestInterceptor', () => {
+		it('should get ta success request', async () => {
+			// (dummyResponseData as unknown as jest.Mock).mockReturnValueOnce(
+			// 	'Page not found',
+			// );
 
-	test('responseErrorHandler return', async () => {
-		await responseErrorHandler(dummyErrorResponse).catch(x => {
-			expect(x.title).toBe('error');
+			const newConfig = await axiosSuccessRequestInterceptor(dummyResponseData);
+
+			expect(newConfig.headers).toBe('');
+			expect(newConfig.data.message).toBe('Page not found');
 		});
 	});
 
-	test('interceptors.response is called', async () => {
-		jest.spyOn(interceptor, 'get').mockResolvedValue('');
-		const responseUseSpy = jest.spyOn(interceptor.interceptors.response, 'use');
-		render(<InitAxiosInterceptors />);
-		expect(responseUseSpy).toHaveBeenCalledTimes(1);
-	});
-	test('responseHandler error response ', () => {
-		const resp = responseHandler(dummyResponseData);
-		expect(resp.data.message).toBe('Page not found');
+	describe('axiosErrorResponseInterceptor', () => {
+		test('should reject with the error passed into it', async () => {
+			await axiosErrorResponseInterceptor(dummyErrorResponse).catch(x => {
+				expect(x.name).toBe('axios error');
+			});
+		});
 	});
 
-	test('interceptor', async () => {
-		jest.spyOn(interceptor, 'get').mockResolvedValue('');
-		const requestUseSpy = jest.spyOn(interceptor.interceptors.request, 'use');
-		render(<InitAxiosInterceptors />);
-		expect(requestUseSpy).toHaveBeenCalledTimes(1);
+	describe('axiosErrorRequestInterceptor', () => {
+		test('responseErrorHandler return', async () => {
+			await axiosErrorRequestInterceptor(dummyErrorResponse).catch(x => {
+				expect(x.isAxiosError).toBe(true);
+			});
+		});
 	});
 });
