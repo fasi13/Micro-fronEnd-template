@@ -144,7 +144,7 @@ describe('hieararchy store', () => {
 	it('set LoadingChildren sets a specific node loadingChildren state to true when passed true val', () => {
 		useHierarchyStore
 			.getState()
-			.setLoadingChildren([{ pathId: -1, pathName: 'dummy' }], true);
+			.setLoadingChildren([{ pathId: 1, pathName: 'dummy' }], true);
 
 		expect(useHierarchyStore.getState().hierarchyData[0].loadingChildren).toBe(
 			true,
