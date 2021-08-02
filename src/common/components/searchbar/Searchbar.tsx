@@ -3,7 +3,7 @@ import {
 	createStyles,
 	List,
 	makeStyles,
-	TextField,
+	TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -49,25 +49,39 @@ function SearchBar() {
 	const [open, setOpen] = React.useState(false);
 	const { searchData, searchLoading, searchApplication } = useSearchStore();
 
+	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
+
+  const searchElement = (keyword: string) => {
+		setInputKeyword(keyword);
+
+		return keyword.length < 3 ? null : setInputValue(keyword);
+	};
+
+  const updateAutocompletePopper = () => {
+		setOpen(!open);
+	};
+
 	useEffect(() => {
 		searchApplication(inputValue);
 	}, [debounceSearchTerm]);
 
-	React.useEffect(() => {
-		if (!open) {
-			useSearchStore.setState({ searchData: [] });
-		}
-	}, [open]);
-
-	const updateAutocompletePopper = () => {
-		setOpen(!open);
-	};
-
-	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
-
 	useEffect(() => {
 		searchSet = new Set<ApplicationPath>(searchData.map(d => d));
 	}, [searchData]);
+
+	useEffect(() => {
+		if (!open) {
+			useSearchStore.setState({ searchData: [] });
+      searchSet.clear();
+		}
+	}, [open]);
+
+	useEffect(() => {
+		if (inputKeyword.length < 3) {
+			useSearchStore.setState({ searchData: [] });
+      searchSet.clear();
+		}
+	}, [inputKeyword]);
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].name;
@@ -75,10 +89,6 @@ function SearchBar() {
 	const getApplicationId = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].id.toString();
 
-	const searchElement = (keyword: string) => {
-		setInputKeyword(keyword);
-		return keyword.length < 3 ? null : setInputValue(keyword);
-	};
 
 	return (
 		<Autocomplete
