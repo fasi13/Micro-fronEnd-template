@@ -304,8 +304,6 @@ test('should return element id ', () => {
 			},
 		],
 	};
-	const test2 = +mockMultipleArray.mockPath[0].value > 1;
-	console.log(test2);
 	const result = getElementId(mockMultipleArray.mockPath[0]);
 	expect(result).not.toBe('GroupAppName');
 });

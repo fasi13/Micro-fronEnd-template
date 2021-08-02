@@ -9,7 +9,6 @@ Object {
   "editApplication": [Function],
   "editApplicationGroup": [Function],
   "error": null,
-  "getUserApplication": [Function],
   "hierarchyData": Array [
     Object {
       "_links": Array [

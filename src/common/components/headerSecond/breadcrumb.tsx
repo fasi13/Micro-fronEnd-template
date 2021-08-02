@@ -3,8 +3,8 @@
 import { createStyles, makeStyles, Typography } from '@material-ui/core';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
-import React from 'react';
-import { useBreadcrumbStore } from '../../../state';
+import React, { useEffect } from 'react';
+import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
 import { getButtonId } from './breadCrumbUtil';
 
@@ -29,6 +29,9 @@ const useStyles = makeStyles(() =>
 function Breadcrumb() {
 	const classes = useStyles();
 
+	const activeNodeId = useHierarchyStore(state => state.activeNodeId);
+	const nodeName = useHierarchyStore(state => state.hierarchyData?.[0]?.name);
+
 	const { breadCrumbData, setBreadCrumb } = useBreadcrumbStore();
 
 	const handleClick = (index: number) => {
@@ -49,6 +52,10 @@ function Breadcrumb() {
 		setBreadCrumb(pathNameUpdate);
 		el?.scrollIntoView(true);
 	};
+
+	useEffect(() => {
+		setBreadCrumb([{ pathId: activeNodeId, pathName: nodeName }]);
+	}, [activeNodeId, nodeName]);
 
 	return (
 		<Breadcrumbs

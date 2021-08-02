@@ -4,7 +4,7 @@ import { HierarchyTree } from '..';
 import { detachStore, useHierarchyStore } from '../../../state';
 import Searchbar from '../searchbar/Searchbar';
 import './sidebar.scss';
-import { useHierarchyHelper } from './utils';
+import { useHierarchyHelper } from './useHierarchyHelper';
 
 const SidebarContent = () => {
 	const {
@@ -24,13 +24,13 @@ const SidebarContent = () => {
 		initializeHierarchyState,
 		hierarchyData,
 		setLoading,
-		getUserApplication,
+		loadApplication,
 	} = useHierarchyStore();
 
 	useEffect(() => {
 		initializeHierarchyState(0);
 		setLoading(true);
-		getUserApplication();
+		loadApplication();
 	}, []);
 
 	const dSSidebarState = detachStore(state => state.detachSidebar);
