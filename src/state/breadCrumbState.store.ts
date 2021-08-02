@@ -7,7 +7,7 @@ interface BreadcrumbState {
 }
 
 const BreadcrumbStore = (set: any): BreadcrumbState => ({
-	breadCrumbData: [{ pathId: -1, pathName: 'E2E Group' }],
+	breadCrumbData: [],
 	setBreadCrumb: (val: NodePath[]) =>
 		set((state: BreadcrumbState) => {
 			state.breadCrumbData = val;

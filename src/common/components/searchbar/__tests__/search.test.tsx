@@ -61,6 +61,7 @@ describe('Autocomplete Search', () => {
 		userEvent.type(inputField, 'group');
 
 		expect(inputField).toHaveValue('group');
+		//
 
 		useSearchStore.setState({ searchData: mockSearchData });
 
@@ -81,25 +82,4 @@ describe('Autocomplete Search', () => {
 		expect(getByTestId('searchfield-progress')).toBeInTheDocument();
 	});
 
-	test('Search data - with no data', async () => {
-		const { getByRole, getByText } = render(<Searchbar />);
-		const inputField = getByRole('textbox');
-
-		userEvent.type(inputField, '');
-		expect(inputField).toHaveValue('');
-		useSearchStore.setState({ searchData: [] });
-
-		expect(getByText('No results found!')).toBeInTheDocument();
-	});
-
-	test('Search data - with data', async () => {
-		const { getByRole, getByTestId } = render(<Searchbar />);
-
-		const inputField = getByRole('textbox');
-		userEvent.type(inputField, 'group');
-		expect(inputField).toHaveValue('group');
-
-		useSearchStore.setState({ searchData: mockSearchData });
-		expect(getByTestId('searchresult-list')).toBeInTheDocument();
-	});
 });

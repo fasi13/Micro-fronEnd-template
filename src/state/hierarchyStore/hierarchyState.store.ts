@@ -6,21 +6,22 @@ import {
 	NodePath,
 	TEditor,
 	TreeView,
-} from '../types';
-import { HierarchyClient as axios } from '../util/axios';
-import createStore from '../util/immer';
+} from '../../types';
+import { HierarchyClient as axios } from '../../util/axios';
+import createStore from '../../util/immer';
 import {
 	getChildrenLink,
 	getCreateApplicationLink,
 	getCreateGroupLink,
+	getSelfUpdateLink,
+} from './helpers/hierarchy.link.helper';
+import { nodeUpdateState } from './helpers/hierarchy.store.helper';
+import {
 	getHierarchyChildData,
 	getNodeToUpdate,
-	getSelfUpdateLink,
-	HierarchyState,
-	nodeUpdateState,
-	THierarchyChildDataResp,
 	updateNodeValues,
-} from './helpers/hierarchy.store.helper';
+} from './helpers/util.help';
+import { THierarchyChildDataResp, THierarchyState } from './type';
 
 const unknownError = {
 	errorCode: 0,
@@ -29,32 +30,34 @@ const unknownError = {
 	title: 'unknown error',
 };
 
-const HierarchyStore = (set: any, get: any): HierarchyState => ({
+const HierarchyStore = (set: any, get: any): THierarchyState => ({
 	loading: false,
 	error: '',
 	defaultExpandLevel: 0,
 	activeNodeId: 0,
 	hierarchyData: [],
 	setLoading: (val: boolean) =>
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			state.loading = val;
 		}),
 	setLoadingChildren: (nodePath, val: boolean) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.loadingChildren = val;
+			if (node) node.loadingChildren = val;
 		});
 	},
 	setError: (err: string) =>
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			state.error = err;
 		}),
 	initializeHierarchyState: (defaultExpandLevel?: number) =>
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			state.activeNodeId = 1;
 			state.defaultExpandLevel = defaultExpandLevel || 0;
 		}),
-	loadApplication: async (applicationId: string) => {
+	loadApplication: async () => {
+		const applicationId: string = get().activeNodeId;
+		get().setLoading(true);
 		const res = await axios
 			.get<ApiResponse<TreeView>>(`applications/${applicationId}`)
 			.catch((reason: ErrorResponse) => {
@@ -74,7 +77,7 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				);
 
 				if (resGroup) {
-					set((state: HierarchyState) => {
+					set((state: THierarchyState) => {
 						state.loading = false;
 						state.hierarchyData = [
 							{
@@ -95,45 +98,49 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 				}
 			}
 		}
-		return set((state: HierarchyState) => {
+		return set((state: THierarchyState) => {
 			state.loading = false;
 		});
 	},
 	toggleCollapse: async (nodePath: NodePath[], val: boolean) => {
 		if (!val) {
 			const data = getNodeToUpdate(get().hierarchyData, nodePath);
-
-			get().setLoadingChildren(nodePath, true);
-			const { err, children }: THierarchyChildDataResp =
-				await getHierarchyChildData(data);
-			nodeUpdateState(set, nodePath, err, children);
+			if (data) {
+				get().setLoadingChildren(nodePath, true);
+				const { err, children }: THierarchyChildDataResp =
+					await getHierarchyChildData(data);
+				nodeUpdateState(set, nodePath, err, children);
+			}
 		} else {
-			set((state: HierarchyState) => {
+			set((state: THierarchyState) => {
 				const node = getNodeToUpdate(state.hierarchyData, nodePath);
-				node.collapsed = val;
+				if (node) node.collapsed = val;
 			});
 		}
 	},
 	toggleEdit: (nodePath: NodePath[], val: boolean) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-
-			node.edit = val;
-			node.error = null;
+			if (node) {
+				node.edit = val;
+				node.error = null;
+			}
 		});
 	},
 	toggleNewEditor: (nodePath: NodePath[], val: TEditor) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.toggleNewEditor = val;
-			node.collapsed = false;
-			node.error = null;
+			if (node) {
+				node.toggleNewEditor = val;
+				node.collapsed = false;
+				node.error = null;
+			}
 		});
 	},
 	setSaving: (nodePath: NodePath[], val: boolean) => {
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.saving = val;
+			if (node) node.saving = val;
 		});
 	},
 	setNodeError: (nodePath: NodePath[], val) => {
@@ -142,9 +149,9 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 		else if (typeof val === 'string') err = val;
 		else err = val.errors?.[0];
 
-		set((state: HierarchyState) => {
+		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.error = err;
+			if (node) node.error = err;
 		});
 	},
 	createApplicationGroup: async (
@@ -197,9 +204,9 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
 			} else if (resp && resp.status === 200) {
-				set((state: HierarchyState) => {
+				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
-					updateNodeValues(node, name, '');
+					if (node) updateNodeValues(node, name, '');
 				});
 			} else {
 				nodeUpdateState(set, nodePath, unknownError, []);
@@ -256,20 +263,16 @@ const HierarchyStore = (set: any, get: any): HierarchyState => ({
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
 			} else if (resp && resp.status === 200) {
-				set((state: HierarchyState) => {
+				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
-					updateNodeValues(node, name, value);
+					if (node) updateNodeValues(node, name, value);
 				});
 			} else {
 				nodeUpdateState(set, nodePath, unknownError, []);
 			}
 		}
 	},
-	getUserApplication: async () => {
-		get().setLoading(true);
-		await get().loadApplication(get().activeNodeId);
-	},
 });
 
 /* eslint-disable import/prefer-default-export */
-export const useHierarchyStore = createStore<HierarchyState>(HierarchyStore);
+export const useHierarchyStore = createStore<THierarchyState>(HierarchyStore);

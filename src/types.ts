@@ -2,7 +2,6 @@ export interface Hierarchy {
 	name: string;
 }
 
-
 export interface Link {
 	href: string;
 	method: { method: 'POST' | 'GET' | 'PUT' | 'DELETE' };
@@ -13,6 +12,7 @@ export interface Link {
 export interface ApiResponse<T> {
 	data: T;
 	success: boolean;
+	status: number;
 }
 
 export interface DataPaginated<T> {
