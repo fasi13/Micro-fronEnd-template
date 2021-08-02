@@ -25,13 +25,21 @@ export const getNodeToUpdate = (
 	hierarchyData: TreeView[],
 	nodePath: NodePath[],
 ): TreeView | undefined => {
-	let node: TreeView | undefined = hierarchyData[0]; // starting from the parent i.e. hierarchyData[0]
+	// let node: TreeView | undefined = hierarchyData[0]; // starting from the parent i.e. hierarchyData[0]
+	let node: TreeView | undefined;
+
 	for (let i = 0; i < nodePath.length; i += 1) {
-		const nodeToUpdate: TreeView | undefined = node?.childrenData?.find(
-			pn => pn.id === nodePath[i].pathId,
-		);
-		node = nodeToUpdate || undefined;
+		if (i === 0 && nodePath[0].pathId === hierarchyData[0].id)
+			// eslint-disable-next-line prefer-destructuring
+			node = hierarchyData[0];
+		else {
+			const nodeToUpdate: TreeView | undefined = node?.childrenData?.find(
+				pn => pn.id === nodePath[i].pathId,
+			);
+			node = nodeToUpdate || undefined;
+		}
 	}
+
 	return node;
 };
 
@@ -55,7 +63,7 @@ export const getHierarchyChildData = async (
 
 			if (resp) {
 				resp.forEach(res => {
-					if (res.status === 200) {
+					if (res?.status === 200) {
 						const { items } = res?.data?.data;
 						childrenData = items.map((obj: TreeView) => ({
 							...obj,
@@ -66,12 +74,13 @@ export const getHierarchyChildData = async (
 							edit: false,
 							error: null,
 						}));
-					} else err = resp as unknown as ErrorResponse; // break here;
+					}
 				});
 			}
 			return Promise.resolve({ err, children: childrenData });
 		}
 	}
+
 	err = {
 		errorCode: 0,
 		errors: ['Could not find the link to load children with'],

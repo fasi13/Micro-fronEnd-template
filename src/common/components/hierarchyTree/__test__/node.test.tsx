@@ -67,7 +67,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor = jest.fn();
 		const toggleChildren = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -77,7 +77,6 @@ describe('hieararchy store', () => {
 				toggleChildren={() => toggleChildren}
 			/>,
 		);
-		debug();
 		expect(getByTestId('loading-indicator')).toBeInTheDocument();
 	});
 
@@ -87,7 +86,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor = jest.fn();
 		const toggleChildren = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -97,7 +96,6 @@ describe('hieararchy store', () => {
 				toggleChildren={() => toggleChildren}
 			/>,
 		);
-		debug();
 		expect(getByTestId('node-container')).toBeInTheDocument();
 	});
 
@@ -107,7 +105,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor = jest.fn();
 		const toggleChildren2 = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -117,8 +115,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren2}
 			/>,
 		);
-		debug();
-
 		fireEvent.click(getByTestId('node-container'));
 		expect(toggleChildren2).toHaveBeenCalled();
 	});
@@ -129,7 +125,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor2 = jest.fn();
 		const toggleChildren = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -139,8 +135,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		debug();
-
 		fireEvent.click(getByTestId('node-add-app'));
 		expect(toggleNewEditor2).toHaveBeenCalled();
 	});
@@ -151,7 +145,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor2 = jest.fn();
 		const toggleChildren = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -161,8 +155,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		debug();
-
 		fireEvent.click(getByTestId('node-add-app-group'));
 		expect(toggleNewEditor2).toHaveBeenCalled();
 	});
@@ -172,7 +164,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor2 = jest.fn();
 		const toggleChildren = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -182,8 +174,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		debug();
-
 		fireEvent.click(getByTestId('node-labels'));
 		expect(toggleNewEditor2).toHaveBeenCalled();
 	});
@@ -194,7 +184,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor2 = jest.fn();
 		const toggleChildren = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView.id}`}
 				data={dummyTreeView}
@@ -204,8 +194,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		debug();
-
 		fireEvent.click(getByTestId('node-edit'));
 		expect(onToggleNewEditor2).toHaveBeenCalled();
 	});

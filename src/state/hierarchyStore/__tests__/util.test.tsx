@@ -110,6 +110,9 @@ describe('getNodeToUpdate', () => {
 });
 
 describe('getHierarchyChildData', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
 	it('fetches a nodes children from API and add state props to it', async () => {
 		jest.spyOn(axios, 'get').mockResolvedValueOnce({
 			data: {
@@ -200,7 +203,7 @@ describe('getHierarchyChildData', () => {
 		});
 	});
 
-	it('will return could not find link error if data.links is undefind', async () => {
+	it('will return could not find link error if data.links is undefined', async () => {
 		const result = await helper.getHierarchyChildData({
 			...dummyTreeView[0],
 			_links: undefined,
@@ -214,6 +217,47 @@ describe('getHierarchyChildData', () => {
 				errorCode: 0,
 				title: 'unknown error',
 			},
+			children: [],
+		});
+	});
+
+	it('will ignore results that do not have status 200', async () => {
+		jest.spyOn(axios, 'get').mockResolvedValueOnce({
+			data: {
+				data: {
+					items: [
+						{
+							...dummyTreeView[0]?.childrenData[0],
+							collapsed: undefined,
+							toggleNewEditor: undefined,
+							saving: undefined,
+							loadingChildren: undefined,
+							edit: undefined,
+							error: undefined,
+						},
+					],
+				},
+			},
+			status: 0,
+		});
+
+		const p: Link[] | undefined = dummyTreeView[0]._links?.filter(
+			l => l.rel === 'applications',
+		);
+
+		const getChildrenSpy = jest
+			.spyOn(linkHelper, 'getChildrenLink')
+			.mockReturnValueOnce(p);
+
+		const result = await helper.getHierarchyChildData({
+			...dummyTreeView[0],
+			childrenData: undefined,
+		});
+
+		expect(getChildrenSpy).toHaveBeenCalled();
+
+		expect(result).toMatchObject({
+			err: null,
 			children: [],
 		});
 	});
@@ -240,7 +284,7 @@ describe('updateChildrenHandler', () => {
 		const data: TreeView = dummyTreeView[0];
 		helper.updateChildrenHandler(
 			{ ...data, childrenData: undefined },
-			dummyTreeView[0].childrenData,
+			dummyTreeView[0].childrenData || [],
 		);
 		expect(data).toMatchObject({
 			...data,

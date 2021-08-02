@@ -43,7 +43,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 	setLoadingChildren: (nodePath, val: boolean) => {
 		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.loadingChildren = val;
+			if (node) node.loadingChildren = val;
 		});
 	},
 	setError: (err: string) =>
@@ -75,7 +75,6 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 				const resGroup = await axios.get<ApiResponse<DataPaginated<TreeView>>>(
 					childrenGroupLink?.href,
 				);
-				axios.get();
 
 				if (resGroup) {
 					set((state: THierarchyState) => {
@@ -106,38 +105,42 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 	toggleCollapse: async (nodePath: NodePath[], val: boolean) => {
 		if (!val) {
 			const data = getNodeToUpdate(get().hierarchyData, nodePath);
-
-			get().setLoadingChildren(nodePath, true);
-			const { err, children }: THierarchyChildDataResp =
-				await getHierarchyChildData(data);
-			nodeUpdateState(set, nodePath, err, children);
+			if (data) {
+				get().setLoadingChildren(nodePath, true);
+				const { err, children }: THierarchyChildDataResp =
+					await getHierarchyChildData(data);
+				nodeUpdateState(set, nodePath, err, children);
+			}
 		} else {
 			set((state: THierarchyState) => {
 				const node = getNodeToUpdate(state.hierarchyData, nodePath);
-				node.collapsed = val;
+				if (node) node.collapsed = val;
 			});
 		}
 	},
 	toggleEdit: (nodePath: NodePath[], val: boolean) => {
 		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-
-			node.edit = val;
-			node.error = null;
+			if (node) {
+				node.edit = val;
+				node.error = null;
+			}
 		});
 	},
 	toggleNewEditor: (nodePath: NodePath[], val: TEditor) => {
 		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.toggleNewEditor = val;
-			node.collapsed = false;
-			node.error = null;
+			if (node) {
+				node.toggleNewEditor = val;
+				node.collapsed = false;
+				node.error = null;
+			}
 		});
 	},
 	setSaving: (nodePath: NodePath[], val: boolean) => {
 		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.saving = val;
+			if (node) node.saving = val;
 		});
 	},
 	setNodeError: (nodePath: NodePath[], val) => {
@@ -148,7 +151,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 
 		set((state: THierarchyState) => {
 			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			node.error = err;
+			if (node) node.error = err;
 		});
 	},
 	createApplicationGroup: async (
@@ -203,7 +206,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			} else if (resp && resp.status === 200) {
 				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
-					updateNodeValues(node, name, '');
+					if (node) updateNodeValues(node, name, '');
 				});
 			} else {
 				nodeUpdateState(set, nodePath, unknownError, []);
@@ -262,7 +265,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			} else if (resp && resp.status === 200) {
 				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
-					updateNodeValues(node, name, value);
+					if (node) updateNodeValues(node, name, value);
 				});
 			} else {
 				nodeUpdateState(set, nodePath, unknownError, []);

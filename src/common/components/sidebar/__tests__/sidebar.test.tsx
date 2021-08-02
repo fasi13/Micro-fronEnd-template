@@ -1,5 +1,6 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import { useHierarchyStore } from '../../../../state/hierarchyStore';
+import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react-test-renderer';
+import { useHierarchyStore } from '../../../../state';
 import { TreeView } from '../../../../types';
 import { useHierarchyHelper } from '../useHierarchyHelper';
 
@@ -7,12 +8,6 @@ interface NodePath {
 	pathName: string;
 	pathId: number;
 }
-// test('renders sidebar component', () => {
-// 	act(() => {
-// 		const { debug } = render(<Sidebar />);
-// 		debug();
-// 	});
-// });
 
 describe('setNodeErrorFn', () => {
 	const selfupdateUrl = 'dummy/selfupdate';

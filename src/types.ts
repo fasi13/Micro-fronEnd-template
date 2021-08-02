@@ -2,7 +2,6 @@ export interface Hierarchy {
 	name: string;
 }
 
-
 export interface Link {
 	href: string;
 	method: { method: 'POST' | 'GET' | 'PUT' | 'DELETE' };
