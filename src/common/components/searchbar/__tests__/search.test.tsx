@@ -53,7 +53,7 @@ describe('Autocomplete Search', () => {
 	});
 
 	test('It should allow search keyword to be inputted', async () => {
-		const { getByRole, queryByRole } = render(<Searchbar />);
+		const { getByRole, queryByRole, getByTestId } = render(<Searchbar />);
 
 		expect(queryByRole('listbox')).toBeNull();
 		const inputField = getByRole('textbox');
@@ -67,6 +67,19 @@ describe('Autocomplete Search', () => {
 
 		const ListBox = getByRole('listbox');
 		expect(ListBox).toBeDefined();
-		// await waitFor(() => expect(getByRole('listbox')).toBeDefined())
+		expect(getByTestId('searchresult-list')).toBeInTheDocument();
 	});
+
+	test('Search loading - false', async () => {
+		const { queryByTestId } = render(<Searchbar />);
+		useSearchStore.setState({ searchLoading: false });
+		expect(queryByTestId('searchfield-progress')).not.toBeInTheDocument();
+	});
+
+	test('Search loading - true', async () => {
+		const { getByTestId } = render(<Searchbar />);
+		useSearchStore.setState({ searchLoading: true });
+		expect(getByTestId('searchfield-progress')).toBeInTheDocument();
+	});
+
 });
