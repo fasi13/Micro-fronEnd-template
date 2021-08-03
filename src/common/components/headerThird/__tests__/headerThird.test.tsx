@@ -32,21 +32,6 @@ test('drawer must toggle when drawer open/close icon is clicked', () => {
 	expect(dSSidebarState.open).toBeTruthy();
 });
 
-test('drawer must toggle when drawer open/close icon is pressed on keyDown using "enter" key', () => {
-	dSSidebarState.setOpen(false);
-	const { getByTestId } = render(<HeaderThird />);
-	const drawerOpen = getByTestId(drawerOpenStr);
-	fireEvent.keyDown(drawerOpen, { key: 'Enter', code: 13 });
-	expect(dSSidebarState.open).toBeTruthy();
-});
-
-test('drawer must toggle when drawer open/close icon is pressed on keyDown using "space" key', () => {
-	dSSidebarState.setOpen(false);
-	const { getByTestId } = render(<HeaderThird />);
-	const drawerOpen = getByTestId(drawerOpenStr);
-	fireEvent.keyDown(drawerOpen, { key: 'Enter', code: 32 });
-	expect(dSSidebarState.open).toBeTruthy();
-});
 test('drawer must not toggle when drawer open/close icon is pressed on keyDown using other keys', () => {
 	dSSidebarState.setOpen(false);
 	const { getByTestId } = render(<HeaderThird />);

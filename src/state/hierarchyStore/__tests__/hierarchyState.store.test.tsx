@@ -12,7 +12,7 @@ describe('hieararchy store', () => {
 	const createAppUrl = 'dummy/createApp';
 	const childrenAppUrl = 'dummy/children_application';
 	const childrenAppGroupUrl = 'dummy/children_applicationGroup';
-	const dummyErrorMsg = 'dummy error';
+	const dummyErrorMsg = 'dummy-error-dummy-error';
 	const someErrorOccurred = 'some error occurred';
 	const dummyErrorPayload = {
 		title: 'dummyerror',
@@ -27,7 +27,8 @@ describe('hieararchy store', () => {
 		name: 'dummy',
 		collapsed: false,
 		edit: false,
-		error: null,
+		// eslint-disable-next-line sonarjs/no-duplicate-string
+		error: 'dummy error',
 		saving: false,
 		loadingChildren: false,
 		toggleNewEditor: '',
@@ -151,6 +152,16 @@ describe('hieararchy store', () => {
 		);
 	});
 
+	it('set LoadingChildren will not update state if nodeToUpdate is not found', () => {
+		useHierarchyStore
+			.getState()
+			.setLoadingChildren([{ pathId: -1, pathName: 'dummy' }], true);
+
+		expect(useHierarchyStore.getState().hierarchyData[0].loadingChildren).toBe(
+			false,
+		);
+	});
+
 	it('set Error sets error value in store', () => {
 		useHierarchyStore.getState().setError(dummyErrorMsg);
 
@@ -215,7 +226,7 @@ describe('hieararchy store', () => {
 			await useHierarchyStore.getState().loadApplication();
 
 			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
-			expect(axios.get).toHaveBeenCalledWith('dummy/children_applicationGroup');
+			expect(axios.get).toHaveBeenCalledWith(childrenAppGroupUrl);
 			expect(getChildrenLinkSpy).toHaveBeenCalled();
 
 			expect(useHierarchyStore.getState().loading).toBe(false);
@@ -259,9 +270,33 @@ describe('hieararchy store', () => {
 
 			expect(useHierarchyStore.getState().loading).toBe(false);
 		});
+
+		it('ignores modifying state if resGroup is falsy', async () => {
+			jest
+				.spyOn(axios, 'get')
+				.mockResolvedValueOnce({
+					data: { data: dummyTreeView[0], success: true },
+				})
+				.mockResolvedValueOnce(undefined);
+			const getChildrenLinkSpy = jest.spyOn(linkHelper, 'getChildrenLink');
+
+			await useHierarchyStore.getState().loadApplication();
+
+			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
+			expect(axios.get).toHaveBeenCalledWith(childrenAppGroupUrl);
+			expect(getChildrenLinkSpy).toHaveBeenCalled();
+
+			expect(useHierarchyStore.getState().loading).toBe(false);
+			expect(useHierarchyStore.getState().hierarchyData).toMatchObject([
+				...dummyTreeView,
+			]);
+		});
 	});
 
 	describe('toggleCollapse', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
 		it('if passed true it will collapse the node', async () => {
 			useHierarchyStore.setState({
 				...useHierarchyStore.getState(),
@@ -294,10 +329,44 @@ describe('hieararchy store', () => {
 				false,
 			);
 		});
+
+		it('if passed true and unable to find node to update state will not change', async () => {
+			useHierarchyStore.setState({
+				...useHierarchyStore.getState(),
+				hierarchyData: dummyTreeView,
+			});
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			await useHierarchyStore
+				.getState()
+				.toggleCollapse([{ pathId: -9999, pathName: 'dummy' }], true);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				false,
+			);
+		});
+
+		it('if node to update is not found it will not update any state', async () => {
+			const nodeToUpdatespy = jest
+				.spyOn(utilStateHelper, 'getNodeToUpdate')
+				.mockReturnValueOnce(undefined);
+
+			const getHierarchyChildDataSpy = jest.spyOn(
+				utilStateHelper,
+				'getHierarchyChildData',
+			);
+
+			await useHierarchyStore
+				.getState()
+				.toggleCollapse([{ pathId: -999, pathName: 'dummy' }], false);
+
+			expect(nodeToUpdatespy).toReturnWith(undefined);
+			expect(getHierarchyChildDataSpy).not.toHaveBeenCalled();
+		});
 	});
 
 	describe('toggleEdit', () => {
-		it('on toggleEdit it changes edit state and clears any error', async () => {
+		it('on toggleEdit changes edit state and clears any error', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -308,10 +377,24 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].edit).toBe(true);
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
 		});
+
+		it('on toggleEdit will not change state if nodeToUpdate is not found', async () => {
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.toggleEdit([{ pathId: -9999, pathName: 'dummy' }], true);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].edit).toBe(false);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toMatch(
+				'dummy error',
+			);
+		});
 	});
 
 	describe('toggleNewEditor', () => {
-		it('on toggleNewEditor it sets NewEditor Mode Application or Group', async () => {
+		it('on toggleNewEditor sets NewEditor Mode Application or Group', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -327,9 +410,28 @@ describe('hieararchy store', () => {
 			);
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
 		});
+
+		it('on toggleNewEditor will not change state if nodeToUpdate is not found', async () => {
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.toggleNewEditor([{ pathId: -999, pathName: 'dummy' }], 'Application');
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].toggleNewEditor,
+			).toBe('');
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				false,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toEqual(
+				'dummy error',
+			);
+		});
 	});
 	describe('setSaving', () => {
-		it('on setSaving a nodes saving is toggled to passed val', async () => {
+		it('setSaving will not have any effect on state if nodeToUpdate is not found', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -338,6 +440,17 @@ describe('hieararchy store', () => {
 
 			expect(nodeToUpdatespy).toHaveBeenCalled();
 			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(true);
+		});
+
+		it('on setSaving a nodes saving is toggled to passed val', async () => {
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.setSaving([{ pathId: -999, pathName: '' }], true);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
 		});
 	});
 
@@ -382,6 +495,25 @@ describe('hieararchy store', () => {
 			expect(nodeToUpdatespy).toHaveBeenCalled();
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toMatch(
 				'dummy',
+			);
+		});
+
+		it('setNodeError will not update state if nodeToUpdate is not found', async () => {
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const dummyError: ErrorResponse = {
+				errorCode: 0,
+				title: 'dummy',
+				status: 500,
+				errors: ['dummy'],
+			};
+
+			await useHierarchyStore
+				.getState()
+				.setNodeError([{ pathId: -999, pathName: 'dummy' }], dummyError);
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toMatch(
+				'dummy error',
 			);
 		});
 	});
@@ -490,9 +622,28 @@ describe('hieararchy store', () => {
 
 			expect(getCreateGroupLink).toHaveBeenCalled();
 		});
+
+		it('passes empty array to getCreateGroupLink if data.links is falsy', async () => {
+			const getCreateGroupLink = jest
+				.spyOn(linkHelper, 'getCreateGroupLink')
+				.mockImplementationOnce(() => undefined);
+
+			await useHierarchyStore
+				.getState()
+				.createApplicationGroup(
+					{ ...dummyTreeView[0], _links: undefined },
+					dummyTreeView[0].nodePath,
+					'newAppGroup',
+				);
+
+			expect(getCreateGroupLink).toHaveBeenCalledWith([]);
+		});
 	});
 
 	describe('editApplicationGroup', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
 		it('successfully edits application group', async () => {
 			jest.spyOn(axios, 'put').mockResolvedValueOnce({
 				data: { data: dummyTreeView[0], error: null, success: true },
@@ -594,6 +745,28 @@ describe('hieararchy store', () => {
 				);
 
 			expect(getChildrenLinkSpy).toHaveBeenCalled();
+		});
+
+		it('will not affect state if node to update is not found', async () => {
+			jest.spyOn(axios, 'put').mockResolvedValueOnce({
+				data: { data: dummyTreeView[0], error: null, success: true },
+				status: 200,
+			});
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const getNodeToUpdate = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const updateNodeValues = jest.spyOn(utilStateHelper, 'updateNodeValues');
+
+			await useHierarchyStore
+				.getState()
+				.editApplicationGroup(
+					dummyTreeView[0],
+					[{ pathId: -9999, pathName: 'dumy' }],
+					'editAppGroup',
+				);
+
+			expect(getSelfUpdateLink).toHaveBeenCalled();
+			expect(getNodeToUpdate).toHaveBeenCalled();
+			expect(updateNodeValues).not.toHaveBeenCalled();
 		});
 	});
 
@@ -717,6 +890,9 @@ describe('hieararchy store', () => {
 	});
 
 	describe('editApplication', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
 		it('successfully edits application detail', async () => {
 			jest.spyOn(axios, 'put').mockResolvedValueOnce({
 				data: { data: dummyTreeView[0], error: null, success: true },
@@ -782,6 +958,21 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
 		});
 
+		it('passes empty array to getSelfUpdateLink if data.links is falsy', async () => {
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+
+			await useHierarchyStore
+				.getState()
+				.editApplication(
+					{ ...dummyTreeView[0], _links: undefined },
+					dummyTreeView[0].nodePath,
+					'editApp',
+					'editValue',
+				);
+
+			expect(getSelfUpdateLink).toHaveBeenCalledWith([], false);
+		});
+
 		it('handles anything other than response.status 200 as unknown error', async () => {
 			jest.spyOn(axios, 'put').mockResolvedValueOnce({
 				data: { data: dummyTreeView[0], error: null, success: true },
@@ -825,6 +1016,29 @@ describe('hieararchy store', () => {
 				);
 
 			expect(getSelfUpdateLink).toHaveBeenCalled();
+		});
+
+		it('will not update state if getNodeToUpdate returns falsy', async () => {
+			jest.spyOn(axios, 'put').mockResolvedValueOnce({
+				data: { data: dummyTreeView[0], error: null, success: true },
+				status: 200,
+			});
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const getNodeToUpdate = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const updateNodeValues = jest.spyOn(utilStateHelper, 'updateNodeValues');
+
+			await useHierarchyStore
+				.getState()
+				.editApplication(
+					dummyTreeView[0],
+					[{ pathId: -999, pathName: '' }],
+					'editApp',
+					'editValue',
+				);
+
+			expect(getSelfUpdateLink).toHaveBeenCalled();
+			expect(getNodeToUpdate).toHaveBeenCalled();
+			expect(updateNodeValues).not.toHaveBeenCalled();
 		});
 	});
 });

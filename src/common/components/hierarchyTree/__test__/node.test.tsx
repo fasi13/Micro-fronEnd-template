@@ -15,7 +15,7 @@ describe('hieararchy store', () => {
 	let dummyTreeView: TreeView;
 	let dummyTreeView2: TreeView;
 
-	beforeEach(() => {
+	beforeEach(() => { 
 		dummyTreeView = {
 			id: 0,
 			name: 'dummy (12)',
