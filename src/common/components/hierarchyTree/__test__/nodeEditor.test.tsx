@@ -79,7 +79,7 @@ describe('hieararchy store', () => {
 		const submitHandler = jest.fn();
 		const onSetNodeErr = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView.id}`}
 				onClose={() => {
@@ -94,7 +94,6 @@ describe('hieararchy store', () => {
 				clearError={onSetNodeErr()}
 			/>,
 		);
-		debug();
 		const input = getByTestId('node-editor-input') as HTMLInputElement;
 		fireEvent.change(input, {
 			target: { value: 'test' },
@@ -168,7 +167,7 @@ describe('hieararchy store', () => {
 		const submitHandler = jest.fn();
 		const onSetNodeErr = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView.id}`}
 				onClose={() => {
@@ -183,7 +182,6 @@ describe('hieararchy store', () => {
 				clearError={onSetNodeErr()}
 			/>,
 		);
-		debug();
 		const nodeCancelBtn = getByTestId('node-cancel-btn') as HTMLInputElement;
 		fireEvent.click(nodeCancelBtn);
 		expect(onToggleEdit).toHaveBeenCalled();
