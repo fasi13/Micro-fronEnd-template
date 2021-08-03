@@ -49,7 +49,9 @@ export const Node: React.FC<NodePropType> = props => {
 	};
 
 	return (
-		<div className="h-10.5 my-1 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
+		<div
+			data-testid="node-component"
+			className="h-10.5 my-1 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
 			<>
 				{isLoadingChildren ? (
 					<NodeLoadingIndicator />

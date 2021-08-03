@@ -57,7 +57,9 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	}, []);
 
 	return (
-		<div className="flex flex-row items-center justify-start w-10/12 h-auto pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform lg:w-10/12">
+		<div
+			data-testid="node-editor-component"
+			className="flex flex-row items-center justify-start w-10/12 h-auto pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform lg:w-10/12">
 			<form
 				data-testid="node-editor-form"
 				className="relative h-full shadow-sm"
