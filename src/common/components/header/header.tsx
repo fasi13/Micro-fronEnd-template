@@ -128,9 +128,7 @@ export const Header = () => {
 								open={Boolean(anchorMenu)}
 								disableScrollLock
 								onClose={handleMenuClose}>
-								<MenuItem
-									className="gap-x-2 text-5xl"
-									style={{ margin: '5px' }}>
+								<MenuItem className="ui-menu-items menu-box gap-x-2 text-5xl">
 									<ClientMgtIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -140,7 +138,7 @@ export const Header = () => {
 										}
 									/>
 								</MenuItem>
-								<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+								<MenuItem className="ui-menu-items gap-x-2">
 									<ContentMgtIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -152,7 +150,7 @@ export const Header = () => {
 										}
 									/>
 								</MenuItem>
-								<MenuItem className="gap-x-2" style={{ margin: '5px' }}>
+								<MenuItem className="ui-menu-items gap-x-2">
 									<CommunicationIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -166,8 +164,7 @@ export const Header = () => {
 								</MenuItem>
 								<MenuItem
 									data-testid="programs"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+									className="ui-menu-items gap-x-2">
 									<ProgramsIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -177,8 +174,7 @@ export const Header = () => {
 								</MenuItem>
 								<MenuItem
 									data-testid="price-settings"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+									className="ui-menu-items gap-x-2">
 									<PriceIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -186,10 +182,7 @@ export const Header = () => {
 										}
 									/>
 								</MenuItem>
-								<MenuItem
-									data-testid="roles"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+								<MenuItem data-testid="roles" className="ui-menu-items gap-x-2">
 									<RolesIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={<span className="text-sm font-bold">ROLES</span>}
@@ -197,8 +190,7 @@ export const Header = () => {
 								</MenuItem>
 								<MenuItem
 									data-testid="invoice-mgt"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+									className="ui-menu-items gap-x-2">
 									<InvoiceIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -210,8 +202,7 @@ export const Header = () => {
 								</MenuItem>
 								<MenuItem
 									data-testid="user-mgt"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+									className="ui-menu-items gap-x-2">
 									<UserMgtIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -221,8 +212,7 @@ export const Header = () => {
 								</MenuItem>
 								<MenuItem
 									data-testid="settings-mgt"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+									className="ui-menu-items gap-x-2">
 									<SettingsIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={
@@ -234,8 +224,7 @@ export const Header = () => {
 								</MenuItem>
 								<MenuItem
 									data-testid="user-permission"
-									className="gap-x-2"
-									style={{ margin: '5px' }}>
+									className="ui-menu-items gap-x-2">
 									<PermissionIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={

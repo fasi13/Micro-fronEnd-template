@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { useHierarchyStore } from '../../../../state';
-import { TreeView } from '../../../../types';
+import { ErrorResponse, TreeView } from '../../../../types';
 import { NodeEditor } from '../nodeEditor';
 
+const nodeEditorInputStr = 'node-editor-input';
 describe('hieararchy store', () => {
-	let dummyTreeView: TreeView;
-
-	beforeEach(() => {
-		dummyTreeView = {
+	const dummyTreeView: TreeView[] = [
+		{
 			id: 0,
 			name: 'dummy',
 			collapsed: false,
@@ -19,7 +19,7 @@ describe('hieararchy store', () => {
 			loadingChildren: false,
 			toggleNewEditor: '',
 			nodeDepth: 0,
-			nodePath: [{ pathId: -1, pathName: 'dummy' }],
+			nodePath: [{ pathId: 0, pathName: 'dummy' }],
 			_links: [
 				{
 					href: 'dummy/selfupdate',
@@ -70,7 +70,13 @@ describe('hieararchy store', () => {
 					rel: 'applicationGroups',
 				},
 			],
-		};
+		},
+	];
+	beforeEach(() => {
+		useHierarchyStore.setState({
+			...useHierarchyStore.getState(),
+			hierarchyData: [...dummyTreeView],
+		});
 	});
 
 	test('node editor input should accept user input', () => {
@@ -79,88 +85,133 @@ describe('hieararchy store', () => {
 		const submitHandler = jest.fn();
 		const onSetNodeErr = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
-				key={`node_editor_${dummyTreeView.id}`}
+				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
-					onToggleEdit(dummyTreeView.nodePath, false);
+					onToggleEdit(dummyTreeView[0].nodePath, false);
 				}}
 				onSubmit={submitHandler}
-				error={dummyTreeView.error}
-				isSaving={dummyTreeView.saving}
+				error={dummyTreeView[0].error}
+				isSaving={dummyTreeView[0].saving}
 				isApplication
 				data="test-data"
 				setError={onSetNodeErr()}
 				clearError={onSetNodeErr()}
 			/>,
 		);
-		debug();
-		const input = getByTestId('node-editor-input') as HTMLInputElement;
+		const input = getByTestId(nodeEditorInputStr) as HTMLInputElement;
 		fireEvent.change(input, {
 			target: { value: 'test' },
 		});
 		expect(input.value).toBe('test');
 	});
 
-	// test('node editor form submission should call correct function', () => {
-	// 	useHierarchyStore.getState().setLoading(true);
-	// 	const onToggleEdit = jest.fn();
-	// 	const submitHandler = jest.fn();
-	// 	const onSetNodeErr = jest.fn();
+	test('node editor should validate if the input is empty', () => {
+		useHierarchyStore.getState().setLoading(true);
+		const onToggleEdit = jest.fn();
+		const submitHandler = jest.fn();
+		const onSetNodeErr = (val: string | ErrorResponse) => {
+			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
+		};
 
-	// 	const { getByTestId, debug } = render(
-	// 		<NodeEditor
-	// 			key={`node_editor_${dummyTreeView.id}`}
-	// 			onClose={() => {
-	// 				onToggleEdit(dummyTreeView.nodePath, false);
-	// 			}}
-	// 			onSubmit={submitHandler}
-	// 			error={dummyTreeView.error}
-	// 			isSaving={dummyTreeView.saving}
-	// 			isApplication
-	// 			data="test-data"
-	// 			setError={onSetNodeErr()}
-	// 			clearError={onSetNodeErr()}
-	// 		/>,
-	// 	);
-	// 	debug();
-	// 	const form = getByTestId('node-editor-form');
-	// 	fireEvent.submit(form);
-	// 	expect(submitHandler).toHaveBeenCalled();
-	// });
+		const { getByTestId, debug } = render(
+			<NodeEditor
+				key={`node_editor_${dummyTreeView[0].id}`}
+				onClose={() => {
+					onToggleEdit(dummyTreeView[0].nodePath, false);
+				}}
+				onSubmit={submitHandler}
+				error={dummyTreeView[0].error}
+				isSaving={dummyTreeView[0].saving}
+				isApplication
+				data=""
+				setError={val => {
+					onSetNodeErr(val);
+				}}
+				clearError={() => onSetNodeErr('')}
+			/>,
+		);
+		const input = getByTestId(nodeEditorInputStr) as HTMLInputElement;
+		fireEvent.change(input, {
+			target: { value: '' },
+		});
+		userEvent.type(input, '{enter}');
+		debug();
+		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
+			'Value can not be empty',
+		);
+	});
 
-	// test('node editor form submission should call correct function when empty text is provided', () => {
-	// 	const onToggleEdit = jest.fn();
-	// 	const submitHandler = jest.fn();
-	// 	const onSetNodeErr = (val: string | ErrorResponse) =>
-	// 		typeof val === 'string'
-	// 			? useHierarchyStore.getState().setError(val)
-	// 			: useHierarchyStore.getState().setError(val.errors[0]);
+	test('node editor should validate if the input is not correct', () => {
+		useHierarchyStore.getState().setLoading(true);
+		const onToggleEdit = jest.fn();
+		const submitHandler = jest.fn();
+		const onSetNodeErr = (val: string | ErrorResponse) => {
+			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
+		};
 
-	// 	const { getByTestId, debug } = render(
-	// 		<NodeEditor
-	// 			key={`node_editor_${dummyTreeView.id}`}
-	// 			onClose={() => {
-	// 				onToggleEdit(dummyTreeView.nodePath, false);
-	// 			}}
-	// 			onSubmit={submitHandler}
-	// 			error={dummyTreeView.error}
-	// 			isSaving={dummyTreeView.saving}
-	// 			isApplication
-	// 			data=""
-	// 			setError={onSetNodeErr}
-	// 			clearError={() => null}
-	// 		/>,
-	// 	);
-	// 	debug();
-	// 	const form = getByTestId('node-editor-form');
-	// 	const input = getByTestId('node-editor-input') as HTMLInputElement;
-	// 	fireEvent.change(input, {
-	// 		target: { value: '' },
-	// 	});
-	// 	fireEvent.submit(form);
-	// 	expect(submitHandler).toHaveBeenCalled();
-	// });
+		const { getByTestId, debug } = render(
+			<NodeEditor
+				key={`node_editor_${dummyTreeView[0].id}`}
+				onClose={() => {
+					onToggleEdit(dummyTreeView[0].nodePath, false);
+				}}
+				onSubmit={submitHandler}
+				error={dummyTreeView[0].error}
+				isSaving={dummyTreeView[0].saving}
+				isApplication
+				data=""
+				setError={val => {
+					onSetNodeErr(val);
+				}}
+				clearError={() => onSetNodeErr('')}
+			/>,
+		);
+		const input = getByTestId(nodeEditorInputStr) as HTMLInputElement;
+		fireEvent.change(input, {
+			target: { value: 'test' },
+		});
+		userEvent.type(input, '{enter}');
+		debug();
+		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
+			'Application format should be: Application Name (Value)',
+		);
+	});
+
+	test('node editor should clear error message if the input is correct', () => {
+		useHierarchyStore.getState().setLoading(true);
+		const onToggleEdit = jest.fn();
+		const submitHandler = jest.fn();
+		const onSetNodeErr = (val: string | ErrorResponse) => {
+			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
+		};
+
+		const { getByTestId, debug } = render(
+			<NodeEditor
+				key={`node_editor_${dummyTreeView[0].id}`}
+				onClose={() => {
+					onToggleEdit(dummyTreeView[0].nodePath, false);
+				}}
+				onSubmit={submitHandler}
+				error={dummyTreeView[0].error}
+				isSaving={dummyTreeView[0].saving}
+				isApplication
+				data=""
+				setError={val => {
+					onSetNodeErr(val);
+				}}
+				clearError={() => onSetNodeErr('')}
+			/>,
+		);
+		const input = getByTestId(nodeEditorInputStr) as HTMLInputElement;
+		fireEvent.change(input, {
+			target: { value: 'test (testVal)' },
+		});
+		userEvent.type(input, '{enter}');
+		debug();
+		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(null);
+	});
 
 	test('node editor cancel button should call correct function', () => {
 		useHierarchyStore.getState().setLoading(true);
@@ -168,22 +219,21 @@ describe('hieararchy store', () => {
 		const submitHandler = jest.fn();
 		const onSetNodeErr = jest.fn();
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
-				key={`node_editor_${dummyTreeView.id}`}
+				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
-					onToggleEdit(dummyTreeView.nodePath, false);
+					onToggleEdit(dummyTreeView[0].nodePath, false);
 				}}
 				onSubmit={submitHandler}
-				error={dummyTreeView.error}
-				isSaving={dummyTreeView.saving}
+				error={dummyTreeView[0].error}
+				isSaving={dummyTreeView[0].saving}
 				isApplication
 				data="test-data"
 				setError={onSetNodeErr()}
 				clearError={onSetNodeErr()}
 			/>,
 		);
-		debug();
 		const nodeCancelBtn = getByTestId('node-cancel-btn') as HTMLInputElement;
 		fireEvent.click(nodeCancelBtn);
 		expect(onToggleEdit).toHaveBeenCalled();
