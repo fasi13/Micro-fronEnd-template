@@ -36,7 +36,6 @@ export const useHierarchyHelper = () => {
 	const toggleCollapseNodeFn = useCallback(
 		(nodePath: NodePath[], val: boolean) => {
 			// eslint-disable-next-line no-debugger
-			debugger;
 			toggleCollapse(nodePath, val);
 		},
 		[],

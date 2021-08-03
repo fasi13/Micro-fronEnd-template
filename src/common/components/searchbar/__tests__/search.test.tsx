@@ -81,5 +81,4 @@ describe('Autocomplete Search', () => {
 		useSearchStore.setState({ searchLoading: true });
 		expect(getByTestId('searchfield-progress')).toBeInTheDocument();
 	});
-
 });

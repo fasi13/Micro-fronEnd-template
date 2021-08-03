@@ -1,9 +1,9 @@
 import {
-  CircularProgress,
-  createStyles,
-  List,
-  makeStyles,
-  TextField
+	CircularProgress,
+	createStyles,
+	List,
+	makeStyles,
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -51,13 +51,13 @@ function SearchBar() {
 
 	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
 
-  const searchElement = (keyword: string) => {
+	const searchElement = (keyword: string) => {
 		setInputKeyword(keyword);
 
 		return keyword.length < 3 ? null : setInputValue(keyword);
 	};
 
-  const updateAutocompletePopper = () => {
+	const updateAutocompletePopper = () => {
 		setOpen(!open);
 	};
 
@@ -72,14 +72,14 @@ function SearchBar() {
 	useEffect(() => {
 		if (!open) {
 			useSearchStore.setState({ searchData: [] });
-      searchSet.clear();
+			searchSet.clear();
 		}
 	}, [open]);
 
 	useEffect(() => {
 		if (inputKeyword.length < 3) {
 			useSearchStore.setState({ searchData: [] });
-      searchSet.clear();
+			searchSet.clear();
 		}
 	}, [inputKeyword]);
 
@@ -88,7 +88,6 @@ function SearchBar() {
 
 	const getApplicationId = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].id.toString();
-
 
 	return (
 		<Autocomplete
