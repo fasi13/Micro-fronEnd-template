@@ -38,13 +38,14 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	const preValue = useRef(value);
 
 	const checkValidityAndSubmit = (): void => {
-		if (value === '') setError(emptyErrorMsg);
-		else if (
+		if (value === '') {
+			setError(emptyErrorMsg);
+		} else if (
 			isApplication &&
 			value.match(validAppPattern)?.filter(m => m !== undefined).length !== 1
-		)
+		) {
 			setError(invalidApplicationValueFormatMsg);
-		else if (preValue.current !== value) {
+		} else if (preValue.current !== value) {
 			clearError();
 			preValue.current = value;
 			onSubmit(value);
@@ -58,12 +59,14 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	return (
 		<div className="flex flex-row items-center justify-start w-10/12 h-auto pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform lg:w-10/12">
 			<form
+				data-testid="node-editor-form"
 				className="relative h-full shadow-sm"
 				onSubmit={e => {
 					e.preventDefault();
 					checkValidityAndSubmit();
 				}}>
 				<input
+					data-testid="node-editor-input"
 					ref={inputRef}
 					type="text"
 					name="edit_node"
@@ -84,6 +87,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					}}
 				/>
 				<button
+					data-testid="node-cancel-btn"
 					type="button"
 					className={`absolute font-semibold h-10.5 inset-y-0 right-0 flex items-center justify-center w-12 border border-transparent focus:ring-0 focus:outline-non ${
 						// eslint-disable-next-line no-nested-ternary

@@ -78,7 +78,7 @@ export const Header = () => {
 	return (
 		<div className="header-root">
 			<AppBar position="fixed" className="header-appbar">
-				<div className="flex justify-between  items-center  py-4 pr-20 pl-14 ">
+				<div className="flex justify-between items-center px-7 py-4">
 					<div className="text-2xl">
 						<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
 					</div>
@@ -100,7 +100,9 @@ export const Header = () => {
 										color: '#8C9DAC',
 									}}
 								/>
-								<span className="pl-2 text-base" style={{ color: '#BDC6CD' }}>
+								<span
+									className="pl-2 text-base self-center"
+									style={{ color: '#BDC6CD' }}>
 									Manage Communication
 								</span>
 

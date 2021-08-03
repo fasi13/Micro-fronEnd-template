@@ -3,7 +3,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React from 'react';
 import { detachStore } from '../../../state';
 
-export const HeaderThird = () => {
+export const HeaderThird: React.FunctionComponent = () => {
 	const dSOpen = detachStore(state => state.setOpen);
 	const open = detachStore(state => state.open);
 	const detachSidebar = detachStore(state => state.detachSidebar);
@@ -24,8 +24,8 @@ export const HeaderThird = () => {
 
 	return (
 		<div
-			className="fixed w-full py-3 "
-			style={{ background: '#8999A6', height: '65px' }}>
+			className="fixed w-full py-6"
+			style={{ background: '#8999A6', height: '80px' }}>
 			{!detachSidebar ? (
 				<div
 					data-testid="drawer-open"
