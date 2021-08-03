@@ -4,7 +4,7 @@ import {
 	axiosErrorResponseInterceptor,
 	axiosSuccessRequestInterceptor,
 	axiosSuccessResponseInterceptor,
-} from './axios';
+} from '../axios';
 
 const dummyResponseData: AxiosResponse = {
 	config: { method: 'post' },

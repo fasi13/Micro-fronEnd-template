@@ -248,7 +248,7 @@ describe('hieararchy store', () => {
 		const onToggleNewEditor = jest.fn();
 		const toggleChildren = jest.fn();
 		const toggleNewEditor = jest.fn();
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView2.id}`}
 				data={dummyTreeView2}
@@ -259,7 +259,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		debug();
 		expect(getByTestId(nodeLabelsStr)).not.toHaveTextContent('(12)');
 		fireEvent.click(getByTestId(nodeAddAppGroupStr));
 		expect(toggleNewEditor).toHaveBeenCalled();
@@ -272,7 +271,7 @@ describe('hieararchy store', () => {
 		const toggleNewEditor = jest.fn();
 		// (val: TEditor) => useHierarchyStore.getState().toggleNewEditor(dummyTreeView.nodePath, val);
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<Node
 				key={`node_${dummyTreeView2.id}`}
 				data={dummyTreeView2}
@@ -283,7 +282,6 @@ describe('hieararchy store', () => {
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		debug();
 
 		fireEvent.click(getByTestId(nodeAddAppGroupStr));
 		expect(toggleNewEditor).toHaveBeenCalled();
