@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import {
-	act,
-	fireEvent,
-	render,
-	screen,
-	waitFor,
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from '@testing-library/react';
 import React from 'react';
 import { useBreadcrumbStore } from '../../../../state';
@@ -35,12 +35,12 @@ describe('Breadcrumb', () => {
 		expect(elt).toHaveTextContent('/');
 	});
 
-	test('Breadcumb renders E2E Group with disabled paragraph', () => {
+	test('Breadcrumb renders E2E Group with disabled paragraph', () => {
 		render(<Breadcrumb />);
 		expect(screen.getByTestId('disabledBreadLink').closest('p'));
 	});
 
-	test('Breadcumb check for correct classnames', () => {
+	test('Breadcrumb check for correct classnames', () => {
 		render(<Breadcrumb />);
 		expect(screen.getAllByRole('button')[0].className).toContain('first');
 		expect(screen.getAllByRole('button')[1].className).toContain('link');
