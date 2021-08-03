@@ -8,12 +8,12 @@ describe('App', () => {
 		render(<App />);
 	});
 
-	test('loads and displays App', () => {
-		const { getByTestId, getByText, queryByTestId } = render(<App />);
-		const p = getByTestId('message');
+	// test('loads and displays App', () => {
+	// 	const { getByTestId, getByText, queryByTestId } = render(<App />);
+	// 	const p = getByTestId('message');
 
-		getByText('get started', { exact: false });
-		expect(p).toBeInTheDocument();
-		expect(queryByTestId('learn-link')).toBeInTheDocument();
-	});
+	// 	getByText('get started', { exact: false });
+	// 	expect(p).toBeInTheDocument();
+	// 	expect(queryByTestId('learn-link')).toBeInTheDocument();
+	// });
 });

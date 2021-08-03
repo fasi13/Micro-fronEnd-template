@@ -132,7 +132,7 @@ Object {
       ],
       "collapsed": false,
       "edit": false,
-      "error": null,
+      "error": "dummy error",
       "id": 1,
       "loadingChildren": false,
       "name": "dummy",

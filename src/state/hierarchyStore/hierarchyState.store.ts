@@ -159,30 +159,28 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		nodePath: NodePath[],
 		name: string,
 	) => {
-		if (data) {
-			let remoteError: ErrorResponse | null = null;
-			const link: Link | undefined = getCreateGroupLink(data?._links || []);
+		let remoteError: ErrorResponse | null = null;
+		const link: Link | undefined = getCreateGroupLink(data?._links || []);
 
-			if (link) {
-				const { href } = link;
-				get().setSaving(nodePath, true);
+		if (link) {
+			const { href } = link;
+			get().setSaving(nodePath, true);
 
-				const resp = await axios
-					.post(href, { name })
-					.catch((reason: ErrorResponse) => {
-						remoteError = reason;
-					});
+			const resp = await axios
+				.post(href, { name })
+				.catch((reason: ErrorResponse) => {
+					remoteError = reason;
+				});
 
-				if (remoteError) {
-					nodeUpdateState(set, nodePath, remoteError, []);
-				} else if (resp && resp.status === 201) {
-					const { err, children }: THierarchyChildDataResp =
-						await getHierarchyChildData(data);
+			if (remoteError) {
+				nodeUpdateState(set, nodePath, remoteError, []);
+			} else if (resp && resp.status === 201) {
+				const { err, children }: THierarchyChildDataResp =
+					await getHierarchyChildData(data);
 
-					nodeUpdateState(set, nodePath, err, children);
-				} else {
-					nodeUpdateState(set, nodePath, unknownError, []);
-				}
+				nodeUpdateState(set, nodePath, err, children);
+			} else {
+				nodeUpdateState(set, nodePath, unknownError, []);
 			}
 		}
 	},
