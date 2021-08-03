@@ -25,6 +25,7 @@ const SearchStore = (set: any, get: any): SearchState => ({
 			set((state: SearchState) => {
 				state.searchLoading = true;
 			});
+			console.log(get().activeNodeId, '6666');
 			await axios
 				.get<ApiResponse<DataPaginated<ApplicationPath>>>(
 					`applications/${get().activeNodeId}/paths/?keyword=${keyword}`,

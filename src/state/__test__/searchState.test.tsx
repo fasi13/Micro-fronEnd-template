@@ -50,6 +50,9 @@ describe('loadApplication', () => {
 
 		await useSearchStore.getState().searchApplication('Test');
 		expect(axios.get).toHaveBeenCalled();
+		expect(axios.get).toHaveBeenCalledWith(
+			'applications/0/paths/?keyword=Test',
+		);
 		expect(useSearchStore.getState().searchLoading).toBe(false);
 	});
 });
