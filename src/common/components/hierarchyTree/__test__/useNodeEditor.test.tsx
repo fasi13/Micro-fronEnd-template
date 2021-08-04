@@ -81,25 +81,43 @@ describe('useNodeEditor', () => {
 			expect(dummyProps.onSubmit).toBeCalledTimes(1);
 		});
 
-		it(`error clear`, () => {
+		it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
 			dummyProps.error = 'Value can not be empty';
+
 			const { result } = renderHook(useNodeEditor, {
 				initialProps: dummyProps,
 			});
 
-			dummyProps.data = 'test';
-
+			result.current.preValue.current = 'old value';
 			const mockChangeEvent = {
 				currentTarget: {
-					value: 'dummy',
+					value: '',
 				},
 				target: {
-					value: 'dummy',
+					value: 'new value',
 				},
 			} as React.ChangeEvent<HTMLInputElement>;
 
 			result.current.setEditorValue(mockChangeEvent);
-			expect(dummyProps.error).toMatch('Add New Application');
+			expect(dummyProps.clearError).toHaveBeenCalled();
+		});
+
+		it('sets the value of the editor', () => {
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const mockChangeEvent = {
+				currentTarget: {
+					value: '',
+				},
+				target: {
+					value: 'new value',
+				},
+			} as React.ChangeEvent<HTMLInputElement>;
+
+			result.current.setEditorValue(mockChangeEvent);
+
+			expect(result.current.value).toMatch('new value');
 		});
 	});
 });
