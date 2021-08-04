@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+import React from 'react';
 import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
@@ -68,6 +69,17 @@ describe('useNodeEditor', () => {
 			expect(dummyProps.setError).toHaveBeenCalledWith(
 				'Application format should be: Application Name (Value)',
 			);
+		});
+
+		it(`error clear`, () => {
+			dummyProps.error = 'Value can not be empty';
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			dummyProps.data = 'test';
+			const input = <input value="asdf" />;
+			result.current.setEditorValue(input.props.target);
+			expect(dummyProps.error).toMatch('Add New Application');
 		});
 
 		// it('checks if previous value is the same as current value, and if it is it will not call on submit', () => {
