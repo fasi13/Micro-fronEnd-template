@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+import React from 'react';
 import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
@@ -81,15 +82,15 @@ describe('useNodeEditor', () => {
 			expect(dummyProps.onSubmit).toBeCalledTimes(1);
 		});
 
-		it('checks if current and previous are the same', () => {
-			dummyProps.data = 'New Application Group(1919)'; // wrong pattern
-			dummyProps.isApplication = true;
+		it(`error clear`, () => {
+			dummyProps.error = 'Value can not be empty';
 			const { result } = renderHook(useNodeEditor, {
 				initialProps: dummyProps,
 			});
-			result.current.preValue.current = 'New Application Group(1919)';
-			result.current.checkValidityAndSubmit();
-			expect(dummyProps.onSubmit).not.toBeCalled();
+			dummyProps.data = 'test';
+			const input = <input value="asdf" />;
+			result.current.setEditorValue(input.props.target);
+			expect(dummyProps.error).toMatch('Add New Application');
 		});
 	});
 });
