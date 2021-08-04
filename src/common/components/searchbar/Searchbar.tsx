@@ -60,8 +60,7 @@ function SearchBar() {
 
 	const [open, setOpen] = React.useState(false);
 	const { searchData, searchLoading, searchApplication } = useSearchStore();
-
-	let searchSet = new Set<ApplicationPath>(searchData.map(d => d));
+	const emptySearchData: ApplicationPath[] = [];
 
 	const searchElement = (keyword: string) => {
 		setInputKeyword(keyword);
@@ -78,22 +77,16 @@ function SearchBar() {
 	}, [debounceSearchTerm]);
 
 	useEffect(() => {
-		searchSet = new Set<ApplicationPath>(searchData.map(d => d));
+		if (searchData.length === 0) {
+			setInputValue('');
+		}
 	}, [searchData]);
 
 	useEffect(() => {
-		if (!open) {
-			useSearchStore.setState({ searchData: [] });
-			searchSet.clear();
+		if (!open || inputKeyword.length < 3) {
+			useSearchStore.setState({ searchData: emptySearchData });
 		}
-	}, [open]);
-
-	useEffect(() => {
-		if (inputKeyword.length < 3) {
-			useSearchStore.setState({ searchData: [] });
-			searchSet.clear();
-		}
-	}, [inputKeyword]);
+	}, [open, inputKeyword]);
 
 	const getApplicationName = ({ path }: ApplicationPath): string =>
 		path[path.length - 1].name;
@@ -110,7 +103,7 @@ function SearchBar() {
 			id="combo-box-demo"
 			style={{ width: 445, zIndex: 999999 }}
 			className={classes.searchInput}
-			options={Array.from(searchSet)}
+			options={Array.from(searchData)}
 			getOptionLabel={x => getApplicationName(x)}
 			autoComplete
 			fullWidth
