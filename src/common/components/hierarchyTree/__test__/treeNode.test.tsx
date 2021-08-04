@@ -10,8 +10,6 @@ describe('treeNode', () => {
 	const selfUpdateStr = 'dummy/selfupdate';
 	const createGroupStr = 'dummy/createGroup';
 	const createAppStr = 'dummy/createApp';
-	// const nodeLabelsStr = 'node-labels';
-	// const nodeAddAppGroupStr = 'node-add-app-group';
 
 	beforeEach(() => {
 		dummyTreeView = {

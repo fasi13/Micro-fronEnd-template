@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ErrorResponse } from '../../../types';
 import { CloseIcon, SpinnerIcon } from '../../icons';
+import { useNodeEditor } from './hooks/useNodeEditor';
 
 interface NodeEditorPropType {
 	onClose: () => void;
@@ -13,10 +14,10 @@ interface NodeEditorPropType {
 	clearError: () => void;
 }
 
-const nodeEditorPlaceHolder = (isApplication: boolean): string => {
-	if (isApplication) return 'Add New Application';
-	return 'Add New Application Group';
-};
+// const nodeEditorPlaceHolder = (isApplication: boolean): string => {
+// 	if (isApplication) return 'Add New Application';
+// 	return 'Add New Application Group';
+// };
 
 export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	const {
@@ -30,27 +31,40 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 		clearError,
 	} = props;
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [value, setValue] = useState(data || '');
-	const validAppPattern = /^[^)(]+(\([^()]+\)){1}$/g;
-	const emptyErrorMsg = 'Value can not be empty';
-	const invalidApplicationValueFormatMsg =
-		'Application format should be: Application Name (Value)';
-	const preValue = useRef(value);
+	const {
+		checkValidityAndSubmit,
+		nodeEditorPlaceHolder,
+		preValue,
+		value,
+		setValue,
+	} = useNodeEditor({
+		data,
+		isApplication,
+		setError,
+		clearError,
+		onSubmit,
+	});
+	// const [value, setValue] = useState(data || '');
+	// const validAppPattern = /^[^)(]+(\([^()]+\)){1}$/g;
+	// const emptyErrorMsg = 'Value can not be empty';
+	// const invalidApplicationValueFormatMsg =
+	// 	'Application format should be: Application Name (Value)';
+	// const preValue = useRef(value);
 
-	const checkValidityAndSubmit = (): void => {
-		if (value === '') {
-			setError(emptyErrorMsg);
-		} else if (
-			isApplication &&
-			value.match(validAppPattern)?.filter(m => m !== undefined).length !== 1
-		) {
-			setError(invalidApplicationValueFormatMsg);
-		} else if (preValue.current !== value) {
-			clearError();
-			preValue.current = value;
-			onSubmit(value);
-		}
-	};
+	// const checkValidityAndSubmit = (): void => {
+	// 	if (value === '') {
+	// 		setError(emptyErrorMsg);
+	// 	} else if (
+	// 		isApplication &&
+	// 		value.match(validAppPattern)?.filter(m => m !== undefined).length !== 1
+	// 	) {
+	// 		setError(invalidApplicationValueFormatMsg);
+	// 	} else if (preValue.current !== value) {
+	// 		clearError();
+	// 		preValue.current = value;
+	// 		onSubmit(value);
+	// 	}
+	// };
 
 	useEffect(() => {
 		if (inputRef.current) inputRef.current.focus();
@@ -78,7 +92,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					}
 					id="edit_application"
 					className="block h-10.5 w-full pl-2 text-gray-900 placeholder-gray-500 bg-gray-300 border-transparent pr-14 flex-2 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent"
-					placeholder={nodeEditorPlaceHolder(isApplication)}
+					placeholder={nodeEditorPlaceHolder()}
 					aria-invalid="false"
 					aria-describedby="email-error"
 					value={value}

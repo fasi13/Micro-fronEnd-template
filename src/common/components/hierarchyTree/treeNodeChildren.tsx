@@ -2,7 +2,7 @@ import React from 'react';
 import { NodeActions, NodePath, TreeView } from '../../../types';
 import { RenderNodesRecursively } from './renderNodesRecursively';
 
-interface TreeNodeChildrenPropType extends NodeActions {
+export interface TreeNodeChildrenPropType extends NodeActions {
 	childrenData: TreeView[] | undefined;
 	nodeDepth: number;
 	nodePath: NodePath[];

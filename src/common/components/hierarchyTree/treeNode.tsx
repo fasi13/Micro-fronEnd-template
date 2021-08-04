@@ -5,28 +5,6 @@ import { useTreeNode } from './hooks/useTreeNode';
 import { Node } from './node';
 import { NodeEditor } from './nodeEditor';
 
-// const canAddApplication = (node: TreeView): boolean => {
-// 	if (node._links?.find(l => l.rel === 'createApplication')) return true;
-// 	return false;
-// };
-
-// const showHideNewEditorAndTreeChildren = (
-// 	isCollapsed: boolean,
-// 	editorMode: string,
-// ) => {
-// 	if (!isCollapsed) {
-// 		if (editorMode !== '') return 'mb-10';
-// 		return '';
-// 	}
-
-// 	return 'hidden';
-// };
-
-// const nodeValue = (node: TreeView) => {
-// 	if (canAddApplication(node)) return node.name;
-// 	return `${node.name} (${node.value?.toString().trimLeft()})`;
-// };
-
 export interface TreeNodePropType extends NodeActions {
 	data: TreeView;
 	nodeId: number;
@@ -35,28 +13,20 @@ export interface TreeNodePropType extends NodeActions {
 }
 
 export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
-	const {
-		nodeId,
-		nodePath,
-		data,
-		onSetNodeErr,
-		onToggleNewEditor,
-		renderProps,
-	} = props;
+	const { nodeId, nodePath, data, renderProps } = props;
 
 	const {
-		canAddApplication,
 		showHideNewEditorAndTreeChildren,
 		nodeValue,
-		saveApplicationOrGroup,
 		closeEditor,
 		submitHandler,
 		setErrorHandler,
-		clearErrorHandle,
+		clearErrorHandler,
 		isApplication,
 		toggleEdit,
 		toggleChildren,
 		toggleNewEditor,
+		closeNewEditor,
 	} = useTreeNode(props);
 
 	return (
@@ -78,7 +48,7 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 						isApplication={isApplication()}
 						data={nodeValue()}
 						setError={setErrorHandler}
-						clearError={clearErrorHandle}
+						clearError={clearErrorHandler}
 					/>
 				) : (
 					<Node
@@ -108,13 +78,13 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 						<li className="relative flex flex-col items-start justify-center h-auto list-none tree">
 							<NodeEditor
 								key={`new_node_${nodeId}`}
-								onClose={() => onToggleNewEditor(nodePath, '')}
+								onClose={closeNewEditor}
 								onSubmit={submitHandler}
 								error={data.error}
 								isSaving={data.saving}
 								isApplication={data.toggleNewEditor === 'Application'}
-								setError={err => onSetNodeErr(nodePath, err)}
-								clearError={() => onSetNodeErr(nodePath, null)}
+								setError={setErrorHandler}
+								clearError={clearErrorHandler}
 							/>
 						</li>
 					</ul>
