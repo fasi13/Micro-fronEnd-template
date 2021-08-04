@@ -6,8 +6,10 @@ import { useHierarchyStore } from '../../../../state';
 import { ErrorResponse, TreeView } from '../../../../types';
 import { NodeEditor } from '../nodeEditor';
 
+const nodeCancelBtnStr = 'node-cancel-btn';
 const nodeEditorInputStr = 'node-editor-input';
-describe('hierarchy store', () => {
+
+describe('nodeEditor', () => {
 	const dummyTreeView: TreeView[] = [
 		{
 			id: 0,
@@ -115,7 +117,7 @@ describe('hierarchy store', () => {
 			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
 		};
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -137,7 +139,6 @@ describe('hierarchy store', () => {
 			target: { value: '' },
 		});
 		userEvent.type(input, '{enter}');
-		debug();
 		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
 			'Value can not be empty',
 		);
@@ -151,7 +152,7 @@ describe('hierarchy store', () => {
 			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
 		};
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -173,7 +174,6 @@ describe('hierarchy store', () => {
 			target: { value: 'test' },
 		});
 		userEvent.type(input, '{enter}');
-		debug();
 		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
 			'Application format should be: Application Name (Value)',
 		);
@@ -187,7 +187,7 @@ describe('hierarchy store', () => {
 			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
 		};
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -209,8 +209,67 @@ describe('hierarchy store', () => {
 			target: { value: 'test (testVal)' },
 		});
 		userEvent.type(input, '{enter}');
-		debug();
-		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(null);
+		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe('');
+	});
+
+	test('node editor should display spinner icon when isSaving is true', () => {
+		useHierarchyStore.getState().setLoading(true);
+		const onToggleEdit = jest.fn();
+		const submitHandler = jest.fn();
+		const onSetNodeErr = (val: string | ErrorResponse) => {
+			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
+		};
+
+		const { getByTestId } = render(
+			<NodeEditor
+				key={`node_editor_${dummyTreeView[0].id}`}
+				onClose={() => {
+					onToggleEdit(dummyTreeView[0].nodePath, false);
+				}}
+				onSubmit={submitHandler}
+				error={dummyTreeView[0].error}
+				isSaving
+				isApplication
+				data=""
+				setError={val => {
+					onSetNodeErr(val);
+				}}
+				clearError={() => onSetNodeErr('')}
+			/>,
+		);
+		const cancelBtn = getByTestId(nodeCancelBtnStr) as HTMLInputElement;
+		userEvent.type(cancelBtn, '{enter}');
+		expect(getByTestId('spinner-icon')).toBeInTheDocument();
+	});
+
+	test('node editor should display spinner icon when isSaving is true', () => {
+		useHierarchyStore.getState().setLoading(true);
+		const onToggleEdit = jest.fn();
+		const submitHandler = jest.fn();
+		const onSetNodeErr = (val: string | ErrorResponse) => {
+			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
+		};
+
+		const { getByTestId } = render(
+			<NodeEditor
+				key={`node_editor_${dummyTreeView[0].id}`}
+				onClose={() => {
+					onToggleEdit(dummyTreeView[0].nodePath, false);
+				}}
+				onSubmit={submitHandler}
+				error={dummyTreeView[0].error}
+				isSaving={false}
+				isApplication
+				data=""
+				setError={val => {
+					onSetNodeErr(val);
+				}}
+				clearError={() => onSetNodeErr('')}
+			/>,
+		);
+		const cancelBtn = getByTestId(nodeCancelBtnStr) as HTMLInputElement;
+		userEvent.type(cancelBtn, '{enter}');
+		expect(getByTestId('close-icon')).toBeInTheDocument();
 	});
 
 	test('node editor cancel button should call correct function', () => {
@@ -234,8 +293,10 @@ describe('hierarchy store', () => {
 				clearError={onSetNodeErr()}
 			/>,
 		);
-		const nodeCancelBtn = getByTestId('node-cancel-btn') as HTMLInputElement;
+		const nodeCancelBtn = getByTestId(nodeCancelBtnStr) as HTMLInputElement;
 		fireEvent.click(nodeCancelBtn);
 		expect(onToggleEdit).toHaveBeenCalled();
 	});
+
+	// it('focuses the controller referenced by inputRef', () => {});
 });

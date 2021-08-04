@@ -34,12 +34,12 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	const {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
-		preValue,
 		value,
-		setValue,
+		setEditorValue,
 	} = useNodeEditor({
 		data,
 		isApplication,
+		error,
 		setError,
 		clearError,
 		onSubmit,
@@ -96,10 +96,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					aria-invalid="false"
 					aria-describedby="email-error"
 					value={value}
-					onChange={e => {
-						if (error && preValue.current !== e.target.value) clearError();
-						setValue(e.target.value);
-					}}
+					onChange={setEditorValue}
 				/>
 				<button
 					data-testid="node-cancel-btn"
@@ -110,9 +107,13 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					}`}
 					onClick={() => onClose()}>
 					{isSaving ? (
-						<SpinnerIcon className="" width={20} height={20} />
+						<div data-testid="spinner-icon">
+							<SpinnerIcon className="" width={20} height={20} />
+						</div>
 					) : (
-						<CloseIcon className="" width={14} height={14} />
+						<div data-testid="close-icon">
+							<CloseIcon className="" width={14} height={14} />
+						</div>
 					)}
 				</button>
 				<p

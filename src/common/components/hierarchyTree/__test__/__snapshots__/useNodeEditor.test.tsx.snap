@@ -11,7 +11,7 @@ Object {
         "preValue": Object {
           "current": "",
         },
-        "setValue": [Function],
+        "setEditorValue": [Function],
         "value": "",
       },
     ],
@@ -21,7 +21,7 @@ Object {
       "preValue": Object {
         "current": "",
       },
-      "setValue": [Function],
+      "setEditorValue": [Function],
       "value": "",
     },
     "error": undefined,

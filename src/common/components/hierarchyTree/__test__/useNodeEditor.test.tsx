@@ -7,6 +7,7 @@ describe('useNodeEditor', () => {
 	beforeEach(() => {
 		dummyProps = {
 			data: '',
+			error: '',
 			isApplication: true,
 			setError: jest.fn(),
 			clearError: jest.fn(),
