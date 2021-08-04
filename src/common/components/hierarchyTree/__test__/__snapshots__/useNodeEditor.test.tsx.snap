@@ -8,20 +8,14 @@ Object {
       Object {
         "checkValidityAndSubmit": [Function],
         "nodeEditorPlaceHolder": [Function],
-        "preValue": Object {
-          "current": "",
-        },
-        "setValue": [Function],
+        "setEditorValue": [Function],
         "value": "",
       },
     ],
     "current": Object {
       "checkValidityAndSubmit": [Function],
       "nodeEditorPlaceHolder": [Function],
-      "preValue": Object {
-        "current": "",
-      },
-      "setValue": [Function],
+      "setEditorValue": [Function],
       "value": "",
     },
     "error": undefined,

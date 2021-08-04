@@ -4,6 +4,7 @@ import { ErrorResponse } from '../../../../types';
 export interface useNodeEditorProps {
 	data: string | undefined;
 	isApplication: boolean;
+	error: string | null;
 	setError: (val: ErrorResponse | string) => void;
 	clearError: () => void;
 	onSubmit: (value: string) => void;
@@ -11,16 +12,15 @@ export interface useNodeEditorProps {
 
 interface useNodeEditorReturnType {
 	checkValidityAndSubmit: () => void;
-	preValue: React.MutableRefObject<string>;
 	value: string;
 	nodeEditorPlaceHolder: () => string;
-	setValue: React.Dispatch<React.SetStateAction<string>>;
+	setEditorValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const useNodeEditor = (
 	props: useNodeEditorProps,
 ): useNodeEditorReturnType => {
-	const { data, isApplication, setError, clearError, onSubmit } = props;
+	const { data, isApplication, error, setError, clearError, onSubmit } = props;
 
 	const [value, setValue] = useState(data || '');
 	const preValue = useRef(value);
@@ -50,11 +50,15 @@ export const useNodeEditor = (
 		return 'Add New Application Group';
 	};
 
+	const setEditorValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		if (error && preValue.current !== e.target.value) clearError();
+		setValue(e.target.value);
+	};
+
 	return {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
-		preValue,
 		value,
-		setValue,
+		setEditorValue,
 	};
 };

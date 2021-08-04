@@ -34,12 +34,12 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	const {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
-		preValue,
 		value,
-		setValue,
+		setEditorValue,
 	} = useNodeEditor({
 		data,
 		isApplication,
+		error,
 		setError,
 		clearError,
 		onSubmit,
@@ -96,10 +96,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					aria-invalid="false"
 					aria-describedby="email-error"
 					value={value}
-					onChange={e => {
-						if (error && preValue.current !== e.target.value) clearError();
-						setValue(e.target.value);
-					}}
+					onChange={setEditorValue}
 				/>
 				<button
 					data-testid="node-cancel-btn"
