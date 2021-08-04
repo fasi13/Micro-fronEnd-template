@@ -1,12 +1,17 @@
-import create from 'zustand';
+import createStore from '../util/immer';
 
-interface myState {
+interface TChangePasswordModalState {
 	showChangePasswordModal: boolean;
 	setShowChangePasswordModal: (opn: boolean) => void;
 }
 
-export const changePasswordModalStore = create<myState>(set => ({
+export const changePasswordModalStore = (set: any) => ({
 	showChangePasswordModal: false,
 	setShowChangePasswordModal: (opn: boolean) =>
-		set({ showChangePasswordModal: opn }),
-}));
+		set((state: TChangePasswordModalState) => {
+			state.showChangePasswordModal = opn;
+		}),
+});
+
+export const useChangePasswordModalStore =
+	createStore<TChangePasswordModalState>(changePasswordModalStore);

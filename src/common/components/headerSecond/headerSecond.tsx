@@ -1,5 +1,5 @@
 import React from 'react';
-import { detachStore } from '../../../state';
+import { useDetachStore } from '../../../state';
 import Breadcrumbview from './breadcrumb';
 import './headerSecond.scss';
 
@@ -28,12 +28,14 @@ export const OrbitSVG = (props: any) => {
 };
 
 export const HeaderSecond: React.FunctionComponent = () => {
-	const dSOpen = detachStore(state => state.setOpen);
-	const dSSetDetach = detachStore(state => state.setDetachSidebar);
-	const dSSetLastSideBarState = detachStore(state => state.setLastSidebarOpen);
+	const dSOpen = useDetachStore(state => state.setOpen);
+	const dSSetDetach = useDetachStore(state => state.setDetachSidebar);
+	const dSSetLastSideBarState = useDetachStore(
+		state => state.setLastSidebarOpen,
+	);
 
-	const open = detachStore(state => state.open);
-	const detachSidebar = detachStore(state => state.detachSidebar);
+	const open = useDetachStore(state => state.open);
+	const detachSidebar = useDetachStore(state => state.detachSidebar);
 	const lastSidebarOpen = open;
 
 	const setOpen = (opn: boolean) => {
@@ -61,7 +63,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 
 	return (
 		<div className="px-6 py-2 text-xl" style={{ background: '#31506A' }}>
-			<div className="p-px flex flex-wrap">
+			<div className="flex flex-wrap p-px">
 				<div
 					data-testid="detach-handler"
 					onKeyDown={handleDetach}
@@ -73,7 +75,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 					onClick={handleDetach}>
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
-				<span className="pl-2 self-center">
+				<span className="self-center pl-2">
 					{/* E2e Group */}
 					<Breadcrumbview />
 				</span>

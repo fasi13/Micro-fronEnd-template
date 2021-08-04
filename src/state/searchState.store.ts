@@ -30,7 +30,6 @@ const SearchStore = (set: any, get: any): SearchState => ({
 					`applications/${get().activeNodeId}/paths/?keyword=${keyword}`,
 				)
 				.then(resp => {
-					// eslint-disable-next-line no-debugger
 					set((state: SearchState) => {
 						state.searchData = resp.data?.data?.items;
 						state.searchLoading = false;

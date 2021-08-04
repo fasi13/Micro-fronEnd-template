@@ -1,9 +1,12 @@
+// import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
+// import { act } from 'react-dom/test-utils';
+import TestRenderer from 'react-test-renderer';
 import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
 	let dummyProps: useNodeEditorProps;
-
+	const dummyInput = 'New Application Group(2021)';
 	beforeEach(() => {
 		dummyProps = {
 			data: '',
@@ -81,43 +84,59 @@ describe('useNodeEditor', () => {
 			expect(dummyProps.onSubmit).toBeCalledTimes(1);
 		});
 
-		it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
-			dummyProps.error = 'Value can not be empty';
-
-			const { result } = renderHook(useNodeEditor, {
-				initialProps: dummyProps,
+			it('checks if current and new values are the same', () => {
+				dummyProps.data = dummyInput; // wrong pattern
+				dummyProps.isApplication = true;
+				const { result } = renderHook(useNodeEditor, {
+					initialProps: dummyProps,
+				});
+				result.current.preValue.current = dummyInput;
+				result.current.checkValidityAndSubmit();
+				expect(dummyProps.onSubmit).not.toBeCalled();
 			});
 
-			result.current.preValue.current = 'old value';
-			const mockChangeEvent = {
-				currentTarget: {
-					value: '',
-				},
-				target: {
-					value: 'new value',
-				},
-			} as React.ChangeEvent<HTMLInputElement>;
-
-			result.current.setEditorValue(mockChangeEvent);
-			expect(dummyProps.clearError).toHaveBeenCalled();
-		});
-
-		it('sets the value of the editor', () => {
-			const { result } = renderHook(useNodeEditor, {
-				initialProps: dummyProps,
-			});
-			const mockChangeEvent = {
-				currentTarget: {
-					value: '',
-				},
-				target: {
-					value: 'new value',
-				},
-			} as React.ChangeEvent<HTMLInputElement>;
-
-			result.current.setEditorValue(mockChangeEvent);
-
-			expect(result.current.value).toMatch('new value');
-		});
 	});
+
+	describe('setEditorValue',() => {
+				it('sets the value of the editor', () => {
+					const { result } = renderHook(useNodeEditor, {
+						initialProps: dummyProps,
+					});
+					const mockChangeEvent = {
+						currentTarget: {
+							value: '',
+						},
+						target: {
+							value: 'new value',
+						},
+					} as React.ChangeEvent<HTMLInputElement>;
+
+					result.current.setEditorValue(mockChangeEvent);
+
+					expect(result.current.value).toMatch('new value');
+				});
+
+				it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
+					dummyProps.error = 'Value can not be empty';
+					const {act} = TestRenderer;
+					const { result } = renderHook(useNodeEditor, {
+						initialProps: dummyProps,
+					});
+
+					result.current.preValue.current = 'old value';
+					const mockChangeEvent = {
+						currentTarget: {
+							value: '',
+						},
+						target: {
+							value: 'new value',
+						},
+					} as React.ChangeEvent<HTMLInputElement>;
+
+					act(() => result.current.setEditorValue(mockChangeEvent));
+					expect(dummyProps.clearError).toHaveBeenCalled();
+				});
+
+	});
+
 });
