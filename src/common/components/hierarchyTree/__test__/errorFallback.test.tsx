@@ -6,6 +6,14 @@ import { ErrorFallback } from '../errorFallback';
 let Bomb: React.FunctionComponent<{ shouldThrow: boolean }>;
 let App: React.FunctionComponent<{ shouldThrow: boolean }>;
 describe('ErrorBoundary and Fallback', () => {
+	beforeAll(() => {
+		jest.spyOn(console, 'error').mockImplementation(() => null);
+	});
+
+	afterAll(() => {
+		jest.resetAllMocks();
+	});
+
 	beforeEach(() => {
 		Bomb = ({ shouldThrow }) => {
 			if (shouldThrow) throw new Error('dummy error I made up');
