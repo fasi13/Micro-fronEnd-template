@@ -7,7 +7,7 @@ import { ErrorFallback } from './errorFallback';
 import './hierarchy.css';
 import { RenderNodesRecursively } from './renderNodesRecursively';
 
-interface HierarchyPropType extends NodeActions {
+export interface HierarchyPropType extends NodeActions {
 	data: TreeView[];
 	expandNodesAtLevel?: number;
 }

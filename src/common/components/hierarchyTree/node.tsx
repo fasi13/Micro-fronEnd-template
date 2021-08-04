@@ -21,6 +21,15 @@ const NodeLoadingIndicator = () => (
 	</button>
 );
 
+export const trim = (x: TreeView): string => {
+	// eslint-disable-next-line no-debugger
+	debugger;
+	if (x?.value) {
+		return `(${x?.value.toString().trimLeft()})`;
+	}
+	return '';
+};
+
 export const Node: React.FC<NodePropType> = props => {
 	const {
 		data,
@@ -81,8 +90,7 @@ export const Node: React.FC<NodePropType> = props => {
 					setBreadCrumb(nodePath);
 					toggleChildren();
 				}}>
-				{data?.name}{' '}
-				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
+				{data?.name} {trim(data)}
 			</button>
 			<div className="flex space-x-3 node-actions">
 				<button

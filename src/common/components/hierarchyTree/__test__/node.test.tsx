@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { useHierarchyStore } from '../../../../state/hierarchyStore/hierarchyState.store';
 import { TreeView } from '../../../../types';
-import { Node } from '../node';
+import { Node, trim } from '../node';
 
 const selfUpdateStr = 'dummy/selfupdate';
 const createGroupStr = 'dummy/createGroup';
@@ -18,6 +18,7 @@ describe('hieararchy store', () => {
 	beforeEach(() => {
 		dummyTreeView = {
 			id: 0,
+			value: 'dummy (12)',
 			name: 'dummy (12)',
 			collapsed: false,
 			edit: false,
@@ -75,7 +76,7 @@ describe('hieararchy store', () => {
 		};
 		dummyTreeView2 = {
 			id: 0,
-			name: 'dummy',
+			name: '',
 			collapsed: true,
 			edit: false,
 			error: null,
@@ -327,5 +328,11 @@ describe('hieararchy store', () => {
 		);
 		fireEvent.click(getByTestId('node-edit'));
 		expect(onToggleNewEditor2).toHaveBeenCalled();
+	});
+
+	test('is string () included ', () => {
+		expect(trim(dummyTreeView)).toBe('(dummy (12))');
+		dummyTreeView.value = '';
+		expect(trim(dummyTreeView)).toBe('');
 	});
 });
