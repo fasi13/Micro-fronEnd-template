@@ -29,7 +29,7 @@ export const HeaderThird: React.FunctionComponent = () => {
 			{!detachSidebar ? (
 				<div
 					data-testid="drawer-open"
-					onKeyDown={() => null}
+					onKeyDown={undefined}
 					role="button"
 					tabIndex={0}
 					color="inherit"

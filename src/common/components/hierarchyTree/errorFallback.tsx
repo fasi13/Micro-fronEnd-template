@@ -5,7 +5,7 @@ export const ErrorFallback = ({
 	error,
 	resetErrorBoundary,
 }: FallbackProps): JSX.Element => (
-	<div role="alert">
+	<div role="alert" className="text-center text-white">
 		<p>Something went wrong with loading your Application Hierarchy Tree:</p>
 		<pre>{error.message}</pre>
 		<button type="button" onClick={resetErrorBoundary}>
