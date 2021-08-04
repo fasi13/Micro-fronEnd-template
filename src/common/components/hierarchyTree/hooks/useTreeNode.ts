@@ -6,16 +6,33 @@ import {
 	TreeView,
 } from '../../../../types';
 
-interface useTreeNodeProps extends NodeActions {
+export interface useTreeNodeProps extends NodeActions {
 	data: TreeView;
-	nodeId: number;
 	nodePath: NodePath[];
 }
 
-export const useTreeNode = (props: useTreeNodeProps) => {
+interface useTreeNodeReturnType {
+	canAddApplication: (node: TreeView) => boolean;
+	showHideNewEditorAndTreeChildren: (
+		isCollapsed: boolean,
+		editorMode: string,
+	) => '' | 'mb-10' | 'hidden';
+	extractApplicationNameAndValue: (text: string) => string[];
+	nodeValue: () => string;
+	closeEditor: () => void;
+	submitHandler: (value: string) => void;
+	setErrorHandler: (err: string | ErrorResponse) => void;
+	clearErrorHandler: () => void;
+	isApplication: () => boolean;
+	toggleEdit: () => void;
+	toggleChildren: () => void;
+	toggleNewEditor: (val: TEditor) => void;
+	closeNewEditor: () => void;
+}
+
+export const useTreeNode = (props: useTreeNodeProps): useTreeNodeReturnType => {
 	const {
 		data,
-		nodeId,
 		nodePath,
 		onToggleEdit,
 		onEditApplication,
@@ -23,12 +40,9 @@ export const useTreeNode = (props: useTreeNodeProps) => {
 		onEditGroup,
 		onAddGroup,
 		onSetNodeErr,
-		onSetSaving,
 		onToggleCollapse,
 		onToggleNewEditor,
 	} = props;
-
-	console.log(nodeId, onSetSaving);
 
 	const canAddApplication = (node: TreeView): boolean => {
 		if (node._links?.find(l => l.rel === 'createApplication')) return true;
@@ -63,23 +77,23 @@ export const useTreeNode = (props: useTreeNodeProps) => {
 		return result;
 	};
 
-	const saveApplicationOrGroup = (
-		dataToSave: TreeView,
-		newValue: string,
-		path: NodePath[],
-	) => {
-		if (dataToSave.edit && canAddApplication(dataToSave)) {
-			onEditGroup(dataToSave, path, newValue);
-		} else if (dataToSave.edit && !canAddApplication(dataToSave)) {
-			const [name, value] = extractApplicationNameAndValue(newValue);
-			onEditApplication(dataToSave, path, name, value);
-		} else if (dataToSave.toggleNewEditor === 'Application') {
-			const [name, value] = extractApplicationNameAndValue(newValue);
-			onAddApplication(dataToSave, path, name, value);
-		} else if (dataToSave.toggleNewEditor === 'Group') {
-			onAddGroup(dataToSave, path, newValue);
-		}
-	};
+	// const saveApplicationOrGroup = (
+	// 	dataToSave: TreeView,
+	// 	newValue: string,
+	// 	path: NodePath[],
+	// ) => {
+	// 	if (dataToSave.edit && canAddApplication(dataToSave)) {
+	// 		onEditGroup(dataToSave, path, newValue);
+	// 	} else if (dataToSave.edit && !canAddApplication(dataToSave)) {
+	// 		const [name, value] = extractApplicationNameAndValue(newValue);
+	// 		onEditApplication(dataToSave, path, name, value);
+	// 	} else if (dataToSave.toggleNewEditor === 'Application') {
+	// 		const [name, value] = extractApplicationNameAndValue(newValue);
+	// 		onAddApplication(dataToSave, path, name, value);
+	// 	} else if (dataToSave.toggleNewEditor === 'Group') {
+	// 		onAddGroup(dataToSave, path, newValue);
+	// 	}
+	// };
 
 	const closeEditor = () => {
 		onToggleEdit(nodePath, false);
@@ -91,15 +105,27 @@ export const useTreeNode = (props: useTreeNodeProps) => {
 
 	const toggleNewEditor = (val: TEditor) => onToggleNewEditor(nodePath, val);
 
-	const submitHandler = (value: string) => {
-		saveApplicationOrGroup(data, value, nodePath);
+	const closeNewEditor = () => onToggleNewEditor(nodePath, '');
+
+	const submitHandler = (newValue: string) => {
+		if (data.edit && canAddApplication(data)) {
+			onEditGroup(data, nodePath, newValue);
+		} else if (data.edit && !canAddApplication(data)) {
+			const [name, value] = extractApplicationNameAndValue(newValue);
+			onEditApplication(data, nodePath, name, value);
+		} else if (data.toggleNewEditor === 'Application') {
+			const [name, value] = extractApplicationNameAndValue(newValue);
+			onAddApplication(data, nodePath, name, value);
+		} else if (data.toggleNewEditor === 'Group') {
+			onAddGroup(data, nodePath, newValue);
+		}
 	};
 
 	const setErrorHandler = (err: string | ErrorResponse) => {
 		onSetNodeErr(nodePath, err);
 	};
 
-	const clearErrorHandle = () => {
+	const clearErrorHandler = () => {
 		onSetNodeErr(nodePath, null);
 	};
 
@@ -108,15 +134,16 @@ export const useTreeNode = (props: useTreeNodeProps) => {
 	return {
 		canAddApplication,
 		showHideNewEditorAndTreeChildren,
+		extractApplicationNameAndValue,
 		nodeValue,
-		saveApplicationOrGroup,
 		closeEditor,
 		submitHandler,
 		setErrorHandler,
-		clearErrorHandle,
+		clearErrorHandler,
 		isApplication,
 		toggleEdit,
 		toggleChildren,
 		toggleNewEditor,
+		closeNewEditor,
 	};
 };
