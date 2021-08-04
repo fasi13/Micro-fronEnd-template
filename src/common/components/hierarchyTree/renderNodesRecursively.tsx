@@ -3,7 +3,7 @@ import { NodeActions, NodePath, TreeView } from '../../../types';
 import { TreeNode } from './treeNode';
 import { TreeNodeChildren } from './treeNodeChildren';
 
-interface ApplicationPropType extends NodeActions {
+export interface ApplicationPropType extends NodeActions {
 	data: TreeView;
 	nodeDepth: number;
 	nodeId: number;
