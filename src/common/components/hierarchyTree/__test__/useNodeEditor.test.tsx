@@ -1,10 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
-import React from 'react';
 import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
 	let dummyProps: useNodeEditorProps;
-
+	const dummyInput = 'New Application Group(2021)';
 	beforeEach(() => {
 		dummyProps = {
 			data: '',
@@ -81,16 +80,26 @@ describe('useNodeEditor', () => {
 			result.current.checkValidityAndSubmit();
 			expect(dummyProps.onSubmit).toBeCalledTimes(1);
 		});
-
-		it(`error clear`, () => {
-			dummyProps.error = 'Value can not be empty';
+		it('checks if current and new values are the same', () => {
+			dummyProps.data = dummyInput; // wrong pattern
+			dummyProps.isApplication = true;
 			const { result } = renderHook(useNodeEditor, {
 				initialProps: dummyProps,
 			});
-			dummyProps.data = 'test';
-			const input = <input value="asdf" />;
-			result.current.setEditorValue(input.props.target);
-			expect(dummyProps.error).toMatch('Add New Application');
+			result.current.preValue.current = dummyInput;
+			result.current.checkValidityAndSubmit();
+			expect(dummyProps.onSubmit).not.toBeCalled();
 		});
+
+		// it(`error clear`, () => {
+		// 	dummyProps.error = 'Value can not be empty';
+		// 	const { result } = renderHook(useNodeEditor, {
+		// 		initialProps: dummyProps,
+		// 	});
+		// 	dummyProps.data = 'test';
+		// 	const input = <input value="asdf" />;
+		// 	result.current.setEditorValue(input.props.target);
+		// 	expect(dummyProps.error).toMatch('Add New Application');
+		// });
 	});
 });
