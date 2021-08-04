@@ -61,7 +61,6 @@ describe('Autocomplete Search', () => {
 		userEvent.type(inputField, 'group');
 
 		expect(inputField).toHaveValue('group');
-		//
 
 		useSearchStore.setState({ searchData: mockSearchData });
 

@@ -31,7 +31,6 @@ const SearchStore = (set: any, get: any): SearchState => ({
 				)
 				.then(resp => {
 					// eslint-disable-next-line no-debugger
-					debugger;
 					set((state: SearchState) => {
 						state.searchData = resp.data?.data?.items;
 						state.searchLoading = false;
