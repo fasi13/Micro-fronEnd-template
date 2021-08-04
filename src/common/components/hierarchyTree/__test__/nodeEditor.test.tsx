@@ -115,7 +115,7 @@ describe('hierarchy store', () => {
 			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
 		};
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -137,7 +137,6 @@ describe('hierarchy store', () => {
 			target: { value: '' },
 		});
 		userEvent.type(input, '{enter}');
-		debug();
 		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
 			'Value can not be empty',
 		);
@@ -151,7 +150,7 @@ describe('hierarchy store', () => {
 			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
 		};
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -173,7 +172,6 @@ describe('hierarchy store', () => {
 			target: { value: 'test' },
 		});
 		userEvent.type(input, '{enter}');
-		debug();
 		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
 			'Application format should be: Application Name (Value)',
 		);
@@ -187,7 +185,7 @@ describe('hierarchy store', () => {
 			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
 		};
 
-		const { getByTestId, debug } = render(
+		const { getByTestId } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -209,8 +207,7 @@ describe('hierarchy store', () => {
 			target: { value: 'test (testVal)' },
 		});
 		userEvent.type(input, '{enter}');
-		debug();
-		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(null);
+		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe('');
 	});
 
 	test('node editor cancel button should call correct function', () => {
