@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useHierarchyStore } from '../../../state';
-import { ErrorResponse, NodePath, TEditor, TreeView } from '../../../types';
+import { useHierarchyStore } from '../../../../state';
+import { ErrorResponse, NodePath, TEditor, TreeView } from '../../../../types';
 
 export const useHierarchyHelper = () => {
 	const {

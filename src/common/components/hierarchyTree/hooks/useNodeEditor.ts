@@ -12,6 +12,7 @@ export interface useNodeEditorProps {
 
 interface useNodeEditorReturnType {
 	checkValidityAndSubmit: () => void;
+	preValue: React.MutableRefObject<string>;
 	value: string;
 	nodeEditorPlaceHolder: () => string;
 	setEditorValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -58,6 +59,7 @@ export const useNodeEditor = (
 	return {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
+		preValue,
 		value,
 		setEditorValue,
 	};

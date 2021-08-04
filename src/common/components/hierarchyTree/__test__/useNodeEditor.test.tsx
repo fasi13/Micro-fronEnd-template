@@ -7,6 +7,7 @@ describe('useNodeEditor', () => {
 	beforeEach(() => {
 		dummyProps = {
 			data: '',
+			error: '',
 			isApplication: true,
 			setError: jest.fn(),
 			clearError: jest.fn(),
@@ -69,6 +70,16 @@ describe('useNodeEditor', () => {
 				'Application format should be: Application Name (Value)',
 			);
 		});
+		it('checks if the input form is submit properly', () => {
+			dummyProps.data = 'New Application Group(2021)'; // wrong pattern
+			dummyProps.isApplication = true;
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			result.current.preValue.current = 'New Application Group(2026)';
+			result.current.checkValidityAndSubmit();
+			expect(dummyProps.onSubmit).toBeCalledTimes(1);
+		});
 
 		it(`error clear`, () => {
 			dummyProps.error = 'Value can not be empty';
@@ -90,23 +101,5 @@ describe('useNodeEditor', () => {
 			result.current.setEditorValue(mockChangeEvent);
 			expect(dummyProps.error).toMatch('Add New Application');
 		});
-
-		// it('checks if previous value is the same as current value, and if it is it will not call on submit', () => {
-		//   dummyProps.data = 'value'; // wrong pattern
-
-		// 	const ren1 = renderHook(useNodeEditor, {
-		// 		initialProps: dummyProps,
-		// 	});
-
-		//   const {}  = ren1.rerender()
-
-		// 	result.current.checkValidityAndSubmit();
-
-		// 	expect(dummyProps.setError).toHaveBeenCalledWith(
-		// 		'Application format should be: Application Name (Value)',
-		// 	);
-		// });
-
-		// it('checks if previous value is not same as current value, and if it is not it will clear Error , call Onsubmit and update previous value with current value ', () => {});
 	});
 });
