@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-test-renderer';
 import { useHierarchyStore } from '../../../../state';
 import { TreeView } from '../../../../types';
-import { useHierarchyHelper } from '../useHierarchyHelper';
+import { useHierarchyHelper } from '../hooks/useHierarchyHelper';
 
 interface NodePath {
 	pathName: string;

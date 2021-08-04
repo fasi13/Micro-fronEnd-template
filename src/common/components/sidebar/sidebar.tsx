@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { HierarchyTree } from '..';
 import { detachStore, useHierarchyStore } from '../../../state';
 import Searchbar from '../searchbar/Searchbar';
+import { useHierarchyHelper } from './hooks/useHierarchyHelper';
 import './sidebar.scss';
-import { useHierarchyHelper } from './useHierarchyHelper';
 
 const SidebarContent = () => {
 	const {

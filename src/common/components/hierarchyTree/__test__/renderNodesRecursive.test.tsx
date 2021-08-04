@@ -2,7 +2,10 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { TreeView } from '../../../../types';
-import { ApplicationPropType, RenderNodesRecursively } from '../renderNodesRecursively';
+import {
+	ApplicationPropType,
+	RenderNodesRecursively,
+} from '../renderNodesRecursively';
 
 describe('treeNode', () => {
 	let dummyProps: ApplicationPropType;
@@ -73,7 +76,7 @@ describe('treeNode', () => {
 			data: { ...dummyTreeView },
 			nodeId: dummyTreeView.id,
 			nodePath: dummyTreeView.nodePath,
-      nodeDepth:0,
+			nodeDepth: 0,
 			onToggleCollapse: jest.fn(),
 			onToggleNewEditor: jest.fn(),
 			onToggleEdit: jest.fn(),
@@ -87,7 +90,8 @@ describe('treeNode', () => {
 	});
 
 	it('renders treeNode component', () => {
-		expect( render(<RenderNodesRecursively {...dummyProps} />)).toMatchSnapshot()
+		expect(
+			render(<RenderNodesRecursively {...dummyProps} />),
+		).toMatchSnapshot();
 	});
-
 });

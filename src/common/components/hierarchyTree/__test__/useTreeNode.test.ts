@@ -84,189 +84,191 @@ describe('useTreeNode', () => {
 		};
 	});
 
-describe('useTreeNode snapShot return values', () => {
-	it('returns object of helper methods', () => {
-		const result = renderHook(useTreeNode, { initialProps: dummyProps });
-		expect(result).toMatchSnapshot();
+	describe('useTreeNode snapShot return values', () => {
+		it('returns object of helper methods', () => {
+			const result = renderHook(useTreeNode, { initialProps: dummyProps });
+			expect(result).toMatchSnapshot();
+		});
 	});
-});
 
-describe('canAddApplication', () => {
-	it('returns true if node has link with rel createApplication', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
+	describe('canAddApplication', () => {
+		it('returns true if node has link with rel createApplication', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+
+			expect(result.current.canAddApplication(dummyTreeView)).toBe(true);
+		});
+	});
+
+	describe('showHideNewEditorAndTreeChildren', () => {
+		it('returns mb-10 if is collapse is false and editorMode is not empty', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+			expect(
+				result.current.showHideNewEditorAndTreeChildren(false, 'Application'),
+			).toBe('mb-10');
 		});
 
-		expect(result.current.canAddApplication(dummyTreeView)).toBe(true);
-	});
-});
-
-describe('showHideNewEditorAndTreeChildren', () => {
-	it('returns mb-10 if is collapse is false and editorMode is not empty', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
-		});
-		expect(
-			result.current.showHideNewEditorAndTreeChildren(false, 'Application'),
-		).toBe('mb-10');
-	});
-
-	it('returns empty string if is collapsed is false and editorMode is empty', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
-		});
-		expect(result.current.showHideNewEditorAndTreeChildren(false, '')).toBe('');
-	});
-
-	it('returns hidden text if is collapsed is true', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
-		});
-		expect(result.current.showHideNewEditorAndTreeChildren(true, '')).toBe(
-			'hidden',
-		);
-	});
-});
-
-describe('nodeValue', () => {
-	it('returns name as it is if it is group', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
-		});
-		expect(result.current.nodeValue()).toEqual('dummy-name');
-	});
-
-	it('returns name with value if it is application', () => {
-		dummyProps.data._links = dummyProps.data._links.filter(
-			l => l.rel !== 'createApplication',
-		);
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
-		});
-		expect(result.current.nodeValue()).toEqual('dummy-name (dummy-value)');
-	});
-});
-
-describe('extractApplicationNameAndValue', () => {
-	it(`given 'name (value)' it returns array of ['name','value']`, () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
+		it('returns empty string if is collapsed is false and editorMode is empty', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+			expect(result.current.showHideNewEditorAndTreeChildren(false, '')).toBe(
+				'',
+			);
 		});
 
-		const val: string[] =
-			result.current.extractApplicationNameAndValue('name (value)');
-
-		expect(val).toContain('name ');
-		expect(val).toContain('value');
+		it('returns hidden text if is collapsed is true', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+			expect(result.current.showHideNewEditorAndTreeChildren(true, '')).toBe(
+				'hidden',
+			);
+		});
 	});
 
-	it(`given 'dummytext' it returns array of ['dummytext']`, () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
+	describe('nodeValue', () => {
+		it('returns name as it is if it is group', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+			expect(result.current.nodeValue()).toEqual('dummy-name');
 		});
 
-		const val: string[] =
-			result.current.extractApplicationNameAndValue('dummytext');
-
-		expect(val).toContain('dummytext');
+		it('returns name with value if it is application', () => {
+			dummyProps.data._links = dummyProps.data?._links.filter(
+				l => l.rel !== 'createApplication',
+			);
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+			expect(result.current.nodeValue()).toEqual('dummy-name (dummy-value)');
+		});
 	});
 
-	it(`given '' it returns array of ['','']`, () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: dummyProps,
+	describe('extractApplicationNameAndValue', () => {
+		it(`given 'name (value)' it returns array of ['name','value']`, () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+
+			const val: string[] =
+				result.current.extractApplicationNameAndValue('name (value)');
+
+			expect(val).toContain('name ');
+			expect(val).toContain('value');
 		});
 
-		const val: string[] = result.current.extractApplicationNameAndValue('');
+		it(`given 'dummytext' it returns array of ['dummytext']`, () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
 
-		expect(val).toContain('');
-		expect(val).toContain('');
-	});
-});
+			const val: string[] =
+				result.current.extractApplicationNameAndValue('dummytext');
 
-describe('submitHandler', () => {
-	it('calls onEditGroup', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: { ...dummyProps, data: { ...dummyTreeView, edit: true } },
+			expect(val).toContain('dummytext');
 		});
 
-		result.current.submitHandler('newValue');
+		it(`given '' it returns array of ['','']`, () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
 
-		expect(dummyProps.onEditGroup).toHaveBeenCalled();
+			const val: string[] = result.current.extractApplicationNameAndValue('');
+
+			expect(val).toContain('');
+			expect(val).toContain('');
+		});
 	});
 
-	it('calls onEditApplication', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: {
-				...dummyProps,
-				data: {
-					...dummyTreeView,
-					edit: true,
-					_links: dummyTreeView._links.filter(
-						l => l.rel !== 'createApplication',
-					),
+	describe('submitHandler', () => {
+		it('calls onEditGroup', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: { ...dummyProps, data: { ...dummyTreeView, edit: true } },
+			});
+
+			result.current.submitHandler('newValue');
+
+			expect(dummyProps.onEditGroup).toHaveBeenCalled();
+		});
+
+		it('calls onEditApplication', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: {
+					...dummyProps,
+					data: {
+						...dummyTreeView,
+						edit: true,
+						_links: dummyTreeView?._links.filter(
+							l => l.rel !== 'createApplication',
+						),
+					},
 				},
-			},
+			});
+
+			result.current.submitHandler('newValue');
+
+			expect(dummyProps.onEditApplication).toHaveBeenCalled();
 		});
 
-		result.current.submitHandler('newValue');
-
-		expect(dummyProps.onEditApplication).toHaveBeenCalled();
-	});
-
-	it('calls onAddApplication', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: {
-				...dummyProps,
-				data: {
-					...dummyTreeView,
-					edit: false,
-					toggleNewEditor: 'Application',
+		it('calls onAddApplication', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: {
+					...dummyProps,
+					data: {
+						...dummyTreeView,
+						edit: false,
+						toggleNewEditor: 'Application',
+					},
 				},
-			},
+			});
+
+			result.current.submitHandler('newValue');
+
+			expect(dummyProps.onAddApplication).toHaveBeenCalled();
 		});
 
-		result.current.submitHandler('newValue');
-
-		expect(dummyProps.onAddApplication).toHaveBeenCalled();
-	});
-
-	it('calls onAddGroup', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: {
-				...dummyProps,
-				data: {
-					...dummyTreeView,
-					edit: false,
-					toggleNewEditor: 'Group',
+		it('calls onAddGroup', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: {
+					...dummyProps,
+					data: {
+						...dummyTreeView,
+						edit: false,
+						toggleNewEditor: 'Group',
+					},
 				},
-			},
+			});
+
+			result.current.submitHandler('newValue');
+
+			expect(dummyProps.onAddGroup).toHaveBeenCalled();
 		});
 
-		result.current.submitHandler('newValue');
-
-		expect(dummyProps.onAddGroup).toHaveBeenCalled();
-	});
-
-	it('calls nothing if it is not in edit mode and toggleNewEditor emptyString', () => {
-		const { result } = renderHook(useTreeNode, {
-			initialProps: {
-				...dummyProps,
-				data: {
-					...dummyTreeView,
-					edit: false,
-					toggleNewEditor: '',
+		it('calls nothing if it is not in edit mode and toggleNewEditor emptyString', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: {
+					...dummyProps,
+					data: {
+						...dummyTreeView,
+						edit: false,
+						toggleNewEditor: '',
+					},
 				},
-			},
+			});
+
+			result.current.submitHandler('newValue');
+
+			expect(dummyProps.onEditGroup).not.toHaveBeenCalled();
+			expect(dummyProps.onEditApplication).not.toHaveBeenCalled();
+			expect(dummyProps.onAddApplication).not.toHaveBeenCalled();
+			expect(dummyProps.onAddGroup).not.toHaveBeenCalled();
 		});
-
-		result.current.submitHandler('newValue');
-
-		expect(dummyProps.onEditGroup).not.toHaveBeenCalled();
-		expect(dummyProps.onEditApplication).not.toHaveBeenCalled();
-		expect(dummyProps.onAddApplication).not.toHaveBeenCalled();
-		expect(dummyProps.onAddGroup).not.toHaveBeenCalled();
 	});
-});
 
 	describe('closeEditor', () => {
 		it('calls onToggleEdit', () => {
