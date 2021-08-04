@@ -7,7 +7,7 @@ import { ErrorResponse, TreeView } from '../../../../types';
 import { NodeEditor } from '../nodeEditor';
 
 const nodeEditorInputStr = 'node-editor-input';
-describe('hieararchy store', () => {
+describe('hierarchy store', () => {
 	const dummyTreeView: TreeView[] = [
 		{
 			id: 0,

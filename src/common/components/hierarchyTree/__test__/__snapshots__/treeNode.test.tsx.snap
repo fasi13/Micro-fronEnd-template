@@ -29,8 +29,6 @@ Object {
             dummy (12)
              
             
-            ?? 
-            false
           </button>
           <div
             class="flex space-x-3 node-actions"
@@ -140,8 +138,6 @@ Object {
           dummy (12)
            
           
-          ?? 
-          false
         </button>
         <div
           class="flex space-x-3 node-actions"

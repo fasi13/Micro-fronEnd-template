@@ -83,7 +83,6 @@ export const Node: React.FC<NodePropType> = props => {
 				}}>
 				{data?.name}{' '}
 				{data?.value ? `(${data?.value.toString().trimLeft()})` : ''}
-				?? {`${data.collapsed}`}
 			</button>
 			<div className="flex space-x-3 node-actions">
 				<button
