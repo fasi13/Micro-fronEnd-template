@@ -87,7 +87,7 @@ describe('nodeEditor', () => {
 		const submitHandler = jest.fn();
 		const onSetNodeErr = jest.fn();
 
-		const { getByTestId } = render(
+		const { getByTestId, debug } = render(
 			<NodeEditor
 				key={`node_editor_${dummyTreeView[0].id}`}
 				onClose={() => {
@@ -102,6 +102,7 @@ describe('nodeEditor', () => {
 				clearError={onSetNodeErr()}
 			/>,
 		);
+		debug();
 		const input = getByTestId(nodeEditorInputStr) as HTMLInputElement;
 		fireEvent.change(input, {
 			target: { value: 'test' },

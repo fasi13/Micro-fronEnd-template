@@ -1,0 +1,308 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`treeNode renders hierarchyTree component 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="w-full h-full text-white"
+      >
+        <ul
+          class="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible"
+        >
+          <li
+            class="relative flex flex-col items-start justify-center h-auto list-none tree"
+          >
+            <div
+              class="w-full h-full"
+            >
+              <div
+                class="h-10.5 w-full"
+                data-testid="treeitem"
+              >
+                <div
+                  class="h-10.5 my-1 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
+                  data-testid="node-component"
+                >
+                  <button
+                    class="flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
+								collapse
+								"
+                    data-testid="node-container"
+                    type="button"
+                  />
+                  <button
+                    class="w-full flex items-center text-left pl-\` h-10.5 border-indigo-200"
+                    data-testid="node-labels"
+                    id="dummy_(12)____0"
+                    type="button"
+                  >
+                    dummy (12)
+                     
+                    
+                  </button>
+                  <div
+                    class="flex space-x-3 node-actions"
+                  >
+                    <button
+                      class="cursor-pointer hidden"
+                      data-testid="node-add-app"
+                      title="Add Application"
+                      type="button"
+                    >
+                      <svg
+                        class=""
+                        height="18"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="256"
+                          cy="256"
+                          fill="#fff"
+                          fill-opacity="0.75"
+                          r="256"
+                        />
+                        <path
+                          d="M375.001 239.001H272.999V136.999c0-9.383-7.616-16.999-16.999-16.999s-16.999 7.616-16.999 16.999v102.002H136.999c-9.383 0-16.999 7.616-16.999 16.999s7.616 16.999 16.999 16.999h102.002v102.002c0 9.383 7.616 16.999 16.999 16.999s16.999-7.616 16.999-16.999V272.999h102.002c9.383 0 16.999-7.616 16.999-16.999s-7.614-16.999-16.999-16.999z"
+                          fill="#3F98E3"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      class="cursor-pointer "
+                      data-testid="node-add-app-group"
+                      title="Add Application Group"
+                      type="button"
+                    >
+                      <svg
+                        class=""
+                        fill="none"
+                        height="18"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M264.533 477.867H25.6c-3.866 0-8.533-3.806-8.533-8.533v-25.6a8.536 8.536 0 00-8.533-8.533c-4.71 0-8.534 3.822-8.534 8.532v25.6c0 13.636 11.964 25.6 25.6 25.6h238.933a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533zm204.8-358.4V76.8c0-14.114-11.486-25.6-25.6-25.6H261.692a8.584 8.584 0 01-5.12-1.707L197.402 5.12A25.76 25.76 0 00182.042 0H51.2C37.086 0 25.6 11.486 25.6 25.6v93.867c-14.114 0-25.6 11.486-25.6 25.6v230.4A8.536 8.536 0 008.533 384a8.536 8.536 0 008.533-8.533v-230.4c0-4.702 3.831-8.533 8.533-8.533h443.733c4.702 0 8.533 3.831 8.533 8.533v119.467a8.536 8.536 0 008.533 8.533 8.536 8.536 0 008.533-8.533V145.067c.002-14.114-11.483-25.6-25.598-25.6zm-59.733 0H85.333v-8.533c0-4.702 3.831-8.533 8.533-8.533h307.2c4.702 0 8.533 3.831 8.533 8.533v8.533h.001zm42.667 0h-25.6v-8.533c0-14.114-11.486-25.6-25.6-25.6h-307.2c-14.114 0-25.6 11.486-25.6 25.6v8.533h-25.6V25.6c0-4.702 3.831-8.533 8.533-8.533h130.842c1.835 0 3.652.606 5.12 1.707l59.17 44.373a25.757 25.757 0 0015.36 5.12h182.042c4.702 0 8.533 3.831 8.533 8.533v42.667zm-8.534 256h-51.2v-51.2a8.536 8.536 0 00-8.533-8.533 8.536 8.536 0 00-8.533 8.533v51.2h-51.2a8.536 8.536 0 00-8.533 8.533 8.536 8.536 0 008.533 8.533h51.2v51.2a8.536 8.536 0 008.533 8.533 8.536 8.536 0 008.533-8.533v-51.2h51.2a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533z"
+                          fill="#fff"
+                        />
+                        <path
+                          d="M384 256c-70.579 0-128 57.421-128 128 0 70.579 57.421 128 128 128 70.579 0 128-57.421 128-128 0-70.579-57.421-128-128-128zm0 238.933c-61.167 0-110.933-49.766-110.933-110.933 0-61.167 49.766-110.933 110.933-110.933 61.167 0 110.933 49.766 110.933 110.933 0 61.167-49.766 110.933-110.933 110.933zM102.4 42.667H68.267a8.536 8.536 0 00-8.533 8.533 8.536 8.536 0 008.533 8.533H102.4a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533zm76.8 0h-8.533a8.536 8.536 0 00-8.533 8.533 8.536 8.536 0 008.533 8.533h8.533a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533zm-42.667 17.066a8.533 8.533 0 008.533-8.533 8.533 8.533 0 00-8.533-8.533A8.533 8.533 0 00128 51.2a8.533 8.533 0 008.533 8.533zm-128 358.4a8.533 8.533 0 008.533-8.533 8.533 8.533 0 00-8.533-8.533A8.533 8.533 0 000 409.6a8.533 8.533 0 008.533 8.533z"
+                          fill="#fff"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      class="cursor-pointer"
+                      data-testid="node-edit"
+                      title="Edit Node"
+                      type="button"
+                    >
+                      <svg
+                        class=""
+                        fill="none"
+                        height="18"
+                        stroke="#ffff"
+                        viewBox="0 0 470 470"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M456.836 76.168l-64-64.054c-16.125-16.139-44.177-16.17-60.365.031L45.763 301.682a10.733 10.733 0 00-2.688 4.587L.409 455.73a10.682 10.682 0 0010.261 13.606c.979 0 1.969-.136 2.927-.407l149.333-42.703a10.714 10.714 0 004.583-2.69l289.323-286.983c8.063-8.069 12.5-18.787 12.5-30.192 0-11.405-4.437-22.124-12.5-30.193zM285.989 89.737l39.264 39.264-204.996 204.997-14.712-29.434a10.671 10.671 0 00-9.542-5.896H78.921L285.989 89.737zm-259.788 353.4L40.095 394.5l34.742 34.742-48.636 13.895zm123.135-35.177l-51.035 14.579-51.503-51.503 14.579-51.035h28.031l18.385 36.771a10.671 10.671 0 004.771 4.771l36.771 18.385v28.032h.001zm21.334-17.543v-17.082c0-4.042-2.281-7.729-5.896-9.542l-29.434-14.712 204.996-204.996 39.264 39.264-208.93 207.068zM441.784 121.72l-47.033 46.613-93.747-93.747 46.582-47.001c8.063-8.063 22.104-8.063 30.167 0l64 64a21.187 21.187 0 016.25 15.083c0 5.698-2.219 11.052-6.219 15.052z"
+                          fill="#fff"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class=""
+                data-testid="tree-item-children"
+              />
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="w-full h-full text-white"
+    >
+      <ul
+        class="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible"
+      >
+        <li
+          class="relative flex flex-col items-start justify-center h-auto list-none tree"
+        >
+          <div
+            class="w-full h-full"
+          >
+            <div
+              class="h-10.5 w-full"
+              data-testid="treeitem"
+            >
+              <div
+                class="h-10.5 my-1 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
+                data-testid="node-component"
+              >
+                <button
+                  class="flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
+								collapse
+								"
+                  data-testid="node-container"
+                  type="button"
+                />
+                <button
+                  class="w-full flex items-center text-left pl-\` h-10.5 border-indigo-200"
+                  data-testid="node-labels"
+                  id="dummy_(12)____0"
+                  type="button"
+                >
+                  dummy (12)
+                   
+                  
+                </button>
+                <div
+                  class="flex space-x-3 node-actions"
+                >
+                  <button
+                    class="cursor-pointer hidden"
+                    data-testid="node-add-app"
+                    title="Add Application"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      height="18"
+                      viewBox="0 0 512 512"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="256"
+                        cy="256"
+                        fill="#fff"
+                        fill-opacity="0.75"
+                        r="256"
+                      />
+                      <path
+                        d="M375.001 239.001H272.999V136.999c0-9.383-7.616-16.999-16.999-16.999s-16.999 7.616-16.999 16.999v102.002H136.999c-9.383 0-16.999 7.616-16.999 16.999s7.616 16.999 16.999 16.999h102.002v102.002c0 9.383 7.616 16.999 16.999 16.999s16.999-7.616 16.999-16.999V272.999h102.002c9.383 0 16.999-7.616 16.999-16.999s-7.614-16.999-16.999-16.999z"
+                        fill="#3F98E3"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    class="cursor-pointer "
+                    data-testid="node-add-app-group"
+                    title="Add Application Group"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      fill="none"
+                      height="18"
+                      viewBox="0 0 512 512"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M264.533 477.867H25.6c-3.866 0-8.533-3.806-8.533-8.533v-25.6a8.536 8.536 0 00-8.533-8.533c-4.71 0-8.534 3.822-8.534 8.532v25.6c0 13.636 11.964 25.6 25.6 25.6h238.933a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533zm204.8-358.4V76.8c0-14.114-11.486-25.6-25.6-25.6H261.692a8.584 8.584 0 01-5.12-1.707L197.402 5.12A25.76 25.76 0 00182.042 0H51.2C37.086 0 25.6 11.486 25.6 25.6v93.867c-14.114 0-25.6 11.486-25.6 25.6v230.4A8.536 8.536 0 008.533 384a8.536 8.536 0 008.533-8.533v-230.4c0-4.702 3.831-8.533 8.533-8.533h443.733c4.702 0 8.533 3.831 8.533 8.533v119.467a8.536 8.536 0 008.533 8.533 8.536 8.536 0 008.533-8.533V145.067c.002-14.114-11.483-25.6-25.598-25.6zm-59.733 0H85.333v-8.533c0-4.702 3.831-8.533 8.533-8.533h307.2c4.702 0 8.533 3.831 8.533 8.533v8.533h.001zm42.667 0h-25.6v-8.533c0-14.114-11.486-25.6-25.6-25.6h-307.2c-14.114 0-25.6 11.486-25.6 25.6v8.533h-25.6V25.6c0-4.702 3.831-8.533 8.533-8.533h130.842c1.835 0 3.652.606 5.12 1.707l59.17 44.373a25.757 25.757 0 0015.36 5.12h182.042c4.702 0 8.533 3.831 8.533 8.533v42.667zm-8.534 256h-51.2v-51.2a8.536 8.536 0 00-8.533-8.533 8.536 8.536 0 00-8.533 8.533v51.2h-51.2a8.536 8.536 0 00-8.533 8.533 8.536 8.536 0 008.533 8.533h51.2v51.2a8.536 8.536 0 008.533 8.533 8.536 8.536 0 008.533-8.533v-51.2h51.2a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533z"
+                        fill="#fff"
+                      />
+                      <path
+                        d="M384 256c-70.579 0-128 57.421-128 128 0 70.579 57.421 128 128 128 70.579 0 128-57.421 128-128 0-70.579-57.421-128-128-128zm0 238.933c-61.167 0-110.933-49.766-110.933-110.933 0-61.167 49.766-110.933 110.933-110.933 61.167 0 110.933 49.766 110.933 110.933 0 61.167-49.766 110.933-110.933 110.933zM102.4 42.667H68.267a8.536 8.536 0 00-8.533 8.533 8.536 8.536 0 008.533 8.533H102.4a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533zm76.8 0h-8.533a8.536 8.536 0 00-8.533 8.533 8.536 8.536 0 008.533 8.533h8.533a8.536 8.536 0 008.533-8.533 8.536 8.536 0 00-8.533-8.533zm-42.667 17.066a8.533 8.533 0 008.533-8.533 8.533 8.533 0 00-8.533-8.533A8.533 8.533 0 00128 51.2a8.533 8.533 0 008.533 8.533zm-128 358.4a8.533 8.533 0 008.533-8.533 8.533 8.533 0 00-8.533-8.533A8.533 8.533 0 000 409.6a8.533 8.533 0 008.533 8.533z"
+                        fill="#fff"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    class="cursor-pointer"
+                    data-testid="node-edit"
+                    title="Edit Node"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      fill="none"
+                      height="18"
+                      stroke="#ffff"
+                      viewBox="0 0 470 470"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M456.836 76.168l-64-64.054c-16.125-16.139-44.177-16.17-60.365.031L45.763 301.682a10.733 10.733 0 00-2.688 4.587L.409 455.73a10.682 10.682 0 0010.261 13.606c.979 0 1.969-.136 2.927-.407l149.333-42.703a10.714 10.714 0 004.583-2.69l289.323-286.983c8.063-8.069 12.5-18.787 12.5-30.192 0-11.405-4.437-22.124-12.5-30.193zM285.989 89.737l39.264 39.264-204.996 204.997-14.712-29.434a10.671 10.671 0 00-9.542-5.896H78.921L285.989 89.737zm-259.788 353.4L40.095 394.5l34.742 34.742-48.636 13.895zm123.135-35.177l-51.035 14.579-51.503-51.503 14.579-51.035h28.031l18.385 36.771a10.671 10.671 0 004.771 4.771l36.771 18.385v28.032h.001zm21.334-17.543v-17.082c0-4.042-2.281-7.729-5.896-9.542l-29.434-14.712 204.996-204.996 39.264 39.264-208.93 207.068zM441.784 121.72l-47.033 46.613-93.747-93.747 46.582-47.001c8.063-8.063 22.104-8.063 30.167 0l64 64a21.187 21.187 0 016.25 15.083c0 5.698-2.219 11.052-6.219 15.052z"
+                        fill="#fff"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+              data-testid="tree-item-children"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
