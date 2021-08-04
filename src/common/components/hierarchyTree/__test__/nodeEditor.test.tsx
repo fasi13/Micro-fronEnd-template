@@ -7,7 +7,7 @@ import { ErrorResponse, TreeView } from '../../../../types';
 import { NodeEditor } from '../nodeEditor';
 
 const nodeEditorInputStr = 'node-editor-input';
-describe('hierarchy store', () => {
+describe('nodeEditor', () => {
 	const dummyTreeView: TreeView[] = [
 		{
 			id: 0,
@@ -235,4 +235,6 @@ describe('hierarchy store', () => {
 		fireEvent.click(nodeCancelBtn);
 		expect(onToggleEdit).toHaveBeenCalled();
 	});
+
+	// it('focuses the controller referenced by inputRef', () => {});
 });
