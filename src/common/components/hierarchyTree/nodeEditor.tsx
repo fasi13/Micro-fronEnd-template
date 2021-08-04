@@ -110,9 +110,13 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					}`}
 					onClick={() => onClose()}>
 					{isSaving ? (
-						<SpinnerIcon className="" width={20} height={20} />
+						<div data-testid="spinner-icon">
+							<SpinnerIcon className="" width={20} height={20} />
+						</div>
 					) : (
-						<CloseIcon className="" width={14} height={14} />
+						<div data-testid="close-icon">
+							<CloseIcon className="" width={14} height={14} />
+						</div>
 					)}
 				</button>
 				<p
