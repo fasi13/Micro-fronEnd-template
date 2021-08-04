@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import React from 'react';
 import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
@@ -76,9 +75,19 @@ describe('useNodeEditor', () => {
 			const { result } = renderHook(useNodeEditor, {
 				initialProps: dummyProps,
 			});
+
 			dummyProps.data = 'test';
-			const input = <input value="asdf" />;
-			result.current.setEditorValue(input.props.target);
+
+			const mockChangeEvent = {
+				currentTarget: {
+					value: 'dummy',
+				},
+				target: {
+					value: 'dummy',
+				},
+			} as React.ChangeEvent<HTMLInputElement>;
+
+			result.current.setEditorValue(mockChangeEvent);
 			expect(dummyProps.error).toMatch('Add New Application');
 		});
 
