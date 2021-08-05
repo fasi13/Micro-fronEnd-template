@@ -11,6 +11,7 @@ describe('useNodeEditor', () => {
 		dummyProps = {
 			data: '',
 			error: '',
+			isSaving: false,
 			isApplication: true,
 			setError: jest.fn(),
 			clearError: jest.fn(),
@@ -84,59 +85,88 @@ describe('useNodeEditor', () => {
 			expect(dummyProps.onSubmit).toBeCalledTimes(1);
 		});
 
-			it('checks if current and new values are the same', () => {
-				dummyProps.data = dummyInput; // wrong pattern
-				dummyProps.isApplication = true;
-				const { result } = renderHook(useNodeEditor, {
-					initialProps: dummyProps,
-				});
-				result.current.preValue.current = dummyInput;
-				result.current.checkValidityAndSubmit();
-				expect(dummyProps.onSubmit).not.toBeCalled();
+		it('checks if current and new values are the same', () => {
+			dummyProps.data = dummyInput; // wrong pattern
+			dummyProps.isApplication = true;
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
 			});
-
+			result.current.preValue.current = dummyInput;
+			result.current.checkValidityAndSubmit();
+			expect(dummyProps.onSubmit).not.toBeCalled();
+		});
 	});
 
-	describe('setEditorValue',() => {
-				it('sets the value of the editor', () => {
-					const { result } = renderHook(useNodeEditor, {
-						initialProps: dummyProps,
-					});
-					const mockChangeEvent = {
-						currentTarget: {
-							value: '',
-						},
-						target: {
-							value: 'new value',
-						},
-					} as React.ChangeEvent<HTMLInputElement>;
+	describe('setEditorValue', () => {
+		it('sets the value of the editor', () => {
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const mockChangeEvent = {
+				currentTarget: {
+					value: '',
+				},
+				target: {
+					value: 'new value',
+				},
+			} as React.ChangeEvent<HTMLInputElement>;
 
-					result.current.setEditorValue(mockChangeEvent);
+			result.current.setEditorValue(mockChangeEvent);
 
-					expect(result.current.value).toMatch('new value');
-				});
+			expect(result.current.value).toMatch('new value');
+		});
 
-				it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
-					dummyProps.error = 'Value can not be empty';
-					const {act} = TestRenderer;
-					const { result } = renderHook(useNodeEditor, {
-						initialProps: dummyProps,
-					});
+		it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
+			dummyProps.error = 'Value can not be empty';
+			const { act } = TestRenderer;
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
 
-					result.current.preValue.current = 'old value';
-					const mockChangeEvent = {
-						currentTarget: {
-							value: '',
-						},
-						target: {
-							value: 'new value',
-						},
-					} as React.ChangeEvent<HTMLInputElement>;
+			result.current.preValue.current = 'old value';
+			const mockChangeEvent = {
+				currentTarget: {
+					value: '',
+				},
+				target: {
+					value: 'new value',
+				},
+			} as React.ChangeEvent<HTMLInputElement>;
 
-					act(() => result.current.setEditorValue(mockChangeEvent));
-					expect(dummyProps.clearError).toHaveBeenCalled();
-				});
+			act(() => result.current.setEditorValue(mockChangeEvent));
+			expect(dummyProps.clearError).toHaveBeenCalled();
+		});
+	});
 
+	describe('closeButtonStyling', () => {
+		it('returns bg-red-400 if node has error', () => {
+			dummyProps.error = 'dummyError';
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const classNames = result.current.closeButtonStyling();
+			expect(classNames).toMatch('bg-red-400');
+		});
+
+		it('returns bg-gray-300 if node is saving', () => {
+			dummyProps.isSaving = true;
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const classNames = result.current.closeButtonStyling();
+			expect(classNames).toMatch('bg-gray-300');
+		});
+
+		it('returns bg-faded-skyblue for a default node state', () => {
+			dummyProps.isSaving = false;
+			dummyProps.error = '';
+
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const classNames = result.current.closeButtonStyling();
+			expect(classNames).toMatch('bg-faded-skyblue');
+		});
 	});
 
 });

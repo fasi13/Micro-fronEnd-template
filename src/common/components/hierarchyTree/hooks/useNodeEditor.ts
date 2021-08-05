@@ -3,6 +3,7 @@ import { ErrorResponse } from '../../../../types';
 
 export interface useNodeEditorProps {
 	data: string | undefined;
+	isSaving: boolean;
 	isApplication: boolean;
 	error: string | null;
 	setError: (val: ErrorResponse | string) => void;
@@ -16,12 +17,21 @@ interface useNodeEditorReturnType {
 	value: string;
 	nodeEditorPlaceHolder: () => string;
 	setEditorValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	closeButtonStyling: () => string;
 }
 
 export const useNodeEditor = (
 	props: useNodeEditorProps,
 ): useNodeEditorReturnType => {
-	const { data, isApplication, error, setError, clearError, onSubmit } = props;
+	const {
+		data,
+		isApplication,
+		isSaving,
+		error,
+		setError,
+		clearError,
+		onSubmit,
+	} = props;
 
 	const [value, setValue] = useState(data || '');
 	const preValue = useRef(value);
@@ -56,9 +66,17 @@ export const useNodeEditor = (
 		setValue(e.target.value);
 	};
 
+	const closeButtonStyling = (): string => {
+		if (error) return 'bg-red-400';
+		if (isSaving) return 'bg-gray-300';
+
+		return 'bg-faded-skyblue';
+	};
+
 	return {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
+		closeButtonStyling,
 		preValue,
 		value,
 		setEditorValue,

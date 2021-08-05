@@ -25,7 +25,6 @@ export const getNodeToUpdate = (
 	hierarchyData: TreeView[],
 	nodePath: NodePath[],
 ): TreeView | undefined => {
-	// let node: TreeView | undefined = hierarchyData[0]; // starting from the parent i.e. hierarchyData[0]
 	let node: TreeView | undefined;
 
 	for (let i = 0; i < nodePath.length; i += 1) {

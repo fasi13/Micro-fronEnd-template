@@ -5,7 +5,6 @@ import React from 'react';
 import { Rnd } from 'react-rnd';
 import { Header, HeaderThird, Sidebar } from '../../common/components';
 import { useDetachStore } from '../../state';
-// import { InitAxiosInterceptors } from '../../util/interceptor';
 import './home.scss';
 
 const drawerWidth = 500;
@@ -97,7 +96,7 @@ export const Home: React.FunctionComponent = () => {
 			{dSSidebarState ? (
 				<Rnd
 					data-testid="rnd"
-					className="rndcustomize relative"
+					className="relative rndcustomize"
 					bounds=".root"
 					default={{
 						x: offsetLeft,
@@ -105,7 +104,7 @@ export const Home: React.FunctionComponent = () => {
 						width: detachedSidebarWidth,
 						height: detachedSidebarHeight,
 					}}>
-					<div className="w-full h-full m-4 mr-1 overflow-hidden journal-scroll pr-2 cursor-auto">
+					<div className="w-full h-full pr-2 m-4 mr-1 overflow-hidden cursor-auto journal-scroll">
 						<Sidebar />
 					</div>
 					<div
@@ -124,7 +123,7 @@ export const Home: React.FunctionComponent = () => {
 				className={clsx(classes.content, {
 					[classes.contentShift]: open,
 				})}>
-				<div className="header3 h-6">
+				<div className="h-6 header3">
 					<HeaderThird />
 				</div>
 				<div className={classes.drawerHeader} />

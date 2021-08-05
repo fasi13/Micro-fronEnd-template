@@ -36,35 +36,16 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 		nodeEditorPlaceHolder,
 		value,
 		setEditorValue,
+		closeButtonStyling,
 	} = useNodeEditor({
 		data,
+		isSaving,
 		isApplication,
 		error,
 		setError,
 		clearError,
 		onSubmit,
 	});
-	// const [value, setValue] = useState(data || '');
-	// const validAppPattern = /^[^)(]+(\([^()]+\)){1}$/g;
-	// const emptyErrorMsg = 'Value can not be empty';
-	// const invalidApplicationValueFormatMsg =
-	// 	'Application format should be: Application Name (Value)';
-	// const preValue = useRef(value);
-
-	// const checkValidityAndSubmit = (): void => {
-	// 	if (value === '') {
-	// 		setError(emptyErrorMsg);
-	// 	} else if (
-	// 		isApplication &&
-	// 		value.match(validAppPattern)?.filter(m => m !== undefined).length !== 1
-	// 	) {
-	// 		setError(invalidApplicationValueFormatMsg);
-	// 	} else if (preValue.current !== value) {
-	// 		clearError();
-	// 		preValue.current = value;
-	// 		onSubmit(value);
-	// 	}
-	// };
 
 	useEffect(() => {
 		if (inputRef.current) inputRef.current.focus();
@@ -101,10 +82,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 				<button
 					data-testid="node-cancel-btn"
 					type="button"
-					className={`absolute font-semibold h-10.5 inset-y-0 right-0 flex items-center justify-center w-12 border border-transparent focus:ring-0 focus:outline-non ${
-						// eslint-disable-next-line no-nested-ternary
-						error ? 'bg-red-400' : isSaving ? 'bg-gray-300' : 'bg-faded-skyblue'
-					}`}
+					className={`absolute font-semibold h-10.5 inset-y-0 right-0 flex items-center justify-center w-12 border border-transparent focus:ring-0 focus:outline-non ${closeButtonStyling()}`}
 					onClick={() => onClose()}>
 					{isSaving ? (
 						<div data-testid="spinner-icon">
