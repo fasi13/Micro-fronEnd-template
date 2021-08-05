@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It should render addicon 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <svg
+        class=""
+        height="512"
+        viewBox="0 0 512 512"
+        width="512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="256"
+          cy="256"
+          fill="#fff"
+          fill-opacity="0.75"
+          r="256"
+        />
+        <path
+          d="M375.001 239.001H272.999V136.999c0-9.383-7.616-16.999-16.999-16.999s-16.999 7.616-16.999 16.999v102.002H136.999c-9.383 0-16.999 7.616-16.999 16.999s7.616 16.999 16.999 16.999h102.002v102.002c0 9.383 7.616 16.999 16.999 16.999s16.999-7.616 16.999-16.999V272.999h102.002c9.383 0 16.999-7.616 16.999-16.999s-7.614-16.999-16.999-16.999z"
+          fill="#3F98E3"
+        />
+      </svg>
+    </div>
+  </body>,
+  "container": <div>
+    <svg
+      class=""
+      height="512"
+      viewBox="0 0 512 512"
+      width="512"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="256"
+        cy="256"
+        fill="#fff"
+        fill-opacity="0.75"
+        r="256"
+      />
+      <path
+        d="M375.001 239.001H272.999V136.999c0-9.383-7.616-16.999-16.999-16.999s-16.999 7.616-16.999 16.999v102.002H136.999c-9.383 0-16.999 7.616-16.999 16.999s7.616 16.999 16.999 16.999h102.002v102.002c0 9.383 7.616 16.999 16.999 16.999s16.999-7.616 16.999-16.999V272.999h102.002c9.383 0 16.999-7.616 16.999-16.999s-7.614-16.999-16.999-16.999z"
+        fill="#3F98E3"
+      />
+    </svg>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
