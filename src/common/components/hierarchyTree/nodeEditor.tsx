@@ -14,11 +14,6 @@ interface NodeEditorPropType {
 	clearError: () => void;
 }
 
-// const nodeEditorPlaceHolder = (isApplication: boolean): string => {
-// 	if (isApplication) return 'Add New Application';
-// 	return 'Add New Application Group';
-// };
-
 export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	const {
 		onClose,
@@ -68,9 +63,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 					type="text"
 					name="edit_node"
 					disabled={isSaving}
-					title={
-						isApplication ? 'Application: Name (value)' : 'Application Group'
-					}
+					title={nodeEditorPlaceHolder()}
 					id="edit_application"
 					className="block h-10.5 w-full pl-2 text-gray-900 placeholder-gray-500 bg-gray-300 border-transparent pr-14 flex-2 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent"
 					placeholder={nodeEditorPlaceHolder()}
