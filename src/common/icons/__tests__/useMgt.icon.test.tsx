@@ -5,5 +5,9 @@ import { UserMgtIcon } from '../index';
 test('It should render UserMgtIcon', async () => {
 	const size = { width: 512, height: 512 };
 
-	render(<UserMgtIcon className="" width={size.width} height={size.height} />);
+	expect(
+		render(
+			<UserMgtIcon className="" width={size.width} height={size.height} />,
+		),
+	).toMatchSnapshot();
 });

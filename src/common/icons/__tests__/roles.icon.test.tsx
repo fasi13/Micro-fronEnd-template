@@ -5,5 +5,7 @@ import { RolesIcon } from '../index';
 test('It should render rolesIcon', async () => {
 	const size = { width: 512, height: 512 };
 
-	render(<RolesIcon className="" width={size.width} height={size.height} />);
+	expect(
+		render(<RolesIcon className="" width={size.width} height={size.height} />),
+	).toMatchSnapshot();
 });
