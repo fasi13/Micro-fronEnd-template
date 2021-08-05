@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
+import { linkStyle, textStyle } from './breadCrumbStyleHelper';
 
 const useStyles = makeStyles(() =>
 	createStyles({
@@ -64,10 +65,9 @@ function Breadcrumb() {
 			{breadCrumbData.map((bread, index: number) =>
 				breadCrumbData.length - 1 !== index ? (
 					<Link
-						// data-testid="breadLink"
 						key={bread.pathId.toString()}
 						component="button"
-						className={index !== 0 ? classes.link : classes.first}
+						className={linkStyle(index, classes.link, classes.first)}
 						onClick={() => handleClick(index)}>
 						{bread.pathName}
 					</Link>
@@ -75,7 +75,7 @@ function Breadcrumb() {
 					<Typography
 						data-testid="disabledBreadLink"
 						key={bread.pathId.toString()}
-						className={index !== 0 ? classes.last : classes.first}>
+						className={textStyle(index, classes.last, classes.first)}>
 						{bread.pathName}
 					</Typography>
 				),

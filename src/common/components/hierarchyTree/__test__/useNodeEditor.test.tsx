@@ -2,10 +2,10 @@
 import { renderHook } from '@testing-library/react-hooks';
 // import { act } from 'react-dom/test-utils';
 import TestRenderer from 'react-test-renderer';
-import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
+import { TUseNodeEditorProps, useNodeEditor } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
-	let dummyProps: useNodeEditorProps;
+	let dummyProps: TUseNodeEditorProps;
 	const dummyInput = 'New Application Group(2021)';
 	beforeEach(() => {
 		dummyProps = {
@@ -168,5 +168,4 @@ describe('useNodeEditor', () => {
 			expect(classNames).toMatch('bg-faded-skyblue');
 		});
 	});
-
 });

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { ErrorResponse } from '../../../../types';
 
-export interface useNodeEditorProps {
+export interface TUseNodeEditorProps {
 	data: string | undefined;
 	isSaving: boolean;
 	isApplication: boolean;
@@ -11,7 +11,7 @@ export interface useNodeEditorProps {
 	onSubmit: (value: string) => void;
 }
 
-interface useNodeEditorReturnType {
+interface TUseNodeEditorReturnType {
 	checkValidityAndSubmit: () => void;
 	preValue: React.MutableRefObject<string>;
 	value: string;
@@ -21,8 +21,8 @@ interface useNodeEditorReturnType {
 }
 
 export const useNodeEditor = (
-	props: useNodeEditorProps,
-): useNodeEditorReturnType => {
+	props: TUseNodeEditorProps,
+): TUseNodeEditorReturnType => {
 	const {
 		data,
 		isApplication,
