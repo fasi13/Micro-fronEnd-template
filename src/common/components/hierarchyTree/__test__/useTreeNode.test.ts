@@ -314,8 +314,9 @@ describe('useTreeNode', () => {
 			const { result } = renderHook(useTreeNode, {
 				initialProps: dummyProps,
 			});
-
-			expect(result.current.toggleEdit()).toHaveBeenCalled();
+			const spy = jest.spyOn(result.current, 'toggleEdit');
+			result.current.toggleEdit();
+			expect(spy).toHaveBeenCalled();
 		});
 	});
 
@@ -324,8 +325,9 @@ describe('useTreeNode', () => {
 			const { result } = renderHook(useTreeNode, {
 				initialProps: dummyProps,
 			});
-
-			expect(result.current.toggleChildren()).toHaveBeenCalled();
+			const spy = jest.spyOn(result.current, 'toggleChildren');
+			result.current.toggleChildren();
+			expect(spy).toHaveBeenCalled();
 		});
 	});
 
@@ -334,8 +336,9 @@ describe('useTreeNode', () => {
 			const { result } = renderHook(useTreeNode, {
 				initialProps: dummyProps,
 			});
-
-			expect(result.current.toggleNewEditor('Application')).toHaveBeenCalled();
+			const spy = jest.spyOn(result.current, 'toggleNewEditor');
+			result.current.toggleNewEditor('Application');
+			expect(spy).toHaveBeenCalled();
 		});
 	});
 
@@ -344,8 +347,9 @@ describe('useTreeNode', () => {
 			const { result } = renderHook(useTreeNode, {
 				initialProps: dummyProps,
 			});
-
-			expect(result.current.closeNewEditor()).toHaveBeenCalled();
+			const spy = jest.spyOn(result.current, 'closeNewEditor');
+			result.current.closeNewEditor();
+			expect(spy).toHaveBeenCalled();
 		});
 	});
 });

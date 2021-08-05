@@ -8,6 +8,7 @@ Object {
       Object {
         "checkValidityAndSubmit": [Function],
         "closeButtonStyling": [Function],
+        "focusOnEditor": [Function],
         "nodeEditorPlaceHolder": [Function],
         "preValue": Object {
           "current": "",
@@ -19,6 +20,7 @@ Object {
     "current": Object {
       "checkValidityAndSubmit": [Function],
       "closeButtonStyling": [Function],
+      "focusOnEditor": [Function],
       "nodeEditorPlaceHolder": [Function],
       "preValue": Object {
         "current": "",
