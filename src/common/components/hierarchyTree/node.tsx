@@ -22,8 +22,6 @@ const NodeLoadingIndicator = () => (
 );
 
 export const trim = (x: TreeView): string => {
-	// eslint-disable-next-line no-debugger
-	debugger;
 	if (x?.value) {
 		return `(${x?.value.toString().trimLeft()})`;
 	}
