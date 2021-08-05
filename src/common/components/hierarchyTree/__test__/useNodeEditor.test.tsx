@@ -1,7 +1,5 @@
 // import { waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
-// import { act } from 'react-dom/test-utils';
-import TestRenderer from 'react-test-renderer';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { TUseNodeEditorProps, useNodeEditor } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
@@ -98,7 +96,7 @@ describe('useNodeEditor', () => {
 	});
 
 	describe('setEditorValue', () => {
-		it('sets the value of the editor', () => {
+		it('sets the value of the editor', async () => {
 			const { result } = renderHook(useNodeEditor, {
 				initialProps: dummyProps,
 			});
@@ -111,14 +109,13 @@ describe('useNodeEditor', () => {
 				},
 			} as React.ChangeEvent<HTMLInputElement>;
 
-			result.current.setEditorValue(mockChangeEvent);
+			act(() => result.current.setEditorValue(mockChangeEvent));
 
 			expect(result.current.value).toMatch('new value');
 		});
 
 		it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
 			dummyProps.error = 'Value can not be empty';
-			const { act } = TestRenderer;
 			const { result } = renderHook(useNodeEditor, {
 				initialProps: dummyProps,
 			});
