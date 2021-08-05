@@ -308,4 +308,44 @@ describe('useTreeNode', () => {
 			expect(dummyProps.onSetNodeErr).toHaveBeenCalled();
 		});
 	});
+
+	describe('toggleEdit', () => {
+		it('toggleEdit calls onToggleEdit', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+
+			expect(result.current.toggleEdit()).toHaveBeenCalled();
+		});
+	});
+
+	describe('toggleChildren', () => {
+		it('toggleChildren calls onToggleEdit', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+
+			expect(result.current.toggleChildren()).toHaveBeenCalled();
+		});
+	});
+
+	describe('toggleNewEditor', () => {
+		it('toggleNewEditor calls onToggleEdit', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+
+			expect(result.current.toggleNewEditor('Application')).toHaveBeenCalled();
+		});
+	});
+
+	describe('closeNewEditor', () => {
+		it('closeNewEditor calls onToggleEdit', () => {
+			const { result } = renderHook(useTreeNode, {
+				initialProps: dummyProps,
+			});
+
+			expect(result.current.closeNewEditor()).toHaveBeenCalled();
+		});
+	});
 });

@@ -156,6 +156,25 @@ describe('useNodeEditor', () => {
 			result.current.focusOnEditor(RefInit);
 			expect(RefInit.current?.focus).toHaveBeenCalled();
 		});
+
+		it('does not call focus on input Ref if passed input Ref is not initialized ', () => {
+			const props: TUseNodeEditorProps = {
+				clearError: jest.fn(),
+				data: '',
+				error: null,
+				isApplication: false,
+				isSaving: false,
+				onSubmit: jest.fn(),
+				setError: jest.fn(),
+			};
+
+			const RefInit = {
+				current: null,
+			} as unknown as React.RefObject<HTMLInputElement>;
+			const { result } = renderHook(useNodeEditor, { initialProps: props });
+			result.current.focusOnEditor(RefInit);
+			expect(RefInit.current).toBeFalsy();
+		});
 	});
 
 	describe('closeButtonStyling', () => {
