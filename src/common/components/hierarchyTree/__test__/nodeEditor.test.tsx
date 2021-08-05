@@ -1,9 +1,11 @@
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { useHierarchyStore } from '../../../../state';
 import { ErrorResponse, TreeView } from '../../../../types';
+import { useNodeEditor } from '../hooks/useNodeEditor';
 import { NodeEditor } from '../nodeEditor';
 
 const nodeCancelBtnStr = 'node-cancel-btn';
@@ -299,5 +301,39 @@ describe('nodeEditor', () => {
 		expect(onToggleEdit).toHaveBeenCalled();
 	});
 
-	// it('focuses the controller referenced by inputRef', () => {});
+	it('focuses the controller referenced by inputRef', () => {
+		const RefInit = {
+			current: {
+				focus: jest.fn(),
+			},
+		} as unknown as React.RefObject<HTMLInputElement>;
+
+		const inputRef = jest.spyOn(React, 'useRef').mockReturnValue({
+			current: { className: 'relative h-full shadow-sm' },
+		});
+		const onToggleEdit = jest.fn();
+		const submitHandler = jest.fn();
+		const onSetNodeErr = jest.fn();
+		render(
+			<NodeEditor
+				key={`node_editor_${dummyTreeView[0].id}`}
+				onClose={() => {
+					onToggleEdit(dummyTreeView[0].nodePath, false);
+				}}
+				onSubmit={submitHandler}
+				error={dummyTreeView[0].error}
+				isSaving={dummyTreeView[0].saving}
+				isApplication
+				data="test-data"
+				setError={onSetNodeErr()}
+				clearError={onSetNodeErr()}
+			/>,
+		);
+		expect(inputRef).toBeCalledWith('test-data');
+		const { result } = renderHook(useNodeEditor);
+		const spy = jest.spyOn(result.current, 'focusOnEditor');
+		result.current.focusOnEditor(RefInit);
+		expect(spy).toHaveBeenCalled();
+		expect(RefInit.current?.focus).toHaveBeenCalled();
+	});
 });

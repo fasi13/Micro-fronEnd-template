@@ -29,6 +29,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	const {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
+		focusOnEditor,
 		value,
 		setEditorValue,
 		closeButtonStyling,
@@ -43,7 +44,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 	});
 
 	useEffect(() => {
-		if (inputRef.current) inputRef.current.focus();
+		focusOnEditor(inputRef);
 	}, []);
 
 	return (
