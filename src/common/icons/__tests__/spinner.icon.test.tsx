@@ -5,5 +5,9 @@ import { SpinnerIcon } from '../index';
 test('It should render SpinnerIcon', async () => {
 	const size = { width: 512, height: 512 };
 
-	render(<SpinnerIcon className="" width={size.width} height={size.height} />);
+	expect(
+		render(
+			<SpinnerIcon className="" width={size.width} height={size.height} />,
+		),
+	).toMatchSnapshot();
 });

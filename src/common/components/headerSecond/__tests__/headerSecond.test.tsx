@@ -2,11 +2,11 @@ import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Home } from '../../../../pages/home/home';
-import { detachStore } from '../../../../state';
+import { useDetachStore } from '../../../../state';
 import { HeaderSecond } from '../headerSecond';
 
 const detachIconStr = 'detach-icon';
-const dSSidebarState = detachStore.getState();
+const dSSidebarState = useDetachStore.getState();
 const detachHandlerStr = 'detach-handler';
 test('renders home component', () => {
 	render(<HeaderSecond />);

@@ -96,13 +96,3 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 		</>
 	);
 };
-
-// const TreeNodeIsSame = (
-// 	prevProps: Readonly<React.PropsWithChildren<TreeNodePropType>>,
-// 	nextProps: Readonly<React.PropsWithChildren<TreeNodePropType>>,
-// ) =>
-// 	prevProps.data.name === nextProps.data.name &&
-// 	prevProps.data.value === nextProps.data.value &&
-// 	prevProps.data?.childrenData === nextProps.data?.childrenData;
-
-// export const TreeNodeMemo = React.memo(TreeNode, TreeNodeIsSame);

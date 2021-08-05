@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import { HierarchyTree } from '..';
-import { detachStore, useHierarchyStore } from '../../../state';
+import { useDetachStore, useHierarchyStore } from '../../../state';
 import Searchbar from '../searchbar/Searchbar';
 import { useHierarchyHelper } from './hooks/useHierarchyHelper';
 import './sidebar.scss';
@@ -33,7 +33,7 @@ const SidebarContent = () => {
 		loadApplication();
 	}, []);
 
-	const dSSidebarState = detachStore(state => state.detachSidebar);
+	const dSSidebarState = useDetachStore(state => state.detachSidebar);
 
 	return (
 		<>

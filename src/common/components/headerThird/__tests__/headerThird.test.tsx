@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { detachStore } from '../../../../state';
+import { useDetachStore } from '../../../../state';
 import { HeaderThird } from '../headerThird';
 
-const dSSidebarState = detachStore.getState();
+const dSSidebarState = useDetachStore.getState();
 const drawerOpenStr = 'drawer-open';
 test('renders home component', () => {
 	render(<HeaderThird />);

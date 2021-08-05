@@ -6,12 +6,12 @@ import {
 	TreeView,
 } from '../../../../types';
 
-export interface useTreeNodeProps extends NodeActions {
+export interface TUseTreeNodeProps extends NodeActions {
 	data: TreeView;
 	nodePath: NodePath[];
 }
 
-interface useTreeNodeReturnType {
+interface TUseTreeNodeReturnType {
 	canAddApplication: (node: TreeView) => boolean;
 	showHideNewEditorAndTreeChildren: (
 		isCollapsed: boolean,
@@ -30,7 +30,9 @@ interface useTreeNodeReturnType {
 	closeNewEditor: () => void;
 }
 
-export const useTreeNode = (props: useTreeNodeProps): useTreeNodeReturnType => {
+export const useTreeNode = (
+	props: TUseTreeNodeProps,
+): TUseTreeNodeReturnType => {
 	const {
 		data,
 		nodePath,

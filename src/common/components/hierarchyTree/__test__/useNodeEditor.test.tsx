@@ -1,13 +1,15 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { useNodeEditor, useNodeEditorProps } from '../hooks/useNodeEditor';
+// import { waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-hooks';
+import { TUseNodeEditorProps, useNodeEditor } from '../hooks/useNodeEditor';
 
 describe('useNodeEditor', () => {
-	let dummyProps: useNodeEditorProps;
+	let dummyProps: TUseNodeEditorProps;
 	const dummyInput = 'New Application Group(2021)';
 	beforeEach(() => {
 		dummyProps = {
 			data: '',
 			error: '',
+			isSaving: false,
 			isApplication: true,
 			setError: jest.fn(),
 			clearError: jest.fn(),
@@ -80,6 +82,7 @@ describe('useNodeEditor', () => {
 			result.current.checkValidityAndSubmit();
 			expect(dummyProps.onSubmit).toBeCalledTimes(1);
 		});
+
 		it('checks if current and new values are the same', () => {
 			dummyProps.data = dummyInput; // wrong pattern
 			dummyProps.isApplication = true;
@@ -90,16 +93,76 @@ describe('useNodeEditor', () => {
 			result.current.checkValidityAndSubmit();
 			expect(dummyProps.onSubmit).not.toBeCalled();
 		});
+	});
 
-		// it(`error clear`, () => {
-		// 	dummyProps.error = 'Value can not be empty';
-		// 	const { result } = renderHook(useNodeEditor, {
-		// 		initialProps: dummyProps,
-		// 	});
-		// 	dummyProps.data = 'test';
-		// 	const input = <input value="asdf" />;
-		// 	result.current.setEditorValue(input.props.target);
-		// 	expect(dummyProps.error).toMatch('Add New Application');
-		// });
+	describe('setEditorValue', () => {
+		it('sets the value of the editor', async () => {
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const mockChangeEvent = {
+				currentTarget: {
+					value: '',
+				},
+				target: {
+					value: 'new value',
+				},
+			} as React.ChangeEvent<HTMLInputElement>;
+
+			act(() => result.current.setEditorValue(mockChangeEvent));
+
+			expect(result.current.value).toMatch('new value');
+		});
+
+		it(`clears editor value if error existed and preValue is not equal to current Editor Value`, () => {
+			dummyProps.error = 'Value can not be empty';
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+
+			result.current.preValue.current = 'old value';
+			const mockChangeEvent = {
+				currentTarget: {
+					value: '',
+				},
+				target: {
+					value: 'new value',
+				},
+			} as React.ChangeEvent<HTMLInputElement>;
+
+			act(() => result.current.setEditorValue(mockChangeEvent));
+			expect(dummyProps.clearError).toHaveBeenCalled();
+		});
+	});
+
+	describe('closeButtonStyling', () => {
+		it('returns bg-red-400 if node has error', () => {
+			dummyProps.error = 'dummyError';
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const classNames = result.current.closeButtonStyling();
+			expect(classNames).toMatch('bg-red-400');
+		});
+
+		it('returns bg-gray-300 if node is saving', () => {
+			dummyProps.isSaving = true;
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const classNames = result.current.closeButtonStyling();
+			expect(classNames).toMatch('bg-gray-300');
+		});
+
+		it('returns bg-faded-skyblue for a default node state', () => {
+			dummyProps.isSaving = false;
+			dummyProps.error = '';
+
+			const { result } = renderHook(useNodeEditor, {
+				initialProps: dummyProps,
+			});
+			const classNames = result.current.closeButtonStyling();
+			expect(classNames).toMatch('bg-faded-skyblue');
+		});
 	});
 });

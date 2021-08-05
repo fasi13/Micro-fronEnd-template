@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import React from 'react';
-import { changePasswordModalStore } from '../../../state';
+import { useChangePasswordModalStore } from '../../../state';
 import {
 	ClientMgtIcon,
 	CommunicationIcon,
@@ -63,10 +63,10 @@ export const Header = () => {
 		setAnchorAvatarMenu(null);
 	};
 
-	const showChangePassword = changePasswordModalStore(
+	const showChangePassword = useChangePasswordModalStore(
 		state => state.showChangePasswordModal,
 	);
-	const setShowChangePassword = changePasswordModalStore(
+	const setShowChangePassword = useChangePasswordModalStore(
 		state => state.setShowChangePasswordModal,
 	);
 
@@ -78,7 +78,7 @@ export const Header = () => {
 	return (
 		<div className="header-root">
 			<AppBar position="fixed" className="header-appbar">
-				<div className="flex justify-between items-center px-7 py-4">
+				<div className="flex items-center justify-between py-4 px-7">
 					<div className="text-2xl">
 						<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
 					</div>
@@ -101,7 +101,7 @@ export const Header = () => {
 									}}
 								/>
 								<span
-									className="pl-2 text-base self-center"
+									className="self-center pl-2 text-base"
 									style={{ color: '#BDC6CD' }}>
 									Manage Communication
 								</span>
@@ -128,7 +128,7 @@ export const Header = () => {
 								open={Boolean(anchorMenu)}
 								disableScrollLock
 								onClose={handleMenuClose}>
-								<MenuItem className="ui-menu-items menu-box gap-x-2 text-5xl">
+								<MenuItem className="text-5xl ui-menu-items menu-box gap-x-2">
 									<ClientMgtIcon className="" width={40} height={40} />
 									<ListItemText
 										primary={

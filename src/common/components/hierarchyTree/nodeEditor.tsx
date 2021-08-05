@@ -32,8 +32,10 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 		focusOnEditor,
 		value,
 		setEditorValue,
+		closeButtonStyling,
 	} = useNodeEditor({
 		data,
+		isSaving,
 		isApplication,
 		error,
 		setError,
@@ -76,10 +78,7 @@ export const NodeEditor: React.FC<NodeEditorPropType> = props => {
 				<button
 					data-testid="node-cancel-btn"
 					type="button"
-					className={`absolute font-semibold h-10.5 inset-y-0 right-0 flex items-center justify-center w-12 border border-transparent focus:ring-0 focus:outline-non ${
-						// eslint-disable-next-line no-nested-ternary
-						error ? 'bg-red-400' : isSaving ? 'bg-gray-300' : 'bg-faded-skyblue'
-					}`}
+					className={`absolute font-semibold h-10.5 inset-y-0 right-0 flex items-center justify-center w-12 border border-transparent focus:ring-0 focus:outline-non ${closeButtonStyling()}`}
 					onClick={() => onClose()}>
 					{isSaving ? (
 						<div data-testid="spinner-icon">

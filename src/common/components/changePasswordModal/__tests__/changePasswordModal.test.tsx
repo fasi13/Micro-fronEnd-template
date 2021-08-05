@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, within } from '@testing-library/react';
 import React from 'react';
-import { changePasswordModalStore } from '../../../../state';
+import { useChangePasswordModalStore } from '../../../../state';
 import ChangePasswordModal from '../changePasswordModal';
 
-const changePasswordModalState = changePasswordModalStore.getState();
+const changePasswordModalState = useChangePasswordModalStore.getState();
 const modalContainerStr = 'modal-container';
 const passwordModalStr = 'password-modal';
 const newPasswordStr = 'new-password';

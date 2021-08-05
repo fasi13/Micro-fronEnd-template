@@ -159,18 +159,4 @@ describe('treeNode', () => {
 		expect(queryByTestId('new-node-editor')).toBeFalsy();
 	});
 
-	// it('yehualashet', () => {
-	// 	dummyProps.data.edit = true;
-	// 	dummyProps.data.collapsed = false;
-
-	// 	// const renderPropsSpy = jest.spyOn(dummyProps, 'renderProps');
-	// 	const objPP = renderer.create(<TreeNode {...dummyProps} />);
-
-	// 	console.log(objPP.toJSON()?.[0].children);
-	// 	expect(true).toBe(true);
-
-	// 	// expect(getByTestId('node-editor-component')).toBeTruthy();
-	// 	// expect(getByTestId('tree-item-children')).toBeTruthy();
-	// 	// expect(renderPropsSpy).toHaveBeenCalled();
-	// });
 });

@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import { ErrorResponse } from '../../../../types';
 
-export interface useNodeEditorProps {
+export interface TUseNodeEditorProps {
 	data: string | undefined;
+	isSaving: boolean;
 	isApplication: boolean;
 	error: string | null;
 	setError: (val: ErrorResponse | string) => void;
@@ -10,19 +11,28 @@ export interface useNodeEditorProps {
 	onSubmit: (value: string) => void;
 }
 
-interface useNodeEditorReturnType {
+interface TUseNodeEditorReturnType {
 	focusOnEditor: (inputRef: React.RefObject<HTMLInputElement>) => void;
 	checkValidityAndSubmit: () => void;
 	preValue: React.MutableRefObject<string>;
 	value: string;
 	nodeEditorPlaceHolder: () => string;
 	setEditorValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	closeButtonStyling: () => string;
 }
 
 export const useNodeEditor = (
-	props: useNodeEditorProps,
-): useNodeEditorReturnType => {
-	const { data, isApplication, error, setError, clearError, onSubmit } = props;
+	props: TUseNodeEditorProps,
+): TUseNodeEditorReturnType => {
+	const {
+		data,
+		isApplication,
+		isSaving,
+		error,
+		setError,
+		clearError,
+		onSubmit,
+	} = props;
 
 	const [value, setValue] = useState(data || '');
 	const preValue = useRef(value);
@@ -64,9 +74,17 @@ export const useNodeEditor = (
 		}
 	};
 
+	const closeButtonStyling = (): string => {
+		if (error) return 'bg-red-400';
+		if (isSaving) return 'bg-gray-300';
+
+		return 'bg-faded-skyblue';
+	};
+
 	return {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
+		closeButtonStyling,
 		preValue,
 		value,
 		focusOnEditor,

@@ -7,14 +7,16 @@ import {
 } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
-import { changePasswordModalStore } from '../../../state';
+import { useChangePasswordModalStore } from '../../../state';
 import './changePasswordModal.scss';
 
 const ChangePasswordModal: React.FunctionComponent = () => {
-	const open = changePasswordModalStore(state => state.showChangePasswordModal);
+	const open = useChangePasswordModalStore(
+		state => state.showChangePasswordModal,
+	);
 	const requiredStr = 'This field is required.';
 	const passwordDidNotMatchStr = 'Password did not match.';
-	const setOpen = changePasswordModalStore(
+	const setOpen = useChangePasswordModalStore(
 		state => state.setShowChangePasswordModal,
 	);
 	const handleClose = () => {
@@ -138,7 +140,7 @@ const ChangePasswordModal: React.FunctionComponent = () => {
 									Cancel
 								</button>
 								<button
-									className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded"
+									className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
 									disabled={validateAllFields()}
 									data-testid="submit-btn"
 									type="submit">

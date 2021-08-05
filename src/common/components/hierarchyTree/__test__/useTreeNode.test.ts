@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { TreeView } from '../../../../types';
-import { useTreeNode, useTreeNodeProps } from '../hooks/useTreeNode';
+import { TUseTreeNodeProps, useTreeNode } from '../hooks/useTreeNode';
 
-let dummyProps: useTreeNodeProps;
+let dummyProps: TUseTreeNodeProps;
 let dummyTreeView: TreeView;
 const selfUpdateStr = 'dummy/selfupdate';
 const createGroupStr = 'dummy/createGroup';
@@ -308,24 +308,4 @@ describe('useTreeNode', () => {
 			expect(dummyProps.onSetNodeErr).toHaveBeenCalled();
 		});
 	});
-
-	// describe('submitHandler', () => {
-	// 	beforeEach(() => {
-	// 		jest.clearAllMocks();
-	// 	});
-
-	// 	it('saveApplicationOrGroup', () => {
-	// 		const { result } = renderHook(useTreeNode, {
-	// 			initialProps: dummyProps,
-	// 		});
-	// 		const saveApplicationOrGroupSpy = jest.spyOn(
-	// 			result.current,
-	// 			'saveApplicationOrGroup',
-	// 		);
-
-	// 		result.current.submitHandler('dummy');
-
-	// 		expect(saveApplicationOrGroupSpy).toHaveBeenCalled();
-	// 	});
-	// });
 });

@@ -1,19 +1,30 @@
-import create from 'zustand';
+import createStore from '../util/immer';
 
-interface myState {
+interface TDetachState {
 	open: boolean;
 	detachSidebar: boolean;
 	lastSidebarOpen: boolean;
-	setOpen: (opn: boolean) => void;
+	setOpen: (open: boolean) => void;
 	setDetachSidebar: (detach: boolean) => void;
-	setLastSidebarOpen: (opn: boolean) => void;
+	setLastSidebarOpen: (open: boolean) => void;
 }
 
-export const detachStore = create<myState>(set => ({
+export const detachStore = (set: any) => ({
 	open: true,
 	detachSidebar: false,
 	lastSidebarOpen: true,
-	setOpen: (opn: boolean) => set({ open: opn }),
-	setDetachSidebar: (detach: boolean) => set({ detachSidebar: detach }),
-	setLastSidebarOpen: (opn: boolean) => set({ lastSidebarOpen: opn }),
-}));
+	setOpen: (open: boolean) =>
+		set((state: TDetachState) => {
+			state.open = open;
+		}),
+	setDetachSidebar: (detach: boolean) =>
+		set((state: TDetachState) => {
+			state.detachSidebar = detach;
+		}),
+	setLastSidebarOpen: (open: boolean) =>
+		set((state: TDetachState) => {
+			state.lastSidebarOpen = open;
+		}),
+});
+
+export const useDetachStore = createStore<TDetachState>(detachStore);

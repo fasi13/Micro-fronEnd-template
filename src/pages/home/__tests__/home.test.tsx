@@ -2,10 +2,10 @@ import '@testing-library/jest-dom';
 import { fireEvent, render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import React from 'react';
-import { detachStore } from '../../../state';
+import { useDetachStore } from '../../../state';
 import { Home } from '../home';
 
-const dSSidebarState = detachStore.getState();
+const dSSidebarState = useDetachStore.getState();
 const closeDetachedSidebarStr = 'close-detached-sidebar';
 test('renders home component', () => {
 	render(<Home />);

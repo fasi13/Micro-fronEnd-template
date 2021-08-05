@@ -1,12 +1,12 @@
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React from 'react';
-import { detachStore } from '../../../state';
+import { useDetachStore } from '../../../state';
 
 export const HeaderThird: React.FunctionComponent = () => {
-	const dSOpen = detachStore(state => state.setOpen);
-	const open = detachStore(state => state.open);
-	const detachSidebar = detachStore(state => state.detachSidebar);
+	const dSOpen = useDetachStore(state => state.setOpen);
+	const open = useDetachStore(state => state.open);
+	const detachSidebar = useDetachStore(state => state.detachSidebar);
 
 	const handleDrawerOpen = () => {
 		dSOpen(!open);
