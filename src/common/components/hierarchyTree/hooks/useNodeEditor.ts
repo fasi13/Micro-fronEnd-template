@@ -11,6 +11,7 @@ export interface useNodeEditorProps {
 }
 
 interface useNodeEditorReturnType {
+	focusOnEditor: (inputRef: React.RefObject<HTMLInputElement>) => void;
 	checkValidityAndSubmit: () => void;
 	preValue: React.MutableRefObject<string>;
 	value: string;
@@ -55,12 +56,20 @@ export const useNodeEditor = (
 		if (error && preValue.current !== e.target.value) clearError();
 		setValue(e.target.value);
 	};
+	const focusOnEditor = (inputRef: React.RefObject<HTMLInputElement>): void => {
+		// eslint-disable-next-line no-debugger
+		debugger;
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	};
 
 	return {
 		checkValidityAndSubmit,
 		nodeEditorPlaceHolder,
 		preValue,
 		value,
+		focusOnEditor,
 		setEditorValue,
 	};
 };
