@@ -320,11 +320,7 @@ describe('nodeEditor', () => {
 
 		const { result } = renderHook(useNodeEditor, { initialProps: props });
 		const spy = jest.spyOn(result.current, 'focusOnEditor');
-
 		result.current.focusOnEditor(RefInit);
-
 		expect(spy).toHaveBeenCalled();
-
-		// expect(RefInit.current?.focus).toHaveBeenCalled();
 	});
 });

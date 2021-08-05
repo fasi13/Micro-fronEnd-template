@@ -67,8 +67,6 @@ export const useNodeEditor = (
 		setValue(e.target.value);
 	};
 	const focusOnEditor = (inputRef: React.RefObject<HTMLInputElement>): void => {
-		// eslint-disable-next-line no-debugger
-		debugger;
 		if (inputRef.current) {
 			inputRef.current.focus();
 		}

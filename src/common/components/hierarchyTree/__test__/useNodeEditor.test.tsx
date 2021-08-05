@@ -135,6 +135,29 @@ describe('useNodeEditor', () => {
 		});
 	});
 
+	describe('focusOnEditor', () => {
+		it('sets focus on passed in html input element', () => {
+			const props: TUseNodeEditorProps = {
+				clearError: jest.fn(),
+				data: '',
+				error: null,
+				isApplication: false,
+				isSaving: false,
+				onSubmit: jest.fn(),
+				setError: jest.fn(),
+			};
+
+			const RefInit = {
+				current: {
+					focus: jest.fn(),
+				},
+			} as unknown as React.RefObject<HTMLInputElement>;
+			const { result } = renderHook(useNodeEditor, { initialProps: props });
+			result.current.focusOnEditor(RefInit);
+			expect(RefInit.current?.focus).toHaveBeenCalled();
+		});
+	});
+
 	describe('closeButtonStyling', () => {
 		it('returns bg-red-400 if node has error', () => {
 			dummyProps.error = 'dummyError';
