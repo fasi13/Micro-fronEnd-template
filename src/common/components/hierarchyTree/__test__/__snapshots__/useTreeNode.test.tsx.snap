@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useTreeNode useTreeNode snapShot return values returns object of helper methods 1`] = `
+Object {
+  "rerender": [Function],
+  "result": Object {
+    "all": Array [
+      Object {
+        "canAddApplication": [Function],
+        "clearErrorHandler": [Function],
+        "closeEditor": [Function],
+        "closeNewEditor": [Function],
+        "extractApplicationNameAndValue": [Function],
+        "isApplication": [Function],
+        "nodeValue": [Function],
+        "setErrorHandler": [Function],
+        "showHideNewEditorAndTreeChildren": [Function],
+        "submitHandler": [Function],
+        "toggleChildren": [Function],
+        "toggleEdit": [Function],
+        "toggleNewEditor": [Function],
+      },
+    ],
+    "current": Object {
+      "canAddApplication": [Function],
+      "clearErrorHandler": [Function],
+      "closeEditor": [Function],
+      "closeNewEditor": [Function],
+      "extractApplicationNameAndValue": [Function],
+      "isApplication": [Function],
+      "nodeValue": [Function],
+      "setErrorHandler": [Function],
+      "showHideNewEditorAndTreeChildren": [Function],
+      "submitHandler": [Function],
+      "toggleChildren": [Function],
+      "toggleEdit": [Function],
+      "toggleNewEditor": [Function],
+    },
+    "error": undefined,
+  },
+  "unmount": [Function],
+  "waitFor": [Function],
+  "waitForNextUpdate": [Function],
+  "waitForValueToChange": [Function],
+}
+`;
