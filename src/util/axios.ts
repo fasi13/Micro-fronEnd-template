@@ -1,8 +1,11 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const HierarchyClient = axios.create({
-	baseURL: process.env.REACT_APP_CONTENT_API,
-	headers: { 'Content-Type': 'application/json' },
+	baseURL: process.env.REACT_APP_HIERARCHY_API,
+	headers: {
+		'Content-Type': 'application/json',
+		'Access-Control-Allow-Headers': 'content-type',
+	},
 });
 export const axiosSuccessRequestInterceptor = (request: AxiosRequestConfig) =>
 	request;
@@ -23,4 +26,21 @@ HierarchyClient.interceptors.request.use(
 	axiosErrorRequestInterceptor,
 );
 
-export { HierarchyClient };
+const ContentDeliveryClient = axios.create({
+	baseURL: process.env.REACT_APP_CONTENT_API,
+	headers: {
+		'Content-Type': 'application/json',
+		'Access-Control-Allow-Headers': 'content-type',
+		Authorization: 'Basic dGVzdDp0ZXN0',
+	},
+});
+
+ContentDeliveryClient.interceptors.response.use(
+	axiosSuccessResponseInterceptor,
+	axiosErrorResponseInterceptor,
+);
+ContentDeliveryClient.interceptors.request.use(
+	axiosSuccessRequestInterceptor,
+	axiosErrorRequestInterceptor,
+);
+export { ContentDeliveryClient, HierarchyClient };

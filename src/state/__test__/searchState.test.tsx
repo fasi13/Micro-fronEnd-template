@@ -49,6 +49,7 @@ describe('loadApplication', () => {
 			});
 
 		await useSearchStore.getState().searchApplication('Test');
+
 		expect(axios.get).toHaveBeenCalled();
 		expect(useSearchStore.getState().searchLoading).toBe(false);
 	});

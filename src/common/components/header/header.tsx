@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import React from 'react';
-import { useChangePasswordModalStore } from '../../../state';
+import { useChangePasswordModalStore, useHierarchyStore } from '../../../state';
 import {
 	ClientMgtIcon,
 	CommunicationIcon,
@@ -44,6 +44,8 @@ export const UserMenu = (props: any) => {
 export const Header = () => {
 	const [anchorMenu, setAnchorMenu] = React.useState(null);
 
+	const { primaryLogo } = useHierarchyStore();
+
 	const handleMenuOpen = (event: any) => {
 		setAnchorMenu(event.currentTarget);
 	};
@@ -75,13 +77,21 @@ export const Header = () => {
 		setShowChangePassword(true);
 	};
 
+	const PrimaryLogo = () => (
+		<div className="text-2xl">
+			{primaryLogo === '' ? (
+				<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
+			) : (
+				<img src={primaryLogo} alt="E2E Logo" width="140" />
+			)}
+		</div>
+	);
+
 	return (
 		<div className="header-root">
 			<AppBar position="fixed" className="header-appbar">
 				<div className="flex items-center justify-between py-4 px-7">
-					<div className="text-2xl">
-						<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
-					</div>
+					<PrimaryLogo />
 					<div className="flex items-center">
 						<div>
 							<div

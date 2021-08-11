@@ -6,9 +6,12 @@ export interface THierarchyState {
 	error: string | null;
 	activeNodeId: number;
 	hierarchyData: TreeView[];
+	primaryLogo: string;
+	setPrimaryLogo: (val: string) => void;
 	setLoading: (val: boolean) => void;
 	setError: (err: string) => void; // ??
 	loadApplication: () => void;
+	getPrimaryLogo: (applicationKey: string) => void;
 	initializeHierarchyState: (defaultExpandLevel?: number) => void;
 	toggleCollapse: (nodePath: NodePath[], val: boolean) => void;
 	toggleEdit: (nodePath: NodePath[], val: boolean) => void;
