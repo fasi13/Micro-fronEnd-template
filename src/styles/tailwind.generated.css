@@ -549,6 +549,10 @@ video {
   border-color: rgba(229, 231, 235, var(--tw-border-opacity));
 }
 
+:root {
+  --link-color: #b6c0c8;
+}
+
 /**
  * This injects Tailwind's component classes and any component classes
  * registered by plugins.
