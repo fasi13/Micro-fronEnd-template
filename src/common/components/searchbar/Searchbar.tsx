@@ -1,9 +1,9 @@
 import {
-	CircularProgress,
-	createStyles,
-	List,
-	makeStyles,
-	TextField,
+  CircularProgress,
+  createStyles,
+  List,
+  makeStyles,
+  TextField
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() =>
 		searchInput: {
 			'& .MuiSvgIcon-root': {
 				fontSize: '2rem',
-				color: 'grey',
+				color: '#819AAE',
 			},
 			'& .MuiOutlinedInput-notchedOutline': {
 				borderColor: '#C2CBD3',
@@ -127,7 +127,7 @@ function SearchBar() {
 						...params.InputProps,
 						startAdornment: (
 							<>
-								<SearchIcon style={{ fill: '#819AAE' }} />
+								<SearchIcon />
 							</>
 						),
 						endAdornment: (
