@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { createStyles, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Theme, Typography } from '@material-ui/core';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import React, { useEffect } from 'react';
@@ -8,18 +8,21 @@ import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
 import { linkStyle, textStyle } from './breadCrumbStyleHelper';
 
-const useStyles = makeStyles(() =>
-	createStyles({
+export interface StyleProps {
+    color: string;
+}
+
+const useStyles = makeStyles<Theme, StyleProps>(() => ({
 		link: {
-			color: '#b6c0c8',
-			fontSize: '1.2rem',
+			color: ({color}) => color,
+			fontSize: "1.2rem",
 		},
 		last: {
 			color: 'grey',
-			fontSize: '1.2rem',
+			fontSize: "1.2rem",
 		},
 		first: {
-			color: '#b6c0c8',
+			color: ({color}) => color,
 			fontSize: '1.6rem',
 			fontWeight: 500,
 		},
@@ -27,7 +30,15 @@ const useStyles = makeStyles(() =>
 );
 
 function Breadcrumb() {
-	const classes = useStyles();
+
+  const styles = getComputedStyle(document.documentElement);
+  const linkColor = styles.getPropertyValue('--link-color');
+
+  const props = {
+    color: linkColor
+  }
+
+	const classes = useStyles(props);
 
 	const activeNodeId = useHierarchyStore(state => state.activeNodeId);
 	const nodeName = useHierarchyStore(state => state.hierarchyData?.[0]?.name);
