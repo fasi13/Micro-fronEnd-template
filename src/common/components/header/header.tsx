@@ -78,16 +78,16 @@ export const Header = () => {
 	};
 
 	const PrimaryLogo = () => (
-		<div className="text-2xl">
+		<div className="text-2xl ">
 			{primaryLogo === '' ? (
+				<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
+			) : (
 				<img
-					src="/E2E_GROUP_LOGO_ORANGE.png"
+					src={primaryLogo}
 					alt="E2E Logo"
 					width="140"
-					height="50px"
+					style={{ height: '50px' }}
 				/>
-			) : (
-				<img src={primaryLogo} alt="E2E Logo" width="140" height="50px" />
 			)}
 		</div>
 	);
