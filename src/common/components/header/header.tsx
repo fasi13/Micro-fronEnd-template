@@ -22,31 +22,31 @@ const manageCommunicationMenuList = [
 		title: 'CONTENT MANAGEMENT',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/communication.svg',
 		title: 'MANAGE COMMUNICATION',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/communication.svg',
 		title: 'PRICE SETTINGS',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/roles.svg',
 		title: 'ROLES',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/invoice.svg',
 		title: 'INVOICE MANAGEMENT',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/usermgt.svg',
 		title: 'USER MANAGEMENT',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/settings.svg',
 		title: 'SETTINGS MANAGEMENT',
 	},
 	{
-		icon: 'https://previews.dropbox.com/p/orig/ABSXKKfU51ZI-3k-Cqqa2iw47uPrktVLA9J4iTTCCKiP8d7LeOC7Gonx8XSnu39oj7qh6M1JuiBF9lR3qZtVPnHz8kKy9Ut7VwgyXGI0UPoL5WwQMyrplw1CM2r7qTZtLRkYFTG3ti6iBPhpgzysg4s5qi_7hwb75NoGstgqtLsNZ0GHpsTt5MbCxqSVLkY-i8WGGRlj-5AP0PX3VAfahqqeD_76wgYmCYLjGEV5ukMwVXAt_y3-GItWM7Z08f43zxF5rGCZKBN53k9FJ_kXTAwDp1q8NKp_tV83cdD-XX0zlnzNdrdBzmhOqMKTFTD7Yw6-JecISOPPhMgJ8Y8r1bLD/p.svg?fv_content=true&size_mode=5',
+		icon: '/permission.svg',
 		title: 'USER PERMISSION',
 	},
 ];
