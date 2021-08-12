@@ -23,9 +23,7 @@ export const HeaderThird: React.FunctionComponent = () => {
 		);
 
 	return (
-		<div
-			className="fixed w-full py-6"
-			style={{ background: '#8999A6', height: '80px' }}>
+		<div className="fixed w-full py-6 bg-regentgray h-20">
 			{!detachSidebar ? (
 				<div
 					data-testid="drawer-open"

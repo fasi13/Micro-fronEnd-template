@@ -41,10 +41,10 @@ const SidebarContent = () => {
 				<Searchbar />
 			</div>
 			<br />
-			{/* CodeReview:  Providing style like that will make it re render on every change please look into useMemo or useCallback */}
 			<div
-				className="overflow-y-auto bg-grayblue journal-scroll"
-				style={dSSidebarState ? { height: '83%' } : { height: 'inherit' }}>
+				className={`overflow-y-auto bg-grayblue journal-scroll ${
+					dSSidebarState ? 'h-5/6' : 'h-auto'
+				}`}>
 				<div className="" style={widthStyle}>
 					<HierarchyTree
 						onToggleCollapse={toggleCollapseNodeFn}

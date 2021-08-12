@@ -53,57 +53,6 @@ test('UserMenu contains correct className when false is passed to isOpened prop'
 	const userAvatar = getByTestId(userAvatarStr);
 	expect(userAvatar.className).not.toContain('active');
 });
-
-test('click on Manage communication menu should display popups', () => {
-	const { getByTestId } = render(<Header />);
-	const menuTitleElt = getByTestId(menuTitleStr);
-	fireEvent.click(menuTitleElt);
-
-	const clntmgt = getByTestId('clntmgt');
-	expect(clntmgt).toBeInTheDocument();
-	const cntntmgt = getByTestId('cntntmgt');
-	expect(cntntmgt).toBeInTheDocument();
-	const manageCommunication = getByTestId('manage-communication');
-	expect(manageCommunication).toBeInTheDocument();
-	const programs = getByTestId('programs');
-	expect(programs).toBeInTheDocument();
-	const priceSettings = getByTestId('price-settings');
-	expect(priceSettings).toBeInTheDocument();
-	const roles = getByTestId('roles');
-	expect(roles).toBeInTheDocument();
-	const invoiceMgt = getByTestId('invoice-mgt');
-	expect(invoiceMgt).toBeInTheDocument();
-	const settingsMgt = getByTestId('settings-mgt');
-	expect(settingsMgt).toBeInTheDocument();
-	const userPermission = getByTestId('user-permission');
-	expect(userPermission).toBeInTheDocument();
-});
-
-test('key pressing with "Enter" on Manage communication menu should display popups', () => {
-	const { getByTestId } = render(<Header />);
-	const menuTitleElt = getByTestId(menuTitleStr);
-
-	fireEvent.keyDown(menuTitleElt, { key: 'Enter' });
-	const clntmgt = getByTestId('clntmgt');
-	expect(clntmgt).toBeInTheDocument();
-	const cntntmgt = getByTestId('cntntmgt');
-	expect(cntntmgt).toBeInTheDocument();
-	const manageCommunication = getByTestId('manage-communication');
-	expect(manageCommunication).toBeInTheDocument();
-	const programs = getByTestId('programs');
-	expect(programs).toBeInTheDocument();
-	const priceSettings = getByTestId('price-settings');
-	expect(priceSettings).toBeInTheDocument();
-	const roles = getByTestId('roles');
-	expect(roles).toBeInTheDocument();
-	const invoiceMgt = getByTestId('invoice-mgt');
-	expect(invoiceMgt).toBeInTheDocument();
-	const settingsMgt = getByTestId('settings-mgt');
-	expect(settingsMgt).toBeInTheDocument();
-	const userPermission = getByTestId('user-permission');
-	expect(userPermission).toBeInTheDocument();
-});
-
 test('click on Account avatar menu should display popups', () => {
 	const { getByTestId } = render(<Header />);
 	const menuTitleElt = getByTestId(userAvatarStr);

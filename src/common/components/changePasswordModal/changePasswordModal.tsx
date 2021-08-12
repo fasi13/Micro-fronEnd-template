@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
 	Dialog,
 	DialogActions,
@@ -37,10 +38,8 @@ const ChangePasswordModal: React.FunctionComponent = () => {
 		newPasswordErrorMsg !== '' ||
 		confirmPasswordErrorMsg !== '';
 
-	const handleSubmit2 = (evt: any) => {
+	const handleSubmit = (evt: any) => {
 		evt.preventDefault();
-		// if (!validateAllFields())
-		alert(`Submitting ${oldPassword} ${newPassword} ${confirmPassword}`);
 	};
 
 	const handleOldPassword = (e: any) => {
@@ -77,7 +76,7 @@ const ChangePasswordModal: React.FunctionComponent = () => {
 				aria-labelledby="form-dialog-title"
 				maxWidth="sm"
 				fullWidth>
-				<form onSubmit={handleSubmit2}>
+				<form onSubmit={handleSubmit}>
 					<DialogTitle id="form-dialog-title">Change your password</DialogTitle>
 					<DialogContent className="p-8">
 						<DialogContentText>

@@ -62,7 +62,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 	};
 
 	return (
-		<div className="px-6 py-2 text-xl" style={{ background: '#31506A' }}>
+		<div className="px-6 py-2 text-xl bg-sanjuan">
 			<div className="flex flex-wrap p-px">
 				<div
 					data-testid="detach-handler"
@@ -76,7 +76,6 @@ export const HeaderSecond: React.FunctionComponent = () => {
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
 				<span className="self-center pl-2">
-					{/* E2e Group */}
 					<Breadcrumbview />
 				</span>
 			</div>
