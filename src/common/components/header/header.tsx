@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
