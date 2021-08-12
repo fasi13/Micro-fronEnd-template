@@ -18,7 +18,7 @@ const manageCommunicationMenuList = [
 		title: 'CLIENT MANAGEMENT',
 	},
 	{
-		icon: '/communication.svg',
+		icon: '/content.svg',
 		title: 'CONTENT MANAGEMENT',
 	},
 	{
@@ -26,7 +26,11 @@ const manageCommunicationMenuList = [
 		title: 'MANAGE COMMUNICATION',
 	},
 	{
-		icon: '/communication.svg',
+		icon: '/programs.svg',
+		title: 'Programs',
+	},
+	{
+		icon: '/price.svg',
 		title: 'PRICE SETTINGS',
 	},
 	{
