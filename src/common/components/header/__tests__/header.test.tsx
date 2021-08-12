@@ -1,17 +1,12 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { useHierarchyStore } from '../../../../state';
 import { Header, UserMenu } from '../header';
 
 const userAvatarStr = 'user-avatar';
 const menuTitleStr = 'menu-title';
 const menuAvatarStr = 'menu-avatar';
-test('Logo must have src = "/E2E_GROUP_LOGO_ORANGE.png" and alt = "E2E Logo"', () => {
-	render(<Header />);
-	const logo = screen.getByRole('img');
-	expect(logo).toHaveAttribute('src', '/E2E_GROUP_LOGO_ORANGE.png');
-	expect(logo).toHaveAttribute('alt', 'E2E Logo');
-});
 
 test('Menu Title should contain "Manage Communication"', () => {
 	const { getByTestId } = render(<Header />);
@@ -125,4 +120,25 @@ test('Clicking on another screen place after the opening "User Avatar menu" shou
 		getByRole('presentation').firstChild ?? getByRole('presentation'),
 	);
 	expect(queryByRole('presentation')).toBeNull();
+});
+
+test('Primary Logo should change dynamically when the PrimaryLogo state changes. If the state empty string, it should return default E2E logo', () => {
+	useHierarchyStore
+		.getState()
+		.setPrimaryLogo(
+			'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
+		);
+	const { rerender } = render(<Header />);
+	const logo = screen.getByRole('img');
+	expect(logo).toHaveAttribute(
+		'src',
+		'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
+	);
+	expect(logo).toHaveAttribute('alt', 'E2E Logo');
+	useHierarchyStore.getState().setPrimaryLogo('');
+	rerender(<Header />);
+	expect(screen.getByRole('img')).toHaveAttribute(
+		'src',
+		'/E2E_GROUP_LOGO_ORANGE.png',
+	);
 });

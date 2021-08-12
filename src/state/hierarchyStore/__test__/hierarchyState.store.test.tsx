@@ -1,5 +1,8 @@
 import { ErrorResponse, TreeView } from '../../../types';
-import { HierarchyClient as axios } from '../../../util/axios';
+import {
+	ContentDeliveryClient,
+	HierarchyClient as axios,
+} from '../../../util/axios';
 import * as linkHelper from '../helpers/hierarchy.link.helper';
 import * as storeHelper from '../helpers/hierarchy.store.helper';
 import * as utilStateHelper from '../helpers/util.help';
@@ -23,6 +26,7 @@ describe('hieararchy store', () => {
 
 	const dummyTreeView: TreeView[] = [];
 	dummyTreeView.push({
+		key: 'ds-sd-e43-545-2323-545df-df43435-c04',
 		id: 1,
 		name: 'dummy',
 		collapsed: false,
@@ -1039,6 +1043,67 @@ describe('hieararchy store', () => {
 			expect(getSelfUpdateLink).toHaveBeenCalled();
 			expect(getNodeToUpdate).toHaveBeenCalled();
 			expect(updateNodeValues).not.toHaveBeenCalled();
+		});
+	});
+	describe('get Primary key', () => {
+		beforeEach(() => {
+			useHierarchyStore.setState({
+				...useHierarchyStore.getState(),
+				activeNodeId: 3,
+			});
+		});
+		it('should get applicationLogo and set to primaryLogo', async () => {
+			jest.spyOn(ContentDeliveryClient, 'get').mockResolvedValueOnce({
+				success: true,
+				data: {
+					items: [
+						{
+							name: 'Primary Logo',
+							description: 'Descscription',
+							displayAsList: false,
+							status: 'Published',
+							value:
+								'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
+							publishDate: '2021-07-09T06:02:44.4479464',
+							dataType: {
+								name: 'Image',
+								isStructuredType: false,
+								type: 'File',
+								_links: [],
+							},
+							version: 28,
+							inherited: false,
+							dataTypeName: 'Image',
+							cultureCode: 'en-US',
+							id: 3,
+						},
+					],
+					offset: 0,
+					limit: 25,
+					totalCount: 1,
+					_links: [],
+				},
+			});
+
+			await useHierarchyStore
+				.getState()
+				.getPrimaryLogo('dc91a61c-5ab0-e711-8b81-005056b80f19');
+
+			expect(ContentDeliveryClient.get).toHaveBeenCalledWith(
+				'/application/dc91a61c-5ab0-e711-8b81-005056b80f19/content',
+				{
+					params: {
+						Group: 'Website Branding',
+						Name: 'Primary Logo',
+					},
+				},
+			);
+		});
+		it('setPrimaryLogo set the Logo URL', () => {
+			useHierarchyStore.getState().setPrimaryLogo('/E2E_GROUP_LOGO_ORANGE.png');
+			expect(useHierarchyStore.getState().primaryLogo).toBe(
+				'/E2E_GROUP_LOGO_ORANGE.png',
+			);
 		});
 	});
 });

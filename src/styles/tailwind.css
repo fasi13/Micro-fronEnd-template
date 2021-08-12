@@ -15,3 +15,9 @@
  * by plugins.
  */
 @tailwind utilities;
+
+@layer base {
+ :root {
+ --link-color: #b6c0c8;
+ }
+}

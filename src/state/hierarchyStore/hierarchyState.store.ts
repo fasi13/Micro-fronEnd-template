@@ -7,7 +7,10 @@ import {
 	TEditor,
 	TreeView,
 } from '../../types';
-import { HierarchyClient as axios } from '../../util/axios';
+import {
+	ContentDeliveryClient,
+	HierarchyClient as axios,
+} from '../../util/axios';
 import createStore from '../../util/immer';
 import {
 	getChildrenLink,
@@ -36,6 +39,12 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 	defaultExpandLevel: 0,
 	activeNodeId: 0,
 	hierarchyData: [],
+	primaryLogo: '',
+	setPrimaryLogo: (val: string) =>
+		set((state: THierarchyState) => {
+			state.primaryLogo = val;
+		}),
+
 	setLoading: (val: boolean) =>
 		set((state: THierarchyState) => {
 			state.loading = val;
@@ -70,7 +79,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			const childrenGroupLink: Link | undefined = childrenLink?.find(
 				c => c.rel === 'applicationGroups',
 			);
-
+			get().getPrimaryLogo(applicationData.key);
 			if (childrenGroupLink) {
 				const resGroup = await axios.get<ApiResponse<DataPaginated<TreeView>>>(
 					childrenGroupLink?.href,
@@ -101,6 +110,22 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		return set((state: THierarchyState) => {
 			state.loading = false;
 		});
+	},
+	getPrimaryLogo: async applicationKey => {
+		let error: ErrorResponse | null = null;
+		await ContentDeliveryClient.get(`/application/${applicationKey}/content`, {
+			params: {
+				Name: 'Primary Logo',
+				Group: 'Website Branding',
+			},
+		})
+			.then(resp => {
+				get().setPrimaryLogo(resp.data.data.items[0].value);
+			})
+			.catch(err => {
+				error = err as unknown as ErrorResponse;
+				console.log(error, 'error');
+			});
 	},
 	toggleCollapse: async (nodePath: NodePath[], val: boolean) => {
 		if (!val) {
