@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
 	Dialog,
 	DialogActions,
@@ -85,6 +84,7 @@ const ChangePasswordModal: React.FunctionComponent = () => {
 						</DialogContentText>
 						<div data-testid="modal-container">
 							<TextField
+								value={oldPassword}
 								inputProps={{ 'data-testid': 'old-password' }}
 								margin="dense"
 								id="oldPassword"
@@ -99,6 +99,7 @@ const ChangePasswordModal: React.FunctionComponent = () => {
 								{oldPasswordErrorMsg}
 							</span>
 							<TextField
+								value={newPassword}
 								inputProps={{ 'data-testid': 'new-password' }}
 								margin="dense"
 								id="newPassword"
