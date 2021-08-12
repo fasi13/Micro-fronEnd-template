@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useWhyDidYouUpdate } from 'use-hooks';
 import { NodeActions, TreeView } from '../../../types';
 import { ErrorFallback } from './errorFallback';
 import './hierarchy.css';
@@ -28,8 +27,6 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 		onAddApplication,
 		onAddGroup,
 	} = props;
-
-	useWhyDidYouUpdate('hierarchyTree', { ...props });
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
