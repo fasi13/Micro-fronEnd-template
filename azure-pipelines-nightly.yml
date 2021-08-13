@@ -98,4 +98,5 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: '$(project)@$(MajorVersion).$(MinorVersion).$(PatchVersion).$(RevisionVersion)'
+    targetPath: 'build'
     publishLocation: 'Container'

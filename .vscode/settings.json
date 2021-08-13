@@ -47,9 +47,9 @@
         "when": "$(basename)"
       }
     },
-  
+
     "files.defaultLanguage": "typescript",
-  
+
     "git.enabled": true,
     "git.autofetch": true,
     "gitlens.advanced.messages": {
@@ -79,7 +79,6 @@
       "activityBarBadge.background": "#143f01",
       "activityBarBadge.foreground": "#e7e7e7"
     },
-    "workbench.sideBar.location": "left",
     "workbench.statusBar.visible": true,
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.folders.associations": {
@@ -101,6 +100,6 @@
     "cSpell.words": ["antd", "jsonb", "ngxs", "semibold", "verzuz"],
     "explorer.compactFolders": false,
     "npm-scripts.showStartNotification": false,
-    "peacock.color": "#990330"
+    "peacock.color": "#990330",
+    "testing.automaticallyOpenPeekViewDuringAutoRun": true
   }
-  

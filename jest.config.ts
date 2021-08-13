@@ -10,4 +10,9 @@ export default async (): Promise<Config.InitialOptions> => ({
 	moduleNameMapper: {
 		'\\.(css|less|scss|sass|svg)$': '<rootDir>/config/CSSStub.js',
 	},
+	setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+	preset: 'ts-jest',
+	transform: {
+		'^.+\\.(ts|tsx)?$': 'babel-jest',
+	},
 });
