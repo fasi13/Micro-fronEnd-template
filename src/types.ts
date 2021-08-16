@@ -1,3 +1,8 @@
+export interface EnvConfig {
+	HIERARCHY_API: string;
+	CONTENT_API: string;
+}
+
 export interface Hierarchy {
 	name: string;
 }

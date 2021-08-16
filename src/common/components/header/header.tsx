@@ -13,43 +13,43 @@ import './header.scss';
 
 const manageCommunicationMenuList = [
 	{
-		icon: '/client-mgt.svg',
+		icon: '/icons/client-mgt.svg',
 		title: 'CLIENT MANAGEMENT',
 	},
 	{
-		icon: '/content.svg',
+		icon: '/icons/content.svg',
 		title: 'CONTENT MANAGEMENT',
 	},
 	{
-		icon: '/communication.svg',
+		icon: '/icons/communication.svg',
 		title: 'MANAGE COMMUNICATION',
 	},
 	{
-		icon: '/programs.svg',
+		icon: '/icons/programs.svg',
 		title: 'Programs',
 	},
 	{
-		icon: '/price.svg',
+		icon: '/icons/price.svg',
 		title: 'PRICE SETTINGS',
 	},
 	{
-		icon: '/roles.svg',
+		icon: '/icons/roles.svg',
 		title: 'ROLES',
 	},
 	{
-		icon: '/invoice.svg',
+		icon: '/icons/invoice.svg',
 		title: 'INVOICE MANAGEMENT',
 	},
 	{
-		icon: '/usermgt.svg',
+		icon: '/icons/usermgt.svg',
 		title: 'USER MANAGEMENT',
 	},
 	{
-		icon: '/settings.svg',
+		icon: '/icons/settings.svg',
 		title: 'SETTINGS MANAGEMENT',
 	},
 	{
-		icon: '/permission.svg',
+		icon: '/icons/permission.svg',
 		title: 'USER PERMISSION',
 	},
 ];
@@ -110,7 +110,7 @@ export const Header = () => {
 	const PrimaryLogo = () => (
 		<div className="text-2xl ">
 			{primaryLogo === '' ? (
-				<img src="/E2E_GROUP_LOGO_ORANGE.png" alt="E2E Logo" width="140" />
+				<img src="/e2e_default_logo.png" alt="E2E Logo" width="140" />
 			) : (
 				<img
 					src={primaryLogo}
@@ -163,7 +163,7 @@ export const Header = () => {
 								{manageCommunicationMenuList.map(menuTitle => {
 									const { title, icon } = menuTitle;
 									return (
-										<MenuItem>
+										<MenuItem key={`${title.split('').join('_')}`}>
 											<div className="flex p-1 ">
 												<img
 													className="pr-2"
