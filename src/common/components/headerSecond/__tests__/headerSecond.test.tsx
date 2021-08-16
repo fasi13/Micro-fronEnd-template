@@ -3,6 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { Home } from '../../../../pages/home/home';
 import { useDetachStore } from '../../../../state';
+import { HierarchyClient } from '../../../../util/axios';
 import { HeaderSecond } from '../headerSecond';
 
 const detachIconStr = 'detach-icon';
@@ -13,6 +14,7 @@ test('renders home component', () => {
 });
 
 test(' detached sidebar should be displayed when detachSidebar global state is assigned to true', () => {
+	jest.spyOn(HierarchyClient, 'get').mockResolvedValueOnce(null);
 	dSSidebarState.setDetachSidebar(true);
 	const { getByTestId } = render(<Home />);
 	const Rnd = getByTestId('rnd');
@@ -21,6 +23,7 @@ test(' detached sidebar should be displayed when detachSidebar global state is a
 
 test('detach-icon should contains correct className when detachSidebar (global state) is assigned to be true', () => {
 	dSSidebarState.setDetachSidebar(true);
+	jest.spyOn(HierarchyClient, 'get').mockResolvedValueOnce(null);
 	const { getByTestId } = render(<HeaderSecond />);
 	const detachIcon = getByTestId(detachIconStr);
 	expect(detachIcon.className).toContain('sidebarDetached');

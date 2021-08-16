@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-test-renderer';
 import { useHierarchyStore } from '../../../../state';
 import { TreeView } from '../../../../types';
+import { HierarchyClient } from '../../../../util/axios';
 import { useHierarchyHelper } from '../hooks/useHierarchyHelper';
 
 interface NodePath {
@@ -178,6 +179,8 @@ describe('setNodeErrorFn', () => {
 	it('is onEditApplicationFn called', async () => {
 		const { result } = renderHook(useHierarchyHelper);
 		const spy = jest.spyOn(result.current, 'onEditApplicationFn');
+		jest.spyOn(HierarchyClient, 'put').mockResolvedValueOnce(null);
+
 		await result.current.onEditApplicationFn(
 			dummyTreeView[0],
 			nodePathStub,
@@ -190,6 +193,8 @@ describe('setNodeErrorFn', () => {
 	it('is onAddApplicationFn called', async () => {
 		const { result } = renderHook(useHierarchyHelper);
 		const spy = jest.spyOn(result.current, 'onAddApplicationFn');
+		jest.spyOn(HierarchyClient, 'post').mockResolvedValue(null);
+
 		await result.current.onAddApplicationFn(
 			dummyTreeView[0],
 			nodePathStub,

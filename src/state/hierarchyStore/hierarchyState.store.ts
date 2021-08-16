@@ -5,24 +5,24 @@ import {
 	Link,
 	NodePath,
 	TEditor,
-	TreeView,
+	TreeView
 } from '../../types';
 import {
 	ContentDeliveryClient,
-	HierarchyClient as axios,
+	HierarchyClient as axios
 } from '../../util/axios';
 import createStore from '../../util/immer';
 import {
 	getChildrenLink,
 	getCreateApplicationLink,
 	getCreateGroupLink,
-	getSelfUpdateLink,
+	getSelfUpdateLink
 } from './helpers/hierarchy.link.helper';
 import { nodeUpdateState } from './helpers/hierarchy.store.helper';
 import {
 	getHierarchyChildData,
 	getNodeToUpdate,
-	updateNodeValues,
+	updateNodeValues
 } from './helpers/util.help';
 import { THierarchyChildDataResp, THierarchyState } from './type';
 

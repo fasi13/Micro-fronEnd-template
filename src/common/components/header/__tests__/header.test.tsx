@@ -139,6 +139,6 @@ test('Primary Logo should change dynamically when the PrimaryLogo state changes.
 	rerender(<Header />);
 	expect(screen.getByRole('img')).toHaveAttribute(
 		'src',
-		'/E2E_GROUP_LOGO_ORANGE.png',
+		'/e2e_default_logo.png',
 	);
 });

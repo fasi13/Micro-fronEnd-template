@@ -1,17 +1,20 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import {
+	axiosContentDeliveryRequestInterceptor,
 	axiosErrorRequestInterceptor,
 	axiosErrorResponseInterceptor,
-	axiosSuccessRequestInterceptor,
+	axiosHierarchyClientRequestInterceptor,
 	axiosSuccessResponseInterceptor,
 } from '../axios';
+import * as setupConfig from '../setupConfig';
 
+const pageNotFound = 'Page not found';
 const dummyResponseData: AxiosResponse = {
 	config: { method: 'post' },
 	headers: '',
 	statusText: 'NotFound',
 	status: 404,
-	data: { message: 'Page not found' },
+	data: { message: pageNotFound },
 };
 
 const dummyErrorResponse: AxiosError = {
@@ -37,11 +40,31 @@ describe('axios', () => {
 			expect(response).toBe(response);
 		});
 	});
-	describe('axiosSuccessRequestInterceptor', () => {
+	describe('axiosContentDeliveryRequestInterceptor', () => {
 		it('should get ta success request', async () => {
-			const newConfig = await axiosSuccessRequestInterceptor(dummyResponseData);
+			jest.spyOn(setupConfig, 'configUrls').mockResolvedValueOnce({
+				HIERARCHY_API: '',
+				CONTENT_API: '',
+			});
+			const newConfig = await axiosContentDeliveryRequestInterceptor(
+				dummyResponseData,
+			);
 			expect(newConfig.headers).toBe('');
-			expect(newConfig.data.message).toBe('Page not found');
+			expect(newConfig.data.message).toBe(pageNotFound);
+		});
+	});
+
+	describe('axiosHierarchyClientRequestInterceptor', () => {
+		it('should get ta success request', async () => {
+			jest.spyOn(setupConfig, 'configUrls').mockResolvedValueOnce({
+				HIERARCHY_API: '',
+				CONTENT_API: '',
+			});
+			const newConfig = await axiosHierarchyClientRequestInterceptor(
+				dummyResponseData,
+			);
+			expect(newConfig.headers).toBe('');
+			expect(newConfig.data.message).toBe(pageNotFound);
 		});
 	});
 
