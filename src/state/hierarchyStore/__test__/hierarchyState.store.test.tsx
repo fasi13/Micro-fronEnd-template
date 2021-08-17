@@ -8,6 +8,7 @@ import * as storeHelper from '../helpers/hierarchy.store.helper';
 import * as utilStateHelper from '../helpers/util.help';
 import { useHierarchyStore } from '../hierarchyState.store';
 
+jest.mock('../../../util/setupConfig.ts');
 describe('hieararchy store', () => {
 	const applicationUrl = 'applications/1';
 	const selfupdateUrl = 'dummy/selfupdate';
@@ -206,6 +207,7 @@ describe('hieararchy store', () => {
 				...useHierarchyStore.getState(),
 				activeNodeId: 1,
 			});
+			jest.clearAllMocks();
 		});
 
 		it('loads an application by its Id from API', async () => {
@@ -258,16 +260,23 @@ describe('hieararchy store', () => {
 		});
 
 		it('ignores application response with empty links', async () => {
-			jest.spyOn(axios, 'get').mockResolvedValueOnce({
-				data: {
-					data: { ...dummyTreeView[0], _links: undefined },
-					success: true,
-				},
-			});
+			jest.spyOn(axios, 'get').mockImplementationOnce(() =>
+				Promise.resolve({
+					data: {
+						data: { ...dummyTreeView[0], _links: undefined },
+						success: true,
+					},
+				}),
+			);
+			jest
+				.spyOn(useHierarchyStore.getState(), 'getPrimaryLogo')
+				.mockImplementationOnce(() => undefined);
 
 			const getChildrenLinkSpy = jest.spyOn(linkHelper, 'getChildrenLink');
 
 			await useHierarchyStore.getState().loadApplication();
+
+			expect(axios.get).toHaveBeenCalledTimes(1);
 
 			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
 			expect(getChildrenLinkSpy).toHaveBeenCalled();
@@ -278,17 +287,24 @@ describe('hieararchy store', () => {
 		it('ignores modifying state if resGroup is falsy', async () => {
 			jest
 				.spyOn(axios, 'get')
-				.mockResolvedValueOnce({
-					data: { data: dummyTreeView[0], success: true },
-				})
-				.mockResolvedValueOnce(undefined);
+				.mockImplementationOnce(() =>
+					Promise.resolve({
+						data: { data: dummyTreeView[0], success: true },
+					}),
+				)
+				.mockImplementationOnce(() => Promise.resolve(undefined));
+
 			const getChildrenLinkSpy = jest.spyOn(linkHelper, 'getChildrenLink');
+			jest
+				.spyOn(useHierarchyStore.getState(), 'getPrimaryLogo')
+				.mockImplementationOnce(() => undefined);
 
 			await useHierarchyStore.getState().loadApplication();
 
 			expect(axios.get).toHaveBeenCalledWith(applicationUrl);
 			expect(axios.get).toHaveBeenCalledWith(childrenAppGroupUrl);
 			expect(getChildrenLinkSpy).toHaveBeenCalled();
+			expect(axios.get).toHaveBeenCalledTimes(2);
 
 			expect(useHierarchyStore.getState().loading).toBe(false);
 			expect(useHierarchyStore.getState().hierarchyData).toMatchObject([
@@ -1100,9 +1116,9 @@ describe('hieararchy store', () => {
 			);
 		});
 		it('setPrimaryLogo set the Logo URL', () => {
-			useHierarchyStore.getState().setPrimaryLogo('/E2E_GROUP_LOGO_ORANGE.png');
+			useHierarchyStore.getState().setPrimaryLogo('/e2e_default_logo.png');
 			expect(useHierarchyStore.getState().primaryLogo).toBe(
-				'/E2E_GROUP_LOGO_ORANGE.png',
+				'/e2e_default_logo.png',
 			);
 		});
 	});

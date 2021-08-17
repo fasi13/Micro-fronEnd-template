@@ -79,8 +79,6 @@ export const Home: React.FunctionComponent = () => {
 
 	return (
 		<div className="flex min-h-screen root">
-			{/* <CssBaseline /> */}
-			{/* <InitAxiosInterceptors /> */}
 			<Header />
 			<Drawer
 				data-testid="drawer"

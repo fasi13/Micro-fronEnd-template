@@ -1,14 +1,28 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { configUrls } from './setupConfig';
 
 const HierarchyClient = axios.create({
-	baseURL: process.env.REACT_APP_HIERARCHY_API,
 	headers: {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Headers': 'content-type',
 	},
 });
-export const axiosSuccessRequestInterceptor = (request: AxiosRequestConfig) =>
-	request;
+export const axiosHierarchyClientRequestInterceptor = async (
+	request: AxiosRequestConfig,
+): Promise<any> => {
+	const urls = await configUrls();
+	request.baseURL = urls?.HIERARCHY_API;
+	return request;
+};
+
+export const axiosContentDeliveryRequestInterceptor = async (
+	request: AxiosRequestConfig,
+): Promise<any> => {
+	const urls = await configUrls();
+	request.baseURL = urls?.CONTENT_API;
+	return request;
+};
+
 export const axiosErrorRequestInterceptor = (error: any) =>
 	Promise.reject(error);
 
@@ -22,12 +36,11 @@ HierarchyClient.interceptors.response.use(
 	axiosErrorResponseInterceptor,
 );
 HierarchyClient.interceptors.request.use(
-	axiosSuccessRequestInterceptor,
+	axiosHierarchyClientRequestInterceptor,
 	axiosErrorRequestInterceptor,
 );
 
 const ContentDeliveryClient = axios.create({
-	baseURL: process.env.REACT_APP_CONTENT_API,
 	headers: {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Headers': 'content-type',
@@ -40,7 +53,7 @@ ContentDeliveryClient.interceptors.response.use(
 	axiosErrorResponseInterceptor,
 );
 ContentDeliveryClient.interceptors.request.use(
-	axiosSuccessRequestInterceptor,
+	axiosContentDeliveryRequestInterceptor,
 	axiosErrorRequestInterceptor,
 );
 export { ContentDeliveryClient, HierarchyClient };

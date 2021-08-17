@@ -3,6 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import React from 'react';
 import { useDetachStore } from '../../../state';
+import { HierarchyClient } from '../../../util/axios';
 import { Home } from '../home';
 
 const dSSidebarState = useDetachStore.getState();
@@ -12,6 +13,7 @@ test('renders home component', () => {
 });
 
 test(' detached sidebar should be displayed when detachSidebar global state is assigned to true', () => {
+	jest.spyOn(HierarchyClient, 'get').mockResolvedValue(null);
 	dSSidebarState.setDetachSidebar(true);
 	const { getByTestId } = render(<Home />);
 	const Rnd = getByTestId('rnd');
