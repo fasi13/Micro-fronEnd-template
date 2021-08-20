@@ -119,7 +119,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			},
 		})
 			.then(resp => {
-				get().setPrimaryLogo(resp.data.data.items?.[0].value);
+				get().setPrimaryLogo(resp.data?.data?.items?.[0].value);
 			})
 			.catch(err => {
 				error = err as unknown as ErrorResponse;
