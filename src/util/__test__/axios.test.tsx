@@ -41,7 +41,7 @@ describe('axios', () => {
 		});
 	});
 	describe('axiosContentDeliveryRequestInterceptor', () => {
-		it('should get ta success request', async () => {
+		it('should get content delivery success request', async () => {
 			jest.spyOn(setupConfig, 'configUrls').mockResolvedValueOnce({
 				HIERARCHY_API: '',
 				CONTENT_API: '',
@@ -55,7 +55,7 @@ describe('axios', () => {
 	});
 
 	describe('axiosHierarchyClientRequestInterceptor', () => {
-		it('should get ta success request', async () => {
+		it('should get hierarchy client success request', async () => {
 			jest.spyOn(setupConfig, 'configUrls').mockResolvedValueOnce({
 				HIERARCHY_API: '',
 				CONTENT_API: '',

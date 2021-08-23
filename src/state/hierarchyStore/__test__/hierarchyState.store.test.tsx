@@ -138,6 +138,38 @@ describe('hieararchy store', () => {
 			error: null,
 		});
 	});
+
+	const dummyErrorResponse = {
+		success: true,
+		data: {
+			items: [
+				{
+					name: 'Primary Logo dummy',
+					description: 'Descscription',
+					displayAsList: false,
+					status: 'Published',
+					value:
+						'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
+					publishDate: '2021-07-09T06:02:44.4479464',
+					dataType: {
+						name: 'Image',
+						isStructuredType: false,
+						type: 'File',
+						_links: [],
+					},
+					version: 28,
+					inherited: false,
+					dataTypeName: 'Image',
+					cultureCode: 'en-US',
+					id: 3,
+				},
+			],
+			offset: 0,
+			limit: 25,
+			totalCount: 1,
+			_links: [],
+		},
+	};
 	it('hierarchy store is defined', () => {
 		expect(useHierarchyStore.getState()).toMatchSnapshot();
 	});
@@ -335,6 +367,9 @@ describe('hieararchy store', () => {
 
 		it('if passed false it will expand node', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const branding = jest
+				.spyOn(useHierarchyStore.getState(), 'getPrimaryLogo')
+				.mockImplementationOnce(() => undefined);
 			const getHierarchyChildDataSpy = jest
 				.spyOn(utilStateHelper, 'getHierarchyChildData')
 				.mockResolvedValueOnce({ err: null, children: dummyTreeView });
@@ -342,7 +377,7 @@ describe('hieararchy store', () => {
 			await useHierarchyStore
 				.getState()
 				.toggleCollapse(dummyTreeView[0].nodePath, false);
-
+			expect(branding).toHaveBeenCalled();
 			expect(nodeToUpdatespy).toHaveBeenCalled();
 			expect(getHierarchyChildDataSpy).toHaveBeenCalled();
 			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
@@ -1072,32 +1107,34 @@ describe('hieararchy store', () => {
 			jest.spyOn(ContentDeliveryClient, 'get').mockResolvedValueOnce({
 				success: true,
 				data: {
-					items: [
-						{
-							name: 'Primary Logo',
-							description: 'Descscription',
-							displayAsList: false,
-							status: 'Published',
-							value:
-								'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
-							publishDate: '2021-07-09T06:02:44.4479464',
-							dataType: {
-								name: 'Image',
-								isStructuredType: false,
-								type: 'File',
-								_links: [],
+					data: {
+						items: [
+							{
+								name: 'Primary Logo',
+								description: 'Descscription',
+								displayAsList: false,
+								status: 'Published',
+								value:
+									'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
+								publishDate: '2021-07-09T06:02:44.4479464',
+								dataType: {
+									name: 'Image',
+									isStructuredType: false,
+									type: 'File',
+									_links: [],
+								},
+								version: 28,
+								inherited: false,
+								dataTypeName: 'Image',
+								cultureCode: 'en-US',
+								id: 3,
 							},
-							version: 28,
-							inherited: false,
-							dataTypeName: 'Image',
-							cultureCode: 'en-US',
-							id: 3,
-						},
-					],
-					offset: 0,
-					limit: 25,
-					totalCount: 1,
-					_links: [],
+						],
+						offset: 0,
+						limit: 25,
+						totalCount: 1,
+						_links: [],
+					},
 				},
 			});
 
@@ -1120,6 +1157,17 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().primaryLogo).toBe(
 				'/e2e_default_logo.png',
 			);
+		});
+		it('should throw invalid response ', async () => {
+			jest
+				.spyOn(ContentDeliveryClient, 'get')
+				.mockRejectedValue(dummyErrorResponse);
+
+			await useHierarchyStore
+				.getState()
+				.getPrimaryLogo('dc91a61c-5ab0-e711-8b81-005056b80f19');
+
+			expect(ContentDeliveryClient.get).rejects.toEqual(dummyErrorResponse);
 		});
 	});
 });

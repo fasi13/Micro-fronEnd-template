@@ -5,24 +5,24 @@ import {
 	Link,
 	NodePath,
 	TEditor,
-	TreeView
+	TreeView,
 } from '../../types';
 import {
 	ContentDeliveryClient,
-	HierarchyClient as axios
+	HierarchyClient as axios,
 } from '../../util/axios';
 import createStore from '../../util/immer';
 import {
 	getChildrenLink,
 	getCreateApplicationLink,
 	getCreateGroupLink,
-	getSelfUpdateLink
+	getSelfUpdateLink,
 } from './helpers/hierarchy.link.helper';
 import { nodeUpdateState } from './helpers/hierarchy.store.helper';
 import {
 	getHierarchyChildData,
 	getNodeToUpdate,
-	updateNodeValues
+	updateNodeValues,
 } from './helpers/util.help';
 import { THierarchyChildDataResp, THierarchyState } from './type';
 
@@ -79,7 +79,6 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			const childrenGroupLink: Link | undefined = childrenLink?.find(
 				c => c.rel === 'applicationGroups',
 			);
-			get().getPrimaryLogo(applicationData.key);
 			if (childrenGroupLink) {
 				const resGroup = await axios.get<ApiResponse<DataPaginated<TreeView>>>(
 					childrenGroupLink?.href,
@@ -120,7 +119,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			},
 		})
 			.then(resp => {
-				get().setPrimaryLogo(resp.data.data.items[0].value);
+				get().setPrimaryLogo(resp?.data?.data?.items?.[0].value);
 			})
 			.catch(err => {
 				error = err as unknown as ErrorResponse;
@@ -131,6 +130,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		if (!val) {
 			const data = getNodeToUpdate(get().hierarchyData, nodePath);
 			if (data) {
+				get().getPrimaryLogo(data.key);
 				get().setLoadingChildren(nodePath, true);
 				const { err, children }: THierarchyChildDataResp =
 					await getHierarchyChildData(data);
