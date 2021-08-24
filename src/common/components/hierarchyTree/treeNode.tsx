@@ -35,9 +35,7 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 
 			<div
 				data-testid="treeitem"
-				className={
-					data.error && data.edit ? `h-10.5 w-full mb-10` : `h-10.5 w-full`
-				}>
+				className={data.error && data.edit ? `w-full mb-10` : `pl-3 w-full`}>
 				{data.edit ? (
 					<NodeEditor
 						key={`node_editor_${nodeId}`}
