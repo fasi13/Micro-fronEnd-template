@@ -36,7 +36,7 @@ export const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 	return (
 		<li
 			key={nodeId}
-			className="relative flex flex-col items-start justify-center h-auto list-none tree">
+			className="relative flex flex-col items-start justify-center h-auto pl-2 list-none tree">
 			<div className="w-full h-full">
 				<TreeNode
 					key={`treenode_${nodeId}_${nodePath.length}`}

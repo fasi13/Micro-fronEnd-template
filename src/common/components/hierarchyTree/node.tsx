@@ -58,22 +58,20 @@ export const Node: React.FC<NodePropType> = props => {
 	return (
 		<div
 			data-testid="node-component"
-			className="h-10.5 my-1 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
-			<>
-				{isLoadingChildren ? (
-					<NodeLoadingIndicator />
-				) : (
-					<button
-						data-testid="node-container"
-						type="button"
-						className={`flex flex-col items-center justify-center w-5 h-5 text-center text-gray-600 bg-gray-100 rounded-sm cursor-pointer
+			className="h-10.5 my-1 z-30 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
+			{isLoadingChildren ? (
+				<NodeLoadingIndicator />
+			) : (
+				<button
+					data-testid="node-container"
+					type="button"
+					className={`flex flex-col items-center justify-center w-6 h-6 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
 								${expandOrCollapse()}
 								`}
-						onClick={() => toggleChildren()}>
-						<></>
-					</button>
-				)}
-			</>
+					onClick={toggleChildren}>
+					<></>
+				</button>
+			)}
 			<button
 				data-testid="node-labels"
 				id={data.name
