@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hieararchy store hierarchy store is defined 1`] = `
+exports[`hierarchy store hierarchy store is defined 1`] = `
 Object {
   "activeNodeId": 0,
   "createApplication": [Function],
