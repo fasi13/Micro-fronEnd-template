@@ -11,18 +11,24 @@ import { useBreadcrumbStore } from '../../../../state';
 import { NodePath } from '../../../../types';
 import Breadcrumb from '../breadcrumb';
 
-const pathData: NodePath[] = [
+const pathData2: NodePath[] = [
 	{ pathId: 1, pathName: 'E2E Group' },
-	{ pathId: 13, pathName: 'New Application Group' },
-	{ pathId: 14, pathName: 'New Group2' },
-	{ pathId: 15, pathName: 'New Application' },
+	{ pathId: 13, pathName: 'Application00' },
+	{ pathId: 14, pathName: 'Application0' },
+	{ pathId: 15, pathName: 'Application1' },
+	{ pathId: 16, pathName: 'Application2' },
+	{ pathId: 17, pathName: 'Application3' },
+	{ pathId: 18, pathName: 'Application4' },
+	{ pathId: 19, pathName: 'Application5' },
+	{ pathId: 20, pathName: 'Application6' },
+	{ pathId: 21, pathName: 'Application7' },
 ];
 
 describe('Breadcrumb', () => {
 	beforeEach(() => {
 		act(async () => {
 			await waitFor(() =>
-				useBreadcrumbStore.setState({ breadCrumbData: pathData }),
+				useBreadcrumbStore.setState({ breadCrumbData: pathData2 }),
 			);
 		});
 	});
@@ -40,17 +46,14 @@ describe('Breadcrumb', () => {
 		expect(screen.getByTestId('disabledBreadLink').closest('p'));
 	});
 
-	test('Breadcrumb check for correct classnames', () => {
-		render(<Breadcrumb />);
-		expect(screen.getAllByRole('button')[0].className).toContain('first');
-		expect(screen.getAllByRole('button')[1].className).toContain('link');
-		expect(screen.getByTestId('disabledBreadLink').className).toContain('last');
-	});
-
 	test('Breadcrumb click event breadcrumb state check', () => {
 		render(<Breadcrumb />);
 		expect(screen.getByTestId('breadcrumbtest')).toBeInTheDocument();
 		fireEvent.click(screen.getAllByRole('button')[0]);
 		expect(useBreadcrumbStore.getState().breadCrumbData.length).toBe(1);
+	});
+
+	test('Breadcrumb check full path output', () => {
+		render(<Breadcrumb />);
 	});
 });

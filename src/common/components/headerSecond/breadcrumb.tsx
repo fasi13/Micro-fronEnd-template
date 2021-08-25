@@ -1,44 +1,28 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable no-plusplus */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { makeStyles, Theme, Typography } from '@material-ui/core';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
+import _ceil from 'lodash/ceil';
 import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
-import { linkStyle, textStyle } from './breadCrumbStyleHelper';
+import './breadcrumb.css';
 
 export interface StyleProps {
-    color: string;
+	color: string;
 }
 
-const useStyles = makeStyles<Theme, StyleProps>(() => ({
-		link: {
-			color: ({color}) => color,
-			fontSize: "1.2rem",
-		},
-		last: {
-			color: 'grey',
-			fontSize: "1.2rem",
-		},
-		first: {
-			color: ({color}) => color,
-			fontSize: '1.6rem',
-			fontWeight: 500,
-		},
-	}),
-);
+const maxPathsToShow = 8;
+let fullPath = '';
+let pathList: NodePath[] = [];
+let ellipsisPosition = 0;
+
+export const generatefullPath = (pathName: string) => {
+	fullPath = fullPath ? `${fullPath} / ${pathName}` : pathName;
+};
 
 function Breadcrumb() {
-
-  const styles = getComputedStyle(document.documentElement);
-  const linkColor = styles.getPropertyValue('--link-color');
-
-  const props = {
-    color: linkColor
-  }
-
-	const classes = useStyles(props);
+	ellipsisPosition = 0;
+	pathList = [];
+	fullPath = '';
 
 	const activeNodeId = useHierarchyStore(state => state.activeNodeId);
 	const nodeName = useHierarchyStore(state => state.hierarchyData?.[0]?.name);
@@ -60,38 +44,73 @@ function Breadcrumb() {
 		for (let i = 0; i <= index; i++) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
+
 		setBreadCrumb(pathNameUpdate);
 		el?.scrollIntoView(true);
 	};
+
+	ellipsisPosition =
+		breadCrumbData.length > maxPathsToShow ? _ceil(maxPathsToShow / 2) : -1;
+
+	if (ellipsisPosition > 0) {
+		const limitPosition =
+			breadCrumbData.length + ellipsisPosition - maxPathsToShow;
+
+		let position = 0;
+		breadCrumbData.forEach(path => {
+			if (position <= ellipsisPosition || position >= limitPosition) {
+				pathList.push(path);
+			}
+			generatefullPath(path.pathName);
+			position++;
+		});
+	} else {
+		pathList = breadCrumbData;
+	}
 
 	useEffect(() => {
 		setBreadCrumb([{ pathId: activeNodeId, pathName: nodeName }]);
 	}, [activeNodeId, nodeName]);
 
 	return (
-		<Breadcrumbs
-			aria-label="breadcrumb"
-			className={classes.link}
+		<ul
+			className="flex flex-wrap text-base items-center"
 			data-testid="breadcrumbtest">
-			{breadCrumbData.map((bread, index: number) =>
-				breadCrumbData.length - 1 !== index ? (
-					<Link
-						key={bread.pathId.toString()}
-						component="button"
-						className={linkStyle(index, classes.link, classes.first)}
-						onClick={() => handleClick(index)}>
-						{bread.pathName}
-					</Link>
+			{pathList.map((bread, index) =>
+				index !== pathList.length - 1 ? (
+					<>
+						<div key={bread.pathId.toString()}>
+							<button
+								onClick={() => handleClick(index)}
+								className={`${
+									index === 0 ? 'text-2xl text-breadNormal' : 'text-breadNormal'
+								}`}>
+								{bread.pathName}
+							</button>
+						</div>
+						<span className="text-breadNormal">&nbsp;/&nbsp;</span>
+						{index === ellipsisPosition && (
+							<>
+								<span className="tooltip">
+									<span className="text-small font-bold">&#8230;</span>
+									<span className="tooltiptext">{fullPath}</span>
+								</span>
+								<span className="text-breadNormal">&nbsp;/&nbsp;</span>
+							</>
+						)}
+					</>
 				) : (
-					<Typography
-						data-testid="disabledBreadLink"
+					<span
 						key={bread.pathId.toString()}
-						className={textStyle(index, classes.last, classes.first)}>
+						className={`${
+							index === 0 ? 'text-2xl text-breadNormal' : 'text-breadDisable'
+						}`}
+						data-testid="disabledBreadLink">
 						{bread.pathName}
-					</Typography>
+					</span>
 				),
 			)}
-		</Breadcrumbs>
+		</ul>
 	);
 }
 

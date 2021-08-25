@@ -11,6 +11,8 @@ module.exports = {
 				lightgrayblue: '#BDC6CD',
 				sanjuan: '#31506A',
 				regentgray: '#8999A6',
+        breadNormal: '#b6c0c8',
+        breadDisable: '#808080'
 			},
 			height: {
 				'10.5': '42px',
