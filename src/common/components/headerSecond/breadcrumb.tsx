@@ -74,7 +74,7 @@ function Breadcrumb() {
 
 	return (
 		<ul
-			className="flex flex-wrap text-base items-center"
+			className="flex flex-wrap text-base items-end"
 			data-testid="breadcrumbtest">
 			{pathList.map((bread, index) =>
 				index !== pathList.length - 1 ? (
