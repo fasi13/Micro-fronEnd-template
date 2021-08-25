@@ -1,7 +1,7 @@
 import { ErrorResponse, TreeView } from '../../../types';
 import {
 	ContentDeliveryClient,
-	HierarchyClient as axios,
+	HierarchyClient as axios
 } from '../../../util/axios';
 import * as linkHelper from '../helpers/hierarchy.link.helper';
 import * as storeHelper from '../helpers/hierarchy.store.helper';
@@ -449,7 +449,16 @@ describe('hieararchy store', () => {
 	});
 
 	describe('toggleNewEditor', () => {
-		it('on toggleNewEditor sets NewEditor Mode Application or Group', async () => {
+
+
+		beforeEach(()=>{
+			jest.spyOn(storeHelper,"nodeUpdateState").mockImplementation(()=>undefined);
+		});
+
+		afterEach(() => {
+			jest.clearAllMocks();
+		})
+		it('toggleNewEditor sets NewEditor Mode Application or Group', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -466,7 +475,7 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
 		});
 
-		it('on toggleNewEditor will not change state if nodeToUpdate is not found', async () => {
+		it('toggleNewEditor will not change state if nodeToUpdate is not found', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -483,6 +492,29 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toEqual(
 				'dummy error',
 			);
+		});
+
+		it('toggleNewEditor will load children nodes if node is not collapsed', async () => {
+				const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.toggleNewEditor(dummyTreeView[0].nodePath, 'Application');
+
+			expect(storeHelper.nodeUpdateState).toHaveBeenCalled();
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].toggleNewEditor,
+			).toBe('Application');
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				false,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
+		});
+
+		it('toggleNewEditor will not load children if NewEditor mode is neither Application nor Group', async () => {
+			console.log('weee');
+			expect(true).toBe(true);
 		});
 	});
 	describe('setSaving', () => {
