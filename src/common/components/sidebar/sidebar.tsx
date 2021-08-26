@@ -6,6 +6,8 @@ import Searchbar from '../searchbar/Searchbar';
 import { useHierarchyHelper } from './hooks/useHierarchyHelper';
 import './sidebar.scss';
 
+let flag = true;
+
 const SidebarContent = () => {
 	const {
 		setNodeErrorFn,
@@ -30,7 +32,11 @@ const SidebarContent = () => {
 	useEffect(() => {
 		initializeHierarchyState(0);
 		setLoading(true);
-		loadApplication();
+
+		if (flag) {
+			loadApplication();
+			flag = false;
+		}
 	}, []);
 
 	const dSSidebarState = useDetachStore(state => state.detachSidebar);
