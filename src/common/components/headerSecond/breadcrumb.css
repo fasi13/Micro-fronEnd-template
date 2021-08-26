@@ -24,3 +24,15 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.first {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #b6c0c8;
+}
+.link {
+  color: #b6c0c8;
+}
+.last {
+  color: #808080;
+}

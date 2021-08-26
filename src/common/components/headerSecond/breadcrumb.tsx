@@ -1,10 +1,9 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable no-plusplus */
 import _ceil from 'lodash/ceil';
 import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
 import './breadcrumb.css';
+import { linkStyle, textStyle } from './breadCrumbStyleHelper';
 
 export interface StyleProps {
 	color: string;
@@ -15,7 +14,7 @@ let fullPath = '';
 let pathList: NodePath[] = [];
 let ellipsisPosition = 0;
 
-export const generatefullPath = (pathName: string) => {
+const generatefullPath = (pathName: string) => {
 	fullPath = fullPath ? `${fullPath} / ${pathName}` : pathName;
 };
 
@@ -41,7 +40,7 @@ function Breadcrumb() {
 
 		const el = document.getElementById(getId);
 
-		for (let i = 0; i <= index; i++) {
+		for (let i = 0; i <= index; i += 1) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
 
@@ -62,7 +61,7 @@ function Breadcrumb() {
 				pathList.push(path);
 			}
 			generatefullPath(path.pathName);
-			position++;
+			position += 1;
 		});
 	} else {
 		pathList = breadCrumbData;
@@ -81,10 +80,9 @@ function Breadcrumb() {
 					<>
 						<div key={bread.pathId.toString()}>
 							<button
+								type="button"
 								onClick={() => handleClick(index)}
-								className={`${
-									index === 0 ? 'text-2xl text-breadNormal' : 'text-breadNormal'
-								}`}>
+								className={linkStyle(index, 'link', 'first')}>
 								{bread.pathName}
 							</button>
 						</div>
@@ -102,9 +100,7 @@ function Breadcrumb() {
 				) : (
 					<span
 						key={bread.pathId.toString()}
-						className={`${
-							index === 0 ? 'text-2xl text-breadNormal' : 'text-breadDisable'
-						}`}
+						className={textStyle(index, 'last', 'first')}
 						data-testid="disabledBreadLink">
 						{bread.pathName}
 					</span>
