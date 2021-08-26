@@ -4,7 +4,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import React from 'react';
 import { useChangePasswordModalStore, useHierarchyStore } from '../../../state';
 import ChangePasswordModal from '../changePasswordModal/changePasswordModal';
@@ -110,9 +109,15 @@ export const Header = () => {
 	const PrimaryLogo = () => (
 		<div className="text-2xl ">
 			{primaryLogo === '' ? (
-				<img src="/e2e_default_logo.png" alt="E2E Logo" width="140" />
+				<img
+					data-testid="default-logo"
+					src="/e2e_default_logo.png"
+					alt="E2E Logo"
+					width="140"
+				/>
 			) : (
 				<img
+					data-testid="logo"
 					src={primaryLogo}
 					alt="E2E Logo"
 					width="140"
@@ -121,6 +126,7 @@ export const Header = () => {
 			)}
 		</div>
 	);
+	const [activeMenu, setActiveMenu] = React.useState(0);
 
 	return (
 		<div className="header-root">
@@ -139,9 +145,15 @@ export const Header = () => {
 								aria-haspopup="true"
 								color="primary"
 								onClick={handleMenuOpen}>
-								<ForumOutlinedIcon className="text-balihai" fontSize="large" />
-								<span className="self-center pl-2 text-base text-lightgrayblue">
-									Manage Communication
+								<img
+									className="pr-2 selected-menu-img"
+									src={manageCommunicationMenuList[activeMenu].icon}
+									alt="menu"
+									height="40"
+									width="40"
+								/>
+								<span className="self-center px-1 text-sm font-bold text-lightgrayblue">
+									{manageCommunicationMenuList[activeMenu].title}
 								</span>
 
 								<div
@@ -160,10 +172,16 @@ export const Header = () => {
 								open={Boolean(anchorMenu)}
 								disableScrollLock
 								onClose={handleMenuClose}>
-								{manageCommunicationMenuList.map(menuTitle => {
+								{manageCommunicationMenuList.map((menuTitle, index) => {
 									const { title, icon } = menuTitle;
 									return (
-										<MenuItem key={`${title.split('').join('_')}`}>
+										<MenuItem
+											key={`${title.split('').join('_')}`}
+											data-testid={`${title.split('').join('_')}`}
+											onClick={() => {
+												setActiveMenu(index);
+												handleMenuClose();
+											}}>
 											<div className="flex p-1 ">
 												<img
 													className="pr-2"
