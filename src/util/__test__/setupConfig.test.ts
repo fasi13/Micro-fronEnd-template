@@ -34,7 +34,7 @@ describe('setupConfig', () => {
 		);
 
 		const result = await configUrls();
-		expect(spy).toHaveBeenCalledWith('./env-config.json');
+		expect(spy).toHaveBeenCalledWith(`${window.origin}/env-config.json`);
 		expect(result).toMatchObject({
 			HIERARCHY_API: 'dummy',
 			CONTENT_API: 'dummy',
@@ -47,7 +47,7 @@ describe('setupConfig', () => {
 			.mockImplementationOnce(() => Promise.reject());
 
 		const result = await configUrls();
-		expect(spy).toHaveBeenCalledWith('./env-config.json');
+		expect(spy).toHaveBeenCalledWith(`${window.origin}/env-config.json`);
 		expect(result).toBeNull();
 	});
 });
