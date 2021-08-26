@@ -6,6 +6,7 @@ import React from 'react';
 import { useSearchStore } from '../../../../state/searchState.store';
 import { ApplicationPath } from '../../../../types';
 import Searchbar from '../Searchbar';
+import { getApplicationName } from '../utils';
 
 const mockSearchData: ApplicationPath[] = [
 	{
@@ -79,5 +80,32 @@ describe('Autocomplete Search', () => {
 		const { getByTestId } = render(<Searchbar />);
 		useSearchStore.setState({ searchLoading: true });
 		expect(getByTestId('searchfield-progress')).toBeInTheDocument();
+	});
+});
+
+describe('get Application Name', () => {
+	const dummyPath: ApplicationPath = {
+		path: [
+			{
+				id: 1,
+				key: 'dc91a61c-5ab0-e711-8b81-005056b80f19',
+				name: 'E2E Group ',
+				value: '1',
+				_links: [],
+			},
+			{
+				id: 2,
+				key: 'e9cc14a8-0f2a-4b1f-863b-60de05df800c',
+				name: 'Application 12ED test',
+				value: 'Value application 12EG',
+
+				_links: [],
+			},
+		],
+		_links: [],
+	};
+	test('should get application name', () => {
+		const applicationName = getApplicationName({ ...dummyPath });
+		expect(applicationName).toBe('Application 12ED test');
 	});
 });

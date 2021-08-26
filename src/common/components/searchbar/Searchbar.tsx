@@ -1,9 +1,9 @@
 import {
-  CircularProgress,
-  createStyles,
-  List,
-  makeStyles,
-  TextField
+	CircularProgress,
+	createStyles,
+	List,
+	makeStyles,
+	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -12,6 +12,7 @@ import { useDebounce } from 'use-hooks';
 import { useSearchStore } from '../../../state';
 import { ApplicationPath } from '../../../types';
 import { SearchApplication } from './search-application';
+import { getApplicationId, getApplicationName } from './utils';
 
 const useStyles = makeStyles(() =>
 	createStyles({
@@ -88,12 +89,6 @@ function SearchBar() {
 		}
 	}, [open, inputKeyword]);
 
-	const getApplicationName = ({ path }: ApplicationPath): string =>
-		path[path.length - 1].name;
-
-	const getApplicationId = ({ path }: ApplicationPath): string =>
-		path[path.length - 1].id.toString();
-
 	return (
 		<Autocomplete
 			data-testid="searchautocomplete"
@@ -103,13 +98,14 @@ function SearchBar() {
 			id="combo-box-demo"
 			style={{ width: 445, zIndex: 999999 }}
 			className={classes.searchInput}
-			options={Array.from(searchData)}
-			getOptionLabel={x => getApplicationName(x)}
+			options={searchData}
+			getOptionLabel={getApplicationName}
 			autoComplete
 			fullWidth
 			includeInputInList
 			filterSelectedOptions
 			loading={searchLoading}
+			filterOptions={y => y}
 			noOptionsText={
 				inputKeyword.length < 3
 					? 'Requires at least 3 characters'
@@ -119,7 +115,7 @@ function SearchBar() {
 				<TextField
 					// eslint-disable-next-line react/jsx-props-no-spreading
 					{...params}
-					onChange={e => searchElement(e.target.value.toString())}
+					onChange={e => searchElement(e.target.value.trim().toString())}
 					data-testid="searchfield"
 					variant="outlined"
 					fullWidth

@@ -15,6 +15,9 @@ export const getSeparator = (index: number, array: any): string =>
 export const getElementId = (element: any): string =>
 	+element.value > -1 ? `(${element.value})` : '';
 
+export const getApplicationId = ({ path }: ApplicationPath): string =>
+	path[path.length - 1].id.toString();
+
 export const getApplicationPath = (application: ApplicationPath): string => {
 	const appPath = application.path;
 
