@@ -176,8 +176,8 @@ export const Header = () => {
 									const { title, icon } = menuTitle;
 									return (
 										<MenuItem
-											key={`${title.split('').join('_')}`}
-											data-testid={`${title.split('').join('_')}`}
+											key={`${title.split(' ').join('_')}`}
+											data-testid={`${title.split(' ').join('_')}`}
 											onClick={() => {
 												setActiveMenu(index);
 												handleMenuClose();

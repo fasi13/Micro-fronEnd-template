@@ -13,8 +13,8 @@ test('Menu Title should contain selected menu', () => {
 	const menuTitleElt = getByTestId(menuTitleStr);
 	fireEvent.click(menuTitleElt);
 
-	const menuItemIcon = getByTestId('R_O_L_E_S');
-	fireEvent.click(menuItemIcon);
+	const menuItem = getByTestId('ROLES');
+	fireEvent.click(menuItem);
 
 	expect(menuTitleElt.textContent).toBe('ROLES');
 });
