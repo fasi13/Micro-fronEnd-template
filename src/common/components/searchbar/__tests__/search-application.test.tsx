@@ -1,5 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
-import { SearchApplicationProps } from '../search-application';
+import { render } from '@testing-library/react';
+import React from 'react';
+import {
+	SearchApplication,
+	SearchApplicationProps,
+} from '../search-application';
 import {
 	getApplicationPath,
 	getApplicationValue,
@@ -254,8 +259,9 @@ const singlePath: SearchApplicationProps = {
 	},
 };
 
-test('should remove application value if its identical with application Name', () => {
-	expect(getApplicationValue(data.item)).toBeNull();
+test('search application testing ', () => {
+	const { queryByText } = render(<SearchApplication item={data.item} />);
+	expect(queryByText(/Application 12ED test/i)).toBeInTheDocument();
 });
 test('should get Group App Name ', () => {
 	expect(getApplicationPath(data.item)).toBe('E2E Group');
@@ -336,4 +342,7 @@ test('should return null', () => {
 
 	const result = getElementId(mockMultipleArray.mockPath[0]);
 	expect(result).not.toBe('GroupAppName');
+});
+test('should remove application value if its identical with application Name', () => {
+	expect(getApplicationValue(data.item)).toBeNull();
 });
