@@ -1,7 +1,13 @@
 import React from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath, TreeView } from '../../../types';
-import { AddIcon, FolderIcon, PencilIcon, SpinnerIcon } from '../../icons';
+import {
+	AddIcon,
+	FolderIcon,
+	GroupIcon,
+	PencilIcon,
+	SpinnerIcon,
+} from '../../icons';
 
 interface NodePropType {
 	data: TreeView;
@@ -81,11 +87,16 @@ export const Node: React.FC<NodePropType> = props => {
 					.toString()
 					.concat('____', data.id.toString())}
 				type="button"
-				className="w-full flex items-center text-left pl-` h-10.5 border-indigo-200"
+				className="w-full flex items-center text-left pl-1` h-10.5 border-indigo-200"
 				onClick={() => {
 					setBreadCrumb(nodePath);
 					toggleChildren();
 				}}>
+				<GroupIcon
+					className={`${canAddApplication(data) ? 'mr-2' : 'hidden mr-2'}`}
+					width={18}
+					height={18}
+				/>
 				{data?.name} {trim(data)}
 			</button>
 			<div className="flex space-x-3 node-actions">
