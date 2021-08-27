@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
@@ -12,15 +11,36 @@ export interface StyleProps {
 const maxPathsToShow = 8;
 
 let fullPath = '';
-let pathList: NodePath[] = [];
 let ellipsisPosition = 0;
+let pathList: NodePath[] = [];
 
-const generatefullPath = (pathName: string) => {
+const generateFullPath = (pathName: string) => {
 	fullPath = fullPath ? `${fullPath} / ${pathName}` : pathName;
 };
 
+const ellipsisPositionGetter = (breadCrumbData: NodePath[]) => {
+	ellipsisPosition =
+		breadCrumbData.length > maxPathsToShow ? Math.ceil(maxPathsToShow / 2) : -1;
+
+	if (ellipsisPosition > 0) {
+		const limitPosition =
+			breadCrumbData.length + ellipsisPosition - maxPathsToShow;
+
+		let position = 0;
+
+		breadCrumbData.forEach(path => {
+			if (position <= ellipsisPosition || position > limitPosition) {
+				pathList.push(path);
+			}
+			generateFullPath(path.pathName);
+			position += 1;
+		});
+	} else {
+		pathList = breadCrumbData;
+	}
+};
+
 function Breadcrumb() {
-	// ellipsisPosition = 0;
 	pathList = [];
 	fullPath = '';
 
@@ -41,7 +61,7 @@ function Breadcrumb() {
 
 		const el = document.getElementById(getId);
 
-		for (let i = 0; i <= index; i++) {
+		for (let i = 0; i <= index; i += 1) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
 
@@ -49,24 +69,7 @@ function Breadcrumb() {
 		el?.scrollIntoView(true);
 	};
 
-	ellipsisPosition =
-		breadCrumbData.length > maxPathsToShow ? Math.ceil(maxPathsToShow / 2) : -1;
-
-	if (ellipsisPosition > 0) {
-		const limitPosition =
-			breadCrumbData.length + ellipsisPosition - maxPathsToShow;
-
-		let position = 0;
-		breadCrumbData.forEach(path => {
-			if (position <= ellipsisPosition || position > limitPosition) {
-				pathList.push(path);
-			}
-			generatefullPath(path.pathName);
-			position++;
-		});
-	} else {
-		pathList = breadCrumbData;
-	}
+	ellipsisPositionGetter(breadCrumbData);
 
 	useEffect(() => {
 		setBreadCrumb([{ pathId: activeNodeId, pathName: nodeName }]);
