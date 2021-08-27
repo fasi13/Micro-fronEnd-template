@@ -6,11 +6,11 @@
 .tooltiptext {
   visibility: hidden;
   width: 100%;
-  background-color: grey;
+  background: floralwhite;
+    color: darkslategrey;
   opacity: 0.9;
-  color: #fff;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 3px;
   padding: 5px;
 
   /* Position the tooltip */
@@ -36,4 +36,8 @@
 }
 .last {
   color: #808080;
+}
+.hidden-path{
+      color: #355673;
+    font-weight: 600;
 }

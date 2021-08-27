@@ -95,7 +95,26 @@ function Breadcrumb() {
 							<>
 								<span className="toolshow">
 									<span className="text-small font-bold">&#8230;</span>
-									<span className="tooltiptext">{fullPath}</span>
+									<span className="tooltiptext">
+										{fullPath
+											.split('/')
+											.map((path: string, pathIndex: number) =>
+												pathIndex >= 5 &&
+												pathIndex < breadCrumbData.length - 3 ? (
+													<>
+														<span className="hidden-path">{path} </span>
+														<span>
+															{breadCrumbData.length !== pathIndex + 1 && '/'}{' '}
+														</span>
+													</>
+												) : (
+													<span>
+														{path}{' '}
+														{breadCrumbData.length !== pathIndex + 1 && '/'}
+													</span>
+												),
+											)}
+									</span>
 								</span>
 								<span className="text-breadNormal">&nbsp;/&nbsp;</span>
 							</>
