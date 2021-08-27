@@ -70,8 +70,8 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		get().setLoading(true);
 		const res = await axios
 			.get<ApiResponse<TreeView>>(`applications/${applicationId}`)
-			.catch((reason: ErrorResponse) => {
-				get().setError(reason?.errors?.[0]);
+			.catch((reason: AxiosError<ErrorResponse>) => {
+				get().setError(reason?.response?.data?.errors?.[0]);
 			});
 
 		if (res) {
@@ -205,11 +205,9 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			const resp = await axios
 				.post(href, { name })
 				.catch((reason: AxiosError<ErrorResponse>) => {
-					remoteError = reason?.response?.data || null;
+					remoteError = reason?.response?.data || unknownError;
 				});
 
-			// eslint-disable-next-line no-debugger
-			debugger;
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
 			} else if (resp && resp.status === 201) {
@@ -233,9 +231,11 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		if (link) {
 			get().setSaving(nodePath, true);
 			const { href } = link;
-			const resp = await axios.put(href, { name }).catch(reason => {
-				remoteError = reason as unknown as ErrorResponse;
-			});
+			const resp = await axios
+				.put(href, { name })
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					remoteError = reason.response?.data || unknownError;
+				});
 
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
@@ -265,7 +265,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			const resp = await axios
 				.post(href, { name, value })
 				.catch((reason: AxiosError<ErrorResponse>) => {
-					remoteError = reason?.response?.data || null;
+					remoteError = reason?.response?.data || unknownError;
 				});
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
@@ -292,9 +292,11 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			const { href } = link;
 			get().setSaving(nodePath, true);
 
-			const resp = await axios.put(href, { name, value }).catch(reason => {
-				remoteError = reason as unknown as ErrorResponse;
-			});
+			const resp = await axios
+				.put(href, { name, value })
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					remoteError = reason.response?.data || unknownError;
+				});
 
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
