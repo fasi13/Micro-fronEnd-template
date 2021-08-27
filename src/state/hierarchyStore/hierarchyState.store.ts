@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import {
 	ApiResponse,
 	DataPaginated,
@@ -203,10 +204,12 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 
 			const resp = await axios
 				.post(href, { name })
-				.catch((reason: ErrorResponse) => {
-					remoteError = reason;
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					remoteError = reason?.response?.data || null;
 				});
 
+			// eslint-disable-next-line no-debugger
+			debugger;
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
 			} else if (resp && resp.status === 201) {
@@ -261,8 +264,8 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 
 			const resp = await axios
 				.post(href, { name, value })
-				.catch((reason: ErrorResponse) => {
-					remoteError = reason;
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					remoteError = reason?.response?.data || null;
 				});
 			if (remoteError) {
 				nodeUpdateState(set, nodePath, remoteError, []);
