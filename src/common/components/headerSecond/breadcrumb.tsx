@@ -1,4 +1,4 @@
-import _ceil from 'lodash/ceil';
+/* eslint-disable no-plusplus */
 import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
@@ -10,6 +10,7 @@ export interface StyleProps {
 }
 
 const maxPathsToShow = 8;
+
 let fullPath = '';
 let pathList: NodePath[] = [];
 let ellipsisPosition = 0;
@@ -19,7 +20,7 @@ const generatefullPath = (pathName: string) => {
 };
 
 function Breadcrumb() {
-	ellipsisPosition = 0;
+	// ellipsisPosition = 0;
 	pathList = [];
 	fullPath = '';
 
@@ -40,7 +41,7 @@ function Breadcrumb() {
 
 		const el = document.getElementById(getId);
 
-		for (let i = 0; i <= index; i += 1) {
+		for (let i = 0; i <= index; i++) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
 
@@ -49,7 +50,7 @@ function Breadcrumb() {
 	};
 
 	ellipsisPosition =
-		breadCrumbData.length > maxPathsToShow ? _ceil(maxPathsToShow / 2) : -1;
+		breadCrumbData.length > maxPathsToShow ? Math.ceil(maxPathsToShow / 2) : -1;
 
 	if (ellipsisPosition > 0) {
 		const limitPosition =
@@ -57,11 +58,11 @@ function Breadcrumb() {
 
 		let position = 0;
 		breadCrumbData.forEach(path => {
-			if (position <= ellipsisPosition || position >= limitPosition) {
+			if (position <= ellipsisPosition || position > limitPosition) {
 				pathList.push(path);
 			}
 			generatefullPath(path.pathName);
-			position += 1;
+			position++;
 		});
 	} else {
 		pathList = breadCrumbData;
