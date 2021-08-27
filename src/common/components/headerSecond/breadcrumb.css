@@ -3,9 +3,9 @@
   display: inline-block;
 }
 
-.tooltip .tooltiptext {
+.tooltiptext {
   visibility: hidden;
-  width: 60vw;
+  width: 100%;
   background-color: grey;
   opacity: 0.9;
   color: #fff;
@@ -17,13 +17,14 @@
   position: absolute;
   z-index: 1;
   top: 100%;
-  /* left: 100%; */
-  margin-left: -20vw;
+  left: 0;
+  /* margin-left: -20vw; */
 }
 
-.tooltip:hover .tooltiptext {
+.toolshow:hover .tooltiptext {
   visibility: visible;
 }
+
 
 .first {
   font-size: 1.5rem;

@@ -75,7 +75,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 					onClick={handleDetach}>
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
-				<span className="self-center pl-2">
+				<span className="self-center pl-2 tooltip">
 					<Breadcrumbview />
 				</span>
 			</div>

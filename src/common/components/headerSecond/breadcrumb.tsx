@@ -93,7 +93,7 @@ function Breadcrumb() {
 						<span className="text-breadNormal">&nbsp;/&nbsp;</span>
 						{index === ellipsisPosition && (
 							<>
-								<span className="tooltip">
+								<span className="toolshow">
 									<span className="text-small font-bold">&#8230;</span>
 									<span className="tooltiptext">{fullPath}</span>
 								</span>
