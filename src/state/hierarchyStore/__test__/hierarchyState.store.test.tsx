@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { ErrorResponse, TreeView } from '../../../types';
 import {
 	ContentDeliveryClient,
@@ -9,7 +10,7 @@ import * as utilStateHelper from '../helpers/util.help';
 import { useHierarchyStore } from '../hierarchyState.store';
 
 jest.mock('../../../util/setupConfig.ts');
-describe('hieararchy store', () => {
+describe('hierarchy store', () => {
 	const applicationUrl = 'applications/1';
 	const selfupdateUrl = 'dummy/selfupdate';
 	const createGroupUrl = 'dummy/createGroup';
@@ -449,7 +450,11 @@ describe('hieararchy store', () => {
 	});
 
 	describe('toggleNewEditor', () => {
-		it('on toggleNewEditor sets NewEditor Mode Application or Group', async () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+
+		it('toggleNewEditor sets NewEditor Mode Application or Group', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -466,7 +471,7 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
 		});
 
-		it('on toggleNewEditor will not change state if nodeToUpdate is not found', async () => {
+		it('toggleNewEditor will not change state if nodeToUpdate is not found', async () => {
 			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
 
 			await useHierarchyStore
@@ -483,6 +488,57 @@ describe('hieararchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toEqual(
 				'dummy error',
 			);
+		});
+
+		it('toggleNewEditor will load children nodes if node is collapsed', async () => {
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+			const nodeUpdateStateSpy = jest.spyOn(storeHelper, 'nodeUpdateState');
+			const brandingSpy = jest
+				.spyOn(useHierarchyStore.getState(), 'getPrimaryLogo')
+				.mockImplementationOnce(() => undefined);
+			const getHierarchyChildDataSpy = jest
+				.spyOn(utilStateHelper, 'getHierarchyChildData')
+				.mockResolvedValueOnce({ err: null, children: dummyTreeView });
+
+			act(() => {
+				useHierarchyStore.setState({
+					...useHierarchyStore.getState(),
+					hierarchyData: [{ ...dummyTreeView[0], collapsed: true }],
+					error: null,
+				});
+			});
+
+			await useHierarchyStore
+				.getState()
+				.toggleNewEditor(dummyTreeView[0].nodePath, 'Application');
+
+			expect(nodeUpdateStateSpy).toHaveBeenCalled();
+			expect(brandingSpy).toHaveBeenCalled();
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+			expect(getHierarchyChildDataSpy).toHaveBeenCalled();
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].toggleNewEditor,
+			).toBe('Application');
+			expect(useHierarchyStore.getState().hierarchyData[0].collapsed).toBe(
+				false,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
+		});
+
+		it('toggleNewEditor will not load children if toggleNewEditor node is neither Application nor Group', async () => {
+			const nodeToUpdatespy = jest.spyOn(utilStateHelper, 'getNodeToUpdate');
+
+			await useHierarchyStore
+				.getState()
+				.toggleNewEditor(dummyTreeView[0].nodePath, '');
+
+			expect(nodeToUpdatespy).toHaveBeenCalled();
+
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].toggleNewEditor,
+			).toBe('');
+
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBeNull();
 		});
 	});
 	describe('setSaving', () => {

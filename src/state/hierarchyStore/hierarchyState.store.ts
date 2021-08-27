@@ -152,13 +152,23 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 			}
 		});
 	},
-	toggleNewEditor: (nodePath: NodePath[], val: TEditor) => {
+	toggleNewEditor: async (nodePath: NodePath[], val: TEditor) => {
+		if (val !== '') {
+			const node = getNodeToUpdate(get().hierarchyData, nodePath);
+			if (node && node.collapsed) {
+				get().getPrimaryLogo(node.key);
+				get().setLoadingChildren(nodePath, true);
+				const { err, children }: THierarchyChildDataResp =
+					await getHierarchyChildData(node);
+				nodeUpdateState(set, nodePath, err, children);
+			}
+		}
+
 		set((state: THierarchyState) => {
-			const node = getNodeToUpdate(state.hierarchyData, nodePath);
-			if (node) {
-				node.toggleNewEditor = val;
-				node.collapsed = false;
-				node.error = null;
+			const latestNode = getNodeToUpdate(state.hierarchyData, nodePath);
+			if (latestNode) {
+				latestNode.toggleNewEditor = val;
+				latestNode.error = null;
 			}
 		});
 	},
