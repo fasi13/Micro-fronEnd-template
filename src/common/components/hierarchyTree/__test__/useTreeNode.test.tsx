@@ -170,7 +170,10 @@ describe('useTreeNode', () => {
 			const val: string[] =
 				result.current.extractApplicationNameAndValue('dummytext');
 
-			expect(val).toContain('dummytext');
+			expect(val.length).toBe(2);
+			expect(val[0]).toContain('dummytext');
+			expect(val[1]).toContain('dummytext');
+
 		});
 
 		it(`given '' it returns array of ['','']`, () => {

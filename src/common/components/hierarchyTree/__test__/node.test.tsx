@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { useHierarchyStore } from '../../../../state/hierarchyStore/hierarchyState.store';
 import { TreeView } from '../../../../types';
-import { Node, trim } from '../node';
+import { Node, trimAndFormat } from '../node';
 
 const selfUpdateStr = 'dummy/selfupdate';
 const createGroupStr = 'dummy/createGroup';
@@ -11,15 +11,16 @@ const createAppStr = 'dummy/createApp';
 const nodeLabelsStr = 'node-labels';
 const nodeAddAppGroupStr = 'node-add-app-group';
 
-describe('hieararchy store', () => {
+describe('hierarchy store', () => {
 	let dummyTreeView: TreeView;
 	let dummyTreeView2: TreeView;
+	let dummyTreeView3: TreeView;
 
 	beforeEach(() => {
 		dummyTreeView = {
 			id: 0,
-			value: 'dummy (12)',
-			name: 'dummy (12)',
+			value: 'dummy',
+			name: 'dummy',
 			collapsed: false,
 			edit: false,
 			error: null,
@@ -110,6 +111,64 @@ describe('hieararchy store', () => {
 					method: { method: 'POST' },
 					name: 'createApp',
 					rel: 'createApplication',
+				},
+				{
+					href: createGroupStr,
+					method: { method: 'POST' },
+					name: 'createGroup',
+					rel: '',
+				},
+				{
+					href: createAppStr,
+					method: { method: 'POST' },
+					name: 'createApp',
+					rel: '',
+				},
+				{
+					href: 'dummy/children_application',
+					method: { method: 'GET' },
+					name: 'getChildren',
+					rel: 'applications',
+				},
+				{
+					href: 'dummy/children_applicationGroup',
+					method: { method: 'GET' },
+					name: 'getChildren',
+					rel: 'applicationGroups',
+				},
+			],
+		};
+		dummyTreeView3 = {
+			id: 0,
+			value: 'value',
+			name: 'dummy',
+			collapsed: false,
+			edit: false,
+			error: null,
+			saving: false,
+			loadingChildren: false,
+			toggleNewEditor: '',
+			nodeDepth: 0,
+			nodePath: [{ pathId: -1, pathName: 'dummy' }],
+			_links: [
+				{
+					href: selfUpdateStr,
+					method: { method: 'GET' },
+					name: 'updateSelf',
+					rel: 'updateApplicationGroup',
+				},
+				{
+					href: selfUpdateStr,
+					method: { method: 'GET' },
+					name: 'updateSelf',
+					rel: 'updateApplication',
+				},
+
+				{
+					href: createGroupStr,
+					method: { method: 'POST' },
+					name: 'createGroup',
+					rel: 'createApplicationGroup',
 				},
 				{
 					href: createGroupStr,
@@ -229,16 +288,16 @@ describe('hieararchy store', () => {
 
 		const { getByTestId } = render(
 			<Node
-				key={`node_${dummyTreeView.id}`}
-				data={dummyTreeView}
-				nodePath={dummyTreeView.nodePath}
+				key={`node_${dummyTreeView3.id}`}
+				data={dummyTreeView3}
+				nodePath={dummyTreeView3.nodePath}
 				isLoadingChildren={useHierarchyStore.getState().loading}
 				editNode={onToggleNewEditor}
 				toggleNewEditor={toggleNewEditor}
 				toggleChildren={toggleChildren}
 			/>,
 		);
-		expect(getByTestId(nodeLabelsStr)).toHaveTextContent(/(12)/i);
+		expect(getByTestId(nodeLabelsStr)).toHaveTextContent(/(value)/i);
 		fireEvent.click(getByTestId(nodeAddAppGroupStr));
 		expect(toggleNewEditor).toHaveBeenCalled();
 		expect(toggleNewEditor).toHaveBeenCalled();
@@ -330,9 +389,15 @@ describe('hieararchy store', () => {
 		expect(onToggleNewEditor2).toHaveBeenCalled();
 	});
 
-	test('is string () included ', () => {
-		expect(trim(dummyTreeView)).toBe('(dummy (12))');
+	test('if braces are included in value', () => {
+		expect(trimAndFormat(dummyTreeView3)).toBe('(value)');
 		dummyTreeView.value = '';
-		expect(trim(dummyTreeView)).toBe('');
+		expect(trimAndFormat(dummyTreeView)).toBe('');
+	});
+
+	test('if application name and value are the same value is empty string ', () => {
+		expect(trimAndFormat(dummyTreeView)).toBe('');
+		dummyTreeView.value = '';
+		expect(trimAndFormat(dummyTreeView)).toBe('');
 	});
 });

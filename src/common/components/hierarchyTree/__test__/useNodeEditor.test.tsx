@@ -1,4 +1,3 @@
-// import { waitFor } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { TUseNodeEditorProps, useNodeEditor } from '../hooks/useNodeEditor';
 
@@ -30,7 +29,7 @@ describe('useNodeEditor', () => {
 				initialProps: dummyProps,
 			});
 			expect(result.current.nodeEditorPlaceHolder()).toMatch(
-				'Add New Application',
+				'New Application: name (value)',
 			);
 		});
 
@@ -40,7 +39,7 @@ describe('useNodeEditor', () => {
 				initialProps: dummyProps,
 			});
 			expect(result.current.nodeEditorPlaceHolder()).toMatch(
-				'Add New Application Group',
+				'New Application Group',
 			);
 		});
 	});
@@ -56,20 +55,6 @@ describe('useNodeEditor', () => {
 
 			expect(dummyProps.setError).toHaveBeenCalledWith(
 				'Value can not be empty',
-			);
-		});
-
-		it(`checks if value has valid pattern name (value) if isApplication is true ,  if pattern is wrong setError gets called `, () => {
-			dummyProps.data = 'name ((value))'; // wrong pattern
-			dummyProps.isApplication = true;
-
-			const { result } = renderHook(useNodeEditor, {
-				initialProps: dummyProps,
-			});
-			result.current.checkValidityAndSubmit();
-
-			expect(dummyProps.setError).toHaveBeenCalledWith(
-				'Application format should be: Application Name (Value)',
 			);
 		});
 		it('checks if the input form is submit properly', () => {
