@@ -8,6 +8,9 @@ import { Node, trimAndFormat } from '../node';
 const selfUpdateStr = 'dummy/selfupdate';
 const createGroupStr = 'dummy/createGroup';
 const createAppStr = 'dummy/createApp';
+const getChildrenAppStr = 'dummy/children_application';
+const getChildrenAppGroupStr = 'dummy/children_applicationGroup';
+
 const nodeLabelsStr = 'node-labels';
 const nodeAddAppGroupStr = 'node-add-app-group';
 
@@ -62,13 +65,13 @@ describe('hierarchy store', () => {
 					rel: '',
 				},
 				{
-					href: 'dummy/children_application',
+					href: getChildrenAppStr,
 					method: { method: 'GET' },
 					name: 'getChildren',
 					rel: 'applications',
 				},
 				{
-					href: 'dummy/children_applicationGroup',
+					href: getChildrenAppGroupStr,
 					method: { method: 'GET' },
 					name: 'getChildren',
 					rel: 'applicationGroups',
@@ -125,13 +128,13 @@ describe('hierarchy store', () => {
 					rel: '',
 				},
 				{
-					href: 'dummy/children_application',
+					href: getChildrenAppStr,
 					method: { method: 'GET' },
 					name: 'getChildren',
 					rel: 'applications',
 				},
 				{
-					href: 'dummy/children_applicationGroup',
+					href: getChildrenAppGroupStr,
 					method: { method: 'GET' },
 					name: 'getChildren',
 					rel: 'applicationGroups',
@@ -183,13 +186,13 @@ describe('hierarchy store', () => {
 					rel: '',
 				},
 				{
-					href: 'dummy/children_application',
+					href: getChildrenAppStr,
 					method: { method: 'GET' },
 					name: 'getChildren',
 					rel: 'applications',
 				},
 				{
-					href: 'dummy/children_applicationGroup',
+					href: getChildrenAppGroupStr,
 					method: { method: 'GET' },
 					name: 'getChildren',
 					rel: 'applicationGroups',
