@@ -4,6 +4,7 @@ import { NodePath, TreeView } from '../../../types';
 import {
 	AddIcon,
 	GroupAddIcon,
+	GroupIcon,
 	PencilIcon,
 	SpinnerIcon
 } from '../../icons';
@@ -95,7 +96,7 @@ export const Node: React.FC<NodePropType> = props => {
 					setBreadCrumb(nodePath);
 					toggleChildren();
 				}}>
-				<GroupAddIcon
+				<GroupIcon
 					className={`${
 						canAddApplication(data) ? 'mr-2 flex-none' : 'hidden mr-2'
 					}`}
