@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hierarchy store hierarchy store is defined 1`] = `
+Object {
+  "activeNodeId": 0,
+  "createApplication": [Function],
+  "createApplicationGroup": [Function],
+  "defaultExpandLevel": 0,
+  "editApplication": [Function],
+  "editApplicationGroup": [Function],
+  "error": null,
+  "getPrimaryLogo": [Function],
+  "hierarchyData": Array [
+    Object {
+      "_links": Array [
+        Object {
+          "href": "dummy/selfupdate",
+          "method": Object {
+            "method": "GET",
+          },
+          "name": "updateSelf",
+          "rel": "updateApplicationGroup",
+        },
+        Object {
+          "href": "dummy/selfupdate",
+          "method": Object {
+            "method": "GET",
+          },
+          "name": "updateSelf",
+          "rel": "updateApplication",
+        },
+        Object {
+          "href": "dummy/createGroup",
+          "method": Object {
+            "method": "POST",
+          },
+          "name": "createGroup",
+          "rel": "createApplicationGroup",
+        },
+        Object {
+          "href": "dummy/createApp",
+          "method": Object {
+            "method": "POST",
+          },
+          "name": "createApp",
+          "rel": "createApplication",
+        },
+        Object {
+          "href": "dummy/children_application",
+          "method": Object {
+            "method": "GET",
+          },
+          "name": "getChildren",
+          "rel": "applications",
+        },
+        Object {
+          "href": "dummy/children_applicationGroup",
+          "method": Object {
+            "method": "GET",
+          },
+          "name": "getChildren",
+          "rel": "applicationGroups",
+        },
+      ],
+      "childrenData": Array [
+        Object {
+          "_links": Array [
+            Object {
+              "href": "dummy/selfupdate",
+              "method": Object {
+                "method": "GET",
+              },
+              "name": "updateSelf",
+              "rel": "updateApplicationGroup",
+            },
+            Object {
+              "href": "dummy/selfupdate",
+              "method": Object {
+                "method": "GET",
+              },
+              "name": "updateSelf",
+              "rel": "updateApplication",
+            },
+            Object {
+              "href": "dummy/createGroup",
+              "method": Object {
+                "method": "POST",
+              },
+              "name": "createGroup",
+              "rel": "createApplicationGroup",
+            },
+            Object {
+              "href": "dummy/createApp",
+              "method": Object {
+                "method": "POST",
+              },
+              "name": "createApp",
+              "rel": "createApplication",
+            },
+            Object {
+              "href": "dummy/children_application",
+              "method": Object {
+                "method": "GET",
+              },
+              "name": "getChildren",
+              "rel": "applications",
+            },
+            Object {
+              "href": "dummy/children_applicationGroup",
+              "method": Object {
+                "method": "GET",
+              },
+              "name": "getChildren",
+              "rel": "applicationGroups",
+            },
+          ],
+          "collapsed": false,
+          "edit": false,
+          "error": null,
+          "id": 2,
+          "loadingChildren": false,
+          "name": "dummy-child",
+          "nodeDepth": 0,
+          "nodePath": Array [
+            Object {
+              "pathId": 2,
+              "pathName": "dummy-child",
+            },
+          ],
+          "saving": false,
+          "toggleNewEditor": "",
+        },
+      ],
+      "collapsed": false,
+      "edit": false,
+      "error": "dummy error",
+      "id": 1,
+      "key": "ds-sd-e43-545-2323-545df-df43435-c04",
+      "loadingChildren": false,
+      "name": "dummy",
+      "nodeDepth": 0,
+      "nodePath": Array [
+        Object {
+          "pathId": 1,
+          "pathName": "dummy",
+        },
+      ],
+      "saving": false,
+      "toggleNewEditor": "",
+    },
+  ],
+  "initializeHierarchyState": [Function],
+  "loadApplication": [Function],
+  "loading": false,
+  "primaryLogo": "",
+  "setError": [Function],
+  "setLoading": [Function],
+  "setLoadingChildren": [Function],
+  "setNodeError": [Function],
+  "setPrimaryLogo": [Function],
+  "setSaving": [Function],
+  "toggleCollapse": [Function],
+  "toggleEdit": [Function],
+  "toggleNewEditor": [Function],
+}
+`;

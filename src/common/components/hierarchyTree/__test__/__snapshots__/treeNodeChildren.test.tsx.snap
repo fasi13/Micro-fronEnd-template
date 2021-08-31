@@ -1,0 +1,420 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeNodeChildren renders treeNodeChildren component 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <ul
+        class="w-full pl-5 ml-2 B"
+      >
+        <li
+          class="__li__dummy (12)__ relative flex flex-col items-start justify-center h-auto list-none tree"
+        >
+          <ul
+            class="w-full"
+          >
+            <li
+              class="relative flex-1 whitespace-nowrap items-start justify-center w-auto h-auto pl-2 list-none tree"
+            >
+              <div
+                class="pl-3 w-full break-all flex justify-start items-center"
+                data-testid="treeitem"
+              >
+                <div
+                  class="flex justify-start items-center h-10.5 my-1 z-30 pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
+                  data-testid="node-component"
+                >
+                  <button
+                    class="flex  flex-none  flex-col items-center justify-center w-4 h-4 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
+								collapse
+								"
+                    data-testid="node-container"
+                    type="button"
+                  />
+                  <button
+                    class="flex-shrink-0 flex-auto flex items-center text-left pl-1\` h-10.5 border-indigo-200"
+                    data-testid="node-labels"
+                    id="dummy_(12)____0"
+                    type="button"
+                  >
+                    <svg
+                      class="hidden mr-2"
+                      fill="none"
+                      height="18"
+                      viewBox="0 0 112 112"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        clip-path="url(#clip0)"
+                        fill="#fff"
+                      >
+                        <path
+                          d="M109.154 29.881L57.949 7.047a4.766 4.766 0 00-3.902 0L2.844 29.88a4.792 4.792 0 00-.302 8.608l51.202 27.306a4.76 4.76 0 002.256.564c.78 0 1.552-.185 2.26-.564l51.204-27.306a4.8 4.8 0 002.535-4.395 4.81 4.81 0 00-2.845-4.213z"
+                        />
+                        <path
+                          d="M104.945 50.313l-48.95 26.112L7.053 50.313a4.786 4.786 0 00-6.486 1.975 4.788 4.788 0 001.973 6.485l51.202 27.314a4.79 4.79 0 002.256.564c.78 0 1.553-.185 2.26-.564l51.204-27.314a4.796 4.796 0 10-4.517-8.46z"
+                        />
+                        <path
+                          d="M104.945 69.042l-48.95 26.104L7.053 69.042a4.787 4.787 0 00-6.486 1.972A4.789 4.789 0 002.54 77.5l51.202 27.305c.706.379 1.48.567 2.256.567.78 0 1.553-.185 2.26-.567L109.462 77.5a4.8 4.8 0 001.974-6.486 4.795 4.795 0 00-6.491-1.972z"
+                        />
+                      </g>
+                      <defs>
+                        <clippath
+                          id="clip0"
+                        >
+                          <path
+                            d="M0 0h112v112H0z"
+                            fill="#fff"
+                          />
+                        </clippath>
+                      </defs>
+                    </svg>
+                    dummy (12)
+                     
+                    
+                  </button>
+                  <div
+                    class="flex flex-shrink-0 flex-1 space-x-3 pl-16 node-actions"
+                  >
+                    <button
+                      class="cursor-pointer hidden"
+                      data-testid="node-add-app"
+                      title="Add Application"
+                      type="button"
+                    >
+                      <svg
+                        class=""
+                        fill="none"
+                        height="15"
+                        viewBox="0 0 62 62"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M31 0C13.878 0 0 13.878 0 31s13.878 31 31 31 31-13.869 31-31S48.122 0 31 0zm14.468 32.966a2.485 2.485 0 01-2.477 2.478H35.55v7.441a2.485 2.485 0 01-2.478 2.477h-4.135a2.485 2.485 0 01-2.478-2.477v-7.441h-7.441a2.485 2.485 0 01-2.478-2.478v-4.135a2.486 2.486 0 012.478-2.477h7.441v-7.442a2.485 2.485 0 012.478-2.477h4.135a2.485 2.485 0 012.478 2.477v7.442h7.441a2.485 2.485 0 012.477 2.477v4.135z"
+                          fill="#fff"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      class="cursor-pointer "
+                      data-testid="node-add-app-group"
+                      title="Add Application Group"
+                      type="button"
+                    >
+                      <svg
+                        class=""
+                        fill="none"
+                        height="18"
+                        viewBox="0 0 112 112"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          clip-path="url(#clip0)"
+                        >
+                          <path
+                            d="M109.154 29.881L57.949 7.047a4.766 4.766 0 00-3.902 0L2.844 29.88a4.792 4.792 0 00-.302 8.608l51.202 27.306a4.76 4.76 0 002.256.564c.78 0 1.552-.185 2.26-.564l51.204-27.306a4.8 4.8 0 002.535-4.395 4.81 4.81 0 00-2.845-4.213z"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M104.945 50.313l-48.95 26.112L7.053 50.313a4.786 4.786 0 00-6.486 1.975 4.788 4.788 0 001.973 6.485l51.202 27.314a4.79 4.79 0 002.256.564c.78 0 1.553-.185 2.26-.564l51.204-27.314a4.796 4.796 0 10-4.517-8.46z"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M104.945 69.042l-48.95 26.104L7.053 69.042a4.787 4.787 0 00-6.486 1.972A4.789 4.789 0 002.54 77.5l51.202 27.305c.706.379 1.48.567 2.256.567.78 0 1.553-.185 2.26-.567L109.462 77.5a4.8 4.8 0 001.974-6.486 4.795 4.795 0 00-6.491-1.972z"
+                            fill="#fff"
+                          />
+                          <path
+                            d="M76.152 31.033H35.848v9.939h40.304v-9.939z"
+                            fill="#3F98E3"
+                          />
+                          <path
+                            d="M60.972 15.848h-9.939v40.304h9.939V15.848z"
+                            fill="#3F98E3"
+                          />
+                        </g>
+                        <defs>
+                          <clippath
+                            id="clip0"
+                          >
+                            <path
+                              d="M0 0h112v112H0z"
+                              fill="#fff"
+                            />
+                          </clippath>
+                        </defs>
+                      </svg>
+                    </button>
+                    <button
+                      class="cursor-pointer"
+                      data-testid="node-edit"
+                      title="Edit Node"
+                      type="button"
+                    >
+                      <svg
+                        class=""
+                        fill="none"
+                        height="18"
+                        viewBox="0 0 128 128"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M110.734 19.899L92.103 1.266a4.32 4.32 0 00-6.11-.001L67.359 19.899l-.008.008L31.61 55.65a4.32 4.32 0 00-1.263 2.923l-.585 19.217a4.321 4.321 0 004.45 4.449l19.216-.586a4.322 4.322 0 002.923-1.263l54.383-54.381a4.32 4.32 0 000-6.11zM89.046 35.476L76.523 22.955 89.048 10.43l12.521 12.523-12.523 12.523zM51.453 73.069l-12.915.394.393-12.915 31.482-31.484 12.524 12.522L51.453 73.07z"
+                          fill="#fff"
+                        />
+                        <path
+                          d="M76.144 67.448a4.32 4.32 0 00-4.32 4.32v31.592H8.64V40.177h31.591a4.32 4.32 0 100-8.64H4.321A4.32 4.32 0 000 35.856v71.822a4.32 4.32 0 004.32 4.32h71.823a4.32 4.32 0 004.32-4.32V71.767a4.319 4.319 0 00-4.32-4.32z"
+                          fill="#fff"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class=""
+                data-testid="tree-item-children"
+              />
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </body>,
+  "container": <div>
+    <ul
+      class="w-full pl-5 ml-2 B"
+    >
+      <li
+        class="__li__dummy (12)__ relative flex flex-col items-start justify-center h-auto list-none tree"
+      >
+        <ul
+          class="w-full"
+        >
+          <li
+            class="relative flex-1 whitespace-nowrap items-start justify-center w-auto h-auto pl-2 list-none tree"
+          >
+            <div
+              class="pl-3 w-full break-all flex justify-start items-center"
+              data-testid="treeitem"
+            >
+              <div
+                class="flex justify-start items-center h-10.5 my-1 z-30 pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
+                data-testid="node-component"
+              >
+                <button
+                  class="flex  flex-none  flex-col items-center justify-center w-4 h-4 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
+								collapse
+								"
+                  data-testid="node-container"
+                  type="button"
+                />
+                <button
+                  class="flex-shrink-0 flex-auto flex items-center text-left pl-1\` h-10.5 border-indigo-200"
+                  data-testid="node-labels"
+                  id="dummy_(12)____0"
+                  type="button"
+                >
+                  <svg
+                    class="hidden mr-2"
+                    fill="none"
+                    height="18"
+                    viewBox="0 0 112 112"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g
+                      clip-path="url(#clip0)"
+                      fill="#fff"
+                    >
+                      <path
+                        d="M109.154 29.881L57.949 7.047a4.766 4.766 0 00-3.902 0L2.844 29.88a4.792 4.792 0 00-.302 8.608l51.202 27.306a4.76 4.76 0 002.256.564c.78 0 1.552-.185 2.26-.564l51.204-27.306a4.8 4.8 0 002.535-4.395 4.81 4.81 0 00-2.845-4.213z"
+                      />
+                      <path
+                        d="M104.945 50.313l-48.95 26.112L7.053 50.313a4.786 4.786 0 00-6.486 1.975 4.788 4.788 0 001.973 6.485l51.202 27.314a4.79 4.79 0 002.256.564c.78 0 1.553-.185 2.26-.564l51.204-27.314a4.796 4.796 0 10-4.517-8.46z"
+                      />
+                      <path
+                        d="M104.945 69.042l-48.95 26.104L7.053 69.042a4.787 4.787 0 00-6.486 1.972A4.789 4.789 0 002.54 77.5l51.202 27.305c.706.379 1.48.567 2.256.567.78 0 1.553-.185 2.26-.567L109.462 77.5a4.8 4.8 0 001.974-6.486 4.795 4.795 0 00-6.491-1.972z"
+                      />
+                    </g>
+                    <defs>
+                      <clippath
+                        id="clip0"
+                      >
+                        <path
+                          d="M0 0h112v112H0z"
+                          fill="#fff"
+                        />
+                      </clippath>
+                    </defs>
+                  </svg>
+                  dummy (12)
+                   
+                  
+                </button>
+                <div
+                  class="flex flex-shrink-0 flex-1 space-x-3 pl-16 node-actions"
+                >
+                  <button
+                    class="cursor-pointer hidden"
+                    data-testid="node-add-app"
+                    title="Add Application"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      fill="none"
+                      height="15"
+                      viewBox="0 0 62 62"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M31 0C13.878 0 0 13.878 0 31s13.878 31 31 31 31-13.869 31-31S48.122 0 31 0zm14.468 32.966a2.485 2.485 0 01-2.477 2.478H35.55v7.441a2.485 2.485 0 01-2.478 2.477h-4.135a2.485 2.485 0 01-2.478-2.477v-7.441h-7.441a2.485 2.485 0 01-2.478-2.478v-4.135a2.486 2.486 0 012.478-2.477h7.441v-7.442a2.485 2.485 0 012.478-2.477h4.135a2.485 2.485 0 012.478 2.477v7.442h7.441a2.485 2.485 0 012.477 2.477v4.135z"
+                        fill="#fff"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    class="cursor-pointer "
+                    data-testid="node-add-app-group"
+                    title="Add Application Group"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      fill="none"
+                      height="18"
+                      viewBox="0 0 112 112"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        clip-path="url(#clip0)"
+                      >
+                        <path
+                          d="M109.154 29.881L57.949 7.047a4.766 4.766 0 00-3.902 0L2.844 29.88a4.792 4.792 0 00-.302 8.608l51.202 27.306a4.76 4.76 0 002.256.564c.78 0 1.552-.185 2.26-.564l51.204-27.306a4.8 4.8 0 002.535-4.395 4.81 4.81 0 00-2.845-4.213z"
+                          fill="#fff"
+                        />
+                        <path
+                          d="M104.945 50.313l-48.95 26.112L7.053 50.313a4.786 4.786 0 00-6.486 1.975 4.788 4.788 0 001.973 6.485l51.202 27.314a4.79 4.79 0 002.256.564c.78 0 1.553-.185 2.26-.564l51.204-27.314a4.796 4.796 0 10-4.517-8.46z"
+                          fill="#fff"
+                        />
+                        <path
+                          d="M104.945 69.042l-48.95 26.104L7.053 69.042a4.787 4.787 0 00-6.486 1.972A4.789 4.789 0 002.54 77.5l51.202 27.305c.706.379 1.48.567 2.256.567.78 0 1.553-.185 2.26-.567L109.462 77.5a4.8 4.8 0 001.974-6.486 4.795 4.795 0 00-6.491-1.972z"
+                          fill="#fff"
+                        />
+                        <path
+                          d="M76.152 31.033H35.848v9.939h40.304v-9.939z"
+                          fill="#3F98E3"
+                        />
+                        <path
+                          d="M60.972 15.848h-9.939v40.304h9.939V15.848z"
+                          fill="#3F98E3"
+                        />
+                      </g>
+                      <defs>
+                        <clippath
+                          id="clip0"
+                        >
+                          <path
+                            d="M0 0h112v112H0z"
+                            fill="#fff"
+                          />
+                        </clippath>
+                      </defs>
+                    </svg>
+                  </button>
+                  <button
+                    class="cursor-pointer"
+                    data-testid="node-edit"
+                    title="Edit Node"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      fill="none"
+                      height="18"
+                      viewBox="0 0 128 128"
+                      width="18"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M110.734 19.899L92.103 1.266a4.32 4.32 0 00-6.11-.001L67.359 19.899l-.008.008L31.61 55.65a4.32 4.32 0 00-1.263 2.923l-.585 19.217a4.321 4.321 0 004.45 4.449l19.216-.586a4.322 4.322 0 002.923-1.263l54.383-54.381a4.32 4.32 0 000-6.11zM89.046 35.476L76.523 22.955 89.048 10.43l12.521 12.523-12.523 12.523zM51.453 73.069l-12.915.394.393-12.915 31.482-31.484 12.524 12.522L51.453 73.07z"
+                        fill="#fff"
+                      />
+                      <path
+                        d="M76.144 67.448a4.32 4.32 0 00-4.32 4.32v31.592H8.64V40.177h31.591a4.32 4.32 0 100-8.64H4.321A4.32 4.32 0 000 35.856v71.822a4.32 4.32 0 004.32 4.32h71.823a4.32 4.32 0 004.32-4.32V71.767a4.319 4.319 0 00-4.32-4.32z"
+                        fill="#fff"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+              data-testid="tree-item-children"
+            />
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

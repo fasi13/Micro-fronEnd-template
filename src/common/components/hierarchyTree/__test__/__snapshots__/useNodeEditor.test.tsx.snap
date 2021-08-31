@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useNodeEditor useNodeEditor snapShot return values returns object of helper methods 1`] = `
+Object {
+  "rerender": [Function],
+  "result": Object {
+    "all": Array [
+      Object {
+        "checkValidityAndSubmit": [Function],
+        "closeButtonStyling": [Function],
+        "focusOnEditor": [Function],
+        "nodeEditorPlaceHolder": [Function],
+        "preValue": Object {
+          "current": "",
+        },
+        "setEditorValue": [Function],
+        "value": "",
+      },
+    ],
+    "current": Object {
+      "checkValidityAndSubmit": [Function],
+      "closeButtonStyling": [Function],
+      "focusOnEditor": [Function],
+      "nodeEditorPlaceHolder": [Function],
+      "preValue": Object {
+        "current": "",
+      },
+      "setEditorValue": [Function],
+      "value": "",
+    },
+    "error": undefined,
+  },
+  "unmount": [Function],
+  "waitFor": [Function],
+  "waitForNextUpdate": [Function],
+  "waitForValueToChange": [Function],
+}
+`;
