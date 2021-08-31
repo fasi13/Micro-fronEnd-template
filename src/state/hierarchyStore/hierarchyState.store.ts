@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import {
 	ApiResponse,
 	DataPaginated,
@@ -69,8 +70,8 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		get().setLoading(true);
 		const res = await axios
 			.get<ApiResponse<TreeView>>(`applications/${applicationId}`)
-			.catch((reason: ErrorResponse) => {
-				get().setError(reason?.errors?.[0]);
+			.catch((reason: AxiosError<ErrorResponse>) => {
+				get().setError(reason?.response?.data?.errors?.[0]);
 			});
 
 		if (res) {
@@ -194,7 +195,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		nodePath: NodePath[],
 		name: string,
 	) => {
-		let remoteError: ErrorResponse | null = null;
+		let createAppRemoteError: ErrorResponse | null = null;
 		const link: Link | undefined = getCreateGroupLink(data?._links || []);
 
 		if (link) {
@@ -203,12 +204,12 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 
 			const resp = await axios
 				.post(href, { name })
-				.catch((reason: ErrorResponse) => {
-					remoteError = reason;
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					createAppRemoteError = reason?.response?.data || unknownError;
 				});
 
-			if (remoteError) {
-				nodeUpdateState(set, nodePath, remoteError, []);
+			if (createAppRemoteError) {
+				nodeUpdateState(set, nodePath, createAppRemoteError, []);
 			} else if (resp && resp.status === 201) {
 				const { err, children }: THierarchyChildDataResp =
 					await getHierarchyChildData(data);
@@ -224,18 +225,21 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		nodePath: NodePath[],
 		name: string,
 	) => {
-		let remoteError: ErrorResponse | null = null;
+		let editApplicationGroupRemoteError: ErrorResponse | null = null;
 		const link: Link | undefined = getSelfUpdateLink(data._links || [], true);
 
 		if (link) {
 			get().setSaving(nodePath, true);
 			const { href } = link;
-			const resp = await axios.put(href, { name }).catch(reason => {
-				remoteError = reason as unknown as ErrorResponse;
-			});
+			const resp = await axios
+				.put(href, { name })
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					editApplicationGroupRemoteError =
+						reason.response?.data || unknownError;
+				});
 
-			if (remoteError) {
-				nodeUpdateState(set, nodePath, remoteError, []);
+			if (editApplicationGroupRemoteError) {
+				nodeUpdateState(set, nodePath, editApplicationGroupRemoteError, []);
 			} else if (resp && resp.status === 200) {
 				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);
@@ -252,7 +256,7 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		name: string,
 		value: string,
 	) => {
-		let remoteError: ErrorResponse | null = null;
+		let createApplicationRemoteError: ErrorResponse | null = null;
 		const link: Link | undefined = getCreateApplicationLink(data?._links || []);
 
 		if (link) {
@@ -261,11 +265,11 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 
 			const resp = await axios
 				.post(href, { name, value })
-				.catch((reason: ErrorResponse) => {
-					remoteError = reason;
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					createApplicationRemoteError = reason?.response?.data || unknownError;
 				});
-			if (remoteError) {
-				nodeUpdateState(set, nodePath, remoteError, []);
+			if (createApplicationRemoteError) {
+				nodeUpdateState(set, nodePath, createApplicationRemoteError, []);
 			} else if (resp && resp.status === 201) {
 				const { err, children }: THierarchyChildDataResp =
 					await getHierarchyChildData(data);
@@ -282,19 +286,21 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 		name: string,
 		value: string,
 	) => {
-		let remoteError: ErrorResponse | null = null;
+		let editApplicationRemoteError: ErrorResponse | null = null;
 		const link: Link | undefined = getSelfUpdateLink(data._links || [], false);
 
 		if (link) {
 			const { href } = link;
 			get().setSaving(nodePath, true);
 
-			const resp = await axios.put(href, { name, value }).catch(reason => {
-				remoteError = reason as unknown as ErrorResponse;
-			});
+			const resp = await axios
+				.put(href, { name, value })
+				.catch((reason: AxiosError<ErrorResponse>) => {
+					editApplicationRemoteError = reason.response?.data || unknownError;
+				});
 
-			if (remoteError) {
-				nodeUpdateState(set, nodePath, remoteError, []);
+			if (editApplicationRemoteError) {
+				nodeUpdateState(set, nodePath, editApplicationRemoteError, []);
 			} else if (resp && resp.status === 200) {
 				set((state: THierarchyState) => {
 					const node = getNodeToUpdate(state.hierarchyData, nodePath);

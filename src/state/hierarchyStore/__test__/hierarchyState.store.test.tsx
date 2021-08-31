@@ -12,7 +12,7 @@ import { useHierarchyStore } from '../hierarchyState.store';
 jest.mock('../../../util/setupConfig.ts');
 describe('hierarchy store', () => {
 	const applicationUrl = 'applications/1';
-	const selfupdateUrl = 'dummy/selfupdate';
+	const selfUpdateUrl = 'dummy/selfupdate';
 	const createGroupUrl = 'dummy/createGroup';
 	const createAppUrl = 'dummy/createApp';
 	const childrenAppUrl = 'dummy/children_application';
@@ -20,10 +20,18 @@ describe('hierarchy store', () => {
 	const dummyErrorMsg = 'dummy-error-dummy-error';
 	const someErrorOccurred = 'some error occurred';
 	const dummyErrorPayload = {
-		title: 'dummyerror',
-		status: 500,
-		errorCode: 0,
-		errors: [dummyErrorMsg],
+		response: {
+			data: {
+				title: 'dummyerror',
+				status: 500,
+				errorCode: 0,
+				errors: [dummyErrorMsg],
+			},
+		},
+	};
+
+	const dummyErrorPayloadEmpty = {
+		response: null,
 	};
 
 	const dummyTreeView: TreeView[] = [];
@@ -42,13 +50,13 @@ describe('hierarchy store', () => {
 		nodePath: [{ pathId: 1, pathName: 'dummy' }],
 		_links: [
 			{
-				href: selfupdateUrl,
+				href: selfUpdateUrl,
 				method: { method: 'GET' },
 				name: 'updateSelf',
 				rel: 'updateApplicationGroup',
 			},
 			{
-				href: selfupdateUrl,
+				href: selfUpdateUrl,
 				method: { method: 'GET' },
 				name: 'updateSelf',
 				rel: 'updateApplication',
@@ -92,13 +100,13 @@ describe('hierarchy store', () => {
 				nodePath: [{ pathId: 2, pathName: 'dummy-child' }],
 				_links: [
 					{
-						href: selfupdateUrl,
+						href: selfUpdateUrl,
 						method: { method: 'GET' },
 						name: 'updateSelf',
 						rel: 'updateApplicationGroup',
 					},
 					{
-						href: selfupdateUrl,
+						href: selfUpdateUrl,
 						method: { method: 'GET' },
 						name: 'updateSelf',
 						rel: 'updateApplication',
@@ -689,6 +697,34 @@ describe('hierarchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
 		});
 
+		it('set remoteError to someErrorOccured if response is empty', async () => {
+			jest.spyOn(axios, 'post').mockRejectedValueOnce(dummyErrorPayloadEmpty);
+			const getCreateGroupLink = jest.spyOn(linkHelper, 'getCreateGroupLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
+
+			await useHierarchyStore
+				.getState()
+				.createApplicationGroup(
+					dummyTreeView[0],
+					dummyTreeView[0].nodePath,
+					'newAppGroup',
+				);
+
+			expect(axios.post).toHaveBeenCalledWith(createGroupUrl, {
+				name: 'newAppGroup',
+			});
+
+			expect(getCreateGroupLink).toHaveBeenCalled();
+			expect(nodeUpdateState).toHaveBeenCalled();
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].loadingChildren,
+			).toBe(false);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
+				someErrorOccurred,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+		});
+
 		it('handles anything other than response.status 201 as unknown error', async () => {
 			jest.spyOn(axios, 'post').mockResolvedValueOnce({
 				data: { data: dummyTreeView[0], error: null, success: true },
@@ -811,6 +847,32 @@ describe('hierarchy store', () => {
 			).toBe(false);
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
 				dummyErrorMsg,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+		});
+
+		it('sets remoteError to someErrorOccured if response is empty', async () => {
+			jest.spyOn(axios, 'put').mockRejectedValue(dummyErrorPayloadEmpty);
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
+
+			await useHierarchyStore
+				.getState()
+				.editApplicationGroup(
+					dummyTreeView[0],
+					dummyTreeView[0].nodePath,
+					'editAppGroup',
+				);
+
+			expect(getSelfUpdateLink).toHaveBeenCalled();
+			expect(nodeUpdateState).toHaveBeenCalled();
+
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].loadingChildren,
+			).toBe(false);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
+				someErrorOccurred,
 			);
 			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
 		});
@@ -948,6 +1010,36 @@ describe('hierarchy store', () => {
 			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
 		});
 
+		it('sets remoteError to someErrorOccured if server sends empty response', async () => {
+			jest.spyOn(axios, 'post').mockRejectedValue(dummyErrorPayloadEmpty);
+			const getCreateApplicationLink = jest.spyOn(
+				linkHelper,
+				'getCreateApplicationLink',
+			);
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
+
+			await useHierarchyStore
+				.getState()
+				.createApplication(
+					dummyTreeView[0],
+					dummyTreeView[0].nodePath,
+					'newApp',
+					'newValue',
+				);
+
+			expect(getCreateApplicationLink).toHaveBeenCalled();
+			expect(nodeUpdateState).toHaveBeenCalled();
+
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].loadingChildren,
+			).toBe(false);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
+				someErrorOccurred,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+		});
+
 		it('handles anything other than response.status 201 as unknown error', async () => {
 			jest.spyOn(axios, 'post').mockResolvedValueOnce({
 				data: { data: dummyTreeView[0], error: null, success: true },
@@ -1065,6 +1157,33 @@ describe('hierarchy store', () => {
 			).toBe(false);
 			expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
 				dummyErrorMsg,
+			);
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+		});
+
+		it('sets remoteError to someErrorOccured if server sends empty response', async () => {
+			jest.spyOn(axios, 'put').mockRejectedValue(dummyErrorPayloadEmpty);
+			const getSelfUpdateLink = jest.spyOn(linkHelper, 'getSelfUpdateLink');
+			const nodeUpdateState = jest.spyOn(storeHelper, 'nodeUpdateState');
+
+			await useHierarchyStore
+				.getState()
+				.editApplication(
+					dummyTreeView[0],
+					dummyTreeView[0].nodePath,
+					'editApp',
+					'editValue',
+				);
+
+			expect(getSelfUpdateLink).toHaveBeenCalled();
+			expect(nodeUpdateState).toHaveBeenCalled();
+
+			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
+			expect(
+				useHierarchyStore.getState().hierarchyData[0].loadingChildren,
+			).toBe(false);
+			expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
+				someErrorOccurred,
 			);
 			expect(useHierarchyStore.getState().hierarchyData[0].saving).toBe(false);
 		});
