@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import { HierarchyTree } from '..';
 import { useDetachStore, useHierarchyStore } from '../../../state';
@@ -42,7 +41,7 @@ const SidebarContent = () => {
 			</div>
 			<br />
 			<div
-				className={`overflow-y-auto bg-grayblue journal-scroll ${
+				className={`overflow-y-auto overflow-x-auto bg-grayblue journal-scroll ml-6 ${
 					dSSidebarState ? 'h-5/6' : 'h-auto'
 				}`}>
 				<div className="" style={widthStyle}>

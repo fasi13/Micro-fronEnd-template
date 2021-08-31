@@ -6,22 +6,22 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="pl-3 w-full"
+        class="pl-3 w-full break-all flex justify-start items-center"
         data-testid="treeitem"
       >
         <div
-          class="h-10.5 my-1 z-30 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
+          class="flex justify-start items-center h-10.5 my-1 z-30 pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
           data-testid="node-component"
         >
           <button
-            class="flex flex-col items-center justify-center w-6 h-6 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
+            class="flex  flex-none  flex-col items-center justify-center w-4 h-4 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
 								collapse
 								"
             data-testid="node-container"
             type="button"
           />
           <button
-            class="w-full flex items-center text-left pl-1\` h-10.5 border-indigo-200"
+            class="flex-shrink-0 flex-auto flex items-center text-left pl-1\` h-10.5 border-indigo-200"
             data-testid="node-labels"
             id="dummy_(12)____0"
             type="button"
@@ -64,7 +64,7 @@ Object {
             
           </button>
           <div
-            class="flex space-x-3 node-actions"
+            class="flex flex-shrink-0 flex-1 space-x-3 pl-16 node-actions"
           >
             <button
               class="cursor-pointer hidden"
@@ -148,22 +148,22 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="pl-3 w-full"
+      class="pl-3 w-full break-all flex justify-start items-center"
       data-testid="treeitem"
     >
       <div
-        class="h-10.5 my-1 z-30 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
+        class="flex justify-start items-center h-10.5 my-1 z-30 pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container"
         data-testid="node-component"
       >
         <button
-          class="flex flex-col items-center justify-center w-6 h-6 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
+          class="flex  flex-none  flex-col items-center justify-center w-4 h-4 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
 								collapse
 								"
           data-testid="node-container"
           type="button"
         />
         <button
-          class="w-full flex items-center text-left pl-1\` h-10.5 border-indigo-200"
+          class="flex-shrink-0 flex-auto flex items-center text-left pl-1\` h-10.5 border-indigo-200"
           data-testid="node-labels"
           id="dummy_(12)____0"
           type="button"
@@ -206,7 +206,7 @@ Object {
           
         </button>
         <div
-          class="flex space-x-3 node-actions"
+          class="flex flex-shrink-0 flex-1 space-x-3 pl-16 node-actions"
         >
           <button
             class="cursor-pointer hidden"

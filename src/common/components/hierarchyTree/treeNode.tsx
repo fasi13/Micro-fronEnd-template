@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { NodeActions, NodePath, TreeView } from '../../../types';
 import { useTreeNode } from './hooks/useTreeNode';
@@ -35,7 +34,11 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 
 			<div
 				data-testid="treeitem"
-				className={data.error && data.edit ? `w-full mb-10` : `pl-3 w-full`}>
+				className={
+					data.error && data.edit
+						? `w-full mb-10`
+						: `pl-3 w-full break-all flex justify-start items-center`
+				}>
 				{data.edit ? (
 					<NodeEditor
 						key={`node_editor_${nodeId}`}
