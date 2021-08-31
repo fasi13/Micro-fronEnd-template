@@ -8,10 +8,15 @@ const userAvatarStr = 'user-avatar';
 const menuTitleStr = 'menu-title';
 const menuAvatarStr = 'menu-avatar';
 
-test('Menu Title should contain "Manage Communication"', () => {
+test('Menu Title should contain selected menu', () => {
 	const { getByTestId } = render(<Header />);
 	const menuTitleElt = getByTestId(menuTitleStr);
-	expect(menuTitleElt.textContent).toBe('Manage Communication');
+	fireEvent.click(menuTitleElt);
+
+	const menuItem = getByTestId('ROLES');
+	fireEvent.click(menuItem);
+
+	expect(menuTitleElt.textContent).toBe('ROLES');
 });
 
 test('User Avatar rendered with correct initials when first name and last name is provided', () => {
@@ -129,7 +134,7 @@ test('Primary Logo should change dynamically when the PrimaryLogo state changes.
 			'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
 		);
 	const { rerender } = render(<Header />);
-	const logo = screen.getByRole('img');
+	const logo = screen.getByTestId('logo');
 	expect(logo).toHaveAttribute(
 		'src',
 		'https://qa-assets-delivery.cxsrecognize.com/Applications/dc91a61c-5ab0-e711-8b81-005056b80f19/JPEG_example_flower.jpeg',
@@ -137,7 +142,7 @@ test('Primary Logo should change dynamically when the PrimaryLogo state changes.
 	expect(logo).toHaveAttribute('alt', 'E2E Logo');
 	useHierarchyStore.getState().setPrimaryLogo('');
 	rerender(<Header />);
-	expect(screen.getByRole('img')).toHaveAttribute(
+	expect(screen.getByTestId('default-logo')).toHaveAttribute(
 		'src',
 		'/e2e_default_logo.png',
 	);
