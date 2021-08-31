@@ -3,8 +3,7 @@ import { useBreadcrumbStore } from '../../../state';
 import { NodePath, TreeView } from '../../../types';
 import {
 	AddIcon,
-	FolderIcon,
-	GroupIcon,
+	GroupAddIcon,
 	PencilIcon,
 	SpinnerIcon
 } from '../../icons';
@@ -96,7 +95,7 @@ export const Node: React.FC<NodePropType> = props => {
 					setBreadCrumb(nodePath);
 					toggleChildren();
 				}}>
-				<GroupIcon
+				<GroupAddIcon
 					className={`${
 						canAddApplication(data) ? 'mr-2 flex-none' : 'hidden mr-2'
 					}`}
@@ -116,7 +115,7 @@ export const Node: React.FC<NodePropType> = props => {
 					className={`cursor-pointer ${
 						canAddApplication(data) ? '' : 'hidden'
 					}`}>
-					<AddIcon className="" width={18} height={18} />
+					<AddIcon className="" width={18} height={15} />
 				</button>
 				<button
 					data-testid="node-add-app-group"
@@ -126,7 +125,7 @@ export const Node: React.FC<NodePropType> = props => {
 						toggleNewEditor('Group');
 					}}
 					className={`cursor-pointer ${canAddGroup(data) ? '' : 'hidden'}`}>
-					<FolderIcon className="" width={18} height={18} />
+					<GroupAddIcon className="" width={18} height={18} />
 				</button>
 				<button
 					data-testid="node-edit"
