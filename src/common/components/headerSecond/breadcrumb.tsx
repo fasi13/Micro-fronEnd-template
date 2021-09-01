@@ -1,44 +1,48 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { makeStyles, Theme, Typography } from '@material-ui/core';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
+import './breadcrumb.css';
 import { linkStyle, textStyle } from './breadCrumbStyleHelper';
 
 export interface StyleProps {
-    color: string;
+	color: string;
 }
 
-const useStyles = makeStyles<Theme, StyleProps>(() => ({
-		link: {
-			color: ({color}) => color,
-			fontSize: "1.2rem",
-		},
-		last: {
-			color: 'grey',
-			fontSize: "1.2rem",
-		},
-		first: {
-			color: ({color}) => color,
-			fontSize: '1.6rem',
-			fontWeight: 500,
-		},
-	}),
-);
+const maxPathsToShow = 8;
+
+let fullPath = '';
+let ellipsisPosition = 0;
+let pathList: NodePath[] = [];
+
+const generateFullPath = (pathName: string) => {
+	fullPath = fullPath ? `${fullPath} / ${pathName}` : pathName;
+};
+
+const ellipsisPositionGetter = (breadCrumbData: NodePath[]) => {
+	ellipsisPosition =
+		breadCrumbData.length > maxPathsToShow ? Math.ceil(maxPathsToShow / 2) : -1;
+
+	if (ellipsisPosition > 0) {
+		const limitPosition =
+			breadCrumbData.length + ellipsisPosition - maxPathsToShow;
+
+		let position = 0;
+
+		breadCrumbData.forEach(path => {
+			if (position <= ellipsisPosition || position > limitPosition) {
+				pathList.push(path);
+			}
+			generateFullPath(path.pathName);
+			position += 1;
+		});
+	} else {
+		pathList = breadCrumbData;
+	}
+};
 
 function Breadcrumb() {
-
-  const styles = getComputedStyle(document.documentElement);
-  const linkColor = styles.getPropertyValue('--link-color');
-
-  const props = {
-    color: linkColor
-  }
-
-	const classes = useStyles(props);
+	pathList = [];
+	fullPath = '';
 
 	const activeNodeId = useHierarchyStore(state => state.activeNodeId);
 	const nodeName = useHierarchyStore(state => state.hierarchyData?.[0]?.name);
@@ -57,41 +61,75 @@ function Breadcrumb() {
 
 		const el = document.getElementById(getId);
 
-		for (let i = 0; i <= index; i++) {
+		for (let i = 0; i <= index; i += 1) {
 			pathNameUpdate.push(breadCrumbData[i]);
 		}
+
 		setBreadCrumb(pathNameUpdate);
 		el?.scrollIntoView(true);
 	};
+
+	ellipsisPositionGetter(breadCrumbData);
 
 	useEffect(() => {
 		setBreadCrumb([{ pathId: activeNodeId, pathName: nodeName }]);
 	}, [activeNodeId, nodeName]);
 
 	return (
-		<Breadcrumbs
-			aria-label="breadcrumb"
-			className={classes.link}
+		<ul
+			className="flex flex-wrap text-base items-end"
 			data-testid="breadcrumbtest">
-			{breadCrumbData.map((bread, index: number) =>
-				breadCrumbData.length - 1 !== index ? (
-					<Link
-						key={bread.pathId.toString()}
-						component="button"
-						className={linkStyle(index, classes.link, classes.first)}
-						onClick={() => handleClick(index)}>
-						{bread.pathName}
-					</Link>
+			{pathList.map((bread, index) =>
+				index !== pathList.length - 1 ? (
+					<>
+						<div key={bread.pathId.toString()}>
+							<button
+								type="button"
+								onClick={() => handleClick(index)}
+								className={linkStyle(index, 'link', 'first')}>
+								{bread.pathName}
+							</button>
+						</div>
+						<span className="text-breadNormal">&nbsp;/&nbsp;</span>
+						{index === ellipsisPosition && (
+							<>
+								<span className="toolshow">
+									<span className="text-small font-bold">&#8230;</span>
+									<span className="tooltiptext">
+										{fullPath
+											.split('/')
+											.map((path: string, pathIndex: number) =>
+												pathIndex >= 5 &&
+												pathIndex < breadCrumbData.length - 3 ? (
+													<>
+														<span className="hidden-path">{path} </span>
+														<span>
+															{breadCrumbData.length !== pathIndex + 1 && '/'}{' '}
+														</span>
+													</>
+												) : (
+													<span>
+														{path}{' '}
+														{breadCrumbData.length !== pathIndex + 1 && '/'}
+													</span>
+												),
+											)}
+									</span>
+								</span>
+								<span className="text-breadNormal">&nbsp;/&nbsp;</span>
+							</>
+						)}
+					</>
 				) : (
-					<Typography
-						data-testid="disabledBreadLink"
+					<span
 						key={bread.pathId.toString()}
-						className={textStyle(index, classes.last, classes.first)}>
+						className={textStyle(index, 'last', 'first')}
+						data-testid="disabledBreadLink">
 						{bread.pathName}
-					</Typography>
+					</span>
 				),
 			)}
-		</Breadcrumbs>
+		</ul>
 	);
 }
 

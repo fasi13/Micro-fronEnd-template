@@ -74,6 +74,7 @@ export const useTreeNode = (
 			.match(new RegExp(newLocal))
 			?.map(x => x.toString()) || ['', ''];
 		if (result.length === 2) result[1] = result[1].replace(/[)(]+/g, '');
+		if (result.length === 1) result.push(`${result[0]}`);
 
 		return result;
 	};

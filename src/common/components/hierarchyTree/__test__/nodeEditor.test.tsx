@@ -147,41 +147,6 @@ describe('nodeEditor', () => {
 		);
 	});
 
-	test('node editor should validate if the input is not correct', () => {
-		useHierarchyStore.getState().setLoading(true);
-		const onToggleEdit = jest.fn();
-		const submitHandler = jest.fn();
-		const onSetNodeErr = (val: string | ErrorResponse) => {
-			useHierarchyStore.getState().setNodeError(dummyTreeView[0].nodePath, val);
-		};
-
-		const { getByTestId } = render(
-			<NodeEditor
-				key={`node_editor_${dummyTreeView[0].id}`}
-				onClose={() => {
-					onToggleEdit(dummyTreeView[0].nodePath, false);
-				}}
-				onSubmit={submitHandler}
-				error={dummyTreeView[0].error}
-				isSaving={dummyTreeView[0].saving}
-				isApplication
-				data=""
-				setError={val => {
-					onSetNodeErr(val);
-				}}
-				clearError={() => onSetNodeErr('')}
-			/>,
-		);
-		const input = getByTestId(nodeEditorInputStr) as HTMLInputElement;
-		fireEvent.change(input, {
-			target: { value: 'test' },
-		});
-		userEvent.type(input, '{enter}');
-		expect(useHierarchyStore.getState().hierarchyData[0].error).toBe(
-			'Application format should be: Application Name (Value)',
-		);
-	});
-
 	test('node editor should clear error message if the input is correct', () => {
 		useHierarchyStore.getState().setLoading(true);
 		const onToggleEdit = jest.fn();

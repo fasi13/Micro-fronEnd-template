@@ -5,7 +5,12 @@ import {
 	SearchApplication,
 	SearchApplicationProps,
 } from '../search-application';
-import { getApplicationPath, getElementId, getSeparator } from '../utils';
+import {
+	getApplicationPath,
+	getApplicationValue,
+	getElementId,
+	getSeparator,
+} from '../utils';
 
 const crateApplicationGroup = 'Create Application Group';
 const pathName = 'Application 12ED test';
@@ -67,8 +72,8 @@ const data: SearchApplicationProps = {
 			{
 				id: 2,
 				key: 'e9cc14a8-0f2a-4b1f-863b-60de05df800c',
-				name: 'Application 12ED test',
-				value: 'Value application 12ED',
+				name: pathName,
+				value: pathName,
 				_links: [
 					{
 						rel: 'self',
@@ -256,10 +261,10 @@ const singlePath: SearchApplicationProps = {
 
 test('search application testing ', () => {
 	const { queryByText } = render(<SearchApplication item={data.item} />);
-	expect(queryByText(/Group App Name/i)).toBeInTheDocument();
+	expect(queryByText(/Application 12ED test/i)).toBeInTheDocument();
 });
 test('should get Group App Name ', () => {
-	expect(getApplicationPath(data.item)).toBe('Group App Name');
+	expect(getApplicationPath(data.item)).toBe('E2E Group');
 });
 test('should not get Group App Name ', () => {
 	expect(getApplicationPath(singlePath.item)).not.toBe('Group-App-Name');
@@ -337,4 +342,7 @@ test('should return null', () => {
 
 	const result = getElementId(mockMultipleArray.mockPath[0]);
 	expect(result).not.toBe('GroupAppName');
+});
+test('should remove application value if its identical with application Name', () => {
+	expect(getApplicationValue(data.item)).toBeNull();
 });

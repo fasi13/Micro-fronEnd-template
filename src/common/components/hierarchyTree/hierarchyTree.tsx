@@ -30,8 +30,8 @@ export const HierarchyTree: React.FC<HierarchyPropType> = (
 
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			<div className="w-full h-full text-white">
-				<ul className="inset-y-0 left-0 z-10 h-full pl-5 ml-3 overflow-x-visible">
+			<div className="w-full h-full text-white ">
+				<ul className="flex w-auto whitespace-nowrap">
 					{data.map((item, index) => (
 						<RenderNodesRecursively
 							key={`__node__${item.id}`}

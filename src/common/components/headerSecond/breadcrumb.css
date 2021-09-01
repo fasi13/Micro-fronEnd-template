@@ -1,0 +1,39 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 100%;
+  background: floralwhite;
+  color: darkslategrey;
+  opacity: 0.9;
+  text-align: center;
+  border-radius: 3px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+}
+
+.toolshow:hover .tooltiptext {
+  visibility: visible;
+}
+
+.first {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #b6c0c8;
+}
+.link {
+  color: #b6c0c8;
+}
+.last {
+  color: #808080;
+}
+.hidden-path{
+  color: #355673;
+  font-weight: 600;
+}
