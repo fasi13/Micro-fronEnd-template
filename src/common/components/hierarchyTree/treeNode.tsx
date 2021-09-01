@@ -36,7 +36,7 @@ export const TreeNode: React.FC<TreeNodePropType> = (props): JSX.Element => {
 				data-testid="treeitem"
 				className={
 					data.error && data.edit
-						? `w-full mb-10`
+						? `w-full`
 						: `pl-3 w-full break-all flex justify-start items-center`
 				}>
 				{data.edit ? (

@@ -6,7 +6,7 @@ import {
 	GroupAddIcon,
 	GroupIcon,
 	PencilIcon,
-	SpinnerIcon
+	SpinnerIcon,
 } from '../../icons';
 
 interface NodePropType {

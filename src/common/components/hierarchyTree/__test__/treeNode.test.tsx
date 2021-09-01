@@ -96,7 +96,7 @@ describe('treeNode', () => {
 		// eslint-disable-next-line react/jsx-props-no-spreading
 		const { getByTestId } = render(<TreeNode {...dummyProps} />);
 
-		expect(getByTestId('treeitem')).toHaveClass('mb-10');
+		expect(getByTestId('treeitem')).toHaveClass('w-full');
 	});
 
 	it('shows nodeEditor component if data.edit is truthy', () => {
@@ -158,5 +158,4 @@ describe('treeNode', () => {
 		expect(queryByTestId('tree-item-children')).toHaveClass('hidden');
 		expect(queryByTestId('new-node-editor')).toBeFalsy();
 	});
-
 });
