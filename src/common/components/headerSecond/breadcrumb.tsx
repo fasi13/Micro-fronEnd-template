@@ -67,8 +67,8 @@ function Breadcrumb() {
 		}
 
 		setBreadCrumb(pathNameUpdate);
-		el?.scrollIntoView(true);
 		toggleCollapse(pathNameUpdate, false);
+		el?.scrollIntoView(true);
 	};
 
 	ellipsisPositionGetter(breadCrumbData);
@@ -83,15 +83,18 @@ function Breadcrumb() {
 			data-testid="breadcrumbtest">
 			{pathList.map((bread, index) =>
 				index !== pathList.length - 1 ? (
-					<>
-						<div key={bread.pathId.toString()}>
-							<button
-								type="button"
-								onClick={() => handleClick(index)}
-								className={linkStyle(index, 'link', 'first')}>
-								{bread.pathName}
-							</button>
-						</div>
+					<li
+						key={bread.pathName
+							.split(' ')
+							.join('__')
+							.toLowerCase()
+							.concat('____', bread.pathId.toString())}>
+						<button
+							type="button"
+							onClick={() => handleClick(index)}
+							className={linkStyle(index, 'link', 'first')}>
+							{bread.pathName}
+						</button>
 						<span className="text-breadNormal">&nbsp;/&nbsp;</span>
 						{index === ellipsisPosition && (
 							<>
@@ -103,14 +106,24 @@ function Breadcrumb() {
 											.map((path: string, pathIndex: number) =>
 												pathIndex >= 5 &&
 												pathIndex < breadCrumbData.length - 3 ? (
-													<>
+													<span
+														key={path
+															.split(' ')
+															.join('__')
+															.toLowerCase()
+															.concat('____', pathIndex.toString())}>
 														<span className="hidden-path">{path} </span>
 														<span>
 															{breadCrumbData.length !== pathIndex + 1 && '/'}{' '}
 														</span>
-													</>
+													</span>
 												) : (
-													<span>
+													<span
+														key={path
+															.split(' ')
+															.join('__')
+															.toLowerCase()
+															.concat('____', pathIndex.toString())}>
 														{path}{' '}
 														{breadCrumbData.length !== pathIndex + 1 && '/'}
 													</span>
@@ -121,7 +134,7 @@ function Breadcrumb() {
 								<span className="text-breadNormal">&nbsp;/&nbsp;</span>
 							</>
 						)}
-					</>
+					</li>
 				) : (
 					<span
 						key={bread.pathId.toString()}
