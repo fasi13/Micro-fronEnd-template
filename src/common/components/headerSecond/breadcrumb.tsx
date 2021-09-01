@@ -68,7 +68,12 @@ function Breadcrumb() {
 
 		setBreadCrumb(pathNameUpdate);
 		toggleCollapse(pathNameUpdate, false);
-		el?.scrollIntoView(true);
+
+		el?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+			inline: 'center',
+		});
 	};
 
 	ellipsisPositionGetter(breadCrumbData);
