@@ -48,6 +48,7 @@ function Breadcrumb() {
 	const nodeName = useHierarchyStore(state => state.hierarchyData?.[0]?.name);
 
 	const { breadCrumbData, setBreadCrumb } = useBreadcrumbStore();
+	const { toggleCollapse } = useHierarchyStore();
 
 	const handleClick = (index: number) => {
 		const pathNameUpdate: NodePath[] = [];
@@ -67,6 +68,7 @@ function Breadcrumb() {
 
 		setBreadCrumb(pathNameUpdate);
 		el?.scrollIntoView(true);
+		toggleCollapse(pathNameUpdate, false);
 	};
 
 	ellipsisPositionGetter(breadCrumbData);
