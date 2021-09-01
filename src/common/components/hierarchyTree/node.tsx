@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useBreadcrumbStore } from '../../../state';
 import { NodePath, TreeView } from '../../../types';
 import {
 	AddIcon,
-	FolderIcon,
+	GroupAddIcon,
 	GroupIcon,
 	PencilIcon,
-	SpinnerIcon,
+	SpinnerIcon
 } from '../../icons';
 
 interface NodePropType {
@@ -44,6 +44,7 @@ export const Node: React.FC<NodePropType> = props => {
 		toggleChildren,
 	} = props;
 
+	const nodeRef = useRef<HTMLDivElement>(null);
 	const { setBreadCrumb } = useBreadcrumbStore();
 
 	const expandOrCollapse = (): string => {
@@ -63,18 +64,21 @@ export const Node: React.FC<NodePropType> = props => {
 
 	return (
 		<div
+			ref={nodeRef}
 			data-testid="node-component"
-			className="h-10.5 my-1 z-30 flex flex-row items-center justify-start w-full pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
+			className="flex justify-start items-center h-10.5 my-1 z-30 pl-2 pr-4 -ml-4 space-x-2 transition-colors duration-300 ease-linear transform group hover:bg-skyblue node-container">
 			{isLoadingChildren ? (
 				<NodeLoadingIndicator />
 			) : (
 				<button
 					data-testid="node-container"
 					type="button"
-					className={`flex flex-col items-center justify-center w-6 h-6 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
+					className={`flex  flex-none  flex-col items-center justify-center w-4 h-4 z-50 text-center text-gray-600 bg-gray-100 rounded-sm
 								${expandOrCollapse()}
 								`}
-					onClick={toggleChildren}>
+					onClick={() => {
+						toggleChildren();
+					}}>
 					<></>
 				</button>
 			)}
@@ -87,19 +91,21 @@ export const Node: React.FC<NodePropType> = props => {
 					.toString()
 					.concat('____', data.id.toString())}
 				type="button"
-				className="w-full flex items-center text-left pl-1` h-10.5 border-indigo-200"
+				className="flex-shrink-0 flex-auto flex items-center text-left pl-1` h-10.5 border-indigo-200"
 				onClick={() => {
 					setBreadCrumb(nodePath);
 					toggleChildren();
 				}}>
 				<GroupIcon
-					className={`${canAddApplication(data) ? 'mr-2' : 'hidden mr-2'}`}
+					className={`${
+						canAddApplication(data) ? 'mr-2 flex-none' : 'hidden mr-2'
+					}`}
 					width={18}
 					height={18}
 				/>
 				{data?.name} {trim(data)}
 			</button>
-			<div className="flex space-x-3 node-actions">
+			<div className="flex flex-shrink-0 flex-1 space-x-3 pl-16 node-actions">
 				<button
 					data-testid="node-add-app"
 					type="button"
@@ -110,7 +116,7 @@ export const Node: React.FC<NodePropType> = props => {
 					className={`cursor-pointer ${
 						canAddApplication(data) ? '' : 'hidden'
 					}`}>
-					<AddIcon className="" width={18} height={18} />
+					<AddIcon className="" width={18} height={15} />
 				</button>
 				<button
 					data-testid="node-add-app-group"
@@ -120,7 +126,7 @@ export const Node: React.FC<NodePropType> = props => {
 						toggleNewEditor('Group');
 					}}
 					className={`cursor-pointer ${canAddGroup(data) ? '' : 'hidden'}`}>
-					<FolderIcon className="" width={18} height={18} />
+					<GroupAddIcon className="" width={18} height={18} />
 				</button>
 				<button
 					data-testid="node-edit"
