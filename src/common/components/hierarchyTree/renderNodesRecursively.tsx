@@ -36,42 +36,40 @@ export const RenderNodesRecursively: React.FC<ApplicationPropType> = (
 	return (
 		<li
 			key={nodeId}
-			className="relative flex flex-col items-start justify-center h-auto pl-2 list-none tree">
-			<div className="w-full h-full">
-				<TreeNode
-					key={`treenode_${nodeId}_${nodePath.length}`}
-					nodeId={nodeId}
-					nodePath={nodePath}
-					data={data}
-					onEditApplication={onEditApplication}
-					onEditGroup={onEditGroup}
-					onToggleCollapse={onToggleCollapse}
-					onAddApplication={onAddApplication}
-					onAddGroup={onAddGroup}
-					onSetNodeErr={onSetNodeErr}
-					onSetSaving={onSetSaving}
-					onToggleEdit={onToggleEdit}
-					onToggleNewEditor={onToggleNewEditor}
-					renderProps={() => (
-						<TreeNodeChildren
-							key={`treenode_${nodeId}`}
-							childrenData={data?.childrenData}
-							nodePath={nodePath}
-							nodeDepth={nodeDepth}
-							expandNodesAtLevel={expandNodesAtLevel}
-							onAddApplication={onAddApplication}
-							onAddGroup={onAddGroup}
-							onEditApplication={onEditApplication}
-							onEditGroup={onEditGroup}
-							onToggleCollapse={onToggleCollapse}
-							onSetNodeErr={onSetNodeErr}
-							onSetSaving={onSetSaving}
-							onToggleEdit={onToggleEdit}
-							onToggleNewEditor={onToggleNewEditor}
-						/>
-					)}
-				/>
-			</div>
+			className="relative flex-1 whitespace-nowrap items-start justify-center w-auto h-auto pl-2 list-none tree">
+			<TreeNode
+				key={`treenode_${nodeId}_${nodePath.length}`}
+				nodeId={nodeId}
+				nodePath={nodePath}
+				data={data}
+				onEditApplication={onEditApplication}
+				onEditGroup={onEditGroup}
+				onToggleCollapse={onToggleCollapse}
+				onAddApplication={onAddApplication}
+				onAddGroup={onAddGroup}
+				onSetNodeErr={onSetNodeErr}
+				onSetSaving={onSetSaving}
+				onToggleEdit={onToggleEdit}
+				onToggleNewEditor={onToggleNewEditor}
+				renderProps={() => (
+					<TreeNodeChildren
+						key={`treenode_${nodeId}`}
+						childrenData={data?.childrenData}
+						nodePath={nodePath}
+						nodeDepth={nodeDepth}
+						expandNodesAtLevel={expandNodesAtLevel}
+						onAddApplication={onAddApplication}
+						onAddGroup={onAddGroup}
+						onEditApplication={onEditApplication}
+						onEditGroup={onEditGroup}
+						onToggleCollapse={onToggleCollapse}
+						onSetNodeErr={onSetNodeErr}
+						onSetSaving={onSetSaving}
+						onToggleEdit={onToggleEdit}
+						onToggleNewEditor={onToggleNewEditor}
+					/>
+				)}
+			/>
 			{children}
 		</li>
 	);

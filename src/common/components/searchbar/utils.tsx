@@ -3,8 +3,10 @@ import { ApplicationPath } from '../../../types';
 export const getApplicationName = ({ path }: ApplicationPath): string =>
 	path[path.length - 1].name;
 
-export const getApplicationValue = ({ path }: ApplicationPath): string =>
-	path[path.length - 1].value;
+export const getApplicationValue = ({ path }: ApplicationPath): string | null =>
+	path[path.length - 1].name === path[path.length - 1].value
+		? null
+		: path[path.length - 1].value;
 
 export const getApplicationLink = ({ path }: ApplicationPath): string =>
 	`tenant/${path[path.length - 1].id}/service/content`;
@@ -25,7 +27,7 @@ export const getApplicationPath = (application: ApplicationPath): string => {
 	if (appPath.length > 1) {
 		appPath.slice(0, appPath.length - 1).forEach((element, index, array) => {
 			const elementId = getElementId(element);
-			strPath += `${element.value}${elementId}${getSeparator(index, array)}`;
+			strPath += `${element.name}${elementId}${getSeparator(index, array)}`;
 		});
 	}
 	return strPath;

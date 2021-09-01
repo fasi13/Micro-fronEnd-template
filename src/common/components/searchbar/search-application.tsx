@@ -4,7 +4,6 @@ import {
 	ListItem,
 	ListItemText,
 	makeStyles,
-	Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
@@ -33,25 +32,36 @@ export const SearchApplication = (props: SearchApplicationProps) => {
 	const classes = useStyles();
 
 	return (
-		<Router>
-			<Link to={getApplicationLink(item)}>
-				<ListItem className={classes.root} divider>
-					<ListItemText
-						primary={getApplicationName(item)}
-						secondary={
-							<>
-								<Typography component="span" variant="body2">
-									{getApplicationValue(item)}
-								</Typography>{' '}
-								<br />
-								<Typography component="span" variant="body2">
-									{getApplicationPath(item)}
-								</Typography>
-							</>
-						}
-					/>
-				</ListItem>
-			</Link>
-		</Router>
+		<>
+			<Router>
+				<Link to={getApplicationLink(item)}>
+					<ListItem>
+						<ListItemText
+							className={classes.root}
+							primary={
+								<>
+									<div className="flex flex-row pb-2">
+										<div className="w-3/4 text-lg">
+											{' '}
+											<div>{getApplicationName(item)}</div>
+										</div>
+										<div className="w-1/4 text-right">
+											<div className="text-sm">{getApplicationValue(item)}</div>
+										</div>
+									</div>
+								</>
+							}
+							secondary={
+								<>
+									<div className="font-extralight pb-2">
+										{getApplicationPath(item)}
+									</div>
+								</>
+							}
+						/>{' '}
+					</ListItem>
+				</Link>
+			</Router>
+		</>
 	);
 };

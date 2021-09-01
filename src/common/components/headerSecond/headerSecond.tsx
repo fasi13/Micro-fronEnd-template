@@ -63,7 +63,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 
 	return (
 		<div className="px-6 py-2 text-xl bg-sanjuan">
-			<div className="flex flex-wrap p-px">
+			<div className="inline-flex   p-px">
 				<div
 					data-testid="detach-handler"
 					onKeyDown={handleDetach}
@@ -75,7 +75,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 					onClick={handleDetach}>
 					<OrbitSVG detachSidebar={detachSidebar} />
 				</div>
-				<span className="self-center pl-2">
+				<span className="self-center pl-2 tooltip">
 					<Breadcrumbview />
 				</span>
 			</div>

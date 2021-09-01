@@ -1,10 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import { HierarchyTree } from '..';
 import { useDetachStore, useHierarchyStore } from '../../../state';
 import Searchbar from '../searchbar/Searchbar';
 import { useHierarchyHelper } from './hooks/useHierarchyHelper';
 import './sidebar.scss';
+
+let flag = true;
 
 const SidebarContent = () => {
 	const {
@@ -30,7 +31,11 @@ const SidebarContent = () => {
 	useEffect(() => {
 		initializeHierarchyState(0);
 		setLoading(true);
-		loadApplication();
+
+		if (flag) {
+			loadApplication();
+			flag = false;
+		}
 	}, []);
 
 	const dSSidebarState = useDetachStore(state => state.detachSidebar);
@@ -42,7 +47,7 @@ const SidebarContent = () => {
 			</div>
 			<br />
 			<div
-				className={`overflow-y-auto bg-grayblue journal-scroll ${
+				className={`overflow-y-auto overflow-x-auto bg-grayblue journal-scroll ml-6 ${
 					dSSidebarState ? 'h-5/6' : 'h-auto'
 				}`}>
 				<div className="" style={widthStyle}>
