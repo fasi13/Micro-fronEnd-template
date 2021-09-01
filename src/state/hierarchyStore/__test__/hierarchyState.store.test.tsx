@@ -1326,6 +1326,10 @@ describe('hierarchy store', () => {
 					},
 				},
 			);
+
+			await useHierarchyStore.getState().getPrimaryLogo('');
+
+			expect(ContentDeliveryClient.get).not.toBeCalledTimes(2);
 		});
 		it('setPrimaryLogo set the Logo URL', () => {
 			useHierarchyStore.getState().setPrimaryLogo('/e2e_default_logo.png');

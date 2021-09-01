@@ -113,19 +113,24 @@ const HierarchyStore = (set: any, get: any): THierarchyState => ({
 	},
 	getPrimaryLogo: async applicationKey => {
 		let error: ErrorResponse | null = null;
-		await ContentDeliveryClient.get(`/application/${applicationKey}/content`, {
-			params: {
-				Name: 'Primary Logo',
-				Group: 'Website Branding',
-			},
-		})
-			.then(resp => {
-				get().setPrimaryLogo(resp?.data?.data?.items?.[0].value);
-			})
-			.catch(err => {
-				error = err as unknown as ErrorResponse;
-				console.log(error, 'error');
-			});
+		if (applicationKey) {
+			await ContentDeliveryClient.get(
+				`/application/${applicationKey}/content`,
+				{
+					params: {
+						Name: 'Primary Logo',
+						Group: 'Website Branding',
+					},
+				},
+			)
+				.then(resp => {
+					get().setPrimaryLogo(resp?.data?.data?.items?.[0].value);
+				})
+				.catch(err => {
+					error = err as unknown as ErrorResponse;
+					console.log(error, 'error');
+				});
+		}
 	},
 	toggleCollapse: async (nodePath: NodePath[], val: boolean) => {
 		if (!val) {
