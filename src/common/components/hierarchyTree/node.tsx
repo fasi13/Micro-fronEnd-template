@@ -27,8 +27,8 @@ const NodeLoadingIndicator = () => (
 	</button>
 );
 
-export const trim = (x: TreeView): string => {
-	if (x?.value) {
+export const trimAndFormat = (x: TreeView): string => {
+	if (x?.value && x?.value.toString().trim() !== x.name.trim()) {
 		return `(${x?.value.toString().trimLeft()})`;
 	}
 	return '';
@@ -103,7 +103,7 @@ export const Node: React.FC<NodePropType> = props => {
 					width={18}
 					height={18}
 				/>
-				{data?.name} {trim(data)}
+				{data?.name} {trimAndFormat(data)}
 			</button>
 			<div className="flex flex-shrink-0 flex-1 space-x-3 pl-16 node-actions">
 				<button

@@ -37,19 +37,11 @@ export const useNodeEditor = (
 	const [value, setValue] = useState(data || '');
 	const preValue = useRef(value);
 
-	const validAppPattern = /^[^)(]+(\([^()]+\)){1}$/g;
 	const emptyErrorMsg = 'Value can not be empty';
-	const invalidApplicationValueFormatMsg =
-		'Application format should be: Application Name (Value)';
 
 	const checkValidityAndSubmit = (): void => {
 		if (value === '') {
 			setError(emptyErrorMsg);
-		} else if (
-			isApplication &&
-			value.match(validAppPattern)?.filter(m => m !== undefined).length !== 1
-		) {
-			setError(invalidApplicationValueFormatMsg);
 		} else if (preValue.current !== value) {
 			clearError();
 			preValue.current = value;
@@ -58,8 +50,8 @@ export const useNodeEditor = (
 	};
 
 	const nodeEditorPlaceHolder = (): string => {
-		if (isApplication) return 'Add New Application';
-		return 'Add New Application Group';
+		if (isApplication) return 'New Application: name (value)';
+		return 'New Application Group';
 	};
 
 	const setEditorValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
