@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
 import './breadcrumb.css';
+import generateUniqueKey from './breadCrumbHelper';
 import { linkStyle, textStyle } from './breadCrumbStyleHelper';
 
 export interface StyleProps {
@@ -9,7 +10,6 @@ export interface StyleProps {
 }
 
 const maxPathsToShow = 8;
-
 let fullPath = '';
 let ellipsisPosition = 0;
 let pathList: NodePath[] = [];
@@ -50,6 +50,9 @@ function Breadcrumb() {
 	const { breadCrumbData, setBreadCrumb } = useBreadcrumbStore();
 	const { toggleCollapse } = useHierarchyStore();
 
+	const leftSideBreadcrumbToShow = 5;
+	const rightSideBreadcrumbToShow = breadCrumbData.length - 3;
+
 	const handleClick = (index: number) => {
 		const pathNameUpdate: NodePath[] = [];
 
@@ -88,12 +91,7 @@ function Breadcrumb() {
 			data-testid="breadcrumbtest">
 			{pathList.map((bread, index) =>
 				index !== pathList.length - 1 ? (
-					<li
-						key={bread.pathName
-							.split(' ')
-							.join('__')
-							.toLowerCase()
-							.concat('____', bread.pathId.toString())}>
+					<li key={generateUniqueKey(bread.pathName, bread.pathId.toString())}>
 						<button
 							type="button"
 							onClick={() => handleClick(index)}
@@ -109,14 +107,10 @@ function Breadcrumb() {
 										{fullPath
 											.split('/')
 											.map((path: string, pathIndex: number) =>
-												pathIndex >= 5 &&
-												pathIndex < breadCrumbData.length - 3 ? (
+												pathIndex >= leftSideBreadcrumbToShow &&
+												pathIndex < rightSideBreadcrumbToShow ? (
 													<span
-														key={path
-															.split(' ')
-															.join('__')
-															.toLowerCase()
-															.concat('____', pathIndex.toString())}>
+														key={generateUniqueKey(path, pathIndex.toString())}>
 														<span className="hidden-path">{path} </span>
 														<span>
 															{breadCrumbData.length !== pathIndex + 1 && '/'}{' '}
@@ -124,11 +118,7 @@ function Breadcrumb() {
 													</span>
 												) : (
 													<span
-														key={path
-															.split(' ')
-															.join('__')
-															.toLowerCase()
-															.concat('____', pathIndex.toString())}>
+														key={generateUniqueKey(path, pathIndex.toString())}>
 														{path}{' '}
 														{breadCrumbData.length !== pathIndex + 1 && '/'}
 													</span>
