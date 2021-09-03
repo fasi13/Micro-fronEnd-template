@@ -45,7 +45,7 @@ export const useNodeEditor = (
 		} else if (preValue.current !== value) {
 			clearError();
 			preValue.current = value;
-			onSubmit(value);
+			onSubmit(value.trim());
 		}
 	};
 
