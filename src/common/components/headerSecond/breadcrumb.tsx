@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useBreadcrumbStore, useHierarchyStore } from '../../../state';
 import { NodePath } from '../../../types';
 import './breadcrumb.css';
-import generateUniqueKey from './breadCrumbHelper';
 import { linkStyle, textStyle } from './breadCrumbStyleHelper';
+import generateUniqueKey from './generateUniqueKey';
 
 export interface StyleProps {
 	color: string;
