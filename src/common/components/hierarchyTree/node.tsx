@@ -77,6 +77,7 @@ export const Node: React.FC<NodePropType> = props => {
 								${expandOrCollapse()}
 								`}
 					onClick={() => {
+						setBreadCrumb(nodePath);
 						toggleChildren();
 					}}>
 					<></>
