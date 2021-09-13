@@ -87,7 +87,7 @@ function Breadcrumb() {
 
 	return (
 		<ul
-			className="flex flex-wrap text-base items-end"
+			className="flex flex-wrap text-base items-end font-normal"
 			data-testid="breadcrumbtest">
 			{pathList.map((bread, index) =>
 				index !== pathList.length - 1 ? (
@@ -108,7 +108,7 @@ function Breadcrumb() {
 											.split('/')
 											.map((path: string, pathIndex: number) =>
 												pathIndex >= leftSideBreadcrumbToShow &&
-												pathIndex < rightSideBreadcrumbToShow ? (
+													pathIndex < rightSideBreadcrumbToShow ? (
 													<span
 														key={generateUniqueKey(path, pathIndex.toString())}>
 														<span className="hidden-path">{path} </span>
@@ -133,7 +133,7 @@ function Breadcrumb() {
 				) : (
 					<span
 						key={bread.pathId.toString()}
-						className={textStyle(index, 'last', 'first')}
+						className={textStyle(index, 'last:', 'first 2xl')}
 						data-testid="disabledBreadLink">
 						{bread.pathName}
 					</span>

@@ -25,13 +25,14 @@
 .first {
   font-size: 1.5rem;
   line-height: 2rem;
-  color: #b6c0c8;
+  color: #CAD0DC;
 }
 .link {
   color: #b6c0c8;
 }
 .last {
-  color: #808080;
+  /* color: #808080; */
+  color: #ffff;
 }
 .hidden-path{
   color: #355673;
