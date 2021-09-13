@@ -12,8 +12,7 @@ export const OrbitSVG = (props: any) => {
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				focusable="false"
-				width="1.8em"
-				className="py-2 h-10"
+				className="py-1 w-10 h-10"
 				preserveAspectRatio="xMidYMid meet"
 				fill="white"
 				viewBox="0 0 24 24">
