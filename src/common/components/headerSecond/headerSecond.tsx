@@ -60,7 +60,7 @@ export const HeaderSecond: React.FunctionComponent = () => {
 	};
 
 	return (
-		<div className="px-6 py-1 h-12 text-xl bg-sanjuan">
+		<div className="px-6 py-1 h-12 text-xl bg-grayblue ">
 			<div className="inline-flex p-px">
 				<div
 					data-testid="detach-handler"
