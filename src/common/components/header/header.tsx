@@ -59,11 +59,11 @@ export const UserMenu = (props: any) => {
 		nameOfUser === ''
 			? '?'
 			: nameOfUser
-					.split(' ')
-					.map((c: any) => c.charAt(0).toUpperCase())
-					.join('')
-					.concat(nameOfUser.charAt(1).toUpperCase())
-					.substring(0, 2);
+				.split(' ')
+				.map((c: any) => c.charAt(0).toUpperCase())
+				.join('')
+				.concat(nameOfUser.charAt(1).toUpperCase())
+				.substring(0, 2);
 	return (
 		<Avatar data-testid="user-avatar" className={`${isOpened ? 'active' : ''}`}>
 			{i}
@@ -158,9 +158,8 @@ export const Header = () => {
 
 								<div
 									data-testid="expand-menu-icon"
-									className={`transition-transform transform  duration-200 ease-in-out ${
-										anchorMenu ? 'rotate-180' : 'rotate-0'
-									}`}>
+									className={`transition-transform transform  duration-200 ease-in-out ${anchorMenu ? 'rotate-180' : 'rotate-0'
+										}`}>
 									<ExpandMoreIcon fontSize="large" className="text-balihai " />
 								</div>
 							</div>

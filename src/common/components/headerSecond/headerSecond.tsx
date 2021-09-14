@@ -10,11 +10,9 @@ export const OrbitSVG = (props: any) => {
 			data-testid="detach-icon"
 			className={`${detachProps.detachSidebar ? 'sidebarDetached' : ''}`}>
 			<svg
-				style={{ width: '50px', height: '100%' }}
 				xmlns="http://www.w3.org/2000/svg"
 				focusable="false"
-				width="1.4em"
-				height="1.4em"
+				className="py-1 w-10 h-10"
 				preserveAspectRatio="xMidYMid meet"
 				fill="white"
 				viewBox="0 0 24 24">
@@ -62,8 +60,8 @@ export const HeaderSecond: React.FunctionComponent = () => {
 	};
 
 	return (
-		<div className="px-6 py-2 text-xl bg-sanjuan">
-			<div className="inline-flex   p-px">
+		<div className="px-6 py-1 h-12 text-xl bg-grayblue ">
+			<div className="inline-flex p-px">
 				<div
 					data-testid="detach-handler"
 					onKeyDown={handleDetach}
