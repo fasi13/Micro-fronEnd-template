@@ -1,0 +1,747 @@
+Script started on 2021-09-20 10:31:40+03:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="116" LINES="16"]
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> react-script start
+
+sh: 1: react-script: not found
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> react-scripts start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+[2J[3J[HCompiling...
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[33mFiles successfully emitted, waiting for typecheck results...[39m
+[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> react-scripts start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[4mc[24m[4mc[24m[90mlear[39m[24m[1m[31mc[1m[31ml[0m[39m[1m[31mc[1m[31ml[1m[31me[0m[39m[1m[31me[1m[31ma[0m[39m[0m[32mc[0m[32ml[0m[32me[0m[32ma[32mr[39m[?1l>[?2004l
+]2;clear]1;clear[H[2J[3J[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mclear[39m[32mn[32mp[32mm[39m[39m [39m[4ms[4mtart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/craco.config.js:29
+			if (cssPluginIdx !== -1) {
+			^
+
+ReferenceError: cssPluginIdx is not defined
+    at configure (/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/craco.config.js:29:4)
+    at giveTotalControl (/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/node_modules/[4m@craco[24m/craco/lib/features/webpack/merge-webpack-config.js:57:25)
+    at mergeWebpackConfig (/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/node_modules/[4m@craco[24m/craco/lib/features/webpack/merge-webpack-config.js:106:38)
+    at overrideWebpackDev (/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/node_modules/[4m@craco[24m/craco/lib/features/webpack/override.js:11:36)
+    at /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/node_modules/[4m@craco[24m/craco/scripts/start.js:27:5
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[33mFiles successfully emitted, waiting for typecheck results...[39m
+[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[33mFiles successfully emitted, waiting for typecheck results...[39m
+[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^[[A^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[33mFiles successfully emitted, waiting for typecheck results...[39m
+[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.166/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[33mFiles successfully emitted, waiting for typecheck results...[39m
+[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mnpm[39m [4mstart[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+is prod: development
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.182/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[33mFiles successfully emitted, waiting for typecheck results...[39m
+[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[4mc[24m[4mc[24m[90mlear[39m[24m[1m[31mc[1m[31ml[0m[39m[1m[31mc[1m[31ml[1m[31me[0m[39m[1m[31me[1m[31ma[0m[39m[0m[32mc[0m[32ml[0m[32me[0m[32ma[32mr[39m[?1l>[?2004l
+]2;clear]1;clear[H[2J[3J[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[4mn[24m[4mn[24m[90mpm start[39m[8D[24m[1m[31mn[1m[31mp[0m[39m[0m[32mn[0m[32mp[32mm[39m[39m [39m[4ms[24m[4ms[39m[4mt[24m[4mt[39m[4ma[24m[4ma[39m[4mr[24m[4mr[39m[4mt[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+is prod: development
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.182/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[4mc[24m[4mc[24m[90mlear[39m[24m[1m[31mc[1m[31ml[0m[39m[1m[31mc[1m[31ml[1m[31me[0m[39m[1m[31me[1m[31ma[0m[39m[0m[32mc[0m[32ml[0m[32me[0m[32ma[32mr[39m[?1l>[?2004l
+]2;clear]1;clear[H[2J[3J[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit push [39m[8D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39mi[39m [39m [39m [39m [90mnit[39m[39mn[39mi[39mt[?1l>[?2004l
+]2;git init]1;gitReinitialized existing Git repository in /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/.git/
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ?[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit init[39m[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39ma[39m [39m [39m [90mdd .[39m[39md[39md [39m [39m [90md .[39m [39m [39m [39m [90mdd .[39m [39m [39m [39m [39m [90minit[39m[39m [39m [39m [39m [90m init[39m[1m[31mg[1m[31mi[0m[39m[39m [39m [39m [39m [39m [39m [90mt init[39m[0m[32mg[39m[0m[39m [39m [39m [39m [39m [39m [39m [32mg[39m[90mit init[39m[39m [39m [39m [39m [39m [39m [39m [39m [8D[32mg[39m[32mg[39m[90mit init[39m[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m[4mc[24m[39m [39m [39m [90mommit -am 'health check functionality added '[39m[45D[4mc[39m[4mo[24m[24mc[24mo[39mm[39mm[39mi[39mt[39m [39m-[39mm[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [37D[90m "first commit"[39m[15D[39m [33m"[33mf[33mi[33mr[33ms[33mt[33m [33mc[33mo[33mm[33mm[33mi[33mt[33m"[39m[?1l>[?2004l
+]2;git commit -m "first commit"]1;gitnpm run format
+
+> micro.frontend.template@0.1.0 lint
+> eslint ./ --ignore-path .gitignore
+
+[0m[0m
+[0m[4m/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/src/pages/app/app.tsx[24m[0m
+[0m  [2m3:13[22m  [33mwarning[39m  Missing return type on function  [2m@typescript-eslint/explicit-module-boundary-types[22m[0m
+[0m[0m
+[0m[4m/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/src/reportWebVitals.ts[24m[0m
+[0m  [2m3:25[22m  [33mwarning[39m  Missing return type on function  [2m@typescript-eslint/explicit-module-boundary-types[22m[0m
+[0m[0m
+[0m[33m[1m✖ 2 problems (0 errors, 2 warnings)[22m[39m[0m
+[0m[33m[1m[22m[39m[0m
+On branch develop
+Your branch is behind 'origin/develop' by 4 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	[31mmodified:   .vscode/settings.json[m
+	[31mdeleted:    azure-pipelines-integration.yml[m
+	[31mdeleted:    azure-pipelines-nightly.yml[m
+	[31mdeleted:    azure-pipelines.yml[m
+	[31mmodified:   package-lock.json[m
+	[31mmodified:   package.json[m
+	[31mmodified:   public/index.html[m
+	[31mmodified:   readme.md[m
+	[31mdeleted:    src/common/components/__tests__/index.test.tsx[m
+	[31mdeleted:    src/common/components/changePasswordModal/__tests__/changePasswordModal.test.tsx[m
+	[31mdeleted:    src/common/components/changePasswordModal/changePasswordModal.scss[m
+	[31mdeleted:    src/common/components/changePasswordModal/changePasswordModal.tsx[m
+	[31mdeleted:    src/common/components/header/__tests__/header.test.tsx[m
+	[31mdeleted:    src/common/components/header/header.scss[m
+	[31mdeleted:    src/common/components/header/header.tsx[m
+	[31mdeleted:    src/common/components/headerSecond/__tests__/breadCrumbStyleHelper.test.tsx[m
+	[31mdeleted:    src/common/components/headerSecond/__tests__/breadcrumb.test.tsx[m
+	[31mdeleted:    src/common/components/headerSecond/__tests__/headerSecond.test.tsx[m
+	[31mdeleted:    src/common/components/headerSecond/breadCrumbStyleHelper.ts[m
+	[31mdeleted:    src/common/components/headerSecond/breadcrumb.css[m
+	[31mdeleted:    src/common/components/headerSecond/breadcrumb.tsx[m
+	[31mdeleted:    src/common/components/headerSecond/generateUniqueKey.ts[m
+	[31mdeleted:    src/common/components/headerSecond/headerSecond.scss[m
+	[31mdeleted:    src/common/components/headerSecond/headerSecond.tsx[m
+	[31mdeleted:    src/common/components/headerThird/__tests__/headerThird.test.tsx[m
+	[31mdeleted:    src/common/components/headerThird/headerThird.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/errorFallback.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/hierarchyTree.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/renderNodesRecursive.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/treeNode.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/treeNodeChildren.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/useNodeEditor.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/__snapshots__/useTreeNode.test.tsx.snap[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/errorFallback.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/hierarchyTree.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/node.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/nodeEditor.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/renderNodesRecursive.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/treeNode.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/treeNodeChildren.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/useNodeEditor.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/__test__/useTreeNode.test.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/errorFallback.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/hierarchy.css[m
+	[31mdeleted:    src/common/components/hierarchyTree/hierarchyTree.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/hooks/useNodeEditor.ts[m
+	[31mdeleted:    src/common/components/hierarchyTree/hooks/useTreeNode.ts[m
+	[31mdeleted:    src/common/components/hierarchyTree/node.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/nodeEditor.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/renderNodesRecursively.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/treeNode.tsx[m
+	[31mdeleted:    src/common/components/hierarchyTree/treeNodeChildren.tsx[m
+	[31mdeleted:    src/common/components/index.ts[m
+	[31mdeleted:    src/common/components/searchbar/Searchbar.tsx[m
+	[31mdeleted:    src/common/components/searchbar/__tests__/search-application.test.tsx[m
+	[31mdeleted:    src/common/components/searchbar/__tests__/search.test.tsx[m
+	[31mdeleted:    src/common/components/searchbar/search-application.tsx[m
+	[31mdeleted:    src/common/components/searchbar/utils.tsx[m
+	[31mdeleted:    src/common/components/sidebar/__tests__/sidebar.test.tsx[m
+	[31mdeleted:    src/common/components/sidebar/hooks/useHierarchyHelper.ts[m
+	[31mdeleted:    src/common/components/sidebar/sidebar.scss[m
+	[31mdeleted:    src/common/components/sidebar/sidebar.tsx[m
+	[31mdeleted:    src/common/icons/__tests__/__snapshots__/add.icon.test.tsx.snap[m
+	[31mdeleted:    src/common/icons/__tests__/__snapshots__/close.icon.test.tsx.snap[m
+	[31mdeleted:    src/common/icons/__tests__/__snapshots__/group-add.icon.test.tsx.snap[m
+	[31mdeleted:    src/common/icons/__tests__/__snapshots__/group.icon.test.tsx.snap[m
+	[31mdeleted:    src/common/icons/__tests__/__snapshots__/pencil.icon.test.tsx.snap[m
+	[31mdeleted:    src/common/icons/__tests__/__snapshots__/spinner.icon.test.tsx.snap[m
+	[31mdeleted:    src/common/icons/__tests__/add.icon.test.tsx[m
+	[31mdeleted:    src/common/icons/__tests__/close.icon.test.tsx[m
+	[31mdeleted:    src/common/icons/__tests__/group-add.icon.test.tsx[m
+	[31mdeleted:    src/common/icons/__tests__/group.icon.test.tsx[m
+	[31mdeleted:    src/common/icons/__tests__/pencil.icon.test.tsx[m
+	[31mdeleted:    src/common/icons/__tests__/spinner.icon.test.tsx[m
+	[31mdeleted:    src/common/icons/add.icon.tsx[m
+	[31mdeleted:    src/common/icons/close.icon.tsx[m
+	[31mdeleted:    src/common/icons/group-add.icon.tsx[m
+	[31mdeleted:    src/common/icons/group.icon.tsx[m
+	[31mdeleted:    src/common/icons/index.ts[m
+	[31mdeleted:    src/common/icons/pencil.icon.tsx[m
+	[31mdeleted:    src/common/icons/spinner.icon.tsx[m
+	[31mdeleted:    src/pages/app/__tests__/App.test.tsx[m
+	[31mdeleted:    src/pages/app/app.css[m
+	[31mmodified:   src/pages/app/app.tsx[m
+	[31mdeleted:    src/pages/home/__tests__/home.test.tsx[m
+	[31mdeleted:    src/pages/home/home.scss[m
+	[31mdeleted:    src/pages/home/home.tsx[m
+	[31mdeleted:    src/state/__test__/searchState.test.tsx[m
+	[31mdeleted:    src/state/breadCrumbS

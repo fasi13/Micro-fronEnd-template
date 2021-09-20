@@ -1,10 +1,8 @@
 import React from 'react';
-import { Home } from '../home/home';
-import './app.css';
 
 const App = () => (
 	<div className="App">
-		<Home />
+		<div>Micro FrontEnd Template</div>
 	</div>
 );
 export default App;

@@ -1,14 +1,14 @@
-# CXS.Admin
+# Micro Front End Template
 
-Admin Tools - CXS Admin
+Template - Micro Front End
 
 ## Getting Started
 
-In order to start with Admin Tools project we require some knowledge and environment setup that will be detailed below
+In order to start with Micro Front End Template project we require some knowledge and environment setup that will be detailed below
 
 ### Required Knowledge
 
-Below is detailed the required knowledge to get start working on a feature of Admin Tools, make sure to review each section.
+Below is detailed the required knowledge to get start working on a feature of This Template, make sure to review each section.
 
 #### React
 
@@ -21,27 +21,16 @@ We are using the latest version of react and we try to keep that up to date, so 
 
 So now you're ready to start working with React!
 
-#### Mobx(Store and Effects)
+#### Zustand (Store and Effects)
 
-Mobx provides us a way to manage the state of the application in a reactive way, so Mobx its a functional reactive programming (TFRP) implementation. Before you go deeper on Mobx we suggest to review some core concepts/libs that uses behind the scenes
+Zustand provides us a way to manage the state of the application in a reactive way, so Zustand A small, fast and scalable bearbones state-management solution using simplified flux principles. Has a comfy api based on hooks, isn't boilerplatey or opinionated.Before you go deeper on Zustand we suggest to review some core concepts/libs that uses behind the scenes
 
-* <https://mobx.js.org/README.html> ( You must review this docs from official mobx's site, here you'll find some concepts like observable, action and computed )
+* <https://github.com/pmndrs/zustand> ( You must review this docs from official Zustand's site, here you'll find some concepts like observable, action and computed )
 
-With that core concepts, you'll be able to review the Mobx docs, the most important ones that we are using in the project are:
+With that core concepts, you'll be able to review the Zustand docs, the most important ones that we are using in the project are:
 
-* <https://mobx.js.org/README.html>
-* <https://mobx.js.org/react-integration.html>
-
-#### Material-UI
-
-Our UI is currently using the material-ui library, but since we are using React to develop our component and all that stuff we use another libraries along with that like tailwindcss. So before we review that if you didn't worked with material-ui we would suggest to review the following link.
-
-* <https://material-ui.com/>
-
-Then you can take a look at the tailwindcss framework, tailwindcss provides us advanced layout. As a suggestion we always try to use tailwindcss for layout part. Please check the link provided to get some ideas about tailwindcss.
-
-* <https://tailwindcss.com/>
-
+* <https://github.com/pmndrs/zustand>
+* <https://dev.to/aaronksaunders/managing-react-state-with-zustand-2e8k>
 ### Environment Setup
 
 In order run the Admin Tools site you'll require packages/programs installed
