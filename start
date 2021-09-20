@@ -943,4 +943,178 @@ no changes added to commit (use "git add" and/or "git commit -a")
 origin	https://github.com/fasi13/Micro-fronEnd-template.git (push)
 [1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
 [A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m ↑1[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
-▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[1m[31mi[0m[39m[1m[31mi[1m[31mt[0m[39m[1m[31mi[0m[39m[0m[39m [0m[39m [32mg[39m[32mg[39m[90mit remote -v[39m[12D[1m[31mg[1m[31mi[0m[39m[1m[31mg[1m[31mi[1m[31my[0m[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [10D [4ms[24m[24msa[4ms[24m [24m [1m[31mg[1m[31mi[0m[39m[0m[39m [90mt remote -v[39m[11D[0m[32mg[39m[0m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [12D[32mg[39m[90mit remote -v[39m[12D[1m[31mg[1m[31mt[0m[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [11D [0m[32mg[39m[0m[39m [32mg[39m[90mit remote -v[39m[12D[1m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[1m[31mi[0m[39m[1m[31mi[1m[31mt[0m[39m[1m[31mi[0m[39m[0m[39m [0m[39m [32mg[39m[32mg[39m[90mit remote -v[39m[12D[1m[31mg[1m[31mi[0m[39m[1m[31mg[1m[31mi[1m[31my[0m[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [10D [4ms[24m[24msa[4ms[24m [24m [1m[31mg[1m[31mi[0m[39m[0m[39m [90mt remote -v[39m[11D[0m[32mg[39m[0m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [12D[32mg[39m[90mit remote -v[39m[12D[1m[31mg[1m[31mt[0m[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [11D [0m[32mg[39m[0m[39m [32mg[39m[90mit remote -v[39m[12D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m[4ms[24m[39m [39m [39m [39m [39m [39m [39m [39m [8D[90mtatus[39m[4ms[39m[4mt[24m[4mt[39m[4ma[24m[24ms[24mt[24ma[39mt[39mu[39ms[?1l>[?2004l
+]2;git status]1;gitOn branch develop
+Your branch and 'origin/develop' have diverged,
+and have 1 and 4 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	[31mmodified:   start[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m ↑1[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit status[39m[9D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39ma[39m [39m [39m [39m [39m [90mdd .[39m[39md[39md[39m [39m[4m.[24m[?1l>[?2004l
+]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ✚[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m ↑1[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit add .[39m[8D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39ma[39md[39md[39m [39m[4m.[24m[?1l>[?2004l
+]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ✚[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m ↑1[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit add .[39m[8D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m[4mc[24m[39m [39m [39m [39m [90mommit -m "first commit"[39m[23D[4mc[39m[4mo[24m[24mc[24mo[39mm[39mm[39mi[39mt[39m [39m-[39mm[39m [33m"[33mf[33mi[33mr[33ms[33mt[33m [33mc[33mo[33mm[33mm[33mi[33mt[33m"[39m[?1l>[?2004l
+]2;git commit -m "first commit"]1;gitnpm run format
+
+> micro.frontend.template@0.1.0 lint
+> eslint ./ --ignore-path .gitignore
+
+[0m[0m
+[0m[4m/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/src/pages/app/app.tsx[24m[0m
+[0m  [2m3:13[22m  [33mwarning[39m  Missing return type on function  [2m@typescript-eslint/explicit-module-boundary-types[22m[0m
+[0m[0m
+[0m[4m/home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/src/reportWebVitals.ts[24m[0m
+[0m  [2m3:25[22m  [33mwarning[39m  Missing return type on function  [2m@typescript-eslint/explicit-module-boundary-types[22m[0m
+[0m[0m
+[0m[33m[1m✖ 2 problems (0 errors, 2 warnings)[22m[39m[0m
+[0m[33m[1m[22m[39m[0m
+[develop 69efe8c6] first commit
+ 1 file changed, 200 insertions(+), 1 deletion(-)
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m ↓4[0m[30m[43m[43m[30m ↑2[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit commit -m "first commit"[39m[27D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m[4mp[24m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [23D[90mush [39m[4mp[39m[4mu[24m[24mp[24mu[39ms[39mh[39m [?1l>[?2004l
+]2;git push]1;gitEnumerating objects: 15981, done.
+Counting objects:   0% (1/15981)Counting objects:   1% (160/15981)Counting objects:   2% (320/15981)Counting objects:   3% (480/15981)Counting objects:   4% (640/15981)Counting objects:   5% (800/15981)Counting objects:   6% (959/15981)Counting objects:   7% (1119/15981)Counting objects:   8% (1279/15981)Counting objects:   9% (1439/15981)Counting objects:  10% (1599/15981)Counting objects:  11% (1758/15981)Counting objects:  12% (1918/15981)Counting objects:  13% (2078/15981)Counting objects:  14% (2238/15981)Counting objects:  15% (2398/15981)Counting objects:  16% (2557/15981)Counting objects:  17% (2717/15981)Counting objects:  18% (2877/15981)Counting objects:  19% (3037/15981)Counting objects:  20% (3197/15981)Counting objects:  21% (3357/15981)Counting objects:  22% (3516/15981)Counting objects:  23% (3676/15981)Counting objects:  24% (3836/15981)Counting objects:  25% (3996/15981)Counting objects:  26% (4156/15981)Counting objects:  27% (4315/15981)Counting objects:  28% (4475/15981)Counting objects:  29% (4635/15981)Counting objects:  30% (4795/15981)Counting objects:  31% (4955/15981)Counting objects:  32% (5114/15981)Counting objects:  33% (5274/15981)Counting objects:  34% (5434/15981)Counting objects:  35% (5594/15981)Counting objects:  36% (5754/15981)Counting objects:  37% (5913/15981)Counting objects:  38% (6073/15981)Counting objects:  39% (6233/15981)Counting objects:  40% (6393/15981)Counting objects:  41% (6553/15981)Counting objects:  42% (6713/15981)Counting objects:  43% (6872/15981)Counting objects:  44% (7032/15981)Counting objects:  45% (7192/15981)Counting objects:  46% (7352/15981)Counting objects:  47% (7512/15981)Counting objects:  48% (7671/15981)Counting objects:  49% (7831/15981)Counting objects:  50% (7991/15981)Counting objects:  51% (8151/15981)Counting objects:  52% (8311/15981)Counting objects:  53% (8470/15981)Counting objects:  54% (8630/15981)Counting objects:  55% (8790/15981)Counting objects:  56% (8950/15981)Counting objects:  57% (9110/15981)Counting objects:  58% (9269/15981)Counting objects:  59% (9429/15981)Counting objects:  60% (9589/15981)Counting objects:  61% (9749/15981)Counting objects:  62% (9909/15981)Counting objects:  63% (10069/15981)Counting objects:  64% (10228/15981)Counting objects:  65% (10388/15981)Counting objects:  66% (10548/15981)Counting objects:  67% (10708/15981)Counting objects:  68% (10868/15981)Counting objects:  69% (11027/15981)Counting objects:  70% (11187/15981)Counting objects:  71% (11347/15981)Counting objects:  72% (11507/15981)Counting objects:  73% (11667/15981)Counting objects:  74% (11826/15981)Counting objects:  75% (11986/15981)Counting objects:  76% (12146/15981)Counting objects:  77% (12306/15981)Counting objects:  78% (12466/15981)Counting objects:  79% (12625/15981)Counting objects:  80% (12785/15981)Counting objects:  81% (12945/15981)Counting objects:  82% (13105/15981)Counting objects:  83% (13265/15981)Counting objects:  84% (13425/15981)Counting objects:  85% (13584/15981)Counting objects:  86% (13744/15981)Counting objects:  87% (13904/15981)Counting objects:  88% (14064/15981)Counting objects:  89% (14224/15981)Counting objects:  90% (14383/15981)Counting objects:  91% (14543/15981)Counting objects:  92% (14703/15981)Counting objects:  93% (14863/15981)Counting objects:  94% (15023/15981)Counting objects:  95% (15182/15981)Counting objects:  96% (15342/15981)Counting objects:  97% (15502/15981)Counting objects:  98% (15662/15981)Counting objects:  99% (15822/15981)Counting objects: 100% (15981/15981)Counting objects: 100% (15981/15981), done.
+Delta compression using up to 8 threads
+Compressing objects:   0% (1/5554)Compressing objects:   1% (56/5554)Compressing objects:   2% (112/5554)Compressing objects:   3% (167/5554)Compressing objects:   4% (223/5554)Compressing objects:   5% (278/5554)Compressing objects:   6% (334/5554)Compressing objects:   7% (389/5554)Compressing objects:   8% (445/5554)Compressing objects:   9% (500/5554)Compressing objects:  10% (556/5554)Compressing objects:  11% (611/5554)Compressing objects:  12% (667/5554)Compressing objects:  13% (723/5554)Compressing objects:  14% (778/5554)Compressing objects:  15% (834/5554)Compressing objects:  16% (889/5554)Compressing objects:  17% (945/5554)Compressing objects:  18% (1000/5554)Compressing objects:  19% (1056/5554)Compressing objects:  20% (1111/5554)Compressing objects:  21% (1167/5554)Compressing objects:  22% (1222/5554)Compressing objects:  23% (1278/5554)Compressing objects:  24% (1333/5554)Compressing objects:  25% (1389/5554)Compressing objects:  26% (1445/5554)Compressing objects:  27% (1500/5554)Compressing objects:  28% (1556/5554)Compressing objects:  29% (1611/5554)Compressing objects:  30% (1667/5554)Compressing objects:  31% (1722/5554)Compressing objects:  32% (1778/5554)Compressing objects:  33% (1833/5554)Compressing objects:  34% (1889/5554)Compressing objects:  35% (1944/5554)Compressing objects:  36% (2000/5554)Compressing objects:  37% (2055/5554)Compressing objects:  38% (2111/5554)Compressing objects:  39% (2167/5554)Compressing objects:  40% (2222/5554)Compressing objects:  41% (2278/5554)Compressing objects:  42% (2333/5554)Compressing objects:  43% (2389/5554)Compressing objects:  44% (2444/5554)Compressing objects:  45% (2500/5554)Compressing objects:  46% (2555/5554)Compressing objects:  47% (2611/5554)Compressing objects:  48% (2666/5554)Compressing objects:  49% (2722/5554)Compressing objects:  50% (2777/5554)Compressing objects:  51% (2833/5554)Compressing objects:  52% (2889/5554)Compressing objects:  53% (2944/5554)Compressing objects:  54% (3000/5554)Compressing objects:  55% (3055/5554)Compressing objects:  56% (3111/5554)Compressing objects:  57% (3166/5554)Compressing objects:  58% (3222/5554)Compressing objects:  59% (3277/5554)Compressing objects:  60% (3333/5554)Compressing objects:  61% (3388/5554)Compressing objects:  62% (3444/5554)Compressing objects:  63% (3500/5554)Compressing objects:  64% (3555/5554)Compressing objects:  65% (3611/5554)Compressing objects:  66% (3666/5554)Compressing objects:  67% (3722/5554)Compressing objects:  68% (3777/5554)Compressing objects:  69% (3833/5554)Compressing objects:  70% (3888/5554)Compressing objects:  71% (3944/5554)Compressing objects:  72% (3999/5554)Compressing objects:  73% (4055/5554)Compressing objects:  74% (4110/5554)Compressing objects:  75% (4166/5554)Compressing objects:  76% (4222/5554)Compressing objects:  77% (4277/5554)Compressing objects:  78% (4333/5554)Compressing objects:  79% (4388/5554)Compressing objects:  80% (4444/5554)Compressing objects:  81% (4499/5554)Compressing objects:  82% (4555/5554)Compressing objects:  83% (4610/5554)Compressing objects:  84% (4666/5554)Compressing objects:  85% (4721/5554)Compressing objects:  86% (4777/5554)Compressing objects:  87% (4832/5554)Compressing objects:  88% (4888/5554)Compressing objects:  89% (4944/5554)Compressing objects:  90% (4999/5554)Compressing objects:  91% (5055/5554)Compressing objects:  92% (5110/5554)Compressing objects:  93% (5166/5554)Compressing objects:  94% (5221/5554)Compressing objects:  95% (5277/5554)Compressing objects:  96% (5332/5554)Compressing objects:  97% (5388/5554)Compressing objects:  98% (5443/5554)Compressing objects:  99% (5499/5554)Compressing objects: 100% (5554/5554)Compressing objects: 100% (5554/5554), done.
+Writing objects:   0% (1/15981)Writing objects:   1% (160/15981)Writing objects:   2% (320/15981)Writing objects:   3% (480/15981)Writing objects:   4% (640/15981)Writing objects:   5% (801/15981)Writing objects:   6% (959/15981)Writing objects:   7% (1119/15981)Writing objects:   8% (1279/15981)Writing objects:   9% (1439/15981)Writing objects:  10% (1601/15981)Writing objects:  11% (1758/15981)Writing objects:  12% (1918/15981)Writing objects:  12% (2059/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  13% (2082/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  14% (2253/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  15% (2401/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  16% (2557/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  17% (2717/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  18% (2877/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  19% (3037/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  20% (3197/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  21% (3357/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  22% (3516/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  23% (3676/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  24% (3836/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  25% (3996/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  26% (4156/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  27% (4315/15981), 1.05 MiB | 1.12 MiB/sWriting objects:  28% (4475/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  29% (4635/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  30% (4796/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  31% (4956/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  32% (5114/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  33% (5275/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  34% (5444/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  35% (5597/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  36% (5757/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  37% (5917/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  38% (6087/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  39% (6242/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  40% (6393/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  41% (6553/15981), 3.24 MiB | 2.21 MiB/sWriting objects:  41% (6564/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  42% (6713/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  43% (6875/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  44% (7040/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  45% (7193/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  46% (7357/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  47% (7514/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  48% (7671/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  49% (7831/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  50% (8002/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  51% (8160/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  52% (8311/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  53% (8470/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  54% (8630/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  55% (8790/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  56% (8950/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  57% (9110/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  58% (9269/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  59% (9429/15981), 5.52 MiB | 2.66 MiB/sWriting objects:  60% (9589/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  61% (9749/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  62% (9909/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  63% (10069/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  64% (10228/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  65% (10388/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  66% (10548/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  67% (10708/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  68% (10868/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  69% (11027/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  70% (11187/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  71% (11349/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  72% (11507/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  73% (11668/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  74% (11826/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  75% (11986/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  76% (12146/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  77% (12307/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  78% (12466/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  79% (12625/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  80% (12785/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  81% (12945/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  82% (13105/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  83% (13265/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  84% (13425/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  85% (13584/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  86% (13745/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  86% (13841/15981), 6.77 MiB | 2.57 MiB/sWriting objects:  86% (13861/15981), 10.79 MiB | 2.48 MiB/sWriting objects:  86% (13865/15981), 12.16 MiB | 2.47 MiB/sWriting objects:  87% (13904/15981), 13.48 MiB | 2.46 MiB/sWriting objects:  87% (13987/15981), 14.86 MiB | 2.74 MiB/sWriting objects:  88% (14064/15981), 14.86 MiB | 2.74 MiB/sWriting objects:  89% (14225/15981), 14.86 MiB | 2.74 MiB/sWriting objects:  90% (14383/15981), 14.86 MiB | 2.74 MiB/sWriting objects:  91% (14543/15981), 14.86 MiB | 2.74 MiB/sWriting objects:  92% (14703/15981), 14.86 MiB | 2.74 MiB/sWriting objects:  92% (14785/15981), 17.36 MiB | 2.38 MiB/sWriting objects:  92% (14858/15981), 20.11 MiB | 2.39 MiB/sWriting objects:  92% (14859/15981), 21.42 MiB | 2.43 MiB/sWriting objects:  93% (14863/15981), 21.42 MiB | 2.43 MiB/sWriting objects:  93% (14881/15981), 23.98 MiB | 2.45 MiB/sWriting objects:  94% (15023/15981), 25.37 MiB | 2.50 MiB/sWriting objects:  95% (15182/15981), 25.37 MiB | 2.50 MiB/sWriting objects:  96% (15342/15981), 25.37 MiB | 2.50 MiB/sWriting objects:  97% (15502/15981), 25.37 MiB | 2.50 MiB/sWriting objects:  98% (15662/15981), 25.37 MiB | 2.50 MiB/sWriting objects:  99% (15822/15981), 25.37 MiB | 2.50 MiB/sWriting objects: 100% (15981/15981), 25.37 MiB | 2.50 MiB/sWriting objects: 100% (15981/15981), 26.20 MiB | 2.47 MiB/s, done.
+Total 15981 (delta 10085), reused 15947 (delta 10067)
+remote: Resolving deltas:   0% (0/10085)[Kremote: Resolving deltas:   1% (101/10085)[Kremote: Resolving deltas:   2% (202/10085)[Kremote: Resolving deltas:   3% (303/10085)[Kremote: Resolving deltas:   4% (404/10085)[Kremote: Resolving deltas:   5% (505/10085)[Kremote: Resolving deltas:   6% (606/10085)[Kremote: Resolving deltas:   7% (706/10085)[Kremote: Resolving deltas:   8% (807/10085)[Kremote: Resolving deltas:   9% (908/10085)[Kremote: Resolving deltas:  10% (1009/10085)[Kremote: Resolving deltas:  11% (1110/10085)[Kremote: Resolving deltas:  12% (1211/10085)[Kremote: Resolving deltas:  13% (1312/10085)[Kremote: Resolving deltas:  14% (1412/10085)[Kremote: Resolving deltas:  15% (1513/10085)[Kremote: Resolving deltas:  16% (1614/10085)[Kremote: Resolving deltas:  17% (1715/10085)[Kremote: Resolving deltas:  18% (1816/10085)[Kremote: Resolving deltas:  19% (1917/10085)[Kremote: Resolving deltas:  20% (2017/10085)[Kremote: Resolving deltas:  21% (2118/10085)[Kremote: Resolving deltas:  22% (2219/10085)[Kremote: Resolving deltas:  23% (2320/10085)[Kremote: Resolving deltas:  24% (2421/10085)[Kremote: Resolving deltas:  25% (2522/10085)[Kremote: Resolving deltas:  26% (2623/10085)[Kremote: Resolving deltas:  27% (2723/10085)[Kremote: Resolving deltas:  28% (2824/10085)[Kremote: Resolving deltas:  29% (2925/10085)[Kremote: Resolving deltas:  30% (3026/10085)[Kremote: Resolving deltas:  31% (3127/10085)[Kremote: Resolving deltas:  32% (3228/10085)[Kremote: Resolving deltas:  33% (3329/10085)[Kremote: Resolving deltas:  34% (3429/10085)[Kremote: Resolving deltas:  35% (3530/10085)[Kremote: Resolving deltas:  36% (3631/10085)[Kremote: Resolving deltas:  37% (3732/10085)[Kremote: Resolving deltas:  38% (3833/10085)[Kremote: Resolving deltas:  39% (3934/10085)[Kremote: Resolving deltas:  40% (4034/10085)[Kremote: Resolving deltas:  41% (4135/10085)[Kremote: Resolving deltas:  42% (4236/10085)[Kremote: Resolving deltas:  43% (4337/10085)[Kremote: Resolving deltas:  44% (4438/10085)[Kremote: Resolving deltas:  45% (4539/10085)[Kremote: Resolving deltas:  46% (4640/10085)[Kremote: Resolving deltas:  47% (4740/10085)[Kremote: Resolving deltas:  48% (4841/10085)[Kremote: Resolving deltas:  49% (4942/10085)[Kremote: Resolving deltas:  50% (5043/10085)[Kremote: Resolving deltas:  51% (5144/10085)[Kremote: Resolving deltas:  52% (5245/10085)[Kremote: Resolving deltas:  53% (5346/10085)[Kremote: Resolving deltas:  54% (5446/10085)[Kremote: Resolving deltas:  55% (5547/10085)[Kremote: Resolving deltas:  56% (5648/10085)[Kremote: Resolving deltas:  57% (5749/10085)[Kremote: Resolving deltas:  58% (5850/10085)[Kremote: Resolving deltas:  59% (5951/10085)[Kremote: Resolving deltas:  60% (6051/10085)[Kremote: Resolving deltas:  61% (6152/10085)[Kremote: Resolving deltas:  62% (6253/10085)[Kremote: Resolving deltas:  63% (6354/10085)[Kremote: Resolving deltas:  64% (6455/10085)[Kremote: Resolving deltas:  65% (6556/10085)[Kremote: Resolving deltas:  66% (6657/10085)[Kremote: Resolving deltas:  67% (6757/10085)[Kremote: Resolving deltas:  68% (6858/10085)[Kremote: Resolving deltas:  69% (6959/10085)[Kremote: Resolving deltas:  70% (7060/10085)[Kremote: Resolving deltas:  71% (7161/10085)[Kremote: Resolving deltas:  72% (7262/10085)[Kremote: Resolving deltas:  73% (7363/10085)[Kremote: Resolving deltas:  74% (7463/10085)[Kremote: Resolving deltas:  75% (7564/10085)[Kremote: Resolving deltas:  76% (7665/10085)[Kremote: Resolving deltas:  77% (7766/10085)[Kremote: Resolving deltas:  78% (7867/10085)[Kremote: Resolving deltas:  79% (7968/10085)[Kremote: Resolving deltas:  80% (8068/10085)[Kremote: Resolving deltas:  81% (8169/10085)[Kremote: Resolving deltas:  82% (8270/10085)[Kremote: Resolving deltas:  83% (8371/10085)[Kremote: Resolving deltas:  84% (8472/10085)[Kremote: Resolving deltas:  85% (8573/10085)[Kremote: Resolving deltas:  86% (8674/10085)[Kremote: Resolving deltas:  87% (8774/10085)[Kremote: Resolving deltas:  88% (8875/10085)[Kremote: Resolving deltas:  89% (8976/10085)[Kremote: Resolving deltas:  90% (9077/10085)[Kremote: Resolving deltas:  91% (9178/10085)[Kremote: Resolving deltas:  92% (9279/10085)[Kremote: Resolving deltas:  93% (9380/10085)[Kremote: Resolving deltas:  94% (9480/10085)[Kremote: Resolving deltas:  95% (9581/10085)[Kremote: Resolving deltas:  96% (9682/10085)[Kremote: Resolving deltas:  97% (9783/10085)[Kremote: Resolving deltas:  98% (9884/10085)[Kremote: Resolving deltas:  99% (9985/10085)[Kremote: Resolving deltas: 100% (10085/10085)[Kremote: Resolving deltas: 100% (10085/10085), done.[K
+To https://github.com/fasi13/Micro-fronEnd-template.git
+ * [new branch]        develop -> develop
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[4mn[24m[4mn[24m[90mpm start[39m[8D[24m[1m[31mn[1m[31mp[0m[39m[0m[32mn[0m[32mp[32mm[39m[39m [39m[4ms[24m[4ms[39m[4mt[24m[4mt[39m[4ma[24m[4ma[39m[4mr[24m[4mr[39m[4mt[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.182/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+[2J[3J[HCompiling...
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+[2J[3J[HCompiling...
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+[2J[3J[HCompiling...
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+[2J[3J[HCompiling...
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+[2J[3J[HCompiling...
+[2J[3J[H[2J[3J[H[33mCompiled with warnings.[39m
+[33m[39m
+src/pages/app/app.tsx
+  [1mLine 3:13:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+src/reportWebVitals.ts
+  [1mLine 3:25:[22m  Missing return type on function  [33m[4m@typescript-eslint/explicit-module-boundary-types[24m[39m
+
+Search for the [4m[33mkeywords[39m[24m to learn more about each warning.
+To ignore, add [36m// eslint-disable-next-line[39m to the line before.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[4mn[24m[4mn[24m[90mpm start[39m[8D[24m[1m[31mn[1m[31mp[0m[39m[0m[32mn[0m[32mp[32mm[39m[39m [39m[4ms[24m[4ms[39m[4mt[24m[4mt[39m[4ma[24m[4ma[39m[4mr[24m[4mr[39m[4mt[24m[?1l>[?2004l
+]2;npm start]1;npm
+> micro.frontend.template@0.1.0 prestart
+> npm run css
+
+
+> micro.frontend.template@0.1.0 css
+> postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css
+
+
+> micro.frontend.template@0.1.0 start
+> craco start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://192.168.1.182/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /home/fasile/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+[2J[3J[H[36mStarting the development server...[39m
+[36m[39m
+[2J[3J[H[2J[3J[H[32mCompiled successfully![39m
+
+You can now view [1mmicro.frontend.template[22m in the browser.
+
+  [1mLocal:[22m            http://localhost:[1m3000[22m
+  [1mOn Your Network:[22m  http://192.168.1.182:[1m3000[22m
+
+Note that the development build is not optimized.
+To create a production build, use [36myarn build[39m.
+
+^C
+[1m[7m%[27m[1m[0m                                                                                                                    ]

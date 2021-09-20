@@ -51,7 +51,8 @@
       "import/prefer-default-export": "off",
       "no-underscore-dangle": "off",
       "react/prop-types": "off", // Since we do not use prop-types
-      "react/require-default-props": "off" // Since we do not use prop-type
+      "react/require-default-props": "off", // Since we do not use prop-type
+      "@typescript-eslint/explicit-module-boundary-types": "off"
 
   },
   "settings": {
