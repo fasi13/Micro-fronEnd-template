@@ -26,7 +26,6 @@ module.exports = {
 				const cssPluginIdx = config.plugins
 					.map(p => p.constructor.name)
 					.indexOf('MiniCssExtractPlugin');
-
 				if (cssPluginIdx !== -1) {
 					config.plugins[cssPluginIdx].options.filename = 'main.css';
 				}
@@ -39,6 +38,13 @@ module.exports = {
 				delete config.optimization;
 			}
 			return config;
+		},
+	},
+	style: {
+		postcss: {
+			/* eslint-disable global-require */
+			plugins: [require('tailwindcss'), require('autoprefixer')],
+			/* eslint-disable global-require */
 		},
 	},
 };
