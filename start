@@ -3064,4 +3064,34 @@ To https://github.com/fasi13/Micro-fronEnd-template.git
 [1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
 [A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
 ▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mgit[39m pushcommit -am [33m"tailwind config"[39m[28Dadd [4m.[24m      [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [23Dstat[24musremote -v[13D[32mn[32mp[32mm[39m[2Cun [2Cst:coverage[21D[32mg[32mi[32mt[39m[2Cemo[2C -v        [8D[9Dstatus   add [4m.[24m comm[24mit -am [33m"tailwind config"[39m[28Dadd [4m.[24m      [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [23D[?1l>[?2004l
-]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J
+]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ✚[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mgit[39m add [4m.[24mpush[24m commit -am [33m"tailwind config"[39m[?1l>[?2004l
+]2;git commit -am "tailwind config"]1;gitnpm run format
+
+> micro.frontend.template@0.1.0 lint
+> eslint ./ --ignore-path .gitignore
+
+[develop add7d886] tailwind config
+ 2 files changed, 60 insertions(+), 1 deletion(-)
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[42m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[42m[34m[0m[34m[42m[42m[30m [0m[30m[42m[42m[30m develop[0m[30m[42m[42m[30m ↑1[0m[30m[42m[42m[30m [0m[30m[42m[49m[32m[0m[32m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mgit[39m commit -am [33m"tailwind config"[39m[28Dadd [4m.[24m      [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [23Dcomm[24mit -am [33m"tailwind config"[39m[?1l>[?2004l
+]2;git commit -am "tailwind config"]1;gitnpm run format
+
+> micro.frontend.template@0.1.0 lint
+> eslint ./ --ignore-path .gitignore
+
+On branch develop
+Your branch is ahead of 'origin/develop' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[42m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[42m[34m[0m[34m[42m[42m[30m [0m[30m[42m[42m[30m develop[0m[30m[42m[42m[30m ↑1[0m[30m[42m[42m[30m [0m[30m[42m[49m[32m[0m[32m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit commit -am "tailwind config"[39m[31D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m[4mp[24m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [27D[90mush[39m[4mp[39m[4mu[24m[24mp[24mu[39ms[39mh[?1l>[?2004l
+]2;git push]1;gitEnumerating objects: 7, done.
+Counting objects:  14% (1/7)Counting objects:  28% (2/7)Counting objects:  42% (3/7)Counting objects:  57% (4/7)Counting objects:  71% (5/7)Counting objects:  85% (6/7)Counting objects: 100% (7/7)Counting objects: 100% (7/7), done.
+Delta compression using up to 8 threads
+Compressing objects:  25% (1/4)Compressing objects:  50% (2/4)Compressing objects:  75% (3/4)Compressing objects: 100% (4/4)Compressing objects: 100% (4/4), done.
+Writing objects:  25% (1/4)Writing objects:  50% (2/4)Writing objects:  75% (3/4)Writing obje
