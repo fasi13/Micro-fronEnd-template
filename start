@@ -3094,4 +3094,47 @@ nothing to commit, working tree clean
 Counting objects:  14% (1/7)Counting objects:  28% (2/7)Counting objects:  42% (3/7)Counting objects:  57% (4/7)Counting objects:  71% (5/7)Counting objects:  85% (6/7)Counting objects: 100% (7/7)Counting objects: 100% (7/7), done.
 Delta compression using up to 8 threads
 Compressing objects:  25% (1/4)Compressing objects:  50% (2/4)Compressing objects:  75% (3/4)Compressing objects: 100% (4/4)Compressing objects: 100% (4/4), done.
-Writing objects:  25% (1/4)Writing objects:  50% (2/4)Writing objects:  75% (3/4)Writing obje
+Writing objects:  25% (1/4)Writing objects:  50% (2/4)Writing objects:  75% (3/4)Writing objects: 100% (4/4)Writing objects: 100% (4/4), 1.60 KiB | 1.60 MiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/3)[Kremote: Resolving deltas:  33% (1/3)[Kremote: Resolving deltas:  66% (2/3)[Kremote: Resolving deltas: 100% (3/3)[Kremote: Resolving deltas: 100% (3/3), completed with 3 local objects.[K
+To https://github.com/fasi13/Micro-fronEnd-template.git
+   94d23188..add7d886  develop -> develop
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mgit[39m pushcommit -am [33m"tailwind config"[39m[28Dadd [4m.[24m      [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [23D[?1l>[?2004l
+]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ✚[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mgit[39m add [4m.[24mpush[24m commit -am [33m"tailwind config"[39m[?1l>[?2004l
+]2;git commit -am "tailwind config"]1;gitnpm run format
+
+> micro.frontend.template@0.1.0 lint
+> eslint ./ --ignore-path .gitignore
+
+[develop f5addf54] tailwind config
+ 2 files changed, 39 insertions(+), 11 deletions(-)
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[42m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[42m[34m[0m[34m[42m[42m[30m [0m[30m[42m[42m[30m develop[0m[30m[42m[42m[30m ↑1[0m[30m[42m[42m[30m [0m[30m[42m[49m[32m[0m[32m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mgit[39m commit -am [33m"tailwind config"[39m[28Dadd [4m.[24m      [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [23Dpush[24m commit -am [33m"tailwind config"[39m[28Dpush       [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [24D[?1l>[?2004l
+]2;git push]1;gitEnumerating objects: 7, done.
+Counting objects:  14% (1/7)Counting objects:  28% (2/7)Counting objects:  42% (3/7)Counting objects:  57% (4/7)Counting objects:  71% (5/7)Counting objects:  85% (6/7)Counting objects: 100% (7/7)Counting objects: 100% (7/7), done.
+Delta compression using up to 8 threads
+Compressing objects:  25% (1/4)Compressing objects:  50% (2/4)Compressing objects:  75% (3/4)Compressing objects: 100% (4/4)Compressing objects: 100% (4/4), done.
+Writing objects:  25% (1/4)Writing objects:  50% (2/4)Writing objects:  75% (3/4)Writing objects: 100% (4/4)Writing objects: 100% (4/4), 915 bytes | 915.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/3)[Kremote: Resolving deltas:  33% (1/3)[Kremote: Resolving deltas:  66% (2/3)[Kremote: Resolving deltas: 100% (3/3)[Kremote: Resolving deltas: 100% (3/3), completed with 3 local objects.[K
+To https://github.com/fasi13/Micro-fronEnd-template.git
+   add7d886..f5addf54  develop -> develop
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit push[39m[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m[4ms[24m[39m [39m [39m [90mtatus[39m[24ms[39ma[39m [39m [39m [39m [90mtus[39m[39mt[39m [39m [?1l>[?2004l
+]2;git sat]1;gitgit: 'sat' is not a git command. See 'git --help'.
+
+The most similar commands are
+	stage
+	stash
+[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ●[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[K[?1h=[?2004h[32mg[39m[32mg[39m[90mit sat[39m[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39ma[39m [39m [90mdd .[39m[39md[39m [39m [39m [90md .[39m[39md[39m [39m[4m.[24m[?1l>[?2004l
+]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                    ]2;fasile@fasile-HP-Pavilion-Laptop-15-cc1xx:~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template]1;...End.Template[0m[27m[24m[J[0m[30m[43m[49m[39m
+[A[0m[40m[33m fasile@fasile-HP-Pavilion-Laptop-15-cc1xx[0m[33m[40m[40m[33m [0m[33m[40m[44m[30m[0m[30m[44m[44m[30m ~/Desktop/E2E.MicroFrontEnd.Template/Micro Front End Template/Micro.Front.End.Template[0m[30m[44m[44m[30m [0m[30m[44m[43m[34m[0m[34m[43m[43m[30m [0m[30m[43m[43m[30m develop[0m[30m[43m[43m[30m[0m[30m[43m[43m[30m ✚[0m[30m[43m[43m[30m [0m[30m[43m[49m[33m[0m[33m[49m[39m [0m[49m[39m
+▶ [0m[49m[0m[49m[39m[
